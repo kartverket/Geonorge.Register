@@ -25,6 +25,7 @@ namespace Kartverket.Register
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/geonorge-default.css",
                       "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

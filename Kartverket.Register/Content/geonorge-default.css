@@ -1,0 +1,95 @@
+﻿/* begin geoNorge default layout */
+
+html, body {
+    font-family: Arial, sans-serif;
+}
+
+.body-content {
+    background-color: #f6f6f6;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, white), color-stop(100%, #f6f6f6));
+    background-image: -webkit-linear-gradient(white, #f6f6f6);
+    background-image: -moz-linear-gradient(white, #f6f6f6);
+    background-image: -ms-linear-gradient(white, #f6f6f6);
+    background-image: -o-linear-gradient(white, #f6f6f6);
+    background-image: linear-gradient(white, #f6f6f6);
+    border-bottom: 1px solid #cccbcb;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 5px rgba(0, 0, 0, 0.075);
+    margin-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 6em;
+    position: relative;    
+    z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: "Meta Book", Arial, sans-serif;
+}
+
+.top-header {
+    color: #565656;
+    text-align: right;
+    padding-bottom: 0px;
+    padding-top: 5px;
+}
+
+.divider-vertical {
+    border-right: 1px solid #cccbcb;
+    border-left: 1px solid white;
+}
+
+.navbar {
+    min-height: 40px;
+    border-radius:0;
+    background: #dedcdc;
+    background-image: -webkit-linear-gradient(#ededed, #dedcdc);
+    background-image: -moz-linear-gradient(#ededed, #dedcdc);
+    background-image: -ms-linear-gradient(#ededed, #dedcdc);
+    background-image: -o-linear-gradient(#ededed, #dedcdc);
+    background-image: linear-gradient(#ededed, #dedcdc);
+}
+.navbar-brand {
+    height: 65px;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    padding-top: 30px;
+    padding-bottom: 14px;
+    background-color: #2571b2;
+    color: white;
+    background-image: -webkit-linear-gradient(#4b8bc2, #0058a3);
+    background-image: -moz-linear-gradient(#4b8bc2, #0058a3);
+    background-image: -ms-linear-gradient(#4b8bc2, #0058a3);
+    background-image: -o-linear-gradient(#4b8bc2, #0058a3);
+    background-image: linear-gradient(#4b8bc2, #0058a3);
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #dddddd;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #cccccc;
+}
+
+.navbar-default .navbar-nav > li > a {
+    padding-top: 30px;
+    padding-bottom: 14px;
+    font-size: 19px;
+    -webkit-font-smoothing: antialiased;
+    color: #565656;
+}
+.navbar-default .navbar-nav > li > a:hover {
+    color: white;
+}
+.navbar-form {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+.navbar-collapse {
+    max-height: 380px;
+}
+
+a {
+    color: #0058a3;
+    text-decoration: none;
+}
+/* end geoNorge default layout */

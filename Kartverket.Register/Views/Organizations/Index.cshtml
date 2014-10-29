@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Kartverket.Register.Models.Organization>
+
+@{
+    ViewBag.Title = UI.Organizations;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    @Html.ActionLink(UI.CreateNew, "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LogoFilename)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            <img src="@Url.Content("~/data/organizations/" + item.LogoFilename)"/>
+        </td>
+        <td>
+            @Html.ActionLink(UI.Edit, "Edit", new { id=item.Number }) |
+            @Html.ActionLink(UI.Details, "Details", new { id = item.Number }) |
+            @Html.ActionLink(UI.Delete, "Delete", new { id = item.Number })
+        </td>
+    </tr>
+}
+
+</table>

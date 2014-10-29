@@ -117,34 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppPageTitle" xml:space="preserve">
-    <value>Geonorge Register</value>
+  <data name="Target" xml:space="preserve">
+    <value>H4sIAAAAAAAEAM1X227bOBB9X2D/QeDTFkjFJH1pAzlBaseLonFcRGnfaWmsEOVFJanA3l/bh/2k/YWO7pZkO3ZaoEWAwCZnztzOzND///tfcLWSwnsCY7lWI3LmnxIPVKRjrpIRydzy9VtydfnnH8FNLFfel1ruTS6HmsqOyKNz6QWlNnoEyawveWS01UvnR1pSFmt6fnr6jp6dUUAIglieF9xnynEJxRf8OtYqgtRlTMx0DMJW53gTFqjeHZNgUxbBiHxkxqG/X8H595Bw68D4pRbxrgVn6FEIYkk8ppR2zKG/F58thM5olYQpHjDxsE4B5ZZMWKjiuGjFDw3p9DwPibaKNVSUWaflkYBnb6oc0b76izJNmhxiFm8w226dR11kckTmJmGK/1PB9w1ejIXJhfcl29+EOPG2CJ40dEFW5X8n3jgTLjMwUpA5w8SJ9ylbCB59hPWD/gpqpDIhNh1H1/Guc4BHn4xOwbj1PSyrcO4yuQBDPNrVpX3lRrWnVwaLFEHWE2/GVregEveI/XD+lnhTvoK4Pqk481lxbBJUcibDr3foOFsIaO7pfrv4f49V/HiQ1f1GbnWip1yA+vnGAtoyasgz7GbHuAJTOVITYrLIb2DltjAOO7Qina0MdmMrkUNwWwiMjd+6U3a/3yX4Nt8bL9thQ8tpU08lumMsBTOWppjGjTFVnXhhOaPGr8Pjm1aWGDSyW3q38bax5LRhCfRu0TR6OuXGuglzbMHyQo5jORAb1mRHvmt729Leb8y2CrVW/rnUPHCS9DHb3E4xXAnKFZFD419vlg3Uix3CBDM7Wn+sRSbVvjGyF6XorQ5GcXI4QrdLN5G6N0PEgPYy0y8HHdSjNx77Rd7XJX2RxnrTLb2uCCqGPr/RB5QtRYiHqXricU7XcI2EkX4u4IffxFhwjLcVmCEBlmBduUUILtPz3mPg91nM1NpYHLGdf9k6VE/MRI/MDBfiD2y7GvQvyVavNpFeutGOADxuaw0H6eEb6dmFVDJ8ROKFxkBKh3sr7YU7a9h1Ad18bQcTsDxpIfK3t4IoN9qC1jIf1FLXNcBINz2qRXolmoFjMSbs2ji+ZJHD6wisLR4dX5jIUOQGSRZ/UPPMpZm7thbkQqw34w3ofvvFYu76HMzTIm0/IwR0k2MIMFfvMy7ixu/pkOu7IHLu/A14XhQTH10Il6wbpDutDgSq0jeBFFSMI+8BZCoQzM5VyJ7gJb7hS+sWEhat6+G5G+T5QnTTHkw4SwyTtsJo9fNfkDT/CXn5Hc2jPD50DgAA</value>
   </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>Opprett ny</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Slett</value>
-  </data>
-  <data name="Details" xml:space="preserve">
-    <value>Vis</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Rediger</value>
-  </data>
-  <data name="Organization" xml:space="preserve">
-    <value>Organisasjon</value>
-  </data>
-  <data name="Organizations" xml:space="preserve">
-    <value>Organisasjoner</value>
-  </data>
-  <data name="Organization_Logo" xml:space="preserve">
-    <value>Logo</value>
-  </data>
-  <data name="Organization_Name" xml:space="preserve">
-    <value>Organisasjonsnavn</value>
-  </data>
-  <data name="Organization_Number" xml:space="preserve">
-    <value>Organisasjonsnummer</value>
+  <data name="DefaultSchema" xml:space="preserve">
+    <value>dbo</value>
   </data>
 </root>

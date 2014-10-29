@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using Kartverket.Register.Models;
 
 namespace Kartverket.Register.Services
@@ -14,12 +14,12 @@ namespace Kartverket.Register.Services
 
         public Organization GetOrganizationByName(string name)
         {
-            throw new NotImplementedException();
+            return _dbContext.Organizations.SingleOrDefault(o => o.Name == name);
         }
 
         public Organization GetOrganizationByNumber(string number)
         {
-            throw new NotImplementedException();
+            return _dbContext.Organizations.SingleOrDefault(o => o.Number == number);
         }
     }
 }

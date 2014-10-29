@@ -6,6 +6,7 @@ namespace Kartverket.Register.Models
     {
         public RegisterDbContext() : base("RegisterDbContext") { }
 
-        public DbSet<Organization> Organizations { get; set; }
+        // marking DbSet with virtual makes it testable
+        public virtual DbSet<Organization> Organizations { get; set; }
     }
 }

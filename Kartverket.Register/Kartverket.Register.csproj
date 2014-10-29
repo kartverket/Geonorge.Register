@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\RegisterDbContext.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />

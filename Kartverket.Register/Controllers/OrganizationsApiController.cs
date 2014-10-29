@@ -1,5 +1,5 @@
 ﻿using System.Web.Http;
-using Kartverket.Register.Models.Api;
+using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
@@ -16,7 +16,7 @@ namespace Kartverket.Register.Controllers
         [Route("api/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByName(string name)
         {
-            Models.Organization organization = _organizationService.GetOrganizationByName(name);
+            Organization organization = _organizationService.GetOrganizationByName(name);
 
             if (organization == null)
                 return NotFound();
@@ -24,13 +24,24 @@ namespace Kartverket.Register.Controllers
             return Ok(Convert(organization));
         }
 
-        private Organization Convert(Models.Organization organization)
+        [Route("api/organisasjon/orgnr/{number}")]
+        public IHttpActionResult GetOrganizationByNumber(string number)
         {
-            return new Organization
+            Organization organization = _organizationService.GetOrganizationByNumber(number);
+
+            if (organization == null)
+                return NotFound();
+
+            return Ok(Convert(organization));
+        }
+
+        private Models.Api.Organization Convert(Organization organization)
+        {
+            return new Models.Api.Organization
             {
                 Name = organization.Name,
                 Number = organization.Number,
-                LogoUrl = Url.Content("~/data/organizations/") + organization.LogoFilename
+                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.LogoFilename
             };
         }
     }

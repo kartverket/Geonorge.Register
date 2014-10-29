@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Kodelister";
+}
+@section head {
+    <link rel="alternate" type="application/atom+xml"
+          href="/kodeliste/atom.xml" title="Atom Feed">
+}
+
+<h2>Kodelister</h2>
+<div class="row">
+    <div class="col-md-8">
+        <p><b>ID</b> <a href="/codelists/">http://register.geonorge.no/kodeliste</a></p>
+        <p>Inneholder kodelister</p>
+        <p><b>Administrator</b>: Kartverket</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <a class="btn btn-warning" href="atom.xml">Atom</a>
+        <a class="btn btn-warning" href="rdf.xml">RDF</a>
+        <a class="btn btn-warning" href="data.json">Json</a>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Navn
+        </th>
+        <th>
+            Innhold
+        </th>
+        <th>
+            Administrator
+        </th>
+        <th>
+            Kontrollorgan
+        </th>
+    </tr>
+
+    <tr>
+        <td>
+            <a href="/codelists/maalemetode">http://register.geonorge.no/kodeliste/maalemetode</a>
+        </td>
+        <td>
+            <a href="/codelists/maalemetode">Målemetode</a>
+</td>
+        <td>
+            metode som ligger til grunn for registrering av posisjon
+        </td>
+        <td>
+            Kartverket
+        </td>
+        <td>Kartverket</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/codelists/hoeydereferansesystem">http://register.geonorge.no/kodeliste/hoeydereferansesystem</a>
+        </td>
+        <td>
+            <a href="/codelists/hoeydereferansesystem">Høydereferansesystem</a>
+</td>
+        <td>
+            referanseflate som er utgangspunktet for høyde
+        </td>
+        <td>
+            Kartverket
+        </td>
+        <td>Kartverket</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="/codelists/berggrunnklassifikasjon">http://register.geonorge.no/kodeliste/berggrunnklassifikasjon</a>
+        </td>
+        <td>
+            <a href="/codelists/berggrunnklassifikasjon">BerggrunnKlassifikasjon</a>
+</td>
+        <td>
+            grovinndeling basert på berggrunnens innbyrdes alder og bevegelse
+
+            Merknad: Hvorvidt de er dannet på det sted de ligger eller er flyttet på (overskjøvet)
+        </td>
+        <td>
+            NGU
+        </td>
+        <td>Kartverket</td>
+    </tr>
+</table>

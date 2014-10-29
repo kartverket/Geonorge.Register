@@ -131,7 +131,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CodelistsController.cs" />
+    <Compile Include="Controllers\EPSGcodesController.cs" />
+    <Compile Include="Controllers\GMLapplicationschemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NamespaceController.cs" />
+    <Compile Include="Controllers\ProductsheetsController.cs" />
+    <Compile Include="Controllers\ProductspesificationsController.cs" />
+    <Compile Include="Controllers\SOSIdefController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,6 +209,15 @@
     <Content Include="Views\Organizations\Details.cshtml" />
     <Content Include="Views\Organizations\Edit.cshtml" />
     <Content Include="Views\Organizations\Index.cshtml" />
+    <Content Include="Views\Productspesifications\index.cshtml" />
+    <Content Include="Views\EPSGcodes\index.cshtml" />
+    <Content Include="Views\GMLapplicationschemas\index.cshtml" />
+    <Content Include="Views\Namespace\index.cshtml" />
+    <Content Include="Views\Productsheets\index.cshtml" />
+    <Content Include="Views\SOSIdef\index.cshtml" />
+    <Content Include="Views\Codelists\index.cshtml" />
+    <Content Include="Views\Codelists\values.cshtml" />
+    <Content Include="Views\Codelists\valuedetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

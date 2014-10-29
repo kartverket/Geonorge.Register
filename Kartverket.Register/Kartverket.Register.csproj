@@ -132,6 +132,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -140,8 +141,8 @@
       <DependentUpon>201410281525363_AddOrganization.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\RegisterDbContext.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +151,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\OrganizationsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

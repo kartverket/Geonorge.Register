@@ -45,6 +45,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc">
+      <HintPath>..\packages\Autofac.Mvc5.3.3.3\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi">
+      <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -128,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DependencyConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -135,6 +145,7 @@
     <Compile Include="Controllers\EPSGcodesController.cs" />
     <Compile Include="Controllers\GMLapplicationschemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\NamespaceController.cs" />
     <Compile Include="Controllers\ProductsheetsController.cs" />
     <Compile Include="Controllers\ProductspesificationsController.cs" />
@@ -147,8 +158,9 @@
       <DependentUpon>201410281525363_AddOrganization.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Api\Organization.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Organization.cs" />
-    <Compile Include="Models\OrganizationViewModel.cs" />
     <Compile Include="Models\RegisterDbContext.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +169,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\OrganizationsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -224,7 +238,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201410281525363_AddOrganization.resx">

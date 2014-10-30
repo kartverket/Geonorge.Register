@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
         {
             string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath("~/data/organizations"), filename);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
             file.SaveAs(path);
             return filename;
         }

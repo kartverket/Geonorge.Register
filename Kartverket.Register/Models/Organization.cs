@@ -5,6 +5,9 @@ namespace Kartverket.Register.Models
 {
     public class Organization
     {
+        // logos will be stored in this directory
+        public const string DataDirectory = "organizations/";
+
         [Key]
         [Display(Name="Organization_Number", ResourceType = typeof(UI) )]
         public string Number { get; set; }

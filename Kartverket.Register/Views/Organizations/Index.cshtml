@@ -5,6 +5,19 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-md-8">
+        <p><b>ID</b> <a href="/organisasjon/">http://register.geonorge.no/organisasjon</a></p>
+        <p>Inneholder organisasjoner og logoer</p>
+        <p><b>Administrator</b>: Kartverket     <b>Kontrollorgan</b>: Kartverket</p>
+    </div>
+    <div class="col-md-4 text-right">
+        <p>Maskinelt tilgjengelige format (ikke navigerbar/implementert)</p>
+        <a class="btn btn-warning" href="atom.xml">Atom</a>
+        <a class="btn btn-warning" href="rdf.xml">RDF</a>
+        <a class="btn btn-warning" href="data.json">Json</a>
+    </div>
+</div>
 
 <p>
     @Html.ActionLink(UI.CreateNew, "Create")

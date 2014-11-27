@@ -18,7 +18,7 @@ namespace Kartverket.Register
             builder.RegisterModule(new AutofacWebTypesModule());
 
             builder.RegisterType<RegisterDbContext>().InstancePerRequest().AsSelf();
-            //builder.RegisterType<OrganizationsService>().As<IOrganizationService>();
+            builder.RegisterType<OrganizationsService>().As<IOrganizationService>();
 
             var container = builder.Build();
 

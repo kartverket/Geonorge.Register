@@ -5,7 +5,10 @@ namespace Kartverket.Register.Models
 {
     public class RegisterDbContext : DbContext
     {
-        public RegisterDbContext() : base("RegisterDbContext") { }
+        public RegisterDbContext() : base("RegisterDbContext") {
+
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Kartverket.Register.Migrations.Configuration>("RegisterDbContext"));
+        }
 
         // marking DbSet with virtual makes it testable
         //public virtual DbSet<Version> Versions { get; set; }

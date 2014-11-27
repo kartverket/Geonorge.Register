@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using System;
 
 namespace Kartverket.Register.Controllers
 {
@@ -44,13 +45,18 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Number,Name")] Organization organization, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "number,name")] Organization organization, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                organization.systemId = Guid.NewGuid();
+                organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
+                organization.dateSubmitted = DateTime.Now;
+                organization.status = new Status() { value = "Submitted" };
+
                 if (file != null && file.ContentLength > 0)
                 {
-                    organization.LogoFilename = SaveLogoToDisk(file, organization.Number);
+                    organization.logoFilename = SaveLogoToDisk(file, organization.number);
                 }
                 db.Organizations.Add(organization);
                 db.SaveChanges();
@@ -93,11 +99,11 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
-                Organization originalOrganization = db.Organizations.Find(organization.Number);
-                originalOrganization.Name = organization.Name;
+                Organization originalOrganization = db.Organizations.Find(organization.number);
+                originalOrganization.name = organization.name;
                 if (file != null && file.ContentLength > 0)
                 {
-                    originalOrganization.LogoFilename = SaveLogoToDisk(file, organization.Number);
+                    originalOrganization.logoFilename = SaveLogoToDisk(file, organization.number);
                 }
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();

@@ -72,6 +72,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -145,10 +147,12 @@
     <Compile Include="Controllers\EPSGcodesController.cs" />
     <Compile Include="Controllers\GMLapplicationschemasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\NamespaceController.cs" />
+    <Compile Include="Controllers\OrganizationsApiController.cs" />
+    <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\ProductsheetsController.cs" />
     <Compile Include="Controllers\ProductspesificationsController.cs" />
+    <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\SOSIdefController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,12 +161,56 @@
     <Compile Include="Migrations\201410281525363_AddOrganization.Designer.cs">
       <DependentUpon>201410281525363_AddOrganization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201411252346042_CreateAllRegisters.cs" />
+    <Compile Include="Migrations\201411252346042_CreateAllRegisters.Designer.cs">
+      <DependentUpon>201411252346042_CreateAllRegisters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411261644313_onlyRegister.cs" />
+    <Compile Include="Migrations\201411261644313_onlyRegister.Designer.cs">
+      <DependentUpon>201411261644313_onlyRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411261647073_addversion.cs" />
+    <Compile Include="Migrations\201411261647073_addversion.Designer.cs">
+      <DependentUpon>201411261647073_addversion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411261651519_addreplacescollection.cs" />
+    <Compile Include="Migrations\201411261651519_addreplacescollection.Designer.cs">
+      <DependentUpon>201411261651519_addreplacescollection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411261753211_addsubregister.cs" />
+    <Compile Include="Migrations\201411261753211_addsubregister.Designer.cs">
+      <DependentUpon>201411261753211_addsubregister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411270747072_addStatus.cs" />
+    <Compile Include="Migrations\201411270747072_addStatus.Designer.cs">
+      <DependentUpon>201411270747072_addStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411270752170_addRegisterItem.cs" />
+    <Compile Include="Migrations\201411270752170_addRegisterItem.Designer.cs">
+      <DependentUpon>201411270752170_addRegisterItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411270757083_updateRegisterItem.cs" />
+    <Compile Include="Migrations\201411270757083_updateRegisterItem.Designer.cs">
+      <DependentUpon>201411270757083_updateRegisterItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201411270759387_updateOrganization.cs" />
+    <Compile Include="Migrations\201411270759387_updateOrganization.Designer.cs">
+      <DependentUpon>201411270759387_updateOrganization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
+    <Compile Include="Models\CodelistValue.cs" />
     <Compile Include="Models\Constants.cs" />
+    <Compile Include="Models\Dataset.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DOKTheme.cs" />
+    <Compile Include="Models\EPSG.cs" />
     <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\Register.cs" />
     <Compile Include="Models\RegisterDbContext.cs" />
-    <Compile Include="Controllers\OrganizationsController.cs" />
+    <Compile Include="Models\RegisterItem.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Version.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\UI.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -189,6 +237,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -232,6 +281,11 @@
     <Content Include="Views\Codelists\index.cshtml" />
     <Content Include="Views\Codelists\values.cshtml" />
     <Content Include="Views\Codelists\valuedetails.cshtml" />
+    <Content Include="Views\Registers\Create.cshtml" />
+    <Content Include="Views\Registers\Delete.cshtml" />
+    <Content Include="Views\Registers\Details.cshtml" />
+    <Content Include="Views\Registers\Edit.cshtml" />
+    <Content Include="Views\Registers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -242,6 +296,33 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201410281525363_AddOrganization.resx">
       <DependentUpon>201410281525363_AddOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411252346042_CreateAllRegisters.resx">
+      <DependentUpon>201411252346042_CreateAllRegisters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411261644313_onlyRegister.resx">
+      <DependentUpon>201411261644313_onlyRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411261647073_addversion.resx">
+      <DependentUpon>201411261647073_addversion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411261651519_addreplacescollection.resx">
+      <DependentUpon>201411261651519_addreplacescollection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411261753211_addsubregister.resx">
+      <DependentUpon>201411261753211_addsubregister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411270747072_addStatus.resx">
+      <DependentUpon>201411270747072_addStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411270752170_addRegisterItem.resx">
+      <DependentUpon>201411270752170_addRegisterItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411270757083_updateRegisterItem.resx">
+      <DependentUpon>201411270757083_updateRegisterItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201411270759387_updateOrganization.resx">
+      <DependentUpon>201411270759387_updateOrganization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

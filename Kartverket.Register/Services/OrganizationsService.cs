@@ -14,12 +14,12 @@ namespace Kartverket.Register.Services
 
         public Organization GetOrganizationByName(string name)
         {
-            return _dbContext.Organizations.SingleOrDefault(o => o.Name == name);
+            return _dbContext.Organizations.SingleOrDefault(o => o.name == name);
         }
 
         public Organization GetOrganizationByNumber(string number)
         {
-            return _dbContext.Organizations.SingleOrDefault(o => o.Number == number);
+            return _dbContext.Organizations.SingleOrDefault(o => o.number == number);
         }
     }
 }

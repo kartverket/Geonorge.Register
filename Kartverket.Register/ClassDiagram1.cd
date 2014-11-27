@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Kartverket.Register.Models.CodelistValue">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAIAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CodelistValue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.Dataset">
+    <Position X="3" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAIBAABCAAAAAEAAAAAAIAAAAAgAAGAAAAAAQAAA=</HashCode>
+      <FileName>Models\Dataset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.RegisterItem">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAEAAAMAAAABAACAAkABAAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\RegisterItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.Version">
+    <Position X="5.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAA=</HashCode>
+      <FileName>Models\Version.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.EPSG">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\EPSG.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.Document">
+    <Position X="5.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\Document.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.Organization" Collapsed="true">
+    <Position X="1" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACQAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Organization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Kartverket.Register.Models.Register">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAkAAAMAgAABAEGAAEABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Register.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

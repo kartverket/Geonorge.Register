@@ -39,9 +39,9 @@ namespace Kartverket.Register.Controllers
         {
             return new Models.Api.Organization
             {
-                Name = organization.Name,
-                Number = organization.Number,
-                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.LogoFilename
+                Name = organization.name,
+                Number = organization.number,
+                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.logoFilename
             };
         }
     }

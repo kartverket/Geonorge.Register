@@ -39,9 +39,9 @@ namespace Kartverket.Register.Tests.Services
         private static void ShouldBeSkogOgLandskap(Organization organization)
         {
             organization.Should().NotBeNull();
-            organization.Name.Should().Be(OrganizationName);
-            organization.Number.Should().Be(OrganizationNumber);
-            organization.LogoFilename.Should().Be(OrganizationLogo);
+            organization.name.Should().Be(OrganizationName);
+            organization.number.Should().Be(OrganizationNumber);
+            organization.logoFilename.Should().Be(OrganizationLogo);
         }
 
         [Test]
@@ -77,9 +77,9 @@ namespace Kartverket.Register.Tests.Services
             {
                 new Organization
                 {
-                    Name = OrganizationName,
-                    Number = OrganizationNumber,
-                    LogoFilename = OrganizationLogo
+                    name = OrganizationName,
+                    number = OrganizationNumber,
+                    logoFilename = OrganizationLogo
                 }
             };
             return listOfOrganizations;

@@ -16,7 +16,7 @@ namespace Kartverket.Register.Tests.Controllers
         private const string OrganizationLogoFilename = "test.png";
         private const string LocationUrl = "http://example.com/data/";
 
-        private readonly Organization _organization = new Organization { Name = OrganizationName, Number = OrganizationNumber, LogoFilename = OrganizationLogoFilename };
+        private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename };
 
         [Test]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByName()

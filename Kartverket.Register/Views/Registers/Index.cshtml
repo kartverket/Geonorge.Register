@@ -4,6 +4,7 @@
     ViewBag.Title = "Index";
 }
 
+
 <h2>Index</h2>
 
 <p>
@@ -35,7 +36,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.name)
+            <a href="/registers/@item.name/@item.systemId">@item.name</a>          
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.description)

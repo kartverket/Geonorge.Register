@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 
 
@@ -30,6 +31,7 @@ namespace Kartverket.Register.Models
         public virtual ICollection<Version> replaces { get; set; }
         public virtual Organization owner { get; set; }
         public virtual Organization manager { get; set; }
+        [DisplayName("Navn")]
         public string name { get; set; }
         public string description { get; set; }
         public virtual Status status { get; set; }

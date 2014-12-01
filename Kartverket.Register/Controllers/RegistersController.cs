@@ -21,7 +21,9 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        public ActionResult Details(Guid? id)
+
+        [Route("registers/{name}/{id}")]
+        public ActionResult Details(string name, Guid? id)
         {
             if (id == null)
             {
@@ -32,7 +34,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            return View(register);
+            return View(register); 
         }
 
         // GET: Registers/Create
@@ -46,7 +48,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
+        public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +74,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
             return View(register);
+            
         }
 
         // POST: Registers/Edit/5
@@ -79,7 +82,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
+        public ActionResult Edit([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
             {

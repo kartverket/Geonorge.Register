@@ -203,6 +203,14 @@
     <Compile Include="Migrations\201411270759387_updateOrganization.Designer.cs">
       <DependentUpon>201411270759387_updateOrganization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412011205206_AddOrganizations.cs" />
+    <Compile Include="Migrations\201412011205206_AddOrganizations.Designer.cs">
+      <DependentUpon>201412011205206_AddOrganizations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412011353070_slettURL.cs" />
+    <Compile Include="Migrations\201412011353070_slettURL.Designer.cs">
+      <DependentUpon>201412011353070_slettURL.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -292,6 +300,11 @@
     <Content Include="Views\Registers\Details.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\Registers\Index.cshtml" />
+    <Content Include="Views\Registers\_subregister.cshtml" />
+    <Content Include="Views\Registers\_documents.cshtml" />
+    <Content Include="Views\Registers\_organization.cshtml" />
+    <Content Include="Views\Registers\_dataset.cshtml" />
+    <Content Include="Views\Registers\_epsg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -329,6 +342,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201411270759387_updateOrganization.resx">
       <DependentUpon>201411270759387_updateOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412011205206_AddOrganizations.resx">
+      <DependentUpon>201412011205206_AddOrganizations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412011353070_slettURL.resx">
+      <DependentUpon>201412011353070_slettURL.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

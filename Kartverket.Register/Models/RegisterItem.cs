@@ -36,7 +36,7 @@ namespace Kartverket.Register.Models
         public DateTime modified { get; set; }
         public virtual Status status { get; set; }
         public DateTime? dateAccepted { get; set; }
-        //public virtual Register register { get; set; }
+        public virtual Register register { get; set; }
 
 		
 

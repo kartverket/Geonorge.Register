@@ -1,0 +1,171 @@
+﻿@font-face {
+  font-family: 'Meta Book';
+  src: url('/Content/fonts/MetaWeb-Book.eot');
+  src: local('☺'), url('/Content/fonts/MetaWeb-Book.woff') format('woff'), url('/fonts/MetaComp-Book.ttf') format('truetype');
+}
+.geonorge-container {
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  color: #565656;
+}
+.geonorge-container h1,
+.geonorge-container h2,
+.geonorge-container h3,
+.geonorge-container h4,
+.geonorge-container h5,
+.geonorge-container h6 {
+  font-family: 'Meta Book', Arial, sans-serif;
+}
+.geonorge-container h1 > a,
+.geonorge-container h2 > a,
+.geonorge-container h3 > a,
+.geonorge-container h4 > a,
+.geonorge-container h5 > a,
+.geonorge-container h6 > a {
+  color: inherit;
+}
+.geonorge-container #logo-on-sm {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+}
+@media (min-width: 480px) {
+  .geonorge-container #logo-on-sm {
+    display: none;
+  }
+}
+.geonorge-container #logo-on-sm img {
+  position: relative;
+  left: -45px;
+  height: 30px;
+}
+.geonorge-container .kartverket-link-list {
+  list-style-position: outside;
+  list-style-type: disc;
+  padding-left: 1em;
+}
+.geonorge-container .kartverket-link-list li {
+  margin-bottom: 0.7em;
+}
+.geonorge-container .kartverket-link-list a {
+  color: #0058a3;
+  display: block;
+  min-height: 1.6666667em;
+}
+.geonorge-container .kartverket-link-list .badge {
+  float: right;
+  height: 1.83em;
+  width: 1.83em;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYxIDY0LjE0MDk0OSwgMjAxMC8xMi8wNy0xMDo1NzowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowMjgwMTE3NDA3MjA2ODExQjdCOEY3Q0FGOEE2QzdEMCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFRTdBRjhGNDJDREMxMUUyQjcyNUFEODIwNjMyQ0UxMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFRTdBRjhGMzJDREMxMUUyQjcyNUFEODIwNjMyQ0UxMSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1LjEgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MDI4MDExNzQwNzIwNjgxMUI3QjhGN0NBRjhBNkM3RDAiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MDI4MDExNzQwNzIwNjgxMUI3QjhGN0NBRjhBNkM3RDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz59ycPAAAABj0lEQVR42rTVv2qDcBAH8PNPlyIOIUOlbyDp0LnPUBDJmkyd8gzJpC+QJVMptFmDCH2DSOcOKb5BSScHkW7R3ldOKGmSGmMODpOIn6i/86tSFAXtKt/3r3gz4Ha5bW5TdqXcMXfAPR+Px1+7jle2YQYBeNwP/X7/0rIsMgyDNE0r9282G8qyjNbrNS0Wi2/+6ZF7wn+Q7oUZveXNi+M4Pdu2SVVVOlR5nlMcxxSG4Qd/HTL+/gcW9HU0Gl13Oh06ppIkodls9skf7yu8hOXy3xjtHYtu4TjzO9yW6lo9XH5TFIVjYcj6kKbrOlb/2XXdC0VR6JTqdrsURdHNcrl8whkPsPqHFopvVS0YBiyY0FyM1H9VFxfLBWxjTutUHVwsG7BZDX8buFim2mSR6pw54BSP6THFc7p3n1jlHMd49ttAUWLFgAMEShsoSqwA8BwphUA5FYUhiTcnZIXnedPValWcWjBgwaymYoLoQ5A0LRwr8TmppoIkpIeIvib4r9gcVoF//qA/66upzZfpjwADACN8MkhZ1I7oAAAAAElFTkSuQmCC");
+  background-repeat: no-repeat;
+}
+.geonorge-container .shortcut {
+  margin-bottom: 10px;
+}
+.geonorge-container .shortcut a {
+  width: 100%;
+  text-align: left;
+  background-color: #ededed;
+}
+.geonorge-container .shortcut img {
+  display: inline-block;
+  float: left;
+  height: 100%;
+  margin-right: 5px;
+}
+@media (min-width: 992px) {
+  .geonorge-container .shortcut {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .geonorge-container .shortcut a {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+.geonorge-container .h-lg {
+  font-size: 2.2em;
+}
+.geonorge-container .h-md {
+  font-size: 1.7em;
+}
+.geonorge-container .h-sm {
+  font-size: 1.2em;
+}
+.geonorge-container .h-xs {
+  font-size: 0.7em;
+}
+@media (min-width: 768px) {
+  .geonorge-container .h-lg {
+    font-size: 2.5em;
+  }
+  .geonorge-container .h-md {
+    font-size: 2em;
+  }
+  .geonorge-container .h-sm {
+    font-size: 1.5em;
+  }
+  .geonorge-container .h-xs {
+    font-size: 1em;
+  }
+}
+.geonorge-container .page-header {
+  border-bottom: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  display: flex;
+}
+.geonorge-container .page-header hr {
+  border-bottom: 3px solid #e87722;
+  border-top: none;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin-top: 15px;
+}
+.geonorge-container .page-header h1,
+.geonorge-container .page-header h2,
+.geonorge-container .page-header h3,
+.geonorge-container .page-header h4 {
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  margin: 0;
+  padding-right: 20px;
+}
+.geonorge-container .edgesDefault {
+  border-left: solid 8px #e87722;
+  border-right: solid 8px #e87722;
+}
+.geonorge-container .edgesGeonorge {
+  border-left: solid 8px #e87722;
+  border-right: solid 8px #e87722;
+}
+.geonorge-container .edgesArtikler {
+  border-left: solid 8px #e87722;
+  border-right: solid 8px #e87722;
+}
+.geonorge-container .edgesKartkatalogen {
+  border-left: solid 8px #249446;
+  border-right: solid 8px #249446;
+}
+.geonorge-container .edgesObjektkatalogen {
+  border-left: solid 8px #1a589f;
+  border-right: solid 8px #1a589f;
+}
+.geonorge-container .edgesNorgeskart {
+  border-left: solid 8px #898d8d;
+  border-right: solid 8px #898d8d;
+}
+.geonorge-container .edgesRegistre {
+  border-left: solid 8px #8c4799;
+  border-right: solid 8px #8c4799;
+}
+.geonorge-container .breadcrumb {
+  background-color: transparent;
+  font-size: 1.2em;
+  margin-top: 2px;
+  margin-bottom: 0;
+}
+.geonorge-container .breadcrumb li + li:before {
+  content: '\25BA';
+}
+/*# sourceMappingURL=common.css.map */

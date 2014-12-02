@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Kartverket.Register.Models.Register>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Register";
 }
 
 
-<h2>Index</h2>
+<h2>Register</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -30,7 +30,7 @@
         <th>
             @Html.DisplayNameFor(model => model.containedItemClass)
         </th>
-        <th></th>
+        <th>Status</th>
     </tr>
 
 @foreach (var item in Model) {
@@ -54,9 +54,10 @@
             @Html.DisplayFor(modelItem => item.containedItemClass)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.systemId }) |
+            <span>Godkjent <i class="statusIcon-godkjent"></i></span>
+            @*@Html.ActionLink("Edit", "Edit", new { id=item.systemId }) |
             @Html.ActionLink("Details", "Details", new { id=item.systemId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.systemId })
+            @Html.ActionLink("Delete", "Delete", new { id=item.systemId })*@
         </td>
     </tr>
 }

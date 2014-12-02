@@ -1,0 +1,101 @@
+﻿@font-face {
+  font-family: 'Meta Book';
+  src: url('/Content/fonts/MetaWeb-Book.eot');
+  src: local('☺'), url('/Content/fonts/MetaWeb-Book.woff') format('woff'), url('/fonts/MetaComp-Book.ttf') format('truetype');
+}
+.geonorge-container .searchbar {
+  margin-bottom: 30px;
+}
+.geonorge-container .searchbar button {
+  background: #dedcdc;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.geonorge-container .searchbar button.dropdown-toggle {
+  width: 180px;
+  text-align: left;
+  white-space: normal;
+}
+@media (max-width: 480px) {
+  .geonorge-container .searchbar button.dropdown-toggle {
+    width: 100%;
+  }
+}
+.geonorge-container .searchbar button > div {
+  float: right;
+}
+.geonorge-container .searchbar #extendedSearch {
+  margin-left: 203px;
+}
+@media (max-width: 480px) {
+  .geonorge-container .searchbar #extendedSearch {
+    display: none;
+  }
+}
+.geonorge-container .dropdown-toggle:focus {
+  z-index: 3;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+@media (max-width: 480px) {
+  .geonorge-container .input-group.input-group-split-on-xs {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .geonorge-container .input-group.input-group-split-on-xs > div,
+  .geonorge-container .input-group.input-group-split-on-xs > input,
+  .geonorge-container .input-group.input-group-split-on-xs > span {
+    float: left;
+    width: 100%;
+  }
+  .geonorge-container .input-group.input-group-split-on-xs .input-group-btn:last-child > button {
+    width: 40%;
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+  }
+  .geonorge-container .searchbar {
+    margin-bottom: 60px;
+  }
+}
+.geonorge-container .geonorge-dropdown {
+  z-index: 99;
+  position: absolute;
+  left: -9px;
+  border: 1px solid #dedcdc;
+  box-shadow: 0 0 10px -1px #999999;
+  width: 100%;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 0 8px 0 0;
+  margin: 0;
+  border-radius: 0;
+}
+.geonorge-container .geonorge-dropdown li {
+  padding: 5px 5px 5px 10px;
+  margin: 5px 5px 5px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-geonorge {
+  border-left: solid 8px #e87722;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-kartkatalogen {
+  border-left: solid 8px #249446;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-norgeskart {
+  border-left: solid 8px #898d8d;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-objektkatalogen {
+  border-left: solid 8px #1a589f;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-artikler {
+  border-left: solid 8px #e87722;
+}
+.geonorge-container .geonorge-dropdown li.left-edge-registre {
+  border-left: solid 8px #8c4799;
+}
+/*# sourceMappingURL=searchbar.css.map */

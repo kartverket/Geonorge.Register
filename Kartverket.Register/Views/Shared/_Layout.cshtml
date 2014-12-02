@@ -1,12 +1,15 @@
-﻿<!DOCTYPE html>
-<html>
+﻿﻿@using Kartverket.Register.Helpers
+<!DOCTYPE html>
+<html class=" js flexbox no-flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg no-smil svgclippaths">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="geonorge-version" content="@Html.ApplicationVersionNumber()" />
     @if (ViewBag.MetaDescription != null)
     {
         <meta name="description" content="@ViewBag.MetaDescription" />
     }
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>
         @ViewBag.Title
         @if (ViewBag.Title != null)
@@ -18,45 +21,24 @@
     @RenderSection("head", false)
     @Styles.Render("~/Content/css")
 </head>
-<body>
-    <div class="options-wrapper">
-        <div class="container">
-            <p class="top-header">Norges geografiske infrastruktur - Norge Digitalt</p>
-        </div>
+<body class="geonorge-container prototype  geonorge">
+    <div id="logo-on-sm">
+        <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
     </div>
-    <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Meny</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <span class="navbar-brand"><img class="logo" src="@Url.Content("~/Content/kartverket_logo.png")" width="117" height="39" /></span>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="divider-vertical"></li>
-                    <li><a href="/">Register</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="http://www.geonorge.no">Geonorge forside</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
+    @Html.Partial("_NavbarPartial")
+
     <div class="body-content">
         <div class="container">
-            @using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "navbar-form ", role = "form" }))
+            @*@using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "navbar-form ", role = "form" }))
             {
                 <div class="input-group">
-                    <input type="text" id="search" class="form-control" name="term" placeholder="Søk (ikke implementert)" value="@RenderSection("SearchTerm", required: false)" >
+                    <input type="text" id="search" class="form-control" name="term" placeholder="Søk (ikke implementert)" value="@RenderSection("SearchTerm", required: false)">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                     </span>
                 </div>
-            }
+            }*@
 
             @if (TempData["success"] != null)
             {
@@ -70,12 +52,18 @@
                     @TempData["failure"]
                 </div>
             }
+            <ol class="breadcrumb">
+                <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
+                <li><a href="/">Register</a></li>
+                @RenderSection("breadcrumb", false)
+            </ol>
             @RenderBody()
         </div>
     </div>
     <div class="container">
         <footer>
             <p>&copy; @DateTime.Now.Year - Kartverket</p>
+            <p>Versjon @Html.ApplicationVersionNumber()</p>
         </footer>
     </div>
 

@@ -22,7 +22,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
 
-        [Route("registers/{name}/{id}")]
+        [Route("register/{name}/{id}")]
         public ActionResult Details(string name, Guid? id)
         {
             if (id == null)

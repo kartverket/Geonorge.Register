@@ -7,58 +7,60 @@
 
 <h2>Register</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.name)
+            Navn
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.description)
+            Innhold
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateSubmitted)
+            Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.modified)
+            Administrator
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.dateAccepted)
+            Eier
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.containedItemClass)
-        </th>
-        <th>Status</th>
+        
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a href="/registers/@item.name/@item.systemId">@item.name</a>          
+            <b><a href="/register/@item.name/@item.systemId">@item.name</a></b>          
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.dateSubmitted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.modified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.dateAccepted)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.containedItemClass)
-        </td>
-        <td>
             <span>Godkjent <i class="statusIcon-godkjent"></i></span>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.systemId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.systemId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.systemId })*@
         </td>
+        <td>
+            @if (item.manager == null)
+            {
+                <span>Ikke angitt</span>
+            }
+            else
+            {
+                @Html.DisplayFor(modelItem => item.manager.name) 
+            }
+            
+        </td>
+        <td>
+            @if (item.owner == null)
+                        {
+                <span>Ikke angitt</span>
+                        }
+                        else
+                        {
+            @Html.DisplayFor(modelItem => item.owner.name)
+            }
+        </td>
+        
     </tr>
 }
 

@@ -18,7 +18,7 @@ namespace Kartverket.Register
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Registers", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

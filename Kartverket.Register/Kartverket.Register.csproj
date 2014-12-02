@@ -258,12 +258,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\common.css" />
+    <Content Include="Content\fonts\statusicon.svg" />
     <Content Include="Content\geonorge-default.css" />
     <Content Include="Content\img\kvlogo_col.png" />
     <Content Include="Content\kartverket_logo.png" />
     <Content Include="Content\logo_kartverket_norgedigitalt.png" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\searchbar.css" />
+    <Content Include="Content\statusIcons.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -277,6 +279,9 @@
     <Content Include="Content\fonts\MetaComp-Book.ttf" />
     <Content Include="Content\fonts\MetaWeb-Book.eot" />
     <Content Include="Content\fonts\MetaWeb-Book.woff" />
+    <Content Include="Content\fonts\statusicon.eot" />
+    <Content Include="Content\fonts\statusicon.ttf" />
+    <Content Include="Content\fonts\statusicon.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

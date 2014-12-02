@@ -28,6 +28,7 @@ namespace Kartverket.Register
                      "~/Content/common.css",
                      "~/Content/navbar.css",
                      "~/Content/searchbar.css",
+                     "~/Content/statusIcons.css",
                      "~/Content/site.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

@@ -1,0 +1,50 @@
+﻿@font-face {
+  font-family: 'statusicon';
+  src: url('/Content/fonts/statusicon.eot?pjbxg9');
+  src: url('/Content/fonts/statusicon.eot?#iefixpjbxg9') format('embedded-opentype'), url('/Content/fonts/statusicon.woff?pjbxg9') format('woff'), url('/Content/fonts/statusicon.ttf?pjbxg9') format('truetype'), url('/Content/fonts/statusicon.svg?pjbxg9#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="statusIcon-"],
+[class*=" statusIcon-"] {
+  font-family: 'statusicon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+[class^="statusIcon-"]:before,
+[class*=" statusIcon-"]:before {
+  content: "\e600";
+  color: #656565;
+}
+.statusIcon-vedtatt:after {
+  content: "\e600";
+  color: #41a547;
+}
+.statusIcon-vedtatt:before {
+  content: "";
+}
+.statusIcon-avvist:after {
+  content: "\e600";
+  color: #cb2026;
+}
+.statusIcon-avvist:before {
+  content: "";
+}
+.statusIcon-godkjent:after {
+  content: "\e601";
+  color: #97c93c;
+  margin-left: -1em;
+}
+.statusIcon-underarbeid:after {
+  content: "\e602";
+  color: #ffcd33;
+  margin-left: -1em;
+}
+/*# sourceMappingURL=statusIcons.css.map */

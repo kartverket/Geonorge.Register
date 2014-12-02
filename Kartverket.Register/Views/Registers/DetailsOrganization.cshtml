@@ -4,9 +4,32 @@
     ViewBag.Title = @Model.name;
 }
 
-<h2>@Html.DisplayFor(model => model.name)</h2>
+<div class="page-header">
+    <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
+    <hr>
+</div>
 
+ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
+
+<img src="@Html.DisplayFor(model => model.logoFilename)" class="img-responsive" alt="logo" />
 <p>
-    @Html.DisplayFor(model => model.description)<br />
-    <b>Administrator</b> .... <b>Kontrollorgan</b> ....
+    @Html.DisplayFor(model => model.description)
 </p>
+<p>
+    Org.nr: @Html.DisplayFor(model => model.number)
+</p>
+<p>
+    Kontakperson: ..
+</p>
+
+    @if (Model.submitter != null)
+    {
+        <p>Innsendt: @Html.DisplayFor(modelItem => Model.submitter.name)</p>
+    }
+<p>
+    Status: @Html.DisplayFor(model => model.status.description)
+</p>
+Stor logo:
+<img src="@Html.DisplayFor(model => model.logoFilename)" class="img-responsive" alt="logo" />
+
+<hr />

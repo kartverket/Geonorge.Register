@@ -1,11 +1,15 @@
-﻿@model IEnumerable<Kartverket.Register.Models.Register>
+﻿﻿@using Kartverket.Register.Helpers
+@model IEnumerable<Kartverket.Register.Models.Register>
 
 @{
     ViewBag.Title = "Register";
 }
 
+<div class="page-header">
+    <h2 class="h-md">Register</h2>
+    <hr>
+</div>
 
-<h2>Register</h2>
 
 
 <table class="table">
@@ -31,7 +35,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <b><a href="/register/@item.name/@item.systemId">@item.name</a></b>          
+            <b><a href="/register/@Html.ToUrl(item.name)/@item.systemId">@item.name</a></b>          
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.description)

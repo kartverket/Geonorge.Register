@@ -24,7 +24,13 @@
             Ekstern referanse
         </th>
         <th>
-
+            Inspirekrav
+        </th>
+        <th>
+            Nasjonalt krav
+        </th>
+        <th>
+            Nasjonalt krav for havområder
         </th>
        
     </tr>
@@ -48,13 +54,18 @@
                 @Html.DisplayFor(modelItem => item.submitter.name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.externalReference)
+                <a target="_blank" href="@Html.DisplayFor(modelItem => item.externalReference)">Vis</a>
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.systemId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.systemId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.systemId })
+                X
             </td>
+            <td>
+                X
+            </td>
+            <td>
+                X
+            </td>
+            
         </tr>
     }
 

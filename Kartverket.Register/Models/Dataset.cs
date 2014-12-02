@@ -10,12 +10,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Kartverket.Register.Models
 {
 	public class Dataset : RegisterItem {
 
+        [ForeignKey("datasetowner")]
+        public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
         public virtual DOKTheme theme { get; set; }
         public string datasetthumbnail { get; set; }

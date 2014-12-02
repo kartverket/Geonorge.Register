@@ -37,6 +37,21 @@ namespace Kartverket.Register.Controllers
             return View(register); 
         }
 
+        [Route("organisasjoner/{name}/{id}")]
+        public ActionResult DetailsOrganization(string name, Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            return View(organization);
+        }
+
         // GET: Registers/Create
         public ActionResult Create()
         {

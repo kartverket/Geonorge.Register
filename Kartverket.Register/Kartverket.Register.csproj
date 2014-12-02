@@ -207,9 +207,25 @@
     <Compile Include="Migrations\201412011205206_AddOrganizations.Designer.cs">
       <DependentUpon>201412011205206_AddOrganizations.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201412011353070_slettURL.cs" />
-    <Compile Include="Migrations\201412011353070_slettURL.Designer.cs">
-      <DependentUpon>201412011353070_slettURL.cs</DependentUpon>
+    <Compile Include="Migrations\201412020840481_addOrganizationData.cs" />
+    <Compile Include="Migrations\201412020840481_addOrganizationData.Designer.cs">
+      <DependentUpon>201412020840481_addOrganizationData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412020938127_registeritemFremmednøkkel.cs" />
+    <Compile Include="Migrations\201412020938127_registeritemFremmednøkkel.Designer.cs">
+      <DependentUpon>201412020938127_registeritemFremmednøkkel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412021151054_fremmednøkkelPåRegisterobjektet.cs" />
+    <Compile Include="Migrations\201412021151054_fremmednøkkelPåRegisterobjektet.Designer.cs">
+      <DependentUpon>201412021151054_fremmednøkkelPåRegisterobjektet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412021205545_addForeignKeyRegisteritem.cs" />
+    <Compile Include="Migrations\201412021205545_addForeignKeyRegisteritem.Designer.cs">
+      <DependentUpon>201412021205545_addForeignKeyRegisteritem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201412021208042_addnullvalues.cs" />
+    <Compile Include="Migrations\201412021208042_addnullvalues.Designer.cs">
+      <DependentUpon>201412021208042_addnullvalues.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
@@ -305,6 +321,7 @@
     <Content Include="Views\Registers\_organization.cshtml" />
     <Content Include="Views\Registers\_dataset.cshtml" />
     <Content Include="Views\Registers\_epsg.cshtml" />
+    <Content Include="Views\Registers\DetailsOrganization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -346,8 +363,20 @@
     <EmbeddedResource Include="Migrations\201412011205206_AddOrganizations.resx">
       <DependentUpon>201412011205206_AddOrganizations.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201412011353070_slettURL.resx">
-      <DependentUpon>201412011353070_slettURL.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201412020840481_addOrganizationData.resx">
+      <DependentUpon>201412020840481_addOrganizationData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412020938127_registeritemFremmednøkkel.resx">
+      <DependentUpon>201412020938127_registeritemFremmednøkkel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412021151054_fremmednøkkelPåRegisterobjektet.resx">
+      <DependentUpon>201412021151054_fremmednøkkelPåRegisterobjektet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412021205545_addForeignKeyRegisteritem.resx">
+      <DependentUpon>201412021205545_addForeignKeyRegisteritem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412021208042_addnullvalues.resx">
+      <DependentUpon>201412021208042_addnullvalues.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

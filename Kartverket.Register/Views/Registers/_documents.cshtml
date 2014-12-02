@@ -3,6 +3,40 @@
 @using Kartverket.Register.Models
 
 
+<div>
+@foreach (Document item in Model)
+{
+
+    <div class="row result-row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 top-padding">
+                <a href="@Html.DisplayFor(modelItem => item.document)"><img src="" class="img-responsive center-block" alt="forside pdf" /></a>
+            </div>
+            <div class="col-no-padding-xs col-xs-12 col-sm-5 col-md-5 col-lg-5">
+                <h4 class="role-button" role="button">
+                    <a href="dokument/@item.name/@item.systemId">@item.name</a>                    
+                    @Html.DisplayFor(modelItem => item.name)
+                </h4>
+                <h5>
+                    @Html.DisplayFor(modelItem => item.documentowner)
+                </h5>
+                <p>
+                    @Html.DisplayFor(modelItem => item.description)
+                </p>
+            </div>
+            <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 ">
+                <a href="@Html.DisplayFor(modelItem => item.document)" type="button" class="btn btn-xs btn-bunnmarg btn-link">
+                    <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
+                </a><br>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+</div>
+
 <table class="table">
     <tr>
         <th>

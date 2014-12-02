@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace Kartverket.Register.Models
@@ -17,6 +18,8 @@ namespace Kartverket.Register.Models
 	public class Document : RegisterItem {
 
         public string thumbnail { get; set; }
+        [ForeignKey("documentowner")]
+        public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
         public string document { get; set; }
 

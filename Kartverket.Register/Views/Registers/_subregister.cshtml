@@ -1,1 +1,51 @@
-﻿@model Kartverket.Register.Models.Register
+﻿@model HashSet<Kartverket.Register.Models.Register>
+
+@using Kartverket.Register.Models
+
+
+<table class="table">
+    <tr>
+        <th>
+            Navn
+        </th>
+        <th>
+            Beskrivelse
+        </th>
+        <th>
+            Administartor
+        </th>
+        <th>
+            Kontrollorgan
+        </th>
+        <th>
+        </th>
+    </tr>
+
+    @foreach (Register item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.manager.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.owner.name)
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.systemId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.systemId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.systemId })
+            </td>
+        </tr>
+    }
+
+</table>
+

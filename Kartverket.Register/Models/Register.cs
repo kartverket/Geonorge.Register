@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -29,11 +30,17 @@ namespace Kartverket.Register.Models
         public Guid systemId { get; set; }
         public virtual Version currentVersion { get; set; }
         public virtual ICollection<Version> replaces { get; set; }
+        [ForeignKey("owner")]
+        public Guid? ownerId { get; set; }
         public virtual Organization owner { get; set; }
+        [ForeignKey("manager")]
+        public Guid? managerId { get; set; }
         public virtual Organization manager { get; set; }
         [DisplayName("Navn")]
         public string name { get; set; }
         public string description { get; set; }
+        [ForeignKey("status")]
+        public string statusId { get; set; }
         public virtual Status status { get; set; }
         public DateTime dateSubmitted { get; set; }
         public DateTime modified { get; set; }
@@ -42,6 +49,7 @@ namespace Kartverket.Register.Models
         public virtual ICollection<RegisterItem> items { get; set; }
         //public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
+        
 
 		
 

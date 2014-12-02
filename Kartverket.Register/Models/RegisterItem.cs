@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -31,12 +32,16 @@ namespace Kartverket.Register.Models
         //public virtual ICollection<Version> replaces { get; set; }
         public string name { get; set; }
         public string description { get; set; }
+        [ForeignKey("submitter")]
+        public Guid? submitterId { get; set; }
         public virtual Organization submitter { get; set; }
         public DateTime dateSubmitted { get; set; }
         public DateTime modified { get; set; }
         public virtual Status status { get; set; }
         public DateTime? dateAccepted { get; set; }
         public virtual Register register { get; set; }
+        [ForeignKey("register")]
+        public Guid registerId { get; set; }
 
 		
 

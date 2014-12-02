@@ -1,0 +1,12 @@
+﻿@model Kartverket.Register.Models.Organization
+
+@{
+    ViewBag.Title = @Model.name;
+}
+
+<h2>@Html.DisplayFor(model => model.name)</h2>
+
+<p>
+    @Html.DisplayFor(model => model.description)<br />
+    <b>Administrator</b> .... <b>Kontrollorgan</b> ....
+</p>

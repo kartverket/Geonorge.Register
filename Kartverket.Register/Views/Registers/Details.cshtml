@@ -1,15 +1,11 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    //@Html.DisplayFor(model => model.name); 
-                        
-                        //ViewBag.Title = "Details";
+    ViewBag.Title = @Model.name;
 }
 
 <h2>@Html.DisplayFor(model => model.name)</h2>
 
-<div>
-    
     <p>
         @Html.DisplayFor(model => model.description)<br />
         <b>Administrator</b> .... <b>Kontrollorgan</b> ....
@@ -17,28 +13,23 @@
 
     @if (Model.containedItemClass == "Organization")
     {
-        <h2>Liste...</h2>
         @Html.Partial("_organization", Model.items)
     }
     @if (Model.containedItemClass == "Document")
     {
-        <h2>Liste...</h2>
         @Html.Partial("_documents", Model.items)
     }
     @if (Model.containedItemClass == "Dataset")
     {
-        <h2>Liste...</h2>
         @Html.Partial("_dataset", Model.items)
     }
     @if (Model.containedItemClass == "EPSG")
     {
-        <h2>Liste...</h2>
         @Html.Partial("_epsg", Model.items)
     }
     @if (Model.containedItemClass == "Register")
     {
-        <h2>Liste...</h2>
-        @Html.Partial("_subregister", Model.items)
+        @Html.Partial("_subregister", Model.subregisters)
     }
  
     

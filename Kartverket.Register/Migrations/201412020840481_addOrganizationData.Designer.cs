@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class slettURL : IMigrationMetadata
+    public sealed partial class addOrganizationData : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(slettURL));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addOrganizationData));
         
         string IMigrationMetadata.Id
         {
-            get { return "201412011353070_slettURL"; }
+            get { return "201412020840481_addOrganizationData"; }
         }
         
         string IMigrationMetadata.Source

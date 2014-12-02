@@ -2,6 +2,32 @@
 
 @using Kartverket.Register.Models
 
+<div>
+    @foreach (Organization item in Model)
+    {
+
+        <div class="row result-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 top-padding">
+                    <a href="/organisasjoner/@item.name/@item.systemId"><img src="@Html.DisplayFor(modelItem => item.logoFilename)" class="img-responsive center-block" alt="logo" /></a>
+</div>
+                <div class="col-no-padding-xs col-xs-12 col-sm-11 col-md-11 col-lg-11">
+                    <h4 class="role-button" role="button">
+                        <a href="/organisasjoner/@item.name/@item.systemId">@Html.DisplayFor(modelItem => item.name)</a>
+</h4>
+                    <h5>
+                        Org.nr: @Html.DisplayFor(modelItem => item.number)
+                    </h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+
+
+</div>
 
 <table class="table">
     <tr>

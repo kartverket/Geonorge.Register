@@ -227,6 +227,10 @@
     <Compile Include="Migrations\201412021208042_addnullvalues.Designer.cs">
       <DependentUpon>201412021208042_addnullvalues.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412021253541_addDocumentItems.cs" />
+    <Compile Include="Migrations\201412021253541_addDocumentItems.Designer.cs">
+      <DependentUpon>201412021253541_addDocumentItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -377,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412021208042_addnullvalues.resx">
       <DependentUpon>201412021208042_addnullvalues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412021253541_addDocumentItems.resx">
+      <DependentUpon>201412021253541_addDocumentItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -3,6 +3,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Autofac;
+using System.Data.Entity;
+using Kartverket.Register.Models;
 
 namespace Kartverket.Register
 {
@@ -17,6 +19,8 @@ namespace Kartverket.Register
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             DependencyConfig.Configure(new ContainerBuilder());
+
+            Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
         }
     }
 }

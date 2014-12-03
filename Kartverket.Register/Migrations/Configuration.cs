@@ -54,7 +54,7 @@ namespace Kartverket.Register.Migrations
             Register kodeliste = new Register { systemId = Guid.Parse("9A46038D-16EE-4562-96D2-8F6304AAB689"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Kodelister", description = "Inneholder kodelister", containedItemClass = "Register" };
             Register gmlApplikasjonsskjema = new Register { systemId = Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "GML applikasjonsskjema", description = "Inneholder godkjente GML applikasjonsskjema", containedItemClass = "Document" };
             Register epskKoder =  new Register { systemId = Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "EPSG koder", description = "Inneholder oversikt over EPSG koder som benyttes i Norge Digitalt omtalt i rammeverksdokumentet ", containedItemClass = "EPSG" };
-            Register dokumentregister = new Register { systemId = Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Dokumentregister", description = "Inneholder dokumenter med tegneregler og kartografi", containedItemClass = "Document" };
+            Register tegneregler = new Register { systemId = Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Tegneregler", description = "Inneholder dokumenter med tegneregler og kartografi", containedItemClass = "Document" };
 
             context.Registers.AddOrUpdate(
                 produktspesifikasjon,
@@ -63,7 +63,7 @@ namespace Kartverket.Register.Migrations
                 kodeliste,
                 gmlApplikasjonsskjema,
                 epskKoder,
-                dokumentregister              
+                tegneregler              
                 //new Register { systemId = Guid.Parse("9A82A6B6-0069-45A4-8CA8-FBB789434F9A"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Navnerom", description = "Inneholder godkjente navnerom", containedItemClass = "Document" },
                 //new Register { systemId = Guid.Parse("B4BA9E24-3717-482B-B9F5-7E349194D502"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "SOSI def", description = "Inneholder godkjente SOSI definisjonsfiler ", containedItemClass = "Document" },
                 //new Register { systemId = Guid.Parse("8960B018-E6EC-4CF5-BDB2-0C2AE744B7E2"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Det offentlige kartgrunnlaget", description = "Inneholder oversikt over datasett som inngår i det offentlige kartgrunnlaget ", containedItemClass = "Dataset" },                            
@@ -160,7 +160,7 @@ namespace Kartverket.Register.Migrations
                 new Document
                 {
                     systemId = Guid.Parse("c8e542c1-09bc-4978-be69-8896396ab49e"),
-                    registerId = dokumentregister.systemId,
+                    registerId = tegneregler.systemId,
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
                     name = "N5 raster",

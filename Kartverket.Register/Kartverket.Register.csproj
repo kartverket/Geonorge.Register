@@ -342,7 +342,7 @@
     <Content Include="Views\Registers\_epsg.cshtml" />
     <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
-    <Content Include="Views\Registers\DetailsDocumentregister.cshtml" />
+    <Content Include="Views\Registers\DetailsTegneregler.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

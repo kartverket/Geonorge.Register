@@ -1,4 +1,5 @@
-﻿@model HashSet<Kartverket.Register.Models.RegisterItem>
+﻿﻿@using Kartverket.Register.Helpers
+@model HashSet<Kartverket.Register.Models.RegisterItem>
 
 @using Kartverket.Register.Models
 
@@ -14,7 +15,7 @@
             </div>
             <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
                 <h4 class="role-button" role="button">
-                    <a href="/dokument/@item.name/@item.systemId">@item.name</a>                    
+                    <a href="/dokument/@Html.ToUrl(item.name)/@item.systemId">@item.name</a>                    
                 </h4>
                 <p>
                     @Html.DisplayFor(modelItem => item.documentowner.name)

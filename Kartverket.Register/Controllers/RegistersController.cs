@@ -52,6 +52,21 @@ namespace Kartverket.Register.Controllers
             return View(organization);
         }
 
+        [Route("dokument/{name}/{id}")]
+        public ActionResult DetailsDocumentregister(string name, Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Document document = db.Documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            return View(document);
+        }
+
         // GET: Registers/Create
         public ActionResult Create()
         {
@@ -63,7 +78,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
+        public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
             {

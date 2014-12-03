@@ -105,21 +105,23 @@ namespace Kartverket.Register.Models
                 new Document
                 {
                     systemId = Guid.Parse("232ED533-7F2B-410F-B783-B3F910B61174"),
-                    registerId = Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"),
+                    registerId = produktspesifikasjon.systemId,
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
                     name = "Produktspesifikasjon for løsmasser",
                     description = "Datagrunnlaget for tema jordarter er basert på innholdet i kvartærgeologiske kart (løsmassekart), som foreligger analogt i flere målestokker (fra 1:20.000 til 1:250.000), og digital kartlegging.",
+                    document = "http://www.ngu.no/upload/Aktuelt/Produktspesifikasjon_LosmasseN250_N50.pdf",
                     documentownerId = Guid.Parse("D7142A92-418E-487E-A6FF-0E32C6AE31D8")
                 },
                 new Document
                 {
                     systemId = Guid.Parse("3F9559B7-BAA5-4D15-9481-96389087B2B6"),
-                    registerId = Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"),
+                    registerId = produktspesifikasjon.systemId,
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
                     name = "Produktspesifikasjon for primærdata kystkontur",
                     description = "Primærdata kystkontur definerer grense mellom sjø og land til bruk i alle Statens kartverks produkter",
+                    document = "http://kartverket.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/Produktspesifikasjoner%20-%20SOSI%20del%203/Produktspesifikasjon_Primrdatakyst_v1.pdf",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
                 },
                 new Document
@@ -128,9 +130,10 @@ namespace Kartverket.Register.Models
                     registerId = Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"),
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
-                    name = "Produktspesifikasjon for løsmasser",
-                    description = "Datagrunnlaget for tema jordarter er basert på innholdet i kvartærgeologiske kart (løsmassekart), som foreligger analogt i flere målestokker (fra 1:20.000 til 1:250.000), og digital kartlegging.",
-                    documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    name = "Flomsoner",
+                    description = "Flomsoner viser arealer som oversvømmes ved ulike flomstørrelser (gjentaksintervall). Det blir utarbeidet flomsoner for 20-, 200- og 1000-årsflommene. I områder der klimaendringene gir en forventet økning i vannføringen på mer enn 20 %, utarbeides det flomsone for 200-årsflommen i år 2100.",
+                    document = "http://gis3.nve.no/metadata/produktark/produktark_flomsone.pdf",
+                    
                 },
                 new Document
                 {
@@ -138,9 +141,10 @@ namespace Kartverket.Register.Models
                     registerId = Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"),
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
-                    name = "Produktspesifikasjon for primærdata kystkontur",
-                    description = "Primærdata kystkontur definerer grense mellom sjø og land til bruk i alle Statens kartverks produkter",
-                    documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    name = "Naturvernområder",
+                    description = "Datasettet inneholder verneområder og vernede enkeltobjekt i Norge, herunder Svalbard og Jan Mayen. Datasettet gir en oversikt over hvilke områder som er vernet etter følgende lover: naturmangfoldloven av 2009, biotopvern etter viltloven av 1981, naturvernloven av 1970, lov om naturvern av 1954, lov om Jan Mayen av 1930 og lov om naturfredning av 1910. I tillegg inneholder det områder vernet etter følgende lovverk på Svalbard: Svalbardloven av 1925 og Svalbardmiljøloven av 2002. Datasettet gir også tilgang til lovforskriften som gjelder for hvert enkelt vernevedtak.",
+                    document = "http://kartverket.no/Documents/Geonorge/Produktark%20og%20presentasjonsregler/Produktark_MDIR_Naturvernomr%C3%A5der_2014.pdf",
+                    documentownerId = Guid.Parse("DD34C8CA-5E5C-4CFD-9B25-AFEADD1BCBFF")
                 }
             );
 

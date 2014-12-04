@@ -167,8 +167,31 @@ namespace Kartverket.Register.Migrations
                     description = "Informasjon lik kartene i Økonomisk kartverk. Symboler, linjer og tekst med samme form som på kartene. Informasjonen forefinnes som et rasterlag pr. kartblad.Datamengde ca. 1 Mb pr. kartblad i TIFFformat i s/h.Datamengde ca. 8 Mb pr. kartblad i PNGformat i farge.",
                     document = "http://www.kartverket.no/Documents/N5-Tegnforklaring.pdf",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
-                }
+                },
 
+                new Document
+                {
+                    systemId = Guid.Parse("a7cdf9b1-af3e-40e0-a229-697e3aa9c6a5"),
+                    registerId = gmlApplikasjonsskjema.systemId,
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "IStedsnavn",
+                    description = "...",
+                    document = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/Stedsnavn/4.5/Stedsnavn.xsd",
+                    documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                },
+
+                new Document
+                {
+                    systemId = Guid.Parse("6be71844-0866-49fc-8c07-258637d035e0"),
+                    registerId = gmlApplikasjonsskjema.systemId,
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "AdmEnheterNorge",
+                    description = "...",
+                    document = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/AdmEnheterNorge/3.0/AdmEnheterNorge.xsd",
+                    documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                }
             );
 
 
@@ -213,6 +236,22 @@ namespace Kartverket.Register.Migrations
                     externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
                 }                  
             );
+
+            //context.Registers.AddOrUpdate(
+            //    new Register
+            //    {
+            //        systemId = Guid.NewGuid(),
+            //        registerId = Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"),
+            //        dateSubmitted = DateTime.Now,
+            //        modified = DateTime.Now,
+            //        name = "UTM sone 29,basert på EUREF89 (ETRS89/UTM), 2d",
+            //        description = " ... ",
+            //        epsg = "EPSG::25829",
+            //        sosiReferencesystem = "19",
+            //        submitterId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //        externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
+            //    }
+            //);
         }
     }
 }

@@ -232,6 +232,10 @@
     <Compile Include="Migrations\201412021253541_addDocumentItems.Designer.cs">
       <DependentUpon>201412021253541_addDocumentItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412041411570_addOrganizationInformation.cs" />
+    <Compile Include="Migrations\201412041411570_addOrganizationInformation.Designer.cs">
+      <DependentUpon>201412041411570_addOrganizationInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -403,6 +407,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412021253541_addDocumentItems.resx">
       <DependentUpon>201412021253541_addDocumentItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412041411570_addOrganizationInformation.resx">
+      <DependentUpon>201412041411570_addOrganizationInformation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

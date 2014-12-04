@@ -43,7 +43,15 @@
                     @Html.DisplayFor(modelItem => item.description)
                 </td>
                 <td>
-                    <span>Godkjent <i class="statusIcon-godkjent"></i></span>
+                    @if (item.status == null)
+                    {
+                        <span>Ikke angitt</span>
+                    }
+                    else
+                    {
+                        <span>@Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@Html.DisplayFor(modelItem => item.status.value)"></i></span>
+                    }
+                         
                 </td>
                 <td>
                     @if (item.manager == null)

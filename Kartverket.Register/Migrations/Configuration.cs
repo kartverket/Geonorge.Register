@@ -25,7 +25,7 @@ namespace Kartverket.Register.Migrations
               new Status { value = "Submitted", description = "Submitted" },
               new Status { value = "NotAccepted", description = "NotAccepted" },
               new Status { value = "Accepted", description = "Accepted" },
-              new Status { value = "Valid", description = "Valid" },
+              new Status { value = "Valid", description = "Godkjent" },
               new Status { value = "Experimental", description = "Experimental" },
               new Status { value = "Deprecated", description = "Deprecated" },
               new Status { value = "Superseded", description = "Superseded" },
@@ -48,13 +48,78 @@ namespace Kartverket.Register.Migrations
 
             );
 
-            Register produktspesifikasjon = new Register { systemId = Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Produktspesifikasjoner", description = "Inneholder dokumenter for produktspesifikasjoner for kart- og geodata ", containedItemClass = "Document", managerId =null, ownerId = null };
-            Register organisasjoner = new Register { systemId = Guid.Parse("FCB0685D-24EB-4156-9AC8-25FA30759094"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Organisasjoner", description = "Inneholder oversikt over organisasjoner og deres logo ", containedItemClass = "Organization" };
-            Register produktark = new Register { systemId = Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Produktark", description = "Inneholder organisasjoners produktark for kart og geodata", containedItemClass = "Document" };
-            Register kodeliste = new Register { systemId = Guid.Parse("9A46038D-16EE-4562-96D2-8F6304AAB689"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Kodelister", description = "Inneholder kodelister", containedItemClass = "Register" };
-            Register gmlApplikasjonsskjema = new Register { systemId = Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "GML applikasjonsskjema", description = "Inneholder godkjente GML applikasjonsskjema", containedItemClass = "Document" };
-            Register epskKoder =  new Register { systemId = Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "EPSG koder", description = "Inneholder oversikt over EPSG koder som benyttes i Norge Digitalt omtalt i rammeverksdokumentet ", containedItemClass = "EPSG" };
-            Register tegneregler = new Register { systemId = Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Tegneregler", description = "Inneholder dokumenter med tegneregler og kartografi", containedItemClass = "Document" };
+            Register produktspesifikasjon = new Register 
+            { 
+                systemId = Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "Produktspesifikasjoner", 
+                description = "Inneholder dokumenter for produktspesifikasjoner for kart- og geodata ", 
+                containedItemClass = "Document", 
+                managerId = null, 
+                ownerId = null, 
+                statusId = "Valid"
+            };
+            Register organisasjoner = new Register 
+            { 
+                systemId = Guid.Parse("FCB0685D-24EB-4156-9AC8-25FA30759094"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "Organisasjoner", 
+                description = "Inneholder oversikt over organisasjoner og deres logo ", 
+                containedItemClass = "Organization", 
+                statusId = "Valid"
+            };
+            Register produktark = new Register 
+            { 
+                systemId = Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "Produktark", 
+                description = "Inneholder organisasjoners produktark for kart og geodata", 
+                containedItemClass = "Document", 
+                statusId = "Valid"
+            };
+            Register kodeliste = new Register 
+            { 
+                systemId = Guid.Parse("9A46038D-16EE-4562-96D2-8F6304AAB689"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "Kodelister", 
+                description = "Inneholder kodelister", 
+                containedItemClass = "Register", 
+                statusId = "Valid"
+            };
+            Register gmlApplikasjonsskjema = new Register 
+            { 
+                systemId = Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "GML applikasjonsskjema", 
+                description = "Inneholder godkjente GML applikasjonsskjema", 
+                containedItemClass = "Document",
+                statusId = "Valid"
+            };
+            Register epskKoder =  new Register 
+            { 
+                systemId = Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "EPSG koder", 
+                description = "Inneholder oversikt over EPSG koder som benyttes i Norge Digitalt omtalt i rammeverksdokumentet ", 
+                containedItemClass = "EPSG",
+                statusId = "Valid"
+            };
+            Register tegneregler = new Register 
+            { 
+                systemId = Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"), 
+                dateSubmitted = DateTime.Now, 
+                modified = DateTime.Now, 
+                name = "Tegneregler", 
+                description = "Inneholder dokumenter med tegneregler og kartografi", 
+                containedItemClass = "Document",
+                statusId = "Valid"
+            };
 
             context.Registers.AddOrUpdate(
                 produktspesifikasjon,
@@ -98,7 +163,9 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now, 
                     number = "874783242", 
                     name = "Kartverket", 
-                    logoFilename = "http://register.test.geonorge.no/data/organizations/971040238_kartverket_logo.png" 
+                    contact = "Lars Inge Arnevik",
+                    logoFilename = "http://register.test.geonorge.no/data/organizations/971040238_kartverket_logo.png",
+                    largeLogo = "http://register.test.geonorge.no/data/organizations/971040238_kartverket_logo.png"
                 },
                 new Organization 
                 { 

@@ -37,7 +37,7 @@
 .statusIcon-avvist:before {
   content: "";
 }
-.statusIcon-godkjent:after {
+.statusIcon-Valid:after {
   content: "\e601";
   color: #97c93c;
   margin-left: -1em;

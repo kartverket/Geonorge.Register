@@ -53,7 +53,7 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("dokument/{name}/{id}")]
-        public ActionResult DetailsTegneregler(string name, Guid? id) //Endre til dokument DetailsDocument
+        public ActionResult DetailsDocument(string name, Guid? id) //Endre til dokument DetailsDocument
         {
             if (id == null)
             {

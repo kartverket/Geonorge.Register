@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.Register
+﻿@model Kartverket.Register.Models.Document
 
 @{
     ViewBag.Title = @Model.name;
@@ -11,6 +11,7 @@
     <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
     <hr>
 </div>
+
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
         ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
@@ -26,21 +27,21 @@
         {
             <span>Status: <i class="statusIcon-godkjent"></i>@Html.DisplayFor(model => model.status.description)</span><br />
         }
-        @if (Model.manager == null)
+        @if (Model.documentowner == null)
         {
             <span>Administrator: Ikke angitt</span><br />
         }
         else
         {
-            <span>Administrator: @Html.DisplayFor(model => model.manager.name)</span><br />
+            <span>Administrator: @Html.DisplayFor(model => model.documentowner.name)</span><br />
         }
-        @if (Model.owner == null)
+        @if (Model.documentowner == null)
         {
             <span>Eier: Ikke angitt</span><br />
         }
         else
         {
-            <span>Eier: @Html.DisplayFor(model => model.owner.name)</span><br />
+            <span>Eier: @Html.DisplayFor(model => model.documentowner.name)</span><br />
         }
         @if (Model.currentVersion == null)
         {
@@ -56,42 +57,34 @@
         <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
     </div>
-       
+
+
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="page-header">
             <hr>
         </div>
 
+        <div class="row result-row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
+                    <a href="@Html.DisplayFor(model => model.document)"><img src="~/Content/pdf.jpg" class="img-responsive center-block" alt="forside pdf" /></a>
+                </div>
+                <div class="col-no-padding-xs col-xs-12 col-sm- col-md-9 col-lg-9">
+                    <a href="@Html.DisplayFor(model => model.document)" type="button" class="btn btn-lg btn-link">
+                        <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        @if (Model.containedItemClass == "Organization")
-        {
-            @Html.Partial("_organization", Model.items)
-        }
-        @if (Model.containedItemClass == "Document")
-        {
-            @Html.Partial("_documents", Model.items)
-        }
-        @if (Model.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_dataset", Model.items)
-        }
-        @if (Model.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_epsg", Model.items)
-        }
-        @if (Model.containedItemClass == "Register")
-        {
-            @Html.Partial("_subregister", Model.subregisters)
-        }
-
-    </div>
-
-    <hr />
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
+        <hr />
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
     </div>
 </div>
+

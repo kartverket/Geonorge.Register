@@ -34,7 +34,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            return View(register); 
+            return View(register);
         }
 
         [Route("organisasjoner/{name}/{id}")]
@@ -53,7 +53,7 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("dokument/{name}/{id}")]
-        public ActionResult DetailsDocument(string name, Guid? id) //Endre til dokument DetailsDocument
+        public ActionResult DetailsDocument(string name, Guid? id)
         {
             if (id == null)
             {
@@ -65,6 +65,21 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
             return View(document);
+        }
+
+        [Route("epsg/{name}/{id}")]
+        public ActionResult DetailsEPSG(string name, Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(id);
+            if (epsg == null)
+            {
+                return HttpNotFound();
+            }
+            return View(epsg);
         }
 
         // GET: Registers/Create
@@ -104,7 +119,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
             return View(register);
-            
+
         }
 
         // POST: Registers/Edit/5

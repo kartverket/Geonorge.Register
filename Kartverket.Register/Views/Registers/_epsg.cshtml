@@ -1,7 +1,6 @@
 ﻿@model HashSet<Kartverket.Register.Models.RegisterItem>
-
 @using Kartverket.Register.Models
-
+@using Kartverket.Register.Helpers
 
 <table class="table">
     <tr>
@@ -32,14 +31,14 @@
         <th>
             Nasjonalt krav for havområder
         </th>
-       
+
     </tr>
 
     @foreach (EPSG item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.name)
+                <b><a href="/epsg/@Html.ToUrl(item.name)/@item.systemId">@item.name</a></b>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.description)
@@ -57,7 +56,7 @@
                 <a target="_blank" href="@Html.DisplayFor(modelItem => item.externalReference)">Vis</a>
             </td>
             <td>
-                X
+                x
             </td>
             <td>
                 X
@@ -65,11 +64,12 @@
             <td>
                 X
             </td>
-            
+
         </tr>
+
     }
 
 </table>
-
+<hr />
 
 

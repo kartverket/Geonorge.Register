@@ -2,70 +2,72 @@
 @model IEnumerable<Kartverket.Register.Models.Register>
 
 @{
-    ViewBag.Title = "Register";
+    ViewBag.Title = "Registre";
 }
 
-<div class="page-header">
-    <h2 class="h-md">Register</h2>
-    <hr>
-</div>
+
+    <div class="page-header">
+        <h2 class="h-md">Registre</h2>
+        <hr>
+    </div>
 
 
 
-<table class="table">
-    <tr>
-        <th>
-            Navn
-        </th>
-        <th>
-            Innhold
-        </th>
-        <th>
-            Status
-        </th>
-        <th>
-            Administrator
-        </th>
-        <th>
-            Eier
-        </th>
-        
-    </tr>
+    <table class="table">
+        <tr>
+            <th>
+                Navn
+            </th>
+            <th>
+                Innhold
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Administrator
+            </th>
+            <th>
+                Eier
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            <b><a href="/register/@Html.ToUrl(item.name)/@item.systemId">@item.name</a></b>          
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.description)
-        </td>
-        <td>
-            <span>Godkjent <i class="statusIcon-godkjent"></i></span>
-        </td>
-        <td>
-            @if (item.manager == null)
-            {
-                <span>Ikke angitt</span>
-            }
-            else
-            {
-                @Html.DisplayFor(modelItem => item.manager.name) 
-            }
-            
-        </td>
-        <td>
-            @if (item.owner == null)
-                        {
-                <span>Ikke angitt</span>
-                        }
-                        else
-                        {
-            @Html.DisplayFor(modelItem => item.owner.name)
-            }
-        </td>
-        
-    </tr>
-}
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <b><a href="/register/@Html.ToUrl(item.name)/@item.systemId">@item.name</a></b>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    <span>Godkjent <i class="statusIcon-godkjent"></i></span>
+                </td>
+                <td>
+                    @if (item.manager == null)
+                    {
+                        <span>Ikke angitt</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.manager.name)
+                    }
+
+                </td>
+                <td>
+                    @if (item.owner == null)
+                    {
+                        <span>Ikke angitt</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.owner.name)
+                    }
+                </td>
+
+            </tr>
+        }
+
+    </table>

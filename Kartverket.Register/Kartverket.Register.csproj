@@ -343,6 +343,7 @@
     <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Registers\DetailsDocument.cshtml" />
+    <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

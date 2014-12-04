@@ -27,8 +27,9 @@
     </div>
     
     @Html.Partial("_NavbarPartial")
-
+    
     <div class="body-content">
+        
         <div class="container">
             @*@using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "navbar-form ", role = "form" }))
             {
@@ -39,6 +40,7 @@
                     </span>
                 </div>
             }*@
+            
 
             @if (TempData["success"] != null)
             {
@@ -54,11 +56,13 @@
             }
             <ol class="breadcrumb">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
-                <li><a href="/">Register</a></li>
+                <li><a href="/">Registre</a></li>
                 @RenderSection("breadcrumb", false)
             </ol>
-            @RenderBody()
-        </div>
+            @Html.Partial("_SearchBarPartial")
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                @RenderBody()
+            </div>
     </div>
     <div class="container">
         <footer>

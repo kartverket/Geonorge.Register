@@ -164,6 +164,8 @@
   font-size: 1.2em;
   margin-top: 2px;
   margin-bottom: 0;
+  margin-left: 0;
+  padding-left: 0;
 }
 .geonorge-container .breadcrumb li + li:before {
   content: '\25BA';

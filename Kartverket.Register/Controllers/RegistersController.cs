@@ -140,23 +140,7 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        [Route("organisasjoner/rediger/{name}/{id}")]
-        public ActionResult EditOrganization(string name, Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
-            if (TryUpdateModel(organization, "",
-                                new string[] { "logoFilename", "logoLarge"}))
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            return View(organization);
-        }
-
+        
         // GET: Registers/Delete/5
         public ActionResult Delete(Guid? id)
         {

@@ -24,8 +24,6 @@ namespace Kartverket.Register.Models
             
             //this.replaces = new HashSet<Version>();
         }
-       
-
         [Key]
         public Guid systemId { get; set; }
         public virtual Version currentVersion { get; set; }

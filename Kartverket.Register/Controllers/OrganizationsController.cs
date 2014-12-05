@@ -45,7 +45,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "number,name")] Organization organization, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "number,name")] Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
         {
             if (ModelState.IsValid)
             {
@@ -54,9 +54,13 @@ namespace Kartverket.Register.Controllers
                 organization.dateSubmitted = DateTime.Now;
                 organization.status = new Status() { value = "Submitted" };
 
-                if (file != null && file.ContentLength > 0)
+                if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
-                    organization.logoFilename = SaveLogoToDisk(file, organization.number);
+                    organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
+                }
+                if (fileLarge != null && fileLarge.ContentLength > 0)
+                {
+                    organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
                 db.Organizations.Add(organization);
                 db.SaveChanges();
@@ -75,6 +79,16 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
+        private string SaveDataToDisk(HttpPostedFileBase file, string organizationNumber)
+        {
+            string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+        
+        
+        
         // GET: Organizations/Edit/5
         public ActionResult Edit(string id)
         {
@@ -86,28 +100,61 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
             {
                 return HttpNotFound();
-            }
+            }      
             return View(organization);
         }
+
+        [Route("organisasjoner/rediger/{name}/{id}")]
+        public ActionResult Edit(string name, Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            statusDropDownList(organization.status);   
+            return View(organization);
+        }
+
+
+        private void statusDropDownList(object selectedStatus = null)
+        {
+            var status = from d in db.Statuses
+                                   orderby d.description
+                                   select d;
+            ViewBag.StatusID = new SelectList(status, "value", "description", selectedStatus);
+        } 
+
+
 
         // POST: Organizations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("organisasjoner/rediger/{name}/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Organization organization, HttpPostedFileBase file)
+        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string name, string id)
         {
             if (ModelState.IsValid)
             {
-                Organization originalOrganization = db.Organizations.Find(organization.number);
+                Organization originalOrganization = db.Organizations.Find(Guid.Parse(id));
                 originalOrganization.name = organization.name;
-                if (file != null && file.ContentLength > 0)
+                
+                if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
-                    originalOrganization.logoFilename = SaveLogoToDisk(file, organization.number);
+                    originalOrganization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
+                }
+                if (fileLarge != null && fileLarge.ContentLength > 0)
+                {
+                    originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit");
             }
             return View(organization);
         }
@@ -148,3 +195,4 @@ namespace Kartverket.Register.Controllers
         }
     }
 }
+

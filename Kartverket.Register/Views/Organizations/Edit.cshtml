@@ -1,4 +1,5 @@
 ﻿@model Kartverket.Register.Models.Organization
+﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = UI.Edit;
@@ -18,14 +19,6 @@
         @Html.HiddenFor(model => model.number)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.number, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.number, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
-                @Html.ValidationMessageFor(model => model.number, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
@@ -34,27 +27,77 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.number, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.logoFilename, new { htmlAttributes = new { @class = "form-control", disabled="disabled" } })
-                <br/>
-                <p><img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" /></p>
-                
-                <input type="file" name="file" />
+                @Html.EditorFor(model => model.number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contact, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="StatusID">Status: </label>
+            <div class="col-md-10">
+                @Html.DropDownList("StatusID", String.Empty)
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.submitter.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.submitter.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.submitter.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <br/>
+                <p><img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" /></p>
+                <input type="file" name="fileSmal" />
+                @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.largeLogo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10"> 
+                <br />
+                <p><img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" /></p>
+                <input type="file" name="fileLarge" />
+                @Html.ValidationMessageFor(model => model.largeLogo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Lagre" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+<hr />
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>
+        <a href="/organisasjoner/@Html.ToUrl(Model.name)/@Model.systemId">Tilbake</a>
+    </p>
 </div>
 
 @section Scripts {

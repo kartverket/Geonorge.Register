@@ -122,6 +122,8 @@ namespace Kartverket.Register.Controllers
 
         }
 
+        
+
         // POST: Registers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -136,6 +138,23 @@ namespace Kartverket.Register.Controllers
                 return RedirectToAction("Index");
             }
             return View(register);
+        }
+
+        [Route("organisasjoner/rediger/{name}/{id}")]
+        public ActionResult EditOrganization(string name, Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+            if (TryUpdateModel(organization, "",
+                                new string[] { "logoFilename", "logoLarge"}))
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            return View(organization);
         }
 
         // GET: Registers/Delete/5

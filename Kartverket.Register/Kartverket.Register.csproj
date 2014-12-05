@@ -349,6 +349,7 @@
     <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Registers\DetailsEPSG.cshtml" />
+    <Content Include="Views\Registers\EditOrganization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

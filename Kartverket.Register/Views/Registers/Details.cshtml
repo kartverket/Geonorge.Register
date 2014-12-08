@@ -24,7 +24,7 @@
         }
         else
         {
-            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.status.value)"></i></span><br />
+            <span>Status: @Html.DisplayFor(model => model.statusId) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }
         @if (Model.manager == null)
         {

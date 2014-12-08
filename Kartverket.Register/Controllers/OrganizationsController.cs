@@ -79,15 +79,6 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        private string SaveDataToDisk(HttpPostedFileBase file, string organizationNumber)
-        {
-            string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
-            file.SaveAs(path);
-            return filename;
-        }
-        
-        
         
         // GET: Organizations/Edit/5
         public ActionResult Edit(string id)
@@ -100,7 +91,9 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
             {
                 return HttpNotFound();
-            }      
+            }
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
             return View(organization);
         }
 
@@ -116,18 +109,27 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            statusDropDownList(organization.status);   
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
             return View(organization);
         }
 
 
-        private void statusDropDownList(object selectedStatus = null)
-        {
-            var status = from d in db.Statuses
-                                   orderby d.description
-                                   select d;
-            ViewBag.StatusID = new SelectList(status, "value", "description", selectedStatus);
-        } 
+        //private void statusDropDownList(object selectedStatus = null)
+        //{
+        //    var status = from d in db.Statuses
+        //                           orderby d.description
+        //                           select d;
+        //    ViewBag.statusId = new SelectList(status, "value", "description", selectedStatus);
+        //}
+
+        //private void submitterDropDownList(object selectedSubmitter = null)
+        //{
+        //    var submitter = from d in db.Organizations
+        //                    orderby d.name
+        //                    select d;
+        //    ViewBag.SubmitterID = new SelectList(submitter, "SystemId", "name", selectedSubmitter);
+        //}
 
 
 
@@ -137,13 +139,32 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("organisasjoner/rediger/{name}/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string name, string id)
+        public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id)
         {
             if (ModelState.IsValid)
             {
                 Organization originalOrganization = db.Organizations.Find(Guid.Parse(id));
-                originalOrganization.name = organization.name;
                 
+                if (submitterId != null)
+                {
+                    originalOrganization.submitterId = organization.submitterId;
+                }
+                if (number != null && number.Length > 0)
+                {
+                    originalOrganization.number = organization.number;
+                }
+                if (description != null && description.Length > 0)
+                {
+                    originalOrganization.description = organization.description; 
+                }
+                if (contact != null && contact.Length > 0)
+                {
+                    originalOrganization.contact = organization.contact;
+                }
+                if (statusID != null)
+                {
+                    originalOrganization.statusId = statusID;
+                }
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
                     originalOrganization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
@@ -152,8 +173,11 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
+                
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
+                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
                 return RedirectToAction("Edit");
             }
             return View(organization);

@@ -24,19 +24,11 @@
         }
         else
         {
-            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.status.value)"></i></span><br />
-        }
-        @if (Model.status == null)
-        {
-            <span>Administrator: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Administrator: @Html.DisplayFor(model => model.status)</span><br />
+            <span>Status: @Html.DisplayFor(model => model.statusId) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }
         @if (Model.submitter == null)
         {
-            <span>Innsender: Ikke angitt</span><br />
+            <span>Innsender: Ikke angitt </span><br />
         }
         else
         {
@@ -50,13 +42,23 @@
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
         }
+        @if (Model.number == null)
+        {
+            <span>Organisasjonsnummer: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Organisasjonsnummer: @Html.DisplayFor(model => model.number)</span><br />
+        }
+        @if (Model.number == null)
+        {
+            <span>Kontaktperson: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Kontaktperson: @Html.DisplayFor(model => model.contact)</span><br />
+        }
 
-        <p>
-            Org.nr: @Html.DisplayFor(model => model.number)
-        </p>
-        <p>
-            Kontakperson: @Html.DisplayFor(model => model.contact)
-        </p>
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">

@@ -27,9 +27,10 @@ namespace Kartverket.Register.Models
         [Display(Name = "Organization_Logo", ResourceType = typeof(UI))]
         public string logoFilename { get; set; }
 
-        [Display(Name = "Stor logo")]
+        [Display(Name = "Stor logo:")]
         public string largeLogo { get; set; }
 
+        [Display(Name = "Kontaktperson:")]
         public string contact { get; set; }
 
 	}//end Organization

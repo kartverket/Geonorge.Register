@@ -40,6 +40,46 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
+        [Route("organisasjoner/ny")]
+        public ActionResult Create(string name, string id)
+        {
+            return View();
+        }
+
+        //// POST: Organizations/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[Route("organisasjoner/ny")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "name,number,description,contact,logoFileName,largeLogo")] Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        organization.systemId = Guid.NewGuid();
+        //        organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
+        //        organization.dateSubmitted = DateTime.Now;
+        //        organization.status = new Status() { value = "Submitted" };
+
+        //        if (fileSmal != null && fileSmal.ContentLength > 0)
+        //        {
+        //            organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
+        //        }
+        //        if (fileLarge != null && fileLarge.ContentLength > 0)
+        //        {
+        //            organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
+        //        }
+        //        db.Organizations.Add(organization);
+        //        db.SaveChanges();
+
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(organization);
+        //}
+
+
+
         // POST: Organizations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -71,6 +111,8 @@ namespace Kartverket.Register.Controllers
             return View(organization);
         }
 
+
+
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
         {
             string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
@@ -79,7 +121,6 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        
         // GET: Organizations/Edit/5
         public ActionResult Edit(string id)
         {
@@ -113,24 +154,6 @@ namespace Kartverket.Register.Controllers
             ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
             return View(organization);
         }
-
-
-        //private void statusDropDownList(object selectedStatus = null)
-        //{
-        //    var status = from d in db.Statuses
-        //                           orderby d.description
-        //                           select d;
-        //    ViewBag.statusId = new SelectList(status, "value", "description", selectedStatus);
-        //}
-
-        //private void submitterDropDownList(object selectedSubmitter = null)
-        //{
-        //    var submitter = from d in db.Organizations
-        //                    orderby d.name
-        //                    select d;
-        //    ViewBag.SubmitterID = new SelectList(submitter, "SystemId", "name", selectedSubmitter);
-        //}
-
 
 
         // POST: Organizations/Edit/5

@@ -21,7 +21,6 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-
         [Route("register/{name}/{id}")]
         public ActionResult Details(string name, Guid? id)
         {
@@ -142,30 +141,32 @@ namespace Kartverket.Register.Controllers
 
         
         // GET: Registers/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(Guid? id, string name)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Kartverket.Register.Models.Register register = db.Registers.Find(id);
-            if (register == null)
+            if (name == null)
             {
                 return HttpNotFound();
             }
             return View(register);
         }
 
-        // POST: Registers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
-            db.Registers.Remove(register);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //// POST: Registers/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(Guid id)
+        //{
+        //    Kartverket.Register.Models.Register register = db.Registers.Find(id);
+        //    db.Registers.Remove(register);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
+
+        
 
         protected override void Dispose(bool disposing)
         {
@@ -175,5 +176,31 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+
+
+        //// POST: Registers/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[Route("organisasjoner/slett/{name}/{id}")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(Organization organization, Guid id, string name, string registerId)
+        //{
+        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+        //    db.Organizations.Remove(organization);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Details");
+        //}
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
+    
     }
 }

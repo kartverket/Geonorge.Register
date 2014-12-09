@@ -322,18 +322,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Organizations\Create.cshtml" />
     <Content Include="Views\Organizations\Delete.cshtml" />
-    <Content Include="Views\Organizations\Details.cshtml" />
     <Content Include="Views\Organizations\Edit.cshtml" />
-    <Content Include="Views\Organizations\Index.cshtml" />
-    <Content Include="Views\Productspesifications\index.cshtml" />
-    <Content Include="Views\EPSGcodes\index.cshtml" />
-    <Content Include="Views\GMLapplicationschemas\index.cshtml" />
-    <Content Include="Views\Namespace\index.cshtml" />
-    <Content Include="Views\Productsheets\index.cshtml" />
-    <Content Include="Views\SOSIdef\index.cshtml" />
-    <Content Include="Views\Codelists\index.cshtml" />
-    <Content Include="Views\Codelists\values.cshtml" />
-    <Content Include="Views\Codelists\valuedetails.cshtml" />
     <Content Include="Views\Registers\Create.cshtml" />
     <Content Include="Views\Registers\Delete.cshtml" />
     <Content Include="Views\Registers\Details.cshtml" />
@@ -349,7 +338,6 @@
     <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Registers\DetailsEPSG.cshtml" />
-    <Content Include="Views\Registers\EditOrganization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

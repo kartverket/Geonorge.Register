@@ -40,59 +40,37 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
-        [Route("organisasjoner/ny")]
-        public ActionResult Create(string name, string id)
+        [Route("register/{registerId}/organisasjoner/ny")]
+        public ActionResult Create(string registerId)
         {
+            //ViewBag.ThemeGroupId = new SelectList(db.Organizations, "Id", "Name");
             return View();
         }
-
-        //// POST: Organizations/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[Route("organisasjoner/ny")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "name,number,description,contact,logoFileName,largeLogo")] Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        organization.systemId = Guid.NewGuid();
-        //        organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
-        //        organization.dateSubmitted = DateTime.Now;
-        //        organization.status = new Status() { value = "Submitted" };
-
-        //        if (fileSmal != null && fileSmal.ContentLength > 0)
-        //        {
-        //            organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
-        //        }
-        //        if (fileLarge != null && fileLarge.ContentLength > 0)
-        //        {
-        //            organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
-        //        }
-        //        db.Organizations.Add(organization);
-        //        db.SaveChanges();
-
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(organization);
-        //}
-
-
 
         // POST: Organizations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("register/{registerId}/organisasjoner/ny")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "number,name")] Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
+        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registerId)
         {
             if (ModelState.IsValid)
             {
                 organization.systemId = Guid.NewGuid();
-                organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
+                //organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
+                //organization.name = name;
+
+                if (organization.name == null) {
+                    organization.name = "ikke angitt";
+                }
+                
+                organization.modified = DateTime.Now;
                 organization.dateSubmitted = DateTime.Now;
-                organization.status = new Status() { value = "Submitted" };
+                organization.registerId = Guid.Parse(registerId);
+                organization.statusId = "Submitted";
+                organization.submitter = null;
+
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -102,16 +80,15 @@ namespace Kartverket.Register.Controllers
                 {
                     organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
-                db.Organizations.Add(organization);
+
+                db.RegisterItems.Add(organization);
                 db.SaveChanges();
-
-                return RedirectToAction("Index");
             }
-
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
+            //ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
+            //ViewBag.ThemeGroupId = new SelectList(db.Organizations, "Id", "Name", organization.registerId); // TEST
             return View(organization);
         }
-
-
 
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
         {
@@ -207,13 +184,14 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Organizations/Delete/5
+        [Route("organisasjoner/slett/{name}/{id}")]
         public ActionResult Delete(string id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = db.Organizations.Find(id);
+            Organization organization = db.Organizations.Find(Guid.Parse(id));
             if (organization == null)
             {
                 return HttpNotFound();
@@ -221,15 +199,17 @@ namespace Kartverket.Register.Controllers
             return View(organization);
         }
 
-        // POST: Organizations/Delete/5
+        // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("organisasjoner/slett/{name}/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(Organization organization, Guid id, string name)
         {
-            Organization organization = db.Organizations.Find(id);
-            db.Organizations.Remove(organization);
+            Organization originalOrganization = db.Organizations.Find(id);
+
+            db.Organizations.Remove(originalOrganization);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/register/organisasjoner/"+ originalOrganization.registerId);
         }
 
         protected override void Dispose(bool disposing)

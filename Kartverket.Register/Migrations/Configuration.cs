@@ -143,29 +143,29 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now, 
                     number = "874783242", 
                     name = "Kystverket", 
-                    logoFilename = "http://register.test.geonorge.no/data/organizations/874783242_kystverketlogo.jpg" 
+                    logoFilename = "874783242_kystverketlogo.jpg" 
                 },
                 new Organization 
                 { 
                     systemId = Guid.Parse("D7142A92-418E-487E-A6FF-0E32C6AE31D8"), 
                     registerId = organisasjoner.systemId, 
                     dateSubmitted = DateTime.Now, 
-                    modified = DateTime.Now, 
+                    modified = DateTime.Now,
                     number = "970188290", 
                     name = "Norges geologiske undersøkelse", 
-                    logoFilename = "http://register.test.geonorge.no/data/organizations/970188290_nguLogo.png" 
+                    logoFilename = "970188290_nguLogo.png" 
                 },
                 new Organization 
                 { 
                     systemId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"), 
                     registerId = organisasjoner.systemId, 
                     dateSubmitted = DateTime.Now, 
-                    modified = DateTime.Now, 
-                    number = "874783242", 
+                    modified = DateTime.Now,
+                    number = "971040238", 
                     name = "Kartverket", 
                     contact = "Lars Inge Arnevik",
-                    logoFilename = "http://register.test.geonorge.no/data/organizations/971040238_kartverket_logo.png",
-                    largeLogo = "http://register.test.geonorge.no/data/organizations/971040238_kartverket_logo.png"
+                    logoFilename = "971040238_kartverket_logo.png",
+                    largeLogo = "971040238_kartverket_logo.png"
                 },
                 new Organization 
                 { 
@@ -175,7 +175,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now, 
                     number = "999601391", 
                     name = "Miljødirektoratet", 
-                    logoFilename = "http://register.test.geonorge.no/data/organizations/999601391_miljodirlogo.JPG" }
+                    logoFilename = "999601391_miljodirlogo.JPG" }
             );
 
 

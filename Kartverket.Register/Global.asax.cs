@@ -20,7 +20,7 @@ namespace Kartverket.Register
 
             DependencyConfig.Configure(new ContainerBuilder());
 
-            Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
+            //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
         }
     }
 }

@@ -9,7 +9,9 @@
     {
         <meta name="description" content="@ViewBag.MetaDescription" />
     }
-    
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico" />
+    <link rel="apple-touch-icon-precomposed" href="/Content/img/logo-graphic-512.png" />
+
     <title>
         @ViewBag.Title
         @if (ViewBag.Title != null)
@@ -31,17 +33,6 @@
     <div class="body-content">
         
         <div class="container">
-            @*@using (Html.BeginForm("Search", "Home", FormMethod.Get, new { @class = "navbar-form ", role = "form" }))
-            {
-                <div class="input-group">
-                    <input type="text" id="search" class="form-control" name="term" placeholder="Søk (ikke implementert)" value="@RenderSection("SearchTerm", required: false)">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
-                    </span>
-                </div>
-            }*@
-            
-
             @if (TempData["success"] != null)
             {
                 <div class="alert alert-success">

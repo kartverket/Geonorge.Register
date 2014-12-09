@@ -8,13 +8,17 @@ namespace Kartverket.Register.Models.ViewModels
     public class SearchResultItemViewModel
     {
 
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string RegisterName { get; set; }
+        public string RegisterDescription { get; set; }
+        public string RegisterItemName { get; set; }
+        public string RegisterItemDescription { get; set; }
 
         private SearchResultItemViewModel(SearchResultItem item)
         {
-            Name = item.Name;
-            Description = item.Description;
+            RegisterName = item.RegisterName;
+            RegisterDescription = item.RegisterDescription;
+            RegisterItemName = item.RegisterItemName;
+            RegisterItemDescription = item.RegisterItemDescription;
         }
 
         public static List<SearchResultItemViewModel> CreateFromList(IEnumerable<SearchResultItem> items)

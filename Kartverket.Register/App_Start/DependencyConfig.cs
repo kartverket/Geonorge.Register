@@ -6,6 +6,7 @@ using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Search;
 
 namespace Kartverket.Register
 {
@@ -19,6 +20,7 @@ namespace Kartverket.Register
 
             builder.RegisterType<RegisterDbContext>().InstancePerRequest().AsSelf();
             builder.RegisterType<OrganizationsService>().As<IOrganizationService>();
+            builder.RegisterType<SearchService>().As<ISearchService>();
 
             var container = builder.Build();
 

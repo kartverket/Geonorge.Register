@@ -1,3 +1,7 @@
 ﻿.geonorge-container .page-header hr {
   border-bottom: 3px solid #8c4799;
 }
+ul.search-results {
+    padding-left: 0;
+    list-style-type: none;
+}

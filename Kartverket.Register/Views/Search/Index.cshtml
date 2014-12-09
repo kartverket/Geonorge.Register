@@ -1,0 +1,89 @@
+﻿@using Kartverket.Register.Models.ViewModels
+@using Resources
+@model SearchViewModel
+
+@{
+    if (!string.IsNullOrWhiteSpace(Model.Text))
+    {
+        ViewBag.Title = "Søk etter " + Model.Text;
+    }
+    else
+    {
+        ViewBag.Title = "Søk";
+    }
+}
+
+
+@helper DisplayPagination()
+{
+    <p class="text-right">Viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</p>
+    <nav class="text-right">
+        <ul class="pagination">
+            @if (Model.IsPreviousButtonActive())
+            {
+                <li><a href="@Url.Action("Index", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+            }
+            @if (Model.IsNextButtonActive())
+            {
+                <li><a href="@Url.Action("Index", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+            }
+        </ul>
+    </nav>
+}
+
+@section scripts {
+    <script>
+        $('ul.facet').each(function () {
+            var max = 15;
+            if ($(this).find("li").length > max) {
+                $(this)
+                  .find('li:gt(' + max + ')')
+                  .hide()
+                  .end()
+                  .append(
+                    $('<li/>').append('<a href="">Vis flere</a>').click(function (event) {
+                        event.preventDefault();
+                        $(this).siblings(':hidden').show().end().remove();
+                    })
+                );
+            }
+        });
+    </script>
+}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-4">
+
+        </div>
+        <div class="col-sm-12 col-md-8">
+            @if (Model.Result != null)
+            {
+                @DisplayPagination()
+
+                <ul class="search-results">
+                    @foreach (var item in Model.Result.Items)
+                    {
+                        <li style="border-bottom: 1px solid #ccc; margin-bottom: 10px; margin-top: 10px" class="clearfix">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    @item.Name
+                                </div>
+                                <div class="col-md-10">
+
+                                    @item.Description
+                                </div>
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+                @DisplayPagination()
+
+            }
+        </div>
+    </div>
+
+
+
+

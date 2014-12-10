@@ -33,6 +33,32 @@
     <div class="body-content">
         
         <div class="container">
+            <ol class="breadcrumb">
+                <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
+                <li><a href="/">Registre</a></li>
+                @RenderSection("breadcrumb", false)
+            </ol>
+            <div class="menu clearfix">
+                <div class="pull-right">
+                    @if (Request.IsAuthenticated)
+                    {
+                        string username = "";
+                        foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+                        {
+                            if (c.Type == "urn:oid:0.9.2342.19200300.100.1.1" || c.Type == "username")
+                            {
+                                username = @c.Value;
+                            }
+                        }
+                        <a href="@Url.Action("SignOut", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg ut @username</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
+                    }
+                </div>
+            </div>
+
             @if (TempData["success"] != null)
             {
                 <div class="alert alert-success">
@@ -45,11 +71,6 @@
                     @TempData["failure"]
                 </div>
             }
-            <ol class="breadcrumb">
-                <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
-                <li><a href="/">Registre</a></li>
-                @RenderSection("breadcrumb", false)
-            </ol>
             @Html.Partial("_SearchBarPartial")
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 @RenderBody()

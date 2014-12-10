@@ -366,7 +366,6 @@
     <Content Include="Views\Registers\EditEpsg.cshtml" />
     <Content Include="Views\Registers\EditSubregister.cshtml" />
     <Content Include="Views\Registers\EditDataset.cshtml" />
-    <None Include="Web.Dev.config" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

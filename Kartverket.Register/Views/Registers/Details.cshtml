@@ -24,7 +24,7 @@
         }
         else
         {
-            <span>Status: @Html.DisplayFor(model => model.statusId) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }
         @if (Model.manager == null)
         {
@@ -90,9 +90,31 @@
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-            @Html.ActionLink("Back to List", "Index") |
-            <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå ny organisasjon</a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+            @Html.ActionLink("Tilbake", "Index") |
+            
+            @if (Model.containedItemClass == "Organization")
+            {
+                <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå nye @Model.name </a>
+            }
+            @if (Model.containedItemClass == "Document")
+            {
+               
+            }
+            @if (Model.containedItemClass == "Dataset")
+            {
+          
+            }
+            @if (Model.containedItemClass == "EPSG")
+            {
+
+            }
+            @if (Model.containedItemClass == "Register")
+            {
+               
+            }
+            
+            
         </p>
     </div>
 </div>

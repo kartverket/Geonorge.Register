@@ -21,6 +21,10 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Dataset> Datasets { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<EPSG> EPSGs { get; set; }
+        public virtual DbSet<Requirement> requirements { get; set; }
+        //public virtual DbSet<InspireRequirement> inspireRequirements { get; set; }
+        //public virtual DbSet<NationalRequirement> NationalRequirements { get; set; }
+        //public virtual DbSet<NationalSeasRequirement> NationalSeasRequirements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

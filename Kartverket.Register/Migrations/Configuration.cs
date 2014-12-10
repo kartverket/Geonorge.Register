@@ -22,15 +22,21 @@ namespace Kartverket.Register.Migrations
             //  to avoid creating duplicate seed data. E.g.
             //
             context.Statuses.AddOrUpdate(
-              new Status { value = "Submitted", description = "Submitted" },
-              new Status { value = "NotAccepted", description = "NotAccepted" },
-              new Status { value = "Accepted", description = "Accepted" },
-              new Status { value = "Valid", description = "Godkjent" },
-              new Status { value = "Experimental", description = "Experimental" },
-              new Status { value = "Deprecated", description = "Deprecated" },
-              new Status { value = "Superseded", description = "Superseded" },
-              new Status { value = "Retired", description = "Retired" }
+                new Status { value = "Submitted", description = "Sendt inn" },
+                new Status { value = "NotAccepted", description = "Ikke godkjent" },
+                new Status { value = "Accepted", description = "Godkjent" },
+                new Status { value = "Valid", description = "Gyldig" },
+                new Status { value = "Experimental", description = "Eksperimentell" },
+                new Status { value = "Deprecated", description = "Utdatert" },
+                new Status { value = "Superseded", description = "Erstattet" },
+                new Status { value = "Retired", description = "Utgått" }
+            );
 
+            context.requirements.AddOrUpdate(
+                new Requirement { value = "Mandatory", description = "Påkrevd" },
+                new Requirement { value = "Conditional", description = "Betinget" },
+                new Requirement { value = "Recommended", description = "Anbefalt" },
+                new Requirement { value = "Optional", description = "Valgfritt" }      
             );
 
             context.DOKThemes.AddOrUpdate(
@@ -100,7 +106,7 @@ namespace Kartverket.Register.Migrations
                 containedItemClass = "Document",
                 statusId = "Valid"
             };
-            Register epskKoder =  new Register 
+            Register epsgKoder =  new Register 
             { 
                 systemId = Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"), 
                 dateSubmitted = DateTime.Now, 
@@ -127,7 +133,7 @@ namespace Kartverket.Register.Migrations
                 produktark,
                 kodeliste,
                 gmlApplikasjonsskjema,
-                epskKoder,
+                epsgKoder,
                 tegneregler              
                 //new Register { systemId = Guid.Parse("9A82A6B6-0069-45A4-8CA8-FBB789434F9A"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "Navnerom", description = "Inneholder godkjente navnerom", containedItemClass = "Document" },
                 //new Register { systemId = Guid.Parse("B4BA9E24-3717-482B-B9F5-7E349194D502"), dateSubmitted = DateTime.Now, modified = DateTime.Now, name = "SOSI def", description = "Inneholder godkjente SOSI definisjonsfiler ", containedItemClass = "Document" },

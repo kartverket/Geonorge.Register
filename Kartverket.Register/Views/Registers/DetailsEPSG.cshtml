@@ -20,14 +20,14 @@
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
-        @if (Model.status == null)
-        {
-            <span>Status: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Status: <i class="statusIcon-godkjent"></i>@Html.DisplayFor(model => model.status.description)</span><br />
-        }
+       @if (Model.status == null)
+       {
+        <span>Status: Ikke angitt</span><br />
+       }
+       else
+       {
+        <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+       }
         @if (Model.submitter == null)
         {
             <span>Administrator: Ikke angitt</span><br />
@@ -64,10 +64,33 @@
                 <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
                     <p><b>@Html.DisplayFor(model => model.epsg)</b></p>
                 </div>
-                <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
-                    <p>Inspitekrav:                     X</p>
-                    <p>Nasjonalt krav:                  X</p>
-                    <p>Nasjonalt krav for havområder:   X</p>
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 top-padding">
+                    
+                    @if (Model.inspireRequirement == null)
+                    {
+                        <span>Inspirekrav: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Inspirekrav: @Html.DisplayFor(model => model.inspireRequirement.description)</span><br />
+                    }
+                    @if (Model.nationalRequirement == null)
+                    {
+                        <span>Nasjonalt krav: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Nasjonalt krav: @Html.DisplayFor(model => model.nationalRequirement.description)</span><br />
+                    }
+                    @if (Model.nationalSeasRequirement == null)
+                    {
+                        <span>Nasjonalt krav for havområder: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Nasjonalt krav for havområder: @Html.DisplayFor(model => model.nationalSeasRequirement.description)</span><br />
+                    }
+
                 </div>
                 <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
                     <p>Ekstern referanse: <a href="@Html.DisplayFor(model => model.externalReference)">Vis</a></p>
@@ -78,8 +101,8 @@
         <hr />
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-                @Html.ActionLink("Back to List", "Index")
+                @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+                <a href="/register/epsg-koder/@Model.registerId">Tilbake</a> 
             </p>
         </div>
     </div>

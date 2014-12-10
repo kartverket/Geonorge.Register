@@ -21,15 +21,34 @@
             <th>
                 Innhold
             </th>
-            <th>
-                Status
-            </th>
+           
             <th>
                 Administrator
             </th>
             <th>
                 Eier
             </th>
+
+        </tr>
+        <tr>
+            <td>
+                <b><a href="@Html.DokRegisterUrl()">Det offentlige kartgrunnlaget</a></b>
+            </td>
+            <td>
+                Det offentlige kartgrunnlaget beskrives i plan- og bygningslovens paragraf 2-1 og kart- og planforskriften og skal være er en samling geografiske kvalitetsdata, såkalt offentlige autoritative data. Disse skal være valgt ut og tilrettelagt for å være et egnet kunnskapsgrunnlag for de mest vesentlige behovene som følger av plan- og bygningsloven.
+            </td>
+
+            <td>
+               
+                <span>Ikke angitt</span>
+              
+
+            </td>
+            <td>
+               
+               <span>Ikke angitt</span>
+               
+            </td>
 
         </tr>
 
@@ -42,17 +61,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.description)
                 </td>
-                <td>
-                    @if (item.status == null)
-                    {
-                        <span>Ikke angitt</span>
-                    }
-                    else
-                    {
-                        <span>@Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@Html.DisplayFor(modelItem => item.status.value)"></i></span>
-                    }
-                         
-                </td>
+                
                 <td>
                     @if (item.manager == null)
                     {

@@ -139,6 +139,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("organisasjoner/rediger/{name}/{id}")]
         //[ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id)
         {
             if (ModelState.IsValid)

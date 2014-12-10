@@ -22,5 +22,11 @@ namespace Kartverket.Register
 
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
         }
+
+        protected void Session_Start()
+        {
+            Session["role"] = "guest";
+        }
+
     }
 }

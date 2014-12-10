@@ -18,6 +18,7 @@ namespace Kartverket.Register.Controllers
         // GET: Registers
         public ActionResult Index()
         {
+            setAccessRole();
             return View(db.Registers.ToList());
         }
 
@@ -205,6 +206,15 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
+        }
+
+        private void setAccessRole()
+        {
+            bool editor = HasAccessToRegister();
+            if (editor)
+                Session["role"] = "editor";
+            else
+                Session["role"] = "guest";
         }
   
     }

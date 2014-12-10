@@ -1,5 +1,6 @@
 ﻿@using Kartverket.Register.Models.ViewModels
 @using Resources
+﻿@using Kartverket.Register.Helpers
 @model SearchViewModel
 
 @{
@@ -52,41 +53,54 @@
 }
 
     <div class="row">
-        <div class="col-sm-12 col-md-4">
-
-        </div>
-        <div class="col-sm-12 col-md-8">
+    
+        <div class="col-md-offset-2 col-md-8">
             @if (Model.Result != null)
             {
                 @DisplayPagination()
 
-                <ul class="search-results">
+                <div class="search-results">
                     @foreach (var item in Model.Result.Items)
-                    {
-                        <li style="border-bottom: 1px solid #ccc; margin-bottom: 10px; margin-top: 10px" class="clearfix">
+                    {               
                             <div class="row">
-                                <div class="col-md-12">
-                                    <b>@item.RegisterItemName</b>
-                                </div> 
-                            </div>
-                            <div class="row">
-                                <div class="col-md-10">
+                                <div>
+                                    @{
+                        if (item.Discriminator == "Organization")
+                        {
+                            <b><a href="/organisasjoner/@Html.ToUrl(item.RegisterItemName)/@item.SystemID">@item.RegisterItemName</a></b>
+                        }
+                        else if (item.Discriminator == "EPSG")
+                        {
+                            <b><a href="/epsg/@Html.ToUrl(item.RegisterItemName)/@item.SystemID">@item.RegisterItemName</a></b>
+                        }
+                        else if (item.Discriminator == "Document")
+                        {
+                            <b><a href="/dokument/@Html.ToUrl(item.RegisterItemName)/@item.SystemID">@item.RegisterItemName</a></b>
+                        }
+                                    }
+                                </div>
+
+
+                                <div>
                                     @item.RegisterItemDescription
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <i>@item.RegisterName : @item.RegisterDescription</i>
+
+
+                                <div>
+                                    <i><a href="/register/@Html.ToUrl(item.RegisterName)/@item.RegisterID">@item.RegisterName</a> : @item.RegisterDescription</i>
                                 </div>
+                                <hr />
                             </div>
-</li>
+                        
+
                     }
-                </ul>
+                </div>
 
                 @DisplayPagination()
 
             }
         </div>
+
     </div>
 
 

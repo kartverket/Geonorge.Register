@@ -10,7 +10,7 @@ namespace Kartverket.Register.Models
         public SearchParameters()
         {
             Offset = 1;
-            Limit = 5;
+            Limit = 10;
         }
 
         public string Text { get; set; }

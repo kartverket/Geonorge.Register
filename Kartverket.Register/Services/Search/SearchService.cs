@@ -22,13 +22,14 @@ namespace Kartverket.Register.Services.Search
         public SearchResult Search(SearchParameters parameters)
         {
             var queryResults = from r in _dbContext.Registers
-                               from ri in _dbContext.RegisterItems
+                               join ri in _dbContext.RegisterItems
+                               on r.systemId equals ri.registerId
                                where r.name.Contains(parameters.Text)
                                || r.description.Contains(parameters.Text)
                                || ri.name.Contains(parameters.Text)
                                || ri.description.Contains(parameters.Text)
                                orderby r.name
-                               select new SearchResultItem { RegisterName = r.name, RegisterDescription= r.description, RegisterItemName=ri.name, RegisterItemDescription= ri.description };
+                               select new SearchResultItem { RegisterName = r.name, RegisterDescription= r.description, RegisterItemName=ri.name, RegisterItemDescription= ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator=r.containedItemClass };
 
             int NumFound = queryResults.Count();
             List<SearchResultItem> items = new List<SearchResultItem>();
@@ -43,7 +44,10 @@ namespace Kartverket.Register.Services.Search
                    RegisterName = register.RegisterName,
                    RegisterDescription = register.RegisterDescription,
                    RegisterItemName = register.RegisterItemName,
-                   RegisterItemDescription = register.RegisterItemDescription
+                   RegisterItemDescription = register.RegisterItemDescription,
+                   RegisterID = register.RegisterID,
+                   SystemID = register.SystemID,
+                   Discriminator = register.Discriminator
 
                 };
 

@@ -20,14 +20,14 @@
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
-        @if (Model.status == null)
-        {
-            <span>Status: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Status: <i class="statusIcon-godkjent"></i>@Html.DisplayFor(model => model.status.description)</span><br />
-        }
+       @if (Model.status == null)
+       {
+        <span>Status: Ikke angitt</span><br />
+       }
+       else
+       {
+        <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+       }
         @if (Model.submitter == null)
         {
             <span>Administrator: Ikke angitt</span><br />
@@ -64,10 +64,10 @@
                 <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
                     <p><b>@Html.DisplayFor(model => model.epsg)</b></p>
                 </div>
-                <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
-                    <p>Inspitekrav:                     X</p>
-                    <p>Nasjonalt krav:                  X</p>
-                    <p>Nasjonalt krav for havområder:   X</p>
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 top-padding">
+                    <p>Inspirekrav:                     @Model.inspireRequirement</p>
+                    <p>Nasjonalt krav:                  @Model.nasjonalRequirements</p>
+                    <p>Nasjonalt krav for havområder:   @Model.nasjonalRequirementSeas</p>
                 </div>
                 <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
                     <p>Ekstern referanse: <a href="@Html.DisplayFor(model => model.externalReference)">Vis</a></p>
@@ -78,8 +78,8 @@
         <hr />
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-                @Html.ActionLink("Back to List", "Index")
+                @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+                <a href="/register/epsg-koder/@Model.registerId">Tilbake</a> 
             </p>
         </div>
     </div>

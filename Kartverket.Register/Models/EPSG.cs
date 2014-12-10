@@ -20,6 +20,9 @@ namespace Kartverket.Register.Models
         public string epsg { get; set; }
         public string sosiReferencesystem { get; set; }
         public string externalReference { get; set; }
+        public string inspireRequirement { get; set; }
+        public string nasjonalRequirements { get; set; }
+        public string nasjonalRequirementSeas { get; set; }
 
 		
 

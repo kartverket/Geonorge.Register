@@ -25,7 +25,7 @@
         }
         else
         {
-            <span>Status: <i class="statusIcon-godkjent"></i>@Html.DisplayFor(model => model.status.description)</span><br />
+            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }
         @if (Model.documentowner == null)
         {
@@ -81,8 +81,8 @@
         <hr />
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-                @Html.ActionLink("Back to List", "Index")
+                @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+                <a href="/register/@Model.name/@Model.registerId">Tilbake</a> 
             </p>
         </div>
     </div>

@@ -77,12 +77,32 @@
             </div>
         </div>
     </div>
-    <div class="container">
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Kartverket</p>
-            <p>Versjon @Html.ApplicationVersionNumber()</p>
-        </footer>
-    </div>
+    <footer class="page-footer" role="contentinfo">
+        <div class="top-shadow">&nbsp;</div>
+
+        <div class="container padding-bottom">
+            <div class="row">
+
+                <div class="col-sm-3 col-xs-12">
+                    <div>
+                        <h1 class="heading">Kontakt oss</h1>
+                        <p>Tlf. 08700</p>
+                        <p>post@norgedigitalt.no</p>
+                    </div>
+                </div>
+                <div class="col-xs-12 visible-xs">&nbsp;</div>
+                <div class="col-sm-2 col-sm-offset-7 col-xs-12">
+                    <div class="">
+                        <p>© 2014 - Kartverket</p>
+                        <p>Versjon @Html.ApplicationVersionNumber()</p>
+                        <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

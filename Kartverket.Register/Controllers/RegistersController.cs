@@ -14,6 +14,7 @@ namespace Kartverket.Register.Controllers
     {
         private RegisterDbContext db = new RegisterDbContext();
 
+
         // GET: Registers
         public ActionResult Index()
         {
@@ -91,7 +92,8 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
@@ -185,7 +187,8 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [Authorize]
+        //[ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
@@ -216,6 +219,7 @@ namespace Kartverket.Register.Controllers
         //// POST: Registers/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
+        //[Authorize]
         //public ActionResult DeleteConfirmed(Guid id)
         //{
         //    Kartverket.Register.Models.Register register = db.Registers.Find(id);
@@ -232,6 +236,35 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool HasAccessToRegister()
+        {
+            string organization = GetSecurityClaim("organization");
+            string role = GetSecurityClaim("role");
+            bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
+            return isAdmin;
+        }
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
         }
   
     }

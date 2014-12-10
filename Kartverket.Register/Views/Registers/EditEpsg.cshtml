@@ -7,25 +7,18 @@
 
 <h2>@ViewBag.Title</h2>
 
-
-@using (Html.BeginForm("Edit", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Epsg", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
+    @*@Html.AntiForgeryToken()*@
 
     <div class="form-horizontal">
         <h4>@Html.DisplayName(Model.name)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.number)
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="SubmitterID">Innsender: </label>
-            <div class="col-md-10">
-                @Html.DropDownList("SubmitterID")
-                @Html.ValidationMessageFor(model => model.submitterId)
-            </div>
-        </div>
-
+        
+        
+        
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,58 +26,100 @@
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.number, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.number, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.number, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.submitter, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.contact, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.contact, "", new { @class = "text-danger" })
+                Nedtreksliste:.... 
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="statusId">Status: </label>
-            <div class="col-md-5">
-                @Html.DropDownList("statusId")
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <br />
-                <p><img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" /></p>
-                <input type="file" name="fileSmal" />
-                @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
+                Status:
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.largeLogo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.epsg, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <br />
-                <p><img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" /></p>
-                <input type="file" name="fileLarge" />
-                @Html.ValidationMessageFor(model => model.largeLogo, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.epsg, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.epsg, "", new { @class = "text-danger" })
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.sosiReferencesystem, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.sosiReferencesystem, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.sosiReferencesystem, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.externalReference, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.externalReference, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.externalReference, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inspireRequirement, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                Nedtreksliste...
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.inspireRequirementDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.inspireRequirementDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.inspireRequirementDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nationalRequirement, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                Nedtreksliste...
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nationalRequirementDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nationalRequirementDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nationalRequirementDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nationalSeasRequirement, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                Nedtreksliste...
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nationalSeasRequirementDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nationalSeasRequirementDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nationalSeasRequirementDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Lagre" class="btn btn-default" />
@@ -93,10 +128,11 @@
     </div>
 }
 
+
 <hr />
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <p>
-        <a href="/organisasjoner/@Html.ToUrl(Model.name)/@Model.systemId">Tilbake</a>
+        <a href="/epsg/@Html.ToUrl(Model.name)/@Model.systemId">Tilbake</a>
     </p>
 </div>
 

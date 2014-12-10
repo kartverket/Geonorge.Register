@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 
 
@@ -18,20 +19,29 @@ namespace Kartverket.Register.Models
 {
 	public class EPSG : RegisterItem {
 
+        [Display(Name = "EPSG:")]
         public string epsg { get; set; }
+        [Display(Name = "SOSI referansesystem:")]
         public string sosiReferencesystem { get; set; }
+        [Display(Name = "Ekstern referanser:")]
         public string externalReference { get; set; }
-        [ForeignKey("inspireRequirement")]
+        [ForeignKey("inspireRequirement")]       
         public string inspireRequirementId { get; set; }
+        [Display(Name = "Inspirekrav:")]
         public virtual Requirement inspireRequirement { get; set; }
+        [Display(Name = "Beskrivelse:")]
         public string inspireRequirementDescription { get; set; }
         [ForeignKey("nationalRequirement")]
         public string nationalRequirementId { get; set; }
+        [Display(Name = "Nasjonale krav:")]
         public virtual Requirement nationalRequirement { get; set; }
+        [Display(Name = "Beskrivelse:")]
         public string nationalRequirementDescription { get; set; }
         [ForeignKey("nationalSeasRequirement")]
         public string nationalSeasRequirementId { get; set; }
+        [Display(Name = "Nasjonale krav for havområder:")]
         public virtual Requirement nationalSeasRequirement { get; set; }
+        [Display(Name = "Beskrivelse:")]
         public string nationalSeasRequirementDescription { get; set; }
 
 	}//end EPSG

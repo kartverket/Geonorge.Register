@@ -65,16 +65,21 @@
                     {
                         <li style="border-bottom: 1px solid #ccc; margin-bottom: 10px; margin-top: 10px" class="clearfix">
                             <div class="row">
-                                <div class="col-md-2">
-                                    @item.Name
-                                </div>
-                                <div class="col-md-10">
-
-                                    @item.Description
-                                </div>
-
+                                <div class="col-md-12">
+                                    <b>@item.RegisterItemName</b>
+                                </div> 
                             </div>
-                        </li>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    @item.RegisterItemDescription
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i>@item.RegisterName : @item.RegisterDescription</i>
+                                </div>
+                            </div>
+</li>
                     }
                 </ul>
 

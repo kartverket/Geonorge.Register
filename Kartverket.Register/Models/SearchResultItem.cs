@@ -7,7 +7,9 @@ namespace Kartverket.Register.Models
 {
     public class SearchResultItem
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string RegisterName { get; set; }
+        public string RegisterDescription { get; set; }
+        public string RegisterItemName { get; set; }
+        public string RegisterItemDescription { get; set; }
     }
 }

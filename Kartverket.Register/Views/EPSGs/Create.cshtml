@@ -1,22 +1,19 @@
 ﻿@model Kartverket.Register.Models.EPSG
-﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = UI.Edit;
+    ViewBag.Title = "Create";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Create</h2>
 
-@using (Html.BeginForm("Edit", "Epsg", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm()) 
 {
-    @*@Html.AntiForgeryToken()*@
-
+    @Html.AntiForgeryToken()
+    
     <div class="form-horizontal">
-        <h4>@Html.DisplayName(Model.name)</h4>
+        <h4>EPSG</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,7 +21,7 @@
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -34,17 +31,50 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="SubmitterID">Innsender: </label>
+            @Html.LabelFor(model => model.submitterId, "submitterId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SubmitterID")
-                @Html.ValidationMessageFor(model => model.submitterId)
+                @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="statusId">Status: </label>
-            <div class="col-md-5">
-                @Html.DropDownList("statusId")
+            @Html.LabelFor(model => model.dateSubmitted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dateSubmitted, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dateSubmitted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.modified, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.modified, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.modified, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.statusId, "statusId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.registerId, "registerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("registerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.registerId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -73,9 +103,10 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="inspireRequirementId">Inspirekrav</label>
-            <div class="col-md-5">
-                @Html.DropDownList("inspireRequirementId")
+            @Html.LabelFor(model => model.inspireRequirementId, "inspireRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("inspireRequirementId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.inspireRequirementId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -88,9 +119,10 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="nationalRequirementId">Nasjonale krav</label>
-            <div class="col-md-5">
-                @Html.DropDownList("nationalRequirementId")
+            @Html.LabelFor(model => model.nationalRequirementId, "nationalRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("nationalRequirementId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.nationalRequirementId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -103,9 +135,10 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="nationalSeasRequirementId">Nasjonale krav for havområder</label>
-            <div class="col-md-5">
-                @Html.DropDownList("nationalSeasRequirementId")
+            @Html.LabelFor(model => model.nationalSeasRequirementId, "nationalSeasRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("nationalSeasRequirementId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.nationalSeasRequirementId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -116,23 +149,15 @@
                 @Html.ValidationMessageFor(model => model.nationalSeasRequirementDescription, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lagre" class="btn btn-default" />
+                <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-
-<hr />
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <p>
-        <a href="/epsg/@Html.ToUrl(Model.name)/@Model.systemId">Tilbake</a>
-    </p>
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -1,0 +1,106 @@
+﻿@model Kartverket.Register.Models.Document
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Document</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.register.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.register.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submitter.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submitter.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateSubmitted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateSubmitted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateAccepted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateAccepted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.thumbnail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.thumbnail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.document)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.document)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.documentowner.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.documentowner.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

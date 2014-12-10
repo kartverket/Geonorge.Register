@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Kartverket.Register.Models.CodelistValue>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.register.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.status.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.submitter.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateSubmitted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dateAccepted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.value)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.register.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.status.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.submitter.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateSubmitted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.modified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dateAccepted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.value)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.systemId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.systemId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.systemId })
+        </td>
+    </tr>
+}
+
+</table>

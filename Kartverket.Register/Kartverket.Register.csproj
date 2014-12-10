@@ -155,18 +155,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CodelistsController.cs" />
-    <Compile Include="Controllers\EPSGcodesController.cs" />
-    <Compile Include="Controllers\GMLapplicationschemasController.cs" />
+    <Compile Include="Controllers\CodelistValuesController.cs" />
+    <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\NamespaceController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
-    <Compile Include="Controllers\ProductsheetsController.cs" />
-    <Compile Include="Controllers\ProductspesificationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\SOSIdefController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -366,6 +362,21 @@
     <Content Include="Views\Registers\EditEpsg.cshtml" />
     <Content Include="Views\Registers\EditSubregister.cshtml" />
     <Content Include="Views\Registers\EditDataset.cshtml" />
+    <Content Include="Views\EPSGs\Create.cshtml" />
+    <Content Include="Views\EPSGs\Delete.cshtml" />
+    <Content Include="Views\EPSGs\Details.cshtml" />
+    <Content Include="Views\EPSGs\Edit.cshtml" />
+    <Content Include="Views\EPSGs\Index.cshtml" />
+    <Content Include="Views\Documents\Create.cshtml" />
+    <Content Include="Views\Documents\Delete.cshtml" />
+    <Content Include="Views\Documents\Details.cshtml" />
+    <Content Include="Views\Documents\Edit.cshtml" />
+    <Content Include="Views\Documents\Index.cshtml" />
+    <Content Include="Views\CodelistValues\Create.cshtml" />
+    <Content Include="Views\CodelistValues\Delete.cshtml" />
+    <Content Include="Views\CodelistValues\Details.cshtml" />
+    <Content Include="Views\CodelistValues\Edit.cshtml" />
+    <Content Include="Views\CodelistValues\Index.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

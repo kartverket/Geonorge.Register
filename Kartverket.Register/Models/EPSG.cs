@@ -29,19 +29,19 @@ namespace Kartverket.Register.Models
         public string inspireRequirementId { get; set; }
         [Display(Name = "Inspirekrav:")]
         public virtual Requirement inspireRequirement { get; set; }
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Beskrivelse av krav:")]
         public string inspireRequirementDescription { get; set; }
         [ForeignKey("nationalRequirement")]
         public string nationalRequirementId { get; set; }
         [Display(Name = "Nasjonale krav:")]
         public virtual Requirement nationalRequirement { get; set; }
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Beskrivelse av krav:")]
         public string nationalRequirementDescription { get; set; }
         [ForeignKey("nationalSeasRequirement")]
         public string nationalSeasRequirementId { get; set; }
         [Display(Name = "Nasjonale krav for havområder:")]
         public virtual Requirement nationalSeasRequirement { get; set; }
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Beskrivelse av krav:")]
         public string nationalSeasRequirementDescription { get; set; }
 
 	}//end EPSG

@@ -123,72 +123,13 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        [Route("dokument/rediger/{name}/{id}")]
-        public ActionResult EditDocument(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Document document = db.Documents.Find(id);
-            if (document == null)
-            {
-                return HttpNotFound();
-            }
-            return View(document);
-        }
-
-        [Route("epsg/rediger/{name}/{id}")]
-        public ActionResult EditEpsg(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(id);
-            if (epsg == null)
-            {
-                return HttpNotFound();
-            }
-            return View(epsg);
-        }
-
-        [Route("register/rediger/{name}/{id}")]
-        public ActionResult EditSubregister(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
-            return View(register);
-        }
-
-        [Route("dataset/rediger/{name}/{id}")]
-        public ActionResult EditDataset(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(id);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dataset);
-        }
+        
 
         // POST: Registers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        //[ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
         {
             if (ModelState.IsValid)
@@ -199,7 +140,6 @@ namespace Kartverket.Register.Controllers
             }
             return View(register);
         }
-
         
         // GET: Registers/Delete/5
         public ActionResult Delete(Guid? id, string name)

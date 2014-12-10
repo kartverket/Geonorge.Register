@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.Organization
+﻿@model Kartverket.Register.Models.EPSG
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -10,8 +10,8 @@
 
 @using (Html.BeginForm("Edit", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @*@Html.AntiForgeryToken()*@
-    
+    @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <h4>@Html.DisplayName(Model.name)</h4>
         <hr />
@@ -25,7 +25,7 @@
                 @Html.ValidationMessageFor(model => model.submitterId)
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <br/>
+                <br />
                 <p><img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" /></p>
                 <input type="file" name="fileSmal" />
                 @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
@@ -77,7 +77,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.largeLogo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10"> 
+            <div class="col-md-10">
                 <br />
                 <p><img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" /></p>
                 <input type="file" name="fileLarge" />

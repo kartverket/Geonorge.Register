@@ -362,6 +362,10 @@
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Registers\DetailsEPSG.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Registers\EditDocument.cshtml" />
+    <Content Include="Views\Registers\EditEpsg.cshtml" />
+    <Content Include="Views\Registers\EditSubregister.cshtml" />
+    <Content Include="Views\Registers\EditDataset.cshtml" />
     <None Include="Web.Dev.config" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>

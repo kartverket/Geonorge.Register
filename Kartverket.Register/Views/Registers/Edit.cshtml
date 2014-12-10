@@ -1,77 +1,114 @@
 ﻿@model Kartverket.Register.Models.Register
 
-@{
-    ViewBag.Title = "Edit";
+@section breadcrumb {
+    <li class="active">@Html.DisplayFor(model => model.name)</li>
 }
+<div class="page-header">
+    <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
+    <hr>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
 
-<h2>Edit</h2>
+        <p>
+            @Html.DisplayFor(model => model.description)
+        </p>
+        @if (Model.status == null)
+        {
+            <span>Status: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+        }
+        @if (Model.manager == null)
+        {
+            <span>Administrator: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Administrator: @Html.DisplayFor(model => model.manager.name)</span><br />
+        }
+        @if (Model.owner == null)
+        {
+            <span>Eier: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Eier: @Html.DisplayFor(model => model.owner.name)</span><br />
+        }
+        @if (Model.currentVersion == null)
+        {
+            <span>Versjon: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+        }
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Register</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.systemId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.dateSubmitted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.dateSubmitted, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.dateSubmitted, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.modified, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.modified, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.modified, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.containedItemClass, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
+        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
+    </div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="page-header">
+            <hr>
+        </div>
+
+
+        @if (Model.containedItemClass == "Organization")
+        {
+            @Html.Partial("_organization", Model.items)
+        }
+        @if (Model.containedItemClass == "Document")
+        {
+            @Html.Partial("_documents", Model.items)
+        }
+        @if (Model.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_dataset", Model.items)
+        }
+        @if (Model.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_epsg", Model.items)
+        }
+        @if (Model.containedItemClass == "Register")
+        {
+            @Html.Partial("_subregister", Model.subregisters)
+        }
+
+    </div>
+
+    <hr />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <p>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+            @Html.ActionLink("Tilbake", "Index") |
+
+            @if (Model.containedItemClass == "Organization")
+            {
+                <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå nye @Model.name </a>
+            }
+            @if (Model.containedItemClass == "Document")
+            {
+
+            }
+            @if (Model.containedItemClass == "Dataset")
+            {
+
+            }
+            @if (Model.containedItemClass == "EPSG")
+            {
+
+            }
+            @if (Model.containedItemClass == "Register")
+            {
+
+            }
+        </p>
+    </div>
 </div>

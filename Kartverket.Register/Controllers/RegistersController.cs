@@ -121,7 +121,65 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        
+        [Route("dokument/rediger/{name}/{id}")]
+        public ActionResult EditDocument(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Document document = db.Documents.Find(id);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            return View(document);
+        }
+
+        [Route("epsg/rediger/{name}/{id}")]
+        public ActionResult EditEpsg(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(id);
+            if (epsg == null)
+            {
+                return HttpNotFound();
+            }
+            return View(epsg);
+        }
+
+        [Route("register/rediger/{name}/{id}")]
+        public ActionResult EditSubregister(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Register register = db.Registers.Find(id);
+            if (register == null)
+            {
+                return HttpNotFound();
+            }
+            return View(register);
+        }
+
+        [Route("dataset/rediger/{name}/{id}")]
+        public ActionResult EditDataset(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(id);
+            if (dataset == null)
+            {
+                return HttpNotFound();
+            }
+            return View(dataset);
+        }
 
         // POST: Registers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -166,7 +224,6 @@ namespace Kartverket.Register.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        
 
         protected override void Dispose(bool disposing)
         {
@@ -176,31 +233,6 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-
-
-
-        //// POST: Registers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[Route("organisasjoner/slett/{name}/{id}")]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult DeleteConfirmed(Organization organization, Guid id, string name, string registerId)
-        //{
-        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
-        //    db.Organizations.Remove(organization);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Details");
-        //}
-
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing)
-        //    {
-        //        db.Dispose();
-        //    }
-        //    base.Dispose(disposing);
-        //}
-    
+  
     }
 }

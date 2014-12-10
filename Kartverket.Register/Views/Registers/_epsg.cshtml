@@ -56,13 +56,34 @@
                 <a target="_blank" href="@Html.DisplayFor(modelItem => item.externalReference)">Vis</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.inspireRequirement)
+                @if (item.inspireRequirement == null)
+                {
+                    <text>Ikke angitt</text>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.inspireRequirement.description)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nasjonalRequirements)
+                @if (item.nationalRequirement == null)
+                {
+                    <text>Ikke angitt</text>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.nationalRequirement.description)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.nasjonalRequirementSeas)
+               @if (item.nationalSeasRequirement == null)
+               {
+                <text>Ikke angitt</text>
+               }
+               else
+               {
+                @Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)
+               }
             </td>
 
         </tr>

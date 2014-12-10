@@ -65,9 +65,32 @@
                     <p><b>@Html.DisplayFor(model => model.epsg)</b></p>
                 </div>
                 <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 top-padding">
-                    <p>Inspirekrav:                     @Model.inspireRequirement</p>
-                    <p>Nasjonalt krav:                  @Model.nasjonalRequirements</p>
-                    <p>Nasjonalt krav for havområder:   @Model.nasjonalRequirementSeas</p>
+                    
+                    @if (Model.inspireRequirement == null)
+                    {
+                        <span>Inspirekrav: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Inspirekrav: @Html.DisplayFor(model => model.inspireRequirement.description)</span><br />
+                    }
+                    @if (Model.nationalRequirement == null)
+                    {
+                        <span>Nasjonalt krav: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Nasjonalt krav: @Html.DisplayFor(model => model.nationalRequirement.description)</span><br />
+                    }
+                    @if (Model.nationalSeasRequirement == null)
+                    {
+                        <span>Nasjonalt krav for havområder: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Nasjonalt krav for havområder: @Html.DisplayFor(model => model.nationalSeasRequirement.description)</span><br />
+                    }
+
                 </div>
                 <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
                     <p>Ekstern referanse: <a href="@Html.DisplayFor(model => model.externalReference)">Vis</a></p>

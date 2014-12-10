@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201412041411570_addOrganizationInformation.Designer.cs">
       <DependentUpon>201412041411570_addOrganizationInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412100956424_addEpsgRequirements.cs" />
+    <Compile Include="Migrations\201412100956424_addEpsgRequirements.Designer.cs">
+      <DependentUpon>201412100956424_addEpsgRequirements.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -245,6 +249,7 @@
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DOKTheme.cs" />
     <Compile Include="Models\EPSG.cs" />
+    <Compile Include="Models\Requirement.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\Register.cs" />
     <Compile Include="Models\RegisterDbContext.cs" />
@@ -414,6 +419,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412041411570_addOrganizationInformation.resx">
       <DependentUpon>201412041411570_addOrganizationInformation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412100956424_addEpsgRequirements.resx">
+      <DependentUpon>201412100956424_addEpsgRequirements.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -30,8 +30,13 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Deprecated", description = "Utdatert" },
                 new Status { value = "Superseded", description = "Erstattet" },
                 new Status { value = "Retired", description = "Utgått" }
+            );
 
-
+            context.requirements.AddOrUpdate(
+                new Requirement { value = "Mandatory", description = "Påkrevd" },
+                new Requirement { value = "Conditional", description = "Betinget" },
+                new Requirement { value = "Recommended", description = "Anbefalt" },
+                new Requirement { value = "Optional", description = "Valgfritt" }      
             );
 
             context.DOKThemes.AddOrUpdate(

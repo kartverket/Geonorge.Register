@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -20,11 +21,18 @@ namespace Kartverket.Register.Models
         public string epsg { get; set; }
         public string sosiReferencesystem { get; set; }
         public string externalReference { get; set; }
-        public string inspireRequirement { get; set; }
-        public string nasjonalRequirements { get; set; }
-        public string nasjonalRequirementSeas { get; set; }
-
-		
+        [ForeignKey("inspireRequirement")]
+        public string inspireRequirementId { get; set; }
+        public virtual Requirement inspireRequirement { get; set; }
+        public string inspireRequirementDescription { get; set; }
+        [ForeignKey("nationalRequirement")]
+        public string nationalRequirementId { get; set; }
+        public virtual Requirement nationalRequirement { get; set; }
+        public string nationalRequirementDescription { get; set; }
+        [ForeignKey("nationalSeasRequirement")]
+        public string nationalSeasRequirementId { get; set; }
+        public virtual Requirement nationalSeasRequirement { get; set; }
+        public string nationalSeasRequirementDescription { get; set; }
 
 	}//end EPSG
 

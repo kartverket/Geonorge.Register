@@ -90,9 +90,9 @@
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |
-            @Html.ActionLink("Back to List", "Index") |
-            <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå ny organisasjon</a>
+            @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
+            @Html.ActionLink("Tilbake", "Index") |
+            <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå nye @Model.name</a>
         </p>
     </div>
 </div>

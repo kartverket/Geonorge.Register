@@ -87,7 +87,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
             //ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
             //ViewBag.ThemeGroupId = new SelectList(db.Organizations, "Id", "Name", organization.registerId); // TEST
-            return View(organization);
+            return Redirect("/register/organisasjoner/" + organization.registerId);
         }
 
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
@@ -186,7 +186,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
                 return RedirectToAction("Edit");
             }
-            return View(organization);
+            return Redirect("/register/organisasjoner/" + organization.registerId);
         }
 
         // GET: Organizations/Delete/5

@@ -87,7 +87,9 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Redirect("/register/dokument/" + document.registerId);
+                //return RedirectToAction("Index");
             }
 
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
@@ -135,15 +137,17 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
+                document.modified = DateTime.Now;
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations, "submitterId", "name", document.submitterId);
             ViewBag.documentownerId = new SelectList(db.Organizations, "submitterId", "name", document.documentownerId);
-            return View(document);
+
+            return Redirect("/register/dokument/" + document.registerId);
+            //return View(document);
         }
 
         // GET: Documents/Delete/5
@@ -171,7 +175,7 @@ namespace Kartverket.Register.Controllers
             Document document = db.Documents.Find(id);
             db.RegisterItems.Remove(document);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/register/dokument/" + document.registerId);
         }
 
         protected override void Dispose(bool disposing)

@@ -67,8 +67,6 @@ namespace Kartverket.Register.Controllers
                 epsg.registerId = Guid.Parse(registerId);
                 epsg.statusId = "Submitted";
                 epsg.submitter = null;
-
-
                 epsg.inspireRequirementId = "Optional";
                 epsg.nationalRequirementId = "Optional";
                 epsg.nationalSeasRequirementId = "Optional";
@@ -84,7 +82,9 @@ namespace Kartverket.Register.Controllers
             //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            return View(epsg);
+            
+            return Redirect("/register/epsg/" + epsg.registerId);
+            //return View(epsg);
         }
 
         // GET: EPSGs/Edit/5
@@ -116,13 +116,15 @@ namespace Kartverket.Register.Controllers
         [Route("epsg/rediger/{name}/{id}")]
         //[ValidateAntiForgeryToken]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
-        public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
+        public ActionResult Edit(EPSG ePSG, string name, string id)
         {
             if (ModelState.IsValid)
-            {
+            {              
+                ePSG.modified = DateTime.Now;
+                
                 db.Entry(ePSG).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
@@ -130,8 +132,9 @@ namespace Kartverket.Register.Controllers
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            
-            return View(ePSG);
+
+            return Redirect("/register/epsg/" + ePSG.registerId);
+            //return View(ePSG);
         }
 
         // GET: EPSGs/Delete/5
@@ -159,7 +162,7 @@ namespace Kartverket.Register.Controllers
             EPSG ePSG = db.EPSGs.Find(id);
             db.RegisterItems.Remove(ePSG);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/register/epsg/" + ePSG.registerId);
         }
 
         protected override void Dispose(bool disposing)

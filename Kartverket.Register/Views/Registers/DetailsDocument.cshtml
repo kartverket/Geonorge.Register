@@ -84,13 +84,11 @@
             <p>
                 @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
                 <a href="/register/@Model.name/@Model.registerId">Tilbake</a>
-                @if (Session["role"] == "editor") { 
-                <span>|</span><a href="/dokument/rediger/@Html.ToUrl(Model.name)/@Model.systemId">Endre</a>
-                @*<a href="/organisasjoner/slett/@Html.ToUrl(Model.name)/@Model.systemId">Slett</a>*@
+                @if (Session["role"] == "editor")
+                {
+                    <span> | </span><a href="/dokument/rediger/@Html.ToUrl(Model.name)/@Model.systemId">Endre</a>
+                    <span> | </span><a href="/dokument/slett/@Html.ToUrl(Model.name)/@Model.systemId">Slett</a>
                 }
-
-
-
             </p>
         </div>
     </div>

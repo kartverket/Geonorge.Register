@@ -52,7 +52,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
         {
             if (ModelState.IsValid)
@@ -73,7 +73,8 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: EPSGs/Edit/5
-        public ActionResult Edit(Guid? id)
+        [Route("epsg/rediger/{name}/{id}")]
+        public ActionResult Edit(Guid? id, string name)
         {
             if (id == null)
             {
@@ -84,9 +85,9 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", ePSG.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
@@ -97,8 +98,10 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
+        [Route("epsg/rediger/{name}/{id}")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(EPSG ePSG, string name, string id)
+        //public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
         {
             if (ModelState.IsValid)
             {
@@ -106,17 +109,19 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", ePSG.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+            
             return View(ePSG);
         }
 
         // GET: EPSGs/Delete/5
-        public ActionResult Delete(Guid? id)
+        [Route("epsg/slett/{name}/{id}")]
+        public ActionResult Delete(Guid? id, string name)
         {
             if (id == null)
             {
@@ -132,8 +137,9 @@ namespace Kartverket.Register.Controllers
 
         // POST: EPSGs/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        [Route("epsg/slett/{name}/{id}")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id, string name)
         {
             EPSG ePSG = db.EPSGs.Find(id);
             db.RegisterItems.Remove(ePSG);

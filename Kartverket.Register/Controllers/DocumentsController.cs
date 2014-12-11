@@ -69,6 +69,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Documents/Edit/5
+        [Route("dokument/rediger/{name}/{id}")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -80,10 +81,10 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.RegisterItems, "systemId", "name", document.documentownerId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "submitterId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations, "submitterId", "name", document.documentownerId);
             return View(document);
         }
 
@@ -91,8 +92,9 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,thumbnail,documentownerId,document")] Document document)
+        [Route("dokument/rediger/{name}/{id}")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(Document document)
         {
             if (ModelState.IsValid)
             {
@@ -100,14 +102,15 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.RegisterItems, "systemId", "name", document.documentownerId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "submitterId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations, "submitterId", "name", document.documentownerId);
             return View(document);
         }
 
         // GET: Documents/Delete/5
+        [Route("dokument/slett/{name}/{id}")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -124,7 +127,8 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [Route("dokument/slett/{name}/{id}")]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
             Document document = db.Documents.Find(id);

@@ -186,7 +186,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Organizations/Delete/5
         [Route("organisasjoner/slett/{name}/{id}")]
-        public ActionResult Delete(string id)
+        public ActionResult Delete(string id, string name)
         {
             if (id == null)
             {

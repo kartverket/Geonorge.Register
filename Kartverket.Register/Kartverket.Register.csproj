@@ -362,9 +362,9 @@
     <Content Include="Views\Registers\EditEpsg.cshtml" />
     <Content Include="Views\Registers\EditSubregister.cshtml" />
     <Content Include="Views\Registers\EditDataset.cshtml" />
-    <None Include="Web.Dev.config">
+    <Content Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Views\EPSGs\Create.cshtml" />
     <Content Include="Views\EPSGs\Delete.cshtml" />
     <Content Include="Views\EPSGs\Details.cshtml" />
@@ -380,9 +380,9 @@
     <Content Include="Views\CodelistValues\Details.cshtml" />
     <Content Include="Views\CodelistValues\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Index.cshtml" />
-    <None Include="Web.Test.config">
+    <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

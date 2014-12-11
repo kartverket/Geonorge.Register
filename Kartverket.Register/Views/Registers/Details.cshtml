@@ -93,25 +93,28 @@
             @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
             @Html.ActionLink("Tilbake", "Index") |
             
-            @if (Model.containedItemClass == "Organization")
-            {
-                <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå nye @Model.name </a>
-            }
-            @if (Model.containedItemClass == "Document")
-            {
-                <a href="/register/@Model.systemId/dokument/ny">Foreslå nye @Model.name </a>
-            }
-            @if (Model.containedItemClass == "Dataset")
-            {
+            @if (Session["role"] == "editor")
+                            {
+                        if (Model.containedItemClass == "Organization")
+                        {
+                            <a href="/register/@Model.systemId/organisasjoner/ny">Foreslå nye @Model.name </a>
+                        }
+                        if (Model.containedItemClass == "Document")
+                        {
+                            <a href="/register/@Model.systemId/dokument/ny">Foreslå nye @Model.name </a>
+                        }
+                        if (Model.containedItemClass == "Dataset")
+                        {
           
-            }
-            @if (Model.containedItemClass == "EPSG")
-            {
-                <a href="/register/@Model.systemId/epsg/ny">Foreslå nye @Model.name </a>
-            }
-            @if (Model.containedItemClass == "Register")
-            {
+                        }
+                        if (Model.containedItemClass == "EPSG")
+                        {
+                            <a href="/register/@Model.systemId/epsg/ny">Foreslå nye @Model.name </a>
+                        }
+                        if (Model.containedItemClass == "Register")
+                        {
                
+                        }
             }
             
             

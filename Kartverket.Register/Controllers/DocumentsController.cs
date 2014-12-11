@@ -67,11 +67,11 @@ namespace Kartverket.Register.Controllers
                 document.documentowner = null;
                 document.documentownerId = null;
 
-                if (document.name == null || document.name.Length < 0)
+                if (document.name == null || document.name.Length == 0)
                 {
                     document.name = "ikke angitt";
                 }
-                if (document.description == null || document.description.Length < 0)
+                if (document.description == null || document.description.Length == 0)
                 {
                     document.description = "ikke angitt";
                 }
@@ -102,7 +102,7 @@ namespace Kartverket.Register.Controllers
         private string SaveFileToDisk(HttpPostedFileBase file, string submitter)
         {
             string filename = submitter + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);
             return filename;
         }
@@ -122,8 +122,8 @@ namespace Kartverket.Register.Controllers
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "submitterId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.Organizations, "submitterId", "name", document.documentownerId);
+            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", document.documentownerId);
             return View(document);
         }
 
@@ -133,18 +133,25 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dokument/rediger/{name}/{id}")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Document document)
+        public ActionResult Edit(Document document, string name, string id)
         {
             if (ModelState.IsValid)
             {
-                document.modified = DateTime.Now;
-                db.Entry(document).State = EntityState.Modified;
+                Document originalDocument = db.Documents.Find(Guid.Parse(id));
+                if (document.name != null) originalDocument.name = document.name;
+                if (document.description != null) originalDocument.description = document.description;
+                if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
+                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
+                if (document.statusId != null) originalDocument.statusId = document.statusId;
+                if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
+                originalDocument.modified = DateTime.Now;
+                db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();
+                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", originalDocument.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
+                ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "submitterId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.Organizations, "submitterId", "name", document.documentownerId);
 
             return Redirect("/register/dokument/" + document.registerId);
             //return View(document);

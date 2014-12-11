@@ -1,20 +1,20 @@
 ﻿﻿@using Kartverket.Register.Helpers
 @*Searchbar Dropdown with bootstrap.js*@
 <form action="~/search/" class="col-md-offset-2 col-md-8 searchbar">
-    <h1 class="h-md">Søk i registre</h1>
+    <h1 class="h-md">Søk i registrene</h1>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                <span>Registre</span>@*Set this to the text-property of the selected element (searchOptions.js).*@
+                <span>Registrene</span>@*Set this to the text-property of the selected element (searchOptions.js).*@
                 <div><span class="caret"></span></div>
             </button>
             <ul class="geonorge-dropdown dropdown-menu" id="search-dropdown" tabindex="-1">
                 <li tabindex="0" class="left-edge-geonorge"><a href="@Html.GeonorgeUrl()">Søk i Alt</a></li>
                 <li tabindex="0" class="left-edge-artikler"><a href="@Html.GeonorgeArtiklerUrl()">Artikler og Dokumenter</a></li>
                 <li tabindex="0" class="left-edge-kartkatalogen"><a href="@Html.KartkatalogenUrl()">Kartkatalogen</a></li>
-                <li tabindex="0" class="left-edge-norgeskart"><a href="@Html.NorgeskartUrl()">Norgeskart</a></li>
-                <li tabindex="0" class="left-edge-registre"><a href="">Registre</a></li>
+                <li tabindex="0" class="left-edge-norgeskart"><a href="@Html.NorgeskartUrl()">Kartet</a></li>
+                <li tabindex="0" class="left-edge-registre"><a href="">Registrene</a></li>
                 <li tabindex="0" class="left-edge-objektkatalogen"><a href="@Html.ObjektkatalogUrl()">Objektkatalogen</a></li>
             </ul>
         </div><!-- /input-group-btn -->

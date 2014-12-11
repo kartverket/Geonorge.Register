@@ -1,7 +1,7 @@
 ﻿@font-face {
   font-family: 'Meta Book';
   src: url('/Content/fonts/MetaWeb-Book.eot');
-  src: local('☺'), url('/Content/fonts/MetaWeb-Book.woff') format('woff'), url('/fonts/MetaComp-Book.ttf') format('truetype');
+  src: local('☺'), url('/Content/fonts/MetaWeb-Book.woff') format('woff'), url('/Content/fonts/MetaComp-Book.ttf') format('truetype');
 }
 .geonorge-container .searchbar {
   margin-bottom: 30px;

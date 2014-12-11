@@ -243,6 +243,10 @@
     <Compile Include="Migrations\201412100956424_addEpsgRequirements.Designer.cs">
       <DependentUpon>201412100956424_addEpsgRequirements.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201412111315404_changedNameEpsgAttDocumentAtt.cs" />
+    <Compile Include="Migrations\201412111315404_changedNameEpsgAttDocumentAtt.Designer.cs">
+      <DependentUpon>201412111315404_changedNameEpsgAttDocumentAtt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -309,6 +313,7 @@
     <Content Include="Content\fonts\statusicon.eot" />
     <Content Include="Content\fonts\statusicon.ttf" />
     <Content Include="Content\fonts\statusicon.woff" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -447,6 +452,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412100956424_addEpsgRequirements.resx">
       <DependentUpon>201412100956424_addEpsgRequirements.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201412111315404_changedNameEpsgAttDocumentAtt.resx">
+      <DependentUpon>201412111315404_changedNameEpsgAttDocumentAtt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

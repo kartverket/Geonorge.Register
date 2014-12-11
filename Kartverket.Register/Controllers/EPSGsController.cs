@@ -55,20 +55,27 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("register/{registerId}/epsg/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(EPSG ePSG, string registerId)
+        public ActionResult Create(EPSG epsg, string registerId)
         {           
 
             if (ModelState.IsValid)
             {
-                ePSG.systemId = Guid.NewGuid();
-                ePSG.modified = DateTime.Now;
-                ePSG.dateSubmitted = DateTime.Now;
-                ePSG.registerId = Guid.Parse(registerId);
-                ePSG.statusId = "Submitted";
-                ePSG.submitter = null;
 
-                db.RegisterItems.Add(ePSG);
+                epsg.systemId = Guid.NewGuid();
+                epsg.modified = DateTime.Now;
+                epsg.dateSubmitted = DateTime.Now;
+                epsg.registerId = Guid.Parse(registerId);
+                epsg.statusId = "Submitted";
+                epsg.submitter = null;
+
+
+                epsg.inspireRequirementId = "Optional";
+                epsg.nationalRequirementId = "Optional";
+                epsg.nationalSeasRequirementId = "Optional";
+
+                db.RegisterItems.Add(epsg);
                 db.SaveChanges();
+
             }
 
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
@@ -77,7 +84,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            return View(ePSG);
+            return View(epsg);
         }
 
         // GET: EPSGs/Edit/5
@@ -108,8 +115,8 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("epsg/rediger/{name}/{id}")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(EPSG ePSG, string name, string id)
-        //public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
+        //public ActionResult Edit(EPSG ePSG, string name, string id)
+        public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
         {
             if (ModelState.IsValid)
             {

@@ -7,7 +7,7 @@
 
 <h2>Foreslå nytt dokument</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @*@Html.AntiForgeryToken()*@
     
@@ -96,12 +96,20 @@
         </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.document, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.documentUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.document, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.document, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.documentUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.document, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="document" />
+                @Html.ValidationMessageFor(model => model.document, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

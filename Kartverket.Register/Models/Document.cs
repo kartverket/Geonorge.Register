@@ -19,9 +19,9 @@ namespace Kartverket.Register.Models
 
         public string thumbnail { get; set; }
         [ForeignKey("documentowner")]
-        public Guid documentownerId { get; set; }
+        public Guid? documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
-        public string document { get; set; }
+        public string documentUrl { get; set; }
 
 		
 

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -53,7 +54,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("register/{registerId}/dokument/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Document document, string registerId)
+        public ActionResult Create(Document document, string registerId, HttpPostedFileBase documentfile)
         {
             if (ModelState.IsValid)
             {
@@ -63,19 +64,24 @@ namespace Kartverket.Register.Controllers
                 document.registerId = Guid.Parse(registerId);
                 document.statusId = "Submitted";
                 document.submitter = null;
-                //document.documentowner = null;
+                document.documentowner = null;
+                document.documentownerId = null;
 
-                if (document.name == null || document.name.Length > 0)
+                if (document.name == null || document.name.Length < 0)
                 {
                     document.name = "ikke angitt";
                 }
-                if (document.description == null || document.description.Length > 0)
+                if (document.description == null || document.description.Length < 0)
                 {
                     document.description = "ikke angitt";
                 }
-                if (document.document == null || document.document.Length > 0) 
+                //if (document.documentUrl == null || document.documentUrl.Length < 0) 
+                //{
+                //    document.documentUrl = "ikke angitt";
+                //}
+                if (documentfile != null)
                 {
-                    document.document = "ikke angitt";
+                    document.documentUrl = SaveFileToDisk(documentfile, document.name);
                 }
                 
 
@@ -89,6 +95,14 @@ namespace Kartverket.Register.Controllers
             //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", document.submitterId);
             //ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", document.documentownerId);
             return View(document);
+        }
+
+        private string SaveFileToDisk(HttpPostedFileBase file, string submitter)
+        {
+            string filename = submitter + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            file.SaveAs(path);
+            return filename;
         }
 
         // GET: Documents/Edit/5

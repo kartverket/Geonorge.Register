@@ -20,7 +20,7 @@ namespace Kartverket.Register.Models
 	public class EPSG : RegisterItem {
 
         [Display(Name = "EPSG:")]
-        public string epsg { get; set; }
+        public string epsgcode { get; set; }
         [Display(Name = "SOSI referansesystem:")]
         public string sosiReferencesystem { get; set; }
         [Display(Name = "Ekstern referanser:")]

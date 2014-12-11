@@ -194,7 +194,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "Produktspesifikasjon for løsmasser",
                     description = "Datagrunnlaget for tema jordarter er basert på innholdet i kvartærgeologiske kart (løsmassekart), som foreligger analogt i flere målestokker (fra 1:20.000 til 1:250.000), og digital kartlegging.",
-                    document = "http://www.ngu.no/upload/Aktuelt/Produktspesifikasjon_LosmasseN250_N50.pdf",
+                    documentUrl = "http://www.ngu.no/upload/Aktuelt/Produktspesifikasjon_LosmasseN250_N50.pdf",
                     documentownerId = Guid.Parse("D7142A92-418E-487E-A6FF-0E32C6AE31D8")
                 },
                 new Document
@@ -205,7 +205,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "Produktspesifikasjon for primærdata kystkontur",
                     description = "Primærdata kystkontur definerer grense mellom sjø og land til bruk i alle Statens kartverks produkter",
-                    document = "http://kartverket.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/Produktspesifikasjoner%20-%20SOSI%20del%203/Produktspesifikasjon_Primrdatakyst_v1.pdf",
+                    documentUrl = "http://kartverket.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/Produktspesifikasjoner%20-%20SOSI%20del%203/Produktspesifikasjon_Primrdatakyst_v1.pdf",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
                 },
                 new Document
@@ -216,7 +216,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "Flomsoner",
                     description = "Flomsoner viser arealer som oversvømmes ved ulike flomstørrelser (gjentaksintervall). Det blir utarbeidet flomsoner for 20-, 200- og 1000-årsflommene. I områder der klimaendringene gir en forventet økning i vannføringen på mer enn 20 %, utarbeides det flomsone for 200-årsflommen i år 2100.",
-                    document = "http://gis3.nve.no/metadata/produktark/produktark_flomsone.pdf",
+                    documentUrl = "http://gis3.nve.no/metadata/produktark/produktark_flomsone.pdf",
                     documentownerId = Guid.Parse("DD34C8CA-5E5C-4CFD-9B25-AFEADD1BCBFF")
                 },
                 new Document
@@ -227,7 +227,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "Naturvernområder",
                     description = "Datasettet inneholder verneområder og vernede enkeltobjekt i Norge, herunder Svalbard og Jan Mayen. Datasettet gir en oversikt over hvilke områder som er vernet etter følgende lover: naturmangfoldloven av 2009, biotopvern etter viltloven av 1981, naturvernloven av 1970, lov om naturvern av 1954, lov om Jan Mayen av 1930 og lov om naturfredning av 1910. I tillegg inneholder det områder vernet etter følgende lovverk på Svalbard: Svalbardloven av 1925 og Svalbardmiljøloven av 2002. Datasettet gir også tilgang til lovforskriften som gjelder for hvert enkelt vernevedtak.",
-                    document = "http://kartverket.no/Documents/Geonorge/Produktark%20og%20presentasjonsregler/Produktark_MDIR_Naturvernomr%C3%A5der_2014.pdf",
+                    documentUrl = "http://kartverket.no/Documents/Geonorge/Produktark%20og%20presentasjonsregler/Produktark_MDIR_Naturvernomr%C3%A5der_2014.pdf",
                     documentownerId = Guid.Parse("DD34C8CA-5E5C-4CFD-9B25-AFEADD1BCBFF")
                 },
                 new Document
@@ -238,7 +238,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "N5 raster",
                     description = "Informasjon lik kartene i Økonomisk kartverk. Symboler, linjer og tekst med samme form som på kartene. Informasjonen forefinnes som et rasterlag pr. kartblad.Datamengde ca. 1 Mb pr. kartblad i TIFFformat i s/h.Datamengde ca. 8 Mb pr. kartblad i PNGformat i farge.",
-                    document = "http://www.kartverket.no/Documents/N5-Tegnforklaring.pdf",
+                    documentUrl = "http://www.kartverket.no/Documents/N5-Tegnforklaring.pdf",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
                 },
 
@@ -248,9 +248,9 @@ namespace Kartverket.Register.Migrations
                     registerId = gmlApplikasjonsskjema.systemId,
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
-                    name = "IStedsnavn",
+                    name = "Stedsnavn",
                     description = "...",
-                    document = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/Stedsnavn/4.5/Stedsnavn.xsd",
+                    documentUrl = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/Stedsnavn/4.5/Stedsnavn.xsd",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
                 },
 
@@ -262,7 +262,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "AdmEnheterNorge",
                     description = "...",
-                    document = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/AdmEnheterNorge/3.0/AdmEnheterNorge.xsd",
+                    documentUrl = "http://skjema.geonorge.no/SOSI/produktspesifikasjon/AdmEnheterNorge/3.0/AdmEnheterNorge.xsd",
                     documentownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
                 }
             );
@@ -277,7 +277,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "UTM sone 29,basert på EUREF89 (ETRS89/UTM), 2d",
                     description = " ... ",
-                    epsg = "EPSG::25829",
+                    epsgcode = "EPSG::25829",
                     sosiReferencesystem = "19",
                     submitterId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
@@ -290,7 +290,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "UTM sone 30,basert på EUREF89 (ETRS89/UTM), 2d ",
                     description = " ... ",
-                    epsg = "EPSG::25830",
+                    epsgcode = "EPSG::25830",
                     sosiReferencesystem = "20",
                     submitterId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-30n/"
@@ -303,7 +303,7 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     name = "UTM sone 29,basert på EUREF89 (ETRS89/UTM), 2d ",
                     description = " ... ",
-                    epsg = "EPSG::25829",
+                    epsgcode = "EPSG::25829",
                     sosiReferencesystem = "19",
                     submitterId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"

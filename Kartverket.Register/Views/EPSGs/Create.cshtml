@@ -1,5 +1,4 @@
 ﻿@model Kartverket.Register.Models.EPSG
-
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -8,7 +7,7 @@
 
 <h2>Foreslå ny EPSG</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "EPSGs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @*@Html.AntiForgeryToken()*@
     

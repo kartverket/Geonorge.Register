@@ -52,7 +52,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("register/{registerId}/organisasjoner/ny")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registerId)
         {
             if (ModelState.IsValid)
@@ -145,7 +145,11 @@ namespace Kartverket.Register.Controllers
             if (ModelState.IsValid)
             {
                 Organization originalOrganization = db.Organizations.Find(Guid.Parse(id));
-                
+
+                if (organization.name != null)
+                {
+                    originalOrganization.name = organization.name;
+                }
                 if (submitterId != null)
                 {
                     originalOrganization.submitterId = organization.submitterId;
@@ -174,7 +178,8 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
-                
+
+                originalOrganization.modified = DateTime.Now;               
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
@@ -203,7 +208,7 @@ namespace Kartverket.Register.Controllers
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
         [Route("organisasjoner/slett/{name}/{id}")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Organization organization, Guid id, string name)
         {
             Organization originalOrganization = db.Organizations.Find(id);

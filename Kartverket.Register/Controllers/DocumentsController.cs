@@ -37,12 +37,13 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Documents/Create
-        public ActionResult Create()
+        [Route("register/{registerId}/dokument/ny")]
+        public ActionResult Create(string registerId)
         {
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
-            ViewBag.documentownerId = new SelectList(db.RegisterItems, "systemId", "name");
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name");
+            //ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name");
             return View();
         }
 
@@ -50,21 +51,43 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,thumbnail,documentownerId,document")] Document document)
+        [Route("register/{registerId}/dokument/ny")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create(Document document, string registerId)
         {
             if (ModelState.IsValid)
             {
                 document.systemId = Guid.NewGuid();
+                document.modified = DateTime.Now;
+                document.dateSubmitted = DateTime.Now;
+                document.registerId = Guid.Parse(registerId);
+                document.statusId = "Submitted";
+                document.submitter = null;
+                //document.documentowner = null;
+
+                if (document.name == null || document.name.Length > 0)
+                {
+                    document.name = "ikke angitt";
+                }
+                if (document.description == null || document.description.Length > 0)
+                {
+                    document.description = "ikke angitt";
+                }
+                if (document.document == null || document.document.Length > 0) 
+                {
+                    document.document = "ikke angitt";
+                }
+                
+
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.RegisterItems, "systemId", "name", document.documentownerId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
+            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", document.submitterId);
+            //ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", document.documentownerId);
             return View(document);
         }
 

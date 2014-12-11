@@ -58,7 +58,7 @@
         </div>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.statusId, "statusId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.statusId, "Status:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
@@ -106,7 +106,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.inspireRequirementId, "inspireRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.inspireRequirementId, "Inspirekrav:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("inspireRequirementId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.inspireRequirementId, "", new { @class = "text-danger" })
@@ -122,7 +122,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nationalRequirementId, "nationalRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.nationalRequirementId, "Nasjonale krav:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("nationalRequirementId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.nationalRequirementId, "", new { @class = "text-danger" })
@@ -138,7 +138,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nationalSeasRequirementId, "nationalSeasRequirementId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.nationalSeasRequirementId, "Nasjonale krav for havområder:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("nationalSeasRequirementId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.nationalSeasRequirementId, "", new { @class = "text-danger" })

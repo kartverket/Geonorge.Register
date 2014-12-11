@@ -37,14 +37,15 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: EPSGs/Create
-        public ActionResult Create()
+        [Route("register/{registerId}/epsg/ny")]
+        public ActionResult Create(string registerId)
         {
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
-            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description");
-            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description");
-            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description");
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name");
+            //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description");
+            //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description");
+            //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description");
             return View();
         }
 
@@ -52,23 +53,30 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("register/{registerId}/epsg/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,epsg,sosiReferencesystem,externalReference,inspireRequirementId,inspireRequirementDescription,nationalRequirementId,nationalRequirementDescription,nationalSeasRequirementId,nationalSeasRequirementDescription")] EPSG ePSG)
-        {
+        public ActionResult Create(EPSG ePSG, string registerId)
+        {           
+
             if (ModelState.IsValid)
             {
                 ePSG.systemId = Guid.NewGuid();
+                ePSG.modified = DateTime.Now;
+                ePSG.dateSubmitted = DateTime.Now;
+                ePSG.registerId = Guid.Parse(registerId);
+                ePSG.statusId = "Submitted";
+                ePSG.submitter = null;
+
                 db.RegisterItems.Add(ePSG);
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", ePSG.submitterId);
-            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
+            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
+            //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
+            //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
+            //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
             return View(ePSG);
         }
 

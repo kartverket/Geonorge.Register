@@ -25,19 +25,22 @@ namespace Kartverket.Register.Models
         public string sosiReferencesystem { get; set; }
         [Display(Name = "Ekstern referanser:")]
         public string externalReference { get; set; }
-        [ForeignKey("inspireRequirement")]       
+        [ForeignKey("inspireRequirement")]
+        [Display(Name = "Inspirekrav:")]
         public string inspireRequirementId { get; set; }
         [Display(Name = "Inspirekrav:")]
         public virtual Requirement inspireRequirement { get; set; }
         [Display(Name = "Beskrivelse av krav:")]
         public string inspireRequirementDescription { get; set; }
         [ForeignKey("nationalRequirement")]
+        [Display(Name = "Nasjonale krav:")]
         public string nationalRequirementId { get; set; }
         [Display(Name = "Nasjonale krav:")]
         public virtual Requirement nationalRequirement { get; set; }
         [Display(Name = "Beskrivelse av krav:")]
         public string nationalRequirementDescription { get; set; }
         [ForeignKey("nationalSeasRequirement")]
+        [Display(Name = "Nasjonale krav for havområder:")]
         public string nationalSeasRequirementId { get; set; }
         [Display(Name = "Nasjonale krav for havområder:")]
         public virtual Requirement nationalSeasRequirement { get; set; }

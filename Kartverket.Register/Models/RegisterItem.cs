@@ -32,13 +32,14 @@ namespace Kartverket.Register.Models
         public string name { get; set; }
         [Display(Name = "Beskrivelse:")]
         public string description { get; set; }
-        [Display(Name = "Innsender:")]
         [ForeignKey("submitter")]
+        [Display(Name = "Innsender:")]
         public Guid? submitterId { get; set; }
         public virtual Organization submitter { get; set; }
         public DateTime dateSubmitted { get; set; }
         public DateTime modified { get; set; }
         [ForeignKey("status")]
+        [Display(Name = "Status:")]
         public string statusId { get; set; }
         public virtual Status status { get; set; }
         public DateTime? dateAccepted { get; set; }

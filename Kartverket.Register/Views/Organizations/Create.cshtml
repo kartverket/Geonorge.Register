@@ -5,7 +5,7 @@
     ViewBag.Title = UI.CreateNew;
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Foreslå ny organisasjon</h2>
 
 
 @using (Html.BeginForm("Create", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" })) 
@@ -73,7 +73,7 @@
 }
 
 <div>
-    <a href="/register/organisasjoner/fcb0685d-24eb-4156-9ac8-25fa30759094">Tilbake</a>  @*TODO!! @Model.registerId*@  
+    <a href="/register/organisasjoner/fcb0685d-24eb-4156-9ac8-25fa30759094">Tilbake</a> @*TODO!! @model.registerId ??   *@ 
 </div>
 
 @section Scripts {

@@ -99,7 +99,7 @@
             }
             @if (Model.containedItemClass == "Document")
             {
-               
+                <a href="/register/@Model.systemId/dokument/ny">Foreslå nye @Model.name </a>
             }
             @if (Model.containedItemClass == "Dataset")
             {
@@ -107,7 +107,7 @@
             }
             @if (Model.containedItemClass == "EPSG")
             {
-
+                <a href="/register/@Model.systemId/epsg/ny">Foreslå nye @Model.name </a>
             }
             @if (Model.containedItemClass == "Register")
             {

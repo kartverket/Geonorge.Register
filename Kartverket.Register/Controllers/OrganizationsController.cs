@@ -16,7 +16,7 @@ namespace Kartverket.Register.Controllers
         // GET: Organizations
         public ActionResult Index()
         {
-            return View(db.Organizations.ToList());
+            return View(db.Organizations.OrderBy(o => o.name).ToList());
         }
 
         // GET: Organizations/Details/5
@@ -110,8 +110,8 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
             return View(organization);
         }
 
@@ -127,8 +127,8 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
             return View(organization);
         }
 
@@ -182,8 +182,8 @@ namespace Kartverket.Register.Controllers
                 originalOrganization.modified = DateTime.Now;               
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s=>s.description), "value", "description", organization.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
                 return RedirectToAction("Edit");
             }
             return Redirect("/register/organisasjoner/" + organization.registerId);

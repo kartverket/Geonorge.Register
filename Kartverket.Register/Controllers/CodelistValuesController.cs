@@ -41,7 +41,7 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name");
             return View();
         }
 
@@ -62,7 +62,7 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", codelistValue.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", codelistValue.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", codelistValue.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
             return View(codelistValue);
         }
 
@@ -80,7 +80,7 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", codelistValue.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", codelistValue.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", codelistValue.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
             return View(codelistValue);
         }
 
@@ -99,7 +99,7 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", codelistValue.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", codelistValue.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", codelistValue.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
             return View(codelistValue);
         }
 

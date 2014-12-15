@@ -66,23 +66,23 @@
 
         @if (Model.containedItemClass == "Organization")
         {
-            @Html.Partial("_organization", Model.items)
+            @Html.Partial("_organization", Model.items.OrderBy(i=>i.name))
         }
         @if (Model.containedItemClass == "Document")
         {
-            @Html.Partial("_documents", Model.items)
+            @Html.Partial("_documents", Model.items.OrderBy(i => i.name))
         }
         @if (Model.containedItemClass == "Dataset")
         {
-            @Html.Partial("_dataset", Model.items)
+            @Html.Partial("_dataset", Model.items.OrderBy(i => i.name))
         }
         @if (Model.containedItemClass == "EPSG")
         {
-            @Html.Partial("_epsg", Model.items)
+            @Html.Partial("_epsg", Model.items.OrderBy(i => i.name))
         }
         @if (Model.containedItemClass == "Register")
         {
-            @Html.Partial("_subregister", Model.subregisters)
+            @Html.Partial("_subregister", Model.subregisters.OrderBy(i => i.name))
         }
 
     </div>

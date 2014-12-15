@@ -313,7 +313,6 @@
     <Content Include="Content\fonts\statusicon.eot" />
     <Content Include="Content\fonts\statusicon.ttf" />
     <Content Include="Content\fonts\statusicon.woff" />
-    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="readme.txt" />
     <Content Include="Scripts\bootstrap.js" />

@@ -121,9 +121,9 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", document.documentownerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
             return View(document);
         }
 
@@ -147,7 +147,7 @@ namespace Kartverket.Register.Controllers
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", originalDocument.statusId);
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDocument.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
             }

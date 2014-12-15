@@ -102,7 +102,7 @@ namespace Kartverket.Register.Controllers
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
@@ -128,7 +128,7 @@ namespace Kartverket.Register.Controllers
             }
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);

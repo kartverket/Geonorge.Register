@@ -36,7 +36,8 @@ namespace Kartverket.Register.Migrations
                 new Requirement { value = "Mandatory", description = "Påkrevd" },
                 new Requirement { value = "Conditional", description = "Betinget" },
                 new Requirement { value = "Recommended", description = "Anbefalt" },
-                new Requirement { value = "Optional", description = "Valgfritt" }      
+                new Requirement { value = "Optional", description = "Valgfritt" },
+                new Requirement { value = "Notset", description = "Ikke angitt" }     
             );
 
             context.DOKThemes.AddOrUpdate(

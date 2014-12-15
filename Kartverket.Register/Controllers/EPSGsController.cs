@@ -67,9 +67,9 @@ namespace Kartverket.Register.Controllers
                 epsg.registerId = Guid.Parse(registerId);
                 epsg.statusId = "Submitted";
                 epsg.submitter = null;
-                epsg.inspireRequirementId = "Optional";
-                epsg.nationalRequirementId = "Optional";
-                epsg.nationalSeasRequirementId = "Optional";
+                epsg.inspireRequirementId = "Notset";
+                epsg.nationalRequirementId = "Notset";
+                epsg.nationalSeasRequirementId = "Notset";
 
                 db.RegisterItems.Add(epsg);
                 db.SaveChanges();
@@ -118,11 +118,28 @@ namespace Kartverket.Register.Controllers
         //public ActionResult Edit(EPSG ePSG, string name, string id)
         public ActionResult Edit(EPSG ePSG, string name, string id)
         {
+            EPSG originalEPSG = db.EPSGs.Find(Guid.Parse(id));
+
             if (ModelState.IsValid)
-            {              
-                ePSG.modified = DateTime.Now;
+            {
                 
-                db.Entry(ePSG).State = EntityState.Modified;
+                if (ePSG.name != null) originalEPSG.name = ePSG.name;
+
+                if (ePSG.description != null) originalEPSG.description = ePSG.description;
+                if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
+                if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
+                if (ePSG.epsgcode != null) originalEPSG.epsgcode = ePSG.epsgcode;
+                if (ePSG.sosiReferencesystem != null) originalEPSG.sosiReferencesystem = ePSG.sosiReferencesystem;
+                if (ePSG.externalReference != null) originalEPSG.externalReference = ePSG.externalReference;
+                if (ePSG.inspireRequirementId != null) originalEPSG.inspireRequirementId = ePSG.inspireRequirementId;
+                if (ePSG.inspireRequirementDescription != null) originalEPSG.inspireRequirementDescription = ePSG.inspireRequirementDescription;
+                if (ePSG.nationalRequirementId != null) originalEPSG.nationalRequirementId = ePSG.nationalRequirementId;
+                if (ePSG.nationalRequirementDescription != null) originalEPSG.nationalRequirementDescription = ePSG.nationalRequirementDescription;
+                if (ePSG.nationalSeasRequirementId != null) originalEPSG.nationalSeasRequirementId = ePSG.nationalSeasRequirementId;
+                if (ePSG.nationalSeasRequirementDescription != null) originalEPSG.nationalSeasRequirementDescription = ePSG.nationalSeasRequirementDescription;
+                                                                            
+                originalEPSG.modified = DateTime.Now;
+                db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();
 
             }
@@ -133,7 +150,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
 
-            return Redirect("/register/epsg/" + ePSG.registerId);
+            return Redirect("/register/epsg/" + originalEPSG.registerId);
             //return View(ePSG);
         }
 

@@ -54,7 +54,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("register/{registerId}/dokument/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Document document, string registerId, HttpPostedFileBase documentfile)
+        public ActionResult Create(Document document, string registerId, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             if (ModelState.IsValid)
             {
@@ -79,9 +79,16 @@ namespace Kartverket.Register.Controllers
                 //{
                 //    document.documentUrl = "ikke angitt";
                 //}
+
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 if (documentfile != null)
                 {
-                    document.documentUrl = SaveFileToDisk(documentfile, document.name);
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+                }
+
+                if (thumbnail != null)
+                {
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
                 }
                 
 
@@ -133,7 +140,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dokument/rediger/{name}/{id}")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Document document, string name, string id)
+        public ActionResult Edit(Document document, string name, string id, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             if (ModelState.IsValid)
             {
@@ -144,6 +151,19 @@ namespace Kartverket.Register.Controllers
                 if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
                 if (document.statusId != null) originalDocument.statusId = document.statusId;
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
+
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+                if (documentfile != null)
+                {
+                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
+                }
+
+                if (thumbnail != null)
+                {
+                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
+                }
+
+
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();

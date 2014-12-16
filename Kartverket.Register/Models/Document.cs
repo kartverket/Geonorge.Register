@@ -20,7 +20,7 @@ namespace Kartverket.Register.Models
         // logos will be stored in this directory
         public const string DataDirectory = "documents/";
 
-        [Display(Name = "Forside:")]
+        [Display(Name = "Thumbnail:")]
         public string thumbnail { get; set; }
         [Display(Name = "Dokumenteier:")]
         [ForeignKey("documentowner")]

@@ -11,7 +11,15 @@
     <div class="row result-row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="hidden-xs col-sm-1 col-md-1 col-lg-1 top-padding">
-                <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="~/Content/pdf.jpg" class="img-responsive center-block" alt="forside pdf" /></a>
+                @{
+                    string thumb = "/Content/pdf.jpg";
+                    if (item.thumbnail != null)
+                    {
+                        thumb = item.thumbnail;
+                    }
+                }
+                <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block" alt="forside pdf" /></a>
+
             </div>
             <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
                 <h4 class="role-button" role="button">

@@ -7,7 +7,7 @@
 
 <h2>Endre</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @*@Html.AntiForgeryToken()*@
     
@@ -95,6 +95,21 @@
             <div class="col-md-10">
                 @Html.DropDownList("documentownerId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.documentownerId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="thumbnail" />@Model.thumbnail
+                @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="documentfile">Dokument-fil</label>
+            <div class="col-md-10">
+                <input type="file" name="documentfile" />
             </div>
         </div>
 

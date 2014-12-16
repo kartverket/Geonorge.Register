@@ -131,6 +131,9 @@ UpgradeLog*.htm
 App_Data/*.mdf
 App_Data/*.ldf
 
+# uploaded files
+data/
+
 
 #LightSwitch generated files
 GeneratedArtifacts/

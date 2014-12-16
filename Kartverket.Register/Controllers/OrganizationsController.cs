@@ -115,8 +115,8 @@ namespace Kartverket.Register.Controllers
             return View(organization);
         }
 
-        [Route("organisasjoner/rediger/{name}/{id}")]
-        public ActionResult Edit(string name, Guid? id)
+        [Route("organisasjoner/rediger/{seoname}/{id}")]
+        public ActionResult Edit(string seoname, Guid? id)
         {
             if (id == null)
             {
@@ -137,10 +137,10 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("organisasjoner/rediger/{name}/{id}")]
+        [Route("organisasjoner/rediger/{seoname}/{id}")]
         //[ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id)
+        public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id,string seoname)
         {
             if (ModelState.IsValid)
             {

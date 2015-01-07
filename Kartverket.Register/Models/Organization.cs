@@ -33,6 +33,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "Kontaktperson:")]
         public string contact { get; set; }
 
+        [Display(Name = "Kortnavn:")]
+        public string shortname { get; set; }
+
 	}//end Organization
 
 }//end namespace Datamodell

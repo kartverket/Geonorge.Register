@@ -47,6 +47,29 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
+
+        //private string GetSecurityClaim(string type)
+        //{
+        //    string result = null;
+        //    foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+        //    {
+        //        if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+        //        {
+        //            result = claim.Value;
+        //            break;
+        //        }
+        //    }
+
+        //    // bad hack, must fix BAAT
+        //    if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+        //    {
+        //        result = "Kartverket";
+        //    }
+
+        //    return result;
+        //}
+
+        
         // POST: Organizations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -57,6 +80,8 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
+                //string organisasjonLogginn = GetSecurityClaim("organization");
+                
                 organization.systemId = Guid.NewGuid();
                 //organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
                 //organization.name = name;
@@ -70,6 +95,7 @@ namespace Kartverket.Register.Controllers
                 organization.registerId = Guid.Parse(registerId);
                 organization.statusId = "Submitted";
                 organization.submitter = null;
+                
 
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)

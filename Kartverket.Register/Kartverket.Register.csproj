@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201412111315404_changedNameEpsgAttDocumentAtt.Designer.cs">
       <DependentUpon>201412111315404_changedNameEpsgAttDocumentAtt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501071031570_addShortname.cs" />
+    <Compile Include="Migrations\201501071031570_addShortname.Designer.cs">
+      <DependentUpon>201501071031570_addShortname.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -454,6 +458,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201412111315404_changedNameEpsgAttDocumentAtt.resx">
       <DependentUpon>201412111315404_changedNameEpsgAttDocumentAtt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501071031570_addShortname.resx">
+      <DependentUpon>201501071031570_addShortname.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -20,8 +20,8 @@
 
         <div class="form-group">
             <label class="control-label col-md-2" for="SubmitterID">Innsender: </label>
-            <div class="col-md-10">
-                @Html.DropDownList("SubmitterID")
+            <div class="col-md-10">                               
+                @Html.DropDownList("SubmitterID", String.Empty)
                 @Html.ValidationMessageFor(model => model.submitterId)
             </div>
         </div>

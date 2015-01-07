@@ -42,8 +42,11 @@ namespace Kartverket.Register.Models
         [ForeignKey("status")]
         public string statusId { get; set; }
         public virtual Status status { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
         public string containedItemClass { get; set; }
         public virtual ICollection<RegisterItem> items { get; set; }

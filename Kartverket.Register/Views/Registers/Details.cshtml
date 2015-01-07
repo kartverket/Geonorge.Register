@@ -26,7 +26,7 @@
         {
             <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }*@
-        @if (Model.manager == null)
+        @*@if (Model.manager == null)
         {
             <span>Administrator: Ikke angitt</span><br />
         }
@@ -49,7 +49,7 @@
         else
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-        }
+        }*@
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">

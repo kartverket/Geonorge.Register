@@ -35,8 +35,10 @@ namespace Kartverket.Register.Models
         [ForeignKey("submitter")]
         [Display(Name = "Innsender:")]
         public Guid? submitterId { get; set; }
-        public virtual Organization submitter { get; set; }
+        public virtual Organization submitter { get; set; }       
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
         [ForeignKey("status")]
         [Display(Name = "Status:")]

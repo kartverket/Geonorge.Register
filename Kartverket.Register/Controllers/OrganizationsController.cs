@@ -80,7 +80,15 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
-                //string organisasjonLogginn = GetSecurityClaim("organization");
+                
+                
+                
+                
+                //string organizationLogin = GetSecurityClaim("organization");
+                
+
+
+
                 
                 organization.systemId = Guid.NewGuid();
                 //organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
@@ -95,6 +103,8 @@ namespace Kartverket.Register.Controllers
                 organization.registerId = Guid.Parse(registerId);
                 organization.statusId = "Submitted";
                 organization.submitter = null;
+                
+                
                 
 
 

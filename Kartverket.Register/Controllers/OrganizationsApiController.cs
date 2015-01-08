@@ -43,7 +43,8 @@ namespace Kartverket.Register.Controllers
             {
                 Name = organization.name,
                 Number = organization.number,
-                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.logoFilename
+                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.logoFilename,
+                LogoLargeUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.largeLogo
             };
         }
     }

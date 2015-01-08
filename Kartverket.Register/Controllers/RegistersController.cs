@@ -23,7 +23,6 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        //[Route("register/{name}")]
         [Route("register/{name}/{id}")]
         public ActionResult Details(string name, Guid? id)
         {
@@ -38,6 +37,8 @@ namespace Kartverket.Register.Controllers
             }
             return View(register);
         }
+
+
 
         [Route("organisasjoner/{name}/{id}")]
         public ActionResult DetailsOrganization(string name, Guid? id)
@@ -54,6 +55,7 @@ namespace Kartverket.Register.Controllers
             return View(organization);
         }
 
+        
         [Route("dokument/{name}/{id}")]
         public ActionResult DetailsDocument(string name, Guid? id)
         {

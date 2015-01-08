@@ -292,9 +292,6 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\fonts\statusicon.svg" />
     <Content Include="Content\geonorge-default.css" />
-    <Content Include="Content\img\favicon.ico" />
-    <Content Include="Content\img\kvlogo_col.png" />
-    <Content Include="Content\img\logo-graphic-512.png" />
     <Content Include="Content\kartverket_logo.png" />
     <Content Include="Content\logo_kartverket_norgedigitalt.png" />
     <Content Include="Content\navbar.css" />
@@ -394,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

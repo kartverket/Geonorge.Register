@@ -14,7 +14,7 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         // GET: Organizations
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             return View(db.Organizations.OrderBy(o => o.name).ToList());
         }
@@ -40,6 +40,7 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
+        //[Route("register/organisasjoner/ny")]
         [Route("register/{registerId}/organisasjoner/ny")]
         public ActionResult Create(string registerId)
         {
@@ -74,6 +75,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        //[Route("register/{name}/organisasjoner/ny")]
         [Route("register/{registerId}/organisasjoner/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registerId)
@@ -123,6 +125,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);
             //ViewBag.submitterId = new SelectList(db.Organizations, "SystemId", "name", organization.submitterId);
             //ViewBag.ThemeGroupId = new SelectList(db.Organizations, "Id", "Name", organization.registerId); // TEST
+            //return Redirect("/register/organisasjoner/" + organization.name);
             return Redirect("/register/organisasjoner/" + organization.registerId);
         }
 
@@ -152,6 +155,7 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("organisasjoner/rediger/{seoname}/{id}")]
+        //[Route("organisasjoner/rediger/{seoname}")]
         public ActionResult Edit(string seoname, Guid? id)
         {
             if (id == null)
@@ -173,6 +177,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        //[Route("organisasjoner/rediger/{seoname}")]
         [Route("organisasjoner/rediger/{seoname}/{id}")]
         //[ValidateAntiForgeryToken]
         [Authorize]
@@ -223,10 +228,12 @@ namespace Kartverket.Register.Controllers
                 return RedirectToAction("Edit");
             }
             return Redirect("/register/organisasjoner/" + organization.registerId);
+            //return Redirect("/register/organisasjoner/" + organization.name);
         }
 
         // GET: Organizations/Delete/5
         [Route("organisasjoner/slett/{name}/{id}")]
+        //[Route("organisasjoner/slett/{name}")]
         public ActionResult Delete(string id, string name)
         {
             if (id == null)
@@ -243,6 +250,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
+        //[Route("organisasjoner/slett/{name}")]
         [Route("organisasjoner/slett/{name}/{id}")]
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Organization organization, Guid id, string name)

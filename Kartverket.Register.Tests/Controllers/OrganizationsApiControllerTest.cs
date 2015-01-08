@@ -14,9 +14,10 @@ namespace Kartverket.Register.Tests.Controllers
         private const string OrganizationName = "dummy organization";
         private const string OrganizationNumber = "123456";
         private const string OrganizationLogoFilename = "test.png";
+        private const string OrganizationLogoLargeFilename = "testLarge.png";
         private const string LocationUrl = "http://example.com/data/";
 
-        private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename };
+        private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename };
 
         [Test]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByName()
@@ -75,6 +76,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Content.Name.Should().Be(OrganizationName);
             result.Content.Number.Should().Be(OrganizationNumber);
             result.Content.LogoUrl.Should().Be(LocationUrl + Organization.DataDirectory + OrganizationLogoFilename);
+            result.Content.LogoLargeUrl.Should().Be(LocationUrl + Organization.DataDirectory + OrganizationLogoLargeFilename);
         }
 
         private static UrlHelper CreateMockUrlHelper()

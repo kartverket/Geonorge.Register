@@ -15,6 +15,7 @@ namespace Kartverket.Register.Tests.Services
         private const string OrganizationName = "Institutt for skog og landskap";
         private const string OrganizationNumber = "1234567890";
         private const string OrganizationLogo = "logo.png";
+        private const string OrganizationLogoLarge = "logoLarge.png";
 
         [Test]
         public void ShouldReturnNullWhenOrganizationIsNotFoundByName()
@@ -42,6 +43,7 @@ namespace Kartverket.Register.Tests.Services
             organization.name.Should().Be(OrganizationName);
             organization.number.Should().Be(OrganizationNumber);
             organization.logoFilename.Should().Be(OrganizationLogo);
+            organization.largeLogo.Should().Be(OrganizationLogoLarge);
         }
 
         [Test]
@@ -79,7 +81,8 @@ namespace Kartverket.Register.Tests.Services
                 {
                     name = OrganizationName,
                     number = OrganizationNumber,
-                    logoFilename = OrganizationLogo
+                    logoFilename = OrganizationLogo,
+                    largeLogo = OrganizationLogoLarge
                 }
             };
             return listOfOrganizations;

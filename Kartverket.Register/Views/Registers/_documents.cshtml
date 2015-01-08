@@ -26,7 +26,8 @@
                     <a href="/dokument/@Html.ToUrl(item.name)/@item.systemId">@item.name</a>                    
                 </h4>
                 <p>
-                    @Html.DisplayFor(modelItem => item.documentowner.name)
+                    <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                    @*@Html.DisplayFor(modelItem => item.documentowner.logoFilename)*@
                 </p>
                 <p>
                     @Html.DisplayFor(modelItem => item.description)

@@ -49,27 +49,26 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        //private string GetSecurityClaim(string type)
-        //{
-        //    string result = null;
-        //    foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-        //    {
-        //        if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-        //        {
-        //            result = claim.Value;
-        //            break;
-        //        }
-        //    }
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
 
-        //    // bad hack, must fix BAAT
-        //    if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-        //    {
-        //        result = "Kartverket";
-        //    }
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
 
-        //    return result;
-        //}
-
+            return result;
+        }
         
         // POST: Organizations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -82,17 +81,9 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                
-                
-                
-                //string organizationLogin = GetSecurityClaim("organization");
-                
 
+                organization.systemId = Guid.NewGuid();           
 
-
-                
-                organization.systemId = Guid.NewGuid();
                 //organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
                 //organization.name = name;
 
@@ -105,10 +96,6 @@ namespace Kartverket.Register.Controllers
                 organization.registerId = Guid.Parse(registerId);
                 organization.statusId = "Submitted";
                 organization.submitter = null;
-                
-                
-                
-
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -120,6 +107,21 @@ namespace Kartverket.Register.Controllers
                 }
 
                 db.RegisterItems.Add(organization);
+                db.SaveChanges();
+
+                string organizationLogin = GetSecurityClaim("organization");
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                organization.submitterId = orgId;
+                organization.submitter = submitterOrganisasjon;
+                
+                db.Entry(organization).State = EntityState.Modified;
                 db.SaveChanges();
             }
             //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", organization.statusId);

@@ -49,6 +49,29 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+        
+        
         // POST: EPSGs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -72,6 +95,22 @@ namespace Kartverket.Register.Controllers
                 epsg.nationalSeasRequirementId = "Notset";
 
                 db.RegisterItems.Add(epsg);
+
+                string organizationLogin = GetSecurityClaim("organization");
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                epsg.submitterId = orgId;
+                epsg.submitter = submitterOrganisasjon;
+
+                db.Entry(epsg).State = EntityState.Modified;
+               
+
                 db.SaveChanges();
 
             }

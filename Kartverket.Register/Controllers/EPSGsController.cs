@@ -95,6 +95,7 @@ namespace Kartverket.Register.Controllers
                 epsg.nationalSeasRequirementId = "Notset";
 
                 db.RegisterItems.Add(epsg);
+                db.SaveChanges();
 
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -109,7 +110,6 @@ namespace Kartverket.Register.Controllers
                 epsg.submitter = submitterOrganisasjon;
 
                 db.Entry(epsg).State = EntityState.Modified;
-               
 
                 db.SaveChanges();
 

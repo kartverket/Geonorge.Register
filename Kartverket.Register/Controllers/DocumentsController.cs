@@ -48,6 +48,27 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+                
         // POST: Documents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -75,10 +96,6 @@ namespace Kartverket.Register.Controllers
                 {
                     document.description = "ikke angitt";
                 }
-                //if (document.documentUrl == null || document.documentUrl.Length < 0) 
-                //{
-                //    document.documentUrl = "ikke angitt";
-                //}
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 if (documentfile != null)
@@ -90,7 +107,23 @@ namespace Kartverket.Register.Controllers
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
                 }
+
+                string organizationLogin = GetSecurityClaim("organization");
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
                 
+                document.submitterId = orgId;
+                document.submitter = submitterOrganisasjon;
+                document.documentowner = submitterOrganisasjon;
+                document.documentownerId = orgId;
+
+                db.Entry(document).State = EntityState.Modified;
+                //db.SaveChanges();
 
                 db.RegisterItems.Add(document);
                 db.SaveChanges();

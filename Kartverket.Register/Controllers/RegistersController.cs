@@ -38,6 +38,24 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
+        //// GET: Registers/Details/5
+        //[Route("register/{name}")]
+        //public ActionResult Details(string name)
+        //{
+        //    var queryResults = from o in db.Registers
+        //                       where o.name == name
+        //                       select o.systemId;
+
+        //    Guid regId = queryResults.First();
+                       
+        //    Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+        //    if (register == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(register);
+        //}
+
 
 
         [Route("organisasjoner/{name}/{id}")]
@@ -54,6 +72,21 @@ namespace Kartverket.Register.Controllers
             }
             return View(organization);
         }
+
+        //[Route("organisasjoner/{name}"]
+        //public ActionResult DetailsOrganization(string name)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+        //    if (organization == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(organization);
+        //}
 
         
         [Route("dokument/{name}/{id}")]

@@ -52,8 +52,8 @@ namespace Kartverket.Register.Models
         public virtual ICollection<RegisterItem> items { get; set; }
         //public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
+        
         public string seoname { get; set; }
-
 
 
 

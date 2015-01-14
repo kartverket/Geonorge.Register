@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201501131228228_DocumentOwnerIdNotNull.Designer.cs">
       <DependentUpon>201501131228228_DocumentOwnerIdNotNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501140946452_addSeoname.cs" />
+    <Compile Include="Migrations\201501140946452_addSeoname.Designer.cs">
+      <DependentUpon>201501140946452_addSeoname.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -467,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501131228228_DocumentOwnerIdNotNull.resx">
       <DependentUpon>201501131228228_DocumentOwnerIdNotNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501140946452_addSeoname.resx">
+      <DependentUpon>201501140946452_addSeoname.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

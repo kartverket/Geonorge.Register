@@ -20,7 +20,7 @@ namespace Kartverket.Register.Models
 {
     public class Register
     {
-        public Register() 
+        public Register()
         {
             this.items = new HashSet<RegisterItem>();
             this.subregisters = new HashSet<Register>();
@@ -52,10 +52,11 @@ namespace Kartverket.Register.Models
         public virtual ICollection<RegisterItem> items { get; set; }
         //public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
-        
+        public string seoname { get; set; }
 
-		
 
-	}//end Register
+
+
+    }//end Register
 
 }//end namespace Datamodell

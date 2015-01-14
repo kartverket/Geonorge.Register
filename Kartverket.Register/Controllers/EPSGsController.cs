@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using Kartverket.Register.Helpers;
+using System.Text.RegularExpressions;
 
 namespace Kartverket.Register.Controllers
 {
@@ -40,12 +42,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registerId}/epsg/ny")]
         public ActionResult Create(string registerId)
         {
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name");
-            //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description");
-            //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description");
-            //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description");
+
             return View();
         }
 
@@ -70,8 +67,33 @@ namespace Kartverket.Register.Controllers
 
             return result;
         }
-        
-        
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
+        }
+
+
         // POST: EPSGs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -79,7 +101,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registerId}/epsg/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(EPSG epsg, string registerId)
-        {           
+        {
 
             if (ModelState.IsValid)
             {
@@ -93,6 +115,7 @@ namespace Kartverket.Register.Controllers
                 epsg.inspireRequirementId = "Notset";
                 epsg.nationalRequirementId = "Notset";
                 epsg.nationalSeasRequirementId = "Notset";
+                epsg.seoname = MakeSeoFriendlyString(epsg.name);
 
                 db.RegisterItems.Add(epsg);
                 db.SaveChanges();
@@ -115,15 +138,7 @@ namespace Kartverket.Register.Controllers
 
             }
 
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", ePSG.submitterId);
-            //ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-            //ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-            //ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            
-            return Redirect("/register/epsg/" + epsg.registerId);
-            //return View(epsg);
+            return Redirect("/register/epsg");
         }
 
         // GET: EPSGs/Edit/5
@@ -161,7 +176,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                
+
                 if (ePSG.name != null) originalEPSG.name = ePSG.name;
 
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
@@ -176,7 +191,7 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.nationalRequirementDescription != null) originalEPSG.nationalRequirementDescription = ePSG.nationalRequirementDescription;
                 if (ePSG.nationalSeasRequirementId != null) originalEPSG.nationalSeasRequirementId = ePSG.nationalSeasRequirementId;
                 if (ePSG.nationalSeasRequirementDescription != null) originalEPSG.nationalSeasRequirementDescription = ePSG.nationalSeasRequirementDescription;
-                                                                            
+
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();
@@ -189,7 +204,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
 
-            return Redirect("/register/epsg/" + originalEPSG.registerId);
+            return Redirect("/register/epsg");
             //return View(ePSG);
         }
 
@@ -218,7 +233,7 @@ namespace Kartverket.Register.Controllers
             EPSG ePSG = db.EPSGs.Find(id);
             db.RegisterItems.Remove(ePSG);
             db.SaveChanges();
-            return Redirect("/register/epsg/" + ePSG.registerId);
+            return Redirect("/register/epsg");
         }
 
         protected override void Dispose(bool disposing)

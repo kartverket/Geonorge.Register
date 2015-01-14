@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.IO;
+using Kartverket.Register.Helpers;
+using System.Text.RegularExpressions;
 
 namespace Kartverket.Register.Controllers
 {
@@ -39,12 +41,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Create
         [Route("register/{registerId}/dokument/ny")]
-        public ActionResult Create(string registerId)
+        public ActionResult Create()
         {
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name");
-            //ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name");
             return View();
         }
 
@@ -68,7 +66,32 @@ namespace Kartverket.Register.Controllers
 
             return result;
         }
-                
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
+        }
+
         // POST: Documents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -84,9 +107,8 @@ namespace Kartverket.Register.Controllers
                 document.dateSubmitted = DateTime.Now;
                 document.registerId = Guid.Parse(registerId);
                 document.statusId = "Submitted";
-                document.submitter = null;
-                document.documentowner = null;
-                document.documentownerId = null;
+                
+                //document.seoname = MakeSeoFriendlyString(document.name);
 
                 if (document.name == null || document.name.Length == 0)
                 {
@@ -116,7 +138,7 @@ namespace Kartverket.Register.Controllers
 
                 Guid orgId = queryResults.First();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-                
+
                 document.submitterId = orgId;
                 document.submitter = submitterOrganisasjon;
                 document.documentowner = submitterOrganisasjon;
@@ -128,14 +150,10 @@ namespace Kartverket.Register.Controllers
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
 
-                return Redirect("/register/dokument/" + document.registerId);
-                //return RedirectToAction("Index");
+                return View(document);
+                //return Redirect("/register/" + document.register.name);
             }
 
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description", document.statusId);
-            //ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", document.submitterId);
-            //ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", document.documentownerId);
             return View(document);
         }
 
@@ -184,6 +202,7 @@ namespace Kartverket.Register.Controllers
                 if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
                 if (document.statusId != null) originalDocument.statusId = document.statusId;
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
+                //if (document.seoname != null) originalDocument.seoname = document.seoname;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 if (documentfile != null)
@@ -203,11 +222,10 @@ namespace Kartverket.Register.Controllers
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDocument.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
-            }
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
 
-            return Redirect("/register/dokument/" + document.registerId);
-            //return View(document);
+                return Redirect("/register/" + originalDocument.register.name);
+            }
+            return View(document);
         }
 
         // GET: Documents/Delete/5
@@ -232,10 +250,12 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
+
             Document document = db.Documents.Find(id);
+            string registerName = document.register.name;
             db.RegisterItems.Remove(document);
             db.SaveChanges();
-            return Redirect("/register/dokument/" + document.registerId);
+            return Redirect("/register/" + registerName);
         }
 
         protected override void Dispose(bool disposing)

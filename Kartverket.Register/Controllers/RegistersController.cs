@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using System.Text.RegularExpressions;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,15 +23,20 @@ namespace Kartverket.Register.Controllers
             return View(db.Registers.ToList());
         }
 
+
         // GET: Registers/Details/5
-        [Route("register/{name}/{id}")]
-        public ActionResult Details(string name, Guid? id)
+        [Route("register/{name}")]
+        public ActionResult Details(string name)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
+            name = name.Replace("-", " ");
+
+            var queryResults = from o in db.Registers
+                               where o.name == name
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
             if (register == null)
             {
                 return HttpNotFound();
@@ -38,65 +44,51 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        //// GET: Registers/Details/5
-        //[Route("register/{name}")]
-        //public ActionResult Details(string name)
-        //{
-        //    var queryResults = from o in db.Registers
-        //                       where o.name == name
-        //                       select o.systemId;
-
-        //    Guid regId = queryResults.First();
-                       
-        //    Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-        //    if (register == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(register);
-        //}
-
-
-
-        [Route("organisasjoner/{name}/{id}")]
-        public ActionResult DetailsOrganization(string name, Guid? id)
+        [Route("organisasjoner/{name}")]
+        public ActionResult DetailsOrganization(string name)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
+            name = name.Replace("-", " ");
+
+            var queryResults = from o in db.Organizations
+                               where o.name == name
+                               select o.systemId;
+
+            Guid systID = queryResults.First();
+
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systID);
+
             if (organization == null)
             {
                 return HttpNotFound();
             }
+
             return View(organization);
         }
 
-        //[Route("organisasjoner/{name}"]
-        //public ActionResult DetailsOrganization(string name)
+
+        //[Route("dokument/{name}/")]
+        //public ActionResult DetailsDocument(string name)
         //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(id);
-        //    if (organization == null)
+        //    name = name.Replace("-", " ");
+
+        //    var queryResults = from o in db.Documents
+        //                       where o.name == name
+        //                       select o.systemId;
+
+        //    Guid systID = queryResults.First();
+
+        //    Kartverket.Register.Models.Document document = db.Documents.Find(systID);
+        //    if (document == null)
         //    {
         //        return HttpNotFound();
         //    }
-        //    return View(organization);
+        //    return View(document);
         //}
 
-        
-        [Route("dokument/{name}/{id}")]
-        public ActionResult DetailsDocument(string name, Guid? id)
+        [Route("dokument/{name}/{registerId}")]
+        public ActionResult DetailsDocument(string name, Guid registerId)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Document document = db.Documents.Find(id);
+            Kartverket.Register.Models.Document document = db.Documents.Find(registerId);
             if (document == null)
             {
                 return HttpNotFound();
@@ -104,14 +96,18 @@ namespace Kartverket.Register.Controllers
             return View(document);
         }
 
-        [Route("epsg/{name}/{id}")]
-        public ActionResult DetailsEPSG(string name, Guid? id)
+        [Route("epsg/{name}")]
+        public ActionResult DetailsEPSG(string name)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(id);
+            name = name.Replace("-", " ");
+
+            var queryResults = from o in db.EPSGs
+                               where o.name == name
+                               select o.systemId;
+
+            Guid systID = queryResults.First();
+
+            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(systID);
             if (epsg == null)
             {
                 return HttpNotFound();
@@ -160,7 +156,7 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        
+
 
         // POST: Registers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -177,7 +173,7 @@ namespace Kartverket.Register.Controllers
             }
             return View(register);
         }
-        
+
         // GET: Registers/Delete/5
         public ActionResult Delete(Guid? id, string name)
         {
@@ -252,6 +248,6 @@ namespace Kartverket.Register.Controllers
             else
                 Session["role"] = "guest";
         }
-  
+
     }
 }

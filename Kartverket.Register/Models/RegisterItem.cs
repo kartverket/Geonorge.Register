@@ -19,9 +19,9 @@ namespace Kartverket.Register.Models
 {
     public abstract class RegisterItem
     {
-        public RegisterItem() 
+        public RegisterItem()
         {
-            
+
             //this.replaces = new HashSet<Version>();
         }
         [Key]
@@ -35,7 +35,7 @@ namespace Kartverket.Register.Models
         [ForeignKey("submitter")]
         [Display(Name = "Innsender:")]
         public Guid? submitterId { get; set; }
-        public virtual Organization submitter { get; set; }       
+        public virtual Organization submitter { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
@@ -48,7 +48,9 @@ namespace Kartverket.Register.Models
         public virtual Register register { get; set; }
         [ForeignKey("register")]
         public Guid registerId { get; set; }
+        public string seoname { get; set; }
 
-	}//end RegisterItem
+    }
+    //end RegisterItem
 
 }//end namespace Datamodell

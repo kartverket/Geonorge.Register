@@ -10,13 +10,13 @@
         <div class="row result-row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding">
-                    <a href="/organisasjoner/@Html.ToUrl(item.name)/@item.systemId"><img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="img-responsive center-block" alt="logo" /></a>
-</div>
+                    <a href="/organisasjoner/@Html.ToUrl(item.name)"><img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="img-responsive center-block" alt="logo" /></a>
+                </div>
 
                 <div class="col-no-padding-xs col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <h4 class="role-button" role="button">
-                        <a href="/organisasjoner/@Html.ToUrl(item.name)/@item.systemId">@Html.DisplayFor(modelItem => item.name)</a>
-</h4>
+                        <a href="/organisasjoner/@Html.ToUrl(item.name)">@Html.DisplayFor(modelItem => item.name)</a>
+                    </h4>
                     <h5>
                         Org.nr: @Html.DisplayFor(modelItem => item.number)
                     </h5>

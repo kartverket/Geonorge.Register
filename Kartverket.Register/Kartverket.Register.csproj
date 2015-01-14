@@ -163,6 +163,7 @@
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -258,6 +259,10 @@
     <Compile Include="Migrations\201501140946452_addSeoname.cs" />
     <Compile Include="Migrations\201501140946452_addSeoname.Designer.cs">
       <DependentUpon>201501140946452_addSeoname.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201501141252170_UpdateSeoname.cs" />
+    <Compile Include="Migrations\201501141252170_UpdateSeoname.Designer.cs">
+      <DependentUpon>201501141252170_UpdateSeoname.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Api\Organization.cs" />
@@ -401,6 +406,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\img\" />
+    <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -474,6 +480,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501140946452_addSeoname.resx">
       <DependentUpon>201501140946452_addSeoname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501141252170_UpdateSeoname.resx">
+      <DependentUpon>201501141252170_UpdateSeoname.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

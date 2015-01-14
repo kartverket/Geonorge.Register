@@ -68,6 +68,8 @@ namespace Kartverket.Register.Tests.Controllers
 
             ShouldReturnOrganization(result);
         }
+
+
         
         private static void ShouldReturnOrganization(OkNegotiatedContentResult<Models.Api.Organization> result)
         {

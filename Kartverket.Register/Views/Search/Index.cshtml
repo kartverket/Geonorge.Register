@@ -67,15 +67,15 @@
                                     @{
                         if (item.Discriminator == "Organization")
                         {
-                            <b><a href="/organisasjoner/@Html.ToUrl(item.RegisterItemName)/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
+                            <b><a href="/organisasjoner/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
                         }
                         else if (item.Discriminator == "EPSG")
                         {
-                            <b><a href="/epsg/@Html.ToUrl(item.RegisterItemName)/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
+                            <b><a href="/epsg/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
                         }
                         else if (item.Discriminator == "Document")
                         {
-                            <b><a href="/dokument/@Html.ToUrl(item.RegisterItemName)/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
+                            <b><a href="/dokument/@Html.ToUrl(item.RegisterItemName)/@item.DocumentOwner/@item.RegisterItemSeoname">@item.RegisterItemName</a></b>
                         }
                                     }
                                 </div>

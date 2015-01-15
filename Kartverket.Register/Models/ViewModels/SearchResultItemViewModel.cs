@@ -17,6 +17,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string Discriminator { get; set; }
         public string RegisterSeoname { get; set; }
         public string RegisterItemSeoname { get; set; }
+        public string DocumentOwner { get; set; }
 
 
         private SearchResultItemViewModel(SearchResultItem item)
@@ -30,6 +31,7 @@ namespace Kartverket.Register.Models.ViewModels
             Discriminator = item.Discriminator;
             RegisterSeoname = item.RegisterSeoname;
             RegisterItemSeoname = item.RegisterItemSeoname;
+            DocumentOwner = item.DocumentOwner;
             
         }
 

@@ -16,5 +16,6 @@ namespace Kartverket.Register.Models
         public string Discriminator { get; set; }
         public string RegisterSeoname { get; set; }
         public string RegisterItemSeoname { get; set; }
+        public string DocumentOwner { get; set; }
     }
 }

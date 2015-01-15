@@ -21,33 +21,46 @@ namespace Kartverket.Register.Services.Search
 
         public SearchResult Search(SearchParameters parameters)
         {
-            var queryResults = from r in _dbContext.Registers
-                               join ri in _dbContext.RegisterItems
-                               on r.systemId equals ri.registerId
-                               where r.name.Contains(parameters.Text)
-                               || r.description.Contains(parameters.Text)
-                               || ri.name.Contains(parameters.Text)
-                               || ri.description.Contains(parameters.Text)
-                               orderby r.name
-                               select new SearchResultItem { RegisterName = r.name, RegisterDescription= r.description, RegisterItemName=ri.name, RegisterItemDescription= ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator=r.containedItemClass };
+            var queryTest = from d in _dbContext.Documents
+                            where d.documentowner.name.Contains(parameters.Text)
+                            select d.documentowner;
+
+            var queryResults = (from r in _dbContext.Registers
+                                join ri in _dbContext.RegisterItems
+                                on r.systemId equals ri.registerId
+                                where r.name.Contains(parameters.Text)
+                                || r.description.Contains(parameters.Text)
+                                || ri.name.Contains(parameters.Text)
+                                || ri.description.Contains(parameters.Text)
+                                //orderby r.name
+                                select new SearchResultItem { RegisterName = r.name, RegisterDescription = r.description, RegisterItemName = ri.name, RegisterItemDescription = ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator = r.containedItemClass, RegisterSeoname = r.seoname, RegisterItemSeoname = ri.seoname }).Union(
+                               (from d in _dbContext.Documents
+                                where d.documentowner.name.Contains(parameters.Text)
+                                //orderby d.name
+                                select new SearchResultItem { RegisterName = d.register.name, RegisterDescription = d.register.description, RegisterItemName = d.name, RegisterItemDescription = d.description, RegisterID = d.registerId, SystemID = d.systemId, Discriminator = d.register.containedItemClass, RegisterSeoname=d.register.seoname, RegisterItemSeoname = d.seoname })
+                               );//.OrderBy(ri => ri.RegisterItemName);
+
+
 
             int NumFound = queryResults.Count();
             List<SearchResultItem> items = new List<SearchResultItem>();
             int skip = parameters.Offset;
             skip = skip - 1;
-            queryResults = queryResults.Skip(skip).Take(parameters.Limit);
+            queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit);
 
             foreach (SearchResultItem register in queryResults)
             {
                 var item = new SearchResultItem
                 {
-                   RegisterName = register.RegisterName,
-                   RegisterDescription = register.RegisterDescription,
-                   RegisterItemName = register.RegisterItemName,
-                   RegisterItemDescription = register.RegisterItemDescription,
-                   RegisterID = register.RegisterID,
-                   SystemID = register.SystemID,
-                   Discriminator = register.Discriminator
+                    RegisterName = register.RegisterName,
+                    RegisterDescription = register.RegisterDescription,
+                    RegisterItemName = register.RegisterItemName,
+                    RegisterItemDescription = register.RegisterItemDescription,
+                    RegisterID = register.RegisterID,
+                    SystemID = register.SystemID,
+                    Discriminator = register.Discriminator,
+                    RegisterSeoname = register.RegisterSeoname,
+                    RegisterItemSeoname = register.RegisterItemSeoname
 
                 };
 
@@ -61,7 +74,7 @@ namespace Kartverket.Register.Services.Search
                 Offset = parameters.Offset,
                 NumFound = NumFound
             };
-            
+
         }
 
     }

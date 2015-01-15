@@ -14,5 +14,7 @@ namespace Kartverket.Register.Models
         public Guid RegisterID { get; set; }
         public Guid SystemID { get; set; }
         public string Discriminator { get; set; }
+        public string RegisterSeoname { get; set; }
+        public string RegisterItemSeoname { get; set; }
     }
 }

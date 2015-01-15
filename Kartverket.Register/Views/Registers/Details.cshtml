@@ -1,4 +1,5 @@
 ﻿@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = @Model.name;
@@ -101,7 +102,7 @@
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/register/@Model.systemId/dokument/ny">Foreslå nye @Model.name </a>
+                    <a href="/register/dokument/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
@@ -109,7 +110,7 @@
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/register/@Model.systemId/epsg/ny">Foreslå nye @Model.name </a>
+                    <a href="/register/epsg-koder/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {

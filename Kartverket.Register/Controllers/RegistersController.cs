@@ -28,14 +28,13 @@ namespace Kartverket.Register.Controllers
         [Route("register/{name}")]
         public ActionResult Details(string name)
         {
-            name = name.Replace("-", " ");
 
             var queryResults = from o in db.Registers
-                               where o.name == name
+                               where o.seoname == name
                                select o.systemId;
 
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
             {
@@ -47,10 +46,9 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{name}")]
         public ActionResult DetailsOrganization(string name)
         {
-            name = name.Replace("-", " ");
 
             var queryResults = from o in db.Organizations
-                               where o.name == name
+                               where o.seoname == name
                                select o.systemId;
 
             Guid systID = queryResults.First();
@@ -66,29 +64,17 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        //[Route("dokument/{name}/")]
-        //public ActionResult DetailsDocument(string name)
-        //{
-        //    name = name.Replace("-", " ");
-
-        //    var queryResults = from o in db.Documents
-        //                       where o.name == name
-        //                       select o.systemId;
-
-        //    Guid systID = queryResults.First();
-
-        //    Kartverket.Register.Models.Document document = db.Documents.Find(systID);
-        //    if (document == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(document);
-        //}
-
-        [Route("dokument/{name}/{registerId}")]
-        public ActionResult DetailsDocument(string name, Guid registerId)
+        [Route("dokument/{registername}/{documentname}/")]
+        public ActionResult DetailsDocument(string registername, string documentname)
         {
-            Kartverket.Register.Models.Document document = db.Documents.Find(registerId);
+
+            var queryResultsRegisterId = from o in db.Documents
+                               where o.seoname == documentname
+                               select o.systemId;
+
+            Guid systId = queryResultsRegisterId.First();
+            
+            Kartverket.Register.Models.Document document = db.Documents.Find(systId);
             if (document == null)
             {
                 return HttpNotFound();
@@ -96,13 +82,12 @@ namespace Kartverket.Register.Controllers
             return View(document);
         }
 
-        [Route("epsg/{name}")]
+        [Route("epsg-koder/{name}")]
         public ActionResult DetailsEPSG(string name)
         {
-            name = name.Replace("-", " ");
-
+            
             var queryResults = from o in db.EPSGs
-                               where o.name == name
+                               where o.seoname == name
                                select o.systemId;
 
             Guid systID = queryResults.First();

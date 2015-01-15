@@ -103,10 +103,10 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p>
                 @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
-                <a href="/register/@Html.ToUrl(Model.name)/@Model.registerId">Tilbake</a>
+                <a href="/register/@Html.ToUrl(Model.register.name)">Tilbake</a>
                 @if (Session["role"] == "editor"){
-                    <span>| </span><a href="/epsg/rediger/@Html.ToUrl(Model.name)/@Model.systemId">Endre</a>
-                    <span>| </span><a href="/epsg/slett/@Html.ToUrl(Model.name)/@Model.systemId">Slett</a>
+                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
                 }
             </p>
         </div>

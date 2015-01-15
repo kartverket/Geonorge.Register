@@ -99,8 +99,8 @@
 
             @if (Session["role"] == "editor")
             {
-                <span>| </span><a href="/organisasjoner/rediger/@Html.ToUrl(Model.name)/">Endre</a>
-                <span>| </span><a href="/organisasjoner/slett/@Html.ToUrl(Model.name)">Slett</a>
+                <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
             }
         </p>
     </div>

@@ -104,7 +104,6 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("register/organisasjoner/ny")]
-        //[Route("register/{registerId}/organisasjoner/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
         {
@@ -112,10 +111,6 @@ namespace Kartverket.Register.Controllers
             {
 
                 organization.systemId = Guid.NewGuid();
-
-                //organization.currentVersion = new Models.Version() { systemId = Guid.NewGuid(), versionInfo = "0.1" };
-                //organization.name = name;
-
                 if (organization.name == null)
                 {
                     organization.name = "ikke angitt";
@@ -124,15 +119,13 @@ namespace Kartverket.Register.Controllers
                 var queryResultsRegister = from o in db.Registers
                                            where o.name == "Organisasjoner"
                                            select o.systemId;
-
                 Guid regId = queryResultsRegister.First();
 
                 organization.modified = DateTime.Now;
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
                 organization.statusId = "Submitted";
-                //organization.submitter = null;
-                //organization.seoname = MakeSeoFriendlyString(organization.name);
+                organization.seoname = MakeSeoFriendlyString(organization.name);
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -147,13 +140,10 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
 
                 string organizationLogin = GetSecurityClaim("organization");
-
                 var queryResultsOrganization = from o in db.Organizations
                                                where o.name == organizationLogin
                                                select o.systemId;
-
                 Guid orgId = queryResultsOrganization.First();
-
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 organization.submitterId = orgId;
@@ -175,17 +165,13 @@ namespace Kartverket.Register.Controllers
         }
 
         //// GET: Organizations/Edit/5
-
-        //[Route("organisasjoner/rediger/{seoname}/{id}")]
-        [Route("organisasjoner/rediger/{name}")]
-        public ActionResult Edit(string name)
+        [Route("organisasjoner/{orgnavn}/rediger")]
+        public ActionResult Edit(string orgnavn)
         {
-            name = name.Replace("-", " ");
 
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.name == name
+                                           where o.seoname == orgnavn
                                            select o.systemId;
-
             Guid systId = queryResultsOrganisasjon.First();
 
             if (systId == null)
@@ -207,19 +193,15 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("organisasjoner/rediger/{seoname}")]
-        //[Route("organisasjoner/rediger/{seoname}/{id}")]
+        [Route("organisasjoner/{orgnavn}/rediger")]
         //[ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id, string seoname)
+        public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id, string orgnavn)
         {
 
-            seoname = seoname.Replace("-", " ");
-
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.name == seoname
+                                           where o.seoname == orgnavn
                                            select o.systemId;
-
             Guid systId = queryResultsOrganisasjon.First();
 
             if (ModelState.IsValid)
@@ -229,7 +211,7 @@ namespace Kartverket.Register.Controllers
                 if (organization.name != null)
                 {
                     originalOrganization.name = organization.name;
-                    //originalOrganization.seoname = MakeSeoFriendlyString(organization.name);
+                    originalOrganization.seoname = MakeSeoFriendlyString(organization.name);
                 }
                 if (submitterId != null)
                 {
@@ -260,31 +242,26 @@ namespace Kartverket.Register.Controllers
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
 
-
                 originalOrganization.modified = DateTime.Now;
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
-                return RedirectToAction("Edit");
+                
+                return Redirect("/organisasjoner/" + originalOrganization.seoname);                
             }
-            return Redirect("/register/organisasjoner/" + organization.name);
+            return RedirectToAction("Edit");
         }
 
         // GET: Organizations/Delete/5
         //[Route("organisasjoner/slett/{name}/{id}")]
-        [Route("organisasjoner/slett/{name}")]
-        public ActionResult Delete(string name)
+        [Route("organisasjoner/{orgname}/slett")]
+        public ActionResult Delete(string orgname)
         {
-
-            name = name.Replace("-", " ");
-
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.name == name
+                                           where o.seoname == orgname
                                            select o.systemId;
-
             Guid systId = queryResultsOrganisasjon.First();
-
 
             if (systId == null)
             {
@@ -300,24 +277,29 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("organisasjoner/slett/{name}")]
-        //[Route("organisasjoner/slett/{name}/{id}")]
+        [Route("organisasjoner/{orgname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Organization organization, string name)
+        public ActionResult DeleteConfirmed(Organization organization, string orgname)
         {
-            name = name.Replace("-", " ");
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.name == name
+                                           where o.seoname == orgname
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
 
-
             Organization originalOrganization = db.Organizations.Find(systId);
+
+            
+
+            var queryResultsRegisterItems = from o in db.RegisterItems
+                                           where o.registerId == originalOrganization.systemId || o.submitterId == originalOrganization.systemId
+                                           select o.systemId;
+           
 
             db.Organizations.Remove(originalOrganization);
             db.SaveChanges();
-            //return Redirect("/register/organisasjoner/"+ originalOrganization.registerId);
+
+
             return Redirect("/register/organisasjoner/");
         }
 

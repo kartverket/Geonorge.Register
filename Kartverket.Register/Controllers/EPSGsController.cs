@@ -39,7 +39,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: EPSGs/Create
-        [Route("register/{registerId}/epsg/ny")]
+        [Route("register/epsg-koder/ny")]
         public ActionResult Create(string registerId)
         {
 
@@ -93,23 +93,32 @@ namespace Kartverket.Register.Controllers
             return encodedUrl;
         }
 
-
         // POST: EPSGs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("register/{registerId}/epsg/ny")]
+        [Route("register/epsg-koder/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(EPSG epsg, string registerId)
+        public ActionResult Create(EPSG epsg)
         {
 
             if (ModelState.IsValid)
             {
+                epsg.systemId = Guid.NewGuid();
+                if (epsg.name == null)
+                {
+                    epsg.name = "ikke angitt";
+                }
+
+                var queryResultsRegister = from o in db.Registers
+                                           where o.name == "epsg"
+                                           select o.systemId;
+                Guid regId = queryResultsRegister.First();
 
                 epsg.systemId = Guid.NewGuid();
                 epsg.modified = DateTime.Now;
                 epsg.dateSubmitted = DateTime.Now;
-                epsg.registerId = Guid.Parse(registerId);
+                epsg.registerId = regId;
                 epsg.statusId = "Submitted";
                 epsg.submitter = null;
                 epsg.inspireRequirementId = "Notset";
@@ -138,18 +147,23 @@ namespace Kartverket.Register.Controllers
 
             }
 
-            return Redirect("/register/epsg");
+            return Redirect("/register/epsg-koder");
         }
 
         // GET: EPSGs/Edit/5
-        [Route("epsg/rediger/{name}/{id}")]
-        public ActionResult Edit(Guid? id, string name)
+        [Route("epsg-koder/{epsgname}/rediger")]
+        public ActionResult Edit(string epsgname)
         {
-            if (id == null)
+            var queryResultsEpsg = from o in db.EPSGs
+                                           where o.seoname == epsgname
+                                           select o.systemId;
+            Guid systId = queryResultsEpsg.First();
+            
+            if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EPSG ePSG = db.EPSGs.Find(id);
+            EPSG ePSG = db.EPSGs.Find(systId);
             if (ePSG == null)
             {
                 return HttpNotFound();
@@ -167,18 +181,22 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("epsg/rediger/{name}/{id}")]
+        [Route("epsg-koder/{epsgname}/rediger")]
         //[ValidateAntiForgeryToken]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
-        public ActionResult Edit(EPSG ePSG, string name, string id)
+        public ActionResult Edit(EPSG ePSG, string epsgname)
         {
-            EPSG originalEPSG = db.EPSGs.Find(Guid.Parse(id));
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                           where o.seoname == epsgname
+                                           select o.systemId;
+
+            Guid systId = queryResultsOrganisasjon.First();
 
             if (ModelState.IsValid)
             {
+                EPSG originalEPSG = db.EPSGs.Find(systId);
 
-                if (ePSG.name != null) originalEPSG.name = ePSG.name;
-
+                if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = MakeSeoFriendlyString(originalEPSG.name);
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
                 if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
@@ -196,27 +214,34 @@ namespace Kartverket.Register.Controllers
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();
 
-            }
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
-            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
+                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
+                ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
+                ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
+                ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
 
-            return Redirect("/register/epsg");
-            //return View(ePSG);
+                return Redirect("/epsg-koder/" + originalEPSG.seoname);        
+
+            }
+            
+            return Redirect("/register/epsg-koder");
         }
 
         // GET: EPSGs/Delete/5
-        [Route("epsg/slett/{name}/{id}")]
-        public ActionResult Delete(Guid? id, string name)
+        [Route("epsg-koder/{epsgname}/slett")]
+        public ActionResult Delete(string epsgname)
         {
-            if (id == null)
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                           where o.seoname == epsgname
+                                           select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
+
+            if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EPSG ePSG = db.EPSGs.Find(id);
+            EPSG ePSG = db.EPSGs.Find(systId);
             if (ePSG == null)
             {
                 return HttpNotFound();
@@ -226,14 +251,20 @@ namespace Kartverket.Register.Controllers
 
         // POST: EPSGs/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("epsg/slett/{name}/{id}")]
+        [Route("epsg-koder/{epsgname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id, string name)
+        public ActionResult DeleteConfirmed(string epsgname)
         {
-            EPSG ePSG = db.EPSGs.Find(id);
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                           where o.seoname == epsgname
+                                           select o.systemId;
+
+            Guid systId = queryResultsOrganisasjon.First();
+
+            EPSG ePSG = db.EPSGs.Find(systId);
             db.RegisterItems.Remove(ePSG);
             db.SaveChanges();
-            return Redirect("/register/epsg");
+            return Redirect("/register/epsg-koder");
         }
 
         protected override void Dispose(bool disposing)

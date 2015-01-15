@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        [Route("dokument/{registername}/{documentname}/")]
+        [Route("dokument/{registername}/{documentownername}/{documentname}/")]
         public ActionResult DetailsDocument(string registername, string documentname)
         {
 

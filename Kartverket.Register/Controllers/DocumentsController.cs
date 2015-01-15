@@ -172,7 +172,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Documents/Edit/5
-        [Route("dokument/{registername}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string documentname)
         {
             var queryResults = from o in db.Documents
@@ -202,7 +202,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dokument/{registername}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
@@ -240,13 +240,13 @@ namespace Kartverket.Register.Controllers
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
 
-                return Redirect("/dokument/" + registername + "/" + originalDocument.seoname);
+                return Redirect("/dokument/" + registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
             }
             return View(document);
         }
 
         // GET: Documents/Delete/5
-        [Route("dokument/{registername}/{documentname}/slett")]
+        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string documentname)
         {
             var queryResults = from o in db.Documents
@@ -269,7 +269,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("dokument/{registername}/{documentname}/slett")]
+        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string registername, string documentname)
         {

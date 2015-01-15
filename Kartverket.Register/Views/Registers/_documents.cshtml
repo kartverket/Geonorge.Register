@@ -24,9 +24,10 @@
                 <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
                     <h4 class="role-button" role="button">
                         @*<a href="/dokument/@Html.ToUrl(item.name)/@item.systemId">@item.name</a>*@
-                        <a href="/dokument/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.name)/">@item.name</a>
+                        <a href="/dokument/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
                     </h4>
                     <p>
+                        <a href="/dokument/@Html.ToUrl(item.register.name)/@item.documentowner.name/"></a>
                         <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
 
                     </p>

@@ -308,6 +308,15 @@
     <Content Include="Content\common.css" />
     <Content Include="Content\fonts\statusicon.svg" />
     <Content Include="Content\geonorge-default.css" />
+    <Content Include="Content\img\favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\img\kvlogo_col.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\img\logo-graphic-512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\kartverket_logo.png" />
     <Content Include="Content\logo_kartverket_norgedigitalt.png" />
     <Content Include="Content\navbar.css" />
@@ -409,7 +418,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,7 @@ namespace Kartverket.Register.Services.Search
                                 || ri.name.Contains(parameters.Text)
                                 || ri.description.Contains(parameters.Text)
                                 //orderby r.name
-                                select new SearchResultItem { RegisterName = r.name, RegisterDescription = r.description, RegisterItemName = ri.name, RegisterItemDescription = ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator = r.containedItemClass, RegisterSeoname = r.seoname, RegisterItemSeoname = ri.seoname, DocumentOwner = "",  }).Union(
+                                select new SearchResultItem { RegisterName = r.name, RegisterDescription = r.description, RegisterItemName = ri.name, RegisterItemDescription = ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator = r.containedItemClass, RegisterSeoname = r.seoname, RegisterItemSeoname = ri.seoname , DocumentOwner = ri.submitter.name,  }).Union(
                                (from d in _dbContext.Documents
                                 where d.documentowner.name.Contains(parameters.Text)
                                 //orderby d.name

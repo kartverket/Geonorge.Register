@@ -21,10 +21,6 @@ namespace Kartverket.Register.Services.Search
 
         public SearchResult Search(SearchParameters parameters)
         {
-            var queryTest = from d in _dbContext.Documents
-                            where d.documentowner.name.Contains(parameters.Text)
-                            select d.documentowner;
-
             var queryResults = (from o in _dbContext.Organizations
                                 where o.register.name.Contains(parameters.Text)
                                 || o.register.description.Contains(parameters.Text)

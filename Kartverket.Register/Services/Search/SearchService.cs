@@ -21,24 +21,26 @@ namespace Kartverket.Register.Services.Search
 
         public SearchResult Search(SearchParameters parameters)
         {
-            var queryTest = from d in _dbContext.Documents
-                            where d.documentowner.name.Contains(parameters.Text)
-                            select d.documentowner;
-
-            var queryResults = (from r in _dbContext.Registers
-                                join ri in _dbContext.RegisterItems
-                                on r.systemId equals ri.registerId
-                                where r.name.Contains(parameters.Text)
-                                || r.description.Contains(parameters.Text)
-                                || ri.name.Contains(parameters.Text)
-                                || ri.description.Contains(parameters.Text)
-                                //orderby r.name
-                                select new SearchResultItem { RegisterName = r.name, RegisterDescription = r.description, RegisterItemName = ri.name, RegisterItemDescription = ri.description, RegisterID = ri.registerId, SystemID = ri.systemId, Discriminator = r.containedItemClass, RegisterSeoname = r.seoname, RegisterItemSeoname = ri.seoname, DocumentOwner = "",  }).Union(
+            var queryResults = (from o in _dbContext.Organizations
+                                where o.register.name.Contains(parameters.Text)
+                                || o.register.description.Contains(parameters.Text)
+                                || o.register.name.Contains(parameters.Text)
+                                || o.name.Contains(parameters.Text)
+                                || o.description.Contains(parameters.Text)
+                                select new SearchResultItem { RegisterName = o.register.name, RegisterDescription = o.register.description, RegisterItemName = o.name, RegisterItemDescription = o.description, RegisterID = o.registerId, SystemID = o.systemId, Discriminator = o.register.containedItemClass, RegisterSeoname = o.register.seoname, RegisterItemSeoname = o.seoname , DocumentOwner = null  }).Union(
                                (from d in _dbContext.Documents
-                                where d.documentowner.name.Contains(parameters.Text)
-                                //orderby d.name
-                                select new SearchResultItem { RegisterName = d.register.name, RegisterDescription = d.register.description, RegisterItemName = d.name, RegisterItemDescription = d.description, RegisterID = d.registerId, SystemID = d.systemId, Discriminator = d.register.containedItemClass, RegisterSeoname=d.register.seoname, RegisterItemSeoname = d.seoname, DocumentOwner = d.documentowner.name })
-                               );//.OrderBy(ri => ri.RegisterItemName);
+                                where d.register.name.Contains(parameters.Text)
+                                || d.name.Contains(parameters.Text)
+                                || d.description.Contains(parameters.Text)
+                                || d.documentowner.name.Contains(parameters.Text)
+                                select new SearchResultItem { RegisterName = d.register.name, RegisterDescription = d.register.description, RegisterItemName = d.name, RegisterItemDescription = d.description, RegisterID = d.registerId, SystemID = d.systemId, Discriminator = d.register.containedItemClass, RegisterSeoname=d.register.seoname, RegisterItemSeoname = d.seoname, DocumentOwner = d.documentowner.name }).Union(
+                                (from e in _dbContext.EPSGs
+                                 where e.register.name.Contains(parameters.Text)
+                                || e.name.Contains(parameters.Text)
+                                || e.description.Contains(parameters.Text)
+                                || e.epsgcode.Contains(parameters.Text)
+                                select new SearchResultItem { RegisterName = e.register.name, RegisterDescription = e.register.description, RegisterItemName = e.name, RegisterItemDescription = e.description, RegisterID = e.registerId, SystemID = e.systemId, Discriminator = e.register.containedItemClass, RegisterSeoname=e.register.seoname, RegisterItemSeoname = e.seoname, DocumentOwner = null })
+                               ));
 
 
 

@@ -10,6 +10,7 @@ using Kartverket.Register.Models;
 using System.IO;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace Kartverket.Register.Controllers
 {
@@ -112,29 +113,32 @@ namespace Kartverket.Register.Controllers
                 document.modified = DateTime.Now;
                 document.dateSubmitted = DateTime.Now;
                 document.registerId = regId;
-                document.statusId = "Submitted";                               
+                document.statusId = "Submitted";     
 
                 if (document.name == null || document.name.Length == 0)
                 {
                     document.name = "ikke angitt";
                     document.seoname = document.systemId.ToString();
                 }
+
                 if (document.description == null || document.description.Length == 0)
                 {
                     document.description = "ikke angitt";
                 }
 
-                document.seoname = MakeSeoFriendlyString(document.name);
+                document.seoname = MakeSeoFriendlyString(document.name);               
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 if (documentfile != null)
                 {
                     document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
                 }
-
                 if (thumbnail != null)
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
+                }
+                else {
+                    GenerateThumbnail(document, documentfile, url);
                 }
 
                 string organizationLogin = GetSecurityClaim("organization");
@@ -163,10 +167,19 @@ namespace Kartverket.Register.Controllers
             return View(document);
         }
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string submitter)
+        private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
         {
-            string filename = submitter + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.name + "_" + Path.GetFileName(documentfile.FileName));
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), "thumbnail_" + document.name + ".jpg");
+            GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 10, 19);
+            document.thumbnail = url + "thumbnail_" + document.name + ".jpg";
+        }
+
+
+        private string SaveFileToDisk(HttpPostedFileBase file, string name)
+        {
+            string filename = name + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);;
             file.SaveAs(path);
             return filename;
         }
@@ -228,9 +241,13 @@ namespace Kartverket.Register.Controllers
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
                 }
 
-                if (thumbnail != null)
+                if (thumbnail != null )
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
+                }
+                else
+                {
+                    GenerateThumbnail(originalDocument, documentfile, url);
                 }
 
                 originalDocument.modified = DateTime.Now;
@@ -293,5 +310,6 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }

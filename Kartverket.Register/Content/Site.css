@@ -48,4 +48,11 @@ ul.search-results {
 .page-footer .no-margin-bottom {
   margin-bottom: 0;
 }
+
+.img-thumbnail {
+    height: 188px;
+    width: 140px;
+}
+
+
 /*# sourceMappingURL=page-footer.css.map *

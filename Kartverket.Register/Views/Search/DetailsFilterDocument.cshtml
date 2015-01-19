@@ -38,11 +38,11 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
                         @{
-            string thumb = "/Content/pdf.jpg";
-            if (item.thumbnail != null)
-            {
-                thumb = item.thumbnail;
-            }
+                            string thumb = "/Content/pdf.jpg";
+                            if (item.thumbnail != null)
+                            {
+                                thumb = item.thumbnail;
+                            }
                         }
                         <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
 

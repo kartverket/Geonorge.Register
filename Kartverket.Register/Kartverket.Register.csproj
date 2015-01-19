@@ -162,6 +162,7 @@
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
+    <Compile Include="Controllers\SearchApiController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,6 +269,7 @@
       <DependentUpon>201501141351073_UpdateSeonameRegisterItems.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Api\Item.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
     <Compile Include="Models\Constants.cs" />

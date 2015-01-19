@@ -44,7 +44,15 @@ namespace Kartverket.Register.Controllers
         [Route("register/dokument/{registername}/ny")]
         public ActionResult Create()
         {
-            return View();
+            string organizationLogin = GetSecurityClaim("organization");
+            
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+            else {
+                return View();
+            }
         }
 
         private string GetSecurityClaim(string type)
@@ -106,7 +114,7 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid regId = queryResultsRegister.First();
-            
+       
             if (ModelState.IsValid)
             {
                 document.systemId = Guid.NewGuid();
@@ -188,6 +196,13 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string documentname)
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+                        
             var queryResults = from o in db.Documents
                                where o.seoname == documentname
                                select o.systemId;
@@ -266,6 +281,13 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string documentname)
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+            
             var queryResults = from o in db.Documents
                                where o.seoname == documentname
                                select o.systemId;

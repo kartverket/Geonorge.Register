@@ -42,7 +42,12 @@ namespace Kartverket.Register.Controllers
         [Route("register/epsg-koder/ny")]
         public ActionResult Create(string registerId)
         {
+            string organizationLogin = GetSecurityClaim("organization");
 
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -154,6 +159,13 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/rediger")]
         public ActionResult Edit(string epsgname)
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+
             var queryResultsEpsg = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            select o.systemId;
@@ -232,6 +244,13 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/slett")]
         public ActionResult Delete(string epsgname)
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            select o.systemId;

@@ -48,6 +48,12 @@ namespace Kartverket.Register.Controllers
         [Route("register/organisasjoner/ny")]
         public ActionResult Create()
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -169,6 +175,13 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(string orgnavn)
         {
 
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+            
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == orgnavn
                                            select o.systemId;
@@ -258,6 +271,13 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{orgname}/slett")]
         public ActionResult Delete(string orgname)
         {
+            string organizationLogin = GetSecurityClaim("organization");
+
+            if (organizationLogin == null)
+            {
+                return HttpNotFound();
+            }
+            
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == orgname
                                            select o.systemId;

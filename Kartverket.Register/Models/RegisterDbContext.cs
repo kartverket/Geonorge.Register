@@ -22,68 +22,18 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<EPSG> EPSGs { get; set; }
         public virtual DbSet<Requirement> requirements { get; set; }
+        public DbSet<Kartverket.DOK.Models.DokDataset> DokDatasets { get; set; }
+        public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
         //public virtual DbSet<InspireRequirement> inspireRequirements { get; set; }
         //public virtual DbSet<NationalRequirement> NationalRequirements { get; set; }
         //public virtual DbSet<NationalSeasRequirement> NationalSeasRequirements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //TPT 
-            //modelBuilder.Entity<VersionedThing>().ToTable("VersionedThing");
-            //modelBuilder.Entity<Register>().ToTable("Register");
-            //modelBuilder.Entity<RegisterItem>().ToTable("RegisterItem");
-            //modelBuilder.Entity<Organization>().ToTable("Organization");
-            //modelBuilder.Entity<CodelistValue>().ToTable("CodelistValue");
-            //modelBuilder.Entity<Dataset>().ToTable("Dataset");
-            //modelBuilder.Entity<Document>().ToTable("Document");
-            //modelBuilder.Entity<EPSG>().ToTable("EPSG");
-
-            //TPC aproach - not allowed associations
-
-           // modelBuilder.Entity<VersionedThing>()
-           // .Property(c => c.systemId)
-           // .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-           // modelBuilder.Entity<RegisterItem>()
-           //.Property(c => c.systemId)
-           //.HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
-           // modelBuilder.Entity<Register>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("Register");
-           // });
-
-           // modelBuilder.Entity<Organization>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("Organization");
-           // });
-
-           // modelBuilder.Entity<CodelistValue>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("CodelistValue");
-           // });
-
-           // modelBuilder.Entity<Dataset>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("Dataset");
-           // });
-           // modelBuilder.Entity<Document>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("Document");
-           // });
-
-           // modelBuilder.Entity<EPSG>().Map(m =>
-           // {
-           //     m.MapInheritedProperties();
-           //     m.ToTable("EPSG");
-           // });
 
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Kartverket.DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
         }
     }
 }

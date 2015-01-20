@@ -92,8 +92,8 @@
                 <a href="/register/@Html.ToUrl(Model.register.name)/">Tilbake</a>
                 @if (Session["role"] == "editor")
                 {
-                    <span> | </span><a href="/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                    <span> | </span><a href="/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
+                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
                 }
             </p>
         </div>

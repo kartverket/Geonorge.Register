@@ -42,7 +42,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Create
         [Authorize]
-        [Route("register/{registername}/ny")]
+        [Route("dokument/{registername}/ny")]
         public ActionResult Create()
         {
             //string organizationLogin = GetSecurityClaim("organization");
@@ -108,7 +108,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("register/{registername}/ny")]
+        [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
         {
@@ -197,7 +197,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Edit/5
         [Authorize]
-        [Route("{registername}/{organization}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string documentname)
         {
             //string organizationLogin = GetSecurityClaim("organization");
@@ -234,7 +234,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("{registername}/{organization}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
@@ -283,7 +283,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Delete/5
         [Authorize]
-        [Route("{registername}/{organization}/{documentname}/slett")]
+        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string documentname)
         {
             //string organizationLogin = GetSecurityClaim("organization");
@@ -313,7 +313,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("{registername}/{organization}/{documentname}/slett")]
+        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string registername, string documentname)
         {

@@ -43,7 +43,7 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        [Route("organisasjoner/{name}")]
+        [Route("register/organisasjoner/{name}")]
         public ActionResult DetailsOrganization(string name)
         {
 
@@ -64,7 +64,8 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        [Route("{registername}/{documentowner}/{documentname}/")]
+        [Route("register/{registername}/{documentowner}/{documentname}/")]
+        //[Route("{documentowner}/{documentname}/")]
         public ActionResult DetailsDocument(string registername, string documentname)
         {
 
@@ -82,7 +83,7 @@ namespace Kartverket.Register.Controllers
             return View(document);
         }
 
-        [Route("epsg-koder/{name}")]
+        [Route("register/epsg-koder/{name}")]
         public ActionResult DetailsEPSG(string name)
         {
             

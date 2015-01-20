@@ -40,8 +40,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Create
         [Authorize]
-        [Route("register/epsg-koder/ny")]
-        public ActionResult Create(string registerId)
+        [Route("epsg-koder/ny")]
+        public ActionResult Create()
         {
             //string organizationLogin = GetSecurityClaim("organization");
 
@@ -103,7 +103,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("register/epsg-koder/ny")]
+        [Route("epsg-koder/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(EPSG epsg)
         {
@@ -235,7 +235,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
                 ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
 
-                return Redirect("/epsg-koder/" + originalEPSG.seoname);        
+                return Redirect("/register/epsg-koder/" + originalEPSG.seoname);        
 
             }
             

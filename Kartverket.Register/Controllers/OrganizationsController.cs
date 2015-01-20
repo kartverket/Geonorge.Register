@@ -46,7 +46,7 @@ namespace Kartverket.Register.Controllers
         //}
 
         [Authorize]
-        [Route("register/organisasjoner/ny")]
+        [Route("organisasjoner/ny")]
         public ActionResult Create()
         {
             //string organizationLogin = GetSecurityClaim("organization");
@@ -110,7 +110,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("register/organisasjoner/ny")]
+        [Route("organisasjoner/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
         {
@@ -262,7 +262,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
                 
-                return Redirect("/organisasjoner/" + originalOrganization.seoname);                
+                return Redirect("/register/organisasjoner/" + originalOrganization.seoname);                
             }
             return RedirectToAction("Edit");
         }

@@ -19,38 +19,6 @@
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
-        @*@if (Model.status == null)
-            {
-                <span>Status: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
-            }*@
-        @*@if (Model.manager == null)
-            {
-                <span>Administrator: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Administrator: @Html.DisplayFor(model => model.manager.name)</span><br />
-            }
-            @if (Model.owner == null)
-            {
-                <span>Eier: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Eier: @Html.DisplayFor(model => model.owner.name)</span><br />
-            }
-            @if (Model.currentVersion == null)
-            {
-                <span>Versjon: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-            }*@
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -98,11 +66,11 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/register/organisasjoner/ny">Foreslå nye @Model.name </a>
+                    <a href="/organisasjoner/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/register/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
+                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
@@ -110,7 +78,7 @@
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/register/epsg-koder/ny">Foreslå nye @Model.name </a>
+                    <a href="/epsg-koder/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {

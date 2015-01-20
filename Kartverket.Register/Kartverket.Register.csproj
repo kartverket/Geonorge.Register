@@ -336,7 +336,12 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\gsdll64.dll" />
+    <Content Include="bin\GhostscriptSharp.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\gsdll64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

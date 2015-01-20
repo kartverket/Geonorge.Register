@@ -26,7 +26,7 @@
                         <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
                     </h4>
                     <p>
-                        <a href="/filter/@Html.ToUrl(item.register.name)/organisasjon/@Html.ToUrl(@item.documentowner.name)/">
+                        <a href="/filter/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
                     </p>

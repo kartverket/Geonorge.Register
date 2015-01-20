@@ -32,7 +32,7 @@ namespace Kartverket.Register.Controllers
 
         
 
-        [Route("filter/{registername}/organisasjon/{documentownername}/")]
+        [Route("filter/{registername}/{documentownername}/")]
         public ActionResult DetailsFilterDocument(string registername, string documentownername)
         {
 

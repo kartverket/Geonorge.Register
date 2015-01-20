@@ -41,18 +41,21 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Documents/Create
-        [Route("register/dokument/{registername}/ny")]
+        [Authorize]
+        [Route("register/{registername}/ny")]
         public ActionResult Create()
         {
-            string organizationLogin = GetSecurityClaim("organization");
+            //string organizationLogin = GetSecurityClaim("organization");
             
-            if (organizationLogin == null)
-            {
-                return HttpNotFound();
-            }
-            else {
-                return View();
-            }
+            //if (organizationLogin == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //else {
+            //    return View();
+            //}
+
+            return View();
         }
 
         private string GetSecurityClaim(string type)
@@ -105,7 +108,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("register/dokument/{registername}/ny")]
+        [Route("register/{registername}/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
         {
@@ -193,15 +196,16 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Documents/Edit/5
-        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
+        [Authorize]
+        [Route("{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string documentname)
         {
-            string organizationLogin = GetSecurityClaim("organization");
+            //string organizationLogin = GetSecurityClaim("organization");
 
-            if (organizationLogin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (organizationLogin == null)
+            //{
+            //    return HttpNotFound();
+            //}
                         
             var queryResults = from o in db.Documents
                                where o.seoname == documentname
@@ -230,7 +234,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
+        [Route("{registername}/{organization}/{documentname}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
@@ -272,21 +276,22 @@ namespace Kartverket.Register.Controllers
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
 
-                return Redirect("/dokument/" + registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
+                return Redirect(registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
             }
             return View(document);
         }
 
         // GET: Documents/Delete/5
-        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
+        [Authorize]
+        [Route("{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string documentname)
         {
-            string organizationLogin = GetSecurityClaim("organization");
+            //string organizationLogin = GetSecurityClaim("organization");
 
-            if (organizationLogin == null)
-            {
-                return HttpNotFound();
-            }
+            //if (organizationLogin == null)
+            //{
+            //    return HttpNotFound();
+            //}
             
             var queryResults = from o in db.Documents
                                where o.seoname == documentname
@@ -308,7 +313,7 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("dokument/{registername}/{organization}/{documentname}/slett")]
+        [Route("{registername}/{organization}/{documentname}/slett")]
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string registername, string documentname)
         {

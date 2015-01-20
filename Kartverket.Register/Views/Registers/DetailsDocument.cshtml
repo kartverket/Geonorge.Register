@@ -52,6 +52,14 @@
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
         }
+        @if (Model.documentUrl.Contains("/data/documents/"))
+        {
+            <span>Referanse: Intern</span><br />
+        }
+        else
+        {
+            <span>Referanse: Ekstern</span><br />
+        }
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">

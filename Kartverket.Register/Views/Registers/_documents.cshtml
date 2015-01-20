@@ -46,6 +46,16 @@
                     {
                         <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
                     }
+                    <br/>
+                    @if (item.documentUrl.Contains("/data/documents/"))
+                    {
+                        <span>Referanse: Intern</span><br />
+                    }
+                    else
+                    {
+                        <span>Referanse: Ekstern</span><br />
+                    }
+                    
                 </div>
             </div>
         </div>

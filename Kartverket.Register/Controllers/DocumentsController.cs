@@ -140,17 +140,20 @@ namespace Kartverket.Register.Controllers
                 document.seoname = MakeSeoFriendlyString(document.name);               
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                if (documentfile != null)
-                {
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+
+                //Hvilke får prioritet??
+                if (document.documentUrl == null) {                
+                    if (documentfile != null)
+                    {
+                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+                        GenerateThumbnail(document, documentfile, url);
+                    }               
                 }
                 if (thumbnail != null)
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
-                }
-                else {
-                    GenerateThumbnail(document, documentfile, url);
-                }
+                } 
+
 
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -255,16 +258,21 @@ namespace Kartverket.Register.Controllers
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+                
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
                     GenerateThumbnail(originalDocument, documentfile, url);
                 }
-
+                
                 if (thumbnail != null )
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }
+
+                
+
+
 
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;

@@ -258,15 +258,12 @@ namespace Kartverket.Register.Controllers
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
+                    GenerateThumbnail(originalDocument, documentfile, url);
                 }
 
                 if (thumbnail != null )
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
-                }
-                else
-                {
-                    GenerateThumbnail(originalDocument, documentfile, url);
                 }
 
                 originalDocument.modified = DateTime.Now;
@@ -276,7 +273,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
 
-                return Redirect(registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
+                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
             }
             return View(document);
         }

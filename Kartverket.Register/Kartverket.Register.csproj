@@ -336,6 +336,8 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\bin\GhostscriptSharp.dll" />
+    <Content Include="bin\bin\gsdll64.dll" />
     <Content Include="bin\GhostscriptSharp.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

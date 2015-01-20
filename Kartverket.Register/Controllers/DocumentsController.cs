@@ -182,7 +182,7 @@ namespace Kartverket.Register.Controllers
         {
             string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.name + "_" + Path.GetFileName(documentfile.FileName));
             string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), "thumbnail_" + document.name + ".jpg");
-            GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 10, 19);
+            GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
             document.thumbnail = url + "thumbnail_" + document.name + ".jpg";
         }
 

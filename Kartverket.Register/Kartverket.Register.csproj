@@ -94,6 +94,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Cors">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -184,6 +185,8 @@
     <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\SearchApiController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Formatter\CsvFormatter.cs" />
+    <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -5,6 +5,7 @@ using System.Web.Routing;
 using Autofac;
 using System.Data.Entity;
 using Kartverket.Register.Models;
+using Kartverket.Register.Formatter;
 
 namespace Kartverket.Register
 {
@@ -22,6 +23,7 @@ namespace Kartverket.Register
 
             DependencyConfig.Configure(new ContainerBuilder());
 
+            GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter());
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
         }
 

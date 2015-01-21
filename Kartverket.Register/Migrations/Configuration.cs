@@ -12,6 +12,7 @@ namespace Kartverket.Register.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
+            
         }
 
         protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)

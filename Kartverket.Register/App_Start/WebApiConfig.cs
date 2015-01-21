@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Kartverket.Register.Formatter;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -19,7 +20,8 @@ namespace Kartverket.Register
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
+            config.Formatters.Add(new SyndicationFeedFormatter());
+            config.Formatters.Add(new CsvFormatter());
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             //config.Formatters.XmlFormatter.UseXmlSerializer = true;

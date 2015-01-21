@@ -17,5 +17,6 @@ namespace Kartverket.Register.Models
         public string RegisterSeoname { get; set; }
         public string RegisterItemSeoname { get; set; }
         public string DocumentOwner { get; set; }
+        public DateTime RegisterItemUpdated { get; set; }
     }
 }

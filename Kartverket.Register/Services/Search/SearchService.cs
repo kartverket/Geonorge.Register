@@ -27,19 +27,19 @@ namespace Kartverket.Register.Services.Search
                                 || o.register.name.Contains(parameters.Text)
                                 || o.name.Contains(parameters.Text)
                                 || o.description.Contains(parameters.Text)
-                                select new SearchResultItem { RegisterName = o.register.name, RegisterDescription = o.register.description, RegisterItemName = o.name, RegisterItemDescription = o.description, RegisterID = o.registerId, SystemID = o.systemId, Discriminator = o.register.containedItemClass, RegisterSeoname = o.register.seoname, RegisterItemSeoname = o.seoname , DocumentOwner = null  }).Union(
+                                select new SearchResultItem { RegisterName = o.register.name, RegisterDescription = o.register.description, RegisterItemName = o.name, RegisterItemDescription = o.description, RegisterID = o.registerId, SystemID = o.systemId, Discriminator = o.register.containedItemClass, RegisterSeoname = o.register.seoname, RegisterItemSeoname = o.seoname, DocumentOwner = null, RegisterItemUpdated = o.modified }).Union(
                                (from d in _dbContext.Documents
                                 where d.register.name.Contains(parameters.Text)
                                 || d.name.Contains(parameters.Text)
                                 || d.description.Contains(parameters.Text)
                                 || d.documentowner.name.Contains(parameters.Text)
-                                select new SearchResultItem { RegisterName = d.register.name, RegisterDescription = d.register.description, RegisterItemName = d.name, RegisterItemDescription = d.description, RegisterID = d.registerId, SystemID = d.systemId, Discriminator = d.register.containedItemClass, RegisterSeoname=d.register.seoname, RegisterItemSeoname = d.seoname, DocumentOwner = d.documentowner.name }).Union(
+                                select new SearchResultItem { RegisterName = d.register.name, RegisterDescription = d.register.description, RegisterItemName = d.name, RegisterItemDescription = d.description, RegisterID = d.registerId, SystemID = d.systemId, Discriminator = d.register.containedItemClass, RegisterSeoname = d.register.seoname, RegisterItemSeoname = d.seoname, DocumentOwner = d.documentowner.name, RegisterItemUpdated = d.modified }).Union(
                                 (from e in _dbContext.EPSGs
                                  where e.register.name.Contains(parameters.Text)
                                 || e.name.Contains(parameters.Text)
                                 || e.description.Contains(parameters.Text)
                                 || e.epsgcode.Contains(parameters.Text)
-                                select new SearchResultItem { RegisterName = e.register.name, RegisterDescription = e.register.description, RegisterItemName = e.name, RegisterItemDescription = e.description, RegisterID = e.registerId, SystemID = e.systemId, Discriminator = e.register.containedItemClass, RegisterSeoname=e.register.seoname, RegisterItemSeoname = e.seoname, DocumentOwner = null })
+                                select new SearchResultItem { RegisterName = e.register.name, RegisterDescription = e.register.description, RegisterItemName = e.name, RegisterItemDescription = e.description, RegisterID = e.registerId, SystemID = e.systemId, Discriminator = e.register.containedItemClass, RegisterSeoname=e.register.seoname, RegisterItemSeoname = e.seoname, DocumentOwner = null, RegisterItemUpdated = e.modified })
                                ));
 
 
@@ -63,7 +63,8 @@ namespace Kartverket.Register.Services.Search
                     Discriminator = register.Discriminator,
                     RegisterSeoname = register.RegisterSeoname,
                     RegisterItemSeoname = register.RegisterItemSeoname,
-                    DocumentOwner = register.DocumentOwner
+                    DocumentOwner = register.DocumentOwner,
+                    RegisterItemUpdated = register.RegisterItemUpdated
 
                 };
 

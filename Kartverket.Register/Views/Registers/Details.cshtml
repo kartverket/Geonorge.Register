@@ -61,7 +61,7 @@
         <p>
             @Html.ActionLink("Tilbake", "Index") |
 
-            @if (Session["role"] == "editor" && Model.status.value == )
+            @if (Session["role"] == "editor" )
             {
                 if (Model.containedItemClass == "Organization")
                 {
@@ -73,7 +73,7 @@
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-
+                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {

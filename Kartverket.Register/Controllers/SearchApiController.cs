@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
             {
                 name = searchitem.RegisterItemName,
                 description = searchitem.RegisterItemDescription,
-                status = "Unknown",
+                status = searchitem.RegisterItemStatus,
                 updated = searchitem.RegisterItemUpdated,
                 author = searchitem.DocumentOwner,
                 showUrl =  "",

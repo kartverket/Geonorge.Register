@@ -15,14 +15,14 @@ namespace Kartverket.Register.Controllers
     {
         private RegisterDbContext db = new RegisterDbContext();
 
-
+        
         // GET: Registers
         public ActionResult Index()
         {
             setAccessRole();
+
             return View(db.Registers.ToList());
         }
-
 
         // GET: Registers/Details/5
         [Route("register/{name}")]

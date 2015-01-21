@@ -59,10 +59,9 @@
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
-            @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
             @Html.ActionLink("Tilbake", "Index") |
 
-            @if (Session["role"] == "editor")
+            @if (Session["role"] == "editor" && Model.status.value == )
             {
                 if (Model.containedItemClass == "Organization")
                 {
@@ -85,8 +84,6 @@
 
                 }
             }
-
-
         </p>
     </div>
 </div>

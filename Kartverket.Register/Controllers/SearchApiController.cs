@@ -61,17 +61,17 @@ namespace Kartverket.Register.Controllers
             if (searchitem.Discriminator == "Document")
             {
                 tmp.editUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/dokument/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname + "/rediger/";
-                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname;
+                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname;
             }
             else if (searchitem.Discriminator == "EPSG")
             {
                 tmp.editUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/epsg-koder/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname + "/rediger/";
-                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname;
+                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + searchitem.RegisterSeoname + "/" + searchitem.DocumentOwner + "/" + searchitem.RegisterItemSeoname;
             }
             else 
             {
                 tmp.editUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/" + searchitem.RegisterSeoname + "/" + searchitem.RegisterItemSeoname + "/rediger/";
-                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/" + searchitem.RegisterSeoname + "/" + searchitem.RegisterItemSeoname;
+                tmp.showUrl = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + searchitem.RegisterSeoname + "/" + searchitem.RegisterItemSeoname;
             }
             return tmp;
         }

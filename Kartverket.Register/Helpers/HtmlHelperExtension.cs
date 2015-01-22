@@ -50,7 +50,7 @@ namespace Kartverket.Register.Helpers
             return MakeSeoFriendlyString(name);
         }
 
-        private static string MakeSeoFriendlyString(string input)
+        public static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();
 

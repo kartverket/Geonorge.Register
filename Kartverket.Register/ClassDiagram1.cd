@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Kartverket.Register.Models.CodelistValue">
     <Position X="0.5" Y="7.25" Width="1.5" />
     <TypeIdentifier>
@@ -8,51 +8,59 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.Dataset">
-    <Position X="4" Y="7.25" Width="1.75" />
+    <Position X="4.5" Y="7.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAQEAIBAABCAAAEAEAAAAAAIAAAAAgAAGAAAAAAQAAA=</HashCode>
       <FileName>Models\Dataset.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.RegisterItem">
-    <Position X="3.5" Y="2" Width="1.5" />
+    <Position X="4.75" Y="1.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAGAAAMAAAABAACAAkABAAAQAAAAAAAEA=</HashCode>
+      <HashCode>AAQAAAAAAAAAGAAAMAAAABAACAAkABAAAQAAQAAAAEA=</HashCode>
       <FileName>Models\RegisterItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.Version">
-    <Position X="5.75" Y="1" Width="1.5" />
+    <Position X="8" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAIAAAAAAA=</HashCode>
       <FileName>Models\Version.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.EPSG">
-    <Position X="8" Y="7.25" Width="2.75" />
+    <Position X="9.75" Y="7.25" Width="2.75" />
+    <InheritanceLine Type="Kartverket.Register.Models.RegisterItem" FixedToPoint="true">
+      <Path>
+        <Point X="5.875" Y="5.805" />
+        <Point X="5.875" Y="6.875" />
+        <Point X="11.812" Y="6.875" />
+        <Point X="11.812" Y="7.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>BAAAACACAAAAAAgABABAQAAAAAAAAIADAAAAAAAAIAg=</HashCode>
       <FileName>Models\EPSG.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.Document">
-    <Position X="6" Y="7.25" Width="1.75" />
+    <Position X="7" Y="7.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAIAAACAAAAACAAAAAAAAAAAAAAAQA=</HashCode>
       <FileName>Models\Document.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.Organization">
-    <Position X="2.25" Y="7.25" Width="1.5" />
+    <Position X="2.25" Y="7.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAACQAAAAAACAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAACQAAAAAACAAgAAAAAAAAAAACAAAAAAAA=</HashCode>
       <FileName>Models\Organization.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Kartverket.Register.Models.Register">
-    <Position X="1" Y="0.5" Width="1.75" />
+    <Position X="0.75" Y="0.75" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAwAAAAQAAAAmAAAMAgAABAECAEEABAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAwAAAAQAAAAmAAAMAgAABAECAEEABAAAAAAQAAAAAA=</HashCode>
       <FileName>Models\Register.cs</FileName>
     </TypeIdentifier>
   </Class>

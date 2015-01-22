@@ -19,5 +19,6 @@ namespace Kartverket.Register.Models
         public string RegisterItemStatus { get; set; }
         public string DocumentOwner { get; set; }
         public DateTime RegisterItemUpdated { get; set; }
+        public string RegisteItemUrl { get; set; }
     }
 }

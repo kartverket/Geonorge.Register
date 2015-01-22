@@ -7,6 +7,8 @@ using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
 using System.Data.Entity.Infrastructure;
 using Kartverket.Register.Models;
+using System.Web.Configuration;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Services.Search
 {
@@ -71,7 +73,8 @@ namespace Kartverket.Register.Services.Search
                     RegisterItemSeoname = register.RegisterItemSeoname,
                     DocumentOwner = register.DocumentOwner,
                     RegisterItemUpdated = register.RegisterItemUpdated,
-                    RegisterItemStatus = register.RegisterItemStatus
+                    RegisterItemStatus = register.RegisterItemStatus,
+                    RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "/register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname
 
                 };
 

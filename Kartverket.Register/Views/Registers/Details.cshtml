@@ -61,7 +61,12 @@
         <p>
             @Html.ActionLink("Tilbake", "Index") |
 
+<<<<<<< Updated upstream
             @if (Session["role"] == "editor" )
+=======
+            @*@if (Session["role"] == "editor")*@
+            @if (Session["role"] == "editor" && Model.containedItemClass == "Document" || Session["role"] == "admin")
+>>>>>>> Stashed changes
             {
                 if (Model.containedItemClass == "Organization")
                 {
@@ -82,8 +87,9 @@
                 if (Model.containedItemClass == "Register")
                 {
 
-                }
+                }                
             }
+
         </p>
     </div>
 </div>

@@ -43,15 +43,13 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/ny")]
         public ActionResult Create()
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
+   
             return View();
         }
-
 
         private string GetSecurityClaim(string type)
         {
@@ -161,12 +159,10 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/rediger")]
         public ActionResult Edit(string epsgname)
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
 
             var queryResultsEpsg = from o in db.EPSGs
                                            where o.seoname == epsgname
@@ -247,12 +243,10 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/slett")]
         public ActionResult Delete(string epsgname)
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
 
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname

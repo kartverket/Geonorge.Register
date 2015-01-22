@@ -45,16 +45,11 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create()
         {
-            //string organizationLogin = GetSecurityClaim("organization");
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
             
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //else {
-            //    return View();
-            //}
-
             return View();
         }
 
@@ -203,12 +198,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string documentname)
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
                         
             var queryResults = from o in db.Documents
                                where o.seoname == documentname
@@ -291,12 +284,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string documentname)
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
             
             var queryResults = from o in db.Documents
                                where o.seoname == documentname

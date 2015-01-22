@@ -40,21 +40,14 @@ namespace Kartverket.Register.Controllers
 
 
         //// GET: Organizations/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
         [Authorize]
         [Route("organisasjoner/ny")]
         public ActionResult Create()
         {
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
             return View();
         }
 
@@ -79,7 +72,6 @@ namespace Kartverket.Register.Controllers
 
             return result;
         }
-
 
         private static string MakeSeoFriendlyString(string input)
         {
@@ -172,17 +164,15 @@ namespace Kartverket.Register.Controllers
         }
 
         //// GET: Organizations/Edit/5
+        [Authorize]
         [Route("organisasjoner/{orgnavn}/rediger")]
         public ActionResult Edit(string orgnavn)
         {
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
 
-            //string organizationLogin = GetSecurityClaim("organization");
-
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == orgnavn
                                            select o.systemId;
@@ -209,10 +199,9 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("organisasjoner/{orgnavn}/rediger")]
         //[ValidateAntiForgeryToken]
-        [Authorize]
         public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id, string orgnavn)
         {
-
+          
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == orgnavn
                                            select o.systemId;
@@ -269,16 +258,15 @@ namespace Kartverket.Register.Controllers
 
         // GET: Organizations/Delete/5
         //[Route("organisasjoner/slett/{name}/{id}")]
+        [Authorize]
         [Route("organisasjoner/{orgname}/slett")]
         public ActionResult Delete(string orgname)
         {
-            //string organizationLogin = GetSecurityClaim("organization");
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
 
-            //if (organizationLogin == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == orgname
                                            select o.systemId;

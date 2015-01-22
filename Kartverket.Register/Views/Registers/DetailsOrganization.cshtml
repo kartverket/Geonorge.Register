@@ -97,7 +97,7 @@
         <p>
             <a href="/register/organisasjoner">Tilbake</a>
 
-            @if (Session["role"] == "editor")
+            @if (Session["role"] == "admin")
             {
                 <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
                 <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>

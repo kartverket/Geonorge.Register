@@ -115,6 +115,11 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
         {
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
+            
             if (ModelState.IsValid)
             {
                 register.systemId = Guid.NewGuid();
@@ -126,9 +131,15 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
+        [Authorize]
         // GET: Registers/Edit/5
         public ActionResult Edit(Guid? id)
         {
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -161,8 +172,14 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Delete/5
+        [Authorize]
         public ActionResult Delete(Guid? id, string name)
         {
+            if (Session["role"] != "admin")
+            {
+                return HttpNotFound();
+            }
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -197,12 +214,21 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-        private bool HasAccessToRegister()
+        private string HasAccessToRegister()
         {
             string organization = GetSecurityClaim("organization");
             string role = GetSecurityClaim("role");
+                        
             bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
-            return isAdmin;
+            bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_editor");
+
+            if (isAdmin)
+            {
+                return "admin";
+            }
+            else {
+                return "editor";
+            }
         }
 
         private string GetSecurityClaim(string type)
@@ -228,8 +254,10 @@ namespace Kartverket.Register.Controllers
 
         private void setAccessRole()
         {
-            bool editor = HasAccessToRegister();
-            if (editor)
+            string role = HasAccessToRegister();
+            if (role == "admin")
+                Session["role"] = "admin";
+            else if (role == "editor")
                 Session["role"] = "editor";
             else
                 Session["role"] = "guest";

@@ -6,11 +6,6 @@
 <div>
     @foreach (Organization item in Model)
     {
-        @if (item.submitterId == null)
-        {
-            item.submitterId = Guid.Parse("10087020-f17c-45e1-8542-02acbcf3d8a3");
-            
-        }
 
         <div class="row result-row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

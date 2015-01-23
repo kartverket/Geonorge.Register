@@ -33,12 +33,6 @@
 
     @foreach (EPSG item in Model)
     {
-        @if (item.submitterId == null)
-        {
-            item.submitterId = Guid.Parse("10087020-f17c-45e1-8542-02acbcf3d8a3");
-
-        }
-        
         <tr>
             <td>
                 <a href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">@Html.DisplayFor(modelItem => item.name)</a>

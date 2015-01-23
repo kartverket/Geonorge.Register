@@ -1,0 +1,21 @@
+﻿@model Kartverket.Register.Models.Organization
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="row">
+        <div class="col-lg-2 col-md-2">
+            Liten logo:
+        </div>
+        <div class="col-lg-2 col-md-4">
+            <img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" class="img-responsive center-block" alt="logo" />
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2 col-md-2">
+            Stor logo:
+        </div>
+        <div class="col-lg-2 col-md-4">
+            <img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" class="img-responsive center-block" alt="logo" />
+        </div>
+    </div>
+</div>

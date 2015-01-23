@@ -43,86 +43,110 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        [Route("register/organisasjoner/{name}")]
-        public ActionResult DetailsOrganization(string name)
-        {
-
-            var queryResults = from o in db.Organizations
-                               where o.seoname == name
-                               select o.systemId;
-
-            Guid systID = queryResults.First();
-
-            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systID);
-
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(organization);
-        }
-
-
-        [Route("register/{registername}/{documentowner}/{documentname}/")]
+        [Route("register/{registername}/{submitter}/{itemname}/")]
         //[Route("{documentowner}/{documentname}/")]
-        public ActionResult DetailsDocument(string registername, string documentname)
-        {
+        public ActionResult DetailsRegisterItem(string registername, string itemname)
+        {            
 
-            var queryResultsRegisterId = from o in db.Documents
-                               where o.seoname == documentname
-                               select o.systemId;
+            var queryResultsRegisterItem = from o in db.RegisterItems
+                                         where o.seoname == itemname
+                                         select o.systemId;
 
-            Guid systId = queryResultsRegisterId.First();
+            Guid systId = queryResultsRegisterItem.First();
+            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
             
-            Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-            if (document == null)
-            {
-                return HttpNotFound();
-            }
-            return View(document);
+            return View(registerItem);
         }
+        
+        
+        //[Route("register/organisasjoner/{name}")]
+        //public ActionResult DetailsOrganization(string name)
+        //{
 
-        [Route("register/epsg-koder/{name}")]
-        public ActionResult DetailsEPSG(string name)
-        {
+        //    var queryResults = from o in db.Organizations
+        //                       where o.seoname == name
+        //                       select o.systemId;
+
+        //    Guid systID = queryResults.First();
+
+        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(systID);
+
+        //    if (organization == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+        //    return View(organization);
+        //}
+
+
+        //[Route("register/{registername}/{documentowner}/{documentname}/")]
+        ////[Route("{documentowner}/{documentname}/")]
+        //public ActionResult DetailsDocument(string registername, string documentname)
+        //{
+
+        //    var queryResultsRegisterId = from o in db.Documents
+        //                       where o.seoname == documentname
+        //                       select o.systemId;
+
+        //    Guid systId = queryResultsRegisterId.First();
             
-            var queryResults = from o in db.EPSGs
-                               where o.seoname == name
-                               select o.systemId;
+        //    Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+        //    if (document == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(document);
+        //}
 
-            Guid systID = queryResults.First();
+        //[Route("register/epsg-koder/{name}")]
+        //public ActionResult DetailsEPSG(string name)
+        //{
+            
+        //    var queryResults = from o in db.EPSGs
+        //                       where o.seoname == name
+        //                       select o.systemId;
 
-            Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(systID);
-            if (epsg == null)
-            {
-                return HttpNotFound();
-            }
-            return View(epsg);
-        }
+        //    Guid systID = queryResults.First();
+
+        //    Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(systID);
+        //    if (epsg == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(epsg);
+        //}
 
         // GET: Registers/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            string role = GetSecurityClaim("role");
+            if (role == "nd.metadata_admin")
+            {
+                return View();
+            }
+            return HttpNotFound();
         }
 
         // POST: Registers/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         //[ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
             
             if (ModelState.IsValid)
             {
                 register.systemId = Guid.NewGuid();
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == Session["user"]
+                                   select o.systemId;
+
+                register.ownerId = queryResults.First();
+                register.statusId = "Submitted";                
                 db.Registers.Add(register);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -135,11 +159,11 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Edit/5
         public ActionResult Edit(Guid? id)
         {
-            if (Session["role"] != "admin")
+            string role = GetSecurityClaim("role");
+            if (role != "nd.metadata_admin")
             {
                 return HttpNotFound();
             }
-            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -175,7 +199,8 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Delete(Guid? id, string name)
         {
-            if (Session["role"] != "admin")
+            string role = GetSecurityClaim("role");
+            if (role != "nd.metadata_admin")
             {
                 return HttpNotFound();
             }
@@ -216,18 +241,21 @@ namespace Kartverket.Register.Controllers
 
         private string HasAccessToRegister()
         {
-            string organization = GetSecurityClaim("organization");
             string role = GetSecurityClaim("role");
                         
             bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
-            bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_editor");
+            bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata"); //nd.metadata_editor
 
             if (isAdmin)
             {
                 return "admin";
             }
-            else {
+            else if (isEditor)
+            {
                 return "editor";
+            }
+            else {
+                return "guest";
             }
         }
 
@@ -254,13 +282,26 @@ namespace Kartverket.Register.Controllers
 
         private void setAccessRole()
         {
+            string organization = GetSecurityClaim("organization");
+
             string role = HasAccessToRegister();
             if (role == "admin")
+            {
                 Session["role"] = "admin";
+                Session["user"] = organization;
+            }
             else if (role == "editor")
+            {
                 Session["role"] = "editor";
+                Session["user"] = organization;
+            }
             else
+            {
                 Session["role"] = "guest";
+                Session["user"] = "";
+            }
+
+            
         }
 
     }

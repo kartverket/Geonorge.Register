@@ -456,7 +456,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Filterting\DetailsDocument.cshtml" />
-    <Content Include="Views\Search\DetailsFiltering.cshtml" />
     <Content Include="Views\Search\DetailsFilterDocument.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\DisplayDataset\Display.cshtml" />
@@ -470,6 +469,10 @@
     <Content Include="Views\ManageThemeGroup\Details.cshtml" />
     <Content Include="Views\ManageThemeGroup\Edit.cshtml" />
     <Content Include="Views\ManageThemeGroup\Index.cshtml" />
+    <Content Include="Views\Registers\DetailsRegisterItem.cshtml" />
+    <Content Include="Views\Registers\_detailsOrganization.cshtml" />
+    <Content Include="Views\Registers\_detailsDocuments.cshtml" />
+    <Content Include="Views\Registers\_detailsEpsg.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,7 +25,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Details/5
         public ActionResult Details(Guid? id)
-        {
+        {            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -43,58 +43,23 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/ny")]
         public ActionResult Create()
         {
-            if (Session["role"] != "admin")
+            string registerOwner = FindRegisterOwner("epsg-koder");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Registers
+                                   where o.seoname == "epsg-koder"
+                                   select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
+            string registerStatus = register.statusId;
+
+            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
             {
-                return HttpNotFound();
+                return View();
             }
-   
-            return View();
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
+            return HttpNotFound();
         }
 
         // POST: EPSGs/Create
@@ -159,32 +124,35 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/rediger")]
         public ActionResult Edit(string epsgname)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
+            string registerOwner = FindRegisterOwner("epsg-koder");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            var queryResultsEpsg = from o in db.EPSGs
-                                           where o.seoname == epsgname
-                                           select o.systemId;
-            Guid systId = queryResultsEpsg.First();
-            
-            if (systId == null)
+            if (role == "nd.metadata_admin" || user == registerOwner)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var queryResultsEpsg = from o in db.EPSGs
+                                       where o.seoname == epsgname
+                                       select o.systemId;
+                Guid systId = queryResultsEpsg.First();
+
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                EPSG ePSG = db.EPSGs.Find(systId);
+                if (ePSG == null)
+                {
+                    return HttpNotFound();
+                }
+                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
+                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
+                ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
+                ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
+                ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+                return View(ePSG);
             }
-            EPSG ePSG = db.EPSGs.Find(systId);
-            if (ePSG == null)
-            {
-                return HttpNotFound();
-            }
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
-            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            return View(ePSG);
+            return HttpNotFound();
         }
 
         // POST: EPSGs/Edit/5
@@ -231,7 +199,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
                 ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
 
-                return Redirect("/register/epsg-koder/" + originalEPSG.seoname);        
+                return Redirect("/register/epsg-koder/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);        
 
             }
             
@@ -243,26 +211,30 @@ namespace Kartverket.Register.Controllers
         [Route("epsg-koder/{epsgname}/slett")]
         public ActionResult Delete(string epsgname)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
+            string registerOwner = FindRegisterOwner("epsg-koder");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.EPSGs
-                                           where o.seoname == epsgname
-                                           select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.EPSGs
+                                               where o.seoname == epsgname
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                EPSG ePSG = db.EPSGs.Find(systId);
+                if (ePSG == null)
+                {
+                    return HttpNotFound();
+                }
+
+                return View(ePSG);
             }
-            EPSG ePSG = db.EPSGs.Find(systId);
-            if (ePSG == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ePSG);
+            return HttpNotFound();
         }
 
         // POST: EPSGs/Delete/5
@@ -291,5 +263,67 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+        private string FindRegisterOwner(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string registerOwner = register.owner.name;
+            return registerOwner;
+        }
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
+        }
+
+
     }
 }

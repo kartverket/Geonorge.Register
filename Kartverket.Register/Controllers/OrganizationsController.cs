@@ -44,58 +44,23 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/ny")]
         public ActionResult Create()
         {
-            if (Session["role"] != "admin")
+            string registerOwner = FindRegisterOwner("organisasjoner");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Registers
+                               where o.seoname == "organisasjoner"
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            string registerStatus = register.statusId;
+
+            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
             {
-                return HttpNotFound();
+                return View(); 
             }
-            return View();
-        }
-
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
+            return HttpNotFound();
         }
 
         // POST: Organizations/Create
@@ -155,41 +120,37 @@ namespace Kartverket.Register.Controllers
             return Redirect("/register/organisasjoner");
         }
 
-        private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
-        {
-            string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
-            file.SaveAs(path);
-            return filename;
-        }
 
         //// GET: Organizations/Edit/5
         [Authorize]
         [Route("organisasjoner/{orgnavn}/rediger")]
         public ActionResult Edit(string orgnavn)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
+            string registerOwner = FindRegisterOwner("organisasjoner");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.seoname == orgnavn
-                                           select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.Organizations
+                                               where o.seoname == orgnavn
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
+                if (organization == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
+                return View(organization);
             }
-            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
-            return View(organization);
+            return HttpNotFound();
         }
 
 
@@ -251,7 +212,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
                 
-                return Redirect("/register/organisasjoner/" + originalOrganization.seoname);                
+                return Redirect("/register/organisasjoner/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);                
             }
             return RedirectToAction("Edit");
         }
@@ -262,26 +223,29 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{orgname}/slett")]
         public ActionResult Delete(string orgname)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
+            string registerOwner = FindRegisterOwner("organisasjoner");
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.seoname == orgname
-                                           select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.Organizations
+                                               where o.seoname == orgname
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Organization organization = db.Organizations.Find(systId);
+                if (organization == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(organization);
             }
-            Organization organization = db.Organizations.Find(systId);
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            return View(organization);
+            return HttpNotFound();
         }
 
         // POST: Registers/Delete/5
@@ -319,6 +283,76 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+
+
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
+        }
+
+        
+        private string FindRegisterOwner(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string registerOwner = register.owner.name;
+            return registerOwner;
+        }
+
+        private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)
+        {
+            string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            file.SaveAs(path);
+            return filename;
         }
     }
 }

@@ -104,7 +104,8 @@
             <p>
                 @*@Html.ActionLink("Edit", "Edit", new { id = Model.systemId }) |*@
                 <a href="/register/@Html.ToUrl(Model.register.name)">Tilbake</a>
-                @if (Session["role"] == "admin"){
+                @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)
+                {
                     <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
                     <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
                 }

@@ -1,0 +1,134 @@
+﻿@model Kartverket.Register.Models.RegisterItem
+﻿@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = @Model.name;
+}
+
+@section breadcrumb {
+    <li class="active">@Html.DisplayFor(model => model.name)</li>
+}
+<div class="page-header">
+    <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
+    <hr>
+</div>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+        ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
+
+        <p>
+            @Html.DisplayFor(model => model.description)
+        </p>
+        @if (Model.status == null)
+        {
+            <span>Status: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+        }
+        @if (Model.submitter == null)
+        {
+            <span>Administrator: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Administrator: @Html.DisplayFor(model => model.submitter.name)</span><br />
+        }
+        @if (Model.submitter == null)
+        {
+            <span>Eier: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Eier: @Html.DisplayFor(model => model.submitter.name)</span><br />
+        }
+        @if (Model.currentVersion == null)
+        {
+            <span>Versjon: Ikke angitt</span><br />
+        }
+        else
+        {
+            <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+        }
+        @*@if (Model.documentUrl.Contains("/data/documents/"))
+        {
+            <span>Referanse: Intern</span><br />
+        }
+        else
+        {
+            <span>Referanse: Ekstern</span><br />
+        }*@
+
+    </div>
+    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
+        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="page-header">
+            <hr>
+        </div>
+
+
+        @if (Model.register.containedItemClass == "Organization")
+        {
+            @Html.Partial("_detailsOrganization")
+        }
+        @if (Model.register.containedItemClass == "Document")
+        {
+            @Html.Partial("_detailsDocuments")
+        }
+        @if (Model.register.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_detailsDataset")
+        }
+        @if (Model.register.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_detailsEpsg")
+        }
+        @if (Model.register.containedItemClass == "Register")
+        {
+            @Html.Partial("_detailsSubregister")
+        }
+        
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <p>
+            <hr />
+            
+            @Html.ActionLink("Tilbake", "Index")
+
+
+            @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)
+            {
+                if (Model.register.containedItemClass == "Organization")
+                {
+                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                }
+                if (Model.register.containedItemClass == "Document")
+                {
+                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
+                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                }
+                if (Model.register.containedItemClass == "Dataset")
+                {
+                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
+                }
+                if (Model.register.containedItemClass == "EPSG")
+                {
+                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
+                }
+                if (Model.register.containedItemClass == "Register")
+                {
+
+                }
+            }
+
+        </p>
+    </div>
+</div>

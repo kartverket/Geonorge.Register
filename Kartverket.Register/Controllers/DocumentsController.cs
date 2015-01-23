@@ -43,60 +43,26 @@ namespace Kartverket.Register.Controllers
         // GET: Documents/Create
         [Authorize]
         [Route("dokument/{registername}/ny")]
-        public ActionResult Create()
+        public ActionResult Create(string registername)
         {
-            if (Session["role"] != "admin")
+            string registerOwner = FindRegisterOwner(registername);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            string registerStatus = register.statusId;
+
+            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
             {
-                return HttpNotFound();
+                return View();
             }
+            return HttpNotFound();
             
-            return View();
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         // POST: Documents/Create
@@ -176,54 +142,42 @@ namespace Kartverket.Register.Controllers
             return View(document);
         }
 
-        private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
-        {
-            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.name + "_" + Path.GetFileName(documentfile.FileName));
-            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), "thumbnail_" + document.name + ".jpg");
-            GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
-            document.thumbnail = url + "thumbnail_" + document.name + ".jpg";
-        }
-
-
-        private string SaveFileToDisk(HttpPostedFileBase file, string name)
-        {
-            string filename = name + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);;
-            file.SaveAs(path);
-            return filename;
-        }
 
         // GET: Documents/Edit/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(string documentname)
+        public ActionResult Edit(string registername, string documentname)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
-                        
-            var queryResults = from o in db.Documents
-                               where o.seoname == documentname
-                               select o.systemId;
+            string registerOwner = FindRegisterOwner(registername);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            Guid systId = queryResults.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+     
+                var queryResults = from o in db.Documents
+                                   where o.seoname == documentname
+                                   select o.systemId;
+
+                Guid systId = queryResults.First();
             
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Document document = db.Documents.Find(systId);
+                if (document == null)
+                {
+                    return HttpNotFound();
+                }
+                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
+                ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+                return View(document);
             }
-            Document document = db.Documents.Find(systId);
-            if (document == null)
-            {
-                return HttpNotFound();
-            }
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
-            return View(document);
+            return HttpNotFound();
         }
 
         // POST: Documents/Edit/5
@@ -263,10 +217,6 @@ namespace Kartverket.Register.Controllers
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }
 
-                
-
-
-
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();
@@ -282,29 +232,32 @@ namespace Kartverket.Register.Controllers
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        public ActionResult Delete(string documentname)
+        public ActionResult Delete(string registername, string documentname)
         {
-            if (Session["role"] != "admin")
-            {
-                return HttpNotFound();
-            }
-            
-            var queryResults = from o in db.Documents
-                               where o.seoname == documentname
-                               select o.systemId;
+            string registerOwner = FindRegisterOwner(registername);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
 
-            Guid systId = queryResults.First();
-            
-            if (systId == null)
+            if (role == "nd.metadata_admin" || user == registerOwner)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var queryResults = from o in db.Documents
+                                   where o.seoname == documentname
+                                   select o.systemId;
+
+                Guid systId = queryResults.First();
+
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Document document = db.Documents.Find(systId);
+                if (document == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(document);
             }
-            Document document = db.Documents.Find(systId);
-            if (document == null)
-            {
                 return HttpNotFound();
-            }
-            return View(document);
         }
 
         // POST: Documents/Delete/5
@@ -333,6 +286,83 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        private string FindRegisterOwner(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.name == registername
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string registerOwner = register.owner.name;
+            return registerOwner;
+        }
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
+        }
+
+        private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
+        {
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.name + "_" + Path.GetFileName(documentfile.FileName));
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), "thumbnail_" + document.name + ".jpg");
+            GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
+            document.thumbnail = url + "thumbnail_" + document.name + ".jpg";
+        }
+
+
+        private string SaveFileToDisk(HttpPostedFileBase file, string name)
+        {
+            string filename = name + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename); ;
+            file.SaveAs(path);
+            return filename;
+        }
+
 
     }
 }

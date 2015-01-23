@@ -59,25 +59,25 @@
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
-            @Html.ActionLink("Tilbake", "Index") |
+            @Html.ActionLink("Tilbake", "Index")
 
-            @if (Session["role"] == "editor" && Model.containedItemClass == "Document" || Session["role"] == "admin")
+            @if (Session["role"].ToString() == "editor" && Model.statusId == "Submitted" || Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.owner.name)
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/ny">Foreslå nye @Model.name </a>
+                    <a href="/organisasjoner/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
+                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
+                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">Foreslå nye @Model.name </a>
+                    <a href="/epsg-koder/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {

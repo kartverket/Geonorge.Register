@@ -94,7 +94,6 @@
         <hr />
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <p>
-                @*@Session["user"]*@
                 <a href="/register/@Html.ToUrl(Model.register.name)/">Tilbake</a>
                 @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)
                 {

@@ -173,6 +173,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApiController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -183,7 +186,6 @@
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
-    <Compile Include="Controllers\SearchApiController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
@@ -302,6 +304,8 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
+    <Compile Include="Models\Api\Register.cs" />
+    <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\Api\Item.cs" />

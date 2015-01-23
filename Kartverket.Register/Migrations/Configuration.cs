@@ -27,7 +27,7 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "NotAccepted", description = "Ikke godkjent" },
                 new Status { value = "Accepted", description = "Godkjent" },
                 new Status { value = "Valid", description = "Gyldig" },
-                new Status { value = "Experimental", description = "Eksperimentell" },
+                new Status { value = "Experimental", description = "Utkast" },
                 new Status { value = "Deprecated", description = "Utdatert" },
                 new Status { value = "Superseded", description = "Erstattet" },
                 new Status { value = "Retired", description = "Utgått" }

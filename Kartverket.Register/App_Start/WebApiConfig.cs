@@ -22,6 +22,9 @@ namespace Kartverket.Register
             );
             config.Formatters.Add(new SyndicationFeedFormatter());
             config.Formatters.Add(new CsvFormatter());
+            
+            config.Formatters.JsonFormatter.SerializerSettings.Re‌ferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             //config.Formatters.XmlFormatter.UseXmlSerializer = true;

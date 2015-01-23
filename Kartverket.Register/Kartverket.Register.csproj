@@ -489,6 +489,7 @@
     <Content Include="Views\Registers\_detailsOrganization.cshtml" />
     <Content Include="Views\Registers\_detailsDocuments.cshtml" />
     <Content Include="Views\Registers\_detailsEpsg.cshtml" />
+    <Content Include="Views\Organizations\Import.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

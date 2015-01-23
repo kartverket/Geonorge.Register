@@ -21,6 +21,71 @@ namespace Kartverket.Register.Controllers
             return View(db.Organizations.OrderBy(o => o.name).ToList());
         }
 
+        [Authorize]
+        public ActionResult Import()
+        {
+            string role = GetSecurityClaim("role");
+            if (role == "nd.metadata_admin")
+            {
+                return View();
+            }
+            else 
+            return HttpNotFound("Ingen tilgang");
+           
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Import(HttpPostedFileBase csvfile)
+        {
+
+            string filename =  "import_" + Path.GetFileName(csvfile.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            csvfile.SaveAs(path);
+
+            var lines = System.IO.File.ReadAllLines(path).Select(a => a.Split(';')).Skip(1);
+            foreach (var org in lines)
+            {
+                //orgnr, navn, beskrivelse, logo
+                Organization organization = new Organization();
+                organization.systemId = Guid.NewGuid();
+                organization.number = org[0];
+                organization.name = org[1];
+                organization.description = org[2];
+                if (organization.name == null)
+                {
+                    organization.name = "ikke angitt";
+                }
+                
+                string organizationLogin = GetSecurityClaim("organization");
+                var queryResultsOrganization = from o in db.Organizations
+                                               where o.name == organizationLogin
+                                               select o.systemId;
+                Guid orgId = queryResultsOrganization.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                organization.submitterId = orgId;
+                organization.submitter = submitterOrganisasjon;
+                var queryResultsRegister = from o in db.Registers
+                                           where o.name == "Organisasjoner"
+                                           select o.systemId;
+                Guid regId = queryResultsRegister.First();
+
+                organization.modified = DateTime.Now;
+                organization.dateSubmitted = DateTime.Now;
+                organization.registerId = regId;
+                organization.statusId = "Submitted";
+                organization.seoname = MakeSeoFriendlyString(organization.name);
+
+                organization.logoFilename = org[3];
+                organization.largeLogo = org[3];
+
+                db.RegisterItems.Add(organization);
+                db.SaveChanges(); 
+            }
+           
+            return Redirect("/register/organisasjoner");
+        }
         // GET: Organizations/Details/5
         public ActionResult Details(string id)
         {

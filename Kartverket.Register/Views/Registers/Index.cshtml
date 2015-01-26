@@ -21,14 +21,9 @@
             <th>
                 Innhold
             </th>
-           
-            <th>
-                Administrator
-            </th>
             <th>
                 Eier
             </th>
-
         </tr>
         <tr>
             <td>
@@ -37,6 +32,7 @@
             <td>
                 Det offentlige kartgrunnlaget beskrives i plan- og bygningslovens paragraf 2-1 og kart- og planforskriften og skal være er en samling geografiske kvalitetsdata, såkalt offentlige autoritative data. Disse skal være valgt ut og tilrettelagt for å være et egnet kunnskapsgrunnlag for de mest vesentlige behovene som følger av plan- og bygningsloven.
             </td>
+            <td></td>
 
         </tr>
 
@@ -49,18 +45,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.description)
                 </td>
-                
-                <td>
-                    @if (item.manager == null)
-                    {
-                        <span>Ikke angitt</span>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.manager.name)
-                    }
 
-                </td>
                 <td>
                     @if (item.owner == null)
                     {

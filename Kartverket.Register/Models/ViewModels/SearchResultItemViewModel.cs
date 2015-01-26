@@ -18,7 +18,8 @@ namespace Kartverket.Register.Models.ViewModels
         public string RegisterSeoname { get; set; }
         public string RegisterItemSeoname { get; set; }
         public string DocumentOwner { get; set; }
-
+        public string Submitter { get; set; }
+        public string Shortname { get; set; }
 
         private SearchResultItemViewModel(SearchResultItem item)
         {
@@ -32,7 +33,9 @@ namespace Kartverket.Register.Models.ViewModels
             RegisterSeoname = item.RegisterSeoname;
             RegisterItemSeoname = item.RegisterItemSeoname;
             DocumentOwner = item.DocumentOwner;
-            
+            Submitter = item.Submitter;
+            Shortname = item.Shortname;
+
         }
 
         public static List<SearchResultItemViewModel> CreateFromList(IEnumerable<SearchResultItem> items)

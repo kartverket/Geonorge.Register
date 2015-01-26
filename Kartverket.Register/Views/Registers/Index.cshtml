@@ -22,12 +22,12 @@
                 Innhold
             </th>
            
-            @*<th>
+            <th>
                 Administrator
             </th>
             <th>
                 Eier
-            </th>*@
+            </th>
 
         </tr>
         <tr>
@@ -50,7 +50,7 @@
                     @Html.DisplayFor(modelItem => item.description)
                 </td>
                 
-                @*<td>
+                <td>
                     @if (item.manager == null)
                     {
                         <span>Ikke angitt</span>
@@ -70,7 +70,7 @@
                     {
                         @Html.DisplayFor(modelItem => item.owner.name)
                     }
-                </td>*@
+                </td>
 
             </tr>
         }

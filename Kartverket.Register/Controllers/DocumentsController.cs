@@ -216,7 +216,7 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
                     
-                    if (document.documentUrl.Contains(".pdf"))
+                    if (originalDocument.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url);
                         originalDocument.thumbnail = document.thumbnail;

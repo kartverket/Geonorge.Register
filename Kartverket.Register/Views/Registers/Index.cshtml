@@ -24,6 +24,9 @@
             <th>
                 Eier
             </th>
+            <th>
+                Status
+            </th>
         </tr>
         <tr>
             <td>
@@ -56,8 +59,22 @@
                         @Html.DisplayFor(modelItem => item.owner.name)
                     }
                 </td>
+                <td>
+                    @if (item.statusId == null)
+                    {
+                        <span>Ikke angitt</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.status.description)
+                    }
+                </td>
 
             </tr>
+        
+        
         }
+
+        
 
     </table>

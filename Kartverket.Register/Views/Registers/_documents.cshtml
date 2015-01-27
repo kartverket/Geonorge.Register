@@ -12,11 +12,11 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
                     @{
-        string thumb = "/Content/pdf.jpg";
-        if (item.thumbnail != null)
-        {
-            thumb = item.thumbnail;
-        }
+                        string thumb = "/Content/pdf.jpg";
+                        if (item.thumbnail != null)
+                        {
+                            thumb = item.thumbnail;
+                        }
                     }
                     <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
 
@@ -47,13 +47,20 @@
                         <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
                     }
                     <br/>
-                    @if (item.documentUrl.Contains("/data/documents/"))
+                    @if (item.documentUrl == "ikke angitt")
                     {
-                        <span>Referanse: Intern</span><br />
+                        <span>Referanse: mangler</span><br />
                     }
-                    else
-                    {
-                        <span>Referanse: Ekstern</span><br />
+                    else 
+                    { 
+                        if (item.documentUrl.Contains("/data/documents/"))
+                        {
+                            <span>Referanse: Intern</span><br />
+                        }
+                        else
+                        {
+                            <span>Referanse: Ekstern</span><br />
+                        }
                     }
                     
                 </div>

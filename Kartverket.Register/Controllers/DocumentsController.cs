@@ -109,12 +109,15 @@ namespace Kartverket.Register.Controllers
                         GenerateThumbnail(document, documentfile, url);
                     }
                 }    
-                
+                                
                 if (thumbnail != null)
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
-                } 
+                }
 
+                if (document.documentUrl == null) {
+                    document.documentUrl = "ikke angitt";
+                }
 
                 string organizationLogin = GetSecurityClaim("organization");
 

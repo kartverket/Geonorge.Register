@@ -206,7 +206,6 @@ namespace Kartverket.Register.Controllers
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
                     originalDocument.documentUrl = document.documentUrl; 
-                    originalDocument.thumbnail = null;
                 }
                 if (document.statusId != null) originalDocument.statusId = document.statusId;
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;

@@ -62,29 +62,33 @@
            
             @Html.ActionLink("Tilbake", "Index")
 
-            @if (Session["role"].ToString() == "editor" && Model.statusId == "Submitted" || Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.owner.name)
+            @if (Session["role"] != null)
             {
-                if (Model.containedItemClass == "Organization")
-                {
-                    <a href="/organisasjoner/ny">| Foreslå nye @Model.name </a>
-                }
-                if (Model.containedItemClass == "Document")
-                {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
-                }
-                if (Model.containedItemClass == "Dataset")
-                {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
-                }
-                if (Model.containedItemClass == "EPSG")
-                {
-                    <a href="/epsg-koder/ny">| Foreslå nye @Model.name </a>
-                }
-                if (Model.containedItemClass == "Register")
+                @if (Session["role"] == "admin" || Session["role"] == "editor")
                 {
 
-                }
-            }            
+                    if (Model.containedItemClass == "Organization")
+                    {
+                        <a href="/organisasjoner/ny">| Foreslå nye @Model.name </a>
+                    }
+                    if (Model.containedItemClass == "Document")
+                    {
+                        <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    }
+                    if (Model.containedItemClass == "Dataset")
+                    {
+                        <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    }
+                    if (Model.containedItemClass == "EPSG")
+                    {
+                        <a href="/epsg-koder/ny">| Foreslå nye @Model.name </a>
+                    }
+                    if (Model.containedItemClass == "Register")
+                    {
+
+                    }
+                }    
+            }        
         </p>
     </div>
 </div>

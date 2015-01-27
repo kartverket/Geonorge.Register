@@ -102,30 +102,33 @@
             <a href="/register/@Model.register.seoname">Tilbake</a>
 
 
-            @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)
+            @if (Session["role"] != null || Session["user"] != null)
             {
-                if (Model.register.containedItemClass == "Organization")
+                @if (Session["role"].ToString() == "admin" || (Session["role"].ToString() == "editor" && Session["user"].ToString() == Model.register.owner.name))
                 {
-                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Document")
-                {
-                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Dataset")
-                {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
-                }
-                if (Model.register.containedItemClass == "EPSG")
-                {
-                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Register")
-                {
+                    if (Model.register.containedItemClass == "Organization")
+                    {
+                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Document")
+                    {
+                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
+                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Dataset")
+                    {
+                        <a href="/dataset/@Html.ToUrl(Model.name)/ny">Foreslå nye @Model.name </a>
+                    }
+                    if (Model.register.containedItemClass == "EPSG")
+                    {
+                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Register")
+                    {
 
+                    }
                 }
             }
 

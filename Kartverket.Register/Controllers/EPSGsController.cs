@@ -55,7 +55,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
             string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
+            if (role == "nd.metadata_admin" || role == "nd.metadata")
             {
                 return View();
             }

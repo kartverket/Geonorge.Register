@@ -104,7 +104,7 @@
 
             @if (Session["role"] != null || Session["user"] != null)
             {
-                @if (Session["role"].ToString() == "admin" || (Session["role"].ToString() == "editor" && Session["user"].ToString() == Model.register.owner.name))
+                if (Session["role"].ToString() == "admin" || (Session["role"].ToString() == "editor" && Session["user"].ToString() == Model.register.owner.name))
                 {
                     if (Model.register.containedItemClass == "Organization")
                     {

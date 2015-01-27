@@ -5,6 +5,11 @@
     ViewBag.Title = UI.CreateNew;
 }
 
+@section breadcrumb {
+    <li>Dokument</li>
+    <li class="active">Ny</li>
+}
+
 <h2>Foreslå nytt dokument</h2>
 
 @using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))

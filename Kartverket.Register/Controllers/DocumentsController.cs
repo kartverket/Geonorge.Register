@@ -100,15 +100,13 @@ namespace Kartverket.Register.Controllers
                 document.seoname = MakeSeoFriendlyString(document.name);               
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-
-                //Hvilke får prioritet??
-                if (document.documentUrl == null) {                
-                    if (documentfile != null)
-                    {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
-                        GenerateThumbnail(document, documentfile, url);
-                    }               
-                }
+           
+                if (documentfile != null)
+                {
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+                    GenerateThumbnail(document, documentfile, url);
+                }    
+                
                 if (thumbnail != null)
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
@@ -199,7 +197,11 @@ namespace Kartverket.Register.Controllers
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
-                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
+                if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
+                {
+                    originalDocument.documentUrl = document.documentUrl; 
+                    originalDocument.thumbnail = null;
+                }
                 if (document.statusId != null) originalDocument.statusId = document.statusId;
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
@@ -208,10 +210,11 @@ namespace Kartverket.Register.Controllers
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
+                    originalDocument.thumbnail = null;
                     GenerateThumbnail(originalDocument, documentfile, url);
                 }
-                
-                if (thumbnail != null )
+
+                if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }

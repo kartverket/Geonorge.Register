@@ -215,10 +215,11 @@ namespace Kartverket.Register.Controllers
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
-                    originalDocument.thumbnail = null;
+                    
                     if (document.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url);
+                        originalDocument.thumbnail = document.thumbnail;
                     }
                 }
 

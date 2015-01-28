@@ -64,7 +64,7 @@
 
             @if (Session["role"] != null)
             {
-                if (Session["role"] == "admin" || Session["role"] == "editor")
+                if (Session["role"].ToString() == "admin" || Session["role"].ToString() == "editor")
                 {
 
                     if (Model.containedItemClass == "Organization")

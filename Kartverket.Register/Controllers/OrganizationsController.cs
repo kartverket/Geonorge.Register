@@ -121,7 +121,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
             string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View(); 
             }

@@ -62,11 +62,10 @@
            
             @Html.ActionLink("Tilbake", "Index")
 
-            @if (Session["role"] != null)
+            @if (Request.IsAuthenticated)
             {
-                if (Session["role"].ToString() == "admin" || Session["role"].ToString() == "editor")
+                if (Html.IsInGeonorgerole(System.Security.Claims.ClaimsPrincipal.Current.Claims))
                 {
-
                     if (Model.containedItemClass == "Organization")
                     {
                         <a href="/organisasjoner/ny">| Foreslå nye @Model.name </a>

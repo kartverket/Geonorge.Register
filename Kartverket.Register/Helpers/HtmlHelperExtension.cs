@@ -15,6 +15,25 @@ namespace Kartverket.Register.Helpers
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];
             return versionNumber;
         }
+
+        public static bool IsInGeonorgerole(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
+        {
+           bool isInRole = false;
+           foreach (var c in claims)
+            {
+                if (c.Type == "role")
+                {
+                    if (c.Value == "nd.metadata_editor" || c.Value == "nd.metadata_admin" || c.Value == "nd.metadata")
+                    {
+                        isInRole = true;
+                        break;
+                    }
+                }
+            }
+
+           return isInRole;
+        }
+
         public static string GeonorgeUrl(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["GeonorgeUrl"];

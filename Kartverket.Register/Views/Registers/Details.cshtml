@@ -64,7 +64,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                if (Html.IsInGeonorgerole(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims))
                 {
                     if (Model.containedItemClass == "Organization")
                     {

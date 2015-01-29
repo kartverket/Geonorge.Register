@@ -37,14 +37,32 @@ namespace Kartverket.Register.Helpers
             return result;
         }
 
-        public static bool IsInGeonorgerole(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
+        public static bool IsGeonorgeAdmin(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
+        {
+            bool isInRole = false;
+            foreach (var c in claims)
+            {
+                if (c.Type == "role")
+                {
+                    if (c.Value == "nd.metadata_admin")
+                    {
+                        isInRole = true;
+                        break;
+                    }
+                }
+            }
+
+            return isInRole;
+        }
+
+        public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
            bool isInRole = false;
            foreach (var c in claims)
             {
                 if (c.Type == "role")
                 {
-                    if (c.Value == "nd.metadata_editor" || c.Value == "nd.metadata_admin" || c.Value == "nd.metadata")
+                    if (c.Value == "nd.metadata_editor" || c.Value == "nd.metadata")
                     {
                         isInRole = true;
                         break;

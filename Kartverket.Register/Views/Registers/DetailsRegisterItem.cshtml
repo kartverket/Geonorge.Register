@@ -104,7 +104,7 @@
             @if (Request.IsAuthenticated)
             {
 
-                if (Html.IsInGeonorgerole(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.register.owner.name.ToLower())
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.register.owner.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
                 {        
                     if (Model.register.containedItemClass == "Organization")
                     {

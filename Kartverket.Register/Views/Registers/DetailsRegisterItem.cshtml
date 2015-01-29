@@ -101,11 +101,11 @@
           
             <a href="/register/@Model.register.seoname">Tilbake</a>
 
-
-            @if (Session["role"] != null || Session["user"] != null)
+            @if (Request.IsAuthenticated)
             {
-                if (Session["role"].ToString() == "admin" || (Session["role"].ToString() == "editor" && Session["user"].ToString() == Model.register.owner.name))
-                {
+
+                if (Html.IsInGeonorgerole(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.register.owner.name.ToLower())
+                {        
                     if (Model.register.containedItemClass == "Organization")
                     {
                         <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>

@@ -16,6 +16,27 @@ namespace Kartverket.Register.Helpers
             return versionNumber;
         }
 
+        public static string GetSecurityClaim(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims, string type)
+        {
+            string result = null;
+            foreach (var claim in claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+
         public static bool IsInGeonorgerole(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
            bool isInRole = false;

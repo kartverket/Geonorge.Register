@@ -125,8 +125,13 @@ namespace Kartverket.Register.Controllers
                  tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname  + "/ikke-angitt/" + item.seoname;
             }
          
-            //if (item.owner != null) tmp.owner = item.owner.name;
-            //if (item.manager != null) tmp.manager = item.manager.name;
+            if (item is EPSG)
+            {
+
+                var d = (EPSG)item;
+                tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
+            }
+            
 
 
             return tmp;

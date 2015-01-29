@@ -22,8 +22,7 @@ namespace Kartverket.Register.Models
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
         [Display(Name = "Tema:")]
-        [ForeignKey("themeid")]
-        public string themeId { get; set; }
+       
         public virtual DOKTheme theme { get; set; }
         [Display(Name = "Miniatyrbilde")]
         public string datasetthumbnail { get; set; }

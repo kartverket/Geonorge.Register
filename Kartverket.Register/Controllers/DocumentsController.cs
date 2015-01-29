@@ -45,7 +45,6 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername)
         {
-            string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -291,7 +290,7 @@ namespace Kartverket.Register.Controllers
         private string FindRegisterOwner(string registername)
         {
             var queryResults = from o in db.Registers
-                               where o.name == registername
+                               where o.seoname == registername
                                select o.systemId;
 
             Guid regId = queryResults.First();

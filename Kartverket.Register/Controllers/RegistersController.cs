@@ -298,7 +298,7 @@ namespace Kartverket.Register.Controllers
             else
             {
                 Session["role"] = "guest";
-                Session["user"] = "";
+                Session["user"] = "guest";
             }
 
             

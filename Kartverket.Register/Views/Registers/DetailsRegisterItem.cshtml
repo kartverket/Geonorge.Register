@@ -6,6 +6,7 @@
 }
 
 @section breadcrumb {
+    <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
     <li class="active">@Html.DisplayFor(model => model.name)</li>
 }
 <div class="page-header">
@@ -98,8 +99,8 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
             <hr />
-            
-            @Html.ActionLink("Tilbake", "Index")
+          
+            <a href="/register/@Model.register.seoname">Tilbake</a>
 
 
             @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)

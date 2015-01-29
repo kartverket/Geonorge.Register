@@ -5,6 +5,11 @@
     ViewBag.Title = UI.CreateNew;
 }
 
+@section breadcrumb {
+    <li><a href="/register/epsg-koder">EPSG koder</a></li>
+    <li class="active">Ny</li>
+}
+
 <h2>Foreslå ny EPSG</h2>
 
 @using (Html.BeginForm("Create", "EPSGs", FormMethod.Post, new { enctype = "multipart/form-data" }))

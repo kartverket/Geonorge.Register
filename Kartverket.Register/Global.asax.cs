@@ -6,6 +6,8 @@ using Autofac;
 using System.Data.Entity;
 using Kartverket.Register.Models;
 using Kartverket.Register.Formatter;
+using System;
+using System.Web;
 
 namespace Kartverket.Register
 {
@@ -29,7 +31,74 @@ namespace Kartverket.Register
 
         protected void Session_Start()
         {
-            Session["role"] = "guest";
+            setAccessRole();
+        }
+
+
+        private string HasAccessToRegister()
+        {
+            string role = GetSecurityClaim("role");
+
+            bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
+            bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata"); //nd.metadata_editor
+
+            if (isAdmin)
+            {
+                return "admin";
+            }
+            else if (isEditor)
+            {
+                return "editor";
+            }
+            else
+            {
+                return "guest";
+            }
+        }
+
+        private string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
+
+        private void setAccessRole()
+        {
+            string organization = GetSecurityClaim("organization");
+
+            string role = HasAccessToRegister();
+            if (role == "admin")
+            {
+                Session["role"] = "admin";
+                Session["user"] = organization;
+            }
+            else if (role == "editor")
+            {
+                Session["role"] = "editor";
+                Session["user"] = organization;
+            }
+            else
+            {
+                Session["role"] = "guest";
+                Session["user"] = "guest";
+            }
+
+
         }
 
     }

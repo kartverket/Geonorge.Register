@@ -165,6 +165,8 @@ namespace Kartverket.Register.Controllers
             else if (item is EPSG)
             {
                 tmp.itemclass = "EPSG";
+                var d = (EPSG)item;
+                tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
             }
             else tmp.itemclass = "RegisterItem";
 

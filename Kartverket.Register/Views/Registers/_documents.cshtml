@@ -47,7 +47,11 @@
                         <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
                     }
                     <br/>
-                    @if (item.documentUrl.Contains("/data/documents/"))
+                    @if (item.documentUrl == null)
+                    {
+                        <span>Referanse: Ikke angitt</span><br />;
+                    }
+                    else if (item.documentUrl.Contains("/data/documents/"))
                     {
                         <span>Referanse: Intern</span><br />
                     }

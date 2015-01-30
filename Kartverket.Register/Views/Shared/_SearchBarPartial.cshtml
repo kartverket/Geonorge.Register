@@ -11,14 +11,14 @@
 
 <form action="~/search/" class="col-md-offset-2 col-md-8 searchbar">
    
-    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registerne")"/>
+    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registre")"/>
      
     <h1 class="h-md" id="register-heading">Søk i register</h1>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                    <span id="registerSelected">@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registerne")</span>
+                    <span id="registerSelected">@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registre")</span>
                     <div><span class="caret"></span></div>
                 </button>
             <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">

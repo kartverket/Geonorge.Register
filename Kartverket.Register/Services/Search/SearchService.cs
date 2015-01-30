@@ -23,11 +23,17 @@ namespace Kartverket.Register.Services.Search
         
         public SearchResult Search(SearchParameters parameters)
         {
-            var queryResultsRegister = from o in _dbContext.Registers
+            string itemClass = "";
+
+            if (parameters.Register != "Alle registre")
+            {
+                var queryResultsRegister = from o in _dbContext.Registers
                                     where o.name.Contains(parameters.Register)
                                     select o.containedItemClass;
 
-            string itemClass = queryResultsRegister.First();
+                itemClass = queryResultsRegister.First();
+            }
+            
 
             if (itemClass == "Organization")
             {

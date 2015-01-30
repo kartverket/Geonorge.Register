@@ -24,7 +24,7 @@ namespace Kartverket.Register.Models
         public string thumbnail { get; set; }
         [Display(Name = "Dokumenteier:")]
         [ForeignKey("documentowner")]
-        public Guid? documentownerId { get; set; }
+        public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
         [Display(Name = "Dokument url:")]
         public string documentUrl { get; set; }

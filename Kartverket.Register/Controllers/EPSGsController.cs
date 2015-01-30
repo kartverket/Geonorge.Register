@@ -65,6 +65,7 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [Route("epsg-koder/ny")]
         //[ValidateAntiForgeryToken]
@@ -128,22 +129,22 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsEpsg = from o in db.EPSGs
-                                       where o.seoname == epsgname
-                                       select o.systemId;
-                Guid systId = queryResultsEpsg.First();
+            var queryResultsEpsg = from o in db.EPSGs
+                                    where o.seoname == epsgname
+                                    select o.systemId;
+            Guid systId = queryResultsEpsg.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
                 //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
@@ -158,6 +159,7 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [Route("epsg-koder/{epsgname}/rediger")]
         //[ValidateAntiForgeryToken]
@@ -215,22 +217,22 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.EPSGs
-                                               where o.seoname == epsgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                            where o.seoname == epsgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
 
                 return View(ePSG);
             }
@@ -238,6 +240,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // POST: EPSGs/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [Route("epsg-koder/{epsgname}/slett")]
         //[ValidateAntiForgeryToken]

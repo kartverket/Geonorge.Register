@@ -132,6 +132,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("organisasjoner/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
@@ -195,22 +196,22 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgnavn
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgnavn
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
                 return View(organization);
@@ -223,6 +224,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("organisasjoner/{orgnavn}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id, string orgnavn)
@@ -292,23 +294,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(organization);
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
+            return View(organization);
             }
             return HttpNotFound();
         }

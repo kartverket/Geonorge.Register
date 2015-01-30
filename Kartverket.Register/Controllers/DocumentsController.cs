@@ -151,30 +151,32 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string registername, string documentname)
         {
-            string registerOwner = FindRegisterOwner(registername);
+            //string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-     
-                var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
-                                   select o.systemId;
+            var queryResults = from o in db.Documents
+                                where o.seoname == documentname
+                                select o.systemId;
 
-                Guid systId = queryResults.First();
+            Guid systId = queryResults.First();
             
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Document document = db.Documents.Find(systId);
-                if (document == null)
-                {
-                    return HttpNotFound();
-                }
-                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+                
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+                
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower())
+            {
+
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
                 ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
@@ -187,6 +189,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
@@ -248,23 +251,24 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            var queryResults = from o in db.Documents
+                                where o.seoname == documentname
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            if (systId == null)
             {
-                var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
-                                   select o.systemId;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
 
-                Guid systId = queryResults.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Document document = db.Documents.Find(systId);
-                if (document == null)
-                {
-                    return HttpNotFound();
-                }
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower())
+            {
                 return View(document);
             }
                 return HttpNotFound();

@@ -54,5 +54,15 @@ ul.search-results {
     width: 140px;
 }
 
+.img-small {
+    max-width: 150px;
+    max-height: 100px;
+}
+
+.img-large {
+    max-height: 150px;
+    max-width: 400px;
+}
+
 
 /*# sourceMappingURL=page-footer.css.map *

@@ -47,7 +47,7 @@
                         <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
                     }
                     <br/>
-                    @if (item.documentUrl == "ikke angitt")
+                    @if (String.IsNullOrEmpty(item.documentUrl) ||  item.documentUrl == "ikke angitt")
                     {
                         <span>Referanse: mangler</span><br />
                     }

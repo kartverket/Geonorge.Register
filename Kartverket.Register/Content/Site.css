@@ -55,13 +55,13 @@ ul.search-results {
 }
 
 .img-small {
-    max-width: 150px;
-    max-height: 100px;
+    max-width: 150px !important;
+    max-height: 100px !important;
 }
 
 .img-large {
-    max-height: 150px;
-    max-width: 400px;
+    max-height: 150px !important;
+    max-width: 400px !important;
 }
 
 

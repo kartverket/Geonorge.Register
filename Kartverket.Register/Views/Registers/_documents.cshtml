@@ -18,7 +18,7 @@
                             thumb = item.thumbnail;
                         }
                     }
-                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="center-block img-thumbnail img-responsive" alt="forside pdf" /></a>
+                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="center-block img-thumbnail" alt="forside pdf" /></a>
 
                 </div>
                 <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -27,7 +27,7 @@
                     </h4>
                     <p>
                         <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-small" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
                     </p>
                     <p>

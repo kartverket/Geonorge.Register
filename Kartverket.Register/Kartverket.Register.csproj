@@ -318,6 +318,7 @@
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\Api\Item.cs" />

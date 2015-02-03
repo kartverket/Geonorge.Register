@@ -6,12 +6,12 @@ using System.Web.Mvc;
 using Kartverket.Register.Services.Search;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
+using System.Web.Routing;
 
 namespace Kartverket.Register.Controllers
 {
     public class SearchController : Controller
     {
-
         private RegisterDbContext db = new RegisterDbContext();
 
         private readonly ISearchService _searchService;
@@ -30,7 +30,6 @@ namespace Kartverket.Register.Controllers
             return View(model);
         }
 
-        
 
         [Route("register/{registername}/{documentownername}/")]
         public ActionResult DetailsFilterDocument(string registername, string documentownername)
@@ -52,6 +51,6 @@ namespace Kartverket.Register.Controllers
                 }                
             }            
            return View(documents);
-        }
+        }       
     }
 }

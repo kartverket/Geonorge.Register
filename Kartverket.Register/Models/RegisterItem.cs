@@ -12,6 +12,7 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web.Routing;
 
 
 
@@ -50,7 +51,6 @@ namespace Kartverket.Register.Models
         public Guid registerId { get; set; }
         public string seoname { get; set; }
 
-    }
     //end RegisterItem
-
+}
 }//end namespace Datamodell

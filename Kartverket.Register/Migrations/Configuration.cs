@@ -2,6 +2,7 @@ namespace Kartverket.Register.Migrations
 {
     using Kartverket.Register.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -55,6 +56,16 @@ namespace Kartverket.Register.Migrations
               new DOKTheme { value = "Basis geodata", description = "Basis geodata" }
 
             );
+
+            context.Sorting.AddOrUpdate(
+                //new Sorting { value = "name", description = "Navn"},
+                new Sorting { value = "submitter", description = "Innsender"},
+                new Sorting { value = "status", description = "Status", },
+                new Sorting { value = "dateSubmitted", description = "Innsendt" },
+                new Sorting { value = "modified", description = "Endret"},
+                new Sorting { value = "dateAccepted", description = "Godkjent"}
+            );
+
 
             //Register produktspesifikasjon = new Register 
             //{ 

@@ -26,9 +26,8 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name)
+        public ActionResult Details(string name, string sorting)
         {
-
             var queryResults = from o in db.Registers
                                where o.seoname == name
                                select o.systemId;
@@ -36,6 +35,9 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
+            ViewBag.SortOrder = sorting;            
+            ViewBag.sorting = new SelectList(db.Sorting.OrderBy(s => s.description), "value", "description");
+        
             if (register == null)
             {
                 return HttpNotFound();
@@ -58,64 +60,6 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
         
-        
-        //[Route("register/organisasjoner/{name}")]
-        //public ActionResult DetailsOrganization(string name)
-        //{
-
-        //    var queryResults = from o in db.Organizations
-        //                       where o.seoname == name
-        //                       select o.systemId;
-
-        //    Guid systID = queryResults.First();
-
-        //    Kartverket.Register.Models.Organization organization = db.Organizations.Find(systID);
-
-        //    if (organization == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-        //    return View(organization);
-        //}
-
-
-        //[Route("register/{registername}/{documentowner}/{documentname}/")]
-        ////[Route("{documentowner}/{documentname}/")]
-        //public ActionResult DetailsDocument(string registername, string documentname)
-        //{
-
-        //    var queryResultsRegisterId = from o in db.Documents
-        //                       where o.seoname == documentname
-        //                       select o.systemId;
-
-        //    Guid systId = queryResultsRegisterId.First();
-            
-        //    Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-        //    if (document == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(document);
-        //}
-
-        //[Route("register/epsg-koder/{name}")]
-        //public ActionResult DetailsEPSG(string name)
-        //{
-            
-        //    var queryResults = from o in db.EPSGs
-        //                       where o.seoname == name
-        //                       select o.systemId;
-
-        //    Guid systID = queryResults.First();
-
-        //    Kartverket.Register.Models.EPSG epsg = db.EPSGs.Find(systID);
-        //    if (epsg == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(epsg);
-        //}
 
         // GET: Registers/Create
         [Authorize]

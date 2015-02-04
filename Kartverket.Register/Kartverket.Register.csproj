@@ -313,6 +313,14 @@
     <Compile Include="Migrations\201501231533153_UpdateSubmitterId.Designer.cs">
       <DependentUpon>201501231533153_UpdateSubmitterId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501301606016_add-dokregister.cs" />
+    <Compile Include="Migrations\201501301606016_add-dokregister.Designer.cs">
+      <DependentUpon>201501301606016_add-dokregister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502032357567_transferDokToRegister.cs" />
+    <Compile Include="Migrations\201502032357567_transferDokToRegister.Designer.cs">
+      <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -356,7 +364,7 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\gsdll32.dll">
+    <Content Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />
@@ -398,7 +406,6 @@
     <Content Include="Content\fonts\statusicon.ttf" />
     <Content Include="Content\fonts\statusicon.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
-    <Content Include="lib\PDFLibNet.dll" />
     <Content Include="readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -491,6 +498,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -586,6 +594,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501231533153_UpdateSubmitterId.resx">
       <DependentUpon>201501231533153_UpdateSubmitterId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501301606016_add-dokregister.resx">
+      <DependentUpon>201501301606016_add-dokregister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502032357567_transferDokToRegister.resx">
+      <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

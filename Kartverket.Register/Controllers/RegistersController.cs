@@ -36,7 +36,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             ViewBag.SortOrder = sorting;            
-            ViewBag.sorting = new SelectList(db.Sorting.OrderBy(s => s.description), "value", "description");
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
         
             if (register == null)
             {

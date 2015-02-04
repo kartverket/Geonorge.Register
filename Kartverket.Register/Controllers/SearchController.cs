@@ -32,7 +32,7 @@ namespace Kartverket.Register.Controllers
 
 
         [Route("register/{registername}/{documentownername}/")]
-        public ActionResult DetailsFilterDocument(string registername, string documentownername)
+        public ActionResult DetailsFilterDocument(string registername, string documentownername, string sorting)
         {
 
             var queryResultsTest = from d in db.Documents
@@ -40,7 +40,10 @@ namespace Kartverket.Register.Controllers
                                   select d.systemId;
 
             List<Guid> documentsId = queryResultsTest.ToList();
-            List<Document> documents = new List<Document>(); 
+            List<Document> documents = new List<Document>();
+
+            ViewBag.sortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             
             foreach (Guid item in documentsId)
             {
@@ -49,7 +52,30 @@ namespace Kartverket.Register.Controllers
                 {
                     documents.Add(document);
                 }                
-            }            
+            }
+
+            documents.OrderBy(d => d.name);
+            if (sorting == "submitter")
+            {
+                return View(documents.OrderBy(o => o.submitter.name).ToList());
+            }
+            else if (sorting == "status")
+            {
+                return View(documents.OrderBy(o => o.statusId).ToList());
+            }
+            else if (sorting == "dateSubmitted")
+            {
+                return View(documents.OrderByDescending(o => o.dateSubmitted).ToList());
+            }
+            else if (sorting == "modified")
+            {
+                return View(documents.OrderByDescending(o => o.modified).ToList());
+            }
+            else if (sorting == "dateAccepted")
+            {
+                return View(documents.OrderByDescending(o => o.dateAccepted).ToList());
+            }
+
            return View(documents);
         }       
     }

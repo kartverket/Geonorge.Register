@@ -12,7 +12,7 @@
 
 @section breadcrumb {
     <li><a href="/register/@Model.ElementAt(0).register.seoname">@Html.DisplayFor(model => model.ElementAt(0).register.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model)</li>
+    <li class="active">@Html.DisplayFor(model => model.ElementAt(0).documentowner.name)</li>
 }
 
 

@@ -1,5 +1,8 @@
 ﻿﻿@using Kartverket.Register.Helpers
-@model List<Kartverket.Register.Models.RegisterItem>
+@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
+@using PagedList;
+@using PagedList.Mvc;
+
 
 @using Kartverket.Register.Models
 
@@ -60,9 +63,14 @@
 
             </div>
         </div>
+        
     </div>
 
     <hr />
-
 }
 
+<div class="text-center">
+    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+</div>

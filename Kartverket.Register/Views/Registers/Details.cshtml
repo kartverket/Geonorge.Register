@@ -1,5 +1,6 @@
 ﻿@model Kartverket.Register.Models.Register
 ﻿@using Kartverket.Register.Helpers
+@using PagedList;
 
 @{
     ViewBag.Title = @Model.name;
@@ -8,7 +9,6 @@
 @section breadcrumb {
     <li class="active">@Html.DisplayFor(model => model.name)</li>
 }
-
 
 <div class="page-header">
     <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
@@ -38,8 +38,12 @@
     </script>
 
    @{
+        var page = ViewBag.page;
+        var currentFilter = ViewBag.currentFilter;
         var sortering = Model.items.OrderBy(o => o.name).ToList();
-
+        int pageSize = 50;
+        int pageNumber = (page ?? 1);
+        
         if (ViewBag.SortOrder == "submitter" )
         {
             sortering = Model.items.OrderBy(o => o.submitter.name).ToList();
@@ -60,6 +64,7 @@
         {
             sortering = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
         }
+        
     }
     
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -80,23 +85,23 @@
         
         @if (Model.containedItemClass == "Organization")
         {
-            @Html.Partial("_organization", sortering)
+            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.containedItemClass == "Document")
         {
-            @Html.Partial("_documents", sortering)
+            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.containedItemClass == "Dataset")
         {
-            @Html.Partial("_dataset", sortering)
+            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.containedItemClass == "EPSG")
         {
-            @Html.Partial("_epsg", sortering)
+            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.containedItemClass == "Register")
         {
-            @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList())
+            @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
         }
 
     </div>

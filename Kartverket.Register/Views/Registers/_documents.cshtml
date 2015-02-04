@@ -4,64 +4,65 @@
 @using Kartverket.Register.Models
 
 
-<div>
-    @foreach (Document item in Model)
+@foreach (Document item in Model)
+{
+    <div class="row result-row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
+                @{
+    string thumb = "/Content/pdf.jpg";
+    if (item.thumbnail != null)
     {
-        
-        <div class="row result-row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
-                    @{
-        string thumb = "/Content/pdf.jpg";
-        if (item.thumbnail != null)
-        {
-            thumb = item.thumbnail;
-        }
-                    }
-                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
+        thumb = item.thumbnail;
+    }
+                }
+                <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
 
-                </div>
-                <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                    <h4 class="role-button" role="button">
-                        <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
-                    </h4>
-                    <p>
-                        <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
-                        </a>
-                    </p>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.description)
-                    </p>
-                </div>
-                <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
-                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)" type="button" class="btn btn-lg btn-link">
-                        <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
-                    </a><br />
-                    @if (item.status == null)
-                    {
-                        <span>Status: Ikke angitt</span><br />
-                    }
-                    else
-                    {
-                        <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
-                    }
-                    <br/>
-                    @if (item.documentUrl.Contains("/data/documents/"))
-                    {
-                        <span>Referanse: Intern</span><br />
-                    }
-                    else
-                    {
-                        <span>Referanse: Ekstern</span><br />
-                    }
-                    
-                </div>
+            </div>
+            <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                <h4 class="role-button" role="button">
+                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
+                </h4>
+                <p>
+                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
+                        <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                    </a>
+                </p>
+                <p>
+                    @Html.DisplayFor(modelItem => item.description)
+                </p>
+            </div>
+            <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
+                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" type="button" class="btn btn-lg btn-link">
+                    <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
+                </a><br />
+                @if (item.status == null)
+                {
+                    <span>Status: Ikke angitt</span><br />
+                }
+                else
+                {
+                    <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                }
+                <br />
+                @if (item.documentUrl == null)
+                {
+                    <span>Referanse: Ikke angitt</span><br />;
+                }
+                else if (item.documentUrl.Contains("/data/documents/"))
+                {
+                    <span>Referanse: Intern</span><br />
+                }
+                else
+                {
+                    <span>Referanse: Ekstern</span><br />
+                }
+
             </div>
         </div>
+    </div>
 
-        <hr />
-    }
+    <hr />
 
+}
 
-</div>

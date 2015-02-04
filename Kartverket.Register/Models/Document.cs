@@ -29,7 +29,6 @@ namespace Kartverket.Register.Models
         [Display(Name = "Dokument url:")]
         public string documentUrl { get; set; }
 
-		
 
 	}//end Document
 

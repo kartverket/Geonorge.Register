@@ -18,7 +18,7 @@
 
         <p>
             @Html.DisplayFor(model => model.description)
-        </p>
+        </p>        
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -26,40 +26,82 @@
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
     </div>
 
+    <script>
+    function SortBy(sort) {
+        var sort = document.getElementById("sorting");
+        var selected = sort.options[sort.selectedIndex].text;
+        document.sortering.submit();
+        //localStorage['SortingType'] = sort;
+        localStorage['SortingType'] = selected;
+    }
+    </script>
 
+   @{
+        var sortering = Model.items.OrderBy(o => o.name).ToList();
+
+        if (ViewBag.SortOrder == "submitter" )
+        {
+            sortering = Model.items.OrderBy(o => o.submitter.name).ToList();
+        }
+        else if (ViewBag.SortOrder == "status")
+        {
+            sortering = Model.items.OrderBy(o => o.statusId).ToList();
+        }
+        else if (ViewBag.SortOrder == "dateSubmitted")
+        {
+            sortering = Model.items.OrderByDescending(o => o.dateSubmitted).ToList();
+        }
+        else if (ViewBag.SortOrder == "modified")
+        {
+            sortering = Model.items.OrderByDescending(o => o.modified).ToList();
+        }
+        else if (ViewBag.SortOrder == "dateAccepted")
+        {
+            sortering = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
+        }
+    }
+    
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="page-header">
             <hr>
         </div>
 
+        <form action="/register/@Model.seoname" name="sortering" method="get">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                </div>
+                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2" onchange="SortBy()">
+                    Sorter: @Html.DropDownList("sorting", "Navn")
+                </div>
+            </div>
+            <br />
+        </form>
 
         @if (Model.containedItemClass == "Organization")
         {
-            @Html.Partial("_organization", Model.items.OrderBy(i => i.name).ToList())
+            @Html.Partial("_organization", sortering)
         }
         @if (Model.containedItemClass == "Document")
         {
-            @Html.Partial("_documents", Model.items.OrderBy(i => i.name).ToList())
+            @Html.Partial("_documents", sortering)
         }
         @if (Model.containedItemClass == "Dataset")
         {
-            @Html.Partial("_dataset", Model.items.OrderBy(i => i.name).ToList())
+            @Html.Partial("_dataset", sortering)
         }
         @if (Model.containedItemClass == "EPSG")
         {
-            @Html.Partial("_epsg", Model.items.OrderBy(i => i.name).ToList())
+            @Html.Partial("_epsg", sortering)
         }
         @if (Model.containedItemClass == "Register")
         {
-            @Html.Partial("_subregister", Model.subregisters.OrderBy(i => i.name).ToList())
+            @Html.Partial("_subregister", sortering)
         }
 
     </div>
 
-    <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
-           
             @Html.ActionLink("Tilbake", "Index")
 
             @if (Session["role"].ToString() == "editor" && Model.statusId == "Submitted" || Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.owner.name)

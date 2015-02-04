@@ -326,6 +326,7 @@
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\Api\Item.cs" />
@@ -448,11 +449,8 @@
     <Content Include="Views\Registers\_organization.cshtml" />
     <Content Include="Views\Registers\_dataset.cshtml" />
     <Content Include="Views\Registers\_epsg.cshtml" />
-    <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
-    <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
-    <Content Include="Views\Registers\DetailsEPSG.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Registers\EditDocument.cshtml" />
     <Content Include="Views\Registers\EditEpsg.cshtml" />

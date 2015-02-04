@@ -61,7 +61,7 @@ namespace Kartverket.Register.Controllers
             }
             else if (sorting == "status")
             {
-                return View(documents.OrderBy(o => o.statusId).ToList());
+                return View(documents.OrderBy(o => o.description).ToList());
             }
             else if (sorting == "dateSubmitted")
             {

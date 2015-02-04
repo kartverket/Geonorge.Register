@@ -199,9 +199,20 @@ namespace Kartverket.Register.Controllers
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
-                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
-                if (document.statusId != null) originalDocument.statusId = document.statusId;
+                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;                
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
+                if (document.statusId != null)
+                {
+                    if (document.statusId == "Accepted" && originalDocument.statusId != "Accepted")
+                    {
+                        originalDocument.dateAccepted = DateTime.Now;
+                    }
+                    if (originalDocument.statusId == "Accepted" && document.statusId != "Accepted")
+                    {
+                        originalDocument.dateAccepted = null;
+                    }
+                        originalDocument.statusId = document.statusId;
+                }
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 

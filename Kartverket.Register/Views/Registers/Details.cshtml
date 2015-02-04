@@ -46,7 +46,7 @@
         }
         else if (ViewBag.SortOrder == "status")
         {
-            sortering = Model.items.OrderBy(o => o.statusId).ToList();
+            sortering = Model.items.OrderBy(o => o.status.description).ToList();
         }
         else if (ViewBag.SortOrder == "dateSubmitted")
         {

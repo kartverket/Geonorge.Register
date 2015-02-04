@@ -258,10 +258,6 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.contact = organization.contact;
                 }
-                if (statusID != null)
-                {
-                    originalOrganization.statusId = statusID;
-                }
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
                     originalOrganization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
@@ -269,6 +265,18 @@ namespace Kartverket.Register.Controllers
                 if (fileLarge != null && fileLarge.ContentLength > 0)
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
+                }
+                if (organization.statusId != null)
+                {
+                    if (organization.statusId == "Accepted" && originalOrganization.statusId != "Accepted")
+                    {
+                        originalOrganization.dateAccepted = DateTime.Now;
+                    }
+                    if (originalOrganization.statusId == "Accepted" && organization.statusId != "Accepted")
+                    {
+                        originalOrganization.dateAccepted = null;
+                    }
+                    originalOrganization.statusId = organization.statusId;
                 }
 
                 originalOrganization.modified = DateTime.Now;

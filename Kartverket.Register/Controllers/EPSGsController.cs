@@ -144,6 +144,8 @@ namespace Kartverket.Register.Controllers
                 {
                     return HttpNotFound();
                 }
+                
+
                 //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
                 ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
@@ -177,7 +179,6 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = MakeSeoFriendlyString(originalEPSG.name);
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
-                if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
                 if (ePSG.epsgcode != null) originalEPSG.epsgcode = ePSG.epsgcode;
                 if (ePSG.sosiReferencesystem != null) originalEPSG.sosiReferencesystem = ePSG.sosiReferencesystem;
                 if (ePSG.externalReference != null) originalEPSG.externalReference = ePSG.externalReference;
@@ -187,6 +188,18 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.nationalRequirementDescription != null) originalEPSG.nationalRequirementDescription = ePSG.nationalRequirementDescription;
                 if (ePSG.nationalSeasRequirementId != null) originalEPSG.nationalSeasRequirementId = ePSG.nationalSeasRequirementId;
                 if (ePSG.nationalSeasRequirementDescription != null) originalEPSG.nationalSeasRequirementDescription = ePSG.nationalSeasRequirementDescription;
+                if (ePSG.statusId != null)
+                {
+                    if (ePSG.statusId == "Accepted" && originalEPSG.statusId != "Accepted")
+                    {
+                        originalEPSG.dateAccepted = DateTime.Now;
+                    }
+                    if (originalEPSG.statusId == "Accepted" && ePSG.statusId != "Accepted")
+                    {
+                        originalEPSG.dateAccepted = null;
+                    }
+                    originalEPSG.statusId = ePSG.statusId;
+                }
 
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;

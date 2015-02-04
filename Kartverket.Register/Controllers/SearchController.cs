@@ -23,7 +23,7 @@ namespace Kartverket.Register.Controllers
             _searchService = searchService;
         }
 
-        public ActionResult Index(SearchParameters parameters)
+        public ActionResult Index(SearchParameters parameters, int? page)
         {
             SearchResult searchResult = _searchService.Search(parameters);
 
@@ -56,7 +56,7 @@ namespace Kartverket.Register.Controllers
                     documents.Add(document);
                 }                
             }
-            int pageSize = 3;
+            int pageSize = 50;
             int pageNumber = (page ?? 1);
 
             documents.OrderBy(d => d.name);

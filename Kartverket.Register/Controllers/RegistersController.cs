@@ -22,7 +22,7 @@ namespace Kartverket.Register.Controllers
         {
             setAccessRole();
 
-            return View(db.Registers.ToList());
+            return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 
         // GET: Registers/Details/5

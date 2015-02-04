@@ -1,6 +1,8 @@
 ﻿﻿@using Kartverket.Register.Helpers
-@model List<Kartverket.Register.Models.Document>
+@model PagedList.IPagedList<Kartverket.Register.Models.Document>
 @using Kartverket.Register.Models
+@using PagedList;
+@using PagedList.Mvc;
 
 
 @{
@@ -10,7 +12,7 @@
 
 @section breadcrumb {
     <li><a href="/register/@Model.ElementAt(0).register.seoname">@Html.DisplayFor(model => model.ElementAt(0).register.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model.ElementAt(0).documentowner.name)</li>
+    <li class="active">@Html.DisplayFor(model => model)</li>
 }
 
 
@@ -31,7 +33,7 @@
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.ElementAt(0).register.modified)</span>
 
     </div>
-    
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="page-header">
             <hr>
@@ -46,77 +48,88 @@
             }
         </script>
 
-            <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).submitter.seoname" name="sortering" method="get">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-                    </div>
-                    <div class="hidden-xs col-sm-2 col-md-2 col-lg-2" onchange="SortBy()">
-                        Sorter: @Html.DropDownList("sorting", "Navn")
-                    </div>
+        <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).submitter.seoname" name="sortering" method="get">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
                 </div>
-                <br />
-            </form>
-
+                <div class="hidden-xs col-sm-2 col-md-2 col-lg-2" onchange="SortBy()">
+                    Sorter: @Html.DropDownList("sorting", "Navn")
+                </div>
+            </div>
             <br />
+        </form>
 
-            @foreach (Document item in Model)
+        <br />
+
+        @foreach (Document item in Model)
+        {
+
+            <div class="row result-row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
+                        @{
+            string thumb = "/Content/pdf.jpg";
+            if (item.thumbnail != null)
             {
+                thumb = item.thumbnail;
+            }
+                        }
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
 
-                <div class="row result-row">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 top-padding">
-                            @{
-                string thumb = "/Content/pdf.jpg";
-                if (item.thumbnail != null)
-                {
-                    thumb = item.thumbnail;
-                }
-                            }
-                            <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-responsive center-block img-thumbnail" alt="forside pdf" /></a>
-
-                        </div>
-                        <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                            <h4 class="role-button" role="button">
-                                <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
-                            </h4>
-                            <p>
-                                @*<a href="/dokument/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">*@
-                                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
-                                @*</a>*@
-                            </p>
-                            <p>
-                                @Html.DisplayFor(modelItem => item.description)
-                            </p>
-                        </div>
-                        <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
-                            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" type="button" class="btn btn-lg btn-link">
-                                <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
-                            </a><br />
-                            @if (item.status == null)
-                            {
-                                <span>Status: Ikke angitt</span><br />
-                            }
-                            else
-                            {
-                                <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
-                            }
-                        </div>
+                    </div>
+                    <div class="col-no-padding-xs col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                        <h4 class="role-button" role="button">
+                            <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
+                        </h4>
+                        <p>
+                            @*<a href="/dokument/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">*@
+                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                            @*</a>*@
+                        </p>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.description)
+                        </p>
+                    </div>
+                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" type="button" class="btn btn-lg btn-link">
+                            <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
+                        </a><br />
+                        @if (item.status == null)
+                        {
+                            <span>Status: Ikke angitt</span><br />
+                        }
+                        else
+                        {
+                            <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                        }
                     </div>
                 </div>
+            </div>
 
-                <hr />
-            }
+            <hr />
+        }
 
-        </div>
     </div>
 
+
+</div>
 
 
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+        <div class="text-center">
+            Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+
+            @Html.PagedListPager(Model, page => Url.Action("DetailsFilterDocument", new { page, sorting = ViewBag.SortOrder }))
+        </div>
+
         <p>
             <a href="/register/@Html.ToUrl(Model.ElementAt(0).register.name)/">Tilbake</a>
         </p>
     </div>
-</div>
+
+
+
+
 

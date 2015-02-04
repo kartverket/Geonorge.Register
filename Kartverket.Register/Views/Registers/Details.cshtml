@@ -96,7 +96,7 @@
         }
         @if (Model.containedItemClass == "Register")
         {
-            @Html.Partial("_subregister", sortering)
+            @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList())
         }
 
     </div>

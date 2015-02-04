@@ -502,6 +502,7 @@
     <Content Include="Views\Registers\_detailsDocuments.cshtml" />
     <Content Include="Views\Registers\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
+    <Content Include="Views\Shared\_Analytics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

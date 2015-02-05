@@ -327,6 +327,10 @@
     <Compile Include="Migrations\201502032357567_transferDokToRegister.Designer.cs">
       <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.cs" />
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.Designer.cs">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -608,6 +612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502032357567_transferDokToRegister.resx">
       <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502051017299_UpdateStatusId.resx">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

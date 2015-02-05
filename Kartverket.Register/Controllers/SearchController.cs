@@ -77,15 +77,31 @@ namespace Kartverket.Register.Controllers
             {
                 return View(documents.OrderBy(o => o.description).ToList().ToPagedList(pageNumber, pageSize));
             }
+            else if (sorting == "status_desc")
+            {
+                return View(documents.OrderByDescending(o => o.description).ToList().ToPagedList(pageNumber, pageSize));
+            }
             else if (sorting == "dateSubmitted")
+            {
+                return View(documents.OrderBy(o => o.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize));
+            }
+            else if (sorting == "dateSubmitted_desc")
             {
                 return View(documents.OrderByDescending(o => o.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize));
             }
             else if (sorting == "modified")
             {
+                return View(documents.OrderBy(o => o.modified).ToList().ToPagedList(pageNumber, pageSize));
+            }
+            else if (sorting == "modified_desc")
+            {
                 return View(documents.OrderByDescending(o => o.modified).ToList().ToPagedList(pageNumber, pageSize));
             }
             else if (sorting == "dateAccepted")
+            {
+                return View(documents.OrderBy(o => o.dateAccepted).ToList().ToPagedList(pageNumber, pageSize));
+            }
+            else if (sorting == "dateAccepted_desc")
             {
                 return View(documents.OrderByDescending(o => o.dateAccepted).ToList().ToPagedList(pageNumber, pageSize));
             }

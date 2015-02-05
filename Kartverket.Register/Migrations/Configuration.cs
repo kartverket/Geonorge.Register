@@ -62,11 +62,14 @@ namespace Kartverket.Register.Migrations
                 new Sorting { value = "name_desc", description = "Navn å-a" },
                 new Sorting { value = "submitter", description = "Innsender a-å"},
                 new Sorting { value = "submitter_desc", description = "Innsender å-a" },
-                new Sorting { value = "status", description = "Status", },
-                //new Sorting { value = "status_desc", description = "Status" },
-                new Sorting { value = "dateSubmitted", description = "Innsendt" },
-                new Sorting { value = "modified", description = "Endret"},
-                new Sorting { value = "dateAccepted", description = "Godkjent"}
+                new Sorting { value = "status", description = "Status a-å", },
+                new Sorting { value = "status_desc", description = "Status å-a" },
+                new Sorting { value = "dateSubmitted_desc", description = "Innsendt dato synkende" },
+                new Sorting { value = "dateSubmitted", description = "Innsendt dato stigende" },
+                new Sorting { value = "modified", description = "Endret dato stigende"},
+                new Sorting { value = "modified_desc", description = "Endret dato synkende" },
+                new Sorting { value = "dateAccepted", description = "Godkjent dato stigende"},
+                new Sorting { value = "dateAccepted", description = "Godkjent dato synkende" }
             );
 
 

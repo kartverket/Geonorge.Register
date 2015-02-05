@@ -66,15 +66,31 @@
             {
                 sortering = Model.items.OrderBy(o => o.status.description).ToList();
             }
+            else if (ViewBag.SortOrder == "status_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.status.description).ToList();
+            }
             else if (ViewBag.SortOrder == "dateSubmitted")
+            {
+                sortering = Model.items.OrderBy(o => o.dateSubmitted).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateSubmitted_desc")
             {
                 sortering = Model.items.OrderByDescending(o => o.dateSubmitted).ToList();
             }
             else if (ViewBag.SortOrder == "modified")
             {
+                sortering = Model.items.OrderBy(o => o.modified).ToList();
+            }
+            else if (ViewBag.SortOrder == "modified_desc")
+            {
                 sortering = Model.items.OrderByDescending(o => o.modified).ToList();
             }
             else if (ViewBag.SortOrder == "dateAccepted")
+            {
+                sortering = Model.items.OrderBy(o => o.dateAccepted).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateAccepted_desc")
             {
                 sortering = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
             }

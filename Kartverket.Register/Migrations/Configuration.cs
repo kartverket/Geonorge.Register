@@ -59,8 +59,11 @@ namespace Kartverket.Register.Migrations
 
             context.Sorting.AddOrUpdate(
                 //new Sorting { value = "name", description = "Navn"},
-                new Sorting { value = "submitter", description = "Innsender"},
+                new Sorting { value = "name_desc", description = "Navn å-a" },
+                new Sorting { value = "submitter", description = "Innsender a-å"},
+                new Sorting { value = "submitter_desc", description = "Innsender å-a" },
                 new Sorting { value = "status", description = "Status", },
+                //new Sorting { value = "status_desc", description = "Status" },
                 new Sorting { value = "dateSubmitted", description = "Innsendt" },
                 new Sorting { value = "modified", description = "Endret"},
                 new Sorting { value = "dateAccepted", description = "Godkjent"}

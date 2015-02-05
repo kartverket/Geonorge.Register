@@ -60,9 +60,18 @@ namespace Kartverket.Register.Controllers
             int pageNumber = (page ?? 1);
 
             documents.OrderBy(d => d.name);
+
+            if (sorting == "name_desc")
+            {
+                return View(documents.OrderBy(o => o.name).ToList().ToPagedList(pageNumber, pageSize));
+            }
             if (sorting == "submitter")
             {
                 return View(documents.OrderBy(o => o.submitter.name).ToList().ToPagedList(pageNumber, pageSize));
+            }
+            if (sorting == "submitter_desc")
+            {
+                return View(documents.OrderByDescending(o => o.submitter.name).ToList().ToPagedList(pageNumber, pageSize));
             }
             else if (sorting == "status")
             {

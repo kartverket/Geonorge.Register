@@ -38,14 +38,13 @@ namespace Kartverket.Register.Controllers
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;            
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-        
+            ViewBag.register = register.name;
+
+            
             if (register == null)
             {
                 return HttpNotFound();
             }
-
-            
-
             return View(register);
         }
 

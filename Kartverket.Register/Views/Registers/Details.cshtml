@@ -16,7 +16,7 @@
     </div>
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
-            ID: <a href="/register/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a>
+            ID: <a href="/register/@Model.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
             <p>
                 @Html.DisplayFor(model => model.description)
             </p>
@@ -32,15 +32,9 @@
                 var sort = document.getElementById("sorting");
                 var selected = sort.options[sort.selectedIndex].text;
                 document.sortering.submit();
-                //localStorage['SortingType'] = sort;
                 localStorage['SortingType'] = selected;
             }
 
-            function getRegisterName() {
-                var register = document.getElementById('registerName');
-                //document.getElementsByClassName('registernameInput').innerHTML = register;
-                localStorage.setItem('registerName', register.value);
-            }
         </script>
 
         @{

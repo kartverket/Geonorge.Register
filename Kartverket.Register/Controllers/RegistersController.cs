@@ -54,7 +54,7 @@ namespace Kartverket.Register.Controllers
         {            
 
             var queryResultsRegisterItem = from o in db.RegisterItems
-                                         where o.seoname == itemname
+                                         where o.seoname == itemname && o.register.seoname == registername
                                          select o.systemId;
 
             Guid systId = queryResultsRegisterItem.First();

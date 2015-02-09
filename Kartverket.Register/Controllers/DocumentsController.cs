@@ -155,7 +155,7 @@ namespace Kartverket.Register.Controllers
             {
      
                 var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
+                                   where o.seoname == documentname && o.register.seoname == registername
                                    select o.systemId;
 
                 Guid systId = queryResults.First();
@@ -188,7 +188,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname
+                               where o.seoname == documentname && o.register.seoname == registername
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -251,7 +251,7 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin" || user == registerOwner)
             {
                 var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
+                                   where o.seoname == documentname && o.register.seoname == registername 
                                    select o.systemId;
 
                 Guid systId = queryResults.First();
@@ -277,7 +277,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname)
         {
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname
+                               where o.seoname == documentname && o.register.seoname == registername
                                select o.systemId;
 
             Guid systId = queryResults.First();

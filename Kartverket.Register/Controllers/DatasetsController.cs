@@ -61,10 +61,10 @@ namespace Kartverket.Register.Controllers
                 return View();
             }
             return HttpNotFound();
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
-            ViewBag.datasetownerId = new SelectList(db.RegisterItems, "systemId", "name");
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
+            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            //ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
+            //ViewBag.datasetownerId = new SelectList(db.RegisterItems, "systemId", "name");
             //return View();
         }
 
@@ -128,66 +128,146 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Datasets/Edit/5
-        public ActionResult Edit(Guid? id)
+        [Authorize]
+        [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
+        public ActionResult Edit(string registername, string datasetname)
         {
-            if (id == null)
+            string registerOwner = FindRegisterOwner(registername);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            if (role == "nd.metadata_admin" || user == registerOwner)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                var queryResults = from o in db.Datasets
+                                   where o.seoname == datasetname && o.register.seoname == registername
+                                   select o.systemId;
+
+                Guid systId = queryResults.First();
+
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Dataset dataset = db.Datasets.Find(systId);
+                if (dataset == null)
+                {
+                    return HttpNotFound();
+                }
+                ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
+                ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
+                return View(dataset);
             }
-            Dataset dataset = db.Datasets.Find(id);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", dataset.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", dataset.submitterId);
-            //ViewBag.datasetownerId = new SelectList(db.RegisterItems, "systemId", "name", dataset.datasetownerId);
-            return View(dataset);
+            return HttpNotFound();
         }
 
-        // POST: Datasets/Edit/5
+
+        // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "systemId,name,description,submitterId,dateSubmitted,modified,statusId,dateAccepted,registerId,seoname,datasetownerId,datasetthumbnail,productsheet,presentationRules,productspesification,metadata,distributionFormat,distributionUri,distributionArea,wmsUrl,metadataUuid")] Dataset dataset)
+        [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname)
         {
+            var queryResults = from o in db.Datasets
+                               where o.seoname == datasetname && o.register.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+
             if (ModelState.IsValid)
             {
-                db.Entry(dataset).State = EntityState.Modified;
+                Dataset originalDataset = db.Datasets.Find(systId);
+                if (dataset.name != null) originalDataset.name = dataset.name; originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
+                if (dataset.description != null) originalDataset.description = dataset.description;
+                if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
+                if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
+                if (dataset.statusId != null)
+                {
+                    if (dataset.statusId == "Accepted" && originalDataset.statusId != "Accepted")
+                    {
+                        originalDataset.dateAccepted = DateTime.Now;
+                    }
+                    if (originalDataset.statusId == "Accepted" && dataset.statusId != "Accepted")
+                    {
+                        originalDataset.dateAccepted = null;
+                    }
+                    originalDataset.statusId = dataset.statusId;
+                }
+
+                if (dataset.DistributionUrl != null) originalDataset.DistributionUrl = dataset.DistributionUrl;
+                if (dataset.MetadataUrl != null) originalDataset.MetadataUrl = dataset.MetadataUrl;
+                if (dataset.PresentationRulesUrl != null) originalDataset.PresentationRulesUrl = dataset.PresentationRulesUrl;
+                if (dataset.ProductSheetUrl != null) originalDataset.ProductSheetUrl = dataset.ProductSheetUrl;
+                if (dataset.ProductSpecificationUrl != null) originalDataset.ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+                if (dataset.WmsUrl != null) originalDataset.WmsUrl = dataset.WmsUrl;
+                if (dataset.DistributionFormat != null) originalDataset.DistributionFormat = dataset.DistributionFormat;
+                if (dataset.DistributionArea != null) originalDataset.DistributionArea = dataset.DistributionArea;
+                if (dataset.Notes != null) originalDataset.Notes = dataset.Notes;
+                
+               
+                originalDataset.modified = DateTime.Now;
+                db.Entry(originalDataset).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDataset.statusId);
+                ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDataset.submitterId);
+                ViewBag.datasetownerId = new SelectList(db.Organizations, "systemId", "name", originalDataset.datasetownerId);
+
+                return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
             }
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", dataset.statusId);
-            ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name", dataset.submitterId);
-            //ViewBag.datasetownerId = new SelectList(db.RegisterItems, "systemId", "name", dataset.datasetownerId);
             return View(dataset);
         }
 
-        // GET: Datasets/Delete/5
-        public ActionResult Delete(Guid? id)
+        // GET: Documents/Delete/5
+        [Authorize]
+        [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
+        public ActionResult Delete(string registername, string datasetname)
         {
-            if (id == null)
+            string registerOwner = FindRegisterOwner(registername);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            if (role == "nd.metadata_admin" || user == registerOwner)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                var queryResults = from o in db.Datasets
+                                   where o.seoname == datasetname && o.register.seoname == registername
+                                   select o.systemId;
+
+                Guid systId = queryResults.First();
+
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Dataset dataset = db.Datasets.Find(systId);
+                if (dataset == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(dataset);
             }
-            Dataset dataset = db.Datasets.Find(id);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dataset);
+            return HttpNotFound();
         }
 
-        // POST: Datasets/Delete/5
+        // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(Guid id)
+        [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string registername, string datasetname)
         {
-            Dataset dataset = db.Datasets.Find(id);
+            var queryResults = from o in db.Datasets
+                               where o.seoname == datasetname && o.register.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            Dataset dataset = db.Datasets.Find(systId);
             db.RegisterItems.Remove(dataset);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Redirect("/register/" + registername);
         }
 
         protected override void Dispose(bool disposing)
@@ -245,6 +325,18 @@ namespace Kartverket.Register.Controllers
             encodedUrl = encodedUrl.Trim('-');
 
             return encodedUrl;
+        }
+
+        private string FindRegisterOwner(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string registerOwner = register.owner.name;
+            return registerOwner;
         }
     }
 }

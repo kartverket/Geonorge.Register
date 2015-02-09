@@ -234,7 +234,7 @@ namespace Kartverket.Register.Controllers
                 ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
                 ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
 
-                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
+                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
             }
             return View(document);
         }

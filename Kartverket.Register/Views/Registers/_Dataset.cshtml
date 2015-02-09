@@ -25,7 +25,11 @@
         @foreach (Dataset item in Model)
         {
             <tr>
-                <td><b class="name">@item.name</b></td>
+                <td>
+                    <p class="role-button" role="button">
+                        <b><a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">@item.name</a></b>
+                    </p>
+                </td>
                 <td class="publisher">@item.datasetowner.name</td>
                 <td class="themegroup">@item.description</td>
                 <td>

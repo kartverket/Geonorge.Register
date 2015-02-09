@@ -513,6 +513,7 @@
     <Content Include="Views\Datasets\Details.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />
     <Content Include="Views\Datasets\Index.cshtml" />
+    <Content Include="Views\Registers\_detailsDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

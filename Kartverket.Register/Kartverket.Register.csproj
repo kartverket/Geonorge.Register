@@ -183,6 +183,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CodelistValuesController.cs" />
+    <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
@@ -507,6 +508,11 @@
     <Content Include="Views\Registers\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
     <Content Include="Views\Shared\_Analytics.cshtml" />
+    <Content Include="Views\Datasets\Create.cshtml" />
+    <Content Include="Views\Datasets\Delete.cshtml" />
+    <Content Include="Views\Datasets\Details.cshtml" />
+    <Content Include="Views\Datasets\Edit.cshtml" />
+    <Content Include="Views\Datasets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

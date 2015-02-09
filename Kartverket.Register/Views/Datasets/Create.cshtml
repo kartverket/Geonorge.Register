@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = "Opprett datasett";
 }
+@section breadcrumb {
+    <li>Dataset</li>
+    <li class="active">Ny</li>
+}
 
 <h1>@ViewBag.Title</h1>
 <div class="row">
@@ -12,7 +16,7 @@
                 Hent informasjon fra metadatakatalogen
             </div>
             <div class="panel-body">
-                @using (Html.BeginForm("CreateFromMetadata", "ManageDataset", FormMethod.Post, new { @class = "form-inline" }))
+                @using (Html.BeginForm("Create", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
                 {
                     <div class="form-group">
                         @Html.LabelFor(model => model.Uuid, new { @class = "" })
@@ -25,43 +29,34 @@
     </div>
 </div>
 
-@using (Html.BeginForm("Create", "ManageDataset", FormMethod.Post)) 
+@using (Html.BeginForm("Create", "Datasets", FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Publisher, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Publisher, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Publisher, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.Uuid, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Uuid, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                @Html.TextAreaFor(model => model.description, 5, 100, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -130,21 +125,21 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ThumbnailUrl, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.datasetthumbnail, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ThumbnailUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ThumbnailUrl, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.datasetthumbnail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.datasetthumbnail, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThemeGroupId, "Temagruppe", new { @class = "control-label col-md-2" })
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.theme, "Temagruppe", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ThemeGroupId", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ThemeGroupId, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.theme, "", new { @class = "text-danger" })
             </div>
-        </div>
-        
+        </div>*@
+
         <div class="form-group">
             @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

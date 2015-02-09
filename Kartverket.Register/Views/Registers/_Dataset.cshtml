@@ -1,15 +1,15 @@
 ﻿@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
+﻿@using Kartverket.Register.Helpers
 @using PagedList;
 @using PagedList.Mvc;
-
 @using Kartverket.Register.Models
 
 <table class="table table-striped table-bordered" style="background-color: white">
     <thead>
         <tr>
-            <th><a href="" data-sort="name" data-order="asc">Tittel</a></th>
-            <th><a href="" data-sort="publisher" data-order="asc">Eier / leverandør</a></th>
-            <th><a href="" data-sort="themegroup" data-order="asc">Temagruppe</a></th>
+            <th>Tittel</th>
+            <th>Eier / leverandør</th>
+            <th>Temagruppe</th>
             <th>Beskrivelse</th>
             <th style="width: 80px">Metadata</th>
             <th style="width: 90px">Produktark</th>
@@ -17,16 +17,17 @@
             <th style="width: 110px">Produkt-spesifikasjon</th>
             <th>SOSI</th>
             <th>WMS</th>
-            <th><a href="" data-sort="status" data-order="asc">Status</a></th>
+            <th>Status</th>
         </tr>
     </thead>
+
     <tbody class="list">
         @foreach (Dataset item in Model)
         {
             <tr>
                 <td><b class="name">@item.name</b></td>
                 <td class="publisher">@item.datasetowner.name</td>
-                <td class="themegroup">@item.theme.description</td>
+                <td class="themegroup">@item.description</td>
                 <td>
                     @if (item.description != null)
                     {
@@ -44,31 +45,31 @@
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.metadata))
+                    @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
                     {
-                        <a href="@item.metadata" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span> Vis</a>
+                        <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span> Vis</a>
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.productsheet))
+                    @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
                     {
-                        <a href="@item.productsheet" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span> Hent</a>
+                        <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span> Hent</a>
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.presentationRules))
+                    @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
                     {
-                        <a href="@item.presentationRules" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span> Hent</a>
+                        <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span> Hent</a>
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.productspesification))
+                    @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
                     {
-                        <a href="@item.productspesification" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span> Hent</a>
+                        <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span> Hent</a>
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.distributionFormat) && item.distributionFormat.Trim().ToLower().Equals("sosi"))
+                    @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                     {
                         <text>ja</text>
                     }
@@ -78,9 +79,9 @@
                     }
                 </td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(item.wmsUrl))
+                    @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
                     {
-                        <a href="@item.wmsUrl">WMS</a>
+                        <a href="@item.WmsUrl">WMS</a>
                     }
                 </td>
                 <td class="status">

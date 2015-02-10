@@ -25,6 +25,7 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult Index(SearchParameters parameters, int? page)
         {
+            ViewBag.searchRegister = parameters.Register;
             SearchResult searchResult = _searchService.Search(parameters);
 
             SearchViewModel model = new SearchViewModel(parameters, searchResult);

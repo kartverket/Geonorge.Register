@@ -77,6 +77,8 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid regId = queryResultsRegister.First();
+
+            ValidationName(document);
        
             if (ModelState.IsValid)
             {
@@ -170,14 +172,13 @@ namespace Kartverket.Register.Controllers
                 {
                     return HttpNotFound();
                 }
-                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
-                ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+                Viewbags(document);
                 return View(document);
             }
             return HttpNotFound();
         }
+
+        
 
         // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -192,10 +193,13 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid systId = queryResults.First();
-            
+            Document originalDocument = db.Documents.Find(systId);
+
+            ValidationName(document);
+
             if (ModelState.IsValid)
             {
-                Document originalDocument = db.Documents.Find(systId);
+                //Document originalDocument = db.Documents.Find(systId);
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
@@ -230,13 +234,12 @@ namespace Kartverket.Register.Controllers
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDocument.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
-                ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
+                Viewbags(document);
 
                 return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
             }
-            return View(document);
+            Viewbags(document);
+            return View(originalDocument);
         }
 
         // GET: Documents/Delete/5
@@ -373,6 +376,25 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
+        private void ValidationName(Document document)
+        {
+            var queryResultsDataset = from o in db.Documents
+                                      where o.name == document.name && o.systemId != document.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
+        }
+
+        private void Viewbags(Document document)
+        {
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+        }
 
     }
 }

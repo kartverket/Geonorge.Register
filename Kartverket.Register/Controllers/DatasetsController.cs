@@ -11,6 +11,7 @@ using System.IO;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 
 namespace Kartverket.Register.Controllers
 {
@@ -61,11 +62,6 @@ namespace Kartverket.Register.Controllers
                 return View();
             }
             return HttpNotFound();
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name");
-            //ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            //ViewBag.submitterId = new SelectList(db.RegisterItems, "systemId", "name");
-            //ViewBag.datasetownerId = new SelectList(db.RegisterItems, "systemId", "name");
-            //return View();
         }
 
         // POST: Datasets/Create
@@ -82,8 +78,11 @@ namespace Kartverket.Register.Controllers
 
             Guid regId = queryResultsRegister.First();
 
+            ValidationName(dataset);
+
             if (ModelState.IsValid)
-            {
+            {                
+                
                 dataset.systemId = Guid.NewGuid();
                 dataset.modified = DateTime.Now;
                 dataset.dateSubmitted = DateTime.Now;
@@ -123,8 +122,19 @@ namespace Kartverket.Register.Controllers
 
                 return Redirect("/register/" + registername);
             }
-
             return View(dataset);
+        }
+
+        private void ValidationName(Dataset dataset)
+        {
+            var queryResultsDataset = from o in db.Datasets
+                                      where o.name == dataset.name && o.systemId != dataset.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
         }
 
         // GET: Datasets/Edit/5
@@ -154,13 +164,18 @@ namespace Kartverket.Register.Controllers
                 {
                     return HttpNotFound();
                 }
-                ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
-                ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
+                Viewbags(dataset);
                 return View(dataset);
             }
             return HttpNotFound();
+        }
+
+        private void Viewbags(Dataset dataset)
+        {
+            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
+            ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
         }
 
 
@@ -177,10 +192,13 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid systId = queryResults.First();
+            Dataset originalDataset = db.Datasets.Find(systId);
+
+            ValidationName(dataset);
 
             if (ModelState.IsValid)
             {
-                Dataset originalDataset = db.Datasets.Find(systId);
+                
                 if (dataset.name != null) originalDataset.name = dataset.name; originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
                 if (dataset.description != null) originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
@@ -212,13 +230,12 @@ namespace Kartverket.Register.Controllers
                 originalDataset.modified = DateTime.Now;
                 db.Entry(originalDataset).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDataset.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDataset.submitterId);
-                ViewBag.datasetownerId = new SelectList(db.Organizations, "systemId", "name", originalDataset.datasetownerId);
+                Viewbags(dataset);
 
                 return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
             }
-            return View(dataset);
+            Viewbags(dataset);
+            return View(originalDataset);
         }
 
         // GET: Documents/Delete/5

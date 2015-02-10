@@ -45,6 +45,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername)
         {
+            ViewBag.registername = registername;
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 

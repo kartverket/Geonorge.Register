@@ -46,6 +46,7 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/ny")]
         public ActionResult Create(string registername)
         {
+            ViewBag.registername = registername;
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("dataset");
 
@@ -72,6 +73,7 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/ny")]
         public ActionResult Create(Dataset dataset, string registername)
         {
+            
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
                                        select o.systemId;

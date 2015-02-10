@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Opprett datasett";
+    var registername = ViewBag.registername;
 }
 @section breadcrumb {
     <li>Dataset</li>
@@ -157,9 +158,7 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Tilbake til oversikten", "Index")
-</div>
+<a href="/register/@registername/">Tilbake</a>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

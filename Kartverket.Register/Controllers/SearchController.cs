@@ -30,7 +30,10 @@ namespace Kartverket.Register.Controllers
 
             SearchViewModel model = new SearchViewModel(parameters, searchResult);
 
-            return View(model);
+            //int pageSize = 50;
+            //int pageNumber = (page ?? 1);
+
+            return View(model); //.ToPagedList(pageNumber, pageSize)
         }
 
 

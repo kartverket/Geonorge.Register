@@ -2,6 +2,9 @@
 @using Resources
 ﻿@using Kartverket.Register.Helpers
 @model SearchViewModel
+@*@model PagedList.IPagedList<SearchViewModel>*@
+@using PagedList;
+@using PagedList.Mvc;
 
 @{
     if (!string.IsNullOrWhiteSpace(Model.Text))
@@ -34,7 +37,7 @@
 @section scripts {
     <script>
         $('ul.facet').each(function () {
-            var max = 15;
+            var max = 50;
             if ($(this).find("li").length > max) {
                 $(this)
                   .find('li:gt(' + max + ')')

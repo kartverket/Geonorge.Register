@@ -103,7 +103,8 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Register) 
                                     && ( d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text))
+                                    || d.description.Contains(parameters.Text)
+                                    || d.documentowner.name.Contains(parameters.Text))
                                     select new SearchResultItem
                                     {
                                         RegisterName = d.register.name,
@@ -165,7 +166,8 @@ namespace Kartverket.Register.Services.Search
             {
                 var queryResults = (from e in _dbContext.EPSGs
                                     where e.name.Contains(parameters.Text)
-                                    || e.description.Contains(parameters.Text)
+                                    || e.description.Contains(parameters.Text) 
+
                                     select new SearchResultItem
                                     {
                                         RegisterName = e.register.name,
@@ -228,6 +230,7 @@ namespace Kartverket.Register.Services.Search
                                     where d.register.containedItemClass == itemClass
                                     && (d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text))
+
                                     select new SearchResultItem
                                     {
                                         RegisterName = d.register.name,

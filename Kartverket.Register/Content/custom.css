@@ -1,0 +1,99 @@
+.galleryResult{
+
+}
+
+.galleryResult .panel{
+	/*background-color: #249446;*/
+	color: white;
+	padding: 0;
+	box-shadow: none;
+	margin: 0;
+	
+}
+
+.galleryResult a:hover {
+	text-decoration: none;
+}
+
+.galleryResult .col-title{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 200;
+	padding: 75px 10px 0 10px;
+	border: 1px solid #ddd;
+	height: 166px;
+	text-align: center;
+
+	-webkit-transition: background-color .3s; /* For Safari 3.1 to 6.0 */
+    transition: background-color .3s;
+}
+
+.galleryResult .col-title:hover {
+	background-color: rgba(255,255,255,.5);
+}
+
+.galleryResult .col-title:hover h4{
+	background-color: #249446;
+	color: #FFF;
+}
+
+.galleryResult h4 {
+
+	background-color: rgba(255,255,255,.9);
+	z-index: 200;
+	padding: 6px;
+	border: 1px solid #249446;
+	font-size: 15px;
+	-webkit-transition: all .3s; /* For Safari 3.1 to 6.0 */
+    transition: all .3s;
+
+
+}
+
+.galleryResult .col-img{
+	overflow: hidden;
+	height: 170px;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.galleryResult .col-img img{
+	min-width: 100%;
+	min-height: 100%;
+	max-height: 130%;
+}
+
+
+.tableResult *{
+	padding: 0;
+	margin: 0;
+}
+
+.tableResult h4, .tableResult h5, .tableResult .label, .tableResult .btn {
+	margin-top: 2px;
+	margin-bottom: 0px;
+	padding: 4px;
+	border: none;
+	font-size: 14px;
+	line-height: 1.1em;
+	display: inline-block;
+	
+}
+
+.tableResult .btn {
+	background: none!important;
+}
+
+
+.tableResult .kartkatalog-table-heading{
+	padding: 0;
+	border-bottom: 4px solid #249446;
+	margin-bottom: 20px;
+}
+
+.tableResult .label {
+ margin-top: 4px;
+}

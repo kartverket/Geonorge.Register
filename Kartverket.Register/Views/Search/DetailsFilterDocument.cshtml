@@ -35,8 +35,16 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="page-header">
+        <div class=" page-header">
             <hr>
+        </div>
+
+        <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            <div class="btn-group">
+                <a onclick="listView()" id="button-listView" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a>
+                <a onclick="galleryView()" id="button-galleryView" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a>
+                <a onclick="tableView()" id="button-tableView" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a>
+            </div>
         </div>
 
         <script>
@@ -48,14 +56,14 @@
             }
         </script>
 
-        <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).documentowner.seoname" name="sortering" method="get">            
+        <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).documentowner.seoname" name="sortering" method="get">
             <div class="pull-right" onchange="SortBy()">
                 Sorter: @Html.DropDownList("sorting", "Navn a-å")
             </div>
             <br />
         </form>
 
-        <br />
+        <hr/>
 
         @foreach (Document item in Model)
         {

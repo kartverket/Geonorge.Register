@@ -10,14 +10,14 @@
 }
 
 <h1>@ViewBag.Title</h1>
-<div class="row">
+@*<div class="row">
     <div class="col-sm-6 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
                 Hent informasjon fra metadatakatalogen
             </div>
             <div class="panel-body">
-                @using (Html.BeginForm("Create", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
+                @using (Html.BeginForm("CreateFromMetadata", "ManageDataset", FormMethod.Post, new { @class = "form-inline" }))
                 {
                     <div class="form-group">
                         @Html.LabelFor(model => model.Uuid, new { @class = "" })
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 @using (Html.BeginForm("Create", "Datasets", FormMethod.Post))
 {

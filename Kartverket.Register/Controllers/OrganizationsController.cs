@@ -241,11 +241,17 @@ namespace Kartverket.Register.Controllers
                                            select o.systemId;
             Guid systId = queryResultsOrganisasjon.First();
             Organization originalOrganization = db.Organizations.Find(systId);
-            ValidationName(organization);
+            var queryResultsDataset = from o in db.Organizations
+                                      where o.name == organization.name && o.systemId != organization.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
 
             if (ModelState.IsValid)
             {
-                
 
                 if (organization.name != null)
                 {

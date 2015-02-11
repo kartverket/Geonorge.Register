@@ -11,8 +11,7 @@
     @foreach (Document item in Model)
     {
         <div class="row result-row metadata">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-left">
                     @{
                         string thumb = "/Content/pdf.jpg";
@@ -21,33 +20,28 @@
                             thumb = item.thumbnail;
                         }
                     }
-                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="center-block img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                    <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                 </div>
-
-
-
-                <div class="col-no-padding-xs col-xs-12 col-sm-5 col-md-5 col-lg-5 col-title">
-                    <h4 class="role-button" role="button">
-                        <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">@item.name</a>
-                    </h4>
-                    <p class="">
-                        <a class ="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
-                        </a>
-                    </p>
-                    <p class="">
+                <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">
+                        <h4 class="role-button" role="button" style="font-size: 18px;">
+                            @item.name
+                        </h4>
+                    </a>
+                    <a class ="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
+                        <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                    </a>
+                    <p class=" ">
                         @Html.DisplayFor(modelItem => item.description)
-                    </p>    
+                    </p>
                 </div>
-
-                <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-action">
+                <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
                     <a href="@Html.DisplayFor(modelItem => item.documentUrl)" type="button" class="btn btn-lg btn-link">
-                        <span class="glyphicon glyphicon-download-alt pull-left"> </span>last ned
+                        <span class="glyphicon glyphicon-download-alt"> </span>last ned
                     </a><br />
                 </div>
+                <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-actions pull-right">
 
-                <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-logo pull-right">
-                    
                     @if (item.status == null)
                     {
                         <span>Status: Ikke angitt</span><br />
@@ -72,6 +66,7 @@
                 </div>
 
             </div>
+
         </div>
         <hr />
     }

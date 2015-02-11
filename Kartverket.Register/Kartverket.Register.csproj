@@ -87,6 +87,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -177,6 +183,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CodelistValuesController.cs" />
+    <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
@@ -321,6 +328,10 @@
     <Compile Include="Migrations\201502032357567_transferDokToRegister.Designer.cs">
       <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.cs" />
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.Designer.cs">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -364,6 +375,8 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\custom.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -422,6 +435,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\visninger.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -495,6 +509,13 @@
     <Content Include="Views\Registers\_detailsDocuments.cshtml" />
     <Content Include="Views\Registers\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
+    <Content Include="Views\Shared\_Analytics.cshtml" />
+    <Content Include="Views\Datasets\Create.cshtml" />
+    <Content Include="Views\Datasets\Delete.cshtml" />
+    <Content Include="Views\Datasets\Details.cshtml" />
+    <Content Include="Views\Datasets\Edit.cshtml" />
+    <Content Include="Views\Datasets\Index.cshtml" />
+    <Content Include="Views\Registers\_detailsDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -600,6 +621,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502032357567_transferDokToRegister.resx">
       <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502051017299_UpdateStatusId.resx">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

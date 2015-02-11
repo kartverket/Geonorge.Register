@@ -54,5 +54,11 @@ ul.search-results {
     width: 140px;
 }
 
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+
+    background-color: #8C4799;
+    border-color: #DEDCDC;
+}
+
 
 /*# sourceMappingURL=page-footer.css.map *

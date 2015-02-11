@@ -6,24 +6,50 @@
     function registerName(reg) {
         document.getElementById("register").value = reg;
         document.getElementById("registerSelected").innerHTML = reg;
+        //var storedValue = localStorage.getItem('registerName');
+        //var nameInput = document.getElementsByClassName('dropdown-toggle');
+        //if (storedValue) {
+        //    ;
+        //    nameInput.value = storedValue;
+        //}
+        //nameInput.value = "Alle registre";
     }
+
 </script>
+
+@{
+    var searchRegister = ViewBag.searchRegister;
+    var register = ViewBag.register;
+
+    if (searchRegister != null)
+    {
+        register = ViewBag.searchRegister;        
+    }
+    else { 
+        if (register == null)
+        { 
+            register = "Alle registre";
+        } 
+    }
+
+    
+}
 
 <form action="~/search/" class="col-md-offset-2 col-md-8 searchbar">
    
-    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registre")"/>
+    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)"/>
      
     <h1 class="h-md" id="register-heading">Søk i register</h1>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
                 <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                    <span id="registerSelected">@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : "Alle registre")</span>
+                    <span id="registerSelected">@register</span>
                     <div><span class="caret"></span></div>
                 </button>
-            <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">
+            <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">                               
                 <li tabindex="0" onclick="registerName('Alle registre')" class="left-edge-registre"><a>Alle registre</a></li>
-                <li tabindex="0" onclick="registerName('Det offentlige kartgrunnlaget')" class="left-edge-registre"><a href="http://dok.test.geonorge.no/datasett">Det offentlige kartgrunnlaget</a></li>
+                <li tabindex="0" onclick="registerName('Det offentlige kartgrunnlaget')" class="left-edge-registre"><a>Det offentlige kartgrunnlaget</a></li>
                 <li tabindex="0" onclick="registerName('Organisasjoner')" class="left-edge-registre"><a>Organisasjoner</a></li>
                 <li tabindex="0" onclick="registerName('EPSG koder')" class="left-edge-registre"><a>EPSG koder</a></li>
                 <li tabindex="0" onclick="registerName('Produktspesifikasjoner')" class="left-edge-registre"><a>Produktspesifikasjoner</a></li>
@@ -31,6 +57,7 @@
                 <li tabindex="0" onclick="registerName('Kodelister')" class="left-edge-registre"><a>Kodelister</a></li>
                 <li tabindex="0" onclick="registerName('GML applikasjonsskjema')" class="left-edge-registre"><a>GML applikasjonsskjema</a></li>
                 <li tabindex="0" onclick="registerName('Tegneregler')" class="left-edge-registre"><a>Tegneregler</a></li>
+                <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">Objektregisteret</a></li>
             </ul>
 
         </div><!-- /input-group-btn -->
@@ -40,3 +67,5 @@
         </span>
     </div>
 </form>
+
+@*Request.QueryString["register"] != null ? Request.QueryString["register"].ToString()*@

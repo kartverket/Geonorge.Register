@@ -45,6 +45,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername)
         {
+            ViewBag.registername = registername;
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -77,6 +78,8 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid regId = queryResultsRegister.First();
+
+            ValidationName(document);
        
             if (ModelState.IsValid)
             {
@@ -155,7 +158,7 @@ namespace Kartverket.Register.Controllers
             {
      
                 var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
+                                   where o.seoname == documentname && o.register.seoname == registername
                                    select o.systemId;
 
                 Guid systId = queryResults.First();
@@ -170,14 +173,13 @@ namespace Kartverket.Register.Controllers
                 {
                     return HttpNotFound();
                 }
-                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
-                ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+                Viewbags(document);
                 return View(document);
             }
             return HttpNotFound();
         }
+
+        
 
         // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -188,20 +190,34 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname
+                               where o.seoname == documentname && o.register.seoname == registername
                                select o.systemId;
 
             Guid systId = queryResults.First();
-            
+            Document originalDocument = db.Documents.Find(systId);
+
+            ValidationName(document);
+
             if (ModelState.IsValid)
             {
-                Document originalDocument = db.Documents.Find(systId);
+                //Document originalDocument = db.Documents.Find(systId);
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
-                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;
-                if (document.statusId != null) originalDocument.statusId = document.statusId;
+                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;                
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
+                if (document.statusId != null)
+                {
+                    if (document.statusId == "Accepted" && originalDocument.statusId != "Accepted")
+                    {
+                        originalDocument.dateAccepted = DateTime.Now;
+                    }
+                    if (originalDocument.statusId == "Accepted" && document.statusId != "Accepted")
+                    {
+                        originalDocument.dateAccepted = null;
+                    }
+                        originalDocument.statusId = document.statusId;
+                }
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 
@@ -219,13 +235,12 @@ namespace Kartverket.Register.Controllers
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", originalDocument.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations, "systemId", "name", originalDocument.submitterId);
-                ViewBag.documentownerId = new SelectList(db.Organizations, "systemId", "name", originalDocument.documentownerId);
+                Viewbags(document);
 
-                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.name + "/" + originalDocument.seoname);
+                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
             }
-            return View(document);
+            Viewbags(document);
+            return View(originalDocument);
         }
 
         // GET: Documents/Delete/5
@@ -240,7 +255,7 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin" || user == registerOwner)
             {
                 var queryResults = from o in db.Documents
-                                   where o.seoname == documentname
+                                   where o.seoname == documentname && o.register.seoname == registername 
                                    select o.systemId;
 
                 Guid systId = queryResults.First();
@@ -266,7 +281,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname)
         {
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname
+                               where o.seoname == documentname && o.register.seoname == registername
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -362,6 +377,25 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
+        private void ValidationName(Document document)
+        {
+            var queryResultsDataset = from o in db.Documents
+                                      where o.name == document.name && o.systemId != document.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
+        }
+
+        private void Viewbags(Document document)
+        {
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
+            ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+        }
 
     }
 }

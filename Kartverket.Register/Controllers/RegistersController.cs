@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
+using PagedList;
 
 namespace Kartverket.Register.Controllers
 {
@@ -21,12 +22,12 @@ namespace Kartverket.Register.Controllers
         {
             setAccessRole();
 
-            return View(db.Registers.ToList());
+            return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting)
+        public ActionResult Details(string name, string sorting, int? page)
         {
             var queryResults = from o in db.Registers
                                where o.seoname == name
@@ -34,10 +35,12 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-
+            ViewBag.page = page;
             ViewBag.SortOrder = sorting;            
-            ViewBag.sorting = new SelectList(db.Sorting.OrderBy(s => s.description), "value", "description");
-        
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+
+            
             if (register == null)
             {
                 return HttpNotFound();
@@ -51,7 +54,7 @@ namespace Kartverket.Register.Controllers
         {            
 
             var queryResultsRegisterItem = from o in db.RegisterItems
-                                         where o.seoname == itemname
+                                         where o.seoname == itemname && o.register.seoname == registername
                                          select o.systemId;
 
             Guid systId = queryResultsRegisterItem.First();

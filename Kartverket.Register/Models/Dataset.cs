@@ -17,36 +17,50 @@ using System.ComponentModel.DataAnnotations;
 namespace Kartverket.Register.Models
 {
 	public class Dataset : RegisterItem {
-        [Display(Name = "Eier / leverandør")]
+
+        public int Id { get; set; }
+
+        [Display(Name = "Uuid")]
+        public string Uuid { get; set; }
+
         [ForeignKey("datasetowner")]
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
+
+        [Display(Name = "Merknad")]
+        public string Notes { get; set; }
+
+        [Display(Name = "Produktark url")]
+        public string ProductSheetUrl { get; set; }
+
+        [Display(Name = "Presentasjonsregler url")]
+        public string PresentationRulesUrl { get; set; }
+
+        [Display(Name = "Produktspesifikasjon url")]
+        public string ProductSpecificationUrl { get; set; }
+
+        [Display(Name = "Metadata url")]
+        public string MetadataUrl { get; set; }
+
+        [Display(Name = "Distribusjonsformat")]
+        public string DistributionFormat { get; set; }
+
+        [Display(Name = "Distribusjon url")]
+        public string DistributionUrl { get; set; }
+
+        [Display(Name = "Distribusjonsområde")]
+        public string DistributionArea { get; set; }
+
+        [Display(Name = "WMS url")]
+        public string WmsUrl { get; set; }
+
         [Display(Name = "Tema:")]
-       
         public virtual DOKTheme theme { get; set; }
+
         [Display(Name = "Miniatyrbilde")]
         public string datasetthumbnail { get; set; }
-        [Display(Name = "Produktark url")]
-        public string productsheet { get; set; }
-        [Display(Name = "Presentasjonsregler url")]
-        public string presentationRules { get; set; }
-        [Display(Name = "Produktspesifikasjon url")]
-        public string productspesification { get; set; }
-        [Display(Name = "Metadata url")]
-        public string metadata { get; set; }
-        [Display(Name = "Distribusjonsformat")]
-        public string distributionFormat { get; set; }
-        [Display(Name = "Distribusjon url")]
-        public string distributionUri { get; set; }
-        [Display(Name = "Distribusjonsområde")]
-        public string distributionArea { get; set; }
-        [Display(Name = "WMS url")]
-        public string wmsUrl { get; set; }
-        [Display(Name = "Uuid")]
-        public string metadataUuid { get; set; }
-
-		
-
+       
+                   
 	}//end Dataset
 
 }//end namespace Datamodell

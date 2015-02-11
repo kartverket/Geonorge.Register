@@ -83,7 +83,7 @@ namespace Kartverket.Register.Services.Search
                         RegisterItemStatus = register.RegisterItemStatus,
                         RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "/register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
-                        Shortname = register.Shortname
+                        Shortname = register.Shortname,
                     };
 
                     items.Add(item);
@@ -103,7 +103,8 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Register) 
                                     && ( d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text))
+                                    || d.description.Contains(parameters.Text)
+                                    || d.documentowner.name.Contains(parameters.Text))
                                     select new SearchResultItem
                                     {
                                         RegisterName = d.register.name,
@@ -160,12 +161,78 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
+            else if (itemClass == "Dataset")
+            {
+                var queryResults = (from d in _dbContext.Datasets
+                                    where d.register.name.Contains(parameters.Register)
+                                    && (d.name.Contains(parameters.Text)
+                                    || d.description.Contains(parameters.Text)
+                                    || d.datasetowner.name.Contains(parameters.Text))
+                                    select new SearchResultItem
+                                    {
+                                        RegisterName = d.register.name,
+                                        RegisterDescription = d.register.description,
+                                        RegisterItemName = d.name,
+                                        RegisterItemDescription = d.description,
+                                        RegisterID = d.registerId,
+                                        SystemID = d.systemId,
+                                        Discriminator = d.register.containedItemClass,
+                                        RegisterSeoname = d.register.seoname,
+                                        RegisterItemSeoname = d.seoname,
+                                        DocumentOwner = null,
+                                        RegisterItemUpdated = d.modified,
+                                        RegisterItemStatus = d.statusId,
+                                        Submitter = d.submitter.name,
+                                        DatasetOwner = d.datasetowner.name
+                                    });
+
+                int NumFound = queryResults.Count();
+                List<SearchResultItem> items = new List<SearchResultItem>();
+                int skip = parameters.Offset;
+                skip = skip - 1;
+                queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit);
+
+                foreach (SearchResultItem register in queryResults)
+                {
+                    var item = new SearchResultItem
+                    {
+                        RegisterName = register.RegisterName,
+                        RegisterDescription = register.RegisterDescription,
+                        RegisterItemName = register.RegisterItemName,
+                        RegisterItemDescription = register.RegisterItemDescription,
+                        RegisterID = register.RegisterID,
+                        SystemID = register.SystemID,
+                        Discriminator = register.Discriminator,
+                        RegisterSeoname = register.RegisterSeoname,
+                        RegisterItemSeoname = register.RegisterItemSeoname,
+                        DocumentOwner = register.DocumentOwner,
+                        RegisterItemUpdated = register.RegisterItemUpdated,
+                        RegisterItemStatus = register.RegisterItemStatus,
+                        RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "/register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
+                        Submitter = register.Submitter,
+                        Shortname = register.Shortname,
+                        DatasetOwner = register.DatasetOwner
+                    };
+
+                    items.Add(item);
+                }
+
+                return new SearchResult
+                {
+                    Items = items,
+                    Limit = parameters.Limit,
+                    Offset = parameters.Offset,
+                    NumFound = NumFound
+                };
+            }
+
 
             else if (itemClass == "EPSG")
             {
                 var queryResults = (from e in _dbContext.EPSGs
                                     where e.name.Contains(parameters.Text)
-                                    || e.description.Contains(parameters.Text)
+                                    || e.description.Contains(parameters.Text) 
+
                                     select new SearchResultItem
                                     {
                                         RegisterName = e.register.name,
@@ -228,6 +295,7 @@ namespace Kartverket.Register.Services.Search
                                     where d.register.containedItemClass == itemClass
                                     && (d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text))
+
                                     select new SearchResultItem
                                     {
                                         RegisterName = d.register.name,

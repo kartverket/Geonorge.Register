@@ -56,7 +56,8 @@ namespace Kartverket.Register.Migrations
               new DOKTheme { value = "Geologi", description = "Geologi" },
               new DOKTheme { value = "Kyst/Fiskeri", description = "Kyst/Fiskeri" },
               new DOKTheme { value = "Samferdsel", description = "Samferdsel" },
-              new DOKTheme { value = "Basis geodata", description = "Basis geodata" }
+              new DOKTheme { value = "Basis geodata", description = "Basis geodata" },
+              new DOKTheme { value = "Natur", description = "Natur" }
 
             );
 

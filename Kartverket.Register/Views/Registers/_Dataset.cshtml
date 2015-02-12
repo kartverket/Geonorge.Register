@@ -31,7 +31,16 @@
                     </p>
                 </td>
                 <td class="publisher">@item.datasetowner.name</td>
-                <td class="themegroup">@item.description</td>
+                
+                @if (item.ThemeGroupId != null)
+                {
+                    <td class="themegroup">@item.theme.description</td>
+                }
+                else
+                {
+                    <td class="themegroup">Ikke angitt</td>
+                }
+                
                 <td>
                     @if (item.description != null)
                     {

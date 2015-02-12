@@ -55,6 +55,8 @@ namespace Kartverket.Register.Models
         public string WmsUrl { get; set; }
 
         [Display(Name = "Tema:")]
+        [ForeignKey("theme")]
+        public string ThemeGroupId { get; set; }        
         public virtual DOKTheme theme { get; set; }
 
         [Display(Name = "Miniatyrbilde")]

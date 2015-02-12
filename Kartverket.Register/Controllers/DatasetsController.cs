@@ -142,11 +142,11 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(dataset);
                 db.SaveChanges();
-                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
+                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
                 return Redirect("/register/" + registername);
 
             }
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             return View(dataset);
         }
 
@@ -201,7 +201,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
             ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
         }
 
 
@@ -272,6 +272,7 @@ namespace Kartverket.Register.Controllers
                 if (dataset.DistributionFormat != null) originalDataset.DistributionFormat = dataset.DistributionFormat;
                 if (dataset.DistributionArea != null) originalDataset.DistributionArea = dataset.DistributionArea;
                 if (dataset.Notes != null) originalDataset.Notes = dataset.Notes;
+                if (dataset.ThemeGroupId != null) originalDataset.ThemeGroupId = dataset.ThemeGroupId;
                 
                
                 originalDataset.modified = DateTime.Now;

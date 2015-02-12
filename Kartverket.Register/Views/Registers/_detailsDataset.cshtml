@@ -9,15 +9,8 @@
     <div class="row">
         <div class="col-sm-8">
             <div class="col-sm-8">
-                @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl) && !string.IsNullOrWhiteSpace(Model.ProductSheetUrl) && !string.IsNullOrWhiteSpace(Model.ProductSpecificationUrl) && !string.IsNullOrWhiteSpace(Model.PresentationRulesUrl))
-                {
-                    <h3>Produktinformasjon</h3>
-                }
-                else{
-                    <h3>Produktinformasjon</h3>
-                    <p>Ingen informasjon lagt inn</p>
-                }
-
+               <h3>Produktinformasjon</h3>
+               
                 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
                 {
                     <p><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> Vis metadata i metadatakatalogen</a></p>
@@ -38,15 +31,7 @@
         </div>
         <div class="col-sm-8">
             <div class="col-sm-4">
-                @if (!string.IsNullOrWhiteSpace(Model.DistributionUrl) && !string.IsNullOrWhiteSpace(Model.DistributionFormat) && !string.IsNullOrWhiteSpace(Model.DistributionArea))
-                {
-                <h3>Distribusjon</h3>
-                }
-                else
-                {
-                    <h3>Distribusjon</h3>
-                    <p>Ingen informasjon lagt inn</p>
-                }
+                <h3>Distribusjon</h3>               
                 @if (!string.IsNullOrWhiteSpace(Model.DistributionUrl))
                 {
                     <p><a href="@Model.DistributionUrl" class="btn btn-primary">Last ned datasett</a></p>

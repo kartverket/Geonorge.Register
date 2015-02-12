@@ -31,7 +31,10 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Experimental", description = "Utkast" },
                 new Status { value = "Deprecated", description = "Utdatert" },
                 new Status { value = "Superseded", description = "Erstattet" },
-                new Status { value = "Retired", description = "Utgått" }
+                new Status { value = "Retired", description = "Utgått" },
+                new Status { value = "Candidate", description = "Kandidat" },
+                new Status { value = "InProgress", description = "I prosess" },
+                new Status { value = "Proposal", description = "Forslag" }
             );
 
             context.requirements.AddOrUpdate(

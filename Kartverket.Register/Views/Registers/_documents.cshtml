@@ -6,6 +6,7 @@
 
 @using Kartverket.Register.Models
 
+
 <div class="search-results">
     @foreach (Document item in Model)
     {
@@ -72,7 +73,7 @@
 </div>
 
 <div class="text-center">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff
+    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
 
     @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
 </div>

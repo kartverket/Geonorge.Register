@@ -27,7 +27,7 @@
             <tr>
                 <td>
                     <p class="role-button" role="button">
-                        <b><a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">@item.name</a></b>
+                        <b>@item.name</b>
                     </p>
                 </td>
                 <td class="publisher">@item.datasetowner.name</td>
@@ -48,6 +48,7 @@
                             @if (item.description.Length < 80)
                             {
                                 @item.description.Substring(0, item.description.Length)
+                                <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
                             }
                             else
                             {

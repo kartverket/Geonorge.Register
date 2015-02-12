@@ -2,31 +2,31 @@
 using System.Data.Entity.Core.Common.CommandTrees;
 using System.Linq;
 using GeoNorgeAPI;
-using Kartverket.DOK.Models;
+using Kartverket.Register.Models;
 using www.opengis.net;
 
 namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
-        public void UpdateDatasetWithMetadata(DokDataset dataset, string uuid)
+        public void UpdateDatasetWithMetadata(Dataset dataset, string uuid)
         {
             SimpleMetadata metadata = FetchMetadata(uuid);
             if (metadata != null)
             {
                 dataset.Uuid = uuid;
-                dataset.Name = metadata.Title;
-                dataset.Description = metadata.Abstract;
+                dataset.name = metadata.Title;
+                dataset.description = metadata.Abstract;
                 dataset.MetadataUrl = "http://www.geonorge.no/geonetwork/?uuid=" + uuid;
                 dataset.PresentationRulesUrl = metadata.LegendDescriptionUrl;
                 dataset.ProductSheetUrl = metadata.ProductSheetUrl;
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
 
-                dataset.ThumbnailUrl = FetchThumbnailUrl(metadata);
+                dataset.datasetthumbnail = FetchThumbnailUrl(metadata);
 
                 if (metadata.ContactPublisher != null)
                 {
-                    dataset.Publisher = metadata.ContactPublisher.Organization;
+                    dataset.datasetowner.name = metadata.ContactPublisher.Organization;
                 }
 
                 SimpleDistributionDetails distributionDetails = metadata.DistributionDetails;

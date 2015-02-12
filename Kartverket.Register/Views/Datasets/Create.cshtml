@@ -1,7 +1,7 @@
 ﻿@model Kartverket.Register.Models.Dataset
 
 @{
-    ViewBag.Title = "Opprett datasett";
+    ViewBag.Title = "Opprett datasett her";
     var registername = ViewBag.registername;
 }
 @section breadcrumb {
@@ -10,14 +10,14 @@
 }
 
 <h1>@ViewBag.Title</h1>
-@*<div class="row">
+<div class="row">
     <div class="col-sm-6 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
                 Hent informasjon fra metadatakatalogen
             </div>
             <div class="panel-body">
-                @using (Html.BeginForm("CreateFromMetadata", "ManageDataset", FormMethod.Post, new { @class = "form-inline" }))
+                @using (Html.BeginForm("Create", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
                 {
                     <div class="form-group">
                         @Html.LabelFor(model => model.Uuid, new { @class = "" })
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-</div>*@
+</div>
 
 @using (Html.BeginForm("Create", "Datasets", FormMethod.Post))
 {
@@ -133,13 +133,13 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.theme, "Temagruppe", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ThemeGroupId", null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.theme, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })

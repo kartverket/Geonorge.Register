@@ -36,14 +36,6 @@
         {
             <span>Administrator: @Html.DisplayFor(model => model.submitter.name)</span><br />
         }
-        @if (Model.submitter == null)
-        {
-            <span>Eier: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Eier: @Html.DisplayFor(model => model.submitter.name)</span><br />
-        }
         @if (Model.currentVersion == null)
         {
             <span>Versjon: Ikke angitt</span><br />
@@ -52,14 +44,6 @@
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
         }
-        @*@if (Model.documentUrl.Contains("/data/documents/"))
-        {
-            <span>Referanse: Intern</span><br />
-        }
-        else
-        {
-            <span>Referanse: Ekstern</span><br />
-        }*@
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">

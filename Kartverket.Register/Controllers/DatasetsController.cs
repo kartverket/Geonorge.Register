@@ -12,6 +12,7 @@ using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
+using Kartverket.DOK.Service;
 
 namespace Kartverket.Register.Controllers
 {
@@ -56,7 +57,8 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            string registerStatus = register.statusId;
+
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
             {
@@ -64,16 +66,35 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound();
         }
-
+              
+        
         // POST: Datasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername)
+        public ActionResult Create(Dataset dataset, string registername, string uuid)
         {
-            
+
+            if (uuid != null)
+            {
+                var model = new Dataset();
+                try
+                {
+                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+                }
+                catch (Exception e)
+                {
+                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+                }
+
+                ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
+                ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+
+                return View(model);
+            }
+
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
                                        select o.systemId;
@@ -83,8 +104,8 @@ namespace Kartverket.Register.Controllers
             ValidationName(dataset);
 
             if (ModelState.IsValid)
-            {                
-                
+            {
+
                 dataset.systemId = Guid.NewGuid();
                 dataset.modified = DateTime.Now;
                 dataset.dateSubmitted = DateTime.Now;
@@ -121,9 +142,11 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(dataset);
                 db.SaveChanges();
-
+                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
                 return Redirect("/register/" + registername);
+
             }
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
             return View(dataset);
         }
 
@@ -178,6 +201,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
             ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.theme);
         }
 
 
@@ -187,7 +211,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname)
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription)
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
@@ -198,6 +222,27 @@ namespace Kartverket.Register.Controllers
 
             ValidationName(dataset);
 
+            if (dataset.name == null) {
+                var model = db.Datasets.Find(originalDataset.systemId);
+
+                string originalDescription = model.description;
+
+                try
+                {
+                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+                }
+                catch (Exception e)
+                {
+                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+                }
+
+                if (dontUpdateDescription) model.description = originalDescription;
+
+                Viewbags(dataset);
+                return View(model);
+            }
+            
+            
             if (ModelState.IsValid)
             {
                 
@@ -298,6 +343,47 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
+        //public ActionResult CreateFromMetadata(string uuid, string register)
+        //{
+        //    var model = new Dataset();
+        //    try
+        //    {
+        //        new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+        //    }
+
+        //    ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
+        //    ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            
+        //    return View("Create", model);
+
+        //}
+
+        public ActionResult UpdateFromMetadata(Guid id, string uuid, bool dontUpdateDescription)
+        {
+            var model = db.Datasets.Find(id);
+
+            string originalDescription = model.description;
+
+            try
+            {
+                new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+            }
+
+            if (dontUpdateDescription) model.description = originalDescription;
+
+            ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            return View(model);
+        }
+
 
 
         private string GetSecurityClaim(string type)
@@ -357,5 +443,7 @@ namespace Kartverket.Register.Controllers
             string registerOwner = register.owner.name;
             return registerOwner;
         }
+
+
     }
 }

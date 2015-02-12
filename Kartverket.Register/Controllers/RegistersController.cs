@@ -52,14 +52,13 @@ namespace Kartverket.Register.Controllers
         //[Route("{documentowner}/{documentname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemname)
         {            
-
+            
             var queryResultsRegisterItem = from o in db.RegisterItems
                                          where o.seoname == itemname && o.register.seoname == registername
                                          select o.systemId;
 
             Guid systId = queryResultsRegisterItem.First();
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
-            
             return View(registerItem);
         }
         

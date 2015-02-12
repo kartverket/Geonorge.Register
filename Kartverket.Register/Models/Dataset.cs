@@ -18,7 +18,7 @@ namespace Kartverket.Register.Models
 {
 	public class Dataset : RegisterItem {
 
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [Display(Name = "Uuid")]
         public string Uuid { get; set; }

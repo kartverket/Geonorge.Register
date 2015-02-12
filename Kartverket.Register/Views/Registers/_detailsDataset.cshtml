@@ -1,54 +1,86 @@
 ﻿@model Kartverket.Register.Models.Dataset
 
-<div class="row result-row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
+<div itemscope itemtype="http://schema.org/Dataset">
+    
+    <div class="thumbnail pull-right">
+        <img src="@Model.datasetthumbnail" width="300" alt="Miniatyrbilde av @Model.name" />
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="col-sm-8">
+                @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl) && !string.IsNullOrWhiteSpace(Model.ProductSheetUrl) && !string.IsNullOrWhiteSpace(Model.ProductSpecificationUrl) && !string.IsNullOrWhiteSpace(Model.PresentationRulesUrl))
+                {
+                    <h3>Produktinformasjon</h3>
+                }
+                else{
+                    <h3>Produktinformasjon</h3>
+                    <p>Ingen informasjon lagt inn</p>
+                }
 
-            <p>Metadata: 
                 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
                 {
-                    <a href="@Model.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @Model.name"><span class="glyphicon glyphicon-globe"></span> Vis</a>
+                    <p><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> Vis metadata i metadatakatalogen</a></p>
                 }
-            </p>
-            <p>Produktark
                 @if (!string.IsNullOrWhiteSpace(Model.ProductSheetUrl))
                 {
-                    <a href="@Model.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @Model.name"><span class="glyphicon glyphicon-info-sign"></span> Hent</a>
+                    <p><a href="@Model.ProductSheetUrl" class="btn btn-fresh-blue"><span class="glyphicon glyphicon-info-sign"></span> Last ned produktark</a></p>
                 }
-            </p>
-            <p>Kartografi: 
-                @if (!string.IsNullOrWhiteSpace(Model.PresentationRulesUrl))
-                {
-                    <a href="@Model.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @Model.name"><span class="glyphicon glyphicon-picture"></span> Hent</a>
-                }
-            </p>
-            <p>Produktspesifikasjon 
                 @if (!string.IsNullOrWhiteSpace(Model.ProductSpecificationUrl))
                 {
-                    <a href="@Model.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @Model.name"><span class="glyphicon glyphicon-list-alt"></span> Hent</a>
+                    <p><a href="@Model.ProductSpecificationUrl" class="btn btn-fresh-blue"><span class="glyphicon glyphicon-list-alt"></span> Last ned produktspesfikasjon</a></p>
                 }
-            </p>
-            <p>SOSI: 
-                @if (!string.IsNullOrWhiteSpace(Model.DistributionFormat) && Model.DistributionFormat.Trim().ToLower().Equals("sosi"))
-                    {
-                    <text>ja</text>
-                    }
-                    else
-                    {
-                    <text>nei</text>
-                    }
-            </p>
-            <p>WMS: 
-                @if (!string.IsNullOrWhiteSpace(Model.WmsUrl))
+                @if (!string.IsNullOrWhiteSpace(Model.PresentationRulesUrl))
                 {
-                    <a href="@Model.WmsUrl">WMS</a>
+                    <p><a href="@Model.PresentationRulesUrl" class="btn btn-fresh-blue"><span class="glyphicon glyphicon-picture"></span> Last ned kartografi</a></p>
                 }
-            </p>
-
-
+            </div>
         </div>
-        <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 top-padding">
-            Merknader: <br/> @Model.Notes
+        <div class="col-sm-8">
+            <div class="col-sm-4">
+                @if (!string.IsNullOrWhiteSpace(Model.DistributionUrl) && !string.IsNullOrWhiteSpace(Model.DistributionFormat) && !string.IsNullOrWhiteSpace(Model.DistributionArea))
+                {
+                <h3>Distribusjon</h3>
+                }
+                else
+                {
+                    <h3>Distribusjon</h3>
+                    <p>Ingen informasjon lagt inn</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.DistributionUrl))
+                {
+                    <p><a href="@Model.DistributionUrl" class="btn btn-primary">Last ned datasett</a></p>
+                }
+                
+                @if (!string.IsNullOrWhiteSpace(Model.DistributionFormat))
+                {
+                    <p><strong> Format:</strong> @Model.DistributionFormat</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.DistributionArea))
+                {
+                    <p itemprop="spatial" itemscope itemtype="http://schema.org/Place">
+                        <strong>Område:</strong> <span itemprop="name">@Model.DistributionArea</span>
+                    </p>
+                }
+                
+            </div>
+            @if (!string.IsNullOrWhiteSpace(Model.WmsUrl))
+            {
+                <br />
+                <div class="col-sm-4">
+                    <h4>Web Map Service (WMS)</h4>
+                    <p><a href="@Model.WmsUrl">@Model.WmsUrl</a></p>
+                </div>
+            }
+        </div>
+        <div class="col-sm-8">
+            <div class="col-sm-8">
+                @if (!string.IsNullOrWhiteSpace(Model.Notes))
+                {
+                    <h3>Merknad</h3>
+                    <p>@Model.Notes</p>
+                }
+            </div>
         </div>
     </div>
 </div>

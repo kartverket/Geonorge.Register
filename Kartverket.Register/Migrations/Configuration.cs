@@ -73,7 +73,7 @@ namespace Kartverket.Register.Migrations
                 new Sorting { value = "modified", description = "Endret dato stigende"},
                 new Sorting { value = "modified_desc", description = "Endret dato synkende" },
                 new Sorting { value = "dateAccepted", description = "Godkjent dato stigende"},
-                new Sorting { value = "dateAccepted", description = "Godkjent dato synkende" }
+                new Sorting { value = "dateAccepted_desc", description = "Godkjent dato synkende" }
             );
 
 

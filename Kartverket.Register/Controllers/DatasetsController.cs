@@ -344,48 +344,6 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-        //public ActionResult CreateFromMetadata(string uuid, string register)
-        //{
-        //    var model = new Dataset();
-        //    try
-        //    {
-        //        new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-        //    }
-
-        //    ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
-        //    ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            
-        //    return View("Create", model);
-
-        //}
-
-        public ActionResult UpdateFromMetadata(Guid id, string uuid, bool dontUpdateDescription)
-        {
-            var model = db.Datasets.Find(id);
-
-            string originalDescription = model.description;
-
-            try
-            {
-                new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-            }
-            catch (Exception e)
-            {
-                TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-            }
-
-            if (dontUpdateDescription) model.description = originalDescription;
-
-            ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            return View(model);
-        }
-
-
 
         private string GetSecurityClaim(string type)
         {

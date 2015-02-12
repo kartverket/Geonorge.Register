@@ -52,8 +52,8 @@
                             else
                             {
                                 @item.description.Substring(0, 80)<text>...</text>
+                                <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
                             }
-                            @*<a href="@Url.Action("Display", "DisplayDataset", new { id = @item.Id, name=@item.ToSeoUrl()})">vis mer info</a>*@
                         </p>
                     }
                 </td>

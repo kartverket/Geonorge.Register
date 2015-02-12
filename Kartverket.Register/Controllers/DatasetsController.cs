@@ -160,10 +160,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
-            if (dataset.name == null)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navn må fylles ut!");
-            }
         }
 
         // GET: Datasets/Edit/5

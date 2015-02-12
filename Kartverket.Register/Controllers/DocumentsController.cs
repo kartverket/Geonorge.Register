@@ -387,10 +387,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
-            if (document.name == null)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navn må fylles ut!");
-            }
         }
 
         private void Viewbags(Document document)

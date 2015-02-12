@@ -454,10 +454,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
-            if (organization.name == null)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navn må fylles ut!");
-            }
         }
     }
 }

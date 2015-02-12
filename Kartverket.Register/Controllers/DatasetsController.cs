@@ -89,9 +89,9 @@ namespace Kartverket.Register.Controllers
                     TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
                 }
 
-                ViewBag.ThemeGroupId = new SelectList(db.ThemeGroup, "Id", "Name");
+                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-
+                ViewBag.registername = registername;
                 return View(model);
             }
 
@@ -343,7 +343,6 @@ namespace Kartverket.Register.Controllers
             }
             base.Dispose(disposing);
         }
-
 
         private string GetSecurityClaim(string type)
         {

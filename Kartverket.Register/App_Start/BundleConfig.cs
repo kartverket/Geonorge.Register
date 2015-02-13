@@ -29,6 +29,7 @@ namespace Kartverket.Register
                      "~/Content/navbar.css",
                      "~/Content/searchbar.css",
                      "~/Content/statusIcons.css",
+                     "~/Content/custom.css",
                      "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(

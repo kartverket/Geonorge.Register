@@ -6,6 +6,13 @@
 
 @using Kartverket.Register.Models
 
+        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+        </div>
+        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+        </div>
+<hr/>
 
 <div class="search-results">
     @foreach (Document item in Model)
@@ -14,11 +21,11 @@
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-left">
                     @{
-                        string thumb = "/Content/pdf.jpg";
-                        if (item.thumbnail != null)
-                        {
-                            thumb = item.thumbnail;
-                        }
+        string thumb = "/Content/pdf.jpg";
+        if (item.thumbnail != null)
+        {
+            thumb = item.thumbnail;
+        }
                     }
                     <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                 </div>
@@ -28,7 +35,7 @@
                             @item.name
                         </h4>
                     </a>
-                    <a class ="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
                         <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                     </a>
                     <p class=" ">
@@ -72,8 +79,19 @@
     }
 </div>
 
-<div class="text-center">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
 
-    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
 </div>
+
+
+
+
+        @*<div class="text-center">
+                
+            </div>*@

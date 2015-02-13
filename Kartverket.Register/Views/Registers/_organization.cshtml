@@ -5,6 +5,15 @@
 
 @using Kartverket.Register.Models
 
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+</div>
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+</div>
+
+<hr />
+
 <div class="search-results">
     @foreach (Organization item in Model)
     {
@@ -34,11 +43,15 @@
 
 
 </div>
-<div class="text-center">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
 
+<hr />
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+</div>
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
     @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
 </div>
+
 
 
 

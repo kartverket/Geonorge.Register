@@ -4,6 +4,15 @@
 @using PagedList;
 @using PagedList.Mvc;
 
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+</div>
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+</div>
+
+<hr />
+
 <table class="table">
     <tr>
         <th>
@@ -86,9 +95,11 @@
     }
 </table>
 <hr />
-<div class="text-center">
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
     Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
-
+</div>
+<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
     @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
 </div>
+
 

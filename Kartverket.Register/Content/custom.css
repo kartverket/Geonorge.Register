@@ -334,12 +334,7 @@
     max-width: 100%;
 }
 
-/*.search-results.organization.gallery-view .col-img{
-	overflow: hidden;
-	height: 165px;
-	padding: 0;
-	position: absolute;
-	top: 0;
+.search-results.organization.gallery-view .col-img{
 	left: 0;
 	width: 100%;
-}*/
+}

@@ -5,6 +5,12 @@
     ViewBag.Title = "Delete";
 }
 
+@section breadcrumb {
+    <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+    <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+    <li class="active">Slett</li>
+}
+
 <h2>Slett</h2>
 
 <h3>Er du sikker på at du vil slette "@Model.name"?</h3>

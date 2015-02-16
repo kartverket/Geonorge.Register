@@ -2,6 +2,7 @@ namespace Kartverket.Register.Migrations
 {
     using Kartverket.Register.Models;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -30,7 +31,10 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Experimental", description = "Utkast" },
                 new Status { value = "Deprecated", description = "Utdatert" },
                 new Status { value = "Superseded", description = "Erstattet" },
-                new Status { value = "Retired", description = "Utgått" }
+                new Status { value = "Retired", description = "Utgått" },
+                new Status { value = "Candidate", description = "Kandidat" },
+                new Status { value = "InProgress", description = "I prosess" },
+                new Status { value = "Proposal", description = "Forslag" }
             );
 
             context.requirements.AddOrUpdate(
@@ -52,9 +56,26 @@ namespace Kartverket.Register.Migrations
               new DOKTheme { value = "Geologi", description = "Geologi" },
               new DOKTheme { value = "Kyst/Fiskeri", description = "Kyst/Fiskeri" },
               new DOKTheme { value = "Samferdsel", description = "Samferdsel" },
-              new DOKTheme { value = "Basis geodata", description = "Basis geodata" }
+              new DOKTheme { value = "Basis geodata", description = "Basis geodata" },
+              new DOKTheme { value = "Natur", description = "Natur" }
 
             );
+
+            context.Sorting.AddOrUpdate(
+                //new Sorting { value = "name", description = "Navn"},
+                new Sorting { value = "name_desc", description = "Navn å-a" },
+                new Sorting { value = "submitter", description = "Innsender a-å"},
+                new Sorting { value = "submitter_desc", description = "Innsender å-a" },
+                new Sorting { value = "status", description = "Status a-å", },
+                new Sorting { value = "status_desc", description = "Status å-a" },
+                new Sorting { value = "dateSubmitted_desc", description = "Innsendt dato synkende" },
+                new Sorting { value = "dateSubmitted", description = "Innsendt dato stigende" },
+                new Sorting { value = "modified", description = "Endret dato stigende"},
+                new Sorting { value = "modified_desc", description = "Endret dato synkende" },
+                new Sorting { value = "dateAccepted", description = "Godkjent dato stigende"},
+                new Sorting { value = "dateAccepted_desc", description = "Godkjent dato synkende" }
+            );
+
 
             //Register produktspesifikasjon = new Register 
             //{ 

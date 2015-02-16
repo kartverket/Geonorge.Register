@@ -11,29 +11,58 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Kartverket.Register.Models
 {
 	public class Dataset : RegisterItem {
 
+        //public int Id { get; set; }
+
+        [Display(Name = "Uuid")]
+        public string Uuid { get; set; }
+
         [ForeignKey("datasetowner")]
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
+
+        [Display(Name = "Merknad")]
+        public string Notes { get; set; }
+
+        [Display(Name = "Produktark url")]
+        public string ProductSheetUrl { get; set; }
+
+        [Display(Name = "Presentasjonsregler url")]
+        public string PresentationRulesUrl { get; set; }
+
+        [Display(Name = "Produktspesifikasjon url")]
+        public string ProductSpecificationUrl { get; set; }
+
+        [Display(Name = "Metadata url")]
+        public string MetadataUrl { get; set; }
+
+        [Display(Name = "Distribusjonsformat")]
+        public string DistributionFormat { get; set; }
+
+        [Display(Name = "Distribusjon url")]
+        public string DistributionUrl { get; set; }
+
+        [Display(Name = "Distribusjonsområde")]
+        public string DistributionArea { get; set; }
+
+        [Display(Name = "WMS url")]
+        public string WmsUrl { get; set; }
+
+        [Display(Name = "Tema:")]
+        [ForeignKey("theme")]
+        public string ThemeGroupId { get; set; }        
         public virtual DOKTheme theme { get; set; }
+
+        [Display(Name = "Miniatyrbilde")]
         public string datasetthumbnail { get; set; }
-        public string productsheet { get; set; }
-        public string presentationRules { get; set; }
-        public string productspesification { get; set; }
-        public string metadata { get; set; }
-        public string distributionFormat { get; set; }
-        public string distributionUri { get; set; }
-        public string distributionArea { get; set; }
-        public string wmsUrl { get; set; }
-        public string metadataUuid { get; set; }
-
-		
-
+       
+                   
 	}//end Dataset
 
 }//end namespace Datamodell

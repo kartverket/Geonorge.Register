@@ -10,6 +10,7 @@ namespace Kartverket.Register.Models.ViewModels
     {
 
         public string Text { get; set; }
+        public string Register { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
         public int NumFound { get; set; }
@@ -19,6 +20,7 @@ namespace Kartverket.Register.Models.ViewModels
         public SearchViewModel(SearchParameters parameters, SearchResult searchResult)
         {
             Text = parameters.Text;
+            Register = parameters.Register;
             Result = new SearchResultViewModel(searchResult);
             Limit = searchResult.Limit;
             Offset = searchResult.Offset;
@@ -49,6 +51,7 @@ namespace Kartverket.Register.Models.ViewModels
         private RouteValueDictionary CreateLinkWithParameters(RouteValueDictionary routeValues, int index = 0)
         {
             routeValues["text"] = Text;
+            routeValues["register"] = Register;
 
             return routeValues;
         }

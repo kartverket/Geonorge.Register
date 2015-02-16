@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -86,6 +86,12 @@
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -177,6 +183,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CodelistValuesController.cs" />
+    <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
@@ -313,15 +320,27 @@
     <Compile Include="Migrations\201501231533153_UpdateSubmitterId.Designer.cs">
       <DependentUpon>201501231533153_UpdateSubmitterId.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201501300859288_UpdateSubmitter.cs" />
-    <Compile Include="Migrations\201501300859288_UpdateSubmitter.Designer.cs">
-      <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>
+    <Compile Include="Migrations\201501301606016_add-dokregister.cs" />
+    <Compile Include="Migrations\201501301606016_add-dokregister.Designer.cs">
+      <DependentUpon>201501301606016_add-dokregister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502032357567_transferDokToRegister.cs" />
+    <Compile Include="Migrations\201502032357567_transferDokToRegister.Designer.cs">
+      <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.cs" />
+    <Compile Include="Migrations\201502051017299_UpdateStatusId.Designer.cs">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
+ <Compile Include="Migrations\201501300859288_UpdateSubmitter.cs" />
+    <Compile Include="Migrations\201501300859288_UpdateSubmitter.Designer.cs">
+      <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>    
+</Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\Api\Item.cs" />
@@ -360,6 +379,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\gsdll32.dll">
+	<Content Include="Content\custom.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />
@@ -418,6 +440,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\visninger.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -444,9 +467,16 @@
     <Content Include="Views\Registers\_organization.cshtml" />
     <Content Include="Views\Registers\_dataset.cshtml" />
     <Content Include="Views\Registers\_epsg.cshtml" />
+    <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
+    <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
+    <Content Include="Views\Registers\DetailsEPSG.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Registers\EditDocument.cshtml" />
+    <Content Include="Views\Registers\EditEpsg.cshtml" />
+    <Content Include="Views\Registers\EditSubregister.cshtml" />
+    <Content Include="Views\Registers\EditDataset.cshtml" />
     <Content Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -487,9 +517,18 @@
     <Content Include="Views\Registers\_detailsDocuments.cshtml" />
     <Content Include="Views\Registers\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
+    <Content Include="Views\Shared\_Analytics.cshtml" />
+    <Content Include="Views\Datasets\Create.cshtml" />
+    <Content Include="Views\Datasets\Delete.cshtml" />
+    <Content Include="Views\Datasets\Details.cshtml" />
+    <Content Include="Views\Datasets\Edit.cshtml" />
+    <Content Include="Views\Datasets\Index.cshtml" />
+    <Content Include="Views\Registers\_detailsDataset.cshtml" />
+    <Content Include="Views\Shared\_visningstyper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -585,6 +624,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501231533153_UpdateSubmitterId.resx">
       <DependentUpon>201501231533153_UpdateSubmitterId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501301606016_add-dokregister.resx">
+      <DependentUpon>201501301606016_add-dokregister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502032357567_transferDokToRegister.resx">
+      <DependentUpon>201502032357567_transferDokToRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502051017299_UpdateStatusId.resx">
+      <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201501300859288_UpdateSubmitter.resx">
       <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>

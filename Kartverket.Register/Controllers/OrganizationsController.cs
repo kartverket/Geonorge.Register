@@ -137,6 +137,8 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
         {
+            ValidationName(organization);
+            
             if (ModelState.IsValid)
             {
 
@@ -181,9 +183,10 @@ namespace Kartverket.Register.Controllers
 
                 db.Entry(organization).State = EntityState.Modified;
                 db.SaveChanges();
+                return Redirect("/register/organisasjoner");
             }
 
-            return Redirect("/register/organisasjoner");
+            return View(organization);
         }
 
 
@@ -196,27 +199,32 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.Organizations
-                                            where o.seoname == orgnavn
-                                            select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.Organizations
+                                               where o.seoname == orgnavn
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
-            {
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
+                if (organization == null)
+                {
+                    return HttpNotFound();
+                }
+                Viewbags(organization);
                 return View(organization);
             }
             return HttpNotFound();
+        }
+
+        private void Viewbags(Kartverket.Register.Models.Organization organization)
+        {
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
         }
 
 
@@ -234,6 +242,15 @@ namespace Kartverket.Register.Controllers
                                            where o.seoname == orgnavn
                                            select o.systemId;
             Guid systId = queryResultsOrganisasjon.First();
+            Organization originalOrganization = db.Organizations.Find(systId);
+            var queryResultsDataset = from o in db.Organizations
+                                      where o.name == organization.name && o.systemId != organization.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
 
             if (ModelState.IsValid)
             {
@@ -272,16 +289,28 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
                 }
+                if (organization.statusId != null)
+                {
+                    if (organization.statusId == "Accepted" && originalOrganization.statusId != "Accepted")
+                    {
+                        originalOrganization.dateAccepted = DateTime.Now;
+                    }
+                    if (originalOrganization.statusId == "Accepted" && organization.statusId != "Accepted")
+                    {
+                        originalOrganization.dateAccepted = null;
+                    }
+                    originalOrganization.statusId = organization.statusId;
+                }
 
                 originalOrganization.modified = DateTime.Now;
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
-                ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
+                Viewbags(organization);
                 
                 return Redirect("/register/organisasjoner/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);                
             }
-            return RedirectToAction("Edit");
+            Viewbags(organization);
+            return View(originalOrganization);
         }
 
         // GET: Organizations/Delete/5
@@ -294,23 +323,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.Organizations
-                                            where o.seoname == orgname
-                                            select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.Organizations
+                                               where o.seoname == orgname
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Organization organization = db.Organizations.Find(systId);
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
-            {
-            return View(organization);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Organization organization = db.Organizations.Find(systId);
+                if (organization == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(organization);
             }
             return HttpNotFound();
         }
@@ -420,6 +449,18 @@ namespace Kartverket.Register.Controllers
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
             file.SaveAs(path);
             return filename;
+        }
+
+        private void ValidationName(Organization organization)
+        {
+            var queryResultsDataset = from o in db.Organizations
+                                      where o.name == organization.name && o.systemId != organization.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
         }
     }
 }

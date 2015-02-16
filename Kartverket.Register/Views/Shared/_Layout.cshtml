@@ -22,8 +22,12 @@
     </title>
     @RenderSection("head", false)
     @Styles.Render("~/Content/css")
+    
+    @Html.Partial("_Analytics")
+
 </head>
-<body class="geonorge-container prototype  geonorge">
+
+<body class="geonorge-container prototype  geonorge " onload="valgtVisningstype()">
     <div id="logo-on-sm">
         <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
     </div>
@@ -117,6 +121,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", false)
 </body>
 </html>

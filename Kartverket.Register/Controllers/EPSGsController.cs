@@ -71,6 +71,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(EPSG epsg)
         {
+            ValidationName(epsg);
 
             if (ModelState.IsValid)
             {
@@ -81,7 +82,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 var queryResultsRegister = from o in db.Registers
-                                           where o.name == "epsg"
+                                           where o.name == "EPSG koder"
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
 
@@ -114,10 +115,10 @@ namespace Kartverket.Register.Controllers
                 db.Entry(epsg).State = EntityState.Modified;
 
                 db.SaveChanges();
-
+                return Redirect("/register/epsg-koder");
             }
 
-            return Redirect("/register/epsg-koder");
+            return View(epsg);
         }
 
         // GET: EPSGs/Edit/5
@@ -129,28 +130,24 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResultsEpsg = from o in db.EPSGs
-                                    where o.seoname == epsgname
-                                    select o.systemId;
-            Guid systId = queryResultsEpsg.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsEpsg = from o in db.EPSGs
+                                       where o.seoname == epsgname
+                                       select o.systemId;
+                Guid systId = queryResultsEpsg.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EPSG ePSG = db.EPSGs.Find(systId);
-            if (ePSG == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
-            {
-                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
-                ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-                ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-                ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                EPSG ePSG = db.EPSGs.Find(systId);
+                if (ePSG == null)
+                {
+                    return HttpNotFound();
+                }
+
+                Viewbags(ePSG);
                 return View(ePSG);
             }
             return HttpNotFound();
@@ -171,6 +168,9 @@ namespace Kartverket.Register.Controllers
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
+            EPSG epsg = db.EPSGs.Find(systId);
+
+            ValidationName(ePSG);
 
             if (ModelState.IsValid)
             {
@@ -189,24 +189,34 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.nationalRequirementDescription != null) originalEPSG.nationalRequirementDescription = ePSG.nationalRequirementDescription;
                 if (ePSG.nationalSeasRequirementId != null) originalEPSG.nationalSeasRequirementId = ePSG.nationalSeasRequirementId;
                 if (ePSG.nationalSeasRequirementDescription != null) originalEPSG.nationalSeasRequirementDescription = ePSG.nationalSeasRequirementDescription;
+                if (ePSG.statusId != null)
+                {
+                    if (ePSG.statusId == "Accepted" && originalEPSG.statusId != "Accepted")
+                    {
+                        originalEPSG.dateAccepted = DateTime.Now;
+                    }
+                    if (originalEPSG.statusId == "Accepted" && ePSG.statusId != "Accepted")
+                    {
+                        originalEPSG.dateAccepted = null;
+                    }
+                    originalEPSG.statusId = ePSG.statusId;
+                }
 
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();
 
-                //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", ePSG.registerId);
-                ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-                ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
-                ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-                ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-                ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-
+                Viewbags(ePSG);
                 return Redirect("/register/epsg-koder/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);        
 
             }
             
-            return Redirect("/register/epsg-koder");
+            Viewbags(ePSG);
+            
+            return View(epsg);
         }
+
+        
 
         // GET: EPSGs/Delete/5
         [Authorize]
@@ -217,22 +227,22 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.EPSGs
-                                            where o.seoname == epsgname
-                                            select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            if (role == "nd.metadata_admin" || user == registerOwner)
+            {
+                var queryResultsOrganisasjon = from o in db.EPSGs
+                                               where o.seoname == epsgname
+                                               select o.systemId;
+                Guid systId = queryResultsOrganisasjon.First();
 
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EPSG ePSG = db.EPSGs.Find(systId);
-            if (ePSG == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
-            {
+                if (systId == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                EPSG ePSG = db.EPSGs.Find(systId);
+                if (ePSG == null)
+                {
+                    return HttpNotFound();
+                }
 
                 return View(ePSG);
             }
@@ -325,6 +335,27 @@ namespace Kartverket.Register.Controllers
             encodedUrl = encodedUrl.Trim('-');
 
             return encodedUrl;
+        }
+
+        private void Viewbags(EPSG ePSG)
+        {
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
+            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
+            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
+            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+        }
+        
+        private void ValidationName(EPSG epsg)
+        {
+            var queryResultsDataset = from o in db.EPSGs
+                                      where o.name == epsg.name && o.systemId != epsg.systemId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
         }
 
 

@@ -29,7 +29,11 @@ namespace Kartverket.Register
                      "~/Content/navbar.css",
                      "~/Content/searchbar.css",
                      "~/Content/statusIcons.css",
+                     "~/Content/custom.css",
                      "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
+                "~/Scripts/visninger.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

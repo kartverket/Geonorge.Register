@@ -22,5 +22,6 @@ namespace Kartverket.Register.Models
         public string RegisteItemUrl { get; set; }
         public string Submitter { get; set; }
         public string Shortname { get; set; }
+        public string DatasetOwner { get; set; }
     }
 }

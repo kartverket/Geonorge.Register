@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models
             Limit = 10;
         }
 
+        public string Register { get; set; }
         public string Text { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }

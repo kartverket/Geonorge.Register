@@ -1,66 +1,112 @@
 ﻿@model Kartverket.Register.Models.Register
 ﻿@using Kartverket.Register.Helpers
+@using PagedList;
 
 @{
     ViewBag.Title = @Model.name;
 }
 
-@section breadcrumb {
-    <li class="active">@Html.DisplayFor(model => model.name)</li>
-}
-<div class="page-header">
-    <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
-    <hr>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
-        ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
+    @{
+        ViewBag.Title = @Model.name;
+    }
 
-        <p>
-            @Html.DisplayFor(model => model.description)
-        </p>
+    @section breadcrumb {
+        <li class="active">@Html.DisplayFor(model => model.name)</li>
+    }
 
+    <div class="page-header">
+        <h2 class="h-md" id="registerName">@Html.DisplayFor(model => model.name)</h2>
+        <hr>
     </div>
-    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
-        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
-    </div>
-
-
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="page-header">
-            <hr>
+        <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+            ID: <a href="/register/@Model.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
+            <p>
+                @Html.DisplayFor(model => model.description)
+            </p>
+
+        </div>
+        <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
+            <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
+            <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
         </div>
 
+        @{
+            var page = ViewBag.page;
+            var currentFilter = ViewBag.currentFilter;
+            var sortering = Model.items.OrderBy(o => o.name).ToList();
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
 
-        @if (Model.containedItemClass == "Organization")
-        {
-            @Html.Partial("_organization", Model.items.OrderBy(i => i.name).ToList())
-        }
-        @if (Model.containedItemClass == "Document")
-        {
-            @Html.Partial("_documents", Model.items.OrderBy(i => i.name).ToList())
-        }
-        @if (Model.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_dataset", Model.items.OrderBy(i => i.name).ToList())
-        }
-        @if (Model.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_epsg", Model.items.OrderBy(i => i.name).ToList())
-        }
-        @if (Model.containedItemClass == "Register")
-        {
-            @Html.Partial("_subregister", Model.subregisters.OrderBy(i => i.name).ToList())
+            if (ViewBag.SortOrder == "name_desc")
+            {
+                sortering = Model.items.OrderBy(o => o.register.name).ToList();
+            }
+            if (ViewBag.SortOrder == "submitter")
+            {
+                sortering = Model.items.OrderBy(o => o.submitter.name).ToList();
+            }
+            if (ViewBag.SortOrder == "submitter_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.submitter.name).ToList();
+            }    
+            else if (ViewBag.SortOrder == "status")
+            {
+                sortering = Model.items.OrderBy(o => o.status.description).ToList();
+            }
+            else if (ViewBag.SortOrder == "status_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.status.description).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateSubmitted")
+            {
+                sortering = Model.items.OrderBy(o => o.dateSubmitted).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateSubmitted_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.dateSubmitted).ToList();
+            }
+            else if (ViewBag.SortOrder == "modified")
+            {
+                sortering = Model.items.OrderBy(o => o.modified).ToList();
+            }
+            else if (ViewBag.SortOrder == "modified_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.modified).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateAccepted")
+            {
+                sortering = Model.items.OrderBy(o => o.dateAccepted).ToList();
+            }
+            else if (ViewBag.SortOrder == "dateAccepted_desc")
+            {
+                sortering = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
+            }
         }
 
-    </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class=" page-header">
+                <hr>
+            </div>
 
-    <hr />
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p>
-           
-            @Html.ActionLink("Tilbake", "Index")
+            @*<div class="col-md-12 ">
+                <div class="">
+                    <ul class="nav nav-pills pull-left">
+                        <li><a onclick="listView()" id="button-listView" name="liste" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
+                        <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                        <li><a onclick="tableView()" id="button-tableView" name="tabell" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
+                    </ul>
+                    <div class="pagination pagination-sm pull-right">
+                        <form action="/register/@Model.seoname" name="sortering" method="get">
+                            <div class="pull-right" onchange="SortBy()">
+                                Sorter: @Html.DropDownList("sorting", "Navn a-å")
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <br />
+            </div>*@
+   
 
             @if (Request.IsAuthenticated)
             {
@@ -86,8 +132,17 @@
                     {
 
                     }
-                }    
-            }        
-        </p>
+                }
+            </p>
+        </div>
     </div>
-</div>
+
+
+@*<script>
+        function SortBy(sort) {
+            var sort = document.getElementById("sorting");
+            var selected = sort.options[sort.selectedIndex].text;
+            document.sortering.submit();
+            localStorage['SortingType'] = selected;
+        }
+    </script>*@

@@ -24,6 +24,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Requirement> requirements { get; set; }
         public DbSet<Kartverket.DOK.Models.DokDataset> DokDatasets { get; set; }
         public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
+        public virtual DbSet<Sorting> Sorting { get; set; }
         //public virtual DbSet<InspireRequirement> inspireRequirements { get; set; }
         //public virtual DbSet<NationalRequirement> NationalRequirements { get; set; }
         //public virtual DbSet<NationalSeasRequirement> NationalSeasRequirements { get; set; }

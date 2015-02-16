@@ -3,13 +3,18 @@
 
 @{
     ViewBag.Title = UI.CreateNew;
+    var registername = ViewBag.registername;
+}
+
+@section breadcrumb {
+    <li>Dokument</li>
+    <li class="active">Ny</li>
 }
 
 <h2>Foreslå nytt dokument</h2>
 
 @using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @*@Html.AntiForgeryToken()*@
 
     <div class="form-horizontal">
         @*<h4>Document</h4>*@
@@ -19,7 +24,7 @@
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                @Html.ValidationMessage("ErrorMessage")
             </div>
         </div>
 
@@ -129,9 +134,11 @@
 }
 <div>
     
-    @*<a href="/register/@Model.register.name">Tilbake</a>*@ 
+    <a href="/register/@registername/">Tilbake</a>
 
 </div>
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

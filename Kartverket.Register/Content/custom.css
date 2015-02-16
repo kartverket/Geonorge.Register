@@ -309,8 +309,6 @@
 	width: 50%;
 }
 
-
-
 .search-results.organization.gallery-view .col-img, .search-results.organization.gallery-view .col-title {
 	height: 188px;
 }
@@ -328,7 +326,7 @@
 }
 
 .search-results.organization.gallery-view .col-img img {
-    min-width: 50%;
+    min-width: 30%;
     min-height: 50%;
     max-height: 100%;
     max-width: 100%;
@@ -337,5 +335,5 @@
 .search-results.organization.gallery-view .col-img {
 	left: 0;
 	width: 100%;
-    padding-top: 35px;
+    padding-top: 30px;
 }

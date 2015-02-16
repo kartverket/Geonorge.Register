@@ -1,14 +1,29 @@
-﻿<script>
+﻿@*<script>
             function SortBy(sort) {
                 var sort = document.getElementById("sorting");
                 var selected = sort.options[sort.selectedIndex].text;
+                //localStorage['SortingType'] = selected;
+
+                var visningstype = localStorage.getItem("visningstype");
+                
+                //if (visningstype.toString() == "galleri") { galleryView() }
+                //if (visningstype.toString() == "liste") { listView() }
+                //if (visningstype.toString() == "tabell") { tableView() }
+
                 document.sortering.submit();
-                localStorage['SortingType'] = selected;
+
             }
-</script>
+            
+            function valgtVisningstype() {
+                if (visningstype.toString() == "galleri") { galleryView() }
+                if (visningstype.toString() == "liste") { listView() }
+                if (visningstype.toString() == "tabell") { tableView() }
+            }
+</script>*@
+
 
 @{
-    var register = ViewBag.register;
+    var register = ViewBag.register;        
     
 }
 
@@ -30,6 +45,7 @@
             </ul>
         </div>
     </div>
+
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         <div class="pagination pagination-sm pull-right">
             <form action="/register/@register" name="sortering" method="get">

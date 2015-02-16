@@ -10,6 +10,9 @@
     $('.search-results').removeClass('table-view');
     $('.search-results').removeClass('gallery-view');
     $('.search-results').addClass('list-view');
+
+    localStorage.setItem("visningstype", "liste");
+
 }
 
  function galleryView()
@@ -24,6 +27,9 @@
     $('.search-results').removeClass('table-view');
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('gallery-view');
+
+    localStorage.setItem("visningstype", "galleri");
+    
 }
 
 
@@ -49,5 +55,24 @@ function tableView()
             $(".kartkatalog-table-heading").css("z-index", "400");
         }
     });
+
+    localStorage.setItem("visningstype", "tabell");
+
+}
+
+function SortBy(sort) {
+    var sort = document.getElementById("sorting");
+    var selected = sort.options[sort.selectedIndex].text;
+    localStorage.setItem("sortering", selected);
+    document.sortering.submit();
+
+}
+
+function valgtVisningstype() {
+    var visningstype = localStorage.getItem("visningstype");
+
+    if (visningstype.toString() == "galleri") { galleryView() }
+    if (visningstype.toString() == "liste") { listView() }
+    if (visningstype.toString() == "tabell") { tableView() }
 }
 

@@ -334,7 +334,8 @@
     max-width: 100%;
 }
 
-.search-results.organization.gallery-view .col-img{
+.search-results.organization.gallery-view .col-img {
 	left: 0;
 	width: 100%;
+    padding-top: 35px;
 }

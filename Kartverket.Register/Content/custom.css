@@ -326,3 +326,20 @@
 .search-results.organization.gallery-view .col-img img{
 	padding-bottom: 50px;
 }
+
+.search-results.organization.gallery-view .col-img img {
+    min-width: 50%;
+    min-height: 50%;
+    max-height: 100%;
+    max-width: 100%;
+}
+
+/*.search-results.organization.gallery-view .col-img{
+	overflow: hidden;
+	height: 165px;
+	padding: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}*/

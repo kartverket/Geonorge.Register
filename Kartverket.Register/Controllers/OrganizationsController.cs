@@ -254,7 +254,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                Organization originalOrganization = db.Organizations.Find(systId);
+                //Organization originalOrganization = db.Organizations.Find(systId);
 
                 if (organization.name != null)
                 {

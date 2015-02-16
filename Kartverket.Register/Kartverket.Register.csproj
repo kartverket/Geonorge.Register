@@ -331,6 +331,7 @@
     <Compile Include="Migrations\201502051017299_UpdateStatusId.cs" />
     <Compile Include="Migrations\201502051017299_UpdateStatusId.Designer.cs">
       <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
+    </Compile>
  <Compile Include="Migrations\201501300859288_UpdateSubmitter.cs" />
     <Compile Include="Migrations\201501300859288_UpdateSubmitter.Designer.cs">
       <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>    
@@ -378,7 +379,7 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\gsdll32.dll">
+    <Content Include="bin\gsdll32.dll"></Content>
 	<Content Include="Content\custom.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="lib\gsdll32.dll">

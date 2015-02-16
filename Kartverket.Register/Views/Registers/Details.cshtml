@@ -32,7 +32,7 @@
             var page = ViewBag.page;
             var currentFilter = ViewBag.currentFilter;
             var sortering = Model.items.OrderBy(o => o.name).ToList();
-            int pageSize = 3;
+            int pageSize = 50;
             int pageNumber = (page ?? 1);
 
             if (ViewBag.SortOrder == "name_desc")

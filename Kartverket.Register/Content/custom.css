@@ -318,3 +318,11 @@
 .search-results.organization.gallery-view .result-row{
 	margin-bottom: 30px;
 }
+
+.search-results.organization.gallery-view .col-title{
+	padding: 125px 10px 0 10px;
+}
+
+.search-results.organization.gallery-view .col-img img{
+	padding-bottom: 50px;
+}

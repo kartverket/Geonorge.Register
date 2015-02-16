@@ -1,3 +1,66 @@
+#autocomplete{
+	background: none;
+}
+
+.search-filter-wrapper {
+	padding: 0px 0px 40px;
+}
+
+.search-filter-wrapper>.nav-tabs{
+	border-bottom: none;
+}
+
+.view-navigation{
+	padding-left: 0!important;
+	padding-right: 0!important;
+	margin-bottom: 20px;
+}
+
+.search-filter-wrapper ul {
+	padding-right: 0!important;
+}
+
+.view-navigation .pagination{
+	margin: 5px 0;
+}
+
+.view-navigation .nav-pills>li:hover, .view-navigation .pagination > li:hover{
+	cursor: pointer;
+}
+
+.view-navigation .nav-pills>li>a {
+	padding: 5px 7px;
+	margin-top: 4px;
+	font-size: 11px;
+	line-height: 1em;
+}
+
+.view-navigation .nav-pills>li>a.active {
+	background-color: #337AB7;
+	color: #FFF;
+
+}
+
+.view-navigation .pagination > li > a, .view-navigation .pagination > li > span{
+	line-height: 1em;
+}
+
+.view-navigation .pagination-sm > li > a, .view-navigation .pagination-sm > li > span{
+	font-size: 11px;
+	padding: 5px 6px;
+}
+
+.col-actions .btn{
+	color: #337AB7;
+}
+
+
+.col-actions .btn[disabled]{
+	color: #ccc;
+}
+
+
+
 /* ---- Gallery view ---- */
 .search-results.gallery-view .result-row{
 	width: 33%;
@@ -6,7 +69,7 @@
 	box-shadow: none;
 	margin: 0;
 	float: left;
-	height: 175px;
+	height: 190px;
 	border: 10px solid white;
 }
 
@@ -41,7 +104,7 @@
 	z-index: 200;
 	padding: 6px;
 	border: 1px solid #249446;
-	font-size: 15px;
+	font-size: 16px!important;
 	-webkit-transition: all .3s; /* For Safari 3.1 to 6.0 */
     transition: all .3s;
 }
@@ -69,7 +132,7 @@
 .search-results.gallery-view .col-img img{
 	min-width: 100%;
 	min-height: 100%;
-	max-height: 130%;
+	max-height: 160%;
 }
 
 .search-results.gallery-view .col-actions{
@@ -118,7 +181,7 @@
 
 .search-results.table-view .kartkatalog-table-heading{
 	padding: 0;
-	border-bottom: 4px solid #249446;
+	border-bottom: 2px solid #249446;
 	margin-bottom: 20px;
 }
 
@@ -160,6 +223,51 @@
 
 }
 
-.search-filter-wrapper .pagination{
-	margin: 5px 0;
+
+
+
+
+
+.search-results.document.gallery-view .result-row {
+	width: 25%;
+}
+
+.search-results.table-view .peoduktark-table-heading{
+	padding: 0;
+	border-bottom: 2px solid #8C4799;
+}
+
+.search-results.document.gallery-view .col-title h4 {
+	border: 1px solid #8C4799;
+
+}
+
+.search-results.document.gallery-view .col-title:hover h4{
+	background-color: #8C4799;
+}
+
+.search-results.document.table-view .col-actions:nth-child(3) {
+	width: 6.25%;
+}
+
+.search-results.document.table-view .col-actions:nth-child(4) {
+	width: 18.75%;
+}
+
+.search-results.document.table-view .col-actions .status, .search-results.document.table-view .col-actions .reference{
+	display: none;
+}
+
+.search-results.document.table-view .col-actions .status-value, .search-results.document.table-view .col-actions .reference-value{
+	width: 50%;
+}
+
+
+
+.search-results.document.gallery-view .col-img, .search-results.document.gallery-view .col-title {
+	height: 200px;
+}
+
+.search-results.document.gallery-view .result-row{
+	margin-bottom: 30px;
 }

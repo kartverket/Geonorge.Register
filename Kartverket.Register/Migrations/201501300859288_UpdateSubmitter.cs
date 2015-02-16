@@ -16,21 +16,21 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResults = from r in db.Documents
-                               select r.systemId;
+            //var queryResults = from r in db.Documents
+            //                   select r.systemId;
 
-            List<Guid> systId = queryResults.ToList();
+            //List<Guid> systId = queryResults.ToList();
 
-            foreach (Guid item in systId)
-            {
-                Document document = db.Documents.Find(item);
-                Guid documentOwner = document.documentownerId;
+            //foreach (Guid item in systId)
+            //{
+            //    Document document = db.Documents.Find(item);
+            //    Guid documentOwner = document.documentownerId;
 
-                Sql("UPDATE RegisterItems SET submitterId = '" + documentOwner + "' WHERE  (systemId = '" + item.ToString() + "')");
+            //    Sql("UPDATE RegisterItems SET submitterId = '" + documentOwner + "' WHERE  (systemId = '" + item.ToString() + "')");
 
-            }
+            //}
         }
         
         public override void Down()

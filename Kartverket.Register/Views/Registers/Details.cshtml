@@ -28,21 +28,11 @@
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
         </div>
 
-        <script>
-            function SortBy(sort) {
-                var sort = document.getElementById("sorting");
-                var selected = sort.options[sort.selectedIndex].text;
-                document.sortering.submit();
-                localStorage['SortingType'] = selected;
-            }
-
-        </script>
-
         @{
             var page = ViewBag.page;
             var currentFilter = ViewBag.currentFilter;
             var sortering = Model.items.OrderBy(o => o.name).ToList();
-            int pageSize = 50;
+            int pageSize = 3;
             int pageNumber = (page ?? 1);
 
             if (ViewBag.SortOrder == "name_desc")
@@ -96,12 +86,12 @@
                 <hr>
             </div>
 
-            <div class="col-md-12 ">
+            @*<div class="col-md-12 ">
                 <div class="">
                     <ul class="nav nav-pills pull-left">
-                        <li><a onclick="listView()" id="button-listView" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
-                        <li><a onclick="galleryView()" id="button-galleryView" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
-                        <li><a onclick="tableView()" id="button-tableView" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
+                        <li><a onclick="listView()" id="button-listView" name="liste" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
+                        <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                        <li><a onclick="tableView()" id="button-tableView" name="tabell" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
                     </ul>
                     <div class="pagination pagination-sm pull-right">
                         <form action="/register/@Model.seoname" name="sortering" method="get">
@@ -112,9 +102,8 @@
                     </div>
                 </div>
                 <br />
-            </div>
-    
-            <br/>
+            </div>*@
+   
 
             @if (Model.containedItemClass == "Organization")
             {
@@ -169,3 +158,13 @@
             </p>
         </div>
     </div>
+
+
+@*<script>
+        function SortBy(sort) {
+            var sort = document.getElementById("sorting");
+            var selected = sort.options[sort.selectedIndex].text;
+            document.sortering.submit();
+            localStorage['SortingType'] = selected;
+        }
+    </script>*@

@@ -14,6 +14,15 @@
     <li class="active">@Html.DisplayFor(model => model.ElementAt(0).documentowner.name)</li>
 }
 
+<script>
+    function SortBy(sort) {
+        var sort = document.getElementById("sorting");
+        var selected = sort.options[sort.selectedIndex].text;
+        document.sortering.submit();
+        localStorage['SortingType'] = selected;
+    }
+</script>
+
 
 
 <div class="page-header">
@@ -39,40 +48,42 @@
             <hr>
         </div>
 
-        <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
-            <div class="btn-group">
-                <a onclick="listView()" id="button-listView" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a>
-                <a onclick="galleryView()" id="button-galleryView" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a>
-                <a onclick="tableView()" id="button-tableView" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+                <br /><br />
             </div>
-        </div>
-
-        <script>
-            function SortBy(sort) {
-                var sort = document.getElementById("sorting");
-                var selected = sort.options[sort.selectedIndex].text;
-                document.sortering.submit();
-                localStorage['SortingType'] = selected;
-            }
-        </script>
-
-        <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).documentowner.seoname" name="sortering" method="get">
-            <div class="pull-right" onchange="SortBy()">
-                Sorter: @Html.DropDownList("sorting", "Navn a-å")
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
             </div>
+
+
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="">
+                    <ul class="nav nav-pills text-center">
+                        <li><a onclick="listView()" id="button-listView" name="liste" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
+                        <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                        <li><a onclick="tableView()" id="button-tableView" name="tabell" class=""><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="pagination pagination-sm pull-right">
+                    <form action="/register/@Model.ElementAt(0).register.seoname/@Model.ElementAt(0).documentowner.seoname" name="sortering" method="get">
+                        <div class="pull-right" onchange="SortBy()">
+                            Sorter: @Html.DropDownList("sorting", "Navn a-å")
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
             <br />
-        </form>
 
-        <br/>
+            <br /><br />
 
-        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+            <hr />
         </div>
-        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
-        </div>
-        <br/>
-        <hr />
 
         <div class="search-results">
             @foreach (Document item in Model)

@@ -4,16 +4,18 @@
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
 
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+        <br /><br />
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
 
 
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    @Html.Partial("_visningstyper")
 </div>
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
-</div>
-
-<hr />
 
 <table class="table table-striped table-bordered" style="background-color: white">
     <thead>

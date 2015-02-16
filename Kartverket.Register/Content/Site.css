@@ -67,5 +67,9 @@ ul.search-results {
     float: right !important;
 }
 
+.nav > li > a {
+    padding: 0px 15px;
+}
+
 
 /*# sourceMappingURL=page-footer.css.map *

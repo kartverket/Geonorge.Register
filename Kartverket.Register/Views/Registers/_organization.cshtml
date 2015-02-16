@@ -18,26 +18,25 @@
     @Html.Partial("_visningstyper")
 </div>
 
-<div class="search-results">
+<div class="organization search-results">
     @foreach (Organization item in Model)
     {
-
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-left">
                     <a href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname"><img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="img-responsive center-block pull-left" alt="logo @item.name" /></a>
                 </div>
 
-                <div class="col-no-padding-xs col-xs-9 col-sm-9 col-md-9 col-lg-9col-title">
+                <div class="col-no-padding-xs col-xs-9 col-sm-9 col-md-9 col-lg-9 col-title">
                     <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">
                         <h4 class="role-button" role="button">
                             @Html.DisplayFor(modelItem => item.name)
                         </h4>
-                    </a>                    
-                    <p class="">
+                    </a>
+                    <p class="col-actions">
                         Org.nr: @Html.DisplayFor(modelItem => item.number)
                     </p>
-                    <p class="">
+                    <p class="col-title">
                         @Html.DisplayFor(modelItem => item.description)
                     </p>
                 </div>

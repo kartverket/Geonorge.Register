@@ -179,7 +179,7 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower())
             {
                 Viewbags(document);
-		return View(document);
+		        return View(document);
             }
             return HttpNotFound();
         }

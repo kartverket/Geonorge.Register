@@ -199,22 +199,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgnavn
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgnavn
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
                 Viewbags(organization);
                 return View(organization);
             }
@@ -323,22 +324,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
                 return View(organization);
             }
             return HttpNotFound();

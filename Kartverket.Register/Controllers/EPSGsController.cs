@@ -130,23 +130,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            
+            var queryResultsEpsg = from o in db.EPSGs
+                                    where o.seoname == epsgname
+                                    select o.systemId;
+            Guid systId = queryResultsEpsg.First();
+
+            if (systId == null)
             {
-                var queryResultsEpsg = from o in db.EPSGs
-                                       where o.seoname == epsgname
-                                       select o.systemId;
-                Guid systId = queryResultsEpsg.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
                 Viewbags(ePSG);
                 return View(ePSG);
             }
@@ -227,23 +227,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                            where o.seoname == epsgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
+
+            if (systId == null)
             {
-                var queryResultsOrganisasjon = from o in db.EPSGs
-                                               where o.seoname == epsgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
                 return View(ePSG);
             }
             return HttpNotFound();

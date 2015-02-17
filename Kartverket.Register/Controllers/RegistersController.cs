@@ -48,6 +48,98 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
+        // TEST datasetvisning
+
+        [Route("register/dataset/{name}/datasetTest")]
+        public ActionResult NyDetailsDataset(string name, string sorting, int? page)
+        {
+
+            var queryResults = from o in db.Registers
+                               where o.name == name || o.seoname == name
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            if (register.containedItemClass == "Dataset") {
+                
+                var queryResultsTest = from d in db.Datasets
+                                       select d.systemId;
+                List<Guid> datasetsID = queryResultsTest.ToList();
+                List<Dataset> datasets = new List<Dataset>();
+
+                ViewBag.page = page;
+                ViewBag.sortOrder = sorting;
+                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+
+                foreach (Guid item in datasetsID)
+                {
+                    Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(item);
+                    datasets.Add(dataset);
+ 
+                }
+                int pageSize = 50;
+                int pageNumber = (page ?? 1);
+
+                datasets.OrderBy(d => d.name);
+
+                if (sorting == "name_desc")
+                {
+                    return View(datasets.OrderBy(o => o.name).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                if (sorting == "submitter")
+                {
+                    return View(datasets.OrderBy(o => o.submitter.name).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                if (sorting == "submitter_desc")
+                {
+                    return View(datasets.OrderByDescending(o => o.submitter.name).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "status")
+                {
+                    return View(datasets.OrderBy(o => o.description).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "status_desc")
+                {
+                    return View(datasets.OrderByDescending(o => o.description).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "dateSubmitted")
+                {
+                    return View(datasets.OrderBy(o => o.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "dateSubmitted_desc")
+                {
+                    return View(datasets.OrderByDescending(o => o.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "modified")
+                {
+                    return View(datasets.OrderBy(o => o.modified).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "modified_desc")
+                {
+                    return View(datasets.OrderByDescending(o => o.modified).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "dateAccepted")
+                {
+                    return View(datasets.OrderBy(o => o.dateAccepted).ToList().ToPagedList(pageNumber, pageSize));
+                }
+                else if (sorting == "dateAccepted_desc")
+                {
+                    return View(datasets.OrderByDescending(o => o.dateAccepted).ToList().ToPagedList(pageNumber, pageSize));
+                }
+
+                return View(datasets.ToPagedList(pageNumber, pageSize));
+            }
+            return View("Index");
+
+        }       
+
+
+
+
+
+
+
         [Route("register/{registername}/{submitter}/{itemname}/")]
         //[Route("{documentowner}/{documentname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemname)

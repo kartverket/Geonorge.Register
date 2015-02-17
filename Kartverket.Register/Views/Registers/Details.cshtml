@@ -80,10 +80,14 @@
         }
     }
 
+    
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class=" page-header">
             <hr>
         </div>
+
+        <a href="/register/dataset/@Html.ToUrl(Model.name)/datasetTest">Ny visning</a>
 
             @if (Model.containedItemClass == "Organization")
             {
@@ -124,7 +128,7 @@
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>                    
                 }
                 if (Model.containedItemClass == "EPSG")
                 {

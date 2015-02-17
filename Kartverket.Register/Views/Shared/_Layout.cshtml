@@ -100,6 +100,17 @@
                         <p>© 2014 - Kartverket</p>
                         <p>Versjon @Html.ApplicationVersionNumber()</p>
                         <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
+                            <!--
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+                                {
+                                    <p>@c.Type = @c.Value</p>
+                                }
+                            }
+                            -->
+
+
                     </div>
                 </div>
             </div>

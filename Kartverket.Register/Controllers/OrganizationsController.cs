@@ -121,7 +121,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
             string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View(); 
             }
@@ -132,6 +132,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("organisasjoner/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
@@ -198,22 +199,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgnavn
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgnavn
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Kartverket.Register.Models.Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
                 Viewbags(organization);
                 return View(organization);
             }
@@ -231,6 +233,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("organisasjoner/{orgnavn}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Organization organization, string submitterId, string number, string description, string contact, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string statusID, string id, string orgnavn)
@@ -252,6 +255,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
+                //Organization originalOrganization = db.Organizations.Find(systId);
 
                 if (organization.name != null)
                 {
@@ -273,6 +277,10 @@ namespace Kartverket.Register.Controllers
                 if (contact != null && contact.Length > 0)
                 {
                     originalOrganization.contact = organization.contact;
+                }
+                if (statusID != null)
+                {
+                    originalOrganization.statusId = statusID;
                 }
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -316,22 +324,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-                var queryResultsOrganisasjon = from o in db.Organizations
-                                               where o.seoname == orgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
+            
+            var queryResultsOrganisasjon = from o in db.Organizations
+                                            where o.seoname == orgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Organization organization = db.Organizations.Find(systId);
-                if (organization == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Organization organization = db.Organizations.Find(systId);
+            if (organization == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            {
                 return View(organization);
             }
             return HttpNotFound();

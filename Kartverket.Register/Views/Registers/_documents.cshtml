@@ -13,8 +13,7 @@
         Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
     </div>
 
-
-    @Html.Partial("_visningstyper")
+  @Html.Partial("_visningstyper")
 </div>
 
     <div class="document search-results ">
@@ -24,11 +23,11 @@
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
                         @{
-            string thumb = "/Content/pdf.jpg";
-            if (item.thumbnail != null)
-            {
-                thumb = item.thumbnail;
-            }
+			                string thumb = "/Content/pdf.jpg";
+			                if (item.thumbnail != null)
+			                {
+				            thumb = item.thumbnail;
+			                }
                         }
                         <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     </div>
@@ -52,27 +51,30 @@
                     </div>
                     <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-actions pull-right">
 
-                        @if (item.status == null)
+                       @if (item.status == null)
+                    {
+                        <span>Status: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                    }
+                    <br/>
+                    @if (String.IsNullOrEmpty(item.documentUrl) ||  item.documentUrl == "ikke angitt")
+                    {
+                        <span>Referanse: mangler</span><br />
+                    }
+                    else 
+                    { 
+                        if (item.documentUrl.Contains("/data/documents/"))
                         {
-                            <span class="status">Status:</span> <span class="status-value">Ikke angitt</span><br />
+                            <span>Referanse: Intern</span><br />
                         }
                         else
                         {
-                            <span class="status">Status:</span> <span class="status-value">@item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                            <span>Referanse: Ekstern</span><br />
                         }
-                        <br />
-                        @if (item.documentUrl == null)
-                        {
-                            <span class="reference">Referanse:</span><span class="reference-value"> Ikke angitt</span><br />;
-                        }
-                        else if (item.documentUrl.Contains("/data/documents/"))
-                        {
-                            <span class="reference">Referanse:</span><span class="reference-value"> Intern</span><br />;
-                        }
-                        else
-                        {
-                            <span class="reference">Referanse:</span><span class="reference-value"> Ekstern</span><br />;
-                        }
+                    }
                     </div>
 
                 </div>
@@ -81,9 +83,6 @@
             <hr />
         }
     </div>
-
-
-
 
 
     <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">

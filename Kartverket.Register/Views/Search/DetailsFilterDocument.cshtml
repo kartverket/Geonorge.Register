@@ -1,12 +1,13 @@
 ﻿﻿@using Kartverket.Register.Helpers
-@model PagedList.IPagedList<Kartverket.Register.Models.Document>
+@model PagedList<Kartverket.Register.Models.Document>
 @using Kartverket.Register.Models
 @using PagedList;
 @using PagedList.Mvc;
 
 
 @{
-    ViewBag.Title = Model.ElementAt(0).register.name;  
+    ViewBag.Title = Model.ElementAt(0).register.name;
+       
 } 
 
 @section breadcrumb {
@@ -44,7 +45,7 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class=" page-header">
+        <div class="page-header">
             <hr>
         </div>
 
@@ -159,19 +160,19 @@
 </div>
 
 
-    <hr />
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<hr />
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
-        </div>
-        <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
-        </div>
-        <p>
-            <a href="/register/@Html.ToUrl(Model.ElementAt(0).register.name)/">Tilbake</a>
-        </p>
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
     </div>
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    </div>
+    <p>
+        <a href="/register/@Html.ToUrl(Model.ElementAt(0).register.name)/">Tilbake</a>
+    </p>
+</div>
 
 
 

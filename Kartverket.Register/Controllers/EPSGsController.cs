@@ -55,7 +55,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
             string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View();
             }
@@ -65,6 +65,7 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [Route("epsg-koder/ny")]
         //[ValidateAntiForgeryToken]
@@ -129,23 +130,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            
+            var queryResultsEpsg = from o in db.EPSGs
+                                    where o.seoname == epsgname
+                                    select o.systemId;
+            Guid systId = queryResultsEpsg.First();
+
+            if (systId == null)
             {
-                var queryResultsEpsg = from o in db.EPSGs
-                                       where o.seoname == epsgname
-                                       select o.systemId;
-                Guid systId = queryResultsEpsg.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
                 Viewbags(ePSG);
                 return View(ePSG);
             }
@@ -155,6 +156,7 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [Route("epsg-koder/{epsgname}/rediger")]
         //[ValidateAntiForgeryToken]
@@ -177,6 +179,7 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = MakeSeoFriendlyString(originalEPSG.name);
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
+                if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
                 if (ePSG.epsgcode != null) originalEPSG.epsgcode = ePSG.epsgcode;
                 if (ePSG.sosiReferencesystem != null) originalEPSG.sosiReferencesystem = ePSG.sosiReferencesystem;
                 if (ePSG.externalReference != null) originalEPSG.externalReference = ePSG.externalReference;
@@ -205,6 +208,7 @@ namespace Kartverket.Register.Controllers
 
                 Viewbags(ePSG);
                 return Redirect("/register/epsg-koder/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);        
+
             }
             
             Viewbags(ePSG);
@@ -223,29 +227,30 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            
+            var queryResultsOrganisasjon = from o in db.EPSGs
+                                            where o.seoname == epsgname
+                                            select o.systemId;
+            Guid systId = queryResultsOrganisasjon.First();
+
+            if (systId == null)
             {
-                var queryResultsOrganisasjon = from o in db.EPSGs
-                                               where o.seoname == epsgname
-                                               select o.systemId;
-                Guid systId = queryResultsOrganisasjon.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                EPSG ePSG = db.EPSGs.Find(systId);
-                if (ePSG == null)
-                {
-                    return HttpNotFound();
-                }
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EPSG ePSG = db.EPSGs.Find(systId);
+            if (ePSG == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            {
                 return View(ePSG);
             }
             return HttpNotFound();
         }
 
         // POST: EPSGs/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [Route("epsg-koder/{epsgname}/slett")]
         //[ValidateAntiForgeryToken]

@@ -57,7 +57,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
             string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View();
             }
@@ -103,10 +103,11 @@ namespace Kartverket.Register.Controllers
                 document.seoname = MakeSeoFriendlyString(document.name);               
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-
-                //Hvilke får prioritet??
-                if (document.documentUrl == null) {                
-                    if (documentfile != null)
+           
+                if (documentfile != null)
+                {
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+                    if (document.documentUrl.Contains(".pdf"))
                     {
                         document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
                         GenerateThumbnail(document, documentfile, url);
@@ -117,6 +118,9 @@ namespace Kartverket.Register.Controllers
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
                 } 
 
+                if (document.documentUrl == null) {
+                    document.documentUrl = "ikke angitt";
+                }
 
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -150,41 +154,41 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string registername, string documentname)
         {
-            string registerOwner = FindRegisterOwner(registername);
+            //string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
-            {
-     
-                var queryResults = from o in db.Documents
-                                   where o.seoname == documentname && o.register.seoname == registername
-                                   select o.systemId;
+            var queryResults = from o in db.Documents
+                                where o.seoname == documentname
+                                select o.systemId;
 
                 Guid systId = queryResults.First();
             
 
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Document document = db.Documents.Find(systId);
-                if (document == null)
-                {
-                    return HttpNotFound();
-                }
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+                
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+                
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
+            {
                 Viewbags(document);
-                return View(document);
+		        return View(document);
             }
             return HttpNotFound();
         }
-
-        
 
         // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
@@ -204,30 +208,26 @@ namespace Kartverket.Register.Controllers
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
-                if (document.documentUrl != null) originalDocument.documentUrl = document.documentUrl;                
-                if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
-                if (document.statusId != null)
+                if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
-                    if (document.statusId == "Accepted" && originalDocument.statusId != "Accepted")
-                    {
-                        originalDocument.dateAccepted = DateTime.Now;
-                    }
-                    if (originalDocument.statusId == "Accepted" && document.statusId != "Accepted")
-                    {
-                        originalDocument.dateAccepted = null;
-                    }
-                        originalDocument.statusId = document.statusId;
+                    originalDocument.documentUrl = document.documentUrl; 
                 }
+                if (document.statusId != null) originalDocument.statusId = document.statusId;
+                if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
-                    GenerateThumbnail(originalDocument, documentfile, url);
+                    if (originalDocument.documentUrl.Contains(".pdf"))
+                    {
+                        GenerateThumbnail(document, documentfile, url);
+                        originalDocument.thumbnail = document.thumbnail;
+                    }
                 }
-                
-                if (thumbnail != null )
+
+                if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }
@@ -252,23 +252,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            var queryResults = from o in db.Documents
+                                where o.seoname == documentname && o.register.seoname == registername 
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            if (systId == null)
             {
-                var queryResults = from o in db.Documents
-                                   where o.seoname == documentname && o.register.seoname == registername 
-                                   select o.systemId;
-
-                Guid systId = queryResults.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Document document = db.Documents.Find(systId);
-                if (document == null)
-                {
-                    return HttpNotFound();
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
+            {
                 return View(document);
             }
                 return HttpNotFound();

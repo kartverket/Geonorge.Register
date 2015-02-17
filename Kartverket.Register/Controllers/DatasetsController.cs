@@ -60,7 +60,7 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" && register.statusId == "Submitted")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View();
             }
@@ -171,24 +171,24 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+
+            var queryResults = from o in db.Datasets
+                                where o.seoname == datasetname && o.register.seoname == registername
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            if (systId == null)
             {
-
-                var queryResults = from o in db.Datasets
-                                   where o.seoname == datasetname && o.register.seoname == registername
-                                   select o.systemId;
-
-                Guid systId = queryResults.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Dataset dataset = db.Datasets.Find(systId);
-                if (dataset == null)
-                {
-                    return HttpNotFound();
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dataset dataset = db.Datasets.Find(systId);
+            if (dataset == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            {
                 Viewbags(dataset);
                 return View(dataset);
             }
@@ -295,23 +295,24 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            
+            var queryResults = from o in db.Datasets
+                                where o.seoname == datasetname && o.register.seoname == registername
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            if (systId == null)
             {
-                var queryResults = from o in db.Datasets
-                                   where o.seoname == datasetname && o.register.seoname == registername
-                                   select o.systemId;
-
-                Guid systId = queryResults.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Dataset dataset = db.Datasets.Find(systId);
-                if (dataset == null)
-                {
-                    return HttpNotFound();
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Dataset dataset = db.Datasets.Find(systId);
+            if (dataset == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            {
                 return View(dataset);
             }
             return HttpNotFound();

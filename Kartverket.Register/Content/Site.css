@@ -54,6 +54,16 @@ ul.search-results {
     width: 140px;
 }
 
+.img-small {
+    max-width: 150px;
+    max-height: 100px;
+}
+
+.img-large {
+    max-height: 150px;
+    max-width: 400px;
+}
+
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
 
     background-color: #AF85B5;
@@ -67,9 +77,7 @@ ul.search-results {
     float: right !important;
 }
 
-.nav > li > a {
-    padding: 0px 15px;
+ul, ol {
+    margin-top: -10px;
 }
-
-
 /*# sourceMappingURL=page-footer.css.map *

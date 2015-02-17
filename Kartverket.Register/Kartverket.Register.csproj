@@ -332,6 +332,14 @@
     <Compile Include="Migrations\201502051017299_UpdateStatusId.Designer.cs">
       <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201501300859288_UpdateSubmitter.cs" />
+    <Compile Include="Migrations\201501300859288_UpdateSubmitter.Designer.cs">
+      <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502161552252_FixDataset.cs" />
+    <Compile Include="Migrations\201502161552252_FixDataset.Designer.cs">
+      <DependentUpon>201502161552252_FixDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -375,6 +383,8 @@
     <Compile Include="Services\Search\SearchService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\gsdll32.dll">
+    </Content>
     <Content Include="Content\custom.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="lib\gsdll32.dll">
@@ -419,6 +429,7 @@
     <Content Include="Content\fonts\statusicon.ttf" />
     <Content Include="Content\fonts\statusicon.woff" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="lib\PDFLibNet.dll" />
     <Content Include="readme.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -462,8 +473,11 @@
     <Content Include="Views\Registers\_organization.cshtml" />
     <Content Include="Views\Registers\_dataset.cshtml" />
     <Content Include="Views\Registers\_epsg.cshtml" />
+    <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
+    <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
+    <Content Include="Views\Registers\DetailsEPSG.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Registers\EditDocument.cshtml" />
     <Content Include="Views\Registers\EditEpsg.cshtml" />
@@ -520,7 +534,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="bin\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -625,6 +638,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502051017299_UpdateStatusId.resx">
       <DependentUpon>201502051017299_UpdateStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201501300859288_UpdateSubmitter.resx">
+      <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502161552252_FixDataset.resx">
+      <DependentUpon>201502161552252_FixDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

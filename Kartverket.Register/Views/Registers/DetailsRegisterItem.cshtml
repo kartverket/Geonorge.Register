@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = @Model.name;
+    var documentOwner = ViewBag.documentOwner;
 }
 
 @section breadcrumb {
@@ -36,6 +37,10 @@
         {
             <span>Administrator: @Html.DisplayFor(model => model.submitter.name)</span><br />
         }
+        @if (@documentOwner != null)
+        {
+            <span>Eier: @documentOwner </span><br />
+        }
         @if (Model.currentVersion == null)
         {
             <span>Versjon: Ikke angitt</span><br />
@@ -44,6 +49,7 @@
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
         }
+       
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -79,39 +85,44 @@
         }
         
     </div>
-    
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>
             <hr />
           
             <a href="/register/@Model.register.seoname">Tilbake</a>
 
-
-            @if (Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.register.owner.name)
+            @if (Request.IsAuthenticated)
             {
-                if (Model.register.containedItemClass == "Organization")
-                {
-                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                    <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Document")
-                {
-                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                    <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Dataset")
-                {
-                    <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                    <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "EPSG")
-                {
-                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                    <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Register")
-                {
+                
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || 
+                    (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                    (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                {        
+                    if (Model.register.containedItemClass == "Organization")
+                    {
+                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Document")
+                    {
+                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/rediger/">Endre</a>
+                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Dataset")
+                    {
+                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
+                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "EPSG")
+                    {
+                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
+                    }
+                    if (Model.register.containedItemClass == "Register")
+                    {
 
+                    }
                 }
             }
 

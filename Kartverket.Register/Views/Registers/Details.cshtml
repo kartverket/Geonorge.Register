@@ -109,24 +109,28 @@
 
             @if (Model.containedItemClass == "Organization")
             {
-                @Html.Partial("_organization", sortering)
+                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "Document")
             {
-                @Html.Partial("_documents", sortering)
+                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "Dataset")
             {
-                @Html.Partial("_dataset", sortering)
+                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "EPSG")
             {
-                @Html.Partial("_epsg", sortering)
+                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "Register")
             {
-                @Html.Partial("_subregister", sortering)
+                @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
             }
+
+
+
+
 
 
             @if (Request.IsAuthenticated)

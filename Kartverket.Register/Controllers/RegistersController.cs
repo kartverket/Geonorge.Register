@@ -56,9 +56,16 @@ namespace Kartverket.Register.Controllers
             var queryResultsRegisterItem = from o in db.RegisterItems
                                          where o.seoname == itemname && o.register.seoname == registername
                                          select o.systemId;
-
+            
             Guid systId = queryResultsRegisterItem.First();
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
+
+            if (registerItem.register.containedItemClass == "Document") {
+                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                ViewBag.documentOwner = document.documentowner.name;
+            }
+
+
             return View(registerItem);
         }
         

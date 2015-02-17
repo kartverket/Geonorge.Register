@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = @Model.name;
+    var documentOwner = ViewBag.documentOwner;
 }
 
 @section breadcrumb {
@@ -36,13 +37,9 @@
         {
             <span>Administrator: @Html.DisplayFor(model => model.submitter.name)</span><br />
         }
-        @if (Model.submitter == null)
+        @if (@documentOwner != null)
         {
-            <span>Eier: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Eier: @Html.DisplayFor(model => model.submitter.name)</span><br />
+            <span>Eier: @documentOwner </span><br />
         }
         @if (Model.currentVersion == null)
         {

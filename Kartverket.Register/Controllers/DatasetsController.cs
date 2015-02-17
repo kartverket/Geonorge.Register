@@ -187,7 +187,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower())
+            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
             {
                 Viewbags(dataset);
                 return View(dataset);
@@ -311,7 +311,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower())
+            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
             {
                 return View(dataset);
             }

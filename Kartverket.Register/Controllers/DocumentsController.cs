@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
                 
-            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower())
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
             {
                 Viewbags(document);
 		        return View(document);
@@ -252,23 +252,23 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || user == registerOwner)
+            var queryResults = from o in db.Documents
+                                where o.seoname == documentname && o.register.seoname == registername 
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+
+            if (systId == null)
             {
-                var queryResults = from o in db.Documents
-                                   where o.seoname == documentname && o.register.seoname == registername 
-                                   select o.systemId;
-
-                Guid systId = queryResults.First();
-
-                if (systId == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Document document = db.Documents.Find(systId);
-                if (document == null)
-                {
-                    return HttpNotFound();
-                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
+            {
                 return View(document);
             }
                 return HttpNotFound();

@@ -55,13 +55,13 @@ ul.search-results {
 }
 
 .img-small {
-    max-width: 150px !important;
-    max-height: 100px !important;
+    max-width: 150px;
+    max-height: 100px;
 }
 
 .img-large {
-    max-height: 150px !important;
-    max-width: 400px !important;
+    max-height: 150px;
+    max-width: 400px;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
@@ -75,5 +75,9 @@ ul.search-results {
     padding-left: 0px;
     margin: 0px 0px !important;
     float: right !important;
+}
+
+ul, ol {
+    margin-top: -10px;
 }
 /*# sourceMappingURL=page-footer.css.map *

@@ -2,6 +2,9 @@
 ﻿@using Kartverket.Register.Helpers
 @using PagedList;
 
+@{
+    ViewBag.Title = @Model.name;
+}
 
     @{
         ViewBag.Title = @Model.name;
@@ -103,36 +106,32 @@
                 </div>
                 <br />
             </div>*@
-   
 
             @if (Model.containedItemClass == "Organization")
             {
-                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_organization", sortering)
             }
             @if (Model.containedItemClass == "Document")
             {
-                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_documents", sortering)
             }
             @if (Model.containedItemClass == "Dataset")
             {
-                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_dataset", sortering)
             }
             @if (Model.containedItemClass == "EPSG")
             {
-                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_epsg", sortering)
             }
             @if (Model.containedItemClass == "Register")
             {
-                @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sortering)
             }
 
-        </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <p>
-                @Html.ActionLink("Tilbake", "Index")
-
-                @if (Session["role"].ToString() == "editor" && Model.statusId == "Submitted" || Session["role"].ToString() == "admin" || Session["user"].ToString() == Model.owner.name)
+            @if (Request.IsAuthenticated)
+            {
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims))
                 {
                     if (Model.containedItemClass == "Organization")
                     {
@@ -155,6 +154,7 @@
 
                     }
                 }
+            }
             </p>
         </div>
     </div>

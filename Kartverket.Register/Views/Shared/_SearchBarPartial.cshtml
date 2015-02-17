@@ -1,18 +1,9 @@
 ﻿﻿@using Kartverket.Register.Helpers
-@*Searchbar Dropdown with bootstrap.js*@
-
 
 <script>
     function registerName(reg) {
         document.getElementById("register").value = reg;
         document.getElementById("registerSelected").innerHTML = reg;
-        //var storedValue = localStorage.getItem('registerName');
-        //var nameInput = document.getElementsByClassName('dropdown-toggle');
-        //if (storedValue) {
-        //    ;
-        //    nameInput.value = storedValue;
-        //}
-        //nameInput.value = "Alle registre";
     }
 
 </script>
@@ -30,16 +21,14 @@
         { 
             register = "Alle registre";
         } 
-    }
-
-    
+    } 
 }
 
 <form action="~/search/" class="col-md-offset-2 col-md-8 searchbar">
    
     <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)"/>
      
-    <h1 class="h-md" id="register-heading">Søk i register</h1>
+    <h1 class="h-md" id="register-heading">Søk i @register</h1>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">

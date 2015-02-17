@@ -23,11 +23,11 @@
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
                         @{
-			    string thumb = "/Content/pdf.jpg";
-			    if (item.thumbnail != null)
-			    {
-				thumb = item.thumbnail;
-			    }
+			                string thumb = "/Content/pdf.jpg";
+			                if (item.thumbnail != null)
+			                {
+				            thumb = item.thumbnail;
+			                }
                         }
                         <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     </div>
@@ -83,10 +83,6 @@
             <hr />
         }
     </div>
-
-     
-
-
 
 
     <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">

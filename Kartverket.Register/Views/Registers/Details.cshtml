@@ -106,7 +106,28 @@
                 </div>
                 <br />
             </div>*@
-   
+
+            @if (Model.containedItemClass == "Organization")
+            {
+                @Html.Partial("_organization", sortering)
+            }
+            @if (Model.containedItemClass == "Document")
+            {
+                @Html.Partial("_documents", sortering)
+            }
+            @if (Model.containedItemClass == "Dataset")
+            {
+                @Html.Partial("_dataset", sortering)
+            }
+            @if (Model.containedItemClass == "EPSG")
+            {
+                @Html.Partial("_epsg", sortering)
+            }
+            @if (Model.containedItemClass == "Register")
+            {
+                @Html.Partial("_subregister", sortering)
+            }
+
 
             @if (Request.IsAuthenticated)
             {

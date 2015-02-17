@@ -30,7 +30,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Details(string name, string sorting, int? page)
         {
             var queryResults = from o in db.Registers
-                               where o.seoname == name
+                               where o.name == name || o.seoname == name
                                select o.systemId;
 
             Guid systId = queryResults.First();

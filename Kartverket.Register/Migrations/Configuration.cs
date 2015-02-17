@@ -12,7 +12,7 @@ namespace Kartverket.Register.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationDataLossAllowed = false;
             
         }
 

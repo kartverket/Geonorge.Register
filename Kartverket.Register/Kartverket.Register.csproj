@@ -532,6 +532,7 @@
     <Content Include="Views\Registers\_detailsDataset.cshtml" />
     <Content Include="Views\Shared\_visningstyper.cshtml" />
     <Content Include="Views\Registers\NyDetailsDataset.cshtml" />
+    <Content Include="Views\Registers\NyDetailsEPSG.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

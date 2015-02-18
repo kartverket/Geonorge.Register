@@ -16,7 +16,7 @@
   @Html.Partial("_visningstyper")
 </div>
 
-    <div class="document search-results ">
+    <div class="register document search-results ">
         @foreach (Document item in Model)
         {
             <div class="row result-row metadata">
@@ -51,28 +51,28 @@
                     </div>
                     <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-actions pull-right">
 
-                       @if (item.status == null)
+                    @if (item.status == null)
                     {
-                        <span>Status: Ikke angitt</span><br />
+                        <span class="status">Status: </span><span class="status-value">Ikke angitt </span><br />
                     }
                     else
                     {
-                        <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                        <span class="status">Status: </span><span class="status-value">@item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
                     }
                     <br/>
                     @if (String.IsNullOrEmpty(item.documentUrl) ||  item.documentUrl == "ikke angitt")
                     {
-                        <span>Referanse: mangler</span><br />
+                        <span class="reference">Referanse: </span><span class="reference-value">mangler</span><br />
                     }
-                    else 
-                    { 
+                    else
+                    {
                         if (item.documentUrl.Contains("/data/documents/"))
                         {
-                            <span>Referanse: Intern</span><br />
+                            <span class="reference">Referanse: </span><span class="reference-value">Intern</span><br />
                         }
                         else
                         {
-                            <span>Referanse: Ekstern</span><br />
+                            <span class="reference">Referanse: </span><span class="reference-value">Ekstern</span><br />
                         }
                     }
                     </div>

@@ -1,6 +1,6 @@
  function listView()
  {
-    $( ".kartkatalog-table-heading" ).remove();
+     $(".table-heading").remove();
     
     // Buttons   
     $('#button-listView').addClass('active');
@@ -17,7 +17,7 @@
 
  function galleryView()
  {
-    $( ".kartkatalog-table-heading" ).remove();
+     $(".table-heading").remove();
 
     // Buttons
     $('#button-listView').removeClass('active');
@@ -36,8 +36,9 @@
 
 function tableView()
  {
-    $( ".kartkatalog-table-heading" ).remove();
-    $('.search-results').prepend("<div class='col-sm-12 kartkatalog-table-heading'><div class='col-sm-9'><div class='col-md-4'><h4>Tittel</h4></div><div class='col-md-4'><h4>Eier / leverandør</h4></div><div class='col-md-4'><h4>Beskrivelse</h4></div></div><div class='col-sm-3'><div class='col-sm-3'><h4>Last ned</h4></div><div class='col-sm-3'><h4>Nettside</h4></div><div class='col-sm-3'><h4>Kart</h4></div><div class='col-sm-3'><h4>Open Data</h4></div></div></div>");
+    $(".table-heading").remove();
+    $('.search-results.kartkatalog').prepend("<div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
+    $('.search-results.document').prepend("<div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div></div><div class='col-xs-3'><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4>Status</h4></div><div class='col-xs-3'><h4>Referanse</h4></div></div></div>");
   
     // Buttons
     $('#button-listView').removeClass('active');
@@ -48,11 +49,32 @@ function tableView()
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
-    $(window).scroll(function(){
-        if ($(window).scrollTop() > 338){
-            $(".kartkatalog-table-heading").css({"top": ($(window).scrollTop()) -338 + "px"});
-            $(".kartkatalog-table-heading").css("background-color", "white");
-            $(".kartkatalog-table-heading").css("z-index", "400");
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 330) {
+            $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 330 + "px" });
+            $(".kartkatalog .table-heading").css("background-color", "white");
+            $(".kartkatalog .table-heading").css("z-index", "400");
+            if ($(window).width() < 992) {
+                $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 348 + "px" });
+            }
+            if ($(window).width() < 750) {
+                $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 367 + "px" });
+            }
+        } else {
+            $(".kartkatalog .table-heading").css("top", "0");
+        }
+        if ($(window).scrollTop() > 610) {
+            $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 610 + "px" });
+            $(".document .table-heading").css("background-color", "white");
+            $(".document .table-heading").css("z-index", "400");
+            if ($(window).width() < 992) {
+                $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 678 + "px" });
+            }
+            if ($(window).width() < 750) {
+                $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 682 + "px" });
+            }
+        } else {
+            $(".document .table-heading").css("top", "0");
         }
     });
 

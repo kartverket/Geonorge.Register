@@ -3,7 +3,7 @@
 }
 
 .search-filter-wrapper {
-	padding: 0px 0px 40px;
+	padding: 0px!important;
 }
 
 .search-filter-wrapper>.nav-tabs{
@@ -77,6 +77,10 @@
 	display: none;
 }
 
+.search-results.gallery-view .col-logo {
+	display: none;
+}
+
 .search-results.gallery-view a:hover {
 	text-decoration: none;
 }
@@ -125,8 +129,8 @@
 	padding: 0;
 	position: absolute;
 	top: 0;
-	left: 20%;
-	width: 60%;
+	left: 0;
+	width: 100%;
 }
 
 .search-results.gallery-view .col-img img{
@@ -168,7 +172,7 @@
 	margin-bottom: 0px;
 	padding: 4px;
 	border: none;
-	font-size: 14px;
+	font-size: 14px!important;
 	line-height: 1.1em;
 	display: inline-block;
 	
@@ -179,10 +183,11 @@
 }
 
 
-.search-results.table-view .kartkatalog-table-heading{
+.search-results.table-view .table-heading{
 	padding: 0;
 	border-bottom: 2px solid #249446;
 	margin-bottom: 20px;
+	position: relative;
 }
 
 .search-results.table-view .label {
@@ -198,12 +203,12 @@
 }
 
 .search-results.table-view .col-title p span {
-	font-size: 10px;
+	font-size: 10px!important;
 }
 
 .search-results.table-view .col-actions a, .search-results.table-view .col-actions img{
 	width: 25%;
-	font-size: 0;
+	font-size: 0!important;
 	float: left;
 }
 
@@ -218,17 +223,14 @@
 	float: left;
 }
 
-.search-results.table-view .kartkatalog-table-heading{
-	position: relative;
-
-}
 
 
 
 
 
 
-/*Document*/
+
+
 
 .search-results.document.gallery-view .result-row {
 	width: 25%;
@@ -267,13 +269,46 @@
 
 
 .search-results.document.gallery-view .col-img, .search-results.document.gallery-view .col-title {
-	height: 188px;
+	height: 200px;
 }
 
 .search-results.document.gallery-view .result-row{
 	margin-bottom: 30px;
 }
 
+@media (max-width: 992px){
+	.search-results.document.gallery-view .result-row{
+		width: 33.33333%;
+	}
+	.col-sm-12.pull-right{
+		float: none!important;
+	}
+}
+
+@media (max-width: 600px){
+	.search-results.gallery-view .result-row{
+		width: 50%;
+	}
+	.search-results.document.gallery-view .result-row{
+		width: 50%;
+	}
+	#button-tableView{
+		display: none;
+	}
+}
+
+@media (max-width: 450px){
+	.search-results.gallery-view .result-row{
+		width: 100%;
+	}
+	.search-results.document.gallery-view .result-row{
+		width: 100%;
+	}
+	.search-results.document.list-view .col-actions{
+		width: 100%;
+	}
+
+}
 
 /*organization*/
 
@@ -339,3 +374,5 @@
 	width: 100%;
     padding-top: 30px;
 }
+
+

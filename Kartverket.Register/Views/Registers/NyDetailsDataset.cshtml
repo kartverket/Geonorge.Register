@@ -84,8 +84,8 @@
             <hr />
         </div>
 
-        <div class="document search-results">
-            @foreach (Dataset item in Model)
+        <div class="document search-results"> @*lage egne stiler for dataset*@
+            @foreach (Dataset item in Model)  
             {
                 <div class="row result-row metadata">
                     <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
@@ -105,7 +105,7 @@
                             <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
                                 <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                             </a>  
-                            <p>
+                            @*<p>
                                 @if (item.ThemeGroupId != null)
                                 {
                                 <span>Gruppe:</span> @item.theme.description
@@ -114,9 +114,10 @@
                                 {
                                     <span>Gruppe: Ikke angitt</span>
                                 }
-                            </p>
+                            </p>*@
+                            <br />
                                                       
-                            <p class=" ">
+                            <div class=" ">
                                 @if (item.description != null)
                                 {
                                 <p id="shortdesc">
@@ -132,7 +133,7 @@
                                     }
                                 </p>
                                 }
-                            </p>
+                            </div>
                         </div>
                         <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
                             <ul style="list-style-type:none">
@@ -189,7 +190,17 @@
                                     <li class="col-actions status">
                                         Status: @item.status.description
                                     </li>
+                                }                                
+                                @if (item.ThemeGroupId != null)
+                                {
+                                    <li class="col-actions status">
+                                        Gruppe: @item.theme.description
+                                    </li> 
                                 }
+                                else
+                                {
+                                    <li>Gruppe: Ikke angitt</li>
+                                }                              
                             </ul>
 
 </div>

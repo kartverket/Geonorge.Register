@@ -99,7 +99,6 @@
             }
             @if (Model.containedItemClass == "Dataset")
             {
-                <a href="/register/dataset/@Html.ToUrl(Model.name)/datasetTest">Ny visning</a>
                 @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "EPSG")

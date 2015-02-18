@@ -7,129 +7,143 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+        <br /><br />
     </div>
     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
         Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
     </div>
 
-
-    @*@Html.Partial("_visningstyper")*@
-
+    @Html.Partial("_visningstyper")
 </div>
 
-<table class="table table-striped table-bordered" style="background-color: white">
-    <thead>
-        <tr>
-            <th>Tittel</th>
-            <th>Eier / leverandør</th>
-            <th>Temagruppe</th>
-            <th>Beskrivelse</th>
-            <th style="width: 80px">Metadata</th>
-            <th style="width: 90px">Produktark</th>
-            <th style="width: 90px">Kartografi</th>
-            <th style="width: 110px">Produkt-spesifikasjon</th>
-            <th>SOSI</th>
-            <th>WMS</th>
-            <th>Status</th>
-        </tr>
-    </thead>
+<div class="document search-results">
+    @*lage egne stiler for dataset*@
+    @foreach (Dataset item in Model)
+    {
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
 
-    <tbody class="list">
-        @foreach (Dataset item in Model)
-        {
-            <tr>
-                <td>
-                    <p class="role-button" role="button">
-                        <b>@item.name</b>
-                    </p>
-                </td>
-                <td class="publisher"><a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">@item.datasetowner.name</a></td>
-                
-                @if (item.ThemeGroupId != null)
-                {
-                    <td class="themegroup">@item.theme.description</td>
-                }
-                else
-                {
-                    <td class="themegroup">Ikke angitt</td>
-                }
-                
-                <td>
-                    @if (item.description != null)
-                    {
-                        <p id="shortdesc">
-                            @if (item.description.Length < 80)
-                            {
-                                @item.description.Substring(0, item.description.Length)
-                                <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
-                            }
-                            else
-                            {
-                                @item.description.Substring(0, 80)<text>...</text>
-                                <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
-                            }
-                        </p>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
-                    {
-                        <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span> Vis</a>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
-                    {
-                        <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span> Hent</a>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
-                    {
-                        <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span> Hent</a>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
-                    {
-                        <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span> Hent</a>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
-                    {
-                        <text>ja</text>
-                    }
-                    else
-                    {
-                        <text>nei</text>
-                    }
-                </td>
-                <td>
-                    @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
-                    {
-                        <a href="@item.WmsUrl">WMS</a>
-                    }
-                </td>
-                <td class="status">
-                    @if (item.status != null)
-                    {
-                        @item.status.description
-                    }
-                </td>
+                    <a href="#">
+                        <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="datasetThumb" />
+                    </a>
 
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+                <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.submitter.name)/@Html.ToUrl(item.name)/">
+                        <h4 class="role-button" role="button" style="font-size: 18px;">
+                            @item.name
+                        </h4>
+                    </a>
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
+                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                    </a>
+                    <br />
+                    <div class=" ">
+                        @if (item.description != null)
+                        {
+                            <p id="shortdesc">
+                                @if (item.description.Length < 80)
+                                {
+                                    @item.description.Substring(0, item.description.Length)
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                }
+                                else
+                                {
+                                    @item.description.Substring(0, 80)<text>...</text>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                }
+                            </p>
+                        }
+                    </div>
+                </div>
+                <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                    <ul style="list-style-type:none">
+                        @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
+                        {
+                            <li>
+                                <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
+                        {
+                            <li>
+                                <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
+                        {
+                            <li>
+                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
+                            </li>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
+                        {
+                            <li>
+                                <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
+                            </li>
+                        }
 
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+                    </ul>
+                </div>
+                <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-right">
+                    <ul style="list-style-type:none">
+                        @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
+                        {
+                            <li>
+                                SOSI: ja
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                SOSI: Nei
+                            </li>
+                        }
+
+                        @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
+                        {
+                            <li>
+                                <a href="@item.WmsUrl">WMS</a>
+                            </li>
+                        }
+                        @if (item.status != null)
+                        {
+                            <li>
+                                Status: @item.status.description
+                            </li>
+                        }
+                        @if (item.ThemeGroupId != null)
+                        {
+                            <li>
+                                Gruppe: @item.theme.description
+                            </li>
+                        }
+                        else
+                        {
+                            <li>Gruppe: Ikke angitt</li>
+                        }
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+        <hr />
+    }
 </div>
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
-</div>
 
+<hr />
+
+<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
+</div>
 
 
 

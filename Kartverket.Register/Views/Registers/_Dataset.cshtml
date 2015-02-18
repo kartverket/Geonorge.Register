@@ -43,7 +43,7 @@
                         <b>@item.name</b>
                     </p>
                 </td>
-                <td class="publisher">@item.datasetowner.name</td>
+                <td class="publisher"><a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">@item.datasetowner.name</a></td>
                 
                 @if (item.ThemeGroupId != null)
                 {

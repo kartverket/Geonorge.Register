@@ -533,6 +533,9 @@
     <Content Include="Views\Shared\_visningstyper.cshtml" />
     <Content Include="Views\Registers\NyDetailsDataset.cshtml" />
     <Content Include="Views\Registers\NyDetailsEPSG.cshtml" />
+    <Content Include="Views\Search\DetailsFilter.cshtml" />
+    <Content Include="Views\Search\_filterDocument.cshtml" />
+    <Content Include="Views\Search\_filterDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,7 +24,6 @@
 </script>
 
 
-
 <div class="page-header">
     <h2 class="h-md">@Html.DisplayFor(model => Model.ElementAt(0).register.name)</h2>
     <hr>
@@ -105,18 +104,7 @@
                             <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
                                 <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                             </a>  
-                            @*<p>
-                                @if (item.ThemeGroupId != null)
-                                {
-                                <span>Gruppe:</span> @item.theme.description
-                                }
-                                else
-                                {
-                                    <span>Gruppe: Ikke angitt</span>
-                                }
-                            </p>*@
-                            <br />
-                                                      
+                            <br />                                                      
                             <div class=" ">
                                 @if (item.description != null)
                                 {
@@ -139,61 +127,61 @@
                             <ul style="list-style-type:none">
                                 @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
                                     </li>
                                 }
                                 @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
                                     </li>
                                 }
                                 @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
                                     </li>
                                 }
                                 @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
                                     </li>
                                 }
 
                             </ul>
                         </div>
-                        <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 col-actions pull-right">
+                        <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-right">
                             <ul style="list-style-type:none">
                                 @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         SOSI: ja
                                     </li>
                                 }
                                 else
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         SOSI: Nei
                                     </li>
                                 }
 
                                 @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
                                 {
-                                    <li class="col-actions">
+                                    <li>
                                         <a href="@item.WmsUrl">WMS</a>
                                     </li>
                                 }
                                 @if (item.status != null)
                                 {
-                                    <li class="col-actions status">
+                                    <li>
                                         Status: @item.status.description
                                     </li>
                                 }                                
                                 @if (item.ThemeGroupId != null)
                                 {
-                                    <li class="col-actions status">
+                                    <li>
                                         Gruppe: @item.theme.description
                                     </li> 
                                 }

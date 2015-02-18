@@ -134,7 +134,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
+            ViewBag.register = register.seoname;
             ViewBag.owner = organisasjon.name;
             ViewBag.ownerLogo = organisasjon.logoFilename;
             ViewBag.ownerSEO = organisasjon.seoname;

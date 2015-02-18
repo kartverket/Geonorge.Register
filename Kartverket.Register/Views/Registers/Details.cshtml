@@ -87,7 +87,7 @@
             <hr>
         </div>
 
-        <a href="/register/dataset/@Html.ToUrl(Model.name)/datasetTest">Ny visning</a>
+        
 
             @if (Model.containedItemClass == "Organization")
             {
@@ -99,6 +99,7 @@
             }
             @if (Model.containedItemClass == "Dataset")
             {
+                <a href="/register/dataset/@Html.ToUrl(Model.name)/datasetTest">Ny visning</a>
                 @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "EPSG")

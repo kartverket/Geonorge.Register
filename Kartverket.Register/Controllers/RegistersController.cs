@@ -39,6 +39,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.SortOrder = sorting;            
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
 
             
             if (register == null)

@@ -13,97 +13,72 @@
     </div>
 
 
-    @*@Html.Partial("_visningstyper")*@
+    @Html.Partial("_visningstyper")
 
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            Navn
-        </th>
-        <th>
-            Definisjon
-        </th>
-        <th>
-            EPSG
-        </th>
-        <th>
-            SOSI referansesystem
-        </th>
-        <th>
-            Ekstern referanse
-        </th>
-        <th>
-            Inspirekrav
-        </th>
-        <th>
-            Nasjonalt krav
-        </th>
-        <th>
-            Nasjonalt krav for havområder
-        </th>
-
-    </tr>
-
+<div class="document search-results">
+    @*lage egne stiler for dataset*@
     @foreach (EPSG item in Model)
     {
-        <tr>
-            <td>
-                <a href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">@Html.DisplayFor(modelItem => item.name)</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.epsgcode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.sosiReferencesystem)
-            </td>
-            <td>
-                <a target="_blank" href="@Html.DisplayFor(modelItem => item.externalReference)">Vis</a>
-            </td>
-            <td>
-                @if (item.inspireRequirement == null)
-                {
-                    <text>Ikke angitt</text>
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.inspireRequirement.description)
-                }
-            </td>
-            <td>
-                @if (item.nationalRequirement == null)
-                {
-                    <text>Ikke angitt</text>
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.nationalRequirement.description)
-                }
-            </td>
-            <td>
-                @if (item.nationalSeasRequirement == null)
-                {
-                    <text>Ikke angitt</text>
-                }
-                else
-                {
-                    @Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)
-                }
-            </td>
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                <div class="col-title col-xs-5 col-sm-5 col-md-5 col-lg-5 ">
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.submitter.name)/@Html.ToUrl(item.name)/">
+                        <h4 class="role-button" role="button" style="font-size: 18px;">
+                            @item.name
+                        </h4>
+                    </a>
+                    <p>
+                        @item.description
+                    </p>
+                </div>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions ">
+                    <p>EPSG: @Html.DisplayFor(modelItem => item.epsgcode)</p>
+                    <p>Sosi referansesystem: @Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                    <p>ekstern referanse: <a href="@item.externalReference">Vis</a></p>
+                </div>
+                <div class="col-no-padding-xs col-actions col-md-4 col-lg-4">
+                    @if (item.inspireRequirement == null)
+                    {
+                        <p>Inspire krav: Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p>Inspire krav: @Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
+                    }
 
-        </tr>
+                    @if (item.nationalRequirement == null)
+                    {
+                        <p>Nasjonale krav: Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p>Nasjonale krav: @Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
+                    }
+
+                    @if (item.nationalSeasRequirement == null)
+                    {
+                        <p>Nasjonale krav for havområder: Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p>Nasjonale krav for havområder: @Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <hr />
     }
-</table>
-<hr />
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
-</div>
-<div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
 </div>
 
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    </div>
+</div>
 

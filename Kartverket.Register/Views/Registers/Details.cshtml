@@ -103,7 +103,6 @@
             }
             @if (Model.containedItemClass == "EPSG")
             {
-                <a href="/register/epsg/@Html.ToUrl(Model.name)/epsgTest">Ny visning</a>
                 @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "Register")

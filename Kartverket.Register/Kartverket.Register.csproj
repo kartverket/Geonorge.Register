@@ -336,9 +336,13 @@
     <Compile Include="Migrations\201501300859288_UpdateSubmitter.Designer.cs">
       <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502161552252_FixDataset.cs" />
-    <Compile Include="Migrations\201502161552252_FixDataset.Designer.cs">
-      <DependentUpon>201502161552252_FixDataset.cs</DependentUpon>
+    <Compile Include="Migrations\201502181050467_UpdateDok.cs" />
+    <Compile Include="Migrations\201502181050467_UpdateDok.Designer.cs">
+      <DependentUpon>201502181050467_UpdateDok.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502181102201_fixSubmitter.cs" />
+    <Compile Include="Migrations\201502181102201_fixSubmitter.Designer.cs">
+      <DependentUpon>201502181102201_fixSubmitter.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -642,8 +646,11 @@
     <EmbeddedResource Include="Migrations\201501300859288_UpdateSubmitter.resx">
       <DependentUpon>201501300859288_UpdateSubmitter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502161552252_FixDataset.resx">
-      <DependentUpon>201502161552252_FixDataset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502181050467_UpdateDok.resx">
+      <DependentUpon>201502181050467_UpdateDok.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502181102201_fixSubmitter.resx">
+      <DependentUpon>201502181102201_fixSubmitter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -7,18 +7,18 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class FixDataset : IMigrationMetadata
+    public sealed partial class fixSubmitter : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FixDataset));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fixSubmitter));
         
         string IMigrationMetadata.Id
         {
-            get { return "201502161552252_FixDataset"; }
+            get { return "201502181102201_fixSubmitter"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return Resources.GetString("Source"); }
+            get { return null; }
         }
         
         string IMigrationMetadata.Target

@@ -94,6 +94,6 @@
     Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
 </div>
 <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6">
-    @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    @Html.PagedListPager(Model, page => Url.Action("DetailsFilter", new { page, sorting = ViewBag.SortOrder }))
 </div>
 

@@ -12,7 +12,7 @@
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.seoname">@Html.DisplayFor(model => model.seoname)</a></li>
+    <li><a href="/register/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
     <li class="active">@owner</li> 
 }
 
@@ -113,11 +113,12 @@
         }
 
     </div>
-    
-    <hr />
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <a href="/register/@register/">Tilbake</a>
-    </div>
+</div>
+
+<hr />
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <a href="/register/@register/">Tilbake</a>
+</div>
 
 
 

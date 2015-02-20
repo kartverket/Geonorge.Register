@@ -12,53 +12,47 @@
         Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
     </div>
 
-
     @Html.Partial("_visningstyper")
 </div>
 
-<table class="table">
-    <tr>
-        <th>
-            Navn
-        </th>
-        <th>
-            Beskrivelse
-        </th>
-        <th>
-            Administrator
-        </th>
-        <th>
-            Kontrollorgan
-        </th>
-        <th>
-        </th>
-    </tr>
-
-    @foreach (Register item in Model)
+<div class="register subregister search-results ">
+    @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.manager.name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.owner.name)
-            </td>
-            <td>
-                
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.systemId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.systemId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.systemId })
-            </td>
-        </tr>
+        if (item.parentRegister.name == "Kodelister")
+        {   
+            <div class="row result-row metadata">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                    <div class="col-title col-sm-9 col-md-9 col-lg-9 ">
+                        <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
+                        </a>
+                        <p>
+                            @item.description
+                        </p>
+                    </div>
+                    <div class="col-no-padding-xs col-actions col-sm-3 col-md-3 col-lg-3">
+                        <p>Administrator: @item.manager.name</p>
+                        <p>Kontrollorgan: @item.owner.name</p>
+                    </div>
+                </div>
+            </div>
+        }
+        <hr />
     }
+</div>
 
-</table>
+        
+
+<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
+</div>
+
+
 

@@ -40,6 +40,7 @@
                         <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
+                        <div class="orglogo">@Html.DisplayFor(modelItem => item.documentowner.name)</div>
                         <p class=" ">
                             @Html.DisplayFor(modelItem => item.description)
                         </p>

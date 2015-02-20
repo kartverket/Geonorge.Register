@@ -40,40 +40,41 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    <b><a href="/register/@item.seoname">@item.name</a></b>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
+            if (item.parentRegisterId == null)
+            {
 
-                <td>
-                    @if (item.owner == null)
-                    {
-                        <span>Ikke angitt</span>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.owner.name)
-                    }
-                </td>
-                @*<td>
-                    @if (item.statusId == null)
-                    {
-                        <span>Ikke angitt</span>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.status.description)
-                    }
-                </td>*@
+                <tr>
+                    <td>
+                        <b><a href="/register/@item.seoname">@item.name</a></b>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
 
-            </tr>
-        
-        
+                    <td>
+                        @if (item.owner == null)
+                        {
+                            <span>Ikke angitt</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.owner.name)
+                        }
+                    </td>
+                    @*<td>
+                        @if (item.statusId == null)
+                        {
+                            <span>Ikke angitt</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.status.description)
+                        }
+                    </td>*@
+
+                </tr>
+            }
         }
 
-        
 
     </table>

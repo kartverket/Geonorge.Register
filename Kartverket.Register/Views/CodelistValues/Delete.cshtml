@@ -76,6 +76,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.seoname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.seoname)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.value)
         </dt>
 
@@ -86,7 +94,6 @@
     </dl>
 
     @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |

@@ -47,13 +47,13 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResults = from o in db.Registers
-                                   where o.seoname == "epsg-koder"
-                                   select o.systemId;
+            //var queryResults = from o in db.Registers
+            //                       where o.seoname == "epsg-koder"
+            //                       select o.systemId;
 
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
-            string registerStatus = register.statusId;
+            //Guid systId = queryResults.First();
+            //Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
+            //string registerStatus = register.statusId;
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
@@ -62,7 +62,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        // POST: EPSGs/Create
+        // POST: EPSG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
@@ -345,7 +345,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
         }
-        
+
         private void ValidationName(EPSG epsg)
         {
             var queryResultsDataset = from o in db.EPSGs

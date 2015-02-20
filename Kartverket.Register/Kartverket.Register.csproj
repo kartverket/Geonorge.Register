@@ -344,6 +344,10 @@
     <Compile Include="Migrations\201502181102201_fixSubmitter.Designer.cs">
       <DependentUpon>201502181102201_fixSubmitter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502190942203_AddParrenRegister.cs" />
+    <Compile Include="Migrations\201502190942203_AddParrenRegister.Designer.cs">
+      <DependentUpon>201502190942203_AddParrenRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -470,23 +474,15 @@
     <Content Include="Views\Registers\Create.cshtml" />
     <Content Include="Views\Registers\Delete.cshtml" />
     <Content Include="Views\Registers\Details.cshtml" />
-    <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\Registers\Index.cshtml" />
     <Content Include="Views\Registers\_subregister.cshtml" />
     <Content Include="Views\Registers\_documents.cshtml" />
     <Content Include="Views\Registers\_organization.cshtml" />
     <Content Include="Views\Registers\_dataset.cshtml" />
     <Content Include="Views\Registers\_epsg.cshtml" />
-    <Content Include="Views\Registers\DetailsOrganization.cshtml" />
     <Content Include="Views\Shared\_NavbarPartial.cshtml" />
-    <Content Include="Views\Registers\DetailsDocument.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
-    <Content Include="Views\Registers\DetailsEPSG.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
-    <Content Include="Views\Registers\EditDocument.cshtml" />
-    <Content Include="Views\Registers\EditEpsg.cshtml" />
-    <Content Include="Views\Registers\EditSubregister.cshtml" />
-    <Content Include="Views\Registers\EditDataset.cshtml" />
     <Content Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -500,16 +496,10 @@
     <Content Include="Views\Documents\Details.cshtml" />
     <Content Include="Views\Documents\Edit.cshtml" />
     <Content Include="Views\Documents\Index.cshtml" />
-    <Content Include="Views\CodelistValues\Create.cshtml" />
-    <Content Include="Views\CodelistValues\Delete.cshtml" />
-    <Content Include="Views\CodelistValues\Details.cshtml" />
-    <Content Include="Views\CodelistValues\Edit.cshtml" />
-    <Content Include="Views\CodelistValues\Index.cshtml" />
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Filterting\DetailsDocument.cshtml" />
-    <Content Include="Views\Search\DetailsFilterDocument.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\DisplayDataset\Display.cshtml" />
     <Content Include="Views\DisplayDataset\Index.cshtml" />
@@ -535,11 +525,18 @@
     <Content Include="Views\Datasets\Index.cshtml" />
     <Content Include="Views\Registers\_detailsDataset.cshtml" />
     <Content Include="Views\Shared\_visningstyper.cshtml" />
-    <Content Include="Views\Registers\NyDetailsDataset.cshtml" />
-    <Content Include="Views\Registers\NyDetailsEPSG.cshtml" />
     <Content Include="Views\Search\DetailsFilter.cshtml" />
     <Content Include="Views\Search\_filterDocument.cshtml" />
     <Content Include="Views\Search\_filterDataset.cshtml" />
+    <Content Include="Views\Registers\CreateSubregister.cshtml" />
+    <Content Include="Views\Registers\DetailsSubregister.cshtml" />
+    <Content Include="Views\Registers\_codelistValue.cshtml" />
+    <Content Include="Views\CodelistValues\Create.cshtml" />
+    <Content Include="Views\CodelistValues\Delete.cshtml" />
+    <Content Include="Views\CodelistValues\Details.cshtml" />
+    <Content Include="Views\CodelistValues\Edit.cshtml" />
+    <Content Include="Views\CodelistValues\Index.cshtml" />
+    <Content Include="Views\Registers\DetailsSubregisterItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -656,6 +653,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502181102201_fixSubmitter.resx">
       <DependentUpon>201502181102201_fixSubmitter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502190942203_AddParrenRegister.resx">
+      <DependentUpon>201502190942203_AddParrenRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

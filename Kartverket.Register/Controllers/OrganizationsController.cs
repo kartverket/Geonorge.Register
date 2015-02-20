@@ -113,13 +113,13 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResults = from o in db.Registers
-                               where o.seoname == "organisasjoner"
-                               select o.systemId;
+            //var queryResults = from o in db.Registers
+            //                   where o.seoname == "organisasjoner"
+            //                   select o.systemId;
 
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            string registerStatus = register.statusId;
+            //Guid systId = queryResults.First();
+            //Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            //string registerStatus = register.statusId;
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {

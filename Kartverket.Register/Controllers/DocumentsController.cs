@@ -49,13 +49,13 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
+            //var queryResults = from o in db.Registers
+            //                   where o.seoname == registername
+            //                   select o.systemId;
 
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            string registerStatus = register.statusId;
+            //Guid systId = queryResults.First();
+            //Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            //string registerStatus = register.statusId;
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
@@ -159,7 +159,7 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
-                                where o.seoname == documentname
+                                where o.seoname == documentname && o.register.seoname == registername
                                 select o.systemId;
 
                 Guid systId = queryResults.First();
@@ -248,7 +248,6 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string registername, string documentname)
         {
-            string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 

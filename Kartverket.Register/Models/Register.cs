@@ -50,7 +50,9 @@ namespace Kartverket.Register.Models
         public DateTime? dateAccepted { get; set; }
         public string containedItemClass { get; set; }
         public virtual ICollection<RegisterItem> items { get; set; }
-        //public virtual Register parentRegister { get; set; }
+        [ForeignKey("parentRegister")]
+        public Guid? parentRegisterId { get; set; }
+        public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
         
         public string seoname { get; set; }

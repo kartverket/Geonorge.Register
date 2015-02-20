@@ -49,14 +49,40 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
+        // GET: Registers/Details/5
+        [Route("subregister/{registername}/{owner}/{subregister}")]
+        public ActionResult DetailsSubregister(string registername, string owner, string subregister, string sorting, int? page)
+        {
+            var queryResultsSubregister = from r in db.Registers
+                                          where r.seoname == subregister && r.parentRegister.seoname == registername
+                                          select r.systemId;
+
+            if (queryResultsSubregister.Count() > 0)
+	        {
+		        Guid systId = queryResultsSubregister.First();
+                Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+                ViewBag.page = page;
+                ViewBag.SortOrder = sorting;
+                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+                ViewBag.register = register.name;
+                ViewBag.registerSEO = register.seoname;
+
+                if (register == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(register);
+	        }
+                return HttpNotFound();
+        }
+
         [Route("register/{registername}/{submitter}/{itemname}/")]
-        //[Route("{documentowner}/{documentname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemname)
-        {            
+        {
             
             var queryResultsRegisterItem = from o in db.RegisterItems
-                                         where o.seoname == itemname && o.register.seoname == registername
-                                         select o.systemId;
+                                            where o.seoname == itemname && o.register.seoname == registername
+                                            select o.systemId;
             
             Guid systId = queryResultsRegisterItem.First();
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
@@ -65,48 +91,135 @@ namespace Kartverket.Register.Controllers
                 Kartverket.Register.Models.Document document = db.Documents.Find(systId);
                 ViewBag.documentOwner = document.documentowner.name;
             }
-
-
-            return View(registerItem);
+                return View(registerItem);    
         }
-        
 
-        // GET: Registers/Create
-        [Authorize]
-        public ActionResult Create()
+        [Route("subregister/{registername}/{owner}/{subregister}/{itemname}")]
+        public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname)
         {
+            
+            var queryResults = from o in db.RegisterItems
+                                where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
+                                select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
+
+            if (registerItem.register.containedItemClass == "Document") {
+                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                ViewBag.documentOwner = document.documentowner.name;
+            }
+                return View(registerItem);    
+        }
+
+        //// GET: Registers/Create
+        //[Authorize]
+        //public ActionResult Create()
+        //{
+        //    string role = GetSecurityClaim("role");
+        //    if (role == "nd.metadata_admin")
+        //    {
+        //        return View();
+        //    }
+        //    return HttpNotFound();
+        //}
+
+        //// POST: Registers/Create
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
+        //{
+            
+        //    if (ModelState.IsValid)
+        //    {
+        //        register.systemId = Guid.NewGuid();
+
+        //        var queryResults = from o in db.Organizations
+        //                           where o.name == Session["user"]
+        //                           select o.systemId;
+
+        //        register.ownerId = queryResults.First();
+        //        register.statusId = "Submitted";                
+        //        db.Registers.Add(register);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(register);
+        //}
+
+        
+        // GET: subregister/Create
+        [Authorize]
+        [Route("subregister/ny")]
+        public ActionResult CreateSubregister()
+        {
+            string registerOwner = FindRegisterOwner("kodelister");
             string role = GetSecurityClaim("role");
-            if (role == "nd.metadata_admin")
+            string user = GetSecurityClaim("organization");
+            
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View();
             }
             return HttpNotFound();
         }
 
-        // POST: Registers/Create
+        // POST: subregister/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
+        [Route("subregister/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
+        public ActionResult CreateSubregister(Kartverket.Register.Models.Register subregister)
         {
-            
+            ValidationName(subregister);
+
             if (ModelState.IsValid)
             {
-                register.systemId = Guid.NewGuid();
+                subregister.systemId = Guid.NewGuid();
+                if (subregister.name == null)
+                {
+                    subregister.name = "ikke angitt";
+                }
+
+                var queryResultsRegister = from o in db.Registers
+                                           where o.name == "Kodelister"
+                                           select o.systemId;
+                Guid regId = queryResultsRegister.First();
+
+                subregister.systemId = Guid.NewGuid();
+                subregister.modified = DateTime.Now;
+                subregister.dateSubmitted = DateTime.Now;
+                subregister.statusId = "Submitted";
+                subregister.seoname = MakeSeoFriendlyString(subregister.name);
+                subregister.parentRegisterId = regId;
+
+                db.Registers.Add(subregister);
+                db.SaveChanges();
+
+                string organizationLogin = GetSecurityClaim("organization");
 
                 var queryResults = from o in db.Organizations
-                                   where o.name == Session["user"]
+                                   where o.name == organizationLogin
                                    select o.systemId;
 
-                register.ownerId = queryResults.First();
-                register.statusId = "Submitted";                
-                db.Registers.Add(register);
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                subregister.ownerId = submitterOrganisasjon.systemId;
+                subregister.managerId = submitterOrganisasjon.systemId;
+
+                db.Entry(subregister).State = EntityState.Modified;
+
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect("/register/kodelister");
             }
 
-            return View(register);
+            return View(subregister);
         }
 
         [Authorize]
@@ -256,6 +369,55 @@ namespace Kartverket.Register.Controllers
             }
 
             
+        }
+
+        private string FindRegisterOwner(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid regId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string registerOwner = register.owner.name;
+            return registerOwner;
+        }
+
+        private void ValidationName(Kartverket.Register.Models.Register kodelisteregister)
+        {
+            var queryResultsDataset = from o in db.Registers
+                                      where o.name == kodelisteregister.name && o.systemId != kodelisteregister.systemId && o.parentRegister.name == "Kodelister"
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
+        }
+
+        private static string MakeSeoFriendlyString(string input)
+        {
+            string encodedUrl = (input ?? "").ToLower();
+
+            // replace & with and
+            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+
+            // remove characters
+            encodedUrl = encodedUrl.Replace("'", "");
+
+            // replace norwegian characters
+            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+
+            // remove invalid characters
+            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+
+            // remove duplicates
+            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+
+            // trim leading & trailing characters
+            encodedUrl = encodedUrl.Trim('-');
+
+            return encodedUrl;
         }
 
     }

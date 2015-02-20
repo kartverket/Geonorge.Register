@@ -47,6 +47,7 @@
                         <p class="">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </p>
+                        <div class="orglogo">@Html.DisplayFor(modelItem => item.documentowner.name)</div>
                         <p class=" ">
                             @Html.DisplayFor(modelItem => item.description)
                         </p>

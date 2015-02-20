@@ -38,6 +38,7 @@
                     <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
                         <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                     </a>
+                    <div class="orglogo">@Html.DisplayFor(modelItem => item.datasetowner.name)</div>
                     <br />
                     <div class=" ">
                         @if (item.description != null)

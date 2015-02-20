@@ -94,7 +94,7 @@ namespace Kartverket.Register.Controllers
                 return View(registerItem);    
         }
 
-        [Route("subregister/{registername}/{owner}/{subregister}/{itemname}")]
+        [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
         public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname)
         {
             

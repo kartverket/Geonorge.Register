@@ -45,17 +45,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername)
         {
+            
             ViewBag.registername = registername;
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
-
-            //var queryResults = from o in db.Registers
-            //                   where o.seoname == registername
-            //                   select o.systemId;
-
-            //Guid systId = queryResults.First();
-            //Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            //string registerStatus = register.statusId;
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {

@@ -42,8 +42,19 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny")]
         public ActionResult Create(string registername)
         {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
+            if(register.parentRegisterId != null){
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentregister = register.parentRegister.seoname;
+            }
             ViewBag.registername = registername;
-            string role = GetSecurityClaim("role");
+                        string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
@@ -162,7 +173,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("kodeliste/{register}/{submitter}/{itemname}/rediger")]
-        public ActionResult Edit(CodelistValue codelistValue, string register, string itemname)
+        public ActionResult Edit(CodelistValue codelistValue, string submitter, string register, string itemname)
         {
             var queryResults = from o in db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == register
@@ -191,7 +202,7 @@ namespace Kartverket.Register.Controllers
 
                 if(originalCodelistValue.register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname + "/" + register);
+                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname + "/" + submitter + "/" + register);
                 }
                 
                 return Redirect("/register/" + originalCodelistValue.register.seoname);

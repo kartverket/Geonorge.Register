@@ -2,6 +2,9 @@
 
 @{
     ViewBag.Title = "Create";
+    var registername = ViewBag.registername;
+    var parentOwner = ViewBag.registerOwner;
+    var parentregister = ViewBag.parentregister;
 }
 
 <h2>Create</h2>
@@ -46,5 +49,14 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+
+    @if (parentregister != null)
+    {
+        <a href="/subregister/@parentregister/@parentOwner/@registername">Tilbake</a>
+    }
+    else
+    {
+        <a href="/subregister/@registername/">Tilbake</a>
+    }
+    
 </div>

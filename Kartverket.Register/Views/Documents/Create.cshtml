@@ -4,14 +4,15 @@
 @{
     ViewBag.Title = UI.CreateNew;
     var registername = ViewBag.registername;
+    var registerSEO = ViewBag.registerSEO;
 }
 
 @section breadcrumb {
-    <li>Dokument</li>
+    <li><a href="/register/@registerSEO">@registername</a></li>
     <li class="active">Ny</li>
 }
 
-<h2>Foreslå nytt dokument</h2>
+<h2>Foreslå @registername</h2>
 
 @using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -134,7 +135,7 @@
 }
 <div>
     
-    <a href="/register/@registername/">Tilbake</a>
+    <a href="/register/@registerSEO/">Tilbake</a>
 
 </div>
 

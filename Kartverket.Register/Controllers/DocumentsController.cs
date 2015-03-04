@@ -46,7 +46,15 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername)
         {
             
-            ViewBag.registername = registername;
+            ViewBag.registerSEO = registername;
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            ViewBag.registername = register.name;
+
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 

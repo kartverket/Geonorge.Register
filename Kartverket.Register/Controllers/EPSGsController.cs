@@ -349,7 +349,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(EPSG epsg)
         {
             var queryResultsDataset = from o in db.EPSGs
-                                      where o.name == epsg.name && o.systemId != epsg.systemId
+                                      where o.name == epsg.name && o.systemId != epsg.systemId && o.register.name == epsg.register.name
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

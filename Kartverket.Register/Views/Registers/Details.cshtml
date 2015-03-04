@@ -108,6 +108,7 @@
             @if (Model.containedItemClass == "Register")
             {
                 @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
+                //@Html.Partial("_subregister", sortering.ToPagedList(pageNumber, pageSize));
             }
     </div>
 

@@ -41,7 +41,6 @@ namespace Kartverket.Register.Controllers
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
 
-            
             if (register == null)
             {
                 return HttpNotFound();
@@ -66,6 +65,8 @@ namespace Kartverket.Register.Controllers
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
                 ViewBag.register = register.name;
                 ViewBag.registerSEO = register.seoname;
+                ViewBag.ownerSEO = owner;
+                ViewBag.subregister = subregister;
 
                 if (register == null)
                 {

@@ -456,7 +456,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Organization organization)
         {
             var queryResultsDataset = from o in db.Organizations
-                                      where o.name == organization.name && o.systemId != organization.systemId
+                                      where o.name == organization.name && o.systemId != organization.systemId && o.register.name == organization.register.name
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

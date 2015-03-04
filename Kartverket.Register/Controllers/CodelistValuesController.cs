@@ -298,7 +298,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(CodelistValue codelistValue)
         {
             var queryResultsDataset = from o in db.CodelistValues
-                                      where o.name == codelistValue.name && o.systemId != codelistValue.systemId
+                                      where o.name == codelistValue.name && o.systemId != codelistValue.systemId && o.register.name == codelistValue.register.name
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

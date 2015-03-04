@@ -3,9 +3,11 @@
     var registerSEO = ViewBag.registerSEO;
     var owner = ViewBag.owner;
     var ownerSEO = ViewBag.ownerSEO;
-    var kontroller = "/register/" + register;
-
-    if (owner != null) { kontroller = "/register/" + register + "/" + ownerSEO; }
+    var subregister = ViewBag.subregister;
+    
+    var kontroller = "/register/" + registerSEO;
+    if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
+    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + subregister; }
 
 }
 

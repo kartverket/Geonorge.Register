@@ -153,7 +153,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Dataset dataset)
         {
             var queryResultsDataset = from o in db.Datasets
-                                      where o.name == dataset.name && o.systemId != dataset.systemId
+                                      where o.name == dataset.name && o.systemId != dataset.systemId && o.register.name == dataset.register.name
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

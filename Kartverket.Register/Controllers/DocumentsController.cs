@@ -72,7 +72,7 @@ namespace Kartverket.Register.Controllers
 
             Guid regId = queryResultsRegister.First();
 
-            ValidationName(document);
+            ValidationName(document, registername);
        
             if (ModelState.IsValid)
             {
@@ -193,7 +193,7 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Document originalDocument = db.Documents.Find(systId);
 
-            ValidationName(document);
+            ValidationName(document, registername);
 
             if (ModelState.IsValid)
             {
@@ -369,10 +369,10 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        private void ValidationName(Document document)
+        private void ValidationName(Document document, string registername)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.name == document.register.name
+                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

@@ -71,7 +71,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(EPSG epsg)
         {
-            ValidationName(epsg);
+            ValidationName(epsg, "epsg-koder");
 
             if (ModelState.IsValid)
             {
@@ -170,7 +170,7 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResultsOrganisasjon.First();
             EPSG epsg = db.EPSGs.Find(systId);
 
-            ValidationName(ePSG);
+            ValidationName(ePSG, "epsg-koder");
 
             if (ModelState.IsValid)
             {
@@ -346,10 +346,10 @@ namespace Kartverket.Register.Controllers
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
         }
 
-        private void ValidationName(EPSG epsg)
+        private void ValidationName(EPSG epsg, string registername)
         {
             var queryResultsDataset = from o in db.EPSGs
-                                      where o.name == epsg.name && o.systemId != epsg.systemId && o.register.name == epsg.register.name
+                                      where o.name == epsg.name && o.systemId != epsg.systemId && o.register.seoname == registername
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

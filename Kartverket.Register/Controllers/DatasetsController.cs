@@ -101,7 +101,7 @@ namespace Kartverket.Register.Controllers
 
             Guid regId = queryResultsRegister.First();
 
-            ValidationName(dataset);
+            ValidationName(dataset, registername);
 
             if (ModelState.IsValid)
             {
@@ -150,10 +150,10 @@ namespace Kartverket.Register.Controllers
             return View(dataset);
         }
 
-        private void ValidationName(Dataset dataset)
+        private void ValidationName(Dataset dataset, string registername)
         {
             var queryResultsDataset = from o in db.Datasets
-                                      where o.name == dataset.name && o.systemId != dataset.systemId && o.register.name == dataset.register.name
+                                      where o.name == dataset.name && o.systemId != dataset.systemId && o.register.seoname == registername
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -220,7 +220,7 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Dataset originalDataset = db.Datasets.Find(systId);
 
-            ValidationName(dataset);
+            ValidationName(dataset, registername);
 
             if (dataset.name == null) {
                 var model = db.Datasets.Find(originalDataset.systemId);

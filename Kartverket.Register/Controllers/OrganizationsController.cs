@@ -137,7 +137,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge)
         {
-            ValidationName(organization);
+            ValidationName(organization, "organisasjoner");
             
             if (ModelState.IsValid)
             {
@@ -252,6 +252,8 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
+
+            ValidationName(organization, "organisasjoner");
 
             if (ModelState.IsValid)
             {
@@ -453,10 +455,10 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        private void ValidationName(Organization organization)
+        private void ValidationName(Organization organization, string registername)
         {
             var queryResultsDataset = from o in db.Organizations
-                                      where o.name == organization.name && o.systemId != organization.systemId && o.register.name == organization.register.name
+                                      where o.name == organization.name && o.systemId != organization.systemId && o.register.name == registername
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

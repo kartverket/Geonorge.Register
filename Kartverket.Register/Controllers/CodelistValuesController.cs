@@ -85,7 +85,7 @@ namespace Kartverket.Register.Controllers
                 parentRegister = register.parentRegister.seoname;
                 parentRegisterOwner = register.parentRegister.owner.seoname;
             }
-            ValidationName(codelistValue);
+            ValidationName(codelistValue, registername);
 
             if (ModelState.IsValid)
             {
@@ -182,7 +182,7 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
-            ValidationName(codelistValue);
+            ValidationName(codelistValue, register);
 
             if (ModelState.IsValid)
             {
@@ -295,10 +295,10 @@ namespace Kartverket.Register.Controllers
             return result;
         }
 
-        private void ValidationName(CodelistValue codelistValue)
+        private void ValidationName(CodelistValue codelistValue, string registername)
         {
             var queryResultsDataset = from o in db.CodelistValues
-                                      where o.name == codelistValue.name && o.systemId != codelistValue.systemId && o.register.name == codelistValue.register.name
+                                      where o.name == codelistValue.name && o.systemId != codelistValue.systemId && o.register.seoname == registername
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

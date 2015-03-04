@@ -372,7 +372,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Document document)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId
+                                      where o.name == document.name && o.systemId != document.systemId && o.register.name == document.register.name
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

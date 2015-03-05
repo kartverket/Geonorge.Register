@@ -4,16 +4,33 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@section breadcrumb {
 
-@using (Html.BeginForm())
+@if (Model.register.parentRegisterId != null)
+{
+    <li><a href="/register/@Model.register.parentRegister.seoname">@Html.DisplayFor(model => model.register.parentRegister.name)</a></li>
+    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+    <li class="active">Rediger</li>
+}
+else{
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Rediger</li>
+    } 
+}
+
+<h2>Endre</h2>
+<h4>@Model.name</h4>
+<hr />
+
+@using (Html.BeginForm("Edit", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {  
-    <div class="form-horizontal">
-        <h4>CodelistValue</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.systemId)
-
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.systemId)
+    @Html.HiddenFor(model => model.registerId)
+    
+    <div class="form-horizontal">    
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -63,5 +80,15 @@
 }
 
 <div>
-    <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+    @if (Model.register.parentRegisterId != null)
+    {
+        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+    }
+
+
+    
 </div>

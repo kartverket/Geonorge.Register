@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models
         public DbSet<Kartverket.DOK.Models.DokDataset> DokDatasets { get; set; }
         public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
         public virtual DbSet<Sorting> Sorting { get; set; }
+        public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         //public virtual DbSet<InspireRequirement> inspireRequirements { get; set; }
         //public virtual DbSet<NationalRequirement> NationalRequirements { get; set; }
         //public virtual DbSet<NationalSeasRequirement> NationalSeasRequirements { get; set; }

@@ -76,6 +76,16 @@ namespace Kartverket.Register.Migrations
                 new Sorting { value = "dateAccepted_desc", description = "Godkjent dato synkende" }
             );
 
+            context.ContainedItemClass.AddOrUpdate(
+                new ContainedItemClass { value = "Register", description ="Register" },
+                new ContainedItemClass { value = "CodelistValue", description ="Kodelister" },
+                new ContainedItemClass { value = "Dataset", description ="Dataset" },
+                new ContainedItemClass { value = "Document", description ="Dokumenter" },
+                new ContainedItemClass { value = "EPSG", description ="EPSG koder" },
+                new ContainedItemClass { value = "Organization", description ="Organisasjoner" }
+            );
+
+
 
             //Register produktspesifikasjon = new Register 
             //{ 

@@ -192,8 +192,6 @@ namespace Kartverket.Register.Controllers
                 if (codelistValue.submitterId != null) originalCodelistValue.submitterId = codelistValue.submitterId;
                 if (codelistValue.value != null) originalCodelistValue.value = codelistValue.value;
 
-                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-
                 originalCodelistValue.modified = DateTime.Now;
                 db.Entry(originalCodelistValue).State = EntityState.Modified;
                 db.SaveChanges();
@@ -207,8 +205,8 @@ namespace Kartverket.Register.Controllers
                 
                 return Redirect("/register/" + originalCodelistValue.register.seoname);
             }
-            Viewbags(codelistValue);
-            return View(codelistValue);
+            Viewbags(originalCodelistValue);
+            return View(originalCodelistValue);
         }
 
         // GET: CodelistValues/Delete/5

@@ -63,8 +63,8 @@ namespace Kartverket.Register.Controllers
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                ViewBag.register = register.name;
-                ViewBag.registerSEO = register.seoname;
+                ViewBag.register = register.parentRegister.name;
+                ViewBag.registerSEO = register.parentRegister.seoname;
                 ViewBag.ownerSEO = owner;
                 ViewBag.subregister = subregister;
 
@@ -160,6 +160,7 @@ namespace Kartverket.Register.Controllers
             string registerOwner = FindRegisterOwner("kodelister");
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
             
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {

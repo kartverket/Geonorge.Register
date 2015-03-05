@@ -4,6 +4,22 @@
     ViewBag.Title = "Delete";
 }
 
+@section breadcrumb {
+    @if (Model.register.parentRegisterId != null)
+    {
+        <li><a href="/register/@Model.register.parentRegister.seoname">@Html.DisplayFor(model => model.register.parentRegister.name)</a></li>
+        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Slett</li>
+    }
+    else
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Slett</li>
+    }
+}
+
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>

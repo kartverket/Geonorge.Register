@@ -348,11 +348,16 @@
     <Compile Include="Migrations\201502190942203_AddParrenRegister.Designer.cs">
       <DependentUpon>201502190942203_AddParrenRegister.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503050813110_addContainedItemClass.cs" />
+    <Compile Include="Migrations\201503050813110_addContainedItemClass.Designer.cs">
+      <DependentUpon>201503050813110_addContainedItemClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="ModelsDok\ThemeGroup.cs" />
@@ -656,6 +661,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502190942203_AddParrenRegister.resx">
       <DependentUpon>201502190942203_AddParrenRegister.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503050813110_addContainedItemClass.resx">
+      <DependentUpon>201503050813110_addContainedItemClass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

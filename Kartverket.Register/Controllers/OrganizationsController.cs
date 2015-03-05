@@ -140,11 +140,12 @@ namespace Kartverket.Register.Controllers
             ValidationName(organization, registername);
             
             if (ModelState.IsValid)
-            {                
+            {
                 var queryResultsRegister = from o in db.Registers
                                            where o.name == registername
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
+                Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
                 organization.systemId = Guid.NewGuid();
                 if (organization.name == null) { organization.name = "ikke angitt"; }
@@ -178,7 +179,15 @@ namespace Kartverket.Register.Controllers
 
                 db.Entry(organization).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect("/register/" + registername);
+
+                if (register.parentRegister != null)
+                {
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername);
+                }
+                else
+                {
+                    return Redirect("/register/" + registername);
+                }
             }
 
             return View(organization);
@@ -231,6 +240,11 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/rediger")]
         public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string submitter, string organisasjon)
         {
+            var queryResultsRegister = from o in db.Registers
+                                       where o.name == registername
+                                       select o.systemId;
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
           
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == organisasjon && o.register.seoname == registername
@@ -293,8 +307,17 @@ namespace Kartverket.Register.Controllers
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(organization);
-                
-                return Redirect("/register/" + registername + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);                
+
+
+                if (register.parentRegister != null)
+                {
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/" + registername + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
+                }
+                            
             }
             Viewbags(organization);
             return View(originalOrganization);
@@ -336,6 +359,12 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Organization organization, string registername, string submitter, string organisasjon)
         {
+            var queryResultsRegister = from o in db.Registers
+                                       where o.name == registername
+                                       select o.systemId;
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == organisasjon
                                            select o.systemId;
@@ -346,7 +375,14 @@ namespace Kartverket.Register.Controllers
             db.Organizations.Remove(originalOrganization);
             db.SaveChanges();
 
-            return Redirect("/register/" + registername);
+            if (register.parentRegister != null)
+            {
+                return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername);
+            }
+            else
+            {
+                return Redirect("/register/" + registername);
+            }
         }
 
         protected override void Dispose(bool disposing)

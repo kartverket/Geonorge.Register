@@ -494,30 +494,14 @@
     </Content>
     <Content Include="Views\EPSGs\Create.cshtml" />
     <Content Include="Views\EPSGs\Delete.cshtml" />
-    <Content Include="Views\EPSGs\Details.cshtml" />
     <Content Include="Views\EPSGs\Edit.cshtml" />
-    <Content Include="Views\EPSGs\Index.cshtml" />
     <Content Include="Views\Documents\Create.cshtml" />
     <Content Include="Views\Documents\Delete.cshtml" />
-    <Content Include="Views\Documents\Details.cshtml" />
     <Content Include="Views\Documents\Edit.cshtml" />
-    <Content Include="Views\Documents\Index.cshtml" />
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Filterting\DetailsDocument.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\DisplayDataset\Display.cshtml" />
-    <Content Include="Views\DisplayDataset\Index.cshtml" />
-    <Content Include="Views\ManageDataset\Create.cshtml" />
-    <Content Include="Views\ManageDataset\Delete.cshtml" />
-    <Content Include="Views\ManageDataset\Edit.cshtml" />
-    <Content Include="Views\ManageDataset\Index.cshtml" />
-    <Content Include="Views\ManageThemeGroup\Create.cshtml" />
-    <Content Include="Views\ManageThemeGroup\Delete.cshtml" />
-    <Content Include="Views\ManageThemeGroup\Details.cshtml" />
-    <Content Include="Views\ManageThemeGroup\Edit.cshtml" />
-    <Content Include="Views\ManageThemeGroup\Index.cshtml" />
     <Content Include="Views\Registers\DetailsRegisterItem.cshtml" />
     <Content Include="Views\Shared\_detailsOrganization.cshtml" />
     <Content Include="Views\Shared\_detailsDocuments.cshtml" />
@@ -526,22 +510,16 @@
     <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Datasets\Create.cshtml" />
     <Content Include="Views\Datasets\Delete.cshtml" />
-    <Content Include="Views\Datasets\Details.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />
-    <Content Include="Views\Datasets\Index.cshtml" />
     <Content Include="Views\Shared\_detailsDataset.cshtml" />
     <Content Include="Views\Shared\_visningstyper.cshtml" />
     <Content Include="Views\Search\DetailsFilter.cshtml" />
     <Content Include="Views\Search\_filterDocument.cshtml" />
     <Content Include="Views\Search\_filterDataset.cshtml" />
-    <Content Include="Views\Registers\CreateSubregister.cshtml" />
-    <Content Include="Views\Registers\DetailsSubregister.cshtml" />
     <Content Include="Views\Shared\_codelistValue.cshtml" />
     <Content Include="Views\CodelistValues\Create.cshtml" />
     <Content Include="Views\CodelistValues\Delete.cshtml" />
-    <Content Include="Views\CodelistValues\Details.cshtml" />
     <Content Include="Views\CodelistValues\Edit.cshtml" />
-    <Content Include="Views\CodelistValues\Index.cshtml" />
     <Content Include="Views\Subregister\DetailsSubregisterItem.cshtml" />
     <Content Include="Views\Shared\_detailsCodelistValue.cshtml" />
     <Content Include="Views\Subregister\Create.cshtml" />

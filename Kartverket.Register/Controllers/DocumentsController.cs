@@ -73,17 +73,17 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
-        {
-            var queryResultsRegister = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResultsRegister.First();
-
+        {            
             ValidationName(document, registername);
        
             if (ModelState.IsValid)
             {
+                var queryResultsRegister = from o in db.Registers
+                                           where o.seoname == registername
+                                           select o.systemId;
+
+                Guid regId = queryResultsRegister.First();
+
                 document.systemId = Guid.NewGuid();
                 document.modified = DateTime.Now;
                 document.dateSubmitted = DateTime.Now;
@@ -155,7 +155,6 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(string registername, string documentname)
         {
-            //string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -163,7 +162,7 @@ namespace Kartverket.Register.Controllers
                                 where o.seoname == documentname && o.register.seoname == registername
                                 select o.systemId;
 
-                Guid systId = queryResults.First();
+            Guid systId = queryResults.First();
             
 
             if (systId == null)
@@ -191,7 +190,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             var queryResults = from o in db.Documents
@@ -205,7 +203,6 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                //Document originalDocument = db.Documents.Find(systId);
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;

@@ -101,13 +101,13 @@
                 {        
                     if (Model.register.containedItemClass == "Organization")
                     {
-                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                        <span>| </span><a href="/organisasjoner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
+                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
                     }
                     if (Model.register.containedItemClass == "Document")
                     {
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/slett">Slett</a>
                     }
                     if (Model.register.containedItemClass == "Dataset")
                     {

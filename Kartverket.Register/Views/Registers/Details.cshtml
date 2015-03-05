@@ -169,15 +169,15 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/ny">| Foreslå nye @Model.name </a>
+                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    <a href="/dokument/@Model.seoname/ny">| Foreslå nye @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>                    
+                    <a href="/dataset/@Model.seoname/ny">| Foreslå nye @Model.name </a>                    
                 }
                 if (Model.containedItemClass == "EPSG")
                 {

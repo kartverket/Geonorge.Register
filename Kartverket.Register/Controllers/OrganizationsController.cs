@@ -137,12 +137,12 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername)
         {
-            ValidationName(organization, "organisasjoner");
+            ValidationName(organization, registername);
             
             if (ModelState.IsValid)
             {                
                 var queryResultsRegister = from o in db.Registers
-                                           where o.name == "Organisasjoner"
+                                           where o.name == registername
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
 

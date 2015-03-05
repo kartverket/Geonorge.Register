@@ -70,6 +70,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)

@@ -27,14 +27,18 @@
                 <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding col-img">
                     @if (item.register.parentRegister != null)
                     {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.seoname/">
-                            <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="img-responsive center-block img-small" alt="logo @item.name" />
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
                         </a>
                     }
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="img-responsive center-block img-small" alt="logo @item.name" />
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
                         </a>
                     }
                     

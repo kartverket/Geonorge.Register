@@ -8,8 +8,8 @@
 
 @section breadcrumb {
 
-        <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-        <li class="active">@Html.DisplayFor(model => model.name)</li>
+    <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
+    <li class="active">@Html.DisplayFor(model => model.name)</li>
 
 }
 
@@ -34,9 +34,9 @@
         var page = ViewBag.page;
         var currentFilter = ViewBag.currentFilter;
         var sortering = Model.items.OrderBy(o => o.name).ToList();
-        
-        
-        
+
+
+
         int pageSize = 50;
         int pageNumber = (page ?? 1);
 
@@ -164,7 +164,8 @@
             {
                 @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.dateAccepted).ToList().ToPagedList(pageNumber, pageSize))
             }
-            else { 
+            else
+            {
                 @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
             }
         }

@@ -48,35 +48,6 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        // GET: Registers/Details/5
-        [Route("subregister/{registername}/{owner}/{subregister}")]
-        public ActionResult DetailsSubregister(string registername, string owner, string subregister, string sorting, int? page)
-        {
-            var queryResultsSubregister = from r in db.Registers
-                                          where r.seoname == subregister && r.parentRegister.seoname == registername
-                                          select r.systemId;
-
-            if (queryResultsSubregister.Count() > 0)
-	        {
-		        Guid systId = queryResultsSubregister.First();
-                Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-                ViewBag.page = page;
-                ViewBag.SortOrder = sorting;
-                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                ViewBag.register = register.parentRegister.name;
-                ViewBag.registerSEO = register.parentRegister.seoname;
-                ViewBag.ownerSEO = owner;
-                ViewBag.subregister = subregister;
-
-                if (register == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(register);
-	        }
-                return HttpNotFound();
-        }
-
         [Route("register/{registername}/{submitter}/{itemname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemname)
         {
@@ -95,35 +66,6 @@ namespace Kartverket.Register.Controllers
                 return View(registerItem);    
         }
 
-        [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
-        public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname)
-        {
-            
-            var queryResults = from o in db.RegisterItems
-                                where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
-                                select o.systemId;
-
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
-
-            if (registerItem.register.containedItemClass == "Document") {
-                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-                ViewBag.documentOwner = document.documentowner.name;
-            }
-                return View(registerItem);    
-        }
-
-        //// GET: Registers/Create
-        //[Authorize]
-        //public ActionResult Create()
-        //{
-        //    string role = GetSecurityClaim("role");
-        //    if (role == "nd.metadata_admin")
-        //    {
-        //        return View();
-        //    }
-        //    return HttpNotFound();
-        //}
 
         //// POST: Registers/Create
         //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -152,77 +94,7 @@ namespace Kartverket.Register.Controllers
         //}
 
         
-        // GET: subregister/Create
-        [Authorize]
-        [Route("subregister/ny")]
-        public ActionResult CreateSubregister()
-        {
-            string registerOwner = FindRegisterOwner("kodelister");
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
-            
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
-            {
-                return View();
-            }
-            return HttpNotFound();
-        }
-
-        // POST: subregister/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
-        [HttpPost]
-        [Route("subregister/ny")]
-        //[ValidateAntiForgeryToken]
-        public ActionResult CreateSubregister(Kartverket.Register.Models.Register subregister)
-        {
-            ValidationName(subregister);
-
-            if (ModelState.IsValid)
-            {
-                subregister.systemId = Guid.NewGuid();
-                if (subregister.name == null)
-                {
-                    subregister.name = "ikke angitt";
-                }
-
-                var queryResultsRegister = from o in db.Registers
-                                           where o.name == "Kodelister"
-                                           select o.systemId;
-                Guid regId = queryResultsRegister.First();
-
-                subregister.systemId = Guid.NewGuid();
-                subregister.modified = DateTime.Now;
-                subregister.dateSubmitted = DateTime.Now;
-                subregister.statusId = "Submitted";
-                subregister.seoname = MakeSeoFriendlyString(subregister.name);
-                subregister.parentRegisterId = regId;
-
-                db.Registers.Add(subregister);
-                db.SaveChanges();
-
-                string organizationLogin = GetSecurityClaim("organization");
-
-                var queryResults = from o in db.Organizations
-                                   where o.name == organizationLogin
-                                   select o.systemId;
-
-                Guid orgId = queryResults.First();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                subregister.ownerId = submitterOrganisasjon.systemId;
-                subregister.managerId = submitterOrganisasjon.systemId;
-
-                db.Entry(subregister).State = EntityState.Modified;
-
-                db.SaveChanges();
-                return Redirect("/register/kodelister");
-            }
-
-            return View(subregister);
-        }
+        
 
         [Authorize]
         // GET: Registers/Edit/5
@@ -245,7 +117,6 @@ namespace Kartverket.Register.Controllers
             return View(register);
 
         }
-
 
 
         // POST: Registers/Edit/5

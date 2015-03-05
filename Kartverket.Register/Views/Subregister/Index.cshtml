@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Kartverket.Register.Models.CodelistValue>
+﻿@model IEnumerable<Kartverket.Register.Models.Register>
 
 @{
     ViewBag.Title = "Index";
@@ -12,13 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.register.name)
+            @Html.DisplayNameFor(model => model.manager.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.owner.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.parentRegister.name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.status.description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.submitter.name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.name)
@@ -36,10 +39,10 @@
             @Html.DisplayNameFor(model => model.dateAccepted)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.seoname)
+            @Html.DisplayNameFor(model => model.containedItemClass)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.value)
+            @Html.DisplayNameFor(model => model.seoname)
         </th>
         <th></th>
     </tr>
@@ -47,13 +50,16 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.register.name)
+            @Html.DisplayFor(modelItem => item.manager.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.owner.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.parentRegister.name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.status.description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.submitter.name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.name)
@@ -71,10 +77,10 @@
             @Html.DisplayFor(modelItem => item.dateAccepted)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.seoname)
+            @Html.DisplayFor(modelItem => item.containedItemClass)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.value)
+            @Html.DisplayFor(modelItem => item.seoname)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.systemId }) |

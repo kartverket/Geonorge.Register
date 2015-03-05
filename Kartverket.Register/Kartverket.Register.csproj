@@ -542,6 +542,7 @@
     <Content Include="Views\CodelistValues\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Index.cshtml" />
     <Content Include="Views\Registers\DetailsSubregisterItem.cshtml" />
+    <Content Include="Views\Registers\_detailsCodelistValue.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

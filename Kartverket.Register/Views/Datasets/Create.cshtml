@@ -6,11 +6,12 @@
     ViewBag.Title = registername;
 }
 @section breadcrumb {
-    <li>Dataset</li>
+    <li><a href="/register/@registername">@registername</a></li>
     <li class="active">Ny</li>
 }
 
-<h1>@ViewBag.Title</h1>
+<h2>Foreslå datasett</h2>
+<hr/>
 <div class="row">
     <div class="col-sm-6 col-sm-offset-2">
         <div class="panel panel-info">

@@ -202,6 +202,16 @@
                     <a href="/kodeliste/@Model.seoname/ny">| Foreslå nye @Model.name </a>
                 }
             }
+
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            {
+                <a href="#">| Endre @Model.name </a>
+                <a href="#">| slette @Model.name </a>
+            }
+
+
+
+
         }
     </div>
 </div>

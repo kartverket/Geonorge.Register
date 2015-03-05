@@ -32,11 +32,24 @@
                         <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     </div>
                     <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
-                        <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
-                                @item.name
-                            </h4>
-                        </a>
+                        
+
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.seoname/">
+                                <h4 class="role-button" role="button" style="font-size: 18px;">
+                                    @item.name
+                                </h4>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                <h4 class="role-button" role="button" style="font-size: 18px;">
+                                    @item.name
+                                </h4>
+                            </a>
+                        }
                         <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.documentowner.name)/">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>

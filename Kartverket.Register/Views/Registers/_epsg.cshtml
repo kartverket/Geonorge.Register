@@ -24,11 +24,22 @@
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-title col-xs-5 col-sm-5 col-md-5 col-lg-5 ">
-                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.submitter.name)/@Html.ToUrl(item.name)/">
-                        <h4 class="role-button" role="button" style="font-size: 18px;">
-                            @item.name
-                        </h4>
-                    </a>
+                    @if (item.register.parentRegister != null)
+                    {
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.seoname/">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
+                        </a>
+                    }
                     <p>
                         @item.description
                     </p>

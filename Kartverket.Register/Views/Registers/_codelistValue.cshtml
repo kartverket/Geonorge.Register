@@ -23,11 +23,23 @@
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-title col-xs-3 col-sm-3 col-md-3 col-lg-3 ">
-                    <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                        <h4 class="role-button" role="button" style="font-size: 18px;">
-                            @item.name
-                        </h4>
-                    </a>
+                    @if (item.register.parentRegister != null)
+                    {
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.seoname/">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                                @item.name
+                            </h4>
+                        </a>
+                    }
+                    
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-actions ">
                     @item.description

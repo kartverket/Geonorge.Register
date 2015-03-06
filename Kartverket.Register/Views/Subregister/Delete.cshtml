@@ -4,6 +4,15 @@
     ViewBag.Title = "Slett";
 }
 
+@section breadcrumb {
+    @if (Model.parentRegisterId != null)
+    {
+        <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
+        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Slett</li>
+    }
+}
+
 <h2>Slett</h2>
 
 <h3>Er du sikker på at du vil slette @Model.name</h3>

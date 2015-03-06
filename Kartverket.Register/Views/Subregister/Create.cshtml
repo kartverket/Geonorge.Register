@@ -5,8 +5,12 @@
 }
 
 @section breadcrumb {
-    <li>Kodeliste</li>
-    <li class="active">Ny</li>
+    @if (Model.parentRegisterId != null)
+    {
+        <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
+        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Ny</li>
+    }
 }
 
 <h2>Foreslå ny kodeliste</h2>

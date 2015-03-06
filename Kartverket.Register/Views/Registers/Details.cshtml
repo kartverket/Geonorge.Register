@@ -188,6 +188,11 @@
                     <a href="/subregister/@Model.seoname/ny">| Foreslå nye @Model.name </a>
                 }
             }
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            {
+                <span>| </span><a href="/endre/@Model.seoname">Endre</a>
+                <span>| </span><a href="/slett/@Model.seoname">Slett</a>
+            }
         }
     </div>
 </div>

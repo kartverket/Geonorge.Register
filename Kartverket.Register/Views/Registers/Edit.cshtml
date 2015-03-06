@@ -1,22 +1,19 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = UI.CreateNew;
-    var parentRegisterSEO = ViewBag.parentRegisterSEO;
+    ViewBag.Title = UI.Edit;
 }
 
-@section breadcrumb {
+<h2>@ViewBag.Title</h2>
 
-    <li><a href="/register/@parentRegisterSEO">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-    <li class="active">Ny</li>
-}
-
-<h2>Foreslå @parentRegisterSEO</h2>
-@using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "Registers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
+        <h4>@Html.DisplayName(Model.name)</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.systemId)
+        @Html.HiddenFor(model => model.parentRegisterId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,28 +32,32 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, "Type register", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("containedItemClass", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
+                @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.owner, "Eier", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
+                <input type="submit" value="Lagre" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-
-    <a href="/">Tilbake</a>
-
+    <a href="/register/@Model.seoname">Tilbake</a>
 </div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

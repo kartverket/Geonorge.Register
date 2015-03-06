@@ -525,6 +525,7 @@
     <Content Include="Views\Subregister\Details.cshtml" />
     <Content Include="Views\Subregister\Edit.cshtml" />
     <Content Include="Views\Subregister\Index.cshtml" />
+    <Content Include="Views\Registers\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

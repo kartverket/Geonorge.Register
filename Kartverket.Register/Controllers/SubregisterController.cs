@@ -115,7 +115,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 var queryResultsRegister = from o in db.Registers
-                                           where o.name == registername
+                                           where o.seoname == registername
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
 

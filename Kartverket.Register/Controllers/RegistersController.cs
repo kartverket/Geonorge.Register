@@ -41,6 +41,11 @@ namespace Kartverket.Register.Controllers
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
 
+            if(register.parentRegisterId != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+            }
+
             if (register == null)
             {
                 return HttpNotFound();
@@ -67,54 +72,96 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        //// POST: Registers/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass")] Kartverket.Register.Models.Register register)
-        //{
-            
-        //    if (ModelState.IsValid)
-        //    {
-        //        register.systemId = Guid.NewGuid();
-
-        //        var queryResults = from o in db.Organizations
-        //                           where o.name == Session["user"]
-        //                           select o.systemId;
-
-        //        register.ownerId = queryResults.First();
-        //        register.statusId = "Submitted";                
-        //        db.Registers.Add(register);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(register);
-        //}
-
-        
-        
-
+        // GET: subregister/Create
         [Authorize]
-        // GET: Registers/Edit/5
-        public ActionResult Edit(Guid? id)
+        [Route("ny/")]
+        public ActionResult Create()
         {
             string role = GetSecurityClaim("role");
-            if (role != "nd.metadata_admin")
+            string user = GetSecurityClaim("organization");
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+
+            if (role == "nd.metadata_admin")
             {
-                return HttpNotFound();
+                return View();
             }
-            if (id == null)
+            return HttpNotFound();
+        }
+
+        // POST: subregister/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
+        [HttpPost]
+        [Route("ny/")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult Create(Kartverket.Register.Models.Register register)
+        {
+            ValidationName(register);
+
+            if (ModelState.IsValid)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                register.systemId = Guid.NewGuid();
+                if (register.name == null)
+                {
+                    register.name = "ikke angitt";
+                }
+
+                register.systemId = Guid.NewGuid();
+                register.modified = DateTime.Now;
+                register.dateSubmitted = DateTime.Now;
+                register.statusId = "Submitted";
+                register.seoname = MakeSeoFriendlyString(register.name);
+
+                db.Registers.Add(register);
+                db.SaveChanges();
+
+                string organizationLogin = GetSecurityClaim("organization");
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                register.ownerId = submitterOrganisasjon.systemId;
+                register.managerId = submitterOrganisasjon.systemId;
+
+                db.Entry(register).State = EntityState.Modified;
+
+                db.SaveChanges();
+                return Redirect("/");
             }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
+
+            return Redirect("/");
+        }
+
+
+        [Authorize]
+        [Route("endre/{registername}")]
+        public ActionResult Edit(string registername)
+        {
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
             if (register == null)
             {
                 return HttpNotFound();
             }
-            return View(register);
+            if (role == "nd.metadata_admin")
+            {
+                Viewbags(register);
+                return View(register);
+            }
+            return HttpNotFound();
 
         }
 
@@ -123,51 +170,96 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("endre/{registername}")]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "systemId,name,description,dateSubmitted,modified,dateAccepted,containedItemClass,url")] Kartverket.Register.Models.Register register)
+        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername)
         {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            ValidationName(register);
+            Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
             if (ModelState.IsValid)
             {
-                db.Entry(register).State = EntityState.Modified;
+                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = MakeSeoFriendlyString(originalRegister.name);
+                if (register.description != null) originalRegister.description = register.description;
+                if (register.owner != null) originalRegister.ownerId = register.ownerId;
+                if (register.managerId != null) originalRegister.managerId = register.managerId;
+
+                originalRegister.modified = DateTime.Now;
+                if (register.statusId != null)
+                {
+                    originalRegister.statusId = register.statusId;
+                    if (originalRegister.status.description != "Accepted" && register.status.description == "Accepted")
+                    {
+                        originalRegister.dateAccepted = DateTime.Now;
+                    }
+                    if (originalRegister.status.description == "Accepted" && register.status.description != "Accepted")
+                    {
+                        originalRegister.dateAccepted = null;
+                    }
+                }
+
+                db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                Viewbags(register);
+
+                return Redirect("/register/" + registername);
             }
-            return View(register);
+            Viewbags(register);
+            return View(originalRegister);
         }
 
         // GET: Registers/Delete/5
         [Authorize]
-        public ActionResult Delete(Guid? id, string name)
+        [Route("slett/{registername}")]
+        public ActionResult Delete(string registername)
         {
-            string role = GetSecurityClaim("role");
-            if (role != "nd.metadata_admin")
-            {
-                return HttpNotFound();
-            }
-            
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
-            if (name == null)
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
+            if (register == null)
             {
                 return HttpNotFound();
             }
             return View(register);
         }
 
-        //// POST: Registers/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //[Authorize]
-        //public ActionResult DeleteConfirmed(Guid id)
-        //{
-        //    Kartverket.Register.Models.Register register = db.Registers.Find(id);
-        //    db.Registers.Remove(register);
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
-        //}
+        // POST: Registers/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [Route("slett/{registername}")]
+        [Authorize]
+        public ActionResult DeleteConfirmed(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
+            var queryResultsRegisterItem = from o in db.RegisterItems
+                                           where o.register.seoname == registername
+                                           select o.systemId;
+
+            if (queryResultsRegisterItem.Count() > 0)
+            {
+                return View(register);
+                //skriv ut feilmelding på at registeret inneholder registeritems.. kan ikke slettes...
+            }
+            else
+            {
+                db.Registers.Remove(register);
+                db.SaveChanges();
+                return Redirect("/");
+            }
+        }
 
 
         protected override void Dispose(bool disposing)
@@ -256,10 +348,10 @@ namespace Kartverket.Register.Controllers
             return registerOwner;
         }
 
-        private void ValidationName(Kartverket.Register.Models.Register kodelisteregister)
+        private void ValidationName(Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.Registers
-                                      where o.name == kodelisteregister.name && o.systemId != kodelisteregister.systemId && o.parentRegister.name == "Kodelister"
+                                      where o.name == register.name && o.systemId != register.systemId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -268,6 +360,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
+      
         private static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();
@@ -293,5 +386,12 @@ namespace Kartverket.Register.Controllers
             return encodedUrl;
         }
 
+        private void Viewbags(Kartverket.Register.Models.Register register)
+        {
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
+            ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
+        }
     }
+
 }

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 
 
@@ -20,7 +21,8 @@ namespace Kartverket.Register.Models
         {
             //this.subvalues = new HashSet<CodelistValue>();
             
-        } 
+        }
+        [Display(Name = "Kodeverdi")]
         public string value { get; set; }
         //public virtual CodelistValue parent { get; set; }
         //public virtual ICollection<CodelistValue> subvalues { get; set; }

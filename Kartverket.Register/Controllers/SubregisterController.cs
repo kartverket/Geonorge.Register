@@ -92,11 +92,11 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("subregister/ny")]
+        [Route("subregister/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Kartverket.Register.Models.Register subregister)
+        public ActionResult Create(Kartverket.Register.Models.Register subregister, string registername)
         {
-            ValidationName(subregister);
+            ValidationName(subregister, registername);
 
             if (ModelState.IsValid)
             {
@@ -143,42 +143,66 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Subregister/Edit/5
-        public ActionResult Edit(Guid? id)
+        [Authorize]
+        [Route("subregister/{registername}/{owner}/{subregister}/rediger")]
+        public ActionResult Edit(string registername, string subregister)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Registers
+                               where o.seoname == subregister && o.parentRegister.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
             if (register == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.managerId = new SelectList(db.RegisterItems, "systemId", "name", register.managerId);
-            ViewBag.ownerId = new SelectList(db.RegisterItems, "systemId", "name", register.ownerId);
-            ViewBag.parentRegisterId = new SelectList(db.Registers, "systemId", "name", register.parentRegisterId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", register.statusId);
-            return View(register);
+            if (role == "nd.metadata_admin" || user.ToLower() == register.owner.name.ToLower() || user.ToLower() == register.owner.name.ToLower())
+            {
+                Viewbags(register);
+                return View(register);
+            }
+            return HttpNotFound();
         }
 
         // POST: Subregister/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "systemId,ownerId,managerId,name,description,statusId,dateSubmitted,modified,dateAccepted,containedItemClass,parentRegisterId,seoname")] Kartverket.Register.Models.Register register)
+        [Route("subregister/{registername}/{owner}/{subregister}/rediger")]
+        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string subregister)
         {
+            var queryResults = from o in db.Registers
+                               where o.seoname == subregister && o.parentRegister.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
+
+            ValidationName(register, registername);
+
             if (ModelState.IsValid)
             {
-                db.Entry(register).State = EntityState.Modified;
+                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = MakeSeoFriendlyString(originalRegister.name);
+                if (register.description != null) originalRegister.description = register.description;
+                if (register.owner != null) originalRegister.ownerId = register.ownerId;
+                if (register.statusId != null) originalRegister.statusId = register.statusId;
+                if (register.managerId != null) originalRegister.managerId = register.managerId;
+                
+                originalRegister.modified = DateTime.Now;
+                //Test på at dersom status har skiftet til Accepted, så skal dateAccepted settes
+                db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                Viewbags(register);
+
+                return Redirect("/register/" + registername + "/" + originalRegister.owner.seoname + "/" + originalRegister.seoname);
             }
-            ViewBag.managerId = new SelectList(db.RegisterItems, "systemId", "name", register.managerId);
-            ViewBag.ownerId = new SelectList(db.RegisterItems, "systemId", "name", register.ownerId);
-            ViewBag.parentRegisterId = new SelectList(db.Registers, "systemId", "name", register.parentRegisterId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", register.statusId);
-            return View(register);
+            Viewbags(register);
+            return View(originalRegister);
         }
 
         // GET: Subregister/Delete/5
@@ -241,10 +265,10 @@ namespace Kartverket.Register.Controllers
 
         // *********************** Hjelpemetoder
 
-        private void ValidationName(Kartverket.Register.Models.Register kodelisteregister)
+        private void ValidationName(Kartverket.Register.Models.Register subregister, string register)
         {
             var queryResultsDataset = from o in db.Registers
-                                      where o.name == kodelisteregister.name && o.systemId != kodelisteregister.systemId && o.parentRegister.name == "Kodelister"
+                                      where o.name == subregister.name && o.systemId != subregister.systemId && o.parentRegister.name == register
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -310,6 +334,13 @@ namespace Kartverket.Register.Controllers
             encodedUrl = encodedUrl.Trim('-');
 
             return encodedUrl;
+        }
+
+        private void Viewbags(Kartverket.Register.Models.Register register)
+        {
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
+            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
+            ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
         }
     }
 }

@@ -231,6 +231,9 @@ namespace Kartverket.Register.Controllers
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }
 
+                //Test på at dersom status har skiftet til Accepted, så skal dateAccepted settes
+
+
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;
                 db.SaveChanges();

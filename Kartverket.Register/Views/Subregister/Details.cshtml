@@ -206,7 +206,7 @@
 
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
-                <a href="#">| Endre @Model.name </a>
+                <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/rediger">| Endre @Model.name </a>
                 <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/slett">| slette @Model.name </a> //"subregister/{registername}/{owner}/{subregister}/slett")
             }
 

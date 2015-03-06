@@ -37,9 +37,14 @@
 function tableView()
  {
     $(".table-heading").remove();
-    $('.search-results.kartkatalog').prepend("<div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
-    $('.search-results.document').prepend("<div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div></div><div class='col-xs-3'><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4>Status</h4></div><div class='col-xs-3'><h4>Referanse</h4></div></div></div>");
+    $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
+    $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4><h4>Eier / leverandør</h4></div><div class='space'>.</div><div class='col-actions'><h4>Status</h4><h4>Referanse</h4></div></div>");
   
+    $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'><h4>ESPG</h4><h4>Sosi ref. system</h4><h4>Ekstern ref.</h4></div><div class='col-actions'><h4>Inspire krav</h4><h4>Inspire krav</h4><h4>Inspire krav</h4></div></div></div>");
+
+    $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'>ting</div><div class='col-information'><h4>SOSI:</h4><h4>Status:</h4><h4>Gruppe:</h4></div></div></div>");
+
+
     // Buttons
     $('#button-listView').removeClass('active');
     $('#button-galleryView').removeClass('active');
@@ -49,7 +54,7 @@ function tableView()
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
-    $(window).scroll(function () {
+  /*  $(window).scroll(function () {
         if ($(window).scrollTop() > 330) {
             $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 330 + "px" });
             $(".kartkatalog .table-heading").css("background-color", "white");
@@ -77,10 +82,11 @@ function tableView()
             $(".document .table-heading").css("top", "0");
         }
     });
+    */
 
     localStorage.setItem("visningstype", "tabell");
 
-}
+} 
 
 function SortBy(sort) {
     var sort = document.getElementById("sorting");

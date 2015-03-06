@@ -211,7 +211,18 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.documentUrl = document.documentUrl; 
                 }
-                if (document.statusId != null) originalDocument.statusId = document.statusId;
+                if (document.statusId != null)
+                {
+                    originalDocument.statusId = document.statusId;
+                    if (originalDocument.status.description != "Accepted" && document.status.description == "Accepted")
+                    {
+                        originalDocument.dateAccepted = DateTime.Now;
+                    }
+                    if (originalDocument.status.description == "Accepted" && document.status.description != "Accepted")
+                    {
+                        originalDocument.dateAccepted = null;
+                    }
+                }
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;

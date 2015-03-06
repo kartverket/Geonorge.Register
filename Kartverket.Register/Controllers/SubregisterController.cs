@@ -198,11 +198,22 @@ namespace Kartverket.Register.Controllers
                 if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = MakeSeoFriendlyString(originalRegister.name);
                 if (register.description != null) originalRegister.description = register.description;
                 if (register.owner != null) originalRegister.ownerId = register.ownerId;
-                if (register.statusId != null) originalRegister.statusId = register.statusId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
                 
                 originalRegister.modified = DateTime.Now;
-                //Test på at dersom status har skiftet til Accepted, så skal dateAccepted settes
+                if (register.statusId != null)
+                { 
+                    originalRegister.statusId = register.statusId;
+                    if (originalRegister.status.description != "Accepted" && register.status.description == "Accepted")
+                    {
+                        originalRegister.dateAccepted = DateTime.Now;
+                    }
+                    if(originalRegister.status.description == "Accepted" && register.status.description != "Accepted")
+                    {
+                        originalRegister.dateAccepted = null;
+                    }
+                }
+
                 db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(register);

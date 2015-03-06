@@ -192,6 +192,19 @@ namespace Kartverket.Register.Controllers
                 if (codelistValue.submitterId != null) originalCodelistValue.submitterId = codelistValue.submitterId;
                 if (codelistValue.value != null) originalCodelistValue.value = codelistValue.value;
 
+                if (codelistValue.statusId != null)
+                {
+                    originalCodelistValue.statusId = codelistValue.statusId;
+                    if (originalCodelistValue.status.description != "Accepted" && codelistValue.status.description == "Accepted")
+                    {
+                        originalCodelistValue.dateAccepted = DateTime.Now;
+                    }
+                    if (originalCodelistValue.status.description == "Accepted" && codelistValue.status.description != "Accepted")
+                    {
+                        originalCodelistValue.dateAccepted = null;
+                    }
+                }
+
                 originalCodelistValue.modified = DateTime.Now;
                 db.Entry(originalCodelistValue).State = EntityState.Modified;
                 db.SaveChanges();

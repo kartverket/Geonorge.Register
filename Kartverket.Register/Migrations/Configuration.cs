@@ -80,7 +80,7 @@ namespace Kartverket.Register.Migrations
                 new ContainedItemClass { value = "Register", description ="Register" },
                 new ContainedItemClass { value = "CodelistValue", description ="Kodelister" },
                 new ContainedItemClass { value = "Dataset", description ="Dataset" },
-                new ContainedItemClass { value = "Document", description ="Dokumenter" },
+                new ContainedItemClass { value = "Document", description ="Dokument" },
                 new ContainedItemClass { value = "EPSG", description ="EPSG koder" },
                 new ContainedItemClass { value = "Organization", description ="Organisasjoner" }
             );

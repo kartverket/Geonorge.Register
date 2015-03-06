@@ -1,19 +1,17 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = "Kodeliste";
+    ViewBag.Title = UI.CreateNew;
+    var parentRegisterSEO = ViewBag.parentRegisterSEO;
 }
 
 @section breadcrumb {
-    @if (Model.parentRegisterId != null)
-    {
-        <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+
+        <li><a href="/register/@parentRegisterSEO">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
         <li class="active">Ny</li>
-    }
 }
 
-<h2>Foreslå ny kodeliste</h2>
+<h2>Foreslå @parentRegisterSEO</h2>
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
@@ -54,7 +52,7 @@
 
 <div>
 
-    <a href="/register/kodelister/">Tilbake</a>
+    <a href="/register/@parentRegisterSEO/">Tilbake</a>
 
 </div>
 

@@ -72,13 +72,21 @@ namespace Kartverket.Register.Controllers
 
         // GET: subregister/Create
         [Authorize]
-        [Route("subregister/ny")]
-        public ActionResult Create()
+        [Route("subregister/{registername}/ny")]
+        public ActionResult Create(string registername)
         {
-            string registerOwner = FindRegisterOwner("kodelister");
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername
+                                       select o.systemId;
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            
+            
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+            ViewBag.parentRegisterSEO = register.seoname;
+
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
@@ -107,7 +115,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 var queryResultsRegister = from o in db.Registers
-                                           where o.name == "Kodelister"
+                                           where o.name == registername
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
 
@@ -275,19 +283,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
-        }
-
-
-        private string FindRegisterOwner(string registername)
-        {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
         }
 
         private string GetSecurityClaim(string type)

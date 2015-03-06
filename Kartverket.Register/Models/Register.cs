@@ -38,6 +38,7 @@ namespace Kartverket.Register.Models
         public virtual Organization manager { get; set; }
         [DisplayName("Navn")]
         public string name { get; set; }
+        [Display(Name = "Beskrivelse")]
         public string description { get; set; }
         [ForeignKey("status")]
         public string statusId { get; set; }
@@ -48,6 +49,7 @@ namespace Kartverket.Register.Models
         public DateTime modified { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
+        [Display(Name = "Type register")]
         public string containedItemClass { get; set; }
         public virtual ICollection<RegisterItem> items { get; set; }
         [ForeignKey("parentRegister")]

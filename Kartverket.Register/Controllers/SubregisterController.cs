@@ -182,13 +182,17 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Subregister/Delete/5
-        public ActionResult Delete(Guid? id)
+        [Authorize]
+        [Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        public ActionResult Delete(string registername, string owner, string subregister)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
+            var queryResults = from o in db.Registers
+                               where o.seoname == subregister && o.parentRegister.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
             if (register == null)
             {
                 return HttpNotFound();
@@ -198,13 +202,30 @@ namespace Kartverket.Register.Controllers
 
         // POST: Subregister/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        [Route("subregister/{registername}/{owner}/{subregister}/slett")]
+        public ActionResult DeleteConfirmed(string registername, string owner, string subregister)
         {
-            Kartverket.Register.Models.Register register = db.Registers.Find(id);
-            db.Registers.Remove(register);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var queryResults = from o in db.Registers
+                               where o.seoname == subregister && o.parentRegister.seoname == registername
+                               select o.systemId;
+
+            Guid systId = queryResults.First();        
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+
+            var queryResultsRegisterItem = from o in db.RegisterItems
+                               where o.register.seoname == subregister && o.register.parentRegister.seoname == registername
+                               select o.systemId;
+
+            if (queryResultsRegisterItem.Count() > 0)
+            {
+                return View(register);
+                //skriv ut feilmelding på at registeret inneholder registeritems.. kan ikke slettes...
+            }
+            else { 
+                db.Registers.Remove(register);
+                db.SaveChanges();
+                return Redirect("/register/" + registername);
+            }
         }
 
         protected override void Dispose(bool disposing)

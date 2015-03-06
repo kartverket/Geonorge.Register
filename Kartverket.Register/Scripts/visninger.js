@@ -42,7 +42,7 @@ function tableView()
   
     $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'><h4>ESPG</h4><h4>Sosi ref. system</h4><h4>Ekstern ref.</h4></div><div class='col-actions'><h4>Inspire krav</h4><h4>Inspire krav</h4><h4>Inspire krav</h4></div></div></div>");
 
-    $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'>ting</div><div class='col-information'><h4>SOSI:</h4><h4>Status:</h4><h4>Gruppe:</h4></div></div></div>");
+    $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'>Informasjon</div><div class='col-information'><h4>SOSI:</h4><h4>Status:</h4><h4>Gruppe:</h4></div></div></div>");
 
 
     // Buttons

@@ -181,7 +181,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("subregister/{registername}/{owner}/{subregister}/rediger")]
+        [Route("subregister/{registername}/{ownerSubregister}/{subregister}/rediger")]
         public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string subregister)
         {
             var queryResults = from o in db.Registers
@@ -192,6 +192,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
 
             ValidationName(register, registername);
+
 
             if (ModelState.IsValid)
             {
@@ -204,11 +205,11 @@ namespace Kartverket.Register.Controllers
                 if (register.statusId != null)
                 { 
                     originalRegister.statusId = register.statusId;
-                    if (originalRegister.status.description != "Accepted" && register.status.description == "Accepted")
+                    if (originalRegister.statusId != "Accepted" && register.statusId == "Accepted")
                     {
                         originalRegister.dateAccepted = DateTime.Now;
                     }
-                    if(originalRegister.status.description == "Accepted" && register.status.description != "Accepted")
+                    if(originalRegister.statusId == "Accepted" && register.statusId != "Accepted")
                     {
                         originalRegister.dateAccepted = null;
                     }
@@ -218,7 +219,7 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(register);
 
-                return Redirect("/register/" + registername + "/" + originalRegister.owner.seoname + "/" + originalRegister.seoname);
+                return Redirect("/subregister/" + registername + "/" + originalRegister.owner.seoname + "/" + originalRegister.seoname);
             }
             Viewbags(register);
             return View(originalRegister);

@@ -172,17 +172,18 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("kodeliste/{register}/{submitter}/{itemname}/rediger")]
-        public ActionResult Edit(CodelistValue codelistValue, string submitter, string register, string itemname)
+        [Route("kodeliste/{registerCodelist}/{submitterCodelist}/{itemname}/rediger")]
+        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registerCodelist, string itemname)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == register
+                               where o.seoname == itemname && o.register.seoname == registerCodelist
                                select o.systemId;
 
             Guid systId = queryResults.First();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
-            ValidationName(codelistValue, register);
+            ValidationName(codelistValue, registerCodelist);
+
 
             if (ModelState.IsValid)
             {
@@ -195,11 +196,11 @@ namespace Kartverket.Register.Controllers
                 if (codelistValue.statusId != null)
                 {
                     originalCodelistValue.statusId = codelistValue.statusId;
-                    if (originalCodelistValue.status.description != "Accepted" && codelistValue.status.description == "Accepted")
+                    if (originalCodelistValue.statusId != "Accepted" && codelistValue.statusId == "Accepted")
                     {
                         originalCodelistValue.dateAccepted = DateTime.Now;
                     }
-                    if (originalCodelistValue.status.description == "Accepted" && codelistValue.status.description != "Accepted")
+                    if (originalCodelistValue.statusId == "Accepted" && codelistValue.statusId != "Accepted")
                     {
                         originalCodelistValue.dateAccepted = null;
                     }
@@ -213,7 +214,7 @@ namespace Kartverket.Register.Controllers
 
                 if(originalCodelistValue.register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname + "/" + submitter + "/" + register);
+                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname  + "/" + registerCodelist);
                 }
                 
                 return Redirect("/register/" + originalCodelistValue.register.seoname);

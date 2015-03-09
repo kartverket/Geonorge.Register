@@ -192,11 +192,11 @@ namespace Kartverket.Register.Controllers
                 if (register.statusId != null)
                 {
                     originalRegister.statusId = register.statusId;
-                    if (originalRegister.status.description != "Accepted" && register.status.description == "Accepted")
+                    if (originalRegister.statusId != "Accepted" && register.statusId == "Accepted")
                     {
                         originalRegister.dateAccepted = DateTime.Now;
                     }
-                    if (originalRegister.status.description == "Accepted" && register.status.description != "Accepted")
+                    if (originalRegister.statusId == "Accepted" && register.statusId != "Accepted")
                     {
                         originalRegister.dateAccepted = null;
                     }
@@ -206,7 +206,7 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(register);
 
-                return Redirect("/register/" + registername);
+                return Redirect("/register/" + register.name);
             }
             Viewbags(register);
             return View(originalRegister);

@@ -209,9 +209,9 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dataset/{registername}/{organizationname}/{datasetname}/rediger")]
+        [Route("dataset/{registername}/{organizationpar}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname)
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription)
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
@@ -220,6 +220,28 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Dataset originalDataset = db.Datasets.Find(systId);
 
+            
+            if (dataset.name == null)
+            {
+                var model = db.Datasets.Find(originalDataset.systemId);
+
+                string originalDescription = model.description;
+
+                try
+                {
+                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+                }
+                catch (Exception e)
+                {
+                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+                }
+
+                if (dontUpdateDescription) model.description = originalDescription;
+
+                Viewbags(dataset);
+                return View(dataset);
+            }
+            
             ValidationName(dataset, registername);
 
             if (ModelState.IsValid)
@@ -266,28 +288,28 @@ namespace Kartverket.Register.Controllers
             return View(originalDataset);
         }
 
-        public ActionResult UpdateFromMetadata(string systemId, string uuid, bool dontUpdateDescription)
-        {
+        //public ActionResult UpdateFromMetadata(string systemId, string uuid, bool dontUpdateDescription)
+        //{
 
-            var model = db.Datasets.Find(Guid.Parse(systemId));
+        //    var model = db.Datasets.Find(Guid.Parse(systemId));
 
-                string originalDescription = model.description;
+        //        string originalDescription = model.description;
 
-                try
-                {
-                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-                }
-                catch (Exception e)
-                {
-                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-                }
+        //        try
+        //        {
+        //            new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+        //        }
 
-                if (dontUpdateDescription) model.description = originalDescription;
+        //        if (dontUpdateDescription) model.description = originalDescription;
 
-                Viewbags(model);
-                return View("Edit", model);
+        //        Viewbags(model);
+        //        return View("Edit", model);
             
-        }
+        //}
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]

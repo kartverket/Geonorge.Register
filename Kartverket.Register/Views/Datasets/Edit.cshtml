@@ -35,7 +35,7 @@
                 Oppdater datasettet med informasjon fra metadatakatalogen @*<i class="infomessage" title="Påvirker ikke feltene 'Distibusjonsområde', 'Temagruppe', 'WMS-url' og 'Merknad'">(info)</i>*@
             </div>
             <div class="panel-body">
-                @using (Html.BeginForm("UpdateFromMetadata", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
+                @using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
                 {
                     <div class="form-group">
                         <div class="col-sm-6">

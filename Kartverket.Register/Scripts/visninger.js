@@ -99,8 +99,8 @@ function SortBy(sort) {
 function valgtVisningstype() {
     var visningstype = localStorage.getItem("visningstype");
 
-    if (visningstype.toString() == "galleri") { galleryView() }
-    if (visningstype.toString() == "liste") { listView() }
-    if (visningstype.toString() == "tabell") { tableView() }
+    if (visningstype == "galleri") { galleryView() }
+    if (visningstype == "liste") { listView() }
+    if (visningstype == "tabell") { tableView() }
 }
 

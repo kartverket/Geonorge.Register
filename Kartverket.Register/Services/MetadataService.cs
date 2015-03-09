@@ -25,11 +25,6 @@ namespace Kartverket.DOK.Service
 
                 dataset.datasetthumbnail = FetchThumbnailUrl(metadata);
 
-                if (metadata.ContactPublisher != null)
-                {
-                    dataset.datasetowner.name = metadata.ContactPublisher.Organization;
-                }
-
                 SimpleDistributionDetails distributionDetails = metadata.DistributionDetails;
                 if (distributionDetails != null)
                 {

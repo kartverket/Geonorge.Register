@@ -220,7 +220,8 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Dataset originalDataset = db.Datasets.Find(systId);
 
-            
+            ValidationName(dataset, registername);
+
             if (dataset.name == null)
             {
                 var model = db.Datasets.Find(originalDataset.systemId);
@@ -238,11 +239,11 @@ namespace Kartverket.Register.Controllers
 
                 if (dontUpdateDescription) model.description = originalDescription;
 
-                Viewbags(dataset);
-                return View(dataset);
+                Viewbags(model);
+                return View(model);
             }
             
-            ValidationName(dataset, registername);
+           
 
             if (ModelState.IsValid)
             {

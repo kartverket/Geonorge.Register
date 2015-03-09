@@ -266,10 +266,10 @@ namespace Kartverket.Register.Controllers
             return View(originalDataset);
         }
 
-        public ActionResult UpdateFromMetadata(int id, string uuid, bool dontUpdateDescription)
+        public ActionResult UpdateFromMetadata(string systemId, string uuid, bool dontUpdateDescription)
         {
-           
-                var model = db.Datasets.Find(id);
+
+                var model = db.Datasets.Find(systemId);
 
                 string originalDescription = model.description;
 

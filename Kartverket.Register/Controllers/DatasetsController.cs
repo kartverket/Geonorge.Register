@@ -209,9 +209,9 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
+        [Route("dataset/{registername}/{organizationname}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription)
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname)
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
@@ -222,32 +222,12 @@ namespace Kartverket.Register.Controllers
 
             ValidationName(dataset, registername);
 
-            if (dataset.name == null) {
-                var model = db.Datasets.Find(originalDataset.systemId);
-
-                string originalDescription = model.description;
-
-                try
-                {
-                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-                }
-                catch (Exception e)
-                {
-                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-                }
-
-                if (dontUpdateDescription) model.description = originalDescription;
-
-                Viewbags(model);
-                return View(model);
-            }
-            
-            
             if (ModelState.IsValid)
             {
                 
-                if (dataset.name != null) originalDataset.name = dataset.name; originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
-                if (dataset.description != null) originalDataset.description = dataset.description;
+                if (dataset.name != null) originalDataset.name = dataset.name; 
+                originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
+                originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
                 if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
                 if (dataset.statusId != null)
@@ -263,29 +243,51 @@ namespace Kartverket.Register.Controllers
                     originalDataset.statusId = dataset.statusId;
                 }
 
-                if (dataset.DistributionUrl != null) originalDataset.DistributionUrl = dataset.DistributionUrl;
-                if (dataset.MetadataUrl != null) originalDataset.MetadataUrl = dataset.MetadataUrl;
-                if (dataset.PresentationRulesUrl != null) originalDataset.PresentationRulesUrl = dataset.PresentationRulesUrl;
-                if (dataset.ProductSheetUrl != null) originalDataset.ProductSheetUrl = dataset.ProductSheetUrl;
-                if (dataset.ProductSpecificationUrl != null) originalDataset.ProductSpecificationUrl = dataset.ProductSpecificationUrl;
-                if (dataset.WmsUrl != null) originalDataset.WmsUrl = dataset.WmsUrl;
-                if (dataset.DistributionFormat != null) originalDataset.DistributionFormat = dataset.DistributionFormat;
-                if (dataset.DistributionArea != null) originalDataset.DistributionArea = dataset.DistributionArea;
-                if (dataset.Notes != null) originalDataset.Notes = dataset.Notes;
-                if (dataset.ThemeGroupId != null) originalDataset.ThemeGroupId = dataset.ThemeGroupId;
+                originalDataset.DistributionUrl = dataset.DistributionUrl;
+                originalDataset.MetadataUrl = dataset.MetadataUrl;
+                originalDataset.PresentationRulesUrl = dataset.PresentationRulesUrl;
+                originalDataset.ProductSheetUrl = dataset.ProductSheetUrl;
+                originalDataset.ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+                originalDataset.WmsUrl = dataset.WmsUrl;
+                originalDataset.DistributionFormat = dataset.DistributionFormat;
+                originalDataset.DistributionArea = dataset.DistributionArea;
+                originalDataset.Notes = dataset.Notes;
+                originalDataset.ThemeGroupId = dataset.ThemeGroupId;
                 
                
                 originalDataset.modified = DateTime.Now;
                 db.Entry(originalDataset).State = EntityState.Modified;
                 db.SaveChanges();
-                Viewbags(dataset);
+                Viewbags(originalDataset);
 
                 return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
             }
-            Viewbags(dataset);
+            Viewbags(originalDataset);
             return View(originalDataset);
         }
 
+        public ActionResult UpdateFromMetadata(int id, string uuid, bool dontUpdateDescription)
+        {
+           
+                var model = db.Datasets.Find(id);
+
+                string originalDescription = model.description;
+
+                try
+                {
+                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+                }
+                catch (Exception e)
+                {
+                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+                }
+
+                if (dontUpdateDescription) model.description = originalDescription;
+
+                Viewbags(model);
+                return View("Edit", model);
+            
+        }
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]

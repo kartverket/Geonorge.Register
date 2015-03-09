@@ -238,7 +238,7 @@ namespace Kartverket.Register.Controllers
 
                 if (dontUpdateDescription) model.description = originalDescription;
 
-                Viewbags(dataset);
+                Viewbags(model);
                 return View(model);
             }
             

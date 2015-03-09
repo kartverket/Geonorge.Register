@@ -6,6 +6,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Moq;
 using NUnit.Framework;
+using System.Configuration;
 
 namespace Kartverket.Register.Tests.Controllers
 {
@@ -15,7 +16,7 @@ namespace Kartverket.Register.Tests.Controllers
         private const string OrganizationNumber = "123456";
         private const string OrganizationLogoFilename = "test.png";
         private const string OrganizationLogoLargeFilename = "testLarge.png";
-        private const string LocationUrl = "http://example.com/data/";
+        private const string LocationUrl = System.Configuration.ConfigurationSettings.AppSettings["RegistryUrl"] + "data/";
 
         private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename };
 

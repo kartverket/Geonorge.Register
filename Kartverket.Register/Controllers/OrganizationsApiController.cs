@@ -2,6 +2,7 @@
 using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Controllers
 {
@@ -43,8 +44,8 @@ namespace Kartverket.Register.Controllers
             {
                 Name = organization.name,
                 Number = organization.number,
-                LogoUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.logoFilename,
-                LogoLargeUrl = Url.Content(Constants.DataDirectory) + Organization.DataDirectory + organization.largeLogo
+                LogoUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.logoFilename,
+                LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.largeLogo
             };
         }
     }

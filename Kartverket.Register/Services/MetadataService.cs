@@ -4,6 +4,7 @@ using System.Linq;
 using GeoNorgeAPI;
 using Kartverket.Register.Models;
 using www.opengis.net;
+using System.Web.Configuration;
 
 namespace Kartverket.DOK.Service
 {
@@ -17,7 +18,7 @@ namespace Kartverket.DOK.Service
                 dataset.Uuid = uuid;
                 dataset.name = metadata.Title;
                 dataset.description = metadata.Abstract;
-                dataset.MetadataUrl = "http://www.geonorge.no/geonetwork/?uuid=" + uuid;
+                dataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + uuid;
                 dataset.PresentationRulesUrl = metadata.LegendDescriptionUrl;
                 dataset.ProductSheetUrl = metadata.ProductSheetUrl;
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;

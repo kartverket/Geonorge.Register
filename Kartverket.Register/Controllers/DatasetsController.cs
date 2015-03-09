@@ -177,7 +177,7 @@ namespace Kartverket.Register.Controllers
                                 select o.systemId;
 
             Guid systId = queryResults.First();
-
+           
             if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

@@ -269,7 +269,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult UpdateFromMetadata(string systemId, string uuid, bool dontUpdateDescription)
         {
 
-                var model = db.Datasets.Find(systemId);
+            var model = db.Datasets.Find(Guid.Parse(systemId));
 
                 string originalDescription = model.description;
 

@@ -41,13 +41,17 @@ namespace Kartverket.DOK.Service
                     else
                     {
                         dataset.DistributionUrl = distributionDetails.URL;
+                        
                     }
+                    dataset.DistributionArea = distributionDetails.UnitsOfDistribution;
                 }
 
                 if (metadata.DistributionFormat != null)
                 {
                     dataset.DistributionFormat = metadata.DistributionFormat.Name;
+
                 }
+
             }
         }
 

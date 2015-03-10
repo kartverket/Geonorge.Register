@@ -3,11 +3,12 @@
 @{
     ViewBag.Title = UI.CreateNew;
     var parentRegisterSEO = ViewBag.parentRegisterSEO;
+    var parentRegister = ViewBag.parentRegister;
 }
 
 @section breadcrumb {
 
-        <li><a href="/register/@parentRegisterSEO">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
+        <li><a href="/register/@parentRegisterSEO"></a>@parentRegister</li>
         <li class="active">Ny</li>
 }
 

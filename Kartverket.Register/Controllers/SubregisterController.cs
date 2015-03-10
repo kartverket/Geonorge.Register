@@ -84,7 +84,8 @@ namespace Kartverket.Register.Controllers
             
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
-            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description).Where(s => s.value != "Register"), "value", "description", string.Empty);
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description).Where(s => s.value != "Register"), "value", "description", String.Empty);
+            ViewBag.parentRegister = register.name;
             ViewBag.parentRegisterSEO = register.seoname;
 
 

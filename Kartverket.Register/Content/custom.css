@@ -304,9 +304,63 @@
 	width: 50%;
 }
 
+/* Kodelister */
+
+.search-results.codelist.table-view .col-title{
+	width: 30%;
+	float: left;
+}
+
+.search-results.codelist.table-view .col-information{
+	width: 20%;
+	float: left;
+}
+
+.search-results.codelist.table-view .col-descripton h4{
+	width: 30%;
+	float: left;
+}
+
+.search-results.codelist.table-view .table-heading .col-title h4 {
+	width: 30%;
+}
+
+.search-results.codelist.table-view .col-title img{
+    display: none;
+}
+
+.search-results.codelist.table-view .col-actions h4 {
+	width: 50%;
+}
+
+.search-results.codelist.table-view .table-heading .col-descripton{
+    width: 30%;
+}
+.search-results.codelist.table-view .table-heading .col-information{
+    width: 50%;
+}
+
+
+.search-results.codelist.table-view .table-heading .space {
+	width: 6.25%;
+}
+
+.search-results.codelist.table-view .table-heading .col-actions {
+	width: 18.75%;
+}
+
+/*.search-results.codelist.table-view .col-actions .status, .search-results.codelist.table-view .col-actions .reference{
+	display: none;
+}
+
+.search-results.codelist.table-view .col-actions .status-value, .search-results.codelist.table-view .col-actions .reference-value{
+	width: 50%;
+}
+
 
 
 /*organization*/
+
 
 
 .search-results.table-view .peoduktark-table-heading{
@@ -315,7 +369,7 @@
 }
 
 .search-results.organization.table-view .col-actions:nth-child(3) {
-	width: 6.25%;
+	width: 10% !important;
 }
 
 .search-results.organization.table-view .col-actions:nth-child(4) {
@@ -359,6 +413,9 @@
     padding-top: 30px;
 }
 
+.search-results.organization.table-view .col-information p span {
+	display: none;
+}
 
 /* Det offentlige kartgrunnlaget */
 
@@ -394,6 +451,46 @@
 .search-results.dataset.table-view .col-information ul li span {
 	display: none;
 }
+
+/* subregister */
+
+.search-results.subregister.table-view .col-title{
+	width: 85%;
+	float: left;
+}
+
+.search-results.subregister.table-view .col-title img{
+	display: none;
+}
+
+.search-results.subregister.table-view .col-actions, .search-results.subregister.table-view .table-heading .col-actions{
+	width: 15%;
+	float: left;
+}
+
+.search-results.subregister.table-view .col-actions li{
+	width: 25%;
+	float: left;
+}
+
+.search-results.subregister.table-view .col-information{
+	width: 10%;
+	float: left!important;
+}
+
+.search-results.subregister.table-view .col-information li, .search-results.subregister.table-view .table-heading .col-information h4{
+	float: left;
+	width: 33.333%;
+}
+
+.search-results.subregister.table-view .col-information p span {
+	display: none;
+}
+
+.search-results.table-view .col-actions{
+	display: none;
+}
+
 
 
 /* EPSG */

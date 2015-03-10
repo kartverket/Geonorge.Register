@@ -64,14 +64,14 @@
                     </p>
                 </div>
 
-                <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-actions">
+                <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-information">
                     @if (item.status == null)
                     {
-                        <p><span>Status: </span>Ikke angitt</p><br />
+                        <p><span>Status: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i><br />
+                        <p><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
                 </div>
 

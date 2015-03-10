@@ -214,11 +214,11 @@ namespace Kartverket.Register.Controllers
                 if (document.statusId != null)
                 {
                     originalDocument.statusId = document.statusId;
-                    if (originalDocument.status.description != "Accepted" && document.status.description == "Accepted")
+                    if (originalDocument.statusId != "Accepted" && document.statusId == "Accepted")
                     {
                         originalDocument.dateAccepted = DateTime.Now;
                     }
-                    if (originalDocument.status.description == "Accepted" && document.status.description != "Accepted")
+                    if (originalDocument.statusId == "Accepted" && document.statusId != "Accepted")
                     {
                         originalDocument.dateAccepted = null;
                     }
@@ -241,9 +241,6 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
                 }
-
-                //Test på at dersom status har skiftet til Accepted, så skal dateAccepted settes
-
 
                 originalDocument.modified = DateTime.Now;
                 db.Entry(originalDocument).State = EntityState.Modified;

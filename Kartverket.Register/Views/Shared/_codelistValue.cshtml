@@ -22,7 +22,7 @@
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-title col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-title col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
@@ -40,21 +40,23 @@
                         </a>
                     }
                 </div>
-                <div class="col-title col-xs-2 col-sm-2 col-md-2 col-lg-2">
-                    @if (item.value != null)
-                    { 
-                        <p>Kodeverdi: @item.value</p>
-                    }
-                </div>
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-actions ">
+                <div class="col-title col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     @item.description
                 </div>
-                <div class="col-no-padding-xs col-actions col-md-4 col-lg-4">
-                    @if (item.status != null)
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions ">
+                    @if (item.value != null)
                     {
-                        <p>
-                            Status: @item.status.description
-                        </p>
+                        <span>Kodeverdi: </span>@item.value
+                    }
+                </div>
+                <div class="col-no-padding-xs col-actions col-md-2 col-lg-2">
+                    @if (item.status == null)
+                    {
+                        <span>Status: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                        <span>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></span><br />
                     }
                 </div>
             </div>

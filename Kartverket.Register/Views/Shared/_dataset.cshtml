@@ -120,11 +120,13 @@
                                 <a href="@item.WmsUrl">WMS</a>
                             </li>
                         }
-                        @if (item.status != null)
+                        @if (item.status == null)
                         {
-                            <li>
-                                Status: @item.status.description
-                            </li>
+                            <li>Status: Ikke angitt</li>
+                        }
+                        else
+                        {
+                            <li>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {

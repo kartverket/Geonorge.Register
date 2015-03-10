@@ -39,7 +39,7 @@
                     
                 </div>
 
-                <div class="col-no-padding-xs col-xs-9 col-sm-9 col-md-9 col-lg-9 col-title">
+                <div class="col-no-padding-xs col-xs-8 col-sm-8 col-md-8 col-lg-8 col-title">
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
@@ -63,6 +63,18 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </p>
                 </div>
+
+                <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-actions">
+                    @if (item.status == null)
+                    {
+                            <span>Status: Ikke angitt</span><br />
+                    }
+                    else
+                    {
+                            <span>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></span><br />
+                    }
+                </div>
+
             </div>
         </div>
         <hr />

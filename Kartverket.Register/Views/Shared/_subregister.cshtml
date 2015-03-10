@@ -24,24 +24,22 @@
     @foreach (var item in Model)
     {
         if (item.parentRegister.name == register)
-        {   
+        {
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    <div class="col-title col-sm-4 col-md-4 col-lg-4 ">                        
+                    <div class="col-title col-sm-4 col-md-4 col-lg-4 ">
                         <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
                             <h4 class="role-button" role="button" style="font-size: 18px;">
                                 @item.name
                             </h4>
                         </a>
                     </div>
-                    <div class="col-no-padding-xs col-sm-5 col-md-5 col-lg-5">
-                        <p>
-                            @item.description
-                        </p>
+                    <div class="col-no-padding-xs col-description  col-sm-5 col-md-5 col-lg-5">
+                        @item.description
                     </div>
                     <div class="col-no-padding-xs col-actions col-sm-3 col-md-3 col-lg-3">
-                        <p>Administrator: @item.manager.name</p>
-                        <p>Kontrollorgan: @item.owner.name</p>
+                        <span>Administrator: </span>@item.manager.name <br/>
+                        <span>Kontrollorgan: </span> @item.owner.name
                     </div>
                 </div>
             </div>

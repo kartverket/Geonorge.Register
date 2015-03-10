@@ -31,11 +31,11 @@
         }
         @if (Model.submitter == null)
         {
-            <span>Administrator: Ikke angitt</span><br />
+            <span>Innsender: Ikke angitt</span><br />
         }
         else
         {
-            <span>Administrator: @Html.DisplayFor(model => model.submitter.name)</span><br />
+            <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
         }
         @if (@documentOwner != null)
         {

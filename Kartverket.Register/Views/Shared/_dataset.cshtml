@@ -122,21 +122,21 @@
                         }
                         @if (item.status == null)
                         {
-                            <li>Status: Ikke angitt</li>
+                            <li><span>Status: </span>Ikke angitt</li>
                         }
                         else
                         {
-                            <li>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            <li><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {
                             <li>
-                                Gruppe: @item.theme.description
+                                <span>Gruppe: </span>@item.theme.description
                             </li>
                         }
                         else
                         {
-                            <li>Gruppe: Ikke angitt</li>
+                            <li><span>Gruppe: </span>Ikke angitt</li>
                         }
                     </ul>
 
@@ -148,8 +148,6 @@
         <hr />
     }
 </div>
-
-<hr />
 
 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
     <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">

@@ -68,6 +68,12 @@ namespace Kartverket.Register.Controllers
                 Kartverket.Register.Models.Document document = db.Documents.Find(systId);
                 ViewBag.documentOwner = document.documentowner.name;
             }
+
+            if (registerItem.register.containedItemClass == "Dataset")
+            {
+                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
+                ViewBag.datasetOwner = dataset.datasetowner.name;
+            }
                 return View(registerItem);    
         }
 

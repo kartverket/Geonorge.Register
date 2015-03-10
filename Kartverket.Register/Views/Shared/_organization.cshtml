@@ -67,11 +67,11 @@
                 <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-actions">
                     @if (item.status == null)
                     {
-                            <span>Status: Ikke angitt</span><br />
+                        <p><span>Status: </span>Ikke angitt</p><br />
                     }
                     else
                     {
-                            <span>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></span><br />
+                        <span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i><br />
                     }
                 </div>
 

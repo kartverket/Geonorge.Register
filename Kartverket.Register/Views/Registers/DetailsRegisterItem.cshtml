@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = @Model.name;
     var documentOwner = ViewBag.documentOwner;
+    var datasetOwner = ViewBag.datasetOwner;
 }
 
 @section breadcrumb {
@@ -40,6 +41,10 @@
         @if (@documentOwner != null)
         {
             <span>Eier: @documentOwner </span><br />
+        }
+        @if (@datasetOwner != null)
+        {
+            <span>Eier: @datasetOwner </span><br />
         }
         @if (Model.currentVersion == null)
         {

@@ -45,44 +45,44 @@
                     </p>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions ">
-                    <p>EPSG: @Html.DisplayFor(modelItem => item.epsgcode)</p>
-                    <p>Sosi referansesystem: @Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
-                    <p>ekstern referanse: <a href="@item.externalReference">Vis</a></p>
+                    <p><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
+                    <p><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                    <p><span>ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>
                 </div>
                 <div class="col-no-padding-xs col-actions col-md-4 col-lg-4">
                     @if (item.status == null)
                     {
-                        <p>Status: Ikke angitt</p><br />
+                        <p><span>Status: Ikke angitt</span></p><br />
                     }
                     else
                     {
-                        <p>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                        <p><span>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></span></p>
                     }
                     @if (item.inspireRequirement == null)
                     {
-                        <p>Inspire krav: Ikke angitt</p>
+                        <p><span>Inspire krav: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p>Inspire krav: @Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
+                        <p><span>Inspire krav: </span>@Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
                     }
 
                     @if (item.nationalRequirement == null)
                     {
-                        <p>Nasjonale krav: Ikke angitt</p>
+                        <p><span>Nasjonale krav: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p>Nasjonale krav: @Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
+                        <p><span>Nasjonale krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
                     }
 
                     @if (item.nationalSeasRequirement == null)
                     {
-                        <p>Nasjonale krav for havområder: Ikke angitt</p>
+                        <p><span>Nasjonale krav for havområder: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p>Nasjonale krav for havområder: @Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
+                        <p><span>Nasjonale krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
                     }
                 </div>
             </div>

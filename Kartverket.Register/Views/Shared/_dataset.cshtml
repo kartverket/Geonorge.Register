@@ -78,10 +78,22 @@
                                 <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
                             </li>
                         }
+                        else
+                        {
+                            <li>
+                                &nbsp;
+                            </li>
+                        }
                         @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
                         {
                             <li>
                                 <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                &nbsp;
                             </li>
                         }
                         @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
@@ -90,10 +102,22 @@
                                 <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
                             </li>
                         }
+                        else
+                        {
+                            <li>
+                                &nbsp;
+                            </li>
+                        }
                         @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
                         {
                             <li>
                                 <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                &nbsp;
                             </li>
                         }
 
@@ -119,9 +143,12 @@
                             <li>
                                 <a href="@item.WmsUrl">WMS</a>
                             </li>
-                            @*<li>
-                                WMS
-                            </li>*@
+                            
+                        }
+                        else { 
+                            <li>
+                                &nbsp;
+                            </li>
                         }
                         @if (item.status == null)
                         {

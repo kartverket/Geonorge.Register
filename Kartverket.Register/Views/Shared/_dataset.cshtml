@@ -52,7 +52,7 @@
                     </a>
                     <div class="orglogo">@Html.DisplayFor(modelItem => item.datasetowner.name)</div>
                     <br />
-                    <div class=" ">
+                    <div class="">
                         @if (item.description != null)
                         {
                             <p id="shortdesc">
@@ -119,6 +119,9 @@
                             <li>
                                 <a href="@item.WmsUrl">WMS</a>
                             </li>
+                            @*<li>
+                                WMS
+                            </li>*@
                         }
                         @if (item.status == null)
                         {

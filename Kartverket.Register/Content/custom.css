@@ -420,7 +420,7 @@
 /* Det offentlige kartgrunnlaget */
 
 .search-results.dataset.table-view .col-title{
-	width: 55%;
+	width: 40%;
 	float: left;
 }
 
@@ -428,8 +428,13 @@
 	display: none;
 }
 
+.search-results.dataset.table-view .col-title h4 {
+    float: left;
+    width: 50%;
+}
+
 .search-results.dataset.table-view .col-actions, .search-results.dataset.table-view .table-heading .col-actions{
-	width: 15%;
+	width: 20%;
 	float: left;
 }
 
@@ -439,22 +444,41 @@
 }
 
 .search-results.dataset.table-view .col-information{
-	width: 30%;
+	width: 40%;
 	float: left!important;
 }
 
 .search-results.dataset.table-view .col-information li, .search-results.dataset.table-view .table-heading .col-information h4{
 	float: left;
-	width: 33.333%;
+	width: 25%;
 }
 
 .search-results.dataset.table-view .col-information ul li span {
 	display: none;
 }
 
-/* subregister */
+.search-results.dataset.list-view .orglogo {
+    display: none;
+}
 
-.search-results.subregister.table-view .col-title{
+.search-results.dataset.table-view .col-title a, .search-results.table-view .col-title p:nth-child(4) {
+    width: 50.333%;
+}
+
+.search-results.dataset.table-view .col-information li {
+    width: 25%;
+    float: left;
+}
+
+.search-results.dataset.table-view .col-information a{
+    width: 25%;
+    font-size: 14px !important;
+    float: left;
+}
+
+/*/* subregister */
+
+/*.search-results.subregister.table-view .col-title{
 	width: 85%;
 	float: left;
 }
@@ -488,8 +512,8 @@
 }
 
 .search-results.table-view .col-actions{
-	display: none;
-}
+	display: none;*/
+/*}*/
 
 
 

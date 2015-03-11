@@ -361,7 +361,42 @@
 
 /*organization*/
 
+/*.search-results.organization.table-view .col-lg-2 {
+    width: 10%;
+}*/
 
+.search-results.organization.table-view .role-button {
+    width: 100% !important;
+}
+
+.search-results.organization.table-view .col-title a {
+    width: 50%;
+}
+
+.search-results.organization.table-view .col-title h4 {
+    float: left;
+    width: 50%;
+}
+
+.search-results.organization.table-view .col-title {
+    width: 80%;
+}
+.search-results.organization.table-view .col-actions {
+    float:right;
+}
+
+.search-results.organization.table-view .col-information {
+    width: 20%;
+}
+
+.search-results.organization.table-view .col-information p{
+    width: 50%;
+    float:right;
+}
+
+.search-results.organization.table-view .col-title p {
+    font-size: 13px;
+}
 
 .search-results.table-view .peoduktark-table-heading{
 	padding: 0;
@@ -415,6 +450,10 @@
 
 .search-results.organization.table-view .col-information p span {
 	display: none;
+}
+
+.search-results.organization.gallery-view [class^="statusIcon-"], [class*=" statusIcon-"] {
+    display: none;
 }
 
 /* Det offentlige kartgrunnlaget */

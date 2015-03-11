@@ -56,12 +56,17 @@
                             </h4>
                         </a>
                     }
-                    <p class="col-actions">
-                        Org.nr: @Html.DisplayFor(modelItem => item.number)
+                    
+                    <p class="col-title">
+                        @Html.DisplayFor(modelItem => item.number)
                     </p>
                     <p class="col-title">
                         @Html.DisplayFor(modelItem => item.description)
                     </p>
+
+                    @*<p class="col-title">
+                        @Html.DisplayFor(modelItem => item.shortname)
+                    </p>*@
                 </div>
 
                 <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-information">

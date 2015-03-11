@@ -48,7 +48,7 @@
                     }
 
                     <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
-                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                     </a>
                     <div class="orglogo">@Html.DisplayFor(modelItem => item.datasetowner.name)</div>
                     <br />
@@ -180,7 +180,7 @@
 </div>
 
 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
-    <div class="col-img col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-right">
         @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
     </div>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">

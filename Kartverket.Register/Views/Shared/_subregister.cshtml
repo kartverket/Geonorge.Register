@@ -20,7 +20,7 @@
     @Html.Partial("_visningstyper")
 </div>
 
-<div class="register subregister search-results ">
+<div class="register registersub search-results ">
     @foreach (var item in Model)
     {
         if (item.parentRegister.name == register)
@@ -34,7 +34,7 @@
                             </h4>
                         </a>
                     </div>
-                    <div class="col-no-padding-xs col-sm-6 col-md-6 col-col-lg-6 col-actions">
+                    <div class="col-no-padding-xs col-sm-6 col-md-6 col-col-lg-6 col-descripton">
                         <p>@item.description</p>
                     </div>
                     <div class="col-no-padding-xs col-information col-sm-2 col-md-2 col-lg-2">

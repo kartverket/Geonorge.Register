@@ -63,15 +63,15 @@
                             <span class="glyphicon glyphicon-download-alt"> </span>last ned
                         </a><br />
                     </div>
-                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-actions pull-right">
+                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
 
                     @if (item.status == null)
                     {
-                        <span class="status">Status: </span><span class="status-value">Ikke angitt </span><br />
+                        <p><span>Status: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <span class="status">Status: </span><span class="status-value">@item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
+                        <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                     }
                     <br/>
                     @*@if (String.IsNullOrEmpty(item.documentUrl) ||  item.documentUrl == "ikke angitt")

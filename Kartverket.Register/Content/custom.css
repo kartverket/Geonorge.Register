@@ -316,50 +316,71 @@
 	display: none;
 }
 
+.search-results.document.gallery-view i {
+	display: none;
+}
+
 /* Kodelister */
 
-.search-results.codelist.table-view .col-title{
+.search-results.codelist.table-view .table-heading .col-title{
 	width: 30%;
 	float: left;
 }
 
-.search-results.codelist.table-view .col-information{
+.search-results.codelist.table-view .col-title {
+    width: 30%;
+}
+
+.search-results.codelist.table-view .col-title a{
+    width: 100%;
+}
+
+.search-results.codelist.table-view .table-heading .col-descripton {
+    width: 40%;
+    float: left;
+}
+.search-results.codelist.table-view .col-descripton {
+    width: 40%;
+    float: left;
+}
+.search-results.codelist.table-view .col-descripton p {
+    width: 100%;
+    float: left;
+}
+
+.search-results.codelist.table-view .table-heading .col-actions{
 	width: 20%;
 	float: left;
 }
 
-.search-results.codelist.table-view .col-descripton h4{
-	width: 30%;
+.search-results.codelist.table-view .col-actions{
+	width: 20%;
 	float: left;
 }
 
-.search-results.codelist.table-view .table-heading .col-title h4 {
-	width: 30%;
+.search-results.codelist.table-view .table-heading .col-information{
+	width: 10%;
+	float: left;
 }
 
-.search-results.codelist.table-view .col-title img{
+.search-results.codelist.table-view .col-information{
+	width: 10%;
+	float: left;
+}
+
+
+.search-results.codelist.table-view .col-information span {
     display: none;
 }
 
-.search-results.codelist.table-view .col-actions h4 {
-	width: 50%;
+.search-results.codelist.table-view .col-actions span {
+    display: none;
 }
 
-.search-results.codelist.table-view .table-heading .col-descripton{
-    width: 30%;
-}
-.search-results.codelist.table-view .table-heading .col-information{
-    width: 50%;
+.search-results.codelist.gallery-view i {
+    display: none;
 }
 
-
-.search-results.codelist.table-view .table-heading .space {
-	width: 6.25%;
-}
-
-.search-results.codelist.table-view .table-heading .col-actions {
-	width: 18.75%;
-}
 
 
 

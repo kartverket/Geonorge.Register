@@ -43,7 +43,7 @@ function tableView()
     $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'><h4>ESPG</h4><h4>Sosi ref. system</h4><h4>Ekstern ref.</h4></div><div class='col-actions'><h4>Inspire krav</h4><h4>Nasjonale krav</h4><h4>Nasjonale krav for havområder</h4></div></div></div>");
     $('.search-results.registersub').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Registernavn</h4></div><div class='col-descripton'><h4>Beskrivelse</h4></div><div class='col-information'><h4>Eier</h4></div></div>");
     $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4><h4>Eier/Leverandør</h4></div><div class='col-actions'>Data</div><div class='col-information'><h4>SOSI</h4><h4>WMS</h4><h4>Status</h4><h4>Temagruppe</h4></div></div></div>");
-    $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Navn</h4></div><div class='col-description'><h4>Beskrivelse</h4></div><div class='space'>.</div><div class='col-information'><h4>Kodeverdi</h4><h4>Status</h4></div></div>");
+    $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Navn</h4></div><div class='col-descripton'><h4>Beskrivelse</h4></div><div class='col-actions'><h4>Kodeverdi</h4></div><div class='col-information'><h4>Status</h4></div></div>");
 
     // Buttons
     $('#button-listView').removeClass('active');

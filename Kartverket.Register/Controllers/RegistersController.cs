@@ -193,6 +193,7 @@ namespace Kartverket.Register.Controllers
                 if (register.description != null) originalRegister.description = register.description;
                 if (register.owner != null) originalRegister.ownerId = register.ownerId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
+                if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
 
                 originalRegister.modified = DateTime.Now;
                 if (register.statusId != null)

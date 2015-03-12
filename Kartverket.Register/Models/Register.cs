@@ -49,7 +49,7 @@ namespace Kartverket.Register.Models
         public DateTime modified { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
-        [Display(Name = "Type register")]
+        [Display(Name = "Lovlig innhold")]
         public string containedItemClass { get; set; }
         public virtual ICollection<RegisterItem> items { get; set; }
         [ForeignKey("parentRegister")]

@@ -12,7 +12,7 @@
         <li class="active">Ny</li>
 }
 
-<h2>Foreslå @parentRegisterSEO</h2>
+<h2>Foreslå nytt register i @parentRegister</h2>
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, "Type register", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.containedItemClass, "Lovlig innhold", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("containedItemClassID", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })

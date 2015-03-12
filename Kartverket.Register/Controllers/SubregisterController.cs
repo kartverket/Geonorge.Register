@@ -96,7 +96,7 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBagSubregister(Kartverket.Register.Models.Register register)
         {
-            ViewBag.containedItemClassID = new SelectList(db.ContainedItemClass.OrderBy(s => s.description).Where(s => s.value != "Register"), "value", "description", String.Empty);
+            ViewBag.containedItemClassID = new SelectList(db.ContainedItemClass.OrderBy(s => s.description).Where(s => s.value == "CodelistValue"), "value", "description", String.Empty);
             ViewBag.parentRegister = register.name;
             ViewBag.parentRegisterSEO = register.seoname;
         }

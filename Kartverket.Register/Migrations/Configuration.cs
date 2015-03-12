@@ -78,11 +78,11 @@ namespace Kartverket.Register.Migrations
 
             context.ContainedItemClass.AddOrUpdate(
                 new ContainedItemClass { value = "Register", description = "Register" },
-                new ContainedItemClass { value = "CodelistValue", description ="Kodelisteregister" },
-                new ContainedItemClass { value = "Dataset", description ="Datasettregister" },
-                new ContainedItemClass { value = "Document", description ="Dokumentregister" },
-                new ContainedItemClass { value = "EPSG", description ="EPSG koderegister" },
-                new ContainedItemClass { value = "Organization", description ="Organisasjonsregister" }
+                new ContainedItemClass { value = "CodelistValue", description ="Kodeverdier" },
+                new ContainedItemClass { value = "Dataset", description ="Datasett" },
+                new ContainedItemClass { value = "Document", description ="Dokumenter" },
+                new ContainedItemClass { value = "EPSG", description ="EPSG koder" },
+                new ContainedItemClass { value = "Organization", description ="Organisasjoner" }
             );
 
 

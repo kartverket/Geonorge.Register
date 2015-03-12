@@ -180,27 +180,27 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye @Model.name </a>
+                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye @Model.name </a>
+                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye datasett i @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">| Foreslå nye @Model.name </a>
+                    <a href="/epsg-koder/ny">| Foreslå nye epsg koder i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="/subregister/ny">| Foreslå nye @Model.name </a>
+                    <a href="/subregister/ny">| Foreslå nytt register i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
-                    <a href="/kodeliste/@Model.seoname/ny">| Foreslå nye @Model.name </a>
+                    <a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
                 }
             }
 

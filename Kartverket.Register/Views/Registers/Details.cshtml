@@ -169,23 +169,23 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye @Model.name </a>
+                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå ny organisasjon i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Model.seoname/ny">| Foreslå nye @Model.name </a>
+                    <a href="/dokument/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Model.seoname/ny">| Foreslå nye @Model.name </a>                    
+                    <a href="/dataset/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>                    
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">| Foreslå nye @Model.name </a>
+                    <a href="/epsg-koder/ny">| Foreslå ny epsg kode i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="/subregister/@Model.seoname/ny">| Foreslå nye @Model.name </a>
+                    <a href="/subregister/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
                 }
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))

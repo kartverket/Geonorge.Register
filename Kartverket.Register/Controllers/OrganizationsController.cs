@@ -237,23 +237,27 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/rediger")]
-        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string submitter, string organisasjon)
+        [Route("organisasjoner/{registernameOrganization}/{submitterOrganization}/{organisasjon}/rediger")]
+        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registernameOrganization, string organisasjon)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.name == registername
+                                       where o.name == registernameOrganization
                                        select o.systemId;
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
           
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.seoname == organisasjon && o.register.seoname == registername
+                                           where o.seoname == organisasjon && o.register.seoname == registernameOrganization
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
             Organization originalOrganization = db.Organizations.Find(systId);
-            
-            ValidationName(organization, registername);
+
+            ValidationName(organization, registernameOrganization);
+
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
 
             if (ModelState.IsValid)
             {
@@ -311,11 +315,11 @@ namespace Kartverket.Register.Controllers
 
                 if (register.parentRegister != null)
                 {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registernameOrganization + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
                 }
                 else
                 {
-                    return Redirect("/register/" + registername + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
+                    return Redirect("/register/" + registernameOrganization + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
                 }
                             
             }
@@ -357,7 +361,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Organization organization, string registername, string submitter, string organisasjon)
+        public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon)
         {
             var queryResultsRegister = from o in db.Registers
                                        where o.name == registername

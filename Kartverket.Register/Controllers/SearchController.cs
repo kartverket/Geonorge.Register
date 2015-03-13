@@ -60,6 +60,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.owner = organisasjon.name;
             ViewBag.ownerLogo = organisasjon.logoFilename;
             ViewBag.ownerSEO = organisasjon.seoname;
+            ViewBag.searchRegister = register.name;
 
                 
 

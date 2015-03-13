@@ -320,6 +320,10 @@
 	display: none;
 }
 
+.search-results.document.list-view .orglogo {
+    display: none;
+}
+
 /* Kodelister */
 
 .search-results.codelist.table-view .table-heading .col-title{
@@ -522,7 +526,7 @@
 }
 
 .search-results.dataset.table-view .col-title a, .search-results.table-view .col-title p:nth-child(4) {
-    width: 50.333%;
+    width: 50%;
 }
 
 .search-results.dataset.table-view .col-information li {

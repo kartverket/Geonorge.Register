@@ -73,22 +73,6 @@
                     {
                         <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                     }
-                    <br/>
-                    @*@if (String.IsNullOrEmpty(item.documentUrl) ||  item.documentUrl == "ikke angitt")
-                    {
-                        <span class="reference">Referanse: </span><span class="reference-value">mangler</span><br />
-                    }
-                    else
-                    {
-                        if (item.documentUrl.Contains("/data/documents/"))
-                        {
-                            <span class="reference">Referanse: </span><span class="reference-value">Intern</span><br />
-                        }
-                        else
-                        {
-                            <span class="reference">Referanse: </span><span class="reference-value">Ekstern</span><br />
-                        }
-                    }*@
                     </div>
 
                 </div>

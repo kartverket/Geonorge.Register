@@ -21,7 +21,7 @@
     @Html.Partial("_visningstyper")
 </div>
 
-<div class="document search-results">
+<div class="register document search-results">
     @foreach (Document item in Model)
     {
         if(item.documentowner.name == owner)
@@ -57,28 +57,15 @@
                             <span class="glyphicon glyphicon-download-alt"> </span>last ned
                         </a><br />
                     </div>
-                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-actions pull-right">
+                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
 
                         @if (item.status == null)
                         {
-                            <span>Status: Ikke angitt</span><br />
+                            <p><span>Status: </span>Ikke angitt</p>
                         }
                         else
                         {
-                            <span>Status: @item.status.description <i class="statusIcon-@item.statusId"></i></span><br />
-                        }
-                        <br />
-                        @if (item.documentUrl == null)
-                        {
-                            <span>Referanse: Ikke angitt</span><br />;
-                        }
-                        else if (item.documentUrl.Contains("/data/documents/"))
-                        {
-                            <span>Referanse: Intern</span><br />
-                        }
-                        else
-                        {
-                            <span>Referanse: Ekstern</span><br />
+                            <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                         }
                     </div>
 

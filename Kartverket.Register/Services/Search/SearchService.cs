@@ -28,7 +28,7 @@ namespace Kartverket.Register.Services.Search
             if (parameters.Register != "Alle registre")
             {
                 var queryResultsRegister = from o in _dbContext.Registers
-                                    where o.name.Contains(parameters.Register)
+                                    where o.name == parameters.Register || o.seoname == parameters.Register
                                     select o.containedItemClass;
 
                 itemClass = queryResultsRegister.First();
@@ -101,7 +101,7 @@ namespace Kartverket.Register.Services.Search
             else if (itemClass == "Document")
             {
                 var queryResults = (from d in _dbContext.Documents
-                                    where d.register.name.Contains(parameters.Register) 
+                                    where (d.register.name.Contains(parameters.Register) || d.register.seoname.Contains(parameters.Register))
                                     && ( d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.documentowner.name.Contains(parameters.Text))
@@ -164,7 +164,7 @@ namespace Kartverket.Register.Services.Search
             else if (itemClass == "Dataset")
             {
                 var queryResults = (from d in _dbContext.Datasets
-                                    where d.register.name.Contains(parameters.Register)
+                                    where (d.register.name.Contains(parameters.Register) || d.register.seoname.Contains(parameters.Register))
                                     && (d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.datasetowner.name.Contains(parameters.Text))

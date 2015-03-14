@@ -16,34 +16,34 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsRegisterItem = from r in db.RegisterItems
-                                           where r.register.parentRegister.name == "Metadata kodelister"
-                                           select r.systemId;
+            //var queryResultsRegisterItem = from r in db.RegisterItems
+            //                               where r.register.parentRegister.name == "Metadata kodelister"
+            //                               select r.systemId;
 
-            List<Guid> registeritems = queryResultsRegisterItem.ToList();
+            //List<Guid> registeritems = queryResultsRegisterItem.ToList();
 
-            foreach (Guid item in registeritems)
-            {
-                //RegisterItem registerItem = db.RegisterItems.Find(item);
+            //foreach (Guid item in registeritems)
+            //{
+            //    //RegisterItem registerItem = db.RegisterItems.Find(item);
 
-                Sql("DELETE RegisterItems WHERE (systemId = '" + item + "')");
+            //    Sql("DELETE RegisterItems WHERE (systemId = '" + item + "')");
 
-            }
+            //}
 
-            var queryResultsRegister = from r in db.Registers
-                                       where r.parentRegister.name == "Metadata kodelister" || r.name == "Metadata kodelister"
-                                       select r.systemId;
+            //var queryResultsRegister = from r in db.Registers
+            //                           where r.parentRegister.name == "Metadata kodelister" || r.name == "Metadata kodelister"
+            //                           select r.systemId;
 
-            List<Guid> register = queryResultsRegister.ToList();
-            foreach (Guid item in register)
-            {
-                //RegisterItem registerItem = db.RegisterItems.Find(item);
+            //List<Guid> register = queryResultsRegister.ToList();
+            //foreach (Guid item in register)
+            //{
+            //    //RegisterItem registerItem = db.RegisterItems.Find(item);
 
-                Sql("DELETE Registers WHERE (systemId = '" + item + "')");
+            //    Sql("DELETE Registers WHERE (systemId = '" + item + "')");
 
-            }
+            //}
 
         }
         

@@ -359,6 +359,10 @@
     <Compile Include="Migrations\201503101051018_UpdateMetadataUrl.Designer.cs">
       <DependentUpon>201503101051018_UpdateMetadataUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503141124220_deleteMetadataKodelister.cs" />
+    <Compile Include="Migrations\201503141124220_deleteMetadataKodelister.Designer.cs">
+      <DependentUpon>201503141124220_deleteMetadataKodelister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -662,6 +666,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503101051018_UpdateMetadataUrl.resx">
       <DependentUpon>201503101051018_UpdateMetadataUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503141124220_deleteMetadataKodelister.resx">
+      <DependentUpon>201503141124220_deleteMetadataKodelister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

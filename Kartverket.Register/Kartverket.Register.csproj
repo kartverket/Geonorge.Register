@@ -359,9 +359,9 @@
     <Compile Include="Migrations\201503101051018_UpdateMetadataUrl.Designer.cs">
       <DependentUpon>201503101051018_UpdateMetadataUrl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201503141124220_deleteMetadataKodelister.cs" />
-    <Compile Include="Migrations\201503141124220_deleteMetadataKodelister.Designer.cs">
-      <DependentUpon>201503141124220_deleteMetadataKodelister.cs</DependentUpon>
+    <Compile Include="Migrations\201503160922194_DeleteMetadataKodelisterItems.cs" />
+    <Compile Include="Migrations\201503160922194_DeleteMetadataKodelisterItems.Designer.cs">
+      <DependentUpon>201503160922194_DeleteMetadataKodelisterItems.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -667,8 +667,8 @@
     <EmbeddedResource Include="Migrations\201503101051018_UpdateMetadataUrl.resx">
       <DependentUpon>201503101051018_UpdateMetadataUrl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201503141124220_deleteMetadataKodelister.resx">
-      <DependentUpon>201503141124220_deleteMetadataKodelister.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201503160922194_DeleteMetadataKodelisterItems.resx">
+      <DependentUpon>201503160922194_DeleteMetadataKodelisterItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class deleteMetadataKodelister : IMigrationMetadata
+    public sealed partial class DeleteMetadataKodelisterItems : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(deleteMetadataKodelister));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DeleteMetadataKodelisterItems));
         
         string IMigrationMetadata.Id
         {
-            get { return "201503141124220_deleteMetadataKodelister"; }
+            get { return "201503160922194_DeleteMetadataKodelisterItems"; }
         }
         
         string IMigrationMetadata.Source

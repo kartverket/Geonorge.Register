@@ -363,6 +363,10 @@
     <Compile Include="Migrations\201503161424062_DeleteMetadataKoderItems.Designer.cs">
       <DependentUpon>201503161424062_DeleteMetadataKoderItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503161426161_DeleteMetadataKodelisterSubregisters.cs" />
+    <Compile Include="Migrations\201503161426161_DeleteMetadataKodelisterSubregisters.Designer.cs">
+      <DependentUpon>201503161426161_DeleteMetadataKodelisterSubregisters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -669,6 +673,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503161424062_DeleteMetadataKoderItems.resx">
       <DependentUpon>201503161424062_DeleteMetadataKoderItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503161426161_DeleteMetadataKodelisterSubregisters.resx">
+      <DependentUpon>201503161426161_DeleteMetadataKodelisterSubregisters.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

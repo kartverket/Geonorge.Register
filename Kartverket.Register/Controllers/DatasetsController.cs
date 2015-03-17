@@ -276,6 +276,7 @@ namespace Kartverket.Register.Controllers
                 originalDataset.DistributionArea = dataset.DistributionArea;
                 originalDataset.Notes = dataset.Notes;
                 originalDataset.ThemeGroupId = dataset.ThemeGroupId;
+                originalDataset.datasetthumbnail = dataset.datasetthumbnail;
                 
                
                 originalDataset.modified = DateTime.Now;

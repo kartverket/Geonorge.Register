@@ -10,9 +10,9 @@
     if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" +subregister; }
 
 }
-
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-        <div class="">
+<div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6">
+        <div class="view-navigation">
             <ul class="nav nav-pills text-center">
                 <li><a onclick="listView()" id="button-listView" name="liste" class="active"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
                 <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class=""><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
@@ -30,10 +30,4 @@
             </form>
         </div>
     </div>
-
-
-<br />
-
-<br /><br />
-
-<hr />
+</div>

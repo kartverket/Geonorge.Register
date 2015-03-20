@@ -673,7 +673,7 @@ width: 100%;
 height: 100%;
 top: 0px;
 left: 0px;
-position: absolute;
+position: fixed;
 display: block;
 opacity: .9;
 background-color: #fff;
@@ -682,7 +682,7 @@ text-align: center;
 }
 #loading-image {
 position: absolute;
-top: 250px;
+top: 50%;
 left: 50%;
 z-index: 600;
 }

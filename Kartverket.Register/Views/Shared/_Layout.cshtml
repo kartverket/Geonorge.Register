@@ -27,7 +27,8 @@
 
 </head>
 
-<body class="geonorge-container prototype  geonorge " onload="valgtVisningstype()">
+<body class="geonorge-container prototype  geonorge">
+
     <div id="logo-on-sm">
         <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
     </div>
@@ -77,6 +78,9 @@
             }
             @Html.Partial("_SearchBarPartial")
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div id="loading">
+                    <img id="loading-image" src="/Content/img/loader.gif" alt="Loading..." />
+                </div>
                 @RenderBody()
             </div>
         </div>

@@ -61,7 +61,7 @@
   }
 }
 .geonorge-container .geonorge-dropdown {
-  z-index: 99;
+  z-index: 300;
   position: absolute;
   left: -9px;
   border: 1px solid #dedcdc;

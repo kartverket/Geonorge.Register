@@ -51,6 +51,37 @@ function tableView() {
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
+
+    $(window).scroll(function () {
+        if ($(window).width() >= 992) {
+            if ($(window).scrollTop() > 555) {
+                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 555 + "px" });
+                $(".organization .table-heading").css("background-color", "white");
+                $(".organization .table-heading").css("z-index", "400");
+            } else {
+                $(".organization .table-heading").css("top", "0");
+            }
+        } else if ($(window).width() < 992 && $(window).width() >= 750) {
+            if ($(window).scrollTop() > 605) {
+                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 605 + "px" });
+                $(".organization .table-heading").css("background-color", "white");
+                $(".organization .table-heading").css("z-index", "400")
+            } else {
+                $(".organization .table-heading").css("top", "0");
+            }
+        } else if ($(window).width() < 750) {
+            if ($(window).scrollTop() > 630) {
+                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 630 + "px" });
+                $(".organization .table-heading").css("background-color", "white");
+                $(".organization .table-heading").css("z-index", "400")
+            } else {
+                $(".organization .table-heading").css("top", "0");
+            }
+        } else {
+            $(".organization .table-heading").css("top", "0");
+        }
+    });
+
     /*  $(window).scroll(function () {
           if ($(window).scrollTop() > 330) {
               $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 330 + "px" });

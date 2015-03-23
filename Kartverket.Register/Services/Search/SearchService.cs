@@ -31,7 +31,7 @@ namespace Kartverket.Register.Services.Search
                                     where o.name == parameters.Register || o.seoname == parameters.Register
                                     select o.containedItemClass;
 
-                itemClass = queryResultsRegister.First();
+                itemClass = queryResultsRegister.FirstOrDefault();
             }
             
 

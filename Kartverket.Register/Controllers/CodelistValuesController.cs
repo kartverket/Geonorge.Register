@@ -62,63 +62,78 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Import(HttpPostedFileBase csvfile, string registername)
         {
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
-                                       select o.systemId;
-            Guid sysId = queryResultsRegister.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
 
-            StreamReader csvreader = new StreamReader(csvfile.InputStream);
-
-            // Første rad er overskrift
-            if (!csvreader.EndOfStream)
+            if (csvfile != null)
             {
-                csvreader.ReadLine();
-            }
-            
-            while (!csvreader.EndOfStream)
-            {
-                var line = csvreader.ReadLine();
-                var code = line.Split(';');          
 
-                //kodenavn, kodeverdi, beskrivelse
-                CodelistValue codelistValue = new CodelistValue();
-                codelistValue.systemId = Guid.NewGuid();
-                codelistValue.name = code[0];
-                codelistValue.value = code[1];
-                codelistValue.description = code[2];
-                if (codelistValue.name == null)
+
+                var queryResultsRegister = from o in db.Registers
+                                           where o.seoname == registername
+                                           select o.systemId;
+                Guid sysId = queryResultsRegister.First();
+                Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+
+                StreamReader csvreader = new StreamReader(csvfile.InputStream);
+
+                // Første rad er overskrift
+                if (!csvreader.EndOfStream)
                 {
-                    codelistValue.name = codelistValue.value;
+                    csvreader.ReadLine();
                 }
 
-                string organizationLogin = GetSecurityClaim("organization");
-                var queryResultsOrganization = from o in db.Organizations
-                                               where o.name == organizationLogin
-                                               select o.systemId;
-                Guid orgId = queryResultsOrganization.First();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+                while (!csvreader.EndOfStream)
+                {
+                    var line = csvreader.ReadLine();
+                    var code = line.Split(';');
 
-                codelistValue.submitterId = orgId;
-                codelistValue.submitter = submitterOrganisasjon;
+                    //kodenavn, kodeverdi, beskrivelse
+                    CodelistValue codelistValue = new CodelistValue();
+                    codelistValue.systemId = Guid.NewGuid();
+                    codelistValue.name = code[0];
+                    codelistValue.value = code[1];
+                    codelistValue.description = code[2];
+                    if (codelistValue.name == null)
+                    {
+                        codelistValue.name = codelistValue.value;
+                    }
 
-                codelistValue.registerId = sysId;
-                codelistValue.modified = DateTime.Now;
-                codelistValue.dateSubmitted = DateTime.Now;
-                //codelistValue.registerId = regId;
-                codelistValue.statusId = "Submitted";
-                codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+                    //test på om navnet finnes fra før
+                    ValidationName(codelistValue, registername);
+                    if (!ModelState.IsValid)
+                    {
+                        codelistValue.name = codelistValue.name + "_2";
+                    }
 
-                db.RegisterItems.Add(codelistValue);
-                db.SaveChanges();
-            
+                    string organizationLogin = GetSecurityClaim("organization");
+                    var queryResultsOrganization = from o in db.Organizations
+                                                   where o.name == organizationLogin
+                                                   select o.systemId;
+                    Guid orgId = queryResultsOrganization.First();
+                    Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                    codelistValue.submitterId = orgId;
+                    codelistValue.submitter = submitterOrganisasjon;
+
+                    codelistValue.registerId = sysId;
+                    codelistValue.modified = DateTime.Now;
+                    codelistValue.dateSubmitted = DateTime.Now;
+                    //codelistValue.registerId = regId;
+                    codelistValue.statusId = "Submitted";
+                    codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+
+                    db.RegisterItems.Add(codelistValue);
+                    db.SaveChanges();
+
+                }
+
+
+                if (register.parentRegisterId != null)
+                {
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
+                }
+                return Redirect("/register/" + registername);
             }
-
-            if (register.parentRegisterId != null)
-            {
-                return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
-            }
-            return Redirect("/register/" + registername);                
+            return View();
         }
         
         

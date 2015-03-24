@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,6 +23,102 @@ namespace Kartverket.Register.Controllers
             return View(registerItems.ToList());
         }
 
+
+        [Authorize]
+        [Route("kodeliste/{registername}/ny/import")]
+        public ActionResult Import(string registername)
+        {
+            var queryResults = from o in db.Registers
+                               where o.seoname == registername
+                               select o.systemId;
+
+            Guid sysId = queryResults.FirstOrDefault();
+            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+
+            ViewBag.registerName = register.name;
+            ViewBag.registerSeoName = register.seoname;
+
+            if (register.parentRegisterId != null)
+            {
+               ViewBag.parentRegister = register.parentRegister.name;
+               ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
+               ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+            
+
+
+            string role = GetSecurityClaim("role");
+            if (role == "nd.metadata_admin")
+            {
+                return View();
+            }
+            else
+                return HttpNotFound("Ingen tilgang");
+
+        }
+
+
+        [HttpPost]
+        [Route("kodeliste/{registername}/ny/import")]
+        [Authorize]
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername)
+        {
+            string filename = "import_" + Path.GetFileName(csvfile.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            csvfile.SaveAs(path);
+
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername
+                                       select o.systemId;
+            Guid sysId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+
+            var lines = System.IO.File.ReadAllLines(path).Select(a => a.Split(';')).Skip(1);
+            foreach (var code in lines)
+            {
+                //kodenavn, kodeverdi, beskrivelse
+                CodelistValue codelistValue = new CodelistValue();
+                codelistValue.systemId = Guid.NewGuid();
+                codelistValue.name = code[0];
+                codelistValue.value = code[1];
+                codelistValue.description = code[2];
+                if (codelistValue.name == null)
+                {
+                    codelistValue.name = codelistValue.value;
+                }
+
+                string organizationLogin = GetSecurityClaim("organization");
+                var queryResultsOrganization = from o in db.Organizations
+                                               where o.name == organizationLogin
+                                               select o.systemId;
+                Guid orgId = queryResultsOrganization.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                codelistValue.submitterId = orgId;
+                codelistValue.submitter = submitterOrganisasjon;
+
+                codelistValue.registerId = sysId;
+                codelistValue.modified = DateTime.Now;
+                codelistValue.dateSubmitted = DateTime.Now;
+                //codelistValue.registerId = regId;
+                codelistValue.statusId = "Submitted";
+                codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+
+                db.RegisterItems.Add(codelistValue);
+                db.SaveChanges();
+            
+            }
+
+            if (register.parentRegisterId != null)
+            {
+                return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
+            }
+
+            return Redirect("/register/" + registername);
+                
+        }
+        
+        
         // GET: CodelistValues/Details/5
         public ActionResult Details(Guid? id)
         {

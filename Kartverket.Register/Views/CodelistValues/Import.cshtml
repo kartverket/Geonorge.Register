@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Import";
+    var registerName = ViewBag.registerName;
+    var registerSeoName = ViewBag.registerSeoName;
+    var parentRegister = ViewBag.parentRegister;
+    var parentRegisterOwner = ViewBag.parentRegisterOwner;
+    var parentRegisterSeoName = ViewBag.parentRegisterSeoName;
+}
+
+@section breadcrumb {
+    @if (parentRegister != null)
+    {
+        <li><a href="/register/@parentRegisterSeoName">@parentRegister</a></li>
+        <li><a href="/subregister/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName">@registerName</a></li>
+        <li><a href="/kodelister/@registerSeoName/ny/">Ny</a></li>
+        <li class="active">Import</li>
+    }
+    else
+    {
+        <li><a href="/register/@registerSeoName">@registerName</a></li>
+        <li><a href="/kodelister/@registerSeoName/ny/">Ny</a></li>
+        <li class="active">Import</li>
+    }
+}
+
+<h2>Import fra CSV fil</h2>
+<p>Velg csv fil i UTF-8 med kodeliste...</p>
+@using (Html.BeginForm("Import", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <input type="file" name="csvfile" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Importer" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/kodelister/@registerSeoName/ny/">Tilbake</a>
+</div>
+
+

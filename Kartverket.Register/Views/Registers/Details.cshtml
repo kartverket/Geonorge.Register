@@ -183,6 +183,10 @@
                 {
                     <a href="/epsg-koder/ny">| Foreslå ny epsg kode i @Model.name </a>
                 }
+                if (Model.containedItemClass == "CodelistValue")
+                {
+                    <a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
+                }
                 if (Model.containedItemClass == "Register")
                 {
                     <a href="/subregister/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>

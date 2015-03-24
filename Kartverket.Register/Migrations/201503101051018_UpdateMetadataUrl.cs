@@ -28,7 +28,7 @@ namespace Kartverket.Register.Migrations
             {
                 Dataset dataset = db.Datasets.Find(item);
 
-                string metadataUrl = dataset.MetadataUrl.Replace("www.geonorge.no/geonetwork/?uuid=", "kartkatalogen.dev.geonorge.no/metadata/uuid/");
+                string metadataUrl = dataset.MetadataUrl.Replace("www.geonorge.no/geonetwork/?uuid=", "kartkatalog.geonorge.no/metadata/uuid/");
 
 
                 Sql("UPDATE Registeritems SET MetadataUrl = '" + metadataUrl + "' WHERE  (systemId = '" + dataset.systemId.ToString() + "')");

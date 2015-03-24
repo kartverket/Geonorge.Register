@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Import(HttpPostedFileBase csvfile, string registername)
         {
             string filename = "import_" + Path.GetFileName(csvfile.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + CodelistValue.DataDirectory), filename);
             csvfile.SaveAs(path);
 
             var queryResultsRegister = from o in db.Registers

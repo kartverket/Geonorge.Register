@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
             //this.subvalues = new HashSet<CodelistValue>();
             
         }
+        public const string DataDirectory = "codelistValue/";
         [Display(Name = "Kodeverdi")]
         public string value { get; set; }
         //public virtual CodelistValue parent { get; set; }

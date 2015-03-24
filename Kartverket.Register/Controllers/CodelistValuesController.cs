@@ -62,19 +62,25 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Import(HttpPostedFileBase csvfile, string registername)
         {
-            string filename = "import_" + Path.GetFileName(csvfile.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + CodelistValue.DataDirectory), filename);
-            csvfile.SaveAs(path);
-
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
                                        select o.systemId;
             Guid sysId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
 
-            var lines = System.IO.File.ReadAllLines(path).Select(a => a.Split(';')).Skip(1);
-            foreach (var code in lines)
+            StreamReader csvreader = new StreamReader(csvfile.InputStream);
+
+            // Første rad er overskrift
+            if (!csvreader.EndOfStream)
             {
+                csvreader.ReadLine();
+            }
+            
+            while (!csvreader.EndOfStream)
+            {
+                var line = csvreader.ReadLine();
+                var code = line.Split(';');          
+
                 //kodenavn, kodeverdi, beskrivelse
                 CodelistValue codelistValue = new CodelistValue();
                 codelistValue.systemId = Guid.NewGuid();
@@ -112,9 +118,7 @@ namespace Kartverket.Register.Controllers
             {
                 return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
             }
-
-            return Redirect("/register/" + registername);
-                
+            return Redirect("/register/" + registername);                
         }
         
         

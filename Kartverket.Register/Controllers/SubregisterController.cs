@@ -110,6 +110,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Kartverket.Register.Models.Register subregister, string registername)
         {
+
             ValidationName(subregister, registername);
 
             var queryResultsRegister = from o in db.Registers
@@ -132,6 +133,7 @@ namespace Kartverket.Register.Controllers
                 subregister.statusId = "Submitted";
                 subregister.seoname = MakeSeoFriendlyString(subregister.name);
                 subregister.parentRegisterId = regId;
+                subregister.containedItemClass = "CodelistValue";
 
                 db.Registers.Add(subregister);
                 db.SaveChanges();

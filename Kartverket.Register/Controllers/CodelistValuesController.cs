@@ -54,7 +54,6 @@ namespace Kartverket.Register.Controllers
             }
             else
                 return HttpNotFound("Ingen tilgang");
-
         }
 
 

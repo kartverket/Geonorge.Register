@@ -4,15 +4,15 @@
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
 
-<div class="search-filter-wrapper">
-    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
-        </li>
-        <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
-        </li>
-    </ul>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+        <br /><br />
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount
+    </div>
+
     @Html.Partial("_visningstyper")
 </div>
 

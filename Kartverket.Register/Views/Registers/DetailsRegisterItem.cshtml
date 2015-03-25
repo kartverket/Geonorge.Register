@@ -88,6 +88,10 @@
         {
             @Html.Partial("_detailsSubregister")
         }
+        @if (Model.register.containedItemClass == "CodelistValue")
+        {
+            @Html.Partial("_detailsCodelistValue")
+        }
         
     </div>
 
@@ -124,10 +128,13 @@
                         <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
                         <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
                     }
-                    if (Model.register.containedItemClass == "Register")
+                    if (Model.register.containedItemClass == "CodelistValue")
                     {
-
+                        <span>| </span><a href="/kodeliste/@Html.ToUrl(Model.name)/rediger">Endre</a>
+                        <span>| </span><a href="/kodeliste/@Html.ToUrl(Model.name)/slett">Slett</a>
                     }
+
+
                 }
             }
 

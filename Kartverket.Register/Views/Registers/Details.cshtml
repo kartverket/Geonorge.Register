@@ -95,6 +95,10 @@
             {
                 @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
             }
+            @if (Model.containedItemClass == "CodelistValue")
+            {
+                @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+            }
             @if (Model.containedItemClass == "Document")
             {
                 @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))

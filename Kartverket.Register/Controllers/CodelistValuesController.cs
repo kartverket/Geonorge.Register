@@ -62,11 +62,8 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Import(HttpPostedFileBase csvfile, string registername)
         {
-
             if (csvfile != null)
             {
-
-
                 var queryResultsRegister = from o in db.Registers
                                            where o.seoname == registername
                                            select o.systemId;
@@ -75,16 +72,21 @@ namespace Kartverket.Register.Controllers
 
                 StreamReader csvreader = new StreamReader(csvfile.InputStream);
 
-                //// Første rad er overskrift
-                //if (!csvreader.EndOfStream)
-                //{
-                //    csvreader.ReadLine();
-                //}
+                // Første rad er overskrift
+                if (!csvreader.EndOfStream)
+                {
+                    csvreader.ReadLine();
+                }
 
                 while (!csvreader.EndOfStream)
                 {
                     var line = csvreader.ReadLine();
                     var code = line.Split(';');
+
+                    if (code.Count() != 3) {
+                        ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
+                        return View();
+                    }
 
                     //kodenavn, kodeverdi, beskrivelse
                     CodelistValue codelistValue = new CodelistValue();
@@ -98,10 +100,12 @@ namespace Kartverket.Register.Controllers
                     }
 
                     //test på om navnet finnes fra før
+
+                    int versjonsnr = 2;
                     ValidationName(codelistValue, registername);
                     if (!ModelState.IsValid)
                     {
-                        codelistValue.name = codelistValue.name + "_2";
+                        FinnesNavnFraFor(registername, codelistValue, versjonsnr);
                     }
 
                     string organizationLogin = GetSecurityClaim("organization");
@@ -126,7 +130,6 @@ namespace Kartverket.Register.Controllers
 
                 }
 
-
                 if (register.parentRegisterId != null)
                 {
                     return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
@@ -134,6 +137,33 @@ namespace Kartverket.Register.Controllers
                 return Redirect("/register/" + registername);
             }
             return View();
+        }
+
+        private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
+        {
+            CodelistValue testname = new CodelistValue();
+            
+            testname = codelistValue;
+            if (testname.name.Contains("("))
+            {
+                string[] nametab = testname.name.Split('(', ')');
+                string name = nametab[0];
+                int vnr = Convert.ToInt32(nametab[1]);
+                testname.name += "(" + vnr + 1 + ")";
+            }
+            else { 
+                testname.name += "(2)";
+            }
+            var queryResultsDataset = from o in db.CodelistValues
+                                      where o.name == testname.name && o.systemId != codelistValue.systemId && o.register.seoname == registername
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                FinnesNavnFraFor(registername, testname, versjonsnr);
+            }
+            
+            codelistValue.name = testname.name;
         }
         
         

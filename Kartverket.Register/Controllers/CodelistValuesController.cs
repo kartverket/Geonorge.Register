@@ -381,7 +381,12 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
 
             CodelistValue codelistValue = db.CodelistValues.Find(systId);
-            string parent = codelistValue.register.parentRegister.seoname;
+            string parent = null;
+            if (codelistValue.register.parentRegisterId != null)
+            {
+                parent = codelistValue.register.parentRegister.seoname;
+            }
+            
            
             db.RegisterItems.Remove(codelistValue);
             db.SaveChanges();

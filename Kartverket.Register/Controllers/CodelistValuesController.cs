@@ -75,11 +75,11 @@ namespace Kartverket.Register.Controllers
 
                 StreamReader csvreader = new StreamReader(csvfile.InputStream);
 
-                // Første rad er overskrift
-                if (!csvreader.EndOfStream)
-                {
-                    csvreader.ReadLine();
-                }
+                //// Første rad er overskrift
+                //if (!csvreader.EndOfStream)
+                //{
+                //    csvreader.ReadLine();
+                //}
 
                 while (!csvreader.EndOfStream)
                 {

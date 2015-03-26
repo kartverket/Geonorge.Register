@@ -51,6 +51,8 @@ namespace Kartverket.Register.Models
         public Guid registerId { get; set; }
         public string seoname { get; set; }
 
+
+
     //end RegisterItem
 }
 }//end namespace Datamodell

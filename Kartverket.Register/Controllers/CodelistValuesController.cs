@@ -95,21 +95,17 @@ namespace Kartverket.Register.Controllers
                         codelistValue.name = code[0];
                         codelistValue.value = code[1];
                         codelistValue.description = code[2];
-                        if (codelistValue.name == null)
-                        {
-                            codelistValue.name = codelistValue.value;
-                        }
 
-                        //test på om navnet finnes fra før                    
-                        if (ValidationNameImport(codelistValue, registername))
+                        //test på om navnet finnes fra før og at kodeverdi ikke er null                 
+                        if (ValidationNameImport(codelistValue, registername) && codelistValue.value != null)
                         {
                             //int versjonsnr = 2;
                             //FinnesNavnFraFor(registername, codelistValue, versjonsnr);
 
                             string organizationLogin = GetSecurityClaim("organization");
                             var queryResultsOrganization = from o in db.Organizations
-                                                           where o.name == organizationLogin
-                                                           select o.systemId;
+                                                            where o.name == organizationLogin
+                                                            select o.systemId;
                             Guid orgId = queryResultsOrganization.First();
                             Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 

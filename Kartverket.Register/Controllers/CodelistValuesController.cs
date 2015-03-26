@@ -124,7 +124,7 @@ namespace Kartverket.Register.Controllers
                     }
                     if (csvfile.ContentType != "text/csv")
 	                {
-		                ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
+		                ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
                         ViewbagImport(register);
                         return View();
 	                }

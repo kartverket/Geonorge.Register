@@ -86,49 +86,52 @@ namespace Kartverket.Register.Controllers
                     var line = csvreader.ReadLine();
                     var code = line.Split(';');
 
-                    if (code.Count() != 3) {
-                        ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
+                    if (code.Count() == 3)
+                    {
+
+                        //kodenavn, kodeverdi, beskrivelse
+                        CodelistValue codelistValue = new CodelistValue();
+                        codelistValue.systemId = Guid.NewGuid();
+                        codelistValue.name = code[0];
+                        codelistValue.value = code[1];
+                        codelistValue.description = code[2];
+                        if (codelistValue.name == null)
+                        {
+                            codelistValue.name = codelistValue.value;
+                        }
+
+                        //test på om navnet finnes fra før                    
+                        if (ValidationNameImport(codelistValue, registername))
+                        {
+                            //int versjonsnr = 2;
+                            //FinnesNavnFraFor(registername, codelistValue, versjonsnr);
+
+                            string organizationLogin = GetSecurityClaim("organization");
+                            var queryResultsOrganization = from o in db.Organizations
+                                                           where o.name == organizationLogin
+                                                           select o.systemId;
+                            Guid orgId = queryResultsOrganization.First();
+                            Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                            codelistValue.submitterId = orgId;
+                            codelistValue.submitter = submitterOrganisasjon;
+                            codelistValue.registerId = sysId;
+                            codelistValue.modified = DateTime.Now;
+                            codelistValue.dateSubmitted = DateTime.Now;
+                            codelistValue.registerId = register.systemId;
+                            codelistValue.statusId = "Submitted";
+                            codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+
+                            db.RegisterItems.Add(codelistValue);
+                            db.SaveChanges();
+                        }
+                    }
+                    if (csvfile.ContentType != "text/csv")
+	                {
+		                ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
                         ViewbagImport(register);
                         return View();
-                    }
-
-                    //kodenavn, kodeverdi, beskrivelse
-                    CodelistValue codelistValue = new CodelistValue();
-                    codelistValue.systemId = Guid.NewGuid();
-                    codelistValue.name = code[0];
-                    codelistValue.value = code[1];
-                    codelistValue.description = code[2];
-                    if (codelistValue.name == null)
-                    {
-                        codelistValue.name = codelistValue.value;
-                    }
-
-                    //test på om navnet finnes fra før                    
-                    if (!ValidationNameImport(codelistValue, registername))
-                    {
-                        int versjonsnr = 2;
-                        FinnesNavnFraFor(registername, codelistValue, versjonsnr);
-                    }
-
-                    string organizationLogin = GetSecurityClaim("organization");
-                    var queryResultsOrganization = from o in db.Organizations
-                                                   where o.name == organizationLogin
-                                                   select o.systemId;
-                    Guid orgId = queryResultsOrganization.First();
-                    Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                    codelistValue.submitterId = orgId;
-                    codelistValue.submitter = submitterOrganisasjon;
-                    codelistValue.registerId = sysId;
-                    codelistValue.modified = DateTime.Now;
-                    codelistValue.dateSubmitted = DateTime.Now;
-                    codelistValue.registerId = register.systemId;
-                    codelistValue.statusId = "Submitted";
-                    codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
-
-                    db.RegisterItems.Add(codelistValue);
-                    db.SaveChanges();
-
+	                }
                 }
 
                 if (register.parentRegisterId != null)

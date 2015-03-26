@@ -35,17 +35,7 @@ namespace Kartverket.Register.Controllers
             Guid sysId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
 
-            ViewBag.registerName = register.name;
-            ViewBag.registerSeoName = register.seoname;
-
-            if (register.parentRegisterId != null)
-            {
-               ViewBag.parentRegister = register.parentRegister.name;
-               ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
-               ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
-            }
-            
-
+            ViewbagImport(register);
 
             string role = GetSecurityClaim("role");
             if (role == "nd.metadata_admin")
@@ -56,20 +46,33 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound("Ingen tilgang");
         }
 
+        private void ViewbagImport(Kartverket.Register.Models.Register register)
+        {
+            ViewBag.registerName = register.name;
+            ViewBag.registerSeoName = register.seoname;
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+                ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
+                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+        }
+
 
         [HttpPost]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
         public ActionResult Import(HttpPostedFileBase csvfile, string registername)
         {
+            var queryResultsRegister = from o in db.Registers
+                                        where o.seoname == registername
+                                        select o.systemId;
+            Guid sysId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+
             if (csvfile != null)
             {
-                var queryResultsRegister = from o in db.Registers
-                                           where o.seoname == registername
-                                           select o.systemId;
-                Guid sysId = queryResultsRegister.First();
-                Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
-
                 StreamReader csvreader = new StreamReader(csvfile.InputStream);
 
                 // Første rad er overskrift
@@ -85,6 +88,7 @@ namespace Kartverket.Register.Controllers
 
                     if (code.Count() != 3) {
                         ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
+                        ViewbagImport(register);
                         return View();
                     }
 
@@ -99,12 +103,10 @@ namespace Kartverket.Register.Controllers
                         codelistValue.name = codelistValue.value;
                     }
 
-                    //test på om navnet finnes fra før
-
-                    int versjonsnr = 2;
-                    ValidationName(codelistValue, registername);
-                    if (!ModelState.IsValid)
+                    //test på om navnet finnes fra før                    
+                    if (!ValidationNameImport(codelistValue, registername))
                     {
+                        int versjonsnr = 2;
                         FinnesNavnFraFor(registername, codelistValue, versjonsnr);
                     }
 
@@ -117,11 +119,10 @@ namespace Kartverket.Register.Controllers
 
                     codelistValue.submitterId = orgId;
                     codelistValue.submitter = submitterOrganisasjon;
-
                     codelistValue.registerId = sysId;
                     codelistValue.modified = DateTime.Now;
                     codelistValue.dateSubmitted = DateTime.Now;
-                    //codelistValue.registerId = regId;
+                    codelistValue.registerId = register.systemId;
                     codelistValue.statusId = "Submitted";
                     codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
 
@@ -136,6 +137,7 @@ namespace Kartverket.Register.Controllers
                 }
                 return Redirect("/register/" + registername);
             }
+            ViewbagImport(register);
             return View();
         }
 
@@ -148,17 +150,15 @@ namespace Kartverket.Register.Controllers
             {
                 string[] nametab = testname.name.Split('(', ')');
                 string name = nametab[0];
-                int vnr = Convert.ToInt32(nametab[1]);
-                testname.name += "(" + vnr + 1 + ")";
+                int vnr = Convert.ToInt32(nametab[1]) + 1;
+               
+                testname.name = name + "(" + vnr + ")";
             }
             else { 
                 testname.name += "(2)";
             }
-            var queryResultsDataset = from o in db.CodelistValues
-                                      where o.name == testname.name && o.systemId != codelistValue.systemId && o.register.seoname == registername
-                                      select o.systemId;
 
-            if (queryResultsDataset.Count() > 0)
+            if (!ValidationNameImport(codelistValue, registername))
             {
                 FinnesNavnFraFor(registername, testname, versjonsnr);
             }
@@ -467,6 +467,20 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
+        }
+
+        private bool ValidationNameImport(CodelistValue codelistValue, string registername)
+        {
+            var queryResultsDataset = from o in db.CodelistValues
+                                      where o.name == codelistValue.name && o.systemId != codelistValue.systemId && o.register.seoname == registername
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private static string MakeSeoFriendlyString(string input)

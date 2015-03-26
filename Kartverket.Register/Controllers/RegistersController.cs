@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using PagedList;
+using System.Text;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,7 +28,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page)
+        public ActionResult Details(string name, string sorting, int? page, string export)
         {
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
@@ -50,7 +51,33 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
+
+            
+            if (!string.IsNullOrEmpty(export))
+            {
+                return exportCodelist(register);
+            }
+
             return View(register);
+        }
+
+        private ActionResult exportCodelist(Kartverket.Register.Models.Register register)
+        {
+            string text = "Kode; Initialverdi; Beskrivelse\n";
+
+            foreach (CodelistValue item in register.items)
+            {
+                string description = item.description;
+                string replaceWith = " ";
+                string removedBreaksDescription = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+
+                text += item.name + ";" + item.value + ";" + removedBreaksDescription + "\n";
+            }
+
+            byte[] data = Encoding.UTF8.GetBytes(text);
+
+            return File(data, "text/csv", register.name + "_kodeliste.csv");
+
         }
 
         [Route("register/{registername}/{submitter}/{itemname}/")]

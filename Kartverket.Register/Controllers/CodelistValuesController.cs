@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Text;
 
 namespace Kartverket.Register.Controllers
 {
@@ -138,31 +139,6 @@ namespace Kartverket.Register.Controllers
             }
             ViewbagImport(register);
             return View();
-        }
-
-        private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
-        {
-            CodelistValue testname = new CodelistValue();
-            
-            testname = codelistValue;
-            if (testname.name.Contains("("))
-            {
-                string[] nametab = testname.name.Split('(', ')');
-                string name = nametab[0];
-                int vnr = Convert.ToInt32(nametab[1]) + 1;
-               
-                testname.name = name + "(" + vnr + ")";
-            }
-            else { 
-                testname.name += "(2)";
-            }
-
-            if (!ValidationNameImport(codelistValue, registername))
-            {
-                FinnesNavnFraFor(registername, testname, versjonsnr);
-            }
-            
-            codelistValue.name = testname.name;
         }
         
         
@@ -506,6 +482,31 @@ namespace Kartverket.Register.Controllers
 
             return encodedUrl;
         }
+
+        //private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
+        //{
+        //    CodelistValue testname = new CodelistValue();
+
+        //    testname = codelistValue;
+        //    if (testname.name.Contains("("))
+        //    {
+        //        string[] nametab = testname.name.Split('(', ')');
+        //        string name = nametab[0];
+        //        int vnr = Convert.ToInt32(nametab[1]) + 1;
+
+        //        testname.name = name + "(" + vnr + ")";
+        //    }
+        //    else { 
+        //        testname.name += "(2)";
+        //    }
+
+        //    if (!ValidationNameImport(codelistValue, registername))
+        //    {
+        //        FinnesNavnFraFor(registername, testname, versjonsnr);
+        //    }
+
+        //    codelistValue.name = testname.name;
+        //}
 
         private void Viewbags(CodelistValue codelistValue)
         {

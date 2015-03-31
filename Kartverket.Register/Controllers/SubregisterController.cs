@@ -62,7 +62,7 @@ namespace Kartverket.Register.Controllers
             if (export == "csv")
             {
 
-                string text = "Kode; Initialverdi; Beskrivelse\n";
+                string text = "Navn; Kodeverdi; Beskrivelse\n";
 
                 foreach (CodelistValue item in register.items)
                 {
@@ -88,20 +88,20 @@ namespace Kartverket.Register.Controllers
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
 
                 XDocument xdoc = new XDocument
-                    (new XElement(ns + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
                         new XAttribute(gmlNs + "id", register.name),
-                        new XElement("description"),
-                        new XElement("identifier",
+                        new XElement(gmlNs + "description"),
+                        new XElement(gmlNs + "identifier",
                             new XAttribute("codeSpace", "http://skjema.geonorge.no/TODO"), register.name),
 
                         from k in db.CodelistValues.ToList()
                         where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                        select new XElement("dictionaryEntry", new XElement("Definition", new XAttribute(gmlNs + "id", "_25" + k.name),
-                          new XElement("description", k.description),
-                          new XElement("identifier", new XAttribute("codeSpace", "http://skjema.geonorge.no/TODO/" + register.name), k.value),
-                          new XElement("name", k.name)
+                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
+                          new XElement(gmlNs + "description", k.description),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", "http://skjema.geonorge.no/TODO/" + register.name), k.value),
+                          new XElement(gmlNs + "name", k.name)
                     ))));
 
                 byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());

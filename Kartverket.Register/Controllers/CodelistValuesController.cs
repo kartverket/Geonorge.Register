@@ -123,7 +123,7 @@ namespace Kartverket.Register.Controllers
                             db.SaveChanges();
                         }
                     }
-                    if (csvfile.ContentType != "text/csv")
+                    if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
 	                {
 		                ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
                         ViewbagImport(register);

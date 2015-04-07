@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using PagedList;
+using System.Text;
+using System.Xml.Linq;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,7 +29,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page)
+        public ActionResult Details(string name, string sorting, int? page, string export)
         {
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
@@ -50,7 +52,68 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
+
+            
+            if (!string.IsNullOrEmpty(export))
+            {
+                return exportCodelist(register, export);
+            }
+
             return View(register);
+        }
+
+        private ActionResult exportCodelist(Kartverket.Register.Models.Register register, string export)
+        {
+            if (export == "csv")
+            {
+
+                string text = "Kode; Initialverdi; Beskrivelse\n";
+
+                foreach (CodelistValue item in register.items)
+                {
+                    string description = item.description;
+                    string replaceWith = " ";
+                    string removedBreaksDescription = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+
+                    text += item.name + ";" + item.value + ";" + removedBreaksDescription + "\n";
+                }
+
+                byte[] data = Encoding.UTF8.GetBytes(text);
+
+                return File(data, "text/csv", register.name + "_kodeliste.csv");
+            }
+            
+            else if (export == "gml")
+            {
+                //var queryResult = from x in db.CodelistValues
+                //                  select x.value;
+
+                XNamespace ns = "http://www.opengis.net/gml/3.2";
+                XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
+                XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
+
+                XDocument xdoc = new XDocument
+                    (new XElement(ns + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs), 
+                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs), 
+                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"), 
+                        new XAttribute(gmlNs + "id", "FaseType"),
+                        new XElement("description"), 
+                        new XElement("identifier", 
+                            new XAttribute("codeSpace", "http://rep.geointegrasjon.no/Sak/Faser/xml.schema/2012.01.31"), "FaseType"),
+              
+                        from k in db.CodelistValues.ToList()
+                        where k.register.name == register.name
+                        select new XElement("dictionaryEntry", new XElement("Definition", new XAttribute(gmlNs + "id", "_25" + k.name),
+                          new XElement("description", k.description),
+                          new XElement("identifier", new XAttribute("codeSpace", "http://rep.geointegrasjon.no/Sak/Faser/xml.schema/2012.01.31/FaseType"), k.value),
+                          new XElement("name", k.name)
+                    ))));
+
+                byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
+                return File(data, "text/xml", register.name + "_kodeliste.xml");
+            }
+            return View(register);
+
         }
 
         [Route("register/{registername}/{submitter}/{itemname}/")]

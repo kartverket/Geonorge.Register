@@ -16,6 +16,8 @@
     @Html.Partial("_visningstyper")
 </div>
 
+<br />
+
 <div class="register codelist search-results ">
 
     @foreach (Kartverket.Register.Models.CodelistValue item in Model)
@@ -66,12 +68,20 @@
 
         </div>
         <hr />
-
     }
+    
 </div>
 
+<br />
+
 <div class="search-filter-wrapper">
-    <br /><br />
+
+    <div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
+        <a href="@Request.Url?export=csv" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-export"></span> Eksporter til CSV</a>
+        <a href="@Request.Url?export=gml" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-export"></span> Eksporter til GML (Beta)</a>
+        <br /><br /><br />    
+    </div>
+    
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
             <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>

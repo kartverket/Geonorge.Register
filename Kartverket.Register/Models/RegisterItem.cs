@@ -54,5 +54,5 @@ namespace Kartverket.Register.Models
 
 
     //end RegisterItem
-}
+    }
 }//end namespace Datamodell

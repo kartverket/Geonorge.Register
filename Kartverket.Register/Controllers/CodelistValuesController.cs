@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Text;
 
 namespace Kartverket.Register.Controllers
 {
@@ -86,49 +87,48 @@ namespace Kartverket.Register.Controllers
                     var line = csvreader.ReadLine();
                     var code = line.Split(';');
 
-                    if (code.Count() != 3) {
-                        ModelState.AddModelError("ErrorMessagefile", "Filen inneholder feil data!");
+                    if (code.Count() == 3)
+                    {
+
+                        //kodenavn, kodeverdi, beskrivelse
+                        CodelistValue codelistValue = new CodelistValue();
+                        codelistValue.systemId = Guid.NewGuid();
+                        codelistValue.name = code[0];
+                        codelistValue.value = code[1];
+                        codelistValue.description = code[2];
+
+                        //test på om navnet finnes fra før og at kodeverdi ikke er null                 
+                        if (ValidationNameImport(codelistValue, registername) && codelistValue.value != null)
+                        {
+                            //int versjonsnr = 2;
+                            //FinnesNavnFraFor(registername, codelistValue, versjonsnr);
+
+                            string organizationLogin = GetSecurityClaim("organization");
+                            var queryResultsOrganization = from o in db.Organizations
+                                                            where o.name == organizationLogin
+                                                            select o.systemId;
+                            Guid orgId = queryResultsOrganization.First();
+                            Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                            codelistValue.submitterId = orgId;
+                            codelistValue.submitter = submitterOrganisasjon;
+                            codelistValue.registerId = sysId;
+                            codelistValue.modified = DateTime.Now;
+                            codelistValue.dateSubmitted = DateTime.Now;
+                            codelistValue.registerId = register.systemId;
+                            codelistValue.statusId = "Submitted";
+                            codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+
+                            db.RegisterItems.Add(codelistValue);
+                            db.SaveChanges();
+                        }
+                    }
+                    if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
+	                {
+		                ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
                         ViewbagImport(register);
                         return View();
-                    }
-
-                    //kodenavn, kodeverdi, beskrivelse
-                    CodelistValue codelistValue = new CodelistValue();
-                    codelistValue.systemId = Guid.NewGuid();
-                    codelistValue.name = code[0];
-                    codelistValue.value = code[1];
-                    codelistValue.description = code[2];
-                    if (codelistValue.name == null)
-                    {
-                        codelistValue.name = codelistValue.value;
-                    }
-
-                    //test på om navnet finnes fra før                    
-                    if (!ValidationNameImport(codelistValue, registername))
-                    {
-                        int versjonsnr = 2;
-                        FinnesNavnFraFor(registername, codelistValue, versjonsnr);
-                    }
-
-                    string organizationLogin = GetSecurityClaim("organization");
-                    var queryResultsOrganization = from o in db.Organizations
-                                                   where o.name == organizationLogin
-                                                   select o.systemId;
-                    Guid orgId = queryResultsOrganization.First();
-                    Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                    codelistValue.submitterId = orgId;
-                    codelistValue.submitter = submitterOrganisasjon;
-                    codelistValue.registerId = sysId;
-                    codelistValue.modified = DateTime.Now;
-                    codelistValue.dateSubmitted = DateTime.Now;
-                    codelistValue.registerId = register.systemId;
-                    codelistValue.statusId = "Submitted";
-                    codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
-
-                    db.RegisterItems.Add(codelistValue);
-                    db.SaveChanges();
-
+	                }
                 }
 
                 if (register.parentRegisterId != null)
@@ -139,31 +139,6 @@ namespace Kartverket.Register.Controllers
             }
             ViewbagImport(register);
             return View();
-        }
-
-        private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
-        {
-            CodelistValue testname = new CodelistValue();
-            
-            testname = codelistValue;
-            if (testname.name.Contains("("))
-            {
-                string[] nametab = testname.name.Split('(', ')');
-                string name = nametab[0];
-                int vnr = Convert.ToInt32(nametab[1]) + 1;
-               
-                testname.name = name + "(" + vnr + ")";
-            }
-            else { 
-                testname.name += "(2)";
-            }
-
-            if (!ValidationNameImport(codelistValue, registername))
-            {
-                FinnesNavnFraFor(registername, testname, versjonsnr);
-            }
-            
-            codelistValue.name = testname.name;
         }
         
         
@@ -507,6 +482,31 @@ namespace Kartverket.Register.Controllers
 
             return encodedUrl;
         }
+
+        //private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
+        //{
+        //    CodelistValue testname = new CodelistValue();
+
+        //    testname = codelistValue;
+        //    if (testname.name.Contains("("))
+        //    {
+        //        string[] nametab = testname.name.Split('(', ')');
+        //        string name = nametab[0];
+        //        int vnr = Convert.ToInt32(nametab[1]) + 1;
+
+        //        testname.name = name + "(" + vnr + ")";
+        //    }
+        //    else { 
+        //        testname.name += "(2)";
+        //    }
+
+        //    if (!ValidationNameImport(codelistValue, registername))
+        //    {
+        //        FinnesNavnFraFor(registername, testname, versjonsnr);
+        //    }
+
+        //    codelistValue.name = testname.name;
+        //}
 
         private void Viewbags(CodelistValue codelistValue)
         {

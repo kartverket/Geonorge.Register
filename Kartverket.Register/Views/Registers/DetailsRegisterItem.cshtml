@@ -22,37 +22,41 @@
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
-        @if (Model.status == null)
-        {
-            <span>Status: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
-        }
-        @if (Model.submitter == null)
-        {
-            <span>Innsender: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
-        }
-        @if (@documentOwner != null)
-        {
-            <span>Eier: @documentOwner </span><br />
-        }
-        @if (@datasetOwner != null)
-        {
-            <span>Eier: @datasetOwner </span><br />
-        }
-        @if (Model.currentVersion == null)
-        {
-            <span>Versjon: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+
+        @if (Model.register.containedItemClass != "Organization")
+        {        
+            if (Model.status == null)
+            {
+                <span>Status: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+            }
+            if (Model.submitter == null)
+            {
+                <span>Innsender: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
+            }
+            if (@documentOwner != null)
+            {
+                <span>Eier: @documentOwner </span><br />
+            }
+            if (@datasetOwner != null)
+            {
+                <span>Eier: @datasetOwner </span><br />
+            }
+            if (Model.currentVersion == null)
+            {
+                <span>Versjon: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+            }
         }
        
 

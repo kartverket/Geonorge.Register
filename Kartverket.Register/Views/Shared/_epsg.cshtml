@@ -66,20 +66,20 @@
 
                     @if (item.nationalRequirement == null)
                     {
-                        <p><span>Nasjonale krav: </span>Ikke angitt</p>
+                        <p><span>Nasjonalt krav: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p><span>Nasjonale krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
+                        <p><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
                     }
 
                     @if (item.nationalSeasRequirement == null)
                     {
-                        <p><span>Nasjonale krav for havområder: </span>Ikke angitt</p>
+                        <p><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p><span>Nasjonale krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
+                        <p><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
                     }
                 </div>
             </div>

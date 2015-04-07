@@ -39,7 +39,7 @@ namespace Kartverket.Register.Controllers
             ViewbagImport(register);
 
             string role = GetSecurityClaim("role");
-            iif (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
                 return View();
             }

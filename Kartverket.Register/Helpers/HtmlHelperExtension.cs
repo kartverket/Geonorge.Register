@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kartverket.Register.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -53,6 +54,23 @@ namespace Kartverket.Register.Helpers
             }
 
             return isInRole;
+        }
+
+        public static List<Kartverket.Register.Models.Register> Registers() { 
+            RegisterDbContext db = new RegisterDbContext();
+            
+            var queryResults = from o in db.Registers
+                               where o.parentRegisterId == null
+                               select o;
+
+            List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
+            foreach (var item in queryResults)
+	        {
+		        RegistersList.Add(item);
+	        }
+            RegistersList.OrderBy(r => r.name);
+
+            return RegistersList; 
         }
 
         public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)

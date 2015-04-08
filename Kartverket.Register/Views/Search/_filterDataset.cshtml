@@ -15,7 +15,7 @@
             <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("DetailsFilter", new { page, sorting = ViewBag.SortOrder }))
         </li>
     </ul>
     @Html.Partial("_visningstyper")
@@ -180,7 +180,7 @@
             <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("DetailsFilter", new { page, sorting = ViewBag.SortOrder }))
         </li>
     </ul>
 </div>

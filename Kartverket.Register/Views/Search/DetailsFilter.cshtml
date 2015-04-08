@@ -52,7 +52,7 @@
 
         if (ViewBag.SortOrder == "name_desc")
         {
-            sortering = Model.items.OrderBy(o => o.register.name).ToList();
+            sortering = Model.items.OrderByDescending(o => o.name).ToList();
         }
         if (ViewBag.SortOrder == "submitter")
         {

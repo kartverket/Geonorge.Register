@@ -203,5 +203,56 @@ namespace Kartverket.Register.Helpers
 
             return sortedList;
         }
+
+        // SORTERING av Register
+        public static List<Kartverket.Register.Models.Register> SortingRegisters(Kartverket.Register.Models.Register Model, String sortingType)
+        {
+            var sortedList = Model.subregisters.OrderBy(o => o.name).ToList();
+            if (sortingType == "name_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.name).ToList();
+            }
+            if (sortingType == "submitter")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.owner.name).ToList();
+            }
+            if (sortingType == "submitter_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.owner.name).ToList();
+            }
+            else if (sortingType == "status")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.status.description).ToList();
+            }
+            else if (sortingType == "status_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.status.description).ToList();
+            }
+            else if (sortingType == "dateSubmitted")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "dateSubmitted_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "modified")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.modified).ToList();
+            }
+            else if (sortingType == "modified_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.modified).ToList();
+            }
+            else if (sortingType == "dateAccepted")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.dateAccepted).ToList();
+            }
+            else if (sortingType == "dateAccepted_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.dateAccepted).ToList();
+            }
+            return sortedList;
+        }
     }
 }

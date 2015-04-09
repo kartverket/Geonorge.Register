@@ -63,8 +63,6 @@ namespace Kartverket.Register.Controllers
             ViewBag.searchRegister = register.name;
             ViewBag.registerSEO = register.seoname;
 
-                
-
             if (register == null)
             {
                 return HttpNotFound();

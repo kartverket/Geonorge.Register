@@ -38,7 +38,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{registername}/{itemOwner}/")]
-        public ActionResult DetailsFilter(string registername, string itemOwner, string sorting, int? page)  //(string registername, string documentownername, string sorting, int? page)
+        public ActionResult DetailsFilter(string registername, string itemOwner, string sorting, int? page) 
         {
             var queryResults = from o in db.Registers
                                where o.name == registername || o.seoname == registername

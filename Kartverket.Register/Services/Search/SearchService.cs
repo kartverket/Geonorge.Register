@@ -21,6 +21,189 @@ namespace Kartverket.Register.Services.Search
             _dbContext = dbContext;
         }
 
+        public FilterResult Filter(SearchParameters parameters)
+        {
+            string itemClass = "";
+            var queryResultsRegister = from o in _dbContext.Registers
+                                        where o.name == parameters.Register || o.seoname == parameters.Register
+                                        select o.containedItemClass;
+
+            itemClass = queryResultsRegister.FirstOrDefault();
+
+            if (itemClass == "Document")
+            {
+                var queryResults = (from d in _dbContext.Documents
+                                    where d.register.name == parameters.Register
+                                    && d.documentowner.name == parameters.Owner
+                                    select new Filter
+                                    {
+                                        systemId = d.systemId,
+                                        currentVersion = d.currentVersion,
+                                        name = d.name,
+                                        description = d.description,
+                                        submitterId = d.submitterId,
+                                        submitter = d.submitter,
+                                        dateSubmitted = d.dateSubmitted,
+                                        modified = d.modified,
+                                        statusId = d.statusId,
+                                        status = d.status,
+                                        dateAccepted = d.dateAccepted,
+                                        register = d.register,
+                                        registerId = d.registerId,
+                                        seoname = d.seoname,
+                                        thumbnail = d.thumbnail,
+                                        documentowner = d.documentowner,
+                                        documentownerId = d.documentownerId,
+                                        documentUrl = d.documentUrl
+                                    });
+
+                int NumFound = queryResults.Count();
+                List<Filter> items = new List<Filter>();
+                int skip = parameters.Offset;
+                skip = skip - 1;
+
+                queryResults = SortingQueryResults(parameters, queryResults, skip);
+
+                foreach (var doc in queryResults)
+                {
+                    var item = new Filter
+                    {
+                        systemId = doc.systemId,
+                        currentVersion = doc.currentVersion,
+                        name = doc.name,
+                        description = doc.description,
+                        submitterId = doc.submitterId,
+                        submitter = doc.submitter,
+                        dateSubmitted = doc.dateSubmitted,
+                        modified = doc.modified,
+                        statusId = doc.statusId,
+                        status = doc.status,
+                        dateAccepted = doc.dateAccepted,
+                        register = doc.register,
+                        registerId = doc.registerId,
+                        seoname = doc.seoname,
+                        thumbnail = doc.thumbnail,
+                        documentowner = doc.documentowner,
+                        documentownerId = doc.documentownerId,
+                        documentUrl = doc.documentUrl
+                    };
+
+                    items.Add(item);
+                }
+
+                return new FilterResult
+                {
+                    ItemsFilter = items,                    
+                    Limit = parameters.Limit,
+                    Offset = parameters.Offset,
+                    NumFound = NumFound
+                };
+
+
+            }
+
+            else if (itemClass == "Dataset")
+            {
+                var queryResults = (from d in _dbContext.Datasets
+                                    where d.register.name == parameters.Register
+                                    && d.datasetowner.name == parameters.Owner
+                                    select new Filter
+                                    {
+                                        systemId = d.systemId,
+                                        currentVersion = d.currentVersion,
+                                        name = d.name,
+                                        description = d.description,
+                                        submitterId = d.submitterId,
+                                        submitter = d.submitter,
+                                        dateSubmitted = d.dateSubmitted,
+                                        modified = d.modified,
+                                        statusId = d.statusId,
+                                        status = d.status,
+                                        dateAccepted = d.dateAccepted,
+                                        register = d.register,
+                                        registerId = d.registerId,
+                                        seoname = d.seoname,
+                                        datasetownerId = d.datasetownerId,
+                                        datasetowner = d.datasetowner,
+                                        datasetthumbnail = d.datasetthumbnail,
+                                        DistributionArea = d.DistributionArea,
+                                        DistributionFormat = d.DistributionFormat,
+                                        DistributionUrl = d.DistributionUrl,
+                                        MetadataUrl = d.MetadataUrl,
+                                        Notes = d.Notes,
+                                        PresentationRulesUrl = d.PresentationRulesUrl,
+                                        ProductSheetUrl = d.ProductSheetUrl,
+                                        ProductSpecificationUrl = d.ProductSpecificationUrl,
+                                        theme = d.theme,
+                                        ThemeGroupId = d.ThemeGroupId,
+                                        Uuid = d.Uuid,
+                                        WmsUrl = d.WmsUrl
+                                    });
+
+                int NumFound = queryResults.Count();
+                List<Filter> items = new List<Filter>();
+                int skip = parameters.Offset;
+                skip = skip - 1;
+                queryResults = SortingQueryResults(parameters, queryResults, skip);
+
+                foreach (var dat in queryResults)
+                {
+                    var item = new Filter
+                    {
+                        systemId = dat.systemId,
+                        currentVersion = dat.currentVersion,
+                        name = dat.name,
+                        description = dat.description,
+                        submitterId = dat.submitterId,
+                        submitter = dat.submitter,
+                        dateSubmitted = dat.dateSubmitted,
+                        modified = dat.modified,
+                        statusId = dat.statusId,
+                        status = dat.status,
+                        dateAccepted = dat.dateAccepted,
+                        register = dat.register,
+                        registerId = dat.registerId,
+                        seoname = dat.seoname,
+                        datasetownerId = dat.datasetownerId,
+                        datasetowner = dat.datasetowner,
+                        datasetthumbnail = dat.datasetthumbnail,
+                        DistributionArea = dat.DistributionArea,
+                        DistributionFormat = dat.DistributionFormat,
+                        DistributionUrl = dat.DistributionUrl,
+                        MetadataUrl = dat.MetadataUrl,
+                        Notes = dat.Notes,
+                        PresentationRulesUrl = dat.PresentationRulesUrl,
+                        ProductSheetUrl = dat.ProductSheetUrl,
+                        ProductSpecificationUrl = dat.ProductSpecificationUrl,
+                        theme = dat.theme,
+                        ThemeGroupId = dat.ThemeGroupId,
+                        Uuid = dat.Uuid,
+                        WmsUrl = dat.WmsUrl
+                    };
+
+                    items.Add(item);
+                }
+
+                return new FilterResult
+                {
+                    ItemsFilter = items,
+                    Limit = parameters.Limit,
+                    Offset = parameters.Offset,
+                    NumFound = NumFound
+                };
+            }
+
+            return new FilterResult
+                {
+                    ItemsFilter = null,
+                    Limit = 0,
+                    Offset = 0,
+                    NumFound = 0
+                };
+
+        }
+        
+
         public SearchResult Search(SearchParameters parameters)
         {
             string itemClass = "";
@@ -741,6 +924,66 @@ namespace Kartverket.Register.Services.Search
             //return new SearchResult();
 
 
+        }
+
+        private static IQueryable<Models.Filter> SortingQueryResults(SearchParameters parameters, IQueryable<Models.Filter> queryResults, int skip)
+        {
+            if (parameters.OrderBy != null)
+            {
+                if (parameters.OrderBy == "name_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.name).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "submitter")
+                {
+                    queryResults = queryResults.OrderBy(d => d.submitter).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "submitter_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.submitter).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "status")
+                {
+                    queryResults = queryResults.OrderBy(d => d.status).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "status_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.status).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "dateSubmitted")
+                {
+                    queryResults = queryResults.OrderBy(d => d.dateSubmitted).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "dateSubmitted_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.dateSubmitted).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "modified")
+                {
+                    queryResults = queryResults.OrderBy(d => d.modified).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "modified_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.modified).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "dateAccepted")
+                {
+                    queryResults = queryResults.OrderBy(d => d.dateAccepted).Skip(skip).Take(parameters.Limit);
+                }
+                else if (parameters.OrderBy == "dateAccepted_desc")
+                {
+                    queryResults = queryResults.OrderByDescending(d => d.dateAccepted).Skip(skip).Take(parameters.Limit);
+                }
+                else
+                {
+                    queryResults = queryResults.OrderBy(d => d.name).Skip(skip).Take(parameters.Limit);
+                }
+            }
+            else
+            {
+                queryResults = queryResults.OrderBy(d => d.name).Skip(skip).Take(parameters.Limit);
+            }
+            return queryResults;
         }
     }
 }

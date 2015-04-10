@@ -1,40 +1,20 @@
-﻿﻿@using Kartverket.Register.Helpers
-@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
-@using PagedList;
-@using PagedList.Mvc;
-@using Kartverket.Register.Models
-
-@{
-    var owner = ViewBag.owner;
-    var register = ViewBag.register;
-}
-
-<div class="search-filter-wrapper">
-    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
-        </li>
-        <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("DetailsFilter", new { page, sorting = ViewBag.SortOrder }))
-        </li>
-    </ul>
-    @Html.Partial("_visningstyper")
-</div>
+﻿@using Kartverket.Register.Models.ViewModels
+@using Resources
+﻿@using Kartverket.Register.Helpers
+@model FilteringViewModel
 
 <div class="register document search-results">
-    @foreach (Document item in Model)
+    @foreach (var item in Model.FilterResult.Items)
     {
-        if(item.documentowner.name == owner)
-        { 
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-left">
                         @{
-            string thumb = "/Content/pdf.jpg";
-            if (item.thumbnail != null)
-            {
-                thumb = item.thumbnail;
-            }
+                            string thumb = "/Content/pdf.jpg";
+                            if (item.thumbnail != null)
+                            {
+                                thumb = item.thumbnail;
+                            }
                         }
                         <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     </div>
@@ -74,19 +54,8 @@
             </div>
 
             <hr class="" />
-        }
+        
     }
 </div>
 
-<div class="search-filter-wrapper">
-    <br /><br />
-    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
-        </li>
-        <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("DetailsFilter", new { page, sorting = ViewBag.SortOrder }))
-        </li>
-    </ul>
-</div>
 

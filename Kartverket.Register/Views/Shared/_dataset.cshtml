@@ -47,12 +47,27 @@
                         </a>
                     }
 
-                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
-                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
-                    </a>
-                    <div class="orglogo">
-                        <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">@Html.DisplayFor(modelItem => item.datasetowner.name)</a>
-</div>
+                    <form id="filter-@item.systemId" name="filter" action="/register/@item.register.seoname/@item.datasetowner.seoname/">
+
+                        <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : item.register.name)" />
+                        <input name="owner" type="hidden" id="owner" value="@(Request.QueryString["owner"] != null ? Request.QueryString["owner"].ToString() : item.datasetowner.name)" />
+
+                        <a id="selectedOwner-@item.systemId" onclick="this.form.submit()" @*href="/register/@item.register.seoname/@item.documentowner.seoname/"*@>
+                            <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                        </a>
+                        <div class="orglogo">
+                            <a id="selectedOwner-@item.systemId" onclick="this.form.submit()" @*href="/register/@item.register.seoname/@item.documentowner.seoname/"*@>
+                                @Html.DisplayFor(modelItem => item.datasetowner.name)
+                            </a>
+                        </div>
+
+                        <script type='text/javascript'>
+                                document.getElementById("selectedOwner-@item.systemId").onclick = function () {
+                                    document.getElementById("filter-@item.systemId").submit();
+                                }
+                        </script>
+
+                    </form>
                     <br />
                     <div class="">
                         @if (item.description != null)

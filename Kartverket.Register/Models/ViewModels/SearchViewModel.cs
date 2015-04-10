@@ -10,6 +10,7 @@ namespace Kartverket.Register.Models.ViewModels
     {
 
         public string Text { get; set; }
+        public string Owner { get; set; }
         public string Register { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
@@ -19,9 +20,11 @@ namespace Kartverket.Register.Models.ViewModels
 
         public SearchViewModel(SearchParameters parameters, SearchResult searchResult)
         {
+
             Text = parameters.Text;
             Register = parameters.Register;
-            Result = new SearchResultViewModel(searchResult);
+            Owner = parameters.Owner;
+            Result = new SearchResultViewModel(searchResult);           
             Limit = searchResult.Limit;
             Offset = searchResult.Offset;
             NumFound = searchResult.NumFound;

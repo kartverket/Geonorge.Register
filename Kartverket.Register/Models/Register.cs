@@ -56,7 +56,7 @@ namespace Kartverket.Register.Models
         public Guid? parentRegisterId { get; set; }
         public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
-        
+        //public string targetNamespace { get; set; }        
         public string seoname { get; set; }
 
 

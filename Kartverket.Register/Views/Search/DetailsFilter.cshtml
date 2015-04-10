@@ -1,19 +1,16 @@
-﻿@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Models.ViewModels
+@using Resources
 ﻿@using Kartverket.Register.Helpers
-@using PagedList;
-
+@model FilteringViewModel
 
 @{
-    ViewBag.Title = Model.name;
-    var owner = ViewBag.owner;
-    var logo = ViewBag.ownerLogo;
-    var ownerSEO = ViewBag.ownerSEO;
-    var register = ViewBag.register;
+    ViewBag.Title = Model.Owner;
+    var registerSeoname = ViewBag.registerSeo;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
-    <li class="active">@owner</li> 
+    <li><a href="/register/@Model.Register">@Html.DisplayFor(model => model.Register)</a></li>
+    <li class="active">@Model.Owner</li> 
 }
 
 <script>
@@ -26,54 +23,98 @@
 </script>
 
 <div class="page-header">
-    <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
+    <h2 class="h-md">@Html.DisplayFor(model => model.Owner)</h2>
     <hr>
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
-
-        ID: <a href="/register/@ownerSEO">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <img src="@Url.Content("~/data/organizations/" + @logo)" class="img-responsive img-small-logo" alt="@owner" />
+    <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        ID: <a href="/register/@registerSeoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
+        <img src="@Url.Content("~/data/organizations/" + @Model.FilterResult.Items.ElementAt(0).documentUrl)" class="img-responsive img-small-logo" alt="@Model.Owner" />
     </div>
-
-    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
-        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
-        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
-
-    </div>
-
-    @{
-        var page = ViewBag.page;
-        var currentFilter = ViewBag.currentFilter;
-        var sortering = Model.items.OrderBy(o => o.name).ToList();
-        int pageSize = 50;
-        int pageNumber = (page ?? 1);
-
-        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
-    }
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class=" page-header">
             <hr>
         </div>
 
-        @if (Model.containedItemClass == "Document")
-        {           
-            @Html.Partial("_filterDocument", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Dataset")
+        <div class="search-filter-wrapper">
+            <ul class="nav nav-tabs col-sm-6 col-md-6 col-lg-6" role="tablist">
+                <li class="active"><span role="tab">Registeret viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</span></li>
+            </ul>
+            <ul class="pagination pagination-sm col-sm-4 col-md-4 col-lg-4 pull-right ">
+
+                                
+                @if (Model.IsNextButtonActive())
+                {
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+                }
+
+                @for (int i = Model.startPage; i <= Model.endPage; i++)
+                {
+                    if (Model.IsActivePage(i))
+                    {
+                        <li class="active pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                    }
+                }
+
+                @if (Model.IsPreviousButtonActive())
+                {
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+                }
+            </ul>
+
+        </div>
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="view-navigation">
+                    <ul class="nav nav-pills text-center">
+                        <li><a onclick="listView()" id="button-listView" name="liste" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
+                        <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                        <li><a onclick="tableView()" id="button-tableView" name="tabell" class="" title="Tabellvisning"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="pagination pagination-sm pull-right">
+                    <form action="/register/@Html.ToUrl(Model.Register)/@Html.ToUrl(Model.Owner)" name="sortering" method="get">
+                        <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @Model.Register)" />
+                        <input name="owner" type="hidden" id="owner" value="@(Request.QueryString["owner"] != null ? Request.QueryString["owner"].ToString() : Model.Owner)" />
+                        <div class="pull-right" onchange="SortBy()">
+                            Sorter: @Html.DropDownList("sorting", "Navn a-å")
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.FilterResult.Items.ElementAt(0).register.containedItemClass == "Document")
         {
-            @Html.Partial("_filterDataset", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_filterDocument", Model)
+        }
+        @if (Model.FilterResult.Items.ElementAt(0).register.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_filterDataset", Model)
         }
 
     </div>
+
+
+    <hr />
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <a href="/register/@Html.ToUrl(Model.Register)/">Tilbake</a>
+    </div>
+
 </div>
 
-<hr />
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <a href="/register/@register/">Tilbake</a>
-</div>
+
+
+
 
 
 

@@ -25,16 +25,16 @@ namespace Kartverket.Register.Services.Search
         {
             string itemClass = "";
             var queryResultsRegister = from o in _dbContext.Registers
-                                        where o.name == parameters.Register || o.seoname == parameters.Register
-                                        select o.containedItemClass;
+                                       where o.name == parameters.Register || o.seoname == parameters.Register
+                                       select o.containedItemClass;
 
             itemClass = queryResultsRegister.FirstOrDefault();
 
             if (itemClass == "Document")
             {
                 var queryResults = (from d in _dbContext.Documents
-                                    where d.register.name == parameters.Register
-                                    && d.documentowner.name == parameters.Owner
+                                    where (d.register.name == parameters.Register || d.register.seoname == parameters.Register)
+                                    && (d.documentowner.name == parameters.Owner || d.documentowner.seoname == parameters.Owner)
                                     select new Filter
                                     {
                                         systemId = d.systemId,
@@ -64,7 +64,7 @@ namespace Kartverket.Register.Services.Search
 
                 queryResults = SortingQueryResults(parameters, queryResults, skip);
 
-                foreach (var doc in queryResults)
+                foreach (Filter doc in queryResults)
                 {
                     var item = new Filter
                     {
@@ -93,7 +93,7 @@ namespace Kartverket.Register.Services.Search
 
                 return new FilterResult
                 {
-                    ItemsFilter = items,                    
+                    ItemsFilter = items,
                     Limit = parameters.Limit,
                     Offset = parameters.Offset,
                     NumFound = NumFound
@@ -105,8 +105,8 @@ namespace Kartverket.Register.Services.Search
             else if (itemClass == "Dataset")
             {
                 var queryResults = (from d in _dbContext.Datasets
-                                    where d.register.name == parameters.Register
-                                    && d.datasetowner.name == parameters.Owner
+                                    where (d.register.name == parameters.Register || d.register.seoname == parameters.Register)
+                                    && (d.datasetowner.name == parameters.Owner || d.datasetowner.seoname == parameters.Owner)
                                     select new Filter
                                     {
                                         systemId = d.systemId,
@@ -146,7 +146,7 @@ namespace Kartverket.Register.Services.Search
                 skip = skip - 1;
                 queryResults = SortingQueryResults(parameters, queryResults, skip);
 
-                foreach (var dat in queryResults)
+                foreach (Filter dat in queryResults)
                 {
                     var item = new Filter
                     {
@@ -194,15 +194,15 @@ namespace Kartverket.Register.Services.Search
             }
 
             return new FilterResult
-                {
-                    ItemsFilter = null,
-                    Limit = 0,
-                    Offset = 0,
-                    NumFound = 0
-                };
+            {
+                ItemsFilter = null,
+                Limit = 0,
+                Offset = 0,
+                NumFound = 0
+            };
 
         }
-        
+
 
         public SearchResult Search(SearchParameters parameters)
         {
@@ -474,36 +474,36 @@ namespace Kartverket.Register.Services.Search
 
             else if (itemClass == "Register")
             {
-                var queryResults = 
+                var queryResults =
                                     (from d in _dbContext.Registers
-                                    where d.parentRegister.name == parameters.Register
-                                    && d.parentRegister.containedItemClass == itemClass
-                                    && (d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text))
-                                    select new SearchResultItem
-                                    {
-                                        ParentRegisterId = d.parentRegisterId,
-                                        ParentRegisterName = d.parentRegister.name,
-                                        ParentRegisterDescription = d.parentRegister.description,
-                                        ParentRegisterSeoname = d.parentRegister.seoname,
-                                        ParentregisterOwner = d.parentRegister.owner.seoname,
-                                        RegisterName = d.name,
-                                        RegisterDescription = d.description,
-                                        RegisterItemName = null,
-                                        RegisterItemDescription = null,
-                                        RegisterID = d.systemId,
-                                        SystemID = d.systemId,
-                                        Discriminator = d.containedItemClass,
-                                        RegisterSeoname = d.seoname,
-                                        RegisterItemSeoname = null,
-                                        DocumentOwner = null,
-                                        RegisterItemUpdated = d.modified,
-                                        RegisterItemStatus = d.statusId,
-                                        Submitter = null,
-                                        Shortname = null,
-                                        CodelistValue = null
+                                     where d.parentRegister.name == parameters.Register
+                                     && d.parentRegister.containedItemClass == itemClass
+                                     && (d.name.Contains(parameters.Text)
+                                     || d.description.Contains(parameters.Text))
+                                     select new SearchResultItem
+                                     {
+                                         ParentRegisterId = d.parentRegisterId,
+                                         ParentRegisterName = d.parentRegister.name,
+                                         ParentRegisterDescription = d.parentRegister.description,
+                                         ParentRegisterSeoname = d.parentRegister.seoname,
+                                         ParentregisterOwner = d.parentRegister.owner.seoname,
+                                         RegisterName = d.name,
+                                         RegisterDescription = d.description,
+                                         RegisterItemName = null,
+                                         RegisterItemDescription = null,
+                                         RegisterID = d.systemId,
+                                         SystemID = d.systemId,
+                                         Discriminator = d.containedItemClass,
+                                         RegisterSeoname = d.seoname,
+                                         RegisterItemSeoname = null,
+                                         DocumentOwner = null,
+                                         RegisterItemUpdated = d.modified,
+                                         RegisterItemStatus = d.statusId,
+                                         Submitter = null,
+                                         Shortname = null,
+                                         CodelistValue = null
 
-                                    }).Union(
+                                     }).Union(
                                     (from o in _dbContext.Organizations
                                      where o.register.parentRegister.name.Contains(parameters.Register) && (
                                         o.register.name.Contains(parameters.Text)
@@ -511,26 +511,26 @@ namespace Kartverket.Register.Services.Search
                                      || o.register.name.Contains(parameters.Text)
                                      || o.name.Contains(parameters.Text)
                                      || o.description.Contains(parameters.Text))
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = o.register.parentRegisterId,
                                          ParentRegisterName = o.register.parentRegister.name,
                                          ParentRegisterDescription = o.register.parentRegister.description,
                                          ParentRegisterSeoname = o.register.parentRegister.seoname,
                                          ParentregisterOwner = o.register.parentRegister.owner.seoname,
-                                         RegisterName = o.register.name, 
-                                         RegisterDescription = o.register.description, 
-                                         RegisterItemName = o.name, 
-                                         RegisterItemDescription = o.description, 
-                                         RegisterID = o.registerId, 
-                                         SystemID = o.systemId, 
-                                         Discriminator = o.register.containedItemClass, 
-                                         RegisterSeoname = o.register.seoname, 
-                                         RegisterItemSeoname = o.seoname, 
-                                         DocumentOwner = null, 
-                                         RegisterItemUpdated = o.modified, 
-                                         RegisterItemStatus = o.statusId, 
-                                         Submitter = o.submitter.name, 
+                                         RegisterName = o.register.name,
+                                         RegisterDescription = o.register.description,
+                                         RegisterItemName = o.name,
+                                         RegisterItemDescription = o.description,
+                                         RegisterID = o.registerId,
+                                         SystemID = o.systemId,
+                                         Discriminator = o.register.containedItemClass,
+                                         RegisterSeoname = o.register.seoname,
+                                         RegisterItemSeoname = o.seoname,
+                                         DocumentOwner = null,
+                                         RegisterItemUpdated = o.modified,
+                                         RegisterItemStatus = o.statusId,
+                                         Submitter = o.submitter.name,
                                          Shortname = o.shortname,
                                          CodelistValue = null
                                      }).Union(
@@ -540,26 +540,26 @@ namespace Kartverket.Register.Services.Search
                                     || d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.documentowner.name.Contains(parameters.Text))
-                                    select new SearchResultItem 
+                                    select new SearchResultItem
                                     {
                                         ParentRegisterId = d.register.parentRegisterId,
                                         ParentRegisterName = d.register.parentRegister.name,
                                         ParentRegisterDescription = d.register.parentRegister.description,
                                         ParentRegisterSeoname = d.register.parentRegister.seoname,
                                         ParentregisterOwner = d.register.parentRegister.owner.seoname,
-                                        RegisterName = d.register.name, 
-                                        RegisterDescription = d.register.description, 
-                                        RegisterItemName = d.name, 
-                                        RegisterItemDescription = d.description, 
-                                        RegisterID = d.registerId, 
-                                        SystemID = d.systemId, 
-                                        Discriminator = d.register.containedItemClass, 
-                                        RegisterSeoname = d.register.seoname, 
-                                        RegisterItemSeoname = d.seoname, 
-                                        DocumentOwner = d.documentowner.name, 
-                                        RegisterItemUpdated = d.modified, 
-                                        RegisterItemStatus = d.statusId, 
-                                        Submitter = d.submitter.name, 
+                                        RegisterName = d.register.name,
+                                        RegisterDescription = d.register.description,
+                                        RegisterItemName = d.name,
+                                        RegisterItemDescription = d.description,
+                                        RegisterID = d.registerId,
+                                        SystemID = d.systemId,
+                                        Discriminator = d.register.containedItemClass,
+                                        RegisterSeoname = d.register.seoname,
+                                        RegisterItemSeoname = d.seoname,
+                                        DocumentOwner = d.documentowner.name,
+                                        RegisterItemUpdated = d.modified,
+                                        RegisterItemStatus = d.statusId,
+                                        Submitter = d.submitter.name,
                                         Shortname = null,
                                         CodelistValue = null
                                     }).Union(
@@ -569,84 +569,84 @@ namespace Kartverket.Register.Services.Search
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.datasetowner.name.Contains(parameters.Text))
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
                                          ParentRegisterName = d.register.parentRegister.name,
                                          ParentRegisterDescription = d.register.parentRegister.description,
                                          ParentRegisterSeoname = d.register.parentRegister.seoname,
                                          ParentregisterOwner = d.register.parentRegister.owner.seoname,
-                                         RegisterName = d.register.name, 
-                                         RegisterDescription = d.register.description, 
-                                         RegisterItemName = d.name, 
-                                         RegisterItemDescription = d.description, 
-                                         RegisterID = d.registerId, 
-                                         SystemID = d.systemId, 
-                                         Discriminator = d.register.containedItemClass, 
-                                         RegisterSeoname = d.register.seoname, 
-                                         RegisterItemSeoname = d.seoname, 
-                                         DocumentOwner = d.datasetowner.name, 
-                                         RegisterItemUpdated = d.modified, 
-                                         RegisterItemStatus = d.statusId, 
-                                         Submitter = d.submitter.name, 
+                                         RegisterName = d.register.name,
+                                         RegisterDescription = d.register.description,
+                                         RegisterItemName = d.name,
+                                         RegisterItemDescription = d.description,
+                                         RegisterID = d.registerId,
+                                         SystemID = d.systemId,
+                                         Discriminator = d.register.containedItemClass,
+                                         RegisterSeoname = d.register.seoname,
+                                         RegisterItemSeoname = d.seoname,
+                                         DocumentOwner = d.datasetowner.name,
+                                         RegisterItemUpdated = d.modified,
+                                         RegisterItemStatus = d.statusId,
+                                         Submitter = d.submitter.name,
                                          Shortname = null,
                                          CodelistValue = null
-                                    }).Union(
+                                     }).Union(
                                     (from d in _dbContext.CodelistValues
                                      where d.register.parentRegister.name.Contains(parameters.Register) && (
                                         d.register.name.Contains(parameters.Text)
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.value.Contains(parameters.Text))
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
                                          ParentRegisterName = d.register.parentRegister.name,
                                          ParentRegisterDescription = d.register.parentRegister.description,
                                          ParentRegisterSeoname = d.register.parentRegister.seoname,
                                          ParentregisterOwner = d.register.parentRegister.owner.seoname,
-                                         RegisterName = d.register.name, 
-                                         RegisterDescription = d.register.description, 
-                                         RegisterItemName = d.name, 
-                                         RegisterItemDescription = d.description, 
-                                         RegisterID = d.registerId, 
-                                         SystemID = d.systemId, 
-                                         Discriminator = d.register.containedItemClass, 
-                                         RegisterSeoname = d.register.seoname, 
-                                         RegisterItemSeoname = d.seoname, 
-                                         DocumentOwner = null, 
-                                         RegisterItemUpdated = d.modified, 
-                                         RegisterItemStatus = d.statusId, 
-                                         Submitter = d.submitter.name, 
+                                         RegisterName = d.register.name,
+                                         RegisterDescription = d.register.description,
+                                         RegisterItemName = d.name,
+                                         RegisterItemDescription = d.description,
+                                         RegisterID = d.registerId,
+                                         SystemID = d.systemId,
+                                         Discriminator = d.register.containedItemClass,
+                                         RegisterSeoname = d.register.seoname,
+                                         RegisterItemSeoname = d.seoname,
+                                         DocumentOwner = null,
+                                         RegisterItemUpdated = d.modified,
+                                         RegisterItemStatus = d.statusId,
+                                         Submitter = d.submitter.name,
                                          Shortname = null,
                                          CodelistValue = d.value
-                                    }).Union(
+                                     }).Union(
                                     (from e in _dbContext.EPSGs
                                      where e.register.parentRegister.name.Contains(parameters.Register) && (
                                         e.register.name.Contains(parameters.Text)
                                     || e.name.Contains(parameters.Text)
                                     || e.description.Contains(parameters.Text)
                                     || e.epsgcode.Contains(parameters.Text))
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = e.register.parentRegisterId,
                                          ParentRegisterName = e.register.parentRegister.name,
                                          ParentRegisterDescription = e.register.parentRegister.description,
                                          ParentRegisterSeoname = e.register.parentRegister.seoname,
                                          ParentregisterOwner = e.register.parentRegister.owner.seoname,
-                                         RegisterName = e.register.name, 
-                                         RegisterDescription = e.register.description, 
-                                         RegisterItemName = e.name, 
-                                         RegisterItemDescription = e.description, 
-                                         RegisterID = e.registerId, 
-                                         SystemID = e.systemId, 
-                                         Discriminator = e.register.containedItemClass, 
-                                         RegisterSeoname = e.register.seoname, 
-                                         RegisterItemSeoname = e.seoname, 
-                                         DocumentOwner = null, 
-                                         RegisterItemUpdated = e.modified, 
-                                         RegisterItemStatus = e.statusId, 
-                                         Submitter = e.submitter.name, 
+                                         RegisterName = e.register.name,
+                                         RegisterDescription = e.register.description,
+                                         RegisterItemName = e.name,
+                                         RegisterItemDescription = e.description,
+                                         RegisterID = e.registerId,
+                                         SystemID = e.systemId,
+                                         Discriminator = e.register.containedItemClass,
+                                         RegisterSeoname = e.register.seoname,
+                                         RegisterItemSeoname = e.seoname,
+                                         DocumentOwner = null,
+                                         RegisterItemUpdated = e.modified,
+                                         RegisterItemStatus = e.statusId,
+                                         Submitter = e.submitter.name,
                                          Shortname = null,
                                          CodelistValue = null
                                      })
@@ -685,7 +685,7 @@ namespace Kartverket.Register.Services.Search
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
                         CodelistValue = register.CodelistValue
-                        
+
                     };
 
                     items.Add(item);
@@ -735,7 +735,7 @@ namespace Kartverket.Register.Services.Search
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.value.Contains(parameters.Text)
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
                                          ParentRegisterName = d.register.parentRegister.name,
@@ -757,15 +757,15 @@ namespace Kartverket.Register.Services.Search
                                          Submitter = d.submitter.name,
                                          Shortname = null,
                                          CodelistValue = d.value
-                                    }).Union(
+                                     }).Union(
                                     (from o in _dbContext.Organizations
-                                    where o.register.name.Contains(parameters.Text)
-                                    || o.register.description.Contains(parameters.Text)
-                                    || o.register.name.Contains(parameters.Text)
-                                    || o.name.Contains(parameters.Text)
-                                    || o.description.Contains(parameters.Text)
-                                    select new SearchResultItem 
-                                    {  
+                                     where o.register.name.Contains(parameters.Text)
+                                     || o.register.description.Contains(parameters.Text)
+                                     || o.register.name.Contains(parameters.Text)
+                                     || o.name.Contains(parameters.Text)
+                                     || o.description.Contains(parameters.Text)
+                                     select new SearchResultItem
+                                     {
                                          ParentRegisterId = o.register.parentRegisterId,
                                          ParentRegisterName = o.register.parentRegister.name,
                                          ParentRegisterDescription = o.register.parentRegister.description,
@@ -786,14 +786,14 @@ namespace Kartverket.Register.Services.Search
                                          Submitter = o.submitter.name,
                                          Shortname = o.shortname,
                                          CodelistValue = null
-                                    }).Union(
+                                     }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Text)
                                     || d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.documentowner.name.Contains(parameters.Text)
-                                    select new SearchResultItem 
-                                    {  
+                                    select new SearchResultItem
+                                    {
                                         ParentRegisterId = d.register.parentRegisterId,
                                         ParentRegisterName = d.register.parentRegister.name,
                                         ParentRegisterDescription = d.register.parentRegister.description,
@@ -820,8 +820,8 @@ namespace Kartverket.Register.Services.Search
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.datasetowner.name.Contains(parameters.Text)
-                                     select new SearchResultItem 
-                                     { 
+                                     select new SearchResultItem
+                                     {
                                          ParentRegisterId = d.register.parentRegisterId,
                                          ParentRegisterName = d.register.parentRegister.name,
                                          ParentRegisterDescription = d.register.parentRegister.description,
@@ -848,7 +848,7 @@ namespace Kartverket.Register.Services.Search
                                     || e.name.Contains(parameters.Text)
                                     || e.description.Contains(parameters.Text)
                                     || e.epsgcode.Contains(parameters.Text)
-                                     select new SearchResultItem 
+                                     select new SearchResultItem
                                      {
                                          ParentRegisterId = e.register.parentRegisterId,
                                          ParentRegisterName = e.register.parentRegister.name,
@@ -944,11 +944,11 @@ namespace Kartverket.Register.Services.Search
                 }
                 else if (parameters.OrderBy == "status")
                 {
-                    queryResults = queryResults.OrderBy(d => d.status).Skip(skip).Take(parameters.Limit);
+                    queryResults = queryResults.OrderBy(d => d.status.description).Skip(skip).Take(parameters.Limit);
                 }
                 else if (parameters.OrderBy == "status_desc")
                 {
-                    queryResults = queryResults.OrderByDescending(d => d.status).Skip(skip).Take(parameters.Limit);
+                    queryResults = queryResults.OrderByDescending(d => d.status.description).Skip(skip).Take(parameters.Limit);
                 }
                 else if (parameters.OrderBy == "dateSubmitted")
                 {

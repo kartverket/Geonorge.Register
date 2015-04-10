@@ -49,6 +49,9 @@ namespace Kartverket.Register.Controllers
             else {
                 sorting = parameters.OrderBy;
             }
+            parameters.Owner = itemOwner;
+            parameters.Register = registername;
+
             ViewBag.searchRegister = parameters.Register;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description", parameters.OrderBy);
             ViewBag.registerSeo = registername;

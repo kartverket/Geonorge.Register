@@ -50,27 +50,14 @@
                                 </h4>
                             </a>
                         }
-
-                        <form id="filter-@item.systemId" name="filter" action="/register/@item.register.seoname/@item.documentowner.seoname/">
-
-                            <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : item.register.name)" />
-                            <input name="owner" type="hidden" id="owner" value="@(Request.QueryString["owner"] != null ? Request.QueryString["owner"].ToString() : item.documentowner.name)" />
-                            <a id="selectedOwner-@item.systemId" onclick="this.form.submit()" @*href="/register/@item.register.seoname/@item.documentowner.seoname/"*@>
+                            <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
                                 <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                             </a>
                             <div class="orglogo">
-                                <a id="selectedOwner-@item.systemId" onclick="this.form.submit()" @*href="/register/@item.register.seoname/@item.documentowner.seoname/"*@>
+                                <a href="/register/@item.register.seoname/@item.documentowner.seoname/">
                                     @Html.DisplayFor(modelItem => item.documentowner.name)
                                 </a>
                             </div>
-
-                            <script type='text/javascript'>
-                                document.getElementById("selectedOwner-@item.systemId").onclick = function () {
-                                    document.getElementById("filter-@item.systemId").submit();
-                                }
-                            </script>
-
-                        </form>
                         <p class=" ">
                             @Html.DisplayFor(modelItem => item.description)
                         </p>

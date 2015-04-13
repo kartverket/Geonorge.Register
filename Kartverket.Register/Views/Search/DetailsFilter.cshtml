@@ -41,16 +41,17 @@
         </div>
 
         <div class="search-filter-wrapper">
-            <ul class="col-sm-8 col-md-8 col-lg-8 nav nav-tabs" role="tablist">
+            <ul class="col-sm-9 col-md-9 col-lg-9 nav nav-tabs" role="tablist">
                 <li class="active"><span role="tab">Registeret viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</span></li>
             </ul>
-            <ul class="pagination pagination-sm col-sm-4 col-md-4 col-lg-4 pull-right ">
+            <ul class="pagination pagination-sm col-sm-3 col-md-3 col-lg-3 pull-right ">
+
                 @if (Model.IsNextButtonActive())
                 {
-                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">&raquo;</a></li>
                 }
 
-                @for (int i = Model.startPage; i <= Model.endPage; i++)
+                @for (int i = Model.endPage; i >= Model.startPage; i--)
                 {
                     if (Model.IsActivePage(i))
                     {
@@ -58,14 +59,15 @@
                     }
                     else
                     {
-                        <li class="pagination-sm"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                        <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
                     }
                 }
-
+                
                 @if (Model.IsPreviousButtonActive())
                 {
-                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo;</a></li>
                 }
+                
             </ul>
 
             <div class="row">
@@ -107,16 +109,17 @@
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="search-filter-wrapper">
-            <ul class="col-sm-8 col-md-8 col-lg-8 nav nav-tabs" role="tablist">
+            <ul class="col-sm-9 col-md-9 col-lg-9 nav nav-tabs" role="tablist">
                 <li class="active"><span role="tab">Registeret viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</span></li>
             </ul>
-            <ul class="pagination pagination-sm col-sm-4 col-md-4 col-lg-4 pull-right ">
+            <ul class="pagination pagination-sm col-sm-3 col-md-3 col-lg-3 pull-right ">
+
                 @if (Model.IsNextButtonActive())
                 {
-                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">&raquo;</a></li>
                 }
 
-                @for (int i = Model.startPage; i <= Model.endPage; i++)
+                @for (int i = Model.endPage; i >= Model.startPage; i--)
                 {
                     if (Model.IsActivePage(i))
                     {
@@ -124,14 +127,15 @@
                     }
                     else
                     {
-                        <li class="pagination-sm"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                        <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
                     }
                 }
 
                 @if (Model.IsPreviousButtonActive())
                 {
-                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo;</a></li>
                 }
+
             </ul>
             <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <a href="/register/@Html.ToUrl(Model.Register)/">Tilbake</a>

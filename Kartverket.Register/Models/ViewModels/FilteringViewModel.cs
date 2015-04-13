@@ -139,7 +139,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public bool IsNextButtonActive()
         {
-            return NumFound > (Offset + Limit);
+            return NumFound >= (Offset + Limit);
         }
 
     }

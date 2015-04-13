@@ -42,6 +42,12 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registername}/{itemOwner}/")]
         public ActionResult DetailsFilter(SearchParameters parameters, string registername, string itemOwner, string sorting, int? page)
         {
+            var queryresults = from r in db.Organizations
+                               where r.seoname == itemOwner
+                               select r.name;
+
+            ViewBag.ownerName = queryresults.FirstOrDefault();
+            
             if (sorting != null)
             {
                 parameters.OrderBy = sorting;

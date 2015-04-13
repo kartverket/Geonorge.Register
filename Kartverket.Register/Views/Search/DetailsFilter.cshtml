@@ -4,13 +4,15 @@
 @model FilteringViewModel
 
 @{
-    ViewBag.Title = Model.Owner;
+    
     var registerSeoname = ViewBag.registerSeo;
+    var OwnerName = ViewBag.ownerName;
+    ViewBag.Title = OwnerName;
 }
 
 @section breadcrumb {
     <li><a href="/register/@Model.Register">@Html.DisplayFor(model => model.Register)</a></li>
-    <li class="active">@Model.Owner</li> 
+    <li class="active">@OwnerName</li> 
 }
 
 <script>
@@ -23,14 +25,14 @@
 </script>
 
 <div class="page-header">
-    <h2 class="h-md">@Html.DisplayFor(model => model.Owner)</h2>
+    <h2 class="h-md">@OwnerName</h2>
     <hr>
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
         ID: <a href="/register/@registerSeoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <img src="@Url.Content("~/data/organizations/" + Model.FilterResult.Items.ElementAt(0).documentUrl)" class="img-responsive img-small-logo" alt="@Model.Owner" />
+        <img src="@Url.Content("~/data/organizations/" + Model.FilterResult.Items.ElementAt(0).documentUrl)" class="img-responsive img-small-logo" alt="@OwnerName" />
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -98,16 +98,57 @@
         {
             @Html.Partial("_filterDataset", Model)
         }
-
+        <br />
     </div>
 
 
     <hr />
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <a href="/register/@Html.ToUrl(Model.Register)/">Tilbake</a>
-    </div>
+        <div class="search-filter-wrapper">
+            <ul class="col-sm-8 col-md-8 col-lg-8 nav nav-tabs" role="tablist">
+                <li class="active"><span role="tab">Registeret viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</span></li>
+            </ul>
+            <ul class="pagination pagination-sm col-sm-4 col-md-4 col-lg-4 pull-right ">
+                @if (Model.IsNextButtonActive())
+                {
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+                }
 
+                @for (int i = Model.startPage; i <= Model.endPage; i++)
+                {
+                    if (Model.IsActivePage(i))
+                    {
+                        <li class="active pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="pagination-sm"><a href="@Url.Action("DetailsFilter", Model.ParamsForPageNumber(i))">@i</a></li>
+                    }
+                }
+
+                @if (Model.IsPreviousButtonActive())
+                {
+                    <li class="pull-right"><a href="@Url.Action("DetailsFilter", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+                }
+            </ul>
+            <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <a href="/register/@Html.ToUrl(Model.Register)/">Tilbake</a>
+            </span>
+        </div>
+        
+    </div>
+    
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -13,8 +13,9 @@
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
         </li>
     </ul>
+
     @Html.Partial("_visningstyper")
-</div>
+</div> 
 
     <div class="register document search-results ">
         @foreach (Document item in Model)

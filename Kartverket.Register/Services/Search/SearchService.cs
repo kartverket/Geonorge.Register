@@ -936,11 +936,11 @@ namespace Kartverket.Register.Services.Search
                 }
                 else if (parameters.OrderBy == "submitter")
                 {
-                    queryResults = queryResults.OrderBy(d => d.submitter).Skip(skip).Take(parameters.Limit);
+                    queryResults = queryResults.OrderBy(d => d.submitter.name).Skip(skip).Take(parameters.Limit);
                 }
                 else if (parameters.OrderBy == "submitter_desc")
                 {
-                    queryResults = queryResults.OrderByDescending(d => d.submitter).Skip(skip).Take(parameters.Limit);
+                    queryResults = queryResults.OrderByDescending(d => d.submitter.name).Skip(skip).Take(parameters.Limit);
                 }
                 else if (parameters.OrderBy == "status")
                 {

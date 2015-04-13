@@ -47,6 +47,12 @@ namespace Kartverket.Register.Controllers
                                select r.name;
 
             ViewBag.ownerName = queryresults.FirstOrDefault();
+
+            var queryresultsRegister = from r in db.Registers
+                               where r.seoname == registername
+                               select r.name;
+
+            ViewBag.RegisterName = queryresultsRegister.FirstOrDefault();
             
             if (sorting != null)
             {

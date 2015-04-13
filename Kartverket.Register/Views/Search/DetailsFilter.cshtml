@@ -7,11 +7,14 @@
     
     var registerSeoname = ViewBag.registerSeo;
     var OwnerName = ViewBag.ownerName;
-    ViewBag.Title = OwnerName;
+    var registerName = ViewBag.RegisterName;
+    ViewBag.Title = registerName + "" + OwnerName;
+    
+    
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.Register">@Html.DisplayFor(model => model.Register)</a></li>
+    <li><a href="/register/@Model.Register">@registerName</a></li>
     <li class="active">@OwnerName</li> 
 }
 

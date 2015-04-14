@@ -47,11 +47,8 @@
                     <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/@item.seoname">@item.name</a></li>
                 }                          
             </ul>
-
-
-
         </div><!-- /input-group-btn -->
-        <input name="text" type="text" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")"/>
+        <input name="text" type="text" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")"/>
         <span class="input-group-btn">
             <button class="btn" type="submit">Søk</button>
         </span>

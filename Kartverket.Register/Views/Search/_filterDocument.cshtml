@@ -20,9 +20,9 @@
                     </div>
                     <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
                         <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.documentowner.name)/@Html.ToUrl(item.name)/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                         <p class="">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />

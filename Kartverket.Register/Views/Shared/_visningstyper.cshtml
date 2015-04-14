@@ -14,9 +14,9 @@
     <div class="col-sm-6 col-md-6 col-lg-6">
         <div class="view-navigation">
             <ul class="nav nav-pills text-center">
-                <li><a onclick="listView()" id="button-listView" name="liste" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
-                <li><a onclick="galleryView()" id="button-galleryView" name="galleri" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
-                <li><a onclick="tableView()" id="button-tableView" name="tabell" class="" title="Tabellvisning"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
+                <li><a onclick="listView()" id="button-listView" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
+                <li><a onclick="galleryView()" id="button-galleryView" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                <li><a onclick="tableView()" id="button-tableView" class="" title="Tabellvisning"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
             </ul>
         </div>
     </div>
@@ -25,7 +25,7 @@
         <div class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
-                    Sorter: @Html.DropDownList("sorting", "Navn a-å")
+                    <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
                 </div>
             </form>
         </div>

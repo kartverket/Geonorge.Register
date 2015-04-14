@@ -20,7 +20,7 @@
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-title col-xs-5 col-sm-5 col-md-5 col-lg-5 ">
+                <div class="col-title col-xs-5 col-sm-5 col-md-5 col-lg-5">
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
@@ -41,7 +41,7 @@
                         @item.description
                     </p>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
                     <p><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
                     <p><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
                     <p><span>ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>

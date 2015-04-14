@@ -20,18 +20,18 @@
     @Html.Partial("_visningstyper")
 </div>
 
-<div class="register registersub search-results ">
+<div class="register registersub search-results">
     @foreach (var item in Model)
     {
         if (item.parentRegister.name == register)
         {
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    <div class="col-title col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="col-title col-sm-4 col-md-4 col-lg-4">
                         <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
-                            <h4 class="role-button" role="button" style="font-size: 15px;">
+                            <h3 class="role-button" style="font-size: 15px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     </div>
                     <div class="col-no-padding-xs col-sm-6 col-md-6 col-col-lg-6 col-descripton">

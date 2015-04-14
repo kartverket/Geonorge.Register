@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201503310848380_AddMetadataKodeliste.Designer.cs">
       <DependentUpon>201503310848380_AddMetadataKodeliste.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504131034276_addTargetNamespace.cs" />
+    <Compile Include="Migrations\201504131034276_addTargetNamespace.Designer.cs">
+      <DependentUpon>201504131034276_addTargetNamespace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -696,6 +700,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503310848380_AddMetadataKodeliste.resx">
       <DependentUpon>201503310848380_AddMetadataKodeliste.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504131034276_addTargetNamespace.resx">
+      <DependentUpon>201504131034276_addTargetNamespace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

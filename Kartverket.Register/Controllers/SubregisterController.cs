@@ -10,6 +10,7 @@ using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Xml.Linq;
+using System.IO;
 
 namespace Kartverket.Register.Controllers
 {
@@ -80,8 +81,18 @@ namespace Kartverket.Register.Controllers
 
             else if (export == "gml")
             {
-                //var queryResult = from x in db.CodelistValues
-                //                  select x.value;
+                string targetNamespace = ""; 
+                if (register.targetNamespace != null)
+                {
+                    if (register.targetNamespace.EndsWith("/"))
+                    {
+                        targetNamespace = register.targetNamespace + register.seoname;
+                    }
+                    else {
+                        targetNamespace = register.targetNamespace + "/" + register.seoname;
+                    } 
+                }
+                
 
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
@@ -91,16 +102,16 @@ namespace Kartverket.Register.Controllers
                     (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                        new XAttribute(gmlNs + "id", register.name),
+                        new XAttribute(gmlNs + "id", register.seoname),
                         new XElement(gmlNs + "description"),
                         new XElement(gmlNs + "identifier",
-                            new XAttribute("codeSpace", "http://skjema.geonorge.no/TODO"), register.name),
+                            new XAttribute("codeSpace", register.targetNamespace), register.name),
 
                         from k in db.CodelistValues.ToList()
                         where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
                         select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
                           new XElement(gmlNs + "description", k.description),
-                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", "http://skjema.geonorge.no/TODO/" + register.name), k.value),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
                           new XElement(gmlNs + "name", k.name)
                     ))));
 
@@ -270,6 +281,7 @@ namespace Kartverket.Register.Controllers
                 if (register.description != null) originalRegister.description = register.description;
                 if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
+                if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                 
                 originalRegister.modified = DateTime.Now;
                 if (register.statusId != null)

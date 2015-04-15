@@ -33,7 +33,7 @@ else
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <input type="hidden" value="@parentregister" id="parentregister" name="parentregister" />
 

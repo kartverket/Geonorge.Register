@@ -123,8 +123,11 @@
                     }
                     if (Model.register.containedItemClass == "CodelistValue")
                     {
-                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
-                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+                        <span> | </span><a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
+
+                        @*<span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
                     }
                 }
             }

@@ -26,11 +26,12 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
-        public ActionResult Import(string registername)
+        public ActionResult Import(string registername, string parentregister)
         {
             var queryResults = from o in db.Registers
-                               where o.seoname == registername
+                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid sysId = queryResults.FirstOrDefault();
@@ -62,12 +63,13 @@ namespace Kartverket.Register.Controllers
 
 
         [HttpPost]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string parentregister)
         {
             var queryResultsRegister = from o in db.Registers
-                                        where o.seoname == registername
+                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
                                         select o.systemId;
             Guid sysId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
@@ -159,11 +161,12 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Create
         [Authorize]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         [Route("kodeliste/{registername}/ny")]
-        public ActionResult Create(string registername)
+        public ActionResult Create(string registername, string parentregister)
         {
             var queryResults = from o in db.Registers
-                               where o.seoname == registername
+                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -171,7 +174,7 @@ namespace Kartverket.Register.Controllers
 
             if(register.parentRegisterId != null){
                 ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentregister = register.parentRegister.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
             }
             ViewBag.registername = registername;
                         string role = GetSecurityClaim("role");
@@ -189,11 +192,12 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         [Route("kodeliste/{registername}/ny")]
-        public ActionResult Create(CodelistValue codelistValue, string registername, string parentRegister)
+        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister) 
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister) 
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
@@ -245,9 +249,9 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(codelistValue);
                 db.SaveChanges();
-                if (parentRegister != null)
+                if (parentregister != null)
                 {
-                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername);
+                    return Redirect("/subregister/" + parentregister + "/" + parentRegisterOwner + "/" + registername);
                 }
                 else {
                     return Redirect("/register/" + registername);
@@ -260,14 +264,15 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Edit/5
         [Authorize]
-        [Route("kodeliste/{register}/{submitter}/{itemname}/rediger")]
-        public ActionResult Edit(string register, string itemname)
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        [Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
+        public ActionResult Edit(string registername, string itemname, string parentregister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == register
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -296,18 +301,19 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("kodeliste/{registerCodelist}/{submitterCodelist}/{itemname}/rediger")]
-        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registerCodelist, string itemname)
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        [Route("kodeliste/{registername}/{submitterCodelist}/{itemname}/rediger")]
+        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registerCodelist
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
                                select o.systemId;
 
             Guid systId = queryResults.First();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registerCodelist
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
@@ -345,7 +351,7 @@ namespace Kartverket.Register.Controllers
 
                 if(originalCodelistValue.register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname  + "/" + registerCodelist);
+                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname  + "/" + registername);
                 }
                 
                 return Redirect("/register/" + originalCodelistValue.register.seoname);
@@ -356,14 +362,15 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Delete/5
         [Authorize]
-        [Route("kodeliste/{register}/{submitter}/{itemname}/slett")]
-        public ActionResult Delete(string register, string itemname)
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
+        public ActionResult Delete(string registername, string itemname, string parentregister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == register
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -386,12 +393,13 @@ namespace Kartverket.Register.Controllers
 
         // POST: CodelistValues/Delete/5
         [Authorize]
-        [Route("kodeliste/{register}/{submitter}/{itemname}/slett")]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("kodeliste/{registername}/{submitter}/{itemname}/slett")]
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(string register, string itemname, string submitter)
+        public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == register
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -408,9 +416,9 @@ namespace Kartverket.Register.Controllers
             db.SaveChanges();
             if (parent != null)
             {
-                return Redirect("/subregister/" + parent + "/" + submitter + "/" + register);
+                return Redirect("/subregister/" + parentregister + "/" + itemowner + "/" + registername);
             }
-            return Redirect("/register/" + register);
+            return Redirect("/register/" + registername);
         }
 
         protected override void Dispose(bool disposing)
@@ -447,7 +455,7 @@ namespace Kartverket.Register.Controllers
         {
             var queryResultsDataset = from o in db.CodelistValues
                                       where o.name == codelistValue.name && 
-                                            //o.systemId != codelistValue.systemId && 
+                                            o.systemId != codelistValue.systemId && 
                                             o.register.name == register.name &&
                                             (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;

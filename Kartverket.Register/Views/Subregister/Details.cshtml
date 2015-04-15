@@ -166,11 +166,12 @@
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
-                    <a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
+                    @*<a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>*@
+                    <a href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
                 }
             }
-            
-           
+
+
 
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {

@@ -2,17 +2,17 @@
     ViewBag.Title = "Import";
     var registerName = ViewBag.registerName;
     var registerSeoName = ViewBag.registerSeoName;
-    var parentRegister = ViewBag.parentRegister;
+    var parentregister = ViewBag.parentRegister;
     var parentRegisterOwner = ViewBag.parentRegisterOwner;
     var parentRegisterSeoName = ViewBag.parentRegisterSeoName;
 }
 
 @section breadcrumb {
-    @if (parentRegister != null)
+    @if (parentregister != null)
     {
-        <li><a href="/register/@parentRegisterSeoName">@parentRegister</a></li>
+        <li><a href="/register/@parentRegisterSeoName">@parentregister</a></li>
         <li><a href="/subregister/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName">@registerName</a></li>
-        <li><a href="/kodeliste/@registerSeoName/ny/">Ny</a></li>
+        <li><a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Ny</a></li>
         <li class="active">Import</li>
     }
     else
@@ -27,6 +27,7 @@
 <p>Velg csv fil i UTF-8 med kodeliste...</p>
 @using (Html.BeginForm("Import", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <input type="hidden" value="@parentRegisterSeoName" id="parentregister" name="parentregister" />
     <div class="form-horizontal">
         <hr />
         <div class="form-group">
@@ -46,7 +47,15 @@
 }
 
 <div>
-    <a href="/kodeliste/@registerSeoName/ny/">Tilbake</a>
+    @if (parentregister != null)
+    {
+        <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Tilbake</a>
+    }
+    else
+    {
+        <a href="/kodeliste/@registerSeoName/ny/">Tilbake</a>
+    }
+    
 </div>
 
 

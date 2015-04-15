@@ -249,7 +249,7 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(codelistValue);
                 db.SaveChanges();
-                if (parentregister != null)
+                if (!String.IsNullOrWhiteSpace(parentregister))
                 {
                     return Redirect("/subregister/" + parentregister + "/" + parentRegisterOwner + "/" + registername);
                 }

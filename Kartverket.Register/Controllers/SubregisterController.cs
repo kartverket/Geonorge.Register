@@ -81,31 +81,52 @@ namespace Kartverket.Register.Controllers
 
             else if (export == "gml")
             {
-                string targetNamespace = ""; 
+                string targetNamespace = "";
+                string nameSpace = "";
                 if (register.targetNamespace != null)
                 {
+                    nameSpace = register.targetNamespace;
                     if (register.targetNamespace.EndsWith("/"))
                     {
                         targetNamespace = register.targetNamespace + register.seoname;
                     }
-                    else {
+                    else
+                    {
                         targetNamespace = register.targetNamespace + "/" + register.seoname;
-                    } 
+                    }
                 }
-                
+                              
 
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
 
-                XDocument xdoc = new XDocument
-                    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                //XDocument xdoc = new XDocument
+                //    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                //        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+                //        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+                //        new XAttribute(gmlNs + "id", register.seoname),
+                //        new XElement(gmlNs + "description"),
+                //        new XElement(gmlNs + "identifier",
+                //            new XAttribute("codeSpace", nameSpace), register.name),
+
+                //        from k in db.CodelistValues.ToList()
+                //        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
+                //        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
+                //          new XElement(gmlNs + "description", k.description),
+                //          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
+                //          new XElement(gmlNs + "name", k.name)
+                //          ))));
+
+
+                XElement xdoc = 
+                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
                         new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
                         new XAttribute(gmlNs + "id", register.seoname),
                         new XElement(gmlNs + "description"),
                         new XElement(gmlNs + "identifier",
-                            new XAttribute("codeSpace", register.targetNamespace), register.name),
+                            new XAttribute("codeSpace", nameSpace), register.name),
 
                         from k in db.CodelistValues.ToList()
                         where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
@@ -113,10 +134,12 @@ namespace Kartverket.Register.Controllers
                           new XElement(gmlNs + "description", k.description),
                           new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
                           new XElement(gmlNs + "name", k.name)
-                    ))));
+                          )));
 
-                byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
-                return File(data, "text/xml", register.name + "_kodeliste.xml");
+                //byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
+                //return File(data, "text/xml", register.name + "_kodeliste.xml");
+
+                return new XmlResult(xdoc);
             }
             return View(register);
 

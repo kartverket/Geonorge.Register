@@ -88,29 +88,64 @@ namespace Kartverket.Register.Controllers
                 //var queryResult = from x in db.CodelistValues
                 //                  select x.value;
 
+                string targetNamespace = "";
+                string nameSpace = "";
+                if (register.targetNamespace != null)
+                {
+                    nameSpace = register.targetNamespace;
+                    if (register.targetNamespace.EndsWith("/"))
+                    {
+                        targetNamespace = register.targetNamespace + register.seoname;
+                    }
+                    else
+                    {
+                        targetNamespace = register.targetNamespace + "/" + register.seoname;
+                    }
+                }
+
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
 
-                XDocument xdoc = new XDocument
-                    (new XElement(ns + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs), 
-                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs), 
-                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"), 
-                        new XAttribute(gmlNs + "id", "FaseType"),
-                        new XElement("description"), 
-                        new XElement("identifier", 
-                            new XAttribute("codeSpace", "http://rep.geointegrasjon.no/Sak/Faser/xml.schema/2012.01.31"), "FaseType"),
-              
-                        from k in db.CodelistValues.ToList()
-                        where k.register.name == register.name
-                        select new XElement("dictionaryEntry", new XElement("Definition", new XAttribute(gmlNs + "id", "_25" + k.name),
-                          new XElement("description", k.description),
-                          new XElement("identifier", new XAttribute("codeSpace", "http://rep.geointegrasjon.no/Sak/Faser/xml.schema/2012.01.31/FaseType"), k.value),
-                          new XElement("name", k.name)
-                    ))));
+                //XDocument xdoc = new XDocument
+                //    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                //        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+                //        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+                //        new XAttribute(gmlNs + "id", register.seoname),
+                //        new XElement(gmlNs + "description"),
+                //        new XElement(gmlNs + "identifier",
+                //            new XAttribute("codeSpace", nameSpace), register.name),
 
-                byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
-                return File(data, "text/xml", register.name + "_kodeliste.xml");
+                //        from k in db.CodelistValues.ToList()
+                //        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
+                //        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
+                //          new XElement(gmlNs + "description", k.description),
+                //          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
+                //          new XElement(gmlNs + "name", k.name)
+                //          ))));
+
+
+                XElement xdoc =
+                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+                        new XAttribute(gmlNs + "id", register.seoname),
+                        new XElement(gmlNs + "description"),
+                        new XElement(gmlNs + "identifier",
+                            new XAttribute("codeSpace", nameSpace), register.name),
+
+                        from k in db.CodelistValues.ToList()
+                        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
+                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
+                          new XElement(gmlNs + "description", k.description),
+                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
+                          new XElement(gmlNs + "name", k.name)
+                          )));
+
+                //byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
+                //return File(data, "text/xml", register.name + "_kodeliste.xml");
+
+                return new XmlResult(xdoc);
             }
             return View(register);
 

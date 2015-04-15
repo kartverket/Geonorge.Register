@@ -55,11 +55,11 @@
                             </h3>
                         </a>
                     }                   
-                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/">
+                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
                             <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                         </a>
                         <div class="orglogo">
-                            <a href="/register/@item.register.seoname/@item.datasetowner.seoname/">
+                            <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
                                 @Html.DisplayFor(modelItem => item.datasetowner.name)
                             </a>
                         </div>
@@ -71,12 +71,12 @@
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                             </p>
                         }
@@ -139,13 +139,13 @@
                     <ul style="list-style-type:none">
                         @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                         {
-                            <li>
+                            <li title="Sosi: Ja">
                                 <span>SOSI:</span> ja
                             </li>
                         }
                         else
                         {
-                            <li>
+                            <li title="Sosi: Nei">
                                 <span>SOSI:</span> Nei
                             </li>
                         }
@@ -153,7 +153,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
                         {
                             <li>
-                                <a href="@item.WmsUrl">WMS</a>
+                                <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
                             </li>
                             
                         }
@@ -164,21 +164,21 @@
                         }
                         @if (item.status == null)
                         {
-                            <li><span>Status: </span>Ikke angitt</li>
+                            <li title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</li>
                         }
                         else
                         {
-                            <li><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            <li title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {
-                            <li>
+                            <li title="Temagruppe: @item.theme.description">
                                 <span>Gruppe: </span>@item.theme.description
                             </li>
                         }
                         else
                         {
-                            <li><span>Gruppe: </span>Ikke angitt</li>
+                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
                         }
                     </ul>
 

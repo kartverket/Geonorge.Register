@@ -51,7 +51,7 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
 
-                    <td>
+                    <td title="Eier: @item.owner.name">
                         @if (item.owner == null)
                         {
                             <span>Ikke angitt</span>

@@ -25,9 +25,10 @@
 }
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
-  
+    <input type="hidden" value="@parentregister" id="parentRegister" name="parentRegister" />
+
     <div class="form-horizontal">
         <h4>Foreslå ny @registername kode</h4>
         

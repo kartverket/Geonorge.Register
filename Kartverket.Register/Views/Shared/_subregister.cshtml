@@ -11,7 +11,7 @@
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
@@ -20,25 +20,25 @@
     @Html.Partial("_visningstyper")
 </div>
 
-<div class="register registersub search-results ">
+<div class="register registersub search-results">
     @foreach (var item in Model)
     {
         if (item.parentRegister.name == register)
         {
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    <div class="col-title col-sm-4 col-md-4 col-lg-4 ">
+                    <div class="col-title col-sm-4 col-md-4 col-lg-4">
                         <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
-                            <h4 class="role-button" role="button" style="font-size: 15px;">
+                            <h3 class="role-button" style="font-size: 15px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     </div>
                     <div class="col-no-padding-xs col-sm-6 col-md-6 col-col-lg-6 col-descripton">
                         <p>@item.description</p>
                     </div>
                     <div class="col-no-padding-xs col-information col-sm-2 col-md-2 col-lg-2">
-                        <p><span>Eier: </span> @item.owner.name</p>
+                        <p title="Eier: @item.owner.name"><span>Eier: </span> @item.owner.name</p>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
     <br /><br />
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))

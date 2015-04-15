@@ -7,7 +7,7 @@
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
@@ -18,7 +18,7 @@
 
 <br />
 
-<div class="register codelist search-results ">
+<div class="register codelist search-results">
 
     @foreach (Kartverket.Register.Models.CodelistValue item in Model)
     {
@@ -28,40 +28,41 @@
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     }
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     }
                 </div>
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-descripton">
                     <p>@item.description</p>
                 </div>
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions ">
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
                     @if (item.value != null)
                     {
-                        <span>Kodeverdi: </span>@item.value
+                        <p title="Kodeverdi: @item.value"><span>Kodeverdi: </span>@item.value</p>
                     }
-                    else{
-                        <p><span>Kodeverdi: </span>Ikke angitt</p>
+                    else
+                    {
+                        <p title="Kodeverdi: Ikke angitt"><span>Kodeverdi: </span>Ikke angitt</p>
                     }
                 </div>
                 <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
                     @if (item.status == null)
                     {
-                        <p><span>Status: </span>Ikke angitt</p>
+                        <p title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                        <p title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
                 </div>
             </div>
@@ -77,14 +78,14 @@
 <div class="search-filter-wrapper">
 
     <div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
-        <a href="@Request.Url?export=csv" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-export"></span> Eksporter til CSV</a>
-        <a href="@Request.Url?export=gml" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-export"></span> Eksporter til GML (Beta)</a>
+        <a href="@Request.Url?export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span> Eksporter til CSV</a>
+        <a href="@Request.Url?export=gml" class="btn btn-sm btn-default" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span> Eksporter til GML (Beta)</a>
         <br /><br /><br />    
     </div>
     
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))

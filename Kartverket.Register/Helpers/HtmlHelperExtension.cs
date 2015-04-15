@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kartverket.Register.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -53,6 +54,23 @@ namespace Kartverket.Register.Helpers
             }
 
             return isInRole;
+        }
+
+        public static List<Kartverket.Register.Models.Register> Registers() { 
+            RegisterDbContext db = new RegisterDbContext();
+            
+            var queryResults = from o in db.Registers
+                               where o.parentRegisterId == null
+                               select o;
+
+            List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
+            foreach (var item in queryResults)
+	        {
+		        RegistersList.Add(item);
+	        }
+            RegistersList.OrderBy(r => r.name);
+
+            return RegistersList; 
         }
 
         public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
@@ -133,5 +151,108 @@ namespace Kartverket.Register.Helpers
             return encodedUrl;
         }
 
+
+        // SORTERING av registeritems
+        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register Model, String sortingType)
+        {
+            var sortedList = Model.items.OrderBy(o => o.name).ToList();
+            if (sortingType == "name_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.name).ToList();
+            }
+            if (sortingType == "submitter")
+            {
+                sortedList = Model.items.OrderBy(o => o.submitter.name).ToList();
+            }
+            if (sortingType == "submitter_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.submitter.name).ToList();
+            }
+            else if (sortingType == "status")
+            {
+                sortedList = Model.items.OrderBy(o => o.status.description).ToList();
+            }
+            else if (sortingType == "status_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.status.description).ToList();
+            }
+            else if (sortingType == "dateSubmitted")
+            {
+                sortedList = Model.items.OrderBy(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "dateSubmitted_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "modified")
+            {
+                sortedList = Model.items.OrderBy(o => o.modified).ToList();
+            }
+            else if (sortingType == "modified_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.modified).ToList();
+            }
+            else if (sortingType == "dateAccepted")
+            {
+                sortedList = Model.items.OrderBy(o => o.dateAccepted).ToList();
+            }
+            else if (sortingType == "dateAccepted_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
+            }
+
+            return sortedList;
+        }
+
+        // SORTERING av Register
+        public static List<Kartverket.Register.Models.Register> SortingRegisters(Kartverket.Register.Models.Register Model, String sortingType)
+        {
+            var sortedList = Model.subregisters.OrderBy(o => o.name).ToList();
+            if (sortingType == "name_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.name).ToList();
+            }
+            if (sortingType == "submitter")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.owner.name).ToList();
+            }
+            if (sortingType == "submitter_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.owner.name).ToList();
+            }
+            else if (sortingType == "status")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.status.description).ToList();
+            }
+            else if (sortingType == "status_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.status.description).ToList();
+            }
+            else if (sortingType == "dateSubmitted")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "dateSubmitted_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.dateSubmitted).ToList();
+            }
+            else if (sortingType == "modified")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.modified).ToList();
+            }
+            else if (sortingType == "modified_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.modified).ToList();
+            }
+            else if (sortingType == "dateAccepted")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.dateAccepted).ToList();
+            }
+            else if (sortingType == "dateAccepted_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.dateAccepted).ToList();
+            }
+            return sortedList;
+        }
     }
 }

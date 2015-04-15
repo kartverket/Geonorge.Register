@@ -33,16 +33,16 @@ namespace Kartverket.Register.Models
         [Display(Name = "Beskrivelse av krav:")]
         public string inspireRequirementDescription { get; set; }
         [ForeignKey("nationalRequirement")]
-        [Display(Name = "Nasjonale krav:")]
+        [Display(Name = "Nasjonalt krav:")]
         public string nationalRequirementId { get; set; }
-        [Display(Name = "Nasjonale krav:")]
+        [Display(Name = "Nasjonalt krav:")]
         public virtual Requirement nationalRequirement { get; set; }
         [Display(Name = "Beskrivelse av krav:")]
         public string nationalRequirementDescription { get; set; }
         [ForeignKey("nationalSeasRequirement")]
-        [Display(Name = "Nasjonale krav for havområder:")]
+        [Display(Name = "Nasjonalt krav for havområder:")]
         public string nationalSeasRequirementId { get; set; }
-        [Display(Name = "Nasjonale krav for havområder:")]
+        [Display(Name = "Nasjonalt krav for havområder:")]
         public virtual Requirement nationalSeasRequirement { get; set; }
         [Display(Name = "Beskrivelse av krav:")]
         public string nationalSeasRequirementDescription { get; set; }

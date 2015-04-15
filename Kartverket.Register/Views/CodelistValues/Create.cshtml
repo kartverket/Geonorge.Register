@@ -3,18 +3,26 @@
 @{
    
     var registername = ViewBag.registername;
-    var parentOwner = ViewBag.registerOwner;
-    var parentregister = ViewBag.parentregister;
+    var registerOwner = ViewBag.registerOwner;
+    var parentregister = ViewBag.parentRegister;
     ViewBag.Title = registername;
 }
 
 <h2>Ny</h2>
-<a href="/kodeliste/@registername/ny/import" class="btn btn-default pull-right">Importer</a>
+@if (parentregister != null)
+{
+    <a href="/kodeliste/@parentregister/@registerOwner/@registername/ny/import" class="btn btn-default pull-right">Importer</a>
+}
+else
+{
+    <a href="/kodeliste/@registername/ny/import" class="btn btn-default pull-right">Importer</a>
+}
+
 @section breadcrumb {
     @if (parentregister != null)
     {
         <li><a href="/register/@parentregister">@parentregister</a></li>
-        <li><a href="/subregister/@parentregister/@parentOwner/@registername">@registername</a></li>
+        <li><a href="/subregister/@parentregister/@registerOwner/@registername">@registername</a></li>
         <li class="active">Ny</li>
     }
     else
@@ -25,9 +33,10 @@
 }
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-  
+    <input type="hidden" value="@parentregister" id="parentregister" name="parentregister" />
+
     <div class="form-horizontal">
         <h4>Foreslå ny @registername kode</h4>
         
@@ -69,7 +78,7 @@
 
     @if (parentregister != null)
     {
-        <a href="/subregister/@parentregister/@parentOwner/@registername">Tilbake</a>
+        <a href="/subregister/@parentregister/@registerOwner/@registername">Tilbake</a>
     }
     else
     {

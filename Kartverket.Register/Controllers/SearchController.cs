@@ -36,39 +36,75 @@ namespace Kartverket.Register.Controllers
             return View(model); //.ToPagedList(pageNumber, pageSize)
         }
 
+
+
         // GET: Registers/Details/5
         [Route("register/{registername}/{itemOwner}/")]
-        public ActionResult DetailsFilter(string registername, string itemOwner, string sorting, int? page)  //(string registername, string documentownername, string sorting, int? page)
+        public ActionResult DetailsFilter(SearchParameters parameters, string registername, string itemOwner, string sorting, int? page)
         {
-            var queryResults = from o in db.Registers
-                               where o.name == registername || o.seoname == registername
-                               select o.systemId;
+            var queryresults = from r in db.Organizations
+                               where r.seoname == itemOwner
+                               select r.name;
 
-            var queryResultsOrganization = from o in db.Organizations
-                                           where o.seoname == itemOwner 
-                                           select o.systemId;
+            ViewBag.ownerName = queryresults.FirstOrDefault();
 
-            Guid orgId = queryResultsOrganization.First();
-            Kartverket.Register.Models.Organization organisasjon = db.Organizations.Find(orgId);
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            var queryresultsRegister = from r in db.Registers
+                               where r.seoname == registername
+                               select r.name;
+
+            ViewBag.RegisterName = queryresultsRegister.FirstOrDefault();
             
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.seoname;
-            ViewBag.owner = organisasjon.name;
-            ViewBag.ownerLogo = organisasjon.logoFilename;
-            ViewBag.ownerSEO = organisasjon.seoname;
-            ViewBag.searchRegister = register.name;
-
-                
-
-            if (register == null)
+            if (sorting != null)
             {
-                return HttpNotFound();
+                parameters.OrderBy = sorting;
             }
-            return View(register);
+            else {
+                sorting = parameters.OrderBy;
+            }
+            parameters.Owner = itemOwner;
+            parameters.Register = registername;
+
+            ViewBag.searchRegister = parameters.Register;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description", parameters.OrderBy);
+            ViewBag.registerSeo = registername;
+            FilterResult filterResult = _searchService.Filter(parameters);
+            FilteringViewModel model = new FilteringViewModel(parameters, filterResult);
+
+            return View(model);
         }
+
+        //// GET: Registers/Details/5
+        //[Route("register/{registername}/{itemOwner}/")]
+        //public ActionResult DetailsFilter(string registername, string itemOwner, string sorting, int? page) 
+        //{
+        //    var queryResults = from o in db.Registers
+        //                       where o.name == registername || o.seoname == registername
+        //                       select o.systemId;
+
+        //    var queryResultsOrganization = from o in db.Organizations
+        //                                   where o.seoname == itemOwner 
+        //                                   select o.systemId;
+
+        //    Guid orgId = queryResultsOrganization.First();
+        //    Kartverket.Register.Models.Organization organisasjon = db.Organizations.Find(orgId);
+        //    Guid systId = queryResults.First();
+        //    Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            
+        //    ViewBag.page = page;
+        //    ViewBag.SortOrder = sorting;
+        //    ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+        //    ViewBag.register = register.seoname;
+        //    ViewBag.owner = organisasjon.name;
+        //    ViewBag.ownerLogo = organisasjon.logoFilename;
+        //    ViewBag.ownerSEO = organisasjon.seoname;
+        //    ViewBag.searchRegister = register.name;
+        //    ViewBag.registerSEO = register.seoname;
+
+        //    if (register == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(register);
+        //}
     }
 }

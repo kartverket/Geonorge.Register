@@ -5,23 +5,21 @@ using System.Web;
 
 namespace Kartverket.Register.Models
 {
-    public class SearchResult
+    public class FilterResult
     {
-        public List<SearchResultItem> Items { get; set; }
-        //public List<Filter> ItemsFilter { get; set; }
+        public List<Filter> ItemsFilter { get; set; }
         public int NumFound { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
 
-        public SearchResult()
+        public FilterResult()
         {
 
         }
 
-        public SearchResult(SearchResult otherResult)
+        public FilterResult(FilterResult otherResult)
         {
-            Items = otherResult.Items;
-            //ItemsFilter = otherResult.ItemsFilter;
+            ItemsFilter = otherResult.ItemsFilter;
             NumFound = otherResult.NumFound;
             Limit = otherResult.Limit;
             Offset = otherResult.Offset;

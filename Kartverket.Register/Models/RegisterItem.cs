@@ -37,14 +37,15 @@ namespace Kartverket.Register.Models
         [Display(Name = "Innsender:")]
         public Guid? submitterId { get; set; }
         public virtual Organization submitter { get; set; }
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy hh:mm}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
         [ForeignKey("status")]
         [Display(Name = "Status:")]
         public string statusId { get; set; }
         public virtual Status status { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
         public virtual Register register { get; set; }
         [ForeignKey("register")]

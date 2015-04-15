@@ -15,14 +15,14 @@
     <hr>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         ID: <a href="/register/@Model.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
 
     </div>
-    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
+    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2">
         <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
     </div>
@@ -31,63 +31,23 @@
         var page = ViewBag.page;
         var currentFilter = ViewBag.currentFilter;
         var sortering = Model.items.OrderBy(o => o.name).ToList();
+        var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
         int pageSize = 50;
         int pageNumber = (page ?? 1);
-        
-        if (Model.containedItemClass != "Register")
-        { 
 
-            if (ViewBag.SortOrder == "name_desc")
-            {
-                sortering = Model.items.OrderBy(o => o.register.name).ToList();
-            }
-            if (ViewBag.SortOrder == "submitter")
-            {
-                sortering = Model.items.OrderBy(o => o.submitter.name).ToList();
-            }
-            if (ViewBag.SortOrder == "submitter_desc")
-            {
-                sortering = Model.items.OrderByDescending(o => o.submitter.name).ToList();
-            }
-            else if (ViewBag.SortOrder == "status")
-            {
-                sortering = Model.items.OrderBy(o => o.status.description).ToList();
-            }
-            else if (ViewBag.SortOrder == "status_desc")
-            {
-                sortering = Model.items.OrderByDescending(o => o.status.description).ToList();
-            }
-            else if (ViewBag.SortOrder == "dateSubmitted")
-            {
-                sortering = Model.items.OrderBy(o => o.dateSubmitted).ToList();
-            }
-            else if (ViewBag.SortOrder == "dateSubmitted_desc")
-            {
-                sortering = Model.items.OrderByDescending(o => o.dateSubmitted).ToList();
-            }
-            else if (ViewBag.SortOrder == "modified")
-            {
-                sortering = Model.items.OrderBy(o => o.modified).ToList();
-            }
-            else if (ViewBag.SortOrder == "modified_desc")
-            {
-                sortering = Model.items.OrderByDescending(o => o.modified).ToList();
-            }
-            else if (ViewBag.SortOrder == "dateAccepted")
-            {
-                sortering = Model.items.OrderBy(o => o.dateAccepted).ToList();
-            }
-            else if (ViewBag.SortOrder == "dateAccepted_desc")
-            {
-                sortering = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
-            }
+        if (Model.containedItemClass != "Register")
+        {
+            sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
+        }
+        else {
+            sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
         }
 }
 
     
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class=" page-header">
+        <div class="page-header">
             <hr>
         </div>
 
@@ -115,51 +75,51 @@
             {
                 if (ViewBag.SortOrder == "name_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "submitter")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.owner).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "submitter_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.owner).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "status")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.status).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "status_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.status).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "dateSubmitted")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "dateSubmitted_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.dateSubmitted).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "modified")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.modified).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "modified_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.modified).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "dateAccepted")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.dateAccepted).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else if (ViewBag.SortOrder == "dateAccepted_desc")
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderByDescending(s => s.dateAccepted).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }
                 else
                 {
-                    @Html.Partial("_subregister", Model.subregisters.OrderBy(s => s.name).ToList().ToPagedList(pageNumber, pageSize))
+                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
                 }                 
             }
     </div>

@@ -7,7 +7,7 @@
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
@@ -22,51 +22,61 @@
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 ">
+                <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
 
-                    <a href="#">
-                        <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="datasetThumb" />
-                    </a>
+                    @if (item.register.parentRegister != null)
+                    {
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                            <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name">
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                                <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
+                        </a>
+                    }                                                 
 
                 </div>
                 <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     }
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
-                    }
-
-                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">
-                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
-                    </a>
-                    <div class="orglogo">
-                        <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(@item.datasetowner.name)/">@Html.DisplayFor(modelItem => item.datasetowner.name)</a>
-</div>
+                    }                   
+                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                            <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                        </a>
+                        <div class="orglogo">
+                            <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                                @Html.DisplayFor(modelItem => item.datasetowner.name)
+                            </a>
+                        </div>
                     <br />
                     <div class="">
                         @if (item.description != null)
                         {
-                            <p id="shortdesc">
+                            <p>
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                             </p>
                         }
@@ -101,7 +111,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
                         {
                             <li>
-                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned kartografi for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
+                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned tegneregler for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
                             </li>
                         }
                         else
@@ -129,13 +139,13 @@
                     <ul style="list-style-type:none">
                         @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                         {
-                            <li>
+                            <li title="Sosi: Ja">
                                 <span>SOSI:</span> ja
                             </li>
                         }
                         else
                         {
-                            <li>
+                            <li title="Sosi: Nei">
                                 <span>SOSI:</span> Nei
                             </li>
                         }
@@ -143,7 +153,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
                         {
                             <li>
-                                <a href="@item.WmsUrl">WMS</a>
+                                <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
                             </li>
                             
                         }
@@ -154,21 +164,21 @@
                         }
                         @if (item.status == null)
                         {
-                            <li><span>Status: </span>Ikke angitt</li>
+                            <li title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</li>
                         }
                         else
                         {
-                            <li><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            <li title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {
-                            <li>
+                            <li title="Temagruppe: @item.theme.description">
                                 <span>Gruppe: </span>@item.theme.description
                             </li>
                         }
                         else
                         {
-                            <li><span>Gruppe: </span>Ikke angitt</li>
+                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
                         }
                     </ul>
 
@@ -185,7 +195,7 @@
     <br /><br />
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))

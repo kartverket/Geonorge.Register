@@ -136,7 +136,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nationalRequirementId, "Nasjonale krav:", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.nationalRequirementId, "Nasjonalt krav:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("nationalRequirementId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.nationalRequirementId, "", new { @class = "text-danger" })
@@ -152,7 +152,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.nationalSeasRequirementId, "Nasjonale krav for havområder:", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.nationalSeasRequirementId, "Nasjonalt krav for havområder:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("nationalSeasRequirementId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.nationalSeasRequirementId, "", new { @class = "text-danger" })

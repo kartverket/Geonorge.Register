@@ -418,8 +418,9 @@
 }
 
 .search-results.organization.table-view .col-title {
-    width: 80%;
+    width: 100%;
 }
+
 .search-results.organization.table-view .col-actions {
     float:right;
 }

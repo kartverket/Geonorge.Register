@@ -8,7 +8,7 @@
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
@@ -26,12 +26,12 @@
                 <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding col-img">
                     @if (item.register.parentRegister != null)
                     {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/" title="@item.name">
                             <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name"></a>
                     }
                     else
                     {
-                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/" title="@item.name">
                             <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name">
                         </a>
                     }
@@ -42,21 +42,21 @@
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     }
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h4 class="role-button" role="button" style="font-size: 18px;">
+                            <h3 class="role-button" style="font-size: 18px;">
                                 @item.name
-                            </h4>
+                            </h3>
                         </a>
                     }
                     
-                    <p class="col-title">
+                    <p class="col-title" title="Organisasjonsnummer: @item.number">
                         @Html.DisplayFor(modelItem => item.number)
                     </p>
                     <p class="col-title">
@@ -68,7 +68,7 @@
                     </p>*@
                 </div>
 
-                <div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-information">
+                @*<div class="col-no-padding-xs col-xs-2 col-sm-2 col-md-2 col-lg-2 col-information">
                     @if (item.status == null)
                     {
                         <p><span>Status: </span>Ikke angitt</p>
@@ -77,7 +77,7 @@
                     {
                         <p><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
-                </div>
+                </div>*@
 
             </div>
         </div>
@@ -92,7 +92,7 @@
     <br /><br />
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
-            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount</span>
+            <span>Registere viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))

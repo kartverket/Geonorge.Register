@@ -16,48 +16,52 @@
     <hr>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
+    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
 
         <p>
             @Html.DisplayFor(model => model.description)
         </p>
-        @if (Model.status == null)
-        {
-            <span>Status: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
-        }
-        @if (Model.submitter == null)
-        {
-            <span>Innsender: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
-        }
-        @if (@documentOwner != null)
-        {
-            <span>Eier: @documentOwner </span><br />
-        }
-        @if (@datasetOwner != null)
-        {
-            <span>Eier: @datasetOwner </span><br />
-        }
-        @if (Model.currentVersion == null)
-        {
-            <span>Versjon: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+
+        @if (Model.register.containedItemClass != "Organization")
+        {        
+            if (Model.status == null)
+            {
+                <span>Status: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+            }
+            if (Model.submitter == null)
+            {
+                <span>Innsender: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
+            }
+            if (@documentOwner != null)
+            {
+                <span>Eier: @documentOwner </span><br />
+            }
+            if (@datasetOwner != null)
+            {
+                <span>Eier: @datasetOwner </span><br />
+            }
+            if (Model.currentVersion == null)
+            {
+                <span>Versjon: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+            }
         }
        
 
     </div>
-    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
+    <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
         <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
     </div>
@@ -96,8 +100,8 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p>
-            <hr />
+        <hr />
+        <p>            
           
             <a href="/register/@Model.register.seoname">Tilbake</a>
 

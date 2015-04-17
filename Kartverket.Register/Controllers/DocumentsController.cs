@@ -11,6 +11,7 @@ using System.IO;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using Kartverket.Register.Services.Versioning;
 
 namespace Kartverket.Register.Controllers
 {

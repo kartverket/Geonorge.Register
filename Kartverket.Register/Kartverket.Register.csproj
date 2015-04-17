@@ -428,6 +428,7 @@
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
     <Compile Include="Models\Sorting.cs" />
+    <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringViewModel.cs" />
@@ -452,6 +453,7 @@
     <Compile Include="Models\SearchResultItem.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Version.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultViewModel.cs" />
     <Compile Include="Models\ViewModels\SearchViewModel.cs" />
@@ -467,6 +469,8 @@
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
     <Compile Include="Services\Search\SearchService.cs" />
+    <Compile Include="Services\Versioning\IVersioningService.cs" />
+    <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\gsdll32.dll">

@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using PagedList;
 using System.Text;
 using System.Xml.Linq;
+using Kartverket.Register.Services.Versioning;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Controllers
 {
@@ -18,6 +20,18 @@ namespace Kartverket.Register.Controllers
     {
         private RegisterDbContext db = new RegisterDbContext();
 
+        private IVersioningService _versioningService;
+
+        //public RegistersController()
+        //{
+            
+        //}
+        
+        ////public RegistersController(IVersioningService versioningService)
+        ////{
+            
+        ////    _versioningService = versioningService;
+        ////}
         
         // GET: Registers
         public ActionResult Index()
@@ -151,30 +165,38 @@ namespace Kartverket.Register.Controllers
 
         }
 
+        //[Route("register/{registername}/{submitter}/{itemname}/")]
+        //public ActionResult DetailsRegisterItem(string registername, string itemname)
+        //{
+            
+        //    var queryResultsRegisterItem = from o in db.RegisterItems
+        //                                    where o.seoname == itemname && o.register.seoname == registername
+        //                                    select o.systemId;
+            
+        //    Guid systId = queryResultsRegisterItem.First();
+        //    Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
+
+        //    if (registerItem.register.containedItemClass == "Document") {
+        //        Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+        //        ViewBag.documentOwner = document.documentowner.name;
+        //    }
+
+        //    if (registerItem.register.containedItemClass == "Dataset")
+        //    {
+        //        Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
+        //        ViewBag.datasetOwner = dataset.datasetowner.name;
+        //    }
+        //        return View(registerItem);    
+        //}
+
         [Route("register/{registername}/{submitter}/{itemname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemname)
         {
-            
-            var queryResultsRegisterItem = from o in db.RegisterItems
-                                            where o.seoname == itemname && o.register.seoname == registername
-                                            select o.systemId;
-            
-            Guid systId = queryResultsRegisterItem.First();
-            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
-
-            if (registerItem.register.containedItemClass == "Document") {
-                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-                ViewBag.documentOwner = document.documentowner.name;
-            }
-
-            if (registerItem.register.containedItemClass == "Dataset")
-            {
-                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
-                ViewBag.datasetOwner = dataset.datasetowner.name;
-            }
-                return View(registerItem);    
+            _versioningService = new VersioningService(db);
+            VersionsItem versionsItem = _versioningService.Versions(registername, itemname);
+            RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
+            return View(model);           
         }
-
 
         // GET: subregister/Create
         [Authorize]

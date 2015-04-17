@@ -44,14 +44,14 @@
         {
             <span>Eier: @documentOwner </span><br />
         }
-        @if (Model.currentVersion == null)
+        @*@if (Model.currentVersion == null)
         {
             <span>Versjon: Ikke angitt</span><br />
         }
         else
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-        }
+        }*@
 
 
     </div>
@@ -110,6 +110,8 @@
                     {
                         <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/rediger/">Endre</a>
                         <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
+                    [Route("dokument/{parentregister}/{registerowner}/{registername}/{submitter}/{itemname}/ny")]
                     }
                     if (Model.register.containedItemClass == "Dataset")
                     {

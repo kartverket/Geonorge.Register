@@ -28,7 +28,6 @@ namespace Kartverket.Register.Models
         }
         [Key]
         public Guid systemId { get; set; }
-        public virtual Version currentVersion { get; set; }
         public virtual ICollection<Version> replaces { get; set; }
         [ForeignKey("owner")]
         public Guid? ownerId { get; set; }
@@ -59,6 +58,10 @@ namespace Kartverket.Register.Models
         [Url]
         public string targetNamespace { get; set; }        
         public string seoname { get; set; }
+        [ForeignKey("versioning")]
+        public Guid? versioningId { get; set; }
+        public virtual Version versioning { get; set; }
+        public int versionNumber { get; set; }
 
 
 

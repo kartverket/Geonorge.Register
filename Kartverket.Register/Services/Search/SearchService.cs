@@ -38,7 +38,6 @@ namespace Kartverket.Register.Services.Search
                                     select new Filter
                                     {
                                         systemId = d.systemId,
-                                        currentVersion = d.currentVersion,
                                         name = d.name,
                                         description = d.description,
                                         submitterId = d.submitterId,
@@ -69,7 +68,7 @@ namespace Kartverket.Register.Services.Search
                     var item = new Filter
                     {
                         systemId = doc.systemId,
-                        currentVersion = doc.currentVersion,
+                        //currentVersion = doc.currentVersion,
                         name = doc.name,
                         description = doc.description,
                         submitterId = doc.submitterId,
@@ -110,7 +109,6 @@ namespace Kartverket.Register.Services.Search
                                     select new Filter
                                     {
                                         systemId = d.systemId,
-                                        currentVersion = d.currentVersion,
                                         name = d.name,
                                         description = d.description,
                                         submitterId = d.submitterId,
@@ -151,7 +149,7 @@ namespace Kartverket.Register.Services.Search
                     var item = new Filter
                     {
                         systemId = dat.systemId,
-                        currentVersion = dat.currentVersion,
+                        //currentVersion = dat.currentVersion,
                         name = dat.name,
                         description = dat.description,
                         submitterId = dat.submitterId,

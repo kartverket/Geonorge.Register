@@ -11,7 +11,7 @@ namespace Kartverket.Register.Models
         }
 
         // marking DbSet with virtual makes it testable
-        //public virtual DbSet<Version> Versions { get; set; }
+        public virtual DbSet<Version> Versions { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
         public virtual DbSet<DOKTheme> DOKThemes { get; set; }
         public virtual DbSet<Register> Registers { get; set; }

@@ -151,6 +151,115 @@ namespace Kartverket.Register.Controllers
         }
 
 
+
+        // GET: Documents/CreateNewVersion
+        [Authorize]
+        [Route("dokument/{parentregister}/{registerowner}/{registername}/{submitter}/{itemname}/ny")]
+        [Route("dokument/{registername}/{submitter}/{itemname}/ny")]
+        public ActionResult CreateNewVersion(string parentregister, string registername, string itemname)
+        {
+
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Documents
+                               where o.seoname == itemname && o.register.seoname == registername &&
+                               (o.register.parentRegister.seoname == parentregister)
+                               select o.systemId;
+            Guid systId = queryResults.First();
+
+
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            {
+                Viewbags(document);
+                return View(document);
+            }
+            return HttpNotFound();
+
+        }
+
+        // POST: Documents/CreateNewVersion
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Authorize]
+        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/ny")]
+        [Route("dokument/{registername}/{itemowner}/{itemname}/ny")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentregister, string registername, string itemname)
+        {
+            //ValidationName(document, registername);
+
+            if (ModelState.IsValid)
+            {
+                document.systemId = Guid.NewGuid();
+                document.modified = DateTime.Now;
+                document.dateSubmitted = DateTime.Now;
+                document.statusId = "Submitted";
+                document.versionNumber++;
+
+                if (document.description == null || document.description.Length == 0)
+                {
+                    document.description = "ikke angitt";
+                }
+                document.seoname = MakeSeoFriendlyString(document.name);
+
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+
+                if (documentfile != null)
+                {
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber);
+                    if (document.documentUrl.Contains(".pdf"))
+                    {
+                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber);
+                        GenerateThumbnail(document, documentfile, url);
+                    }
+                }
+                if (thumbnail != null)
+                {
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name + "v" + document.versionNumber);
+                }
+                if (document.documentUrl == null)
+                {
+                    document.documentUrl = "ikke angitt";
+                }
+
+                string organizationLogin = GetSecurityClaim("organization");
+
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+
+                document.submitterId = orgId;
+                document.submitter = submitterOrganisasjon;
+                document.documentowner = submitterOrganisasjon;
+                document.documentownerId = orgId;
+
+                db.Entry(document).State = EntityState.Modified;
+                db.RegisterItems.Add(document);
+                db.SaveChanges();
+
+                return Redirect("/register/" + registername + "/" + document.submitter.seoname + "/" + document.seoname);
+            }
+
+            return View(document);
+        }
+
+
         // GET: Documents/Edit/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
@@ -389,7 +498,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Document document, string registername)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername
+                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versionNumber != document.versionNumber
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

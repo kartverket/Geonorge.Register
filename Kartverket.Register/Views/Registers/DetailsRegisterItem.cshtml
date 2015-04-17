@@ -49,14 +49,14 @@
             {
                 <span>Eier: @datasetOwner </span><br />
             }
-            if (Model.currentVersion == null)
+            @*if (Model.currentVersion == null)
             {
                 <span>Versjon: Ikke angitt</span><br />
             }
             else
             {
-                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-            }
+                <span>Versjon: @Html.DisplayFor(model => model.cur)</span><br />
+            }*@
         }
        
 
@@ -121,6 +121,7 @@
                     {
                         <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/rediger/">Endre</a>
                         <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/slett">Slett</a>
+                        <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
                     }
                     if (Model.register.containedItemClass == "Dataset")
                     {

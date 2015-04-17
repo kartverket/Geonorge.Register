@@ -3,23 +3,25 @@
 
 @{
     ViewBag.Title = UI.CreateNew;
-    var registername = ViewBag.registername;
-    var registerSEO = ViewBag.registerSEO;
-    ViewBag.Title = registername;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@registerSEO">@registername</a></li>
-    <li class="active">Ny</li>
+    <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
+    <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Model.name</a></li>
+    <li class="active">Ny versjon</li>
 }
 
-<h2>Foreslå nytt dokument i @registername</h2>
+<h2>Foreslå ny versjon av:</h2>
 
-@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateNewVersion", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    <input type="hidden" name="currentVersionId" id="currentVersionId" value="@Model.systemId" />
+    <input type="hidden" name="registerId" id="registerId" value="@Model.registerId" />
+    <input type="hidden" name="versioningId" id="versioningId" value="@Model.versioningId" />
+    <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versioning.lastVersionNumber" />
     <div class="form-horizontal">
-        @*<h4>Document</h4>*@
+        <h4>@Model.name</h4>
+        <strong>Versjon: @Model.versionNumber</strong>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -44,14 +46,14 @@
                 <input type="file" name="documentfile" />
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="thumbnail" />
                 @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
                 Hvis ikke noe er valgt genereres forsiden av dokumentet som thumbnail
-            </div>
+            </div>           
         </div>
 
         <div class="form-group">
@@ -60,16 +62,14 @@
             </div>
         </div>
     </div>
-    
-    
+
+
 }
 <div>
-    
-    <a href="/register/@registerSEO/">Tilbake</a>
+
+    <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
 
 </div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

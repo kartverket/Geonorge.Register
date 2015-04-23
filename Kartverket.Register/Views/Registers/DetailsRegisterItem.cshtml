@@ -3,8 +3,34 @@
 
 @{
     ViewBag.Title = @Model.currentVersion.name;
-    var documentOwner = ViewBag.documentOwner;
+    var documentOwner = ViewBag.registerItemOwner;
 }
+
+<script>
+    $(function () {
+        var menu_state = localStorage.getItem("navtabselected");
+
+        $('#gjeldendeLink').click(function (event) {
+            localStorage.setItem("navtabselected", "gjeldende");
+        });
+
+        $('#foralagLink').click(function (event) {
+            localStorage.setItem("navtabselected", "forslag");
+        });
+
+        $('#historiskeLink').click(function (event) {
+            localStorage.setItem("navtabselected", "historiske");
+        });
+
+        if (menu_state == 'gjeldende' || menu_state == null)
+            $('#gjeldendeLink').click();
+        else if (menu_state == 'historiske')
+            $('#historiskeLink').click();
+        else if (menu_state == 'forslag')
+            $('#forslagLink').click();
+    }
+)
+</script>
 
 @section breadcrumb {
     <li><a href="/register/@Model.currentVersion.register.seoname">@Html.DisplayFor(model => model.currentVersion.register.name)</a></li>
@@ -17,10 +43,10 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <br />
-        <ul class="nav nav-tabs nav-tabs-topp" style="">
-            <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldende" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Gjeldende</a></li>
-            <li class="tab pull-right"><a aria-expanded="true" href="#forslag" id="forslag" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
-            <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiske" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>Historiske</a></li>
+        <ul class="nav nav-tabs nav-tabs-topp" style="clear:both">
+            <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Gjeldende</a></li>
+            <li class="tab pull-right"><a aria-expanded="true" href="#forslag" id="forslagLink" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
+            <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>Historiske</a></li>
         </ul>
         <br/>
     </div>
@@ -31,7 +57,17 @@
         }
         @if (Model.currentVersion.register.containedItemClass == "Document")
         {
-            @Html.Partial("_detailsDocuments")
+            <div class="tab-content">
+                <div class="tab-pane active" id="gjeldende">
+                    @Html.Partial("_currentVersionDocument", Model)
+                </div>
+                <div class="tab-pane" id="historiske">
+                    @Html.Partial("_histroicalDocuments", Model)
+                </div>
+                <div class="tab-pane" id="forslag">
+                    @Html.Partial("_suggestedDocuments", Model)
+                </div>
+            </div>
         }
         @if (Model.currentVersion.register.containedItemClass == "Dataset")
         {

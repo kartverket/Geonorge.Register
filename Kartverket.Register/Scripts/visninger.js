@@ -139,9 +139,6 @@ $(document).ready(function () {
     }
 });
 
-
-
-
 // Loading animation
 /*
 $(window).load(function () {

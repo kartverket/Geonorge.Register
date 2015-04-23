@@ -536,6 +536,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\visninger.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -606,6 +607,9 @@
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
     <Content Include="Views\Documents\CreateNewVersion.cshtml" />
+    <Content Include="Views\Shared\_currentVersionDocument.cshtml" />
+    <Content Include="Views\Shared\_histroicalDocuments.cshtml" />
+    <Content Include="Views\Shared\_suggestedDocuments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

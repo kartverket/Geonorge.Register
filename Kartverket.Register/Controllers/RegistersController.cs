@@ -189,12 +189,13 @@ namespace Kartverket.Register.Controllers
         //        return View(registerItem);    
         //}
 
-        [Route("register/{registername}/{submitter}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname)
+        [Route("register/{registername}/{registerItemOwner}/{itemname}/")]
+        public ActionResult DetailsRegisterItem(string registername, string itemname, string registerItemOwner)
         {
             _versioningService = new VersioningService(db);
             VersionsItem versionsItem = _versioningService.Versions(registername, itemname);
             RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
+            ViewBag.registerItemOwner = registerItemOwner;
             return View(model);           
         }
 

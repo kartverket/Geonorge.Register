@@ -415,7 +415,7 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from e in _dbContext.EPSGs
                                     where e.name.Contains(parameters.Text)
                                     || e.description.Contains(parameters.Text)
-
+                                    || e.epsgcode.Contains(parameters.Text)
                                     select new SearchResultItem
                                     {
                                         RegisterName = e.register.name,

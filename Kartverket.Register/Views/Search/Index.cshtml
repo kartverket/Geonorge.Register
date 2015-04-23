@@ -93,7 +93,17 @@
                         {
                             if (item.ParentRegisterName == null)
                             {
-                                <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
+                                if (item.Discriminator == "Document")
+                                {
+                                   <b><a href="@item.RegisteItemUrlDocument">@item.RegisterItemName</a></b>
+                                }
+                                else if (item.Discriminator == "Dataset")
+                                {
+                                    <b><a href="@item.RegisteItemUrlDataset">@item.RegisterItemName</a></b>
+                                }
+                                else { 
+                                    <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
+                                }
                             }
                             else
                             {

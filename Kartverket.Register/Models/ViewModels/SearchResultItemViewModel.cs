@@ -24,6 +24,8 @@ namespace Kartverket.Register.Models.ViewModels
         public string SubregisterUrl { get; set; }
         public string subregisterItemUrl { get; set; }
         public string ParentRegisterUrl { get; set; }
+        public string RegisteItemUrlDocument { get; set; }
+        public string RegisteItemUrlDataset { get; set; }
         public string DatasetOwner { get; set; }
         public Guid? ParentRegisterId { get; set; }
         public string ParentRegisterName { get; set; }
@@ -52,6 +54,8 @@ namespace Kartverket.Register.Models.ViewModels
             ParentRegisterName = item.ParentRegisterName;
             ParentRegisterDescription = item.ParentRegisterDescription;
             ParentRegisterUrl = item.ParentRegisterUrl;
+            RegisteItemUrlDataset = item.RegisteItemUrlDataset;
+            RegisteItemUrlDocument = item.RegisteItemUrlDocument;
 
 
 

@@ -21,6 +21,8 @@ namespace Kartverket.Register.Models
         public DateTime RegisterItemUpdated { get; set; }
         public string RegisteItemUrl { get; set; }
         public string SubregisterUrl { get; set; }
+        public string RegisteItemUrlDocument { get; set; }
+        public string RegisteItemUrlDataset { get; set; }
         public string subregisterItemUrl { get; set; }
         public string ParentRegisterUrl { get; set; }
         public string Submitter { get; set; }

@@ -84,7 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
             WmsUrl = item.WmsUrl;
         }
 
-        public static List<FilteringResultItemViewModel> CreateFromList(IEnumerable<Filter> items)
+        public static List<FilteringResultItemViewModel> CreateFromListFilter(IEnumerable<Filter> items)
         {
             return items.Select(item => new FilteringResultItemViewModel(item)).ToList();
         }

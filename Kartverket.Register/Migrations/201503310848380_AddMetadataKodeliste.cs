@@ -3,7 +3,7 @@ namespace Kartverket.Register.Migrations
     using Kartverket.Register.Models;
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddMetadataKodeliste : DbMigration
     {
         public override void Up()
@@ -1157,7 +1157,7 @@ namespace Kartverket.Register.Migrations
             db.SaveChanges();
 
         }
-        
+
         public override void Down()
         {
         }

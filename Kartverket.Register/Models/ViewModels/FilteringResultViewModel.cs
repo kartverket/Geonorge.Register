@@ -11,7 +11,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public FilteringResultViewModel(FilterResult filterResult)
         {
-            Items = FilteringResultItemViewModel.CreateFromList(filterResult.ItemsFilter);
+            Items = FilteringResultItemViewModel.CreateFromListFilter(filterResult.ItemsFilter);
         }
     }
 }

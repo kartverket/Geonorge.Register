@@ -238,7 +238,7 @@ namespace Kartverket.Register.Services.Search
                                         DocumentOwner = null,
                                         RegisterItemUpdated = o.modified,
                                         RegisterItemStatus = o.statusId,
-                                        Submitter = o.submitter.name,
+                                        Submitter = o.submitter.seoname,
                                         Shortname = o.shortname,
                                     });
 
@@ -299,10 +299,10 @@ namespace Kartverket.Register.Services.Search
                                         Discriminator = d.register.containedItemClass,
                                         RegisterSeoname = d.register.seoname,
                                         RegisterItemSeoname = d.seoname,
-                                        DocumentOwner = null,
+                                        DocumentOwner = d.documentowner.seoname,
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.name,
+                                        Submitter = d.submitter.seoname,
                                     });
 
                 int NumFound = queryResults.Count();
@@ -365,8 +365,8 @@ namespace Kartverket.Register.Services.Search
                                         DocumentOwner = null,
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.name,
-                                        DatasetOwner = d.datasetowner.name
+                                        Submitter = d.submitter.seoname,
+                                        DatasetOwner = d.datasetowner.seoname
                                     });
 
                 int NumFound = queryResults.Count();
@@ -430,7 +430,7 @@ namespace Kartverket.Register.Services.Search
                                         DocumentOwner = null,
                                         RegisterItemUpdated = e.modified,
                                         RegisterItemStatus = e.statusId,
-                                        Submitter = e.submitter.name,
+                                        Submitter = e.submitter.seoname,
                                     });
 
                 int NumFound = queryResults.Count();
@@ -497,6 +497,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = d.seoname,
                                          RegisterItemSeoname = null,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = d.modified,
                                          RegisterItemStatus = d.statusId,
                                          Submitter = null,
@@ -528,9 +529,10 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = o.register.seoname,
                                          RegisterItemSeoname = o.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = o.modified,
                                          RegisterItemStatus = o.statusId,
-                                         Submitter = o.submitter.name,
+                                         Submitter = o.submitter.seoname,
                                          Shortname = o.shortname,
                                          CodelistValue = null
                                      }).Union(
@@ -557,9 +559,10 @@ namespace Kartverket.Register.Services.Search
                                         RegisterSeoname = d.register.seoname,
                                         RegisterItemSeoname = d.seoname,
                                         DocumentOwner = d.documentowner.name,
+                                        DatasetOwner = null,
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.name,
+                                        Submitter = d.submitter.seoname,
                                         Shortname = null,
                                         CodelistValue = null
                                     }).Union(
@@ -585,10 +588,11 @@ namespace Kartverket.Register.Services.Search
                                          Discriminator = d.register.containedItemClass,
                                          RegisterSeoname = d.register.seoname,
                                          RegisterItemSeoname = d.seoname,
-                                         DocumentOwner = d.datasetowner.name,
+                                         DocumentOwner = null,
+                                         DatasetOwner = d.datasetowner.seoname,
                                          RegisterItemUpdated = d.modified,
                                          RegisterItemStatus = d.statusId,
-                                         Submitter = d.submitter.name,
+                                         Submitter = d.submitter.seoname,
                                          Shortname = null,
                                          CodelistValue = null
                                      }).Union(
@@ -615,9 +619,10 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = d.register.seoname,
                                          RegisterItemSeoname = d.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = d.modified,
                                          RegisterItemStatus = d.statusId,
-                                         Submitter = d.submitter.name,
+                                         Submitter = d.submitter.seoname,
                                          Shortname = null,
                                          CodelistValue = d.value
                                      }).Union(
@@ -644,9 +649,10 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = e.register.seoname,
                                          RegisterItemSeoname = e.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = e.modified,
                                          RegisterItemStatus = e.statusId,
-                                         Submitter = e.submitter.name,
+                                         Submitter = e.submitter.seoname,
                                          Shortname = null,
                                          CodelistValue = null
                                      })
@@ -677,6 +683,7 @@ namespace Kartverket.Register.Services.Search
                         RegisterSeoname = register.RegisterSeoname,
                         RegisterItemSeoname = register.RegisterItemSeoname,
                         DocumentOwner = register.DocumentOwner,
+                        DatasetOwner = register.DatasetOwner,
                         RegisterItemUpdated = register.RegisterItemUpdated,
                         RegisterItemStatus = register.RegisterItemStatus,
                         SubregisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "subregister/" + register.ParentRegisterSeoname + "/" + register.ParentregisterOwner + "/" + register.RegisterSeoname,

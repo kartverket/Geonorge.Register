@@ -48,6 +48,9 @@ else
                     <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
                         <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                     </a><br />
+
+                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
+                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>
                 </div>
                 <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
 
@@ -63,7 +66,9 @@ else
                 </div>
 
             </div>
+            
         </div>
+        <hr />
     }
 }
 

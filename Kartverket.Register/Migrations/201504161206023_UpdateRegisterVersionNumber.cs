@@ -11,7 +11,7 @@ namespace Kartverket.Register.Migrations
     using System.Web;
     using System.Web.Mvc;
     using System.Text.RegularExpressions;
-    
+
     public partial class UpdateRegisterVersionNumber : DbMigration
     {
         public override void Up()
@@ -33,7 +33,7 @@ namespace Kartverket.Register.Migrations
 
             }
         }
-        
+
         public override void Down()
         {
         }

@@ -11,7 +11,7 @@ namespace Kartverket.Register.Migrations
     using System.Web;
     using System.Web.Mvc;
     using System.Text.RegularExpressions;
-    
+
     public partial class UpdateRegisterItemsVersioningId : DbMigration
     {
         public override void Up()
@@ -25,9 +25,9 @@ namespace Kartverket.Register.Migrations
             List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
 
             var queryResultsRegisterItems = from r in db.RegisterItems
-                                       select r;
+                                            select r;
             List<RegisterItem> registerItems = queryResultsRegisterItems.ToList();
-            
+
 
             foreach (Kartverket.Register.Models.Version v in versions)
             {
@@ -39,12 +39,12 @@ namespace Kartverket.Register.Migrations
                         string versjonsID = ri.versioningId.ToString();
                         string systemID = ri.systemId.ToString();
 
-                        Sql("UPDATE RegisterItems SET versioningId = '" + versjonsID + "' WHERE (systemId = '"+ systemID +"')");
+                        Sql("UPDATE RegisterItems SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
                     }
-                }                
+                }
             }
         }
-        
+
         public override void Down()
         {
         }

@@ -2,7 +2,7 @@ namespace Kartverket.Register.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
-    
+
     public partial class AddRegisterVersion : DbMigration
     {
         public override void Up()
@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
             RenameIndex(table: "dbo.Registers", name: "IX_currentVersion_systemId", newName: "IX_versioningId");
             AddColumn("dbo.Registers", "versionNumber", c => c.Int(nullable: false));
         }
-        
+
         public override void Down()
         {
             DropColumn("dbo.Registers", "versionNumber");

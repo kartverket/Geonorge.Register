@@ -367,8 +367,8 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsRegisterItem.Count() > 0)
             {
+                ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
                 return View(register);
-                //skriv ut feilmelding på at registeret inneholder registeritems.. kan ikke slettes...
             }
             else { 
                 db.Registers.Remove(register);

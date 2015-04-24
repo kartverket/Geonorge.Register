@@ -351,12 +351,13 @@ namespace Kartverket.Register.Controllers
 
             var queryResultsRegisterItem = from o in db.RegisterItems
                                            where o.register.seoname == registername
+                                           || o.register.parentRegister.seoname == registername
                                            select o.systemId;
 
             if (queryResultsRegisterItem.Count() > 0)
             {
-                return View(register);
-                //skriv ut feilmelding på at registeret inneholder registeritems.. kan ikke slettes...
+                ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
+                return View(register);                
             }
             else
             {

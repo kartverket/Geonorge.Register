@@ -362,7 +362,7 @@ namespace Kartverket.Register.Services.Search
                                         Discriminator = d.register.containedItemClass,
                                         RegisterSeoname = d.register.seoname,
                                         RegisterItemSeoname = d.seoname,
-                                        DocumentOwner = null,
+                                        DocumentOwner = null,                                        
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
                                         Submitter = d.submitter.seoname,
@@ -391,7 +391,7 @@ namespace Kartverket.Register.Services.Search
                         DocumentOwner = register.DocumentOwner,
                         RegisterItemUpdated = register.RegisterItemUpdated,
                         RegisterItemStatus = register.RegisterItemStatus,
-                        RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
+                        RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
                         DatasetOwner = register.DatasetOwner
@@ -733,6 +733,7 @@ namespace Kartverket.Register.Services.Search
                                         RegisterSeoname = d.seoname,
                                         RegisterItemSeoname = null,
                                         DocumentOwner = null,
+                                        DatasetOwner = null,
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
                                         Submitter = null,
@@ -762,9 +763,10 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = d.register.seoname,
                                          RegisterItemSeoname = d.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = d.modified,
                                          RegisterItemStatus = d.statusId,
-                                         Submitter = d.submitter.name,
+                                         Submitter = d.submitter.seoname,
                                          Shortname = null,
                                          CodelistValue = d.value
                                      }).Union(
@@ -791,9 +793,10 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = o.register.seoname,
                                          RegisterItemSeoname = o.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = o.modified,
                                          RegisterItemStatus = o.statusId,
-                                         Submitter = o.submitter.name,
+                                         Submitter = o.submitter.seoname,
                                          Shortname = o.shortname,
                                          CodelistValue = null
                                      }).Union(
@@ -818,10 +821,11 @@ namespace Kartverket.Register.Services.Search
                                         Discriminator = d.register.containedItemClass,
                                         RegisterSeoname = d.register.seoname,
                                         RegisterItemSeoname = d.seoname,
-                                        DocumentOwner = d.documentowner.name,
+                                        DocumentOwner = d.documentowner.seoname,
+                                        DatasetOwner = null,
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.name,
+                                        Submitter = d.submitter.seoname,
                                         Shortname = null,
                                         CodelistValue = null
                                     }).Union(
@@ -846,10 +850,11 @@ namespace Kartverket.Register.Services.Search
                                          Discriminator = d.register.containedItemClass,
                                          RegisterSeoname = d.register.seoname,
                                          RegisterItemSeoname = d.seoname,
-                                         DocumentOwner = d.datasetowner.name,
+                                         DocumentOwner = null,
+                                         DatasetOwner = d.datasetowner.seoname,
                                          RegisterItemUpdated = d.modified,
                                          RegisterItemStatus = d.statusId,
-                                         Submitter = d.submitter.name,
+                                         Submitter = d.submitter.seoname,
                                          Shortname = null,
                                          CodelistValue = null
                                      }).Union(
@@ -875,6 +880,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterSeoname = e.register.seoname,
                                          RegisterItemSeoname = e.seoname,
                                          DocumentOwner = null,
+                                         DatasetOwner = null,
                                          RegisterItemUpdated = e.modified,
                                          RegisterItemStatus = e.statusId,
                                          Submitter = e.submitter.name,

@@ -47,14 +47,6 @@
                     <p title="Vis ekstern referanse"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>
                 </div>
                 <div class="col-no-padding-xs col-actions col-md-4 col-lg-4">
-                    @if (item.status == null)
-                    {
-                        <p><span>Status: Ikke angitt</span></p><br />
-                    }
-                    else
-                    {
-                        <p><span>Status: @Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></span></p>
-                    }
                     @if (item.inspireRequirement == null)
                     {
                         <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>

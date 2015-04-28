@@ -101,7 +101,12 @@
                                 {
                                     <b><a href="@item.RegisteItemUrlDataset">@item.RegisterItemName</a></b>
                                 }
-                                else { 
+                                else if (item.Discriminator == "Objektregister")
+                                {
+                                    <b><a href="@item.ObjektkatalogUrl">@item.RegisterItemName</a></b>
+                                }
+                                else
+                                {
                                     <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
                                 }
                             }
@@ -141,6 +146,10 @@
                             {
                                 <span>Epsg-kode</span>
                             }
+                            @if (item.Discriminator == "Objektregister")
+                            {
+                                <span>@item.Type</span>
+                            }
                             @if (item.RegisterItemName == null)
                             {
                                 <span>Register</span>
@@ -148,7 +157,11 @@
 
                         </td>
                         <td width="20%">
-                            @if (item.ParentRegisterName == null)
+                            @if (item.Discriminator == "Objektregister")
+                            {
+                                <a href="@Html.ObjektkatalogUrl()">@item.RegisterName</a>
+                            }
+                            else if (item.ParentRegisterName == null)
                             {
                                 <a href="/register/@item.RegisterSeoname">@item.RegisterName</a>
                             }

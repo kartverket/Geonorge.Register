@@ -29,8 +29,16 @@
 			                {
 				            thumb = item.thumbnail;
 			                }
+
+                            string dokumentUrl = item.documentUrl;
+                            if (item.documentUrl.Contains("ikke angitt"))
+                            {
+                                dokumentUrl = "";
+                            }
                         }
-                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+
+
+                        <a href=@dokumentUrl><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     </div>
                     <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
                         

@@ -1,9 +1,37 @@
 ﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
 
 <div>
+<<<<<<< HEAD
     <div class="tab-content">
         <div class="tab-pane active" id="home">
             @Html.Partial("_currentVersionDocuments", Model)
+=======
+    <div class="row result-row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
+                @{
+                    string thumb = "/Content/pdf.jpg";
+                    if (Model.thumbnail != null)
+                    {
+                        thumb = Model.thumbnail;
+                    }
+
+                    string dokumentUrl = Model.documentUrl;
+                    if (Model.documentUrl.Contains("ikke angitt"))
+                    {
+                        dokumentUrl = "";
+                    }
+                }
+
+
+                <a href=@dokumentUrl><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+            </div>
+            <div class="col-no-padding-xs col-xs-12 col-sm- col-md-9 col-lg-9">
+                <a href="@Html.DisplayFor(model => model.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @Model.name">
+                    <span class="glyphicon glyphicon-download-alt pull-left"> </span>Last ned
+                </a>
+            </div>
+>>>>>>> Development
         </div>
     </div>  
 </div>

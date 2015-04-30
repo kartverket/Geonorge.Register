@@ -86,7 +86,17 @@ namespace Kartverket.Register.Controllers
        
             if (ModelState.IsValid)
             {
+<<<<<<< HEAD
                 //Tildel verdi til dokumentobjektet
+=======
+                var queryResultsRegister = from o in db.Registers
+                                           where o.seoname == registername
+                                           select o.systemId;
+
+                Guid regId = queryResultsRegister.First();
+                Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+>>>>>>> Development
                 document.systemId = Guid.NewGuid();
                 document.modified = DateTime.Now;
                 document.dateSubmitted = DateTime.Now;
@@ -110,16 +120,18 @@ namespace Kartverket.Register.Controllers
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;           
                 if (documentfile != null)
                 {
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+
+
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name);
+                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
                         GenerateThumbnail(document, documentfile, url);
                     }               
                 }
                 if (thumbnail != null)
                 {
-                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name);
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname);
                 } 
 
                 if (document.documentUrl == null) {
@@ -358,7 +370,7 @@ namespace Kartverket.Register.Controllers
                 
                 if (documentfile != null)
                 {
-                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name);
+                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname);
                     if (originalDocument.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url);
@@ -368,7 +380,7 @@ namespace Kartverket.Register.Controllers
 
                 if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
                 {
-                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name);
+                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname);
                 }
 
                 originalDocument.modified = DateTime.Now;
@@ -507,9 +519,9 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string name)
+        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register)
         {
-            string filename = name + "_" + Path.GetFileName(file.FileName);
+            string filename = register + "_" + name + "_" + Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename); ;
             file.SaveAs(path);
             return filename;

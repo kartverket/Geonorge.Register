@@ -710,7 +710,35 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
-                var queryResults = (from d in _dbContext.Registers
+                System.Net.WebClient c = new System.Net.WebClient();
+                c.Encoding = System.Text.Encoding.UTF8;
+                var data = c.DownloadString(System.Web.Configuration.WebConfigurationManager.AppSettings["ObjektkatalogUrl"] + "api/search/?text=" + parameters.Text + "&limit=1000");
+                var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+
+                var objectKats = response["Results"];
+
+                List<SearchResultItem> objList =  new List<SearchResultItem>();
+
+                foreach (var obj in objectKats) {
+
+                    objList.Add(new SearchResultItem 
+                    {
+                        RegisterName = "Objektregister",
+                        RegisterItemName = obj["name"] != null ? obj["name"].ToString() : null,
+                        RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
+                        Discriminator = "Objektregister",
+                        ObjektkatalogUrl = obj["url"] != null ? obj["url"].ToString() : null,
+                        Type = obj["type"] != null ? obj["type"].ToString() : null
+                    });
+                    
+                }
+
+                
+
+                var qObjList = objList.AsQueryable();
+
+
+                var queryResult = (from d in _dbContext.Registers
                                     where d.parentRegister.containedItemClass == "Register"
                                     && (d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text))
@@ -736,7 +764,9 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemStatus = d.statusId,
                                         Submitter = null,
                                         Shortname = null,
-                                        CodelistValue = null
+                                        CodelistValue = null,
+                                        ObjektkatalogUrl = null,
+                                        Type = null
 
                                     }).Union(
                                     (from d in _dbContext.CodelistValues
@@ -766,7 +796,9 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = d.statusId,
                                          Submitter = d.submitter.seoname,
                                          Shortname = null,
-                                         CodelistValue = d.value
+                                         CodelistValue = d.value,
+                                         ObjektkatalogUrl = null,
+                                         Type = null
                                      }).Union(
                                     (from o in _dbContext.Organizations
                                      where o.register.name.Contains(parameters.Text)
@@ -796,7 +828,9 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = o.statusId,
                                          Submitter = o.submitter.seoname,
                                          Shortname = o.shortname,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         ObjektkatalogUrl = null,
+                                         Type = null
                                      }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Text)
@@ -825,7 +859,9 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemStatus = d.statusId,
                                         Submitter = d.submitter.seoname,
                                         Shortname = null,
-                                        CodelistValue = null
+                                        CodelistValue = null,
+                                        ObjektkatalogUrl = null,
+                                        Type = null
                                     }).Union(
                                     (from d in _dbContext.Datasets
                                      where d.register.name.Contains(parameters.Text)
@@ -854,7 +890,9 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = d.statusId,
                                          Submitter = d.submitter.seoname,
                                          Shortname = null,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         ObjektkatalogUrl = null,
+                                         Type = null
                                      }).Union(
                                     (from e in _dbContext.EPSGs
                                      where e.register.name.Contains(parameters.Text)
@@ -883,15 +921,52 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = e.statusId,
                                          Submitter = e.submitter.name,
                                          Shortname = null,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         ObjektkatalogUrl = null,
+                                         Type = null
                                      })
                                   )))));
 
-                int NumFound = queryResults.Count();
+
+                var queryResultsList = queryResult.ToList();
+                var queryResultsListObjektKat =
+                (from o in qObjList
+                 select new SearchResultItem
+                 {
+                     ParentRegisterId = null,
+                     ParentRegisterName = null,
+                     ParentRegisterDescription = null,
+                     ParentRegisterSeoname = null,
+                     ParentregisterOwner = null,
+                     RegisterName = o.RegisterName,
+                     RegisterDescription = null,
+                     RegisterItemName = o.RegisterItemName,
+                     RegisterItemDescription = o.RegisterItemDescription,
+                     RegisterID = new Guid(),
+                     SystemID = new Guid(),
+                     Discriminator = o.Discriminator,
+                     RegisterSeoname = null,
+                     RegisterItemSeoname = null,
+                     DocumentOwner = null,
+                     DatasetOwner = null,
+                     RegisterItemUpdated = new System.DateTime(),
+                     RegisterItemStatus = null,
+                     Submitter = null,
+                     Shortname = null,
+                     CodelistValue = null,
+                     ObjektkatalogUrl = o.ObjektkatalogUrl,
+                     Type = o.Type
+                 }
+                );
+
+                var queryResultsListAll = queryResultsList.Concat(queryResultsListObjektKat.ToList()).ToList();
+                var queryResults = queryResultsListAll;
+
+                int NumFound = queryResultsListAll.Count();
                 List<SearchResultItem> items = new List<SearchResultItem>();
                 int skip = parameters.Offset;
                 skip = skip - 1;
-                queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit);
+                queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit).ToList();
 
                 foreach (SearchResultItem register in queryResults)
                 {
@@ -922,7 +997,9 @@ namespace Kartverket.Register.Services.Search
                         ParentRegisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.ParentRegisterSeoname,
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
-                        CodelistValue = register.CodelistValue
+                        CodelistValue = register.CodelistValue,
+                        ObjektkatalogUrl = register.ObjektkatalogUrl,
+                        Type = register.Type
                     };
 
                     items.Add(item);

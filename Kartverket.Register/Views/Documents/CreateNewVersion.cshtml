@@ -11,7 +11,7 @@
     <li class="active">Ny versjon</li>
 }
 
-<h2>Foreslå ny versjon av:</h2>
+<h2>Foreslå ny versjon av @Model.name</h2>
 
 @using (Html.BeginForm("CreateNewVersion", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -20,8 +20,6 @@
     <input type="hidden" name="versioningId" id="versioningId" value="@Model.versioningId" />
     <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versioning.lastVersionNumber" />
     <div class="form-horizontal">
-        <h4>@Model.name</h4>
-        <strong>Versjon: @Model.versionNumber</strong>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

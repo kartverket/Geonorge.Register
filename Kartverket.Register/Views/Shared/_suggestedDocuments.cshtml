@@ -35,11 +35,6 @@ else
                     <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
                         <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                     </a>
-                    <div class="orglogo">
-                        <a href="/register/@item.register.seoname/@item.documentowner.seoname/">
-                            @Html.DisplayFor(modelItem => item.documentowner.name)
-                        </a>
-                    </div>
                     <p class=" ">
                         @Html.DisplayFor(modelItem => item.description)
                     </p>
@@ -64,11 +59,9 @@ else
                     }
                     <p><span>Versjon: </span>@item.versionNumber</p>
                 </div>
-
-            </div>
-            
+            </div>            
         </div>
-        <hr />
+    <hr />
     }
 }
 

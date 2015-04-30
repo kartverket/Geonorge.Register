@@ -89,7 +89,6 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <hr />
         <p>            
           
         <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
@@ -108,8 +107,8 @@
                 }
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {
-                    <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/rediger/">Endre</a>
-                    <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/slett">Slett</a>
+                    @*<span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/rediger/">Endre</a>
+                    <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/slett">Slett</a>*@
                     <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
                 }
                 if (Model.currentVersion.register.containedItemClass == "Dataset")

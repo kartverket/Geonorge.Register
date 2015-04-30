@@ -86,22 +86,13 @@ namespace Kartverket.Register.Controllers
        
             if (ModelState.IsValid)
             {
-<<<<<<< HEAD
                 //Tildel verdi til dokumentobjektet
-=======
-                var queryResultsRegister = from o in db.Registers
-                                           where o.seoname == registername
-                                           select o.systemId;
-
-                Guid regId = queryResultsRegister.First();
-                Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
->>>>>>> Development
                 document.systemId = Guid.NewGuid();
                 document.modified = DateTime.Now;
                 document.dateSubmitted = DateTime.Now;
                 document.registerId = regId;
-                document.statusId = "Submitted";                
+                document.statusId = "Submitted";
+                document.versionNumber = 1;
 
                 if (document.name == null || document.name.Length == 0)
                 {
@@ -122,16 +113,16 @@ namespace Kartverket.Register.Controllers
                 {
 
 
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
+                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
                         GenerateThumbnail(document, documentfile, url);
                     }               
                 }
                 if (thumbnail != null)
                 {
-                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname);
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
                 } 
 
                 if (document.documentUrl == null) {
@@ -140,10 +131,9 @@ namespace Kartverket.Register.Controllers
 
                 // Opprette versjonering av et element
                 Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
-                versjoneringsGruppe.systemId = new Guid();
+                versjoneringsGruppe.systemId = Guid.NewGuid();
                 versjoneringsGruppe.currentVersion = document.systemId;
                 versjoneringsGruppe.containedItemClass = "Documents";
-                document.versionNumber = 1;
                 versjoneringsGruppe.lastVersionNumber = document.versionNumber;
                 document.versioningId = versjoneringsGruppe.systemId;
 
@@ -190,9 +180,10 @@ namespace Kartverket.Register.Controllers
 
             var queryResults = from o in db.Documents
                                where o.seoname == itemname && o.register.seoname == registername &&
-                               (o.register.parentRegister.seoname == parentregister)
+                               (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.seoname == null)
+                               && o.versioning.currentVersion == o.systemId
                                select o.systemId;
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
 
             if (systId == null)
@@ -225,8 +216,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentregister, string registername, string itemname)
         {
-            //ValidationName(document, registername);
-
+            
             if (ModelState.IsValid)
             {
                 document.systemId = Guid.NewGuid();
@@ -245,16 +235,16 @@ namespace Kartverket.Register.Controllers
 
                 if (documentfile != null)
                 {
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber);
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber);
+                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
                         GenerateThumbnail(document, documentfile, url);
                     }
                 }
                 if (thumbnail != null)
                 {
-                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name + "v" + document.versionNumber);
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name + "v" + document.versionNumber, registername, document.versionNumber);
                 }
                 if (document.documentUrl == null)
                 {
@@ -277,6 +267,16 @@ namespace Kartverket.Register.Controllers
 
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
+                db.SaveChanges();
+
+                //Oppdater versjoneringsgruppen
+                var queryResultVersions = from v in db.Versions
+                                          where v.systemId == document.versioningId
+                                          select v.systemId;
+
+                Guid vSystId = queryResultVersions.FirstOrDefault();
+                Kartverket.Register.Models.Version versjonsgruppe = db.Versions.Find(vSystId);
+                versjonsgruppe.lastVersionNumber = document.versionNumber;
                 db.SaveChanges();
 
                 return Redirect("/register/" + registername + "/" + document.submitter.seoname + "/" + document.seoname);
@@ -350,19 +350,24 @@ namespace Kartverket.Register.Controllers
                 }
                 if (document.statusId != null)
                 {
-                    originalDocument.statusId = document.statusId;
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
                     {
                         originalDocument.dateAccepted = DateTime.Now;
+                        originalDocument.statusId = document.statusId;
                     }
                     if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
                         originalDocument.dateAccepted = null;
+                        originalDocument.statusId = document.statusId;
                     }
-                    if (document.statusId == "Valid")
-                    {
-                        originalDocument.versioning.containedItemClass = document.systemId.ToString();   
-                    }
+                    //if (document.statusId == "Valid")
+                    //{
+                    //    if (originalDocument.versioning.currentVersion != document.systemId)
+                    //    {
+                    //        originalDocument.versioning.currentVersion = document.systemId;
+                    //    }
+                    //    originalDocument.versioning.containedItemClass = document.systemId.ToString();   
+                    //}
                 }
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
@@ -370,7 +375,7 @@ namespace Kartverket.Register.Controllers
                 
                 if (documentfile != null)
                 {
-                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname);
+                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
                     if (originalDocument.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url);
@@ -380,7 +385,7 @@ namespace Kartverket.Register.Controllers
 
                 if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
                 {
-                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname);
+                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
                 }
 
                 originalDocument.modified = DateTime.Now;
@@ -397,14 +402,14 @@ namespace Kartverket.Register.Controllers
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        public ActionResult Delete(string registername, string documentname)
+        public ActionResult Delete(string registername, string documentname, int vnr)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
-                                where o.seoname == documentname && o.register.seoname == registername 
-                                select o.systemId;
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               select o.systemId;
 
             Guid systId = queryResults.First();
 
@@ -428,15 +433,17 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string registername, string documentname)
+        public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber)
         {
+
+            //Finn dokumentet som skal slettes
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname && o.register.seoname == registername
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == versionNumber
                                select o.systemId;
 
             Guid systId = queryResults.First();
-
             Document document = db.Documents.Find(systId);
+
             db.RegisterItems.Remove(document);
             db.SaveChanges();
             return Redirect("/register/" + registername);
@@ -519,9 +526,9 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register)
+        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
         {
-            string filename = register + "_" + name + "_" + Path.GetFileName(file.FileName);
+            string filename = register + "_" + name + "_v" + vnr + "_" + Path.GetFileName(file.FileName);
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename); ;
             file.SaveAs(path);
             return filename;
@@ -530,7 +537,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Document document, string registername)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versionNumber == document.versionNumber
+                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versioningId != document.versioningId && o.versionNumber != document.versionNumber
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

@@ -28,7 +28,25 @@ namespace Kartverket.Register.Services.Versioning
                                 && ri.status.value == "Valid"
                                select ri;
 
-            RegisterItem currentVersion = queryResults.FirstOrDefault();
+            RegisterItem currentVersion = currentVersion = queryResults.FirstOrDefault();
+            List<RegisterItem> validVersions = queryResults.ToList();
+            if (queryResults.Count() > 1)
+            {
+                
+                foreach (RegisterItem item in validVersions)
+                {
+                    if (item.dateAccepted > currentVersion.dateAccepted)
+                    {
+                        currentVersion = item;
+                    }                    
+                }
+
+            }
+            else {
+                currentVersion = queryResults.FirstOrDefault();
+            }
+
+            
             
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
@@ -38,6 +56,9 @@ namespace Kartverket.Register.Services.Versioning
                             && (ri.status.value == "Submitted" 
                             || ri.status.value == "Proposal"
                             || ri.status.value == "InProgress"
+                            || ri.status.value == "NotAccepted"
+                            || ri.status.value == "Accepted"
+                            || ri.status.value == "Experimental"
                             || ri.status.value == "Candidate")
                             select ri;
 
@@ -55,14 +76,31 @@ namespace Kartverket.Register.Services.Versioning
                                            where ri.register.seoname == registername
                                             && ri.register.parentRegisterId == null
                                             && ri.versioningId == currentVersion.versioningId
-                                            && (ri.status.value == "deprecated"
-                                            || ri.status.value == "superseeded"
-                                            || ri.status.value == "retired")
-                                           select ri;
+                                            && (ri.status.value == "Deprecated"
+                                            || ri.status.value == "Superseded"
+                                            || ri.status.value == "Retired")
+                                          select ri;
+
+             
+            
+            if (queryResultsHistorical.Count() != 0)
+            {
+                if (currentVersion == null)
+                {
+                    currentVersion = queryResults.FirstOrDefault();
+                }
 
             foreach (RegisterItem item in queryResultsHistorical)
 	        {
                 historicalItems.Add(item);
+            }
+            }
+            foreach (RegisterItem item in validVersions)
+            {
+                if (item != currentVersion)
+                {
+                    historicalItems.Add(item);
+                }
             }
 
             return new VersionsItem

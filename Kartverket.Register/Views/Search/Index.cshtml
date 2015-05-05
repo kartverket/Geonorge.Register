@@ -82,7 +82,7 @@
             {
                 foreach (var item in Model.Result.Items)
                 {
-                    if (item.currentVersion == item.SystemID)
+                    if (item.currentVersion == item.SystemID || item.currentVersion == null)
                     {
                         <tr>
                             <td width="20%">

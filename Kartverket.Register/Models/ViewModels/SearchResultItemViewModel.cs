@@ -34,7 +34,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string ParentregisterOwner { get; set; }
         public string CodelistValue { get; set; }
         public string Type { get; set; }
-        public Guid currentVersion { get; set; }
+        public Guid? currentVersion { get; set; }
 
         private SearchResultItemViewModel(SearchResultItem item)
         {

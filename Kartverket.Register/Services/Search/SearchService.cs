@@ -784,7 +784,7 @@ namespace Kartverket.Register.Services.Search
                                         CodelistValue = null,
                                         ObjektkatalogUrl = null,
                                         Type = null,
-                                        currentVersion = d.versioning.currentVersion
+                                        currentVersion = null
 
                                     }).Union(
                                     (from d in _dbContext.CodelistValues

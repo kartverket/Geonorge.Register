@@ -115,7 +115,7 @@ namespace Kartverket.Register.Controllers
                     if (document.documentUrl.Contains(".pdf"))
                     {
                         document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
-                        GenerateThumbnail(document, documentfile, url);
+                        GenerateThumbnail(document, documentfile, url, registername);
                     }               
                 }
                 if (thumbnail != null)
@@ -235,7 +235,7 @@ namespace Kartverket.Register.Controllers
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname);
                     if (originalDocument.documentUrl.Contains(".pdf"))
                     {
-                        GenerateThumbnail(document, documentfile, url);
+                        GenerateThumbnail(document, documentfile, url, registername);
                         originalDocument.thumbnail = document.thumbnail;
                     }
                 }
@@ -372,19 +372,31 @@ namespace Kartverket.Register.Controllers
             return encodedUrl;
         }
 
-        private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
+        private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url, string register)
         {
-            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.name + "_" + Path.GetFileName(documentfile.FileName));
-            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), "thumbnail_" + document.name + ".jpg");
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_" + Path.GetFileName(documentfile.FileName));
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
-            document.thumbnail = url + "thumbnail_" + document.name + ".jpg";
+            document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
         }
 
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register)
         {
-            string filename = register + "_" + name + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename); ;
+            string[] documentfilename = file.FileName.Split('.');
+            string filtype = documentfilename.Last();
+            string seofilename = null;
+            foreach (string item in documentfilename)
+            {
+                if (item == filtype)
+                {
+                    break;
+                }
+                seofilename += MakeSeoFriendlyString(item) + "_";
+            }
+
+            string filename = register + "_" + name + "_" + seofilename + "." + filtype;                       
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);
             return filename;
         }

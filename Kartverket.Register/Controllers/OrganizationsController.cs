@@ -11,9 +11,12 @@ using System.Text.RegularExpressions;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class OrganizationsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Organizations
         public ActionResult Index(string searchString)
@@ -463,6 +466,11 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
         }
     }
 }

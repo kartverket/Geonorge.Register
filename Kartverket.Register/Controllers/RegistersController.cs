@@ -16,9 +16,11 @@ using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class RegistersController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+<<<<<<< HEAD
 
         private IVersioningService _versioningService;
 
@@ -32,6 +34,9 @@ namespace Kartverket.Register.Controllers
             
         ////    _versioningService = versioningService;
         ////}
+=======
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+>>>>>>> Development
         
         // GET: Registers
         public ActionResult Index()
@@ -521,6 +526,12 @@ namespace Kartverket.Register.Controllers
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
         }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
+        }
+
     }
 
 }

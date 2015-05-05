@@ -187,6 +187,7 @@
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -431,6 +432,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
+    <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
@@ -610,10 +612,14 @@
     <Content Include="Views\Subregister\Index.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
+<<<<<<< HEAD
     <Content Include="Views\Documents\CreateNewVersion.cshtml" />
     <Content Include="Views\Shared\_currentVersionDocument.cshtml" />
     <Content Include="Views\Shared\_histroicalDocuments.cshtml" />
     <Content Include="Views\Shared\_suggestedDocuments.cshtml" />
+=======
+    <Content Include="Views\Error\NotFound.cshtml" />
+>>>>>>> Development
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,9 +4,12 @@ using Kartverket.DOK.Models;
 
 namespace Kartverket.DOK.Controllers
 {
+    [HandleError]
     public class DisplayDatasetController : Controller
     {
         private Kartverket.Register.Models.RegisterDbContext db = new Kartverket.Register.Models.RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ActionResult Index()
         {
@@ -26,6 +29,11 @@ namespace Kartverket.DOK.Controllers
                 return RedirectToActionPermanent("Index", new { id, name = seoUrl });
 
             return View(dataset);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
         }
     }
 }

@@ -17,6 +17,18 @@ namespace Kartverket.Register.Services.Versioning
 
         public VersionsItem Versions(string registername, string itemname)
         {
+            // Finn versjonsgruppen
+            var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
+                                           where ri.register.seoname == registername && ri.register.parentRegisterId == null
+                                           && ri.seoname == itemname
+                                           select ri.versioningId;
+
+            Guid? vnr = queryResultsRegisteritem.FirstOrDefault();
+
+
+
+            
+
             List<RegisterItem> suggestionsItems = new List<RegisterItem>();
             List<RegisterItem> historicalItems = new List<RegisterItem>();
 
@@ -24,8 +36,8 @@ namespace Kartverket.Register.Services.Versioning
             var queryResults = from ri in _dbContext.RegisterItems
                                where ri.register.seoname == registername
                                 && ri.register.parentRegisterId == null
-                                && ri.seoname == itemname
-                                && ri.status.value == "Valid"
+                                && ri.statusId == "Valid"
+                                && ri.versioningId == vnr
                                select ri;
 
             RegisterItem currentVersion = currentVersion = queryResults.FirstOrDefault();
@@ -52,7 +64,7 @@ namespace Kartverket.Register.Services.Versioning
             queryResults = from ri in _dbContext.RegisterItems
                             where ri.register.seoname == registername
                             && ri.register.parentRegisterId == null
-                            && ri.seoname == itemname
+                            && ri.versioningId == vnr
                             && (ri.status.value == "Submitted" 
                             || ri.status.value == "Proposal"
                             || ri.status.value == "InProgress"

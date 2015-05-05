@@ -350,24 +350,62 @@ namespace Kartverket.Register.Controllers
                 }
                 if (document.statusId != null)
                 {
+                    // Sett dokumentet som gjeldende versjon
+                    var queryResultsVersions = from o in db.Versions
+                                               where o.systemId == document.versioningId
+                                               select o;
+
+                    Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
+
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
                     {
+                        versjonsgruppe.currentVersion = originalDocument.systemId;
                         originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
+                    if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion == originalDocument.systemId)
+                    {
+                        // Finn ny gjeldende versjon
+                        var queryResultsVersionsDocument = from o in db.Documents
+                                                           where o.versioningId == versjonsgruppe.systemId && o.systemId != document.systemId
+                                                           select o;
+
+                        if (queryResultsVersionsDocument.Count() > 0)
+                        {
+                            if (queryResultsVersionsDocument.Count() == 1)
+                            {
+                                Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            }
+                            // Sett gjeldende versjon ut fra status...
+                            else
+                            {
+                                foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted))
+                                {
+                                    if (item.statusId == "Valid")
+                                    {
+                                        versjonsgruppe.currentVersion = item.systemId;
+                                        break;
+                                    }                                    
+                                }
+                                if (versjonsgruppe.currentVersion == document.systemId)
+                                {
+                                    Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
+                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                                }
+                                //db.SaveChanges();
+                                
+                            }
+                        }
+
+                        originalDocument.dateAccepted = null;
+                        originalDocument.statusId = document.statusId;
+                    }
+                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion != originalDocument.systemId)
                     {
                         originalDocument.dateAccepted = null;
                         originalDocument.statusId = document.statusId;
                     }
-                    //if (document.statusId == "Valid")
-                    //{
-                    //    if (originalDocument.versioning.currentVersion != document.systemId)
-                    //    {
-                    //        originalDocument.versioning.currentVersion = document.systemId;
-                    //    }
-                    //    originalDocument.versioning.containedItemClass = document.systemId.ToString();   
-                    //}
                 }
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
@@ -393,6 +431,7 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(document);
 
+                //Retur? Gjeldende versjon!!
                 return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
             }
             Viewbags(document);
@@ -443,6 +482,48 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.First();
             Document document = db.Documents.Find(systId);
+
+            //Finn versjonsgruppen dokumentet ligger i.
+            var queryResultsVersions = from o in db.Versions
+                                       where o.currentVersion == systId
+                                       select o;
+
+            Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
+
+            //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
+            // Finn alle dokumenter i versjonsgruppen
+            if (queryResultsVersions.Count() != 0)
+            {
+                var queryResultsVersionsDocument = from o in db.Documents
+                                                   where o.versioningId == versjonsgruppe.systemId && o.systemId != systId
+                                                   select o;
+
+                if (queryResultsVersionsDocument.Count() != 0)
+                {
+                    if (queryResultsVersionsDocument.Count() == 1)
+                    {
+                        versjonsgruppe.currentVersion = queryResultsVersionsDocument.FirstOrDefault().systemId;
+                    }
+                    // Sett gjeldende versjon ut fra status...
+                    else
+                    {
+                        queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted);
+                        foreach (var item in queryResultsVersionsDocument)
+                        {
+                            if (item.statusId == "Valid")
+                            {
+                                versjonsgruppe.currentVersion = item.systemId;
+                                break;
+                            }
+                        }
+                        if (versjonsgruppe.currentVersion == document.systemId)
+                        {
+                            Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        }
+                    }
+                }
+            }
 
             db.RegisterItems.Remove(document);
             db.SaveChanges();
@@ -537,7 +618,7 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(Document document, string registername)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versioningId != document.versioningId && o.versionNumber != document.versionNumber
+                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versioningId != document.versioningId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

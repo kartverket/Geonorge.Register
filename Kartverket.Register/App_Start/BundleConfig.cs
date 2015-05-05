@@ -33,7 +33,8 @@ namespace Kartverket.Register
                      "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
-                "~/Scripts/visninger.js"));
+                "~/Scripts/visninger.js",
+                "~/Scripts/tabs.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

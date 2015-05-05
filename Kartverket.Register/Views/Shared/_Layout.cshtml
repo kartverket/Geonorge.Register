@@ -25,6 +25,11 @@
     
     @Html.Partial("_Analytics")
 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/js")
+    @RenderSection("scripts", false)
+
 </head>
 
 <body class="geonorge-container prototype  geonorge">
@@ -123,9 +128,6 @@
 
     </footer>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/js")
-    @RenderSection("scripts", false)
+    
 </body>
 </html>

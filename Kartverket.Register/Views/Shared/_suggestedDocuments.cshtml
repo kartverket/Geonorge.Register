@@ -1,4 +1,8 @@
 ﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
+
+
+
 
 <div>
 
@@ -31,7 +35,7 @@ else
                     <h3 class="role-button" style="font-size: 18px;">
                         @item.name
                     </h3>
-                  
+
                     <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
                         <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                     </a>
@@ -44,8 +48,16 @@ else
                         <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                     </a><br />
 
-                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
-                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
+                        (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.currentVersion.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                        (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == item.documentowner.name && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                        {
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>
+                        }
+                    }
                 </div>
                 <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
 
@@ -58,10 +70,22 @@ else
                         <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                     }
                     <p><span>Versjon: </span>@item.versionNumber</p>
+                    @if (item.dateSubmitted != null)
+                    {
+                        <p>Innsendt: @Html.DisplayFor(modelItem => item.dateSubmitted)</p>
+                    }
+                    @if (item.modified != null)
+                    {
+                        <p>Endret: @Html.DisplayFor(modelItem => item.modified)</p>
+                    }
+                    @if (item.statusId == "Valid" && item.dateAccepted != null)
+                    {
+                        <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+                    }
                 </div>
-            </div>            
+            </div>
         </div>
-    <hr />
+        <hr />
     }
 }
 

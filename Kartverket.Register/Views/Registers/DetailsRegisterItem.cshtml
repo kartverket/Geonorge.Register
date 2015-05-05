@@ -6,12 +6,13 @@
     var documentOwner = ViewBag.registerItemOwner;
 }
 
-<script>
+@*<script>
     $(function () {
         var menu_state = localStorage.getItem("navtabselected");
 
         $('#gjeldendeLink').click(function (event) {
             localStorage.setItem("navtabselected", "gjeldende");
+            alert(localStorage.getItem("navtabselected").toString());
         });
 
         $('#foralagLink').click(function (event) {
@@ -22,6 +23,8 @@
             localStorage.setItem("navtabselected", "historiske");
         });
 
+        alert(localStorage.getItem("navtabselected").toString());
+
         if (menu_state == 'gjeldende' || menu_state == null)
             $('#gjeldendeLink').click();
         else if (menu_state == 'historiske')
@@ -30,7 +33,7 @@
             $('#forslagLink').click();
     }
 )
-</script>
+</script>*@
 
 @section breadcrumb {
     <li><a href="/register/@Model.currentVersion.register.seoname">@Html.DisplayFor(model => model.currentVersion.register.name)</a></li>

@@ -1,4 +1,5 @@
 ﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
 
 <div>
 
@@ -8,10 +9,10 @@
 {
     <p>Ingen historiske dokumenter av @Model.currentVersion.name</p>
 }
-else { 
-    
+else
+{
     foreach (Kartverket.Register.Models.Document item in Model.historical)
-    {           
+    {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
@@ -40,8 +41,17 @@ else {
                     <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
                         <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                     </a><br />
-                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
-                    @*<a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>*@
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
+                            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.currentVersion.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == item.documentowner.name && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                        {
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
+                            @*<a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>*@
+                        }
+                    }       
                 </div>
                 <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
 
@@ -69,9 +79,9 @@ else {
 
                 </div>
 
-            </div>    
+            </div>
         </div>
-    <hr />
+        <hr />
     }
 
 }

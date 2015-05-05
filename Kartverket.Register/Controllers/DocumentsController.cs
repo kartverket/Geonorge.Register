@@ -114,20 +114,10 @@ namespace Kartverket.Register.Controllers
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;           
                 if (documentfile != null)
                 {
-<<<<<<< HEAD
-
-
                     document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
-                        GenerateThumbnail(document, documentfile, url);
-=======
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
-                    if (document.documentUrl.Contains(".pdf"))
-                    {
                         GenerateThumbnail(document, documentfile, url, registername);
->>>>>>> Development
                     }               
                 }
                 if (thumbnail != null)
@@ -249,7 +239,7 @@ namespace Kartverket.Register.Controllers
                     if (document.documentUrl.Contains(".pdf"))
                     {
                         document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
-                        GenerateThumbnail(document, documentfile, url);
+                        GenerateThumbnail(document, documentfile, url, registername);
                     }
                 }
                 if (thumbnail != null)
@@ -622,18 +612,13 @@ namespace Kartverket.Register.Controllers
 
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
-        {
-<<<<<<< HEAD
-            string filename = register + "_" + name + "_v" + vnr + "_" + Path.GetFileName(file.FileName);
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename); ;
-=======
+        {            
             string filtype;
             string seofilename;
             MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
 
-            string filename = register + "_" + name + "_" + seofilename + "." + filtype;                       
+            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;                       
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
->>>>>>> Development
             file.SaveAs(path);
             return filename;
         }

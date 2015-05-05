@@ -6,35 +6,6 @@
     var documentOwner = ViewBag.registerItemOwner;
 }
 
-@*<script>
-    $(function () {
-        var menu_state = localStorage.getItem("navtabselected");
-
-        $('#gjeldendeLink').click(function (event) {
-            localStorage.setItem("navtabselected", "gjeldende");
-            alert(localStorage.getItem("navtabselected").toString());
-        });
-
-        $('#foralagLink').click(function (event) {
-            localStorage.setItem("navtabselected", "forslag");
-        });
-
-        $('#historiskeLink').click(function (event) {
-            localStorage.setItem("navtabselected", "historiske");
-        });
-
-        alert(localStorage.getItem("navtabselected").toString());
-
-        if (menu_state == 'gjeldende' || menu_state == null)
-            $('#gjeldendeLink').click();
-        else if (menu_state == 'historiske')
-            $('#historiskeLink').click();
-        else if (menu_state == 'forslag')
-            $('#forslagLink').click();
-    }
-)
-</script>*@
-
 @section breadcrumb {
     <li><a href="/register/@Model.currentVersion.register.seoname">@Html.DisplayFor(model => model.currentVersion.register.name)</a></li>
     <li class="active">@Html.DisplayFor(model => model.currentVersion.name)</li>
@@ -48,7 +19,7 @@
         <br />
         <ul class="nav nav-tabs nav-tabs-topp" style="clear:both">
             <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Gjeldende</a></li>
-            <li class="tab pull-right"><a aria-expanded="true" href="#forslag" id="forslagLink" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
+            <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
             <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>Historiske</a></li>
         </ul>
         <br/>

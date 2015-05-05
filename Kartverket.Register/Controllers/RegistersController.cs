@@ -20,24 +20,11 @@ namespace Kartverket.Register.Controllers
     public class RegistersController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
-<<<<<<< HEAD
 
         private IVersioningService _versioningService;
-
-        //public RegistersController()
-        //{
-            
-        //}
         
-        ////public RegistersController(IVersioningService versioningService)
-        ////{
-            
-        ////    _versioningService = versioningService;
-        ////}
-=======
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
->>>>>>> Development
-        
+
         // GET: Registers
         public ActionResult Index()
         {

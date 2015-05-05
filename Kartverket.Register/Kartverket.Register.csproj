@@ -612,14 +612,11 @@
     <Content Include="Views\Subregister\Index.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Documents\CreateNewVersion.cshtml" />
     <Content Include="Views\Shared\_currentVersionDocument.cshtml" />
     <Content Include="Views\Shared\_histroicalDocuments.cshtml" />
     <Content Include="Views\Shared\_suggestedDocuments.cshtml" />
-=======
     <Content Include="Views\Error\NotFound.cshtml" />
->>>>>>> Development
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

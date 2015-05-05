@@ -13,6 +13,8 @@ namespace Kartverket.Register
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected void Application_Start()
         {
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Migrations.Configuration>());
@@ -33,6 +35,13 @@ namespace Kartverket.Register
         {
             Session["role"] = "guest";
             Session["user"] = "guest";
+        }
+
+        protected void Application_Error(Object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+
+            Log.Error("App_Error", ex);
         }
     }
 }

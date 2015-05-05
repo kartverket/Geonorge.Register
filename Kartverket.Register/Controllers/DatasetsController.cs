@@ -16,9 +16,12 @@ using Kartverket.DOK.Service;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class DatasetsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Datasets
         public ActionResult Index()
@@ -429,6 +432,9 @@ namespace Kartverket.Register.Controllers
             return registerOwner;
         }
 
-
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
+        }
     }
 }

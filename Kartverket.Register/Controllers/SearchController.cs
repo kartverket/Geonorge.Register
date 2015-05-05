@@ -12,9 +12,12 @@ using PagedList;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class SearchController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly ISearchService _searchService;
 
@@ -106,5 +109,10 @@ namespace Kartverket.Register.Controllers
         //    }
         //    return View(register);
         //}
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
+        }
     }
 }

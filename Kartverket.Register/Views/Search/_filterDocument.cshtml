@@ -6,6 +6,8 @@
 <div class="register document search-results">
     @foreach (var item in Model.FilterResult.Items)
     {
+        if (item.currentVersion == item.systemId)
+        {                    
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2 pull-left">
@@ -62,7 +64,7 @@
             </div>
 
             <hr class="" />
-        
+        }
     }
 </div>
 

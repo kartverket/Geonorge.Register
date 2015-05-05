@@ -53,7 +53,8 @@ namespace Kartverket.Register.Services.Search
                                         thumbnail = d.thumbnail,
                                         documentowner = d.documentowner,
                                         documentownerId = d.documentownerId,
-                                        documentUrl = d.documentUrl
+                                        documentUrl = d.documentUrl,
+                                        currentVersion = d.versioning.currentVersion
                                     });
 
                 int NumFound = queryResults.Count();
@@ -68,7 +69,6 @@ namespace Kartverket.Register.Services.Search
                     var item = new Filter
                     {
                         systemId = doc.systemId,
-                        //currentVersion = doc.currentVersion,
                         name = doc.name,
                         description = doc.description,
                         submitterId = doc.submitterId,
@@ -84,7 +84,8 @@ namespace Kartverket.Register.Services.Search
                         thumbnail = doc.thumbnail,
                         documentowner = doc.documentowner,
                         documentownerId = doc.documentownerId,
-                        documentUrl = doc.documentUrl
+                        documentUrl = doc.documentUrl,
+                        currentVersion = doc.currentVersion
                     };
 
                     items.Add(item);
@@ -135,7 +136,8 @@ namespace Kartverket.Register.Services.Search
                                         theme = d.theme,
                                         ThemeGroupId = d.ThemeGroupId,
                                         Uuid = d.Uuid,
-                                        WmsUrl = d.WmsUrl
+                                        WmsUrl = d.WmsUrl,
+                                        currentVersion = d.versioning.currentVersion
                                     });
 
                 int NumFound = queryResults.Count();
@@ -149,7 +151,6 @@ namespace Kartverket.Register.Services.Search
                     var item = new Filter
                     {
                         systemId = dat.systemId,
-                        //currentVersion = dat.currentVersion,
                         name = dat.name,
                         description = dat.description,
                         submitterId = dat.submitterId,
@@ -176,7 +177,8 @@ namespace Kartverket.Register.Services.Search
                         theme = dat.theme,
                         ThemeGroupId = dat.ThemeGroupId,
                         Uuid = dat.Uuid,
-                        WmsUrl = dat.WmsUrl
+                        WmsUrl = dat.WmsUrl,
+                        currentVersion = dat.currentVersion
                     };
 
                     items.Add(item);
@@ -238,6 +240,7 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemStatus = o.statusId,
                                         Submitter = o.submitter.seoname,
                                         Shortname = o.shortname,
+                                        currentVersion = o.versioning.currentVersion,                                        
                                     });
 
                 int NumFound = queryResults.Count();
@@ -265,6 +268,7 @@ namespace Kartverket.Register.Services.Search
                         RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
+                        currentVersion = register.currentVersion,
                     };
 
                     items.Add(item);
@@ -301,6 +305,7 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
                                         Submitter = d.submitter.seoname,
+                                        currentVersion = d.versioning.currentVersion,
                                     });
 
                 int NumFound = queryResults.Count();
@@ -327,7 +332,8 @@ namespace Kartverket.Register.Services.Search
                         RegisterItemStatus = register.RegisterItemStatus,
                         RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
-                        Shortname = register.Shortname
+                        Shortname = register.Shortname,
+                        currentVersion = register.currentVersion,
                     };
 
                     items.Add(item);
@@ -364,7 +370,8 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemUpdated = d.modified,
                                         RegisterItemStatus = d.statusId,
                                         Submitter = d.submitter.seoname,
-                                        DatasetOwner = d.datasetowner.seoname
+                                        DatasetOwner = d.datasetowner.seoname,
+                                        currentVersion = d.versioning.currentVersion
                                     });
 
                 int NumFound = queryResults.Count();
@@ -392,7 +399,8 @@ namespace Kartverket.Register.Services.Search
                         RegisteItemUrlDataset = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.DatasetOwner) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
-                        DatasetOwner = register.DatasetOwner
+                        DatasetOwner = register.DatasetOwner,
+                        currentVersion = register.currentVersion
                     };
 
                     items.Add(item);
@@ -429,6 +437,7 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemUpdated = e.modified,
                                         RegisterItemStatus = e.statusId,
                                         Submitter = e.submitter.seoname,
+                                        currentVersion = e.versioning.currentVersion,
                                     });
 
                 int NumFound = queryResults.Count();
@@ -455,7 +464,8 @@ namespace Kartverket.Register.Services.Search
                         RegisterItemStatus = register.RegisterItemStatus,
                         RegisteItemUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.RegisterSeoname + "/" + HtmlHelperExtensions.MakeSeoFriendlyString(register.Submitter) + "/" + register.RegisterItemSeoname,
                         Submitter = register.Submitter,
-                        Shortname = register.Shortname
+                        Shortname = register.Shortname,
+                        currentVersion = register.currentVersion,
                     };
 
                     items.Add(item);
@@ -500,7 +510,8 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = d.statusId,
                                          Submitter = null,
                                          Shortname = null,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         currentVersion = d.versioning.currentVersion,
 
                                      }).Union(
                                     (from o in _dbContext.Organizations
@@ -532,7 +543,8 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = o.statusId,
                                          Submitter = o.submitter.seoname,
                                          Shortname = o.shortname,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         currentVersion = o.versioning.currentVersion
                                      }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.parentRegister.name.Contains(parameters.Register) && (
@@ -562,7 +574,8 @@ namespace Kartverket.Register.Services.Search
                                         RegisterItemStatus = d.statusId,
                                         Submitter = d.submitter.seoname,
                                         Shortname = null,
-                                        CodelistValue = null
+                                        CodelistValue = null,
+                                        currentVersion = d.versioning.currentVersion
                                     }).Union(
                                     (from d in _dbContext.Datasets
                                      where d.register.parentRegister.name.Contains(parameters.Register) && (
@@ -592,7 +605,8 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = d.statusId,
                                          Submitter = d.submitter.seoname,
                                          Shortname = null,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         currentVersion = d.versioning.currentVersion,
                                      }).Union(
                                     (from d in _dbContext.CodelistValues
                                      where d.register.parentRegister.name.Contains(parameters.Register) && (
@@ -622,7 +636,8 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = d.statusId,
                                          Submitter = d.submitter.seoname,
                                          Shortname = null,
-                                         CodelistValue = d.value
+                                         CodelistValue = d.value,
+                                         currentVersion = d.versioning.currentVersion
                                      }).Union(
                                     (from e in _dbContext.EPSGs
                                      where e.register.parentRegister.name.Contains(parameters.Register) && (
@@ -652,7 +667,8 @@ namespace Kartverket.Register.Services.Search
                                          RegisterItemStatus = e.statusId,
                                          Submitter = e.submitter.seoname,
                                          Shortname = null,
-                                         CodelistValue = null
+                                         CodelistValue = null,
+                                         currentVersion = e.versioning.currentVersion,
                                      })
                                   )))));
 
@@ -692,7 +708,8 @@ namespace Kartverket.Register.Services.Search
                         ParentRegisterUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/" + register.ParentRegisterSeoname,
                         Submitter = register.Submitter,
                         Shortname = register.Shortname,
-                        CodelistValue = register.CodelistValue
+                        CodelistValue = register.CodelistValue,
+                        currentVersion = register.currentVersion,
 
                     };
 
@@ -766,7 +783,8 @@ namespace Kartverket.Register.Services.Search
                                         Shortname = null,
                                         CodelistValue = null,
                                         ObjektkatalogUrl = null,
-                                        Type = null
+                                        Type = null,
+                                        currentVersion = d.versioning.currentVersion
 
                                     }).Union(
                                     (from d in _dbContext.CodelistValues
@@ -798,7 +816,8 @@ namespace Kartverket.Register.Services.Search
                                          Shortname = null,
                                          CodelistValue = d.value,
                                          ObjektkatalogUrl = null,
-                                         Type = null
+                                         Type = null,
+                                         currentVersion = d.versioning.currentVersion
                                      }).Union(
                                     (from o in _dbContext.Organizations
                                      where o.register.name.Contains(parameters.Text)
@@ -830,7 +849,8 @@ namespace Kartverket.Register.Services.Search
                                          Shortname = o.shortname,
                                          CodelistValue = null,
                                          ObjektkatalogUrl = null,
-                                         Type = null
+                                         Type = null,
+                                         currentVersion = o.versioning.currentVersion
                                      }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Text)
@@ -861,7 +881,8 @@ namespace Kartverket.Register.Services.Search
                                         Shortname = null,
                                         CodelistValue = null,
                                         ObjektkatalogUrl = null,
-                                        Type = null
+                                        Type = null,
+                                        currentVersion = d.versioning.currentVersion
                                     }).Union(
                                     (from d in _dbContext.Datasets
                                      where d.register.name.Contains(parameters.Text)
@@ -892,7 +913,9 @@ namespace Kartverket.Register.Services.Search
                                          Shortname = null,
                                          CodelistValue = null,
                                          ObjektkatalogUrl = null,
-                                         Type = null
+                                         Type = null,
+                                         currentVersion = d.versioning.currentVersion
+
                                      }).Union(
                                     (from e in _dbContext.EPSGs
                                      where e.register.name.Contains(parameters.Text)
@@ -923,7 +946,8 @@ namespace Kartverket.Register.Services.Search
                                          Shortname = null,
                                          CodelistValue = null,
                                          ObjektkatalogUrl = null,
-                                         Type = null
+                                         Type = null,
+                                         currentVersion = e.versioning.currentVersion
                                      })
                                   )))));
 
@@ -955,7 +979,8 @@ namespace Kartverket.Register.Services.Search
                      Shortname = null,
                      CodelistValue = null,
                      ObjektkatalogUrl = o.ObjektkatalogUrl,
-                     Type = o.Type
+                     Type = o.Type,
+                     currentVersion = o.currentVersion
                  }
                 );
 
@@ -999,7 +1024,8 @@ namespace Kartverket.Register.Services.Search
                         Shortname = register.Shortname,
                         CodelistValue = register.CodelistValue,
                         ObjektkatalogUrl = register.ObjektkatalogUrl,
-                        Type = register.Type
+                        Type = register.Type,
+                        currentVersion = register.currentVersion
                     };
 
                     items.Add(item);

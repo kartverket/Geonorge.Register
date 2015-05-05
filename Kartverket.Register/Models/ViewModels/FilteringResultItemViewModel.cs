@@ -9,7 +9,7 @@ namespace Kartverket.Register.Models.ViewModels
     {
         // Registeritem
         public Guid systemId { get; set; }
-        //public virtual Version currentVersion { get; set; }
+        public Guid currentVersion { get; set; }
         public string name { get; set; }
         public string description { get; set; }
         public Guid? submitterId { get; set; }
@@ -50,7 +50,7 @@ namespace Kartverket.Register.Models.ViewModels
         private FilteringResultItemViewModel(Filter item)
         {
             systemId = item.systemId;
-            //currentVersion = item.currentVersion;
+            currentVersion = item.currentVersion;
             name = item.name;
             description = item.description;
             submitterId = item.submitterId;

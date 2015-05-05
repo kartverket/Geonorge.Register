@@ -36,6 +36,7 @@ namespace Kartverket.Register.Models
         public string ParentregisterOwner { get; set; }
         public string CodelistValue { get; set; }
         public string Type { get; set; }
+        public Guid currentVersion { get; set; }
         
     }
 }

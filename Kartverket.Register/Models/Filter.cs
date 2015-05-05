@@ -10,7 +10,7 @@ namespace Kartverket.Register.Models
 
         // Registeritem
         public Guid systemId { get; set; }
-        //public virtual Version currentVersion { get; set; }
+        public Guid currentVersion { get; set; }
         public string name { get; set; }        
         public string description { get; set; }
         public Guid? submitterId { get; set; }

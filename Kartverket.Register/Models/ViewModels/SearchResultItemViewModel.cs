@@ -7,7 +7,6 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class SearchResultItemViewModel
     {
-
         public string RegisterName { get; set; }
         public string RegisterDescription { get; set; }
         public string RegisterItemName { get; set; }
@@ -35,6 +34,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string ParentregisterOwner { get; set; }
         public string CodelistValue { get; set; }
         public string Type { get; set; }
+        public Guid currentVersion { get; set; }
 
         private SearchResultItemViewModel(SearchResultItem item)
         {
@@ -60,6 +60,7 @@ namespace Kartverket.Register.Models.ViewModels
             RegisteItemUrlDocument = item.RegisteItemUrlDocument;
             ObjektkatalogUrl = item.ObjektkatalogUrl;
             Type = item.Type;
+            currentVersion = item.currentVersion;
 
 
 

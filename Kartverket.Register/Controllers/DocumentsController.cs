@@ -109,12 +109,9 @@ namespace Kartverket.Register.Controllers
            
                 if (documentfile != null)
                 {
-
-
                     document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
                         GenerateThumbnail(document, documentfile, url, registername);
                     }               
                 }
@@ -374,7 +371,11 @@ namespace Kartverket.Register.Controllers
 
         private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url, string register)
         {
-            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_" + Path.GetFileName(documentfile.FileName));
+            string filtype;
+            string seofilename;
+            MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
+
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_" + seofilename + "." + filtype); 
             string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
             document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
@@ -383,9 +384,21 @@ namespace Kartverket.Register.Controllers
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register)
         {
+            string filtype;
+            string seofilename;
+            MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
+
+            string filename = register + "_" + name + "_" + seofilename + "." + filtype;                       
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        private static void MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
+        {
             string[] documentfilename = file.FileName.Split('.');
-            string filtype = documentfilename.Last();
-            string seofilename = null;
+            filtype = documentfilename.Last();
+            seofilename = null;
             foreach (string item in documentfilename)
             {
                 if (item == filtype)
@@ -394,11 +407,6 @@ namespace Kartverket.Register.Controllers
                 }
                 seofilename += MakeSeoFriendlyString(item) + "_";
             }
-
-            string filename = register + "_" + name + "_" + seofilename + "." + filtype;                       
-            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
-            file.SaveAs(path);
-            return filename;
         }
 
         private void ValidationName(Document document, string registername)

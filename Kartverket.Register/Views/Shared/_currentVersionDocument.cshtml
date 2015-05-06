@@ -29,7 +29,7 @@
             }
             else
             {
-                <a href=@Html.DisplayFor(model => item.documentUrl)><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
             }
         </div>
         <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
@@ -56,7 +56,7 @@
                 (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == item.documentowner.name && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
                 {
                     <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
-                    @*<a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>*@
+                    <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>
                 }
             }
         </div>

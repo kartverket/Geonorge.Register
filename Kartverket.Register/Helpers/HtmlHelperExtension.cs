@@ -212,7 +212,52 @@ namespace Kartverket.Register.Helpers
             }
 
 
+            else if (sortingType == "datasetOwner")
+            {
+                var datasetOwner = Model.items.OfType<Dataset>().OrderBy(o => o.datasetowner.name);
+                sortedList = datasetOwner.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "datasetOwner_desc")
+            {
+                var datasetOwner = Model.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
+                sortedList = datasetOwner.Cast<RegisterItem>().ToList();
+            }
 
+            else if (sortingType == "distributionFormat")
+            {
+                var distributionFormat = Model.items.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
+                sortedList = distributionFormat.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "distributionFormat_desc")
+            {
+                var distributionFormat = Model.items.OfType<Dataset>().OrderByDescending(o => o.DistributionFormat);
+                sortedList = distributionFormat.Cast<RegisterItem>().ToList();
+            }
+
+            else if (sortingType == "wmsUrl")
+            {
+                var wmsUrl = Model.items.OfType<Dataset>().OrderBy(o => o.WmsUrl);
+                sortedList = wmsUrl.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "wmsUrl_desc")
+            {
+                var wmsUrl = Model.items.OfType<Dataset>().OrderByDescending(o => o.WmsUrl);
+                sortedList = wmsUrl.Cast<RegisterItem>().ToList();
+            }
+
+            else if (sortingType == "theme")
+            {
+                var theme = Model.items.OfType<Dataset>().OrderBy(o => o.theme.value);
+                sortedList = theme.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "theme_desc")
+            {
+                var theme = Model.items.OfType<Dataset>().OrderByDescending(o => o.theme.value);
+                sortedList = theme.Cast<RegisterItem>().ToList();
+            }
+
+
+            
             return sortedList;
         }
 

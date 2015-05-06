@@ -157,32 +157,33 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        //[Route("register/{registername}/{submitter}/{itemname}/")]
-        //public ActionResult DetailsRegisterItem(string registername, string itemname)
-        //{
-            
-        //    var queryResultsRegisterItem = from o in db.RegisterItems
-        //                                    where o.seoname == itemname && o.register.seoname == registername
-        //                                    select o.systemId;
-            
-        //    Guid systId = queryResultsRegisterItem.First();
-        //    Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
+        [Route("register/{registername}/{submitter}/{itemname}/")]
+        public ActionResult DetailsRegisterItem(string registername, string itemname)
+        {
 
-        //    if (registerItem.register.containedItemClass == "Document") {
-        //        Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-        //        ViewBag.documentOwner = document.documentowner.name;
-        //    }
+            var queryResultsRegisterItem = from o in db.RegisterItems
+                                           where o.seoname == itemname && o.register.seoname == registername
+                                           select o.systemId;
 
-        //    if (registerItem.register.containedItemClass == "Dataset")
-        //    {
-        //        Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
-        //        ViewBag.datasetOwner = dataset.datasetowner.name;
-        //    }
-        //        return View(registerItem);    
-        //}
+            Guid systId = queryResultsRegisterItem.First();
+            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
-        [Route("register/{registername}/{registerItemOwner}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname, string registerItemOwner)
+            if (registerItem.register.containedItemClass == "Document")
+            {
+                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                ViewBag.documentOwner = document.documentowner.name;
+            }
+
+            if (registerItem.register.containedItemClass == "Dataset")
+            {
+                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
+                ViewBag.datasetOwner = dataset.datasetowner.name;
+            }
+            return View(registerItem);
+        }
+
+        [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}/")]
+        public ActionResult DetailsRegisterItemVersions(string registername, string itemname, string registerItemOwner)
         {
             _versioningService = new VersioningService(db);
             VersionsItem versionsItem = _versioningService.Versions(registername, itemname);

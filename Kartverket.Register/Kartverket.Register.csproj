@@ -617,6 +617,7 @@
     <Content Include="Views\Shared\_histroicalDocuments.cshtml" />
     <Content Include="Views\Shared\_suggestedDocuments.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Registers\DetailsRegisterItemVersions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

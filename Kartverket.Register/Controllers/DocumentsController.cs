@@ -66,7 +66,7 @@ namespace Kartverket.Register.Controllers
                 return View();
             }
             return HttpNotFound();
-            
+
         }
 
         // POST: Documents/Create
@@ -77,7 +77,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
-        {            
+        {
             ValidationName(document, registername);
             // Finn systemId til aktuelt register.
             var queryResultsRegister = from o in db.Registers
@@ -86,7 +86,7 @@ namespace Kartverket.Register.Controllers
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-       
+
             if (ModelState.IsValid)
             {
                 //Tildel verdi til dokumentobjektet
@@ -107,25 +107,26 @@ namespace Kartverket.Register.Controllers
                     document.description = "ikke angitt";
                 }
 
-                document.seoname = MakeSeoFriendlyString(document.name);               
+                document.seoname = MakeSeoFriendlyString(document.name);
 
 
                 //Dokument og thumbnail
-                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;           
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 if (documentfile != null)
                 {
                     document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url, registername);
-                    }               
+                    }
                 }
                 if (thumbnail != null)
                 {
                     document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
-                } 
+                }
 
-                if (document.documentUrl == null) {
+                if (document.documentUrl == null)
+                {
                     document.documentUrl = "ikke angitt";
                 }
 
@@ -216,7 +217,7 @@ namespace Kartverket.Register.Controllers
         //[ValidateAntiForgeryToken]
         public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentregister, string registername, string itemname)
         {
-            
+
             if (ModelState.IsValid)
             {
                 document.systemId = Guid.NewGuid();
@@ -238,7 +239,6 @@ namespace Kartverket.Register.Controllers
                     document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
-                        document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
                         GenerateThumbnail(document, documentfile, url, registername);
                     }
                 }
@@ -295,27 +295,27 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
-                                where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
-                                select o.systemId;
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               select o.systemId;
 
             Guid systId = queryResults.First();
-            
+
 
             if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Document document = db.Documents.Find(systId);
-                
+
             if (document == null)
             {
                 return HttpNotFound();
             }
-                
+
             if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
             {
                 Viewbags(document);
-		        return View(document);
+                return View(document);
             }
             return HttpNotFound();
         }
@@ -346,7 +346,7 @@ namespace Kartverket.Register.Controllers
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
-                    originalDocument.documentUrl = document.documentUrl; 
+                    originalDocument.documentUrl = document.documentUrl;
                 }
                 if (document.statusId != null)
                 {
@@ -386,7 +386,7 @@ namespace Kartverket.Register.Controllers
                                     {
                                         versjonsgruppe.currentVersion = item.systemId;
                                         break;
-                                    }                                    
+                                    }
                                 }
                                 if (versjonsgruppe.currentVersion == document.systemId)
                                 {
@@ -394,7 +394,7 @@ namespace Kartverket.Register.Controllers
                                     versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                                 }
                                 //db.SaveChanges();
-                                
+
                             }
                         }
 
@@ -410,7 +410,7 @@ namespace Kartverket.Register.Controllers
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                
+
                 if (documentfile != null)
                 {
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
@@ -465,7 +465,7 @@ namespace Kartverket.Register.Controllers
             {
                 return View(document);
             }
-                return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Documents/Delete/5
@@ -604,20 +604,20 @@ namespace Kartverket.Register.Controllers
             string seofilename;
             MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
-            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_" + seofilename + "." + filtype); 
-            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + ".jpg");
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v "+ document.versionNumber + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
             document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
         }
 
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
-        {            
+        {
             string filtype;
             string seofilename;
             MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
 
-            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;                       
+            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);
             return filename;

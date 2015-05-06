@@ -160,7 +160,7 @@ namespace Kartverket.Register.Controllers
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
 
-                return Redirect("/register/" + registername);
+                return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);               
             }
             ViewBag.registername = register.name;
             ViewBag.registerSEO = register.seoname;
@@ -279,7 +279,7 @@ namespace Kartverket.Register.Controllers
                 versjonsgruppe.lastVersionNumber = document.versionNumber;
                 db.SaveChanges();
 
-                return Redirect("/register/" + registername + "/" + document.submitter.seoname + "/" + document.seoname);
+                return Redirect("/register/versjoner/" + registername + "/" + document.submitter.seoname + "/" + document.seoname);
             }
 
             return View(document);
@@ -432,7 +432,7 @@ namespace Kartverket.Register.Controllers
                 Viewbags(document);
 
                 //Retur? Gjeldende versjon!!
-                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                return Redirect("/register/versjoner/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
             }
             Viewbags(document);
             return View(originalDocument);

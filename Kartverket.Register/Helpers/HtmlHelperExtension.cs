@@ -256,7 +256,27 @@ namespace Kartverket.Register.Helpers
                 sortedList = theme.Cast<RegisterItem>().ToList();
             }
 
+            else if (sortingType == "epsg")
+            {
+                var epsg = Model.items.OfType<EPSG>().OrderBy(o => o.epsgcode);
+                sortedList = epsg.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "epsg_desc")
+            {
+                var epsg = Model.items.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
+                sortedList = epsg.Cast<RegisterItem>().ToList();
+            }
 
+            else if (sortingType == "sosiReferencesystem")
+            {
+                var sosiReferencesystem = Model.items.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
+                sortedList = sosiReferencesystem.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "sosiReferencesystem_desc")
+            {
+                var sosiReferencesystem = Model.items.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
+                sortedList = sosiReferencesystem.Cast<RegisterItem>().ToList();
+            }
             
             return sortedList;
         }

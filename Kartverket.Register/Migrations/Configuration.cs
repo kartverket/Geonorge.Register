@@ -18,6 +18,8 @@ namespace Kartverket.Register.Migrations
 
         protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)
         {
+            RegisterDbContext db = new RegisterDbContext();
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -359,6 +361,31 @@ namespace Kartverket.Register.Migrations
             //    }
             //);
 
+
+            //FixSubmitter
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET submitterId = '10087020-F17C-45E1-8542-02ACBCF3D8A3' WHERE  (documentownerId IS NULL)");
+
+            context.Registers.AddOrUpdate(
+                new Register
+                {
+                    systemId = Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    dateAccepted = DateTime.Now,
+                    name = "Det offentlige kartgrunnlaget",
+                    description = "Det offentlige kartgrunnlaget beskrives i plan- og bygningslovens paragraf 2-1 og kart- og planforskriften og skal være er en samling geografiske kvalitetsdata, såkalt offentlige autoritative data. Disse skal være valgt ut og tilrettelagt for å være et egnet kunnskapsgrunnlag for de mest vesentlige behovene som følger av plan- og bygningsloven.",
+                    containedItemClass = "Dataset",
+                    statusId = "Valid",
+                    seoname = "det-offentlige-kartgrunnlaget",
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                }
+            );
+            
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET statusId = 'Submitted' WHERE  (statusId IS NULL)");
+
+            
+
             //UpdateVersionNumber
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versionNumber = 1 WHERE  (versionNumber=0)");
             //UpdateRegisterVersionNumber
@@ -368,8 +395,6 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems");
 
             //UpdateRegisterItemsVersioningId
-            RegisterDbContext db = new RegisterDbContext();
-
             var queryResultsVersions = from r in db.Versions
                                        select r;
 

@@ -85,4 +85,13 @@ ul.search-results {
 ul, ol {
     margin-top: -10px;
 }
+
+
+h4 a.sorted-asc:after {
+    content: ' \25BC';
+}
+h4 a.sorted-desc:after {
+    content: ' \25B2';
+}
+
 /*# sourceMappingURL=page-footer.css.map *

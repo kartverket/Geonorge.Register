@@ -224,9 +224,15 @@
 	font-size: 10px!important;
 }
 
-.search-results.table-view .col-actions a, .search-results.table-view .col-actions img{
+/*.search-results.table-view .col-actions a, .search-results.table-view .col-actions img{
 	width: 25%;
 	font-size: 0!important;
+	float: left;
+}*/
+
+.search-results.table-view .col-actions a, .search-results.table-view .col-actions.status {
+	width: 25%;
+	font-size: 12px!important;
 	float: left;
 }
 

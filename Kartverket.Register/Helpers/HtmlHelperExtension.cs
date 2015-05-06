@@ -200,6 +200,18 @@ namespace Kartverket.Register.Helpers
             {
                 sortedList = Model.items.OrderByDescending(o => o.dateAccepted).ToList();
             }
+            else if (sortingType == "documentOwner")
+            {
+                var documentOwner = Model.items.OfType<Document>().OrderBy(o => o.documentowner.name);
+                sortedList = documentOwner.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "documentOwner_desc")
+            {
+                var documentOwner = Model.items.OfType<Document>().OrderByDescending(o => o.documentowner.name);
+                sortedList = documentOwner.Cast<RegisterItem>().ToList();
+            }
+
+
 
             return sortedList;
         }

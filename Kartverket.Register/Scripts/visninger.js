@@ -30,12 +30,45 @@ function galleryView() {
 
 }
 
+function qP(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || ""
+}
+
+function sLink(tittel, defaultSort) {
+
+    sortingSelected = qP('sorting');
+
+    if (sortingSelected == "")
+        sortingSelected = "name";
+
+    if (sortingSelected == defaultSort)
+    {
+        sortingClass = 'sorted-asc';
+        sortTitle = 'Sortert fra A til Å';
+        sortingParam = defaultSort + '_desc';
+    }
+    else if (sortingSelected.indexOf('_desc') > -1 && sortingSelected == defaultSort + '_desc')
+    {
+        sortingClass = 'sorted-desc';
+        sortTitle = 'Sortert fra Å til A';
+        sortingParam = defaultSort;
+    }
+    else
+    {
+        sortingClass = '';
+        sortTitle = '';
+        sortingParam = defaultSort;
+
+    }
+
+    return "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam + "'>" + tittel + "</a>"
+}
 
 
 function tableView() {
     $(".table-heading").remove();
     $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
-    $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4><h4>Eier</h4></div><div class='space'>.</div><div class='col-actions'><h4>Status</h4></div></div>");
+    $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "documentOwner") + "</h4></div><div class='space'>.</div><div class='col-actions'><h4>" + sLink("Status", "status") + "</h4></div></div>");
     $('.search-results.organization').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Organisasjonsnavn</h4><h4>Organisasjonsnummer</h4></div></div>");
     $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'><h4>ESPG</h4><h4>Sosi ref. system</h4><h4>Ekstern ref.</h4></div><div class='col-actions'><h4>Inspire krav</h4><h4>Nasjonalt krav</h4><h4>Nasjonalt krav for havområder</h4></div></div></div>");
     $('.search-results.registersub').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Registernavn</h4></div><div class='col-descripton'><h4>Beskrivelse</h4></div><div class='col-information'><h4>Eier</h4></div></div>");

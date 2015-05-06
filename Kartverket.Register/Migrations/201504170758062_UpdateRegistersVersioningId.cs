@@ -16,32 +16,32 @@ namespace Kartverket.Register.Migrations
     {
         public override void Up()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            //RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsVersions = from r in db.Versions
-                                       select r;
+            //var queryResultsVersions = from r in db.Versions
+            //                           select r;
 
-            List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
+            //List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
 
-            var queryResultsRegisterItems = from r in db.Registers
-                                            select r;
-            List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems.ToList();
+            //var queryResultsRegisterItems = from r in db.Registers
+            //                                select r;
+            //List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems.ToList();
 
 
-            foreach (Kartverket.Register.Models.Version v in versions)
-            {
-                foreach (Kartverket.Register.Models.Register r in registers)
-                {
-                    if (v.currentVersion == r.systemId)
-                    {
-                        r.versioningId = v.systemId;
-                        string versjonsID = r.versioningId.ToString();
-                        string systemID = r.systemId.ToString();
+            //foreach (Kartverket.Register.Models.Version v in versions)
+            //{
+            //    foreach (Kartverket.Register.Models.Register r in registers)
+            //    {
+            //        if (v.currentVersion == r.systemId)
+            //        {
+            //            r.versioningId = v.systemId;
+            //            string versjonsID = r.versioningId.ToString();
+            //            string systemID = r.systemId.ToString();
 
-                        Sql("UPDATE Registers SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
-                    }
-                }
-            }
+            //            Sql("UPDATE Registers SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
+            //        }
+            //    }
+            //}
         }
 
         public override void Down()

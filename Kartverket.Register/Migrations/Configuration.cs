@@ -358,6 +358,76 @@ namespace Kartverket.Register.Migrations
             //        externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
             //    }
             //);
+
+            //UpdateVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versionNumber = 1 WHERE  (versionNumber=0)");
+            //UpdateRegisterVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET versionNumber = 1 WHERE  (versionNumber=0)");
+            //AddItemsToVersionTable
+            context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, containedItemClass as containedItemClass FROM Registers");
+            context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems");
+
+            //UpdateRegisterItemsVersioningId
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsVersions = from r in db.Versions
+                                       select r;
+
+            List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
+
+            var queryResultsRegisterItems = from r in db.RegisterItems
+                                            select r;
+            List<RegisterItem> registerItems = queryResultsRegisterItems.ToList();
+
+
+            foreach (Kartverket.Register.Models.Version v in versions)
+            {
+                foreach (RegisterItem ri in registerItems)
+                {
+                    if (v.currentVersion == ri.systemId)
+                    {
+                        ri.versioningId = v.systemId;
+                        string versjonsID = ri.versioningId.ToString();
+                        string systemID = ri.systemId.ToString();
+
+                        context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
+                    }
+                }
+            }
+
+
+
+            //UpdateRegistersVersioningId
+
+            var queryResultsVersions2 = from r in db.Versions
+                                       select r;
+
+            List<Kartverket.Register.Models.Version> versions2 = queryResultsVersions2.ToList();
+
+            var queryResultsRegisterItems2 = from r in db.Registers
+                                            select r;
+            List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems2.ToList();
+
+
+            foreach (Kartverket.Register.Models.Version v in versions)
+            {
+                foreach (Kartverket.Register.Models.Register r in registers)
+                {
+                    if (v.currentVersion == r.systemId)
+                    {
+                        r.versioningId = v.systemId;
+                        string versjonsID = r.versioningId.ToString();
+                        string systemID = r.systemId.ToString();
+
+                        context.Database.ExecuteSqlCommand("UPDATE Registers SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
+                    }
+                }
+            }
+
+            //UpdateLastVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
+
+
         }
     }
 }

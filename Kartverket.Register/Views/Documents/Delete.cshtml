@@ -16,7 +16,7 @@
     else
     {
         <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/register/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li><a href="/register/versjoner/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
         <li class="active">Slett</li>
     }
 }
@@ -34,7 +34,7 @@
         @Html.HiddenFor(model => model.versionNumber)
         <div class="form-actions no-color">
             <input type="submit" value="Slett" class="btn btn-default" /> |
-            <a href="/register/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/">Tilbake</a>
+            <a href="/register/versjoner/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/">Tilbake</a>
         </div>
     }
 </div>

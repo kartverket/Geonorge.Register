@@ -1,4 +1,7 @@
 function listView() {
+
+    $("#sortBox").show();
+
     $(".table-heading").remove();
 
     // Buttons   
@@ -66,6 +69,9 @@ function sLink(tittel, defaultSort) {
 
 
 function tableView() {
+
+    $("#sortBox").hide();
+
     $(".table-heading").remove();
     $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
     $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "documentOwner") + "</h4></div><div class='space'>.</div><div class='col-actions'><h4>" + sLink("Status", "status") + "</h4></div></div>");

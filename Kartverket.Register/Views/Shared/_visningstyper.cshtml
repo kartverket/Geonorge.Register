@@ -22,7 +22,7 @@
     </div>
 
     <div class="col-sm-6 col-md-6 col-lg-6">
-        <div class="pagination pagination-sm pull-right">
+        <div id="sortBox" class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")

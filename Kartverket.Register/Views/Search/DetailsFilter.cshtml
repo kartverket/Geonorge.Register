@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <div class="pagination pagination-sm pull-right">
+                    <div id="sortBox" class="pagination pagination-sm pull-right">
                         <form action="/register/@Html.ToUrl(Model.Register)/@Html.ToUrl(Model.Owner)" name="sortering" method="get">
                             <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @Model.Register)" />
                             <input name="owner" type="hidden" id="owner" value="@(Request.QueryString["owner"] != null ? Request.QueryString["owner"].ToString() : Model.Owner)" />

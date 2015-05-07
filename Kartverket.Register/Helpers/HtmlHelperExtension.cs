@@ -155,6 +155,18 @@ namespace Kartverket.Register.Helpers
         // SORTERING av registeritems
         public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register Model, String sortingType)
         {
+
+            if (string.IsNullOrEmpty(sortingType)) 
+            {
+                if (HttpContext.Current.Session != null && HttpContext.Current.Session["sortingType"] != null) 
+                {
+                    sortingType = HttpContext.Current.Session["sortingType"].ToString();
+                    HttpContext.Current.Response.Redirect(HttpContext.Current.Request.Path + "?sorting=" + sortingType);
+                }
+            }
+            HttpContext.Current.Session["sortingType"] = sortingType;
+
+
             var sortedList = Model.items.OrderBy(o => o.name).ToList();
             if (sortingType == "name_desc")
             {
@@ -335,6 +347,16 @@ namespace Kartverket.Register.Helpers
         // SORTERING av Register
         public static List<Kartverket.Register.Models.Register> SortingRegisters(Kartverket.Register.Models.Register Model, String sortingType)
         {
+            if (string.IsNullOrEmpty(sortingType))
+            {
+                if (HttpContext.Current.Session != null && HttpContext.Current.Session["sortingType"] != null)
+                {
+                    sortingType = HttpContext.Current.Session["sortingType"].ToString();
+                    HttpContext.Current.Response.Redirect(HttpContext.Current.Request.Path + "?sorting=" + sortingType);
+                }
+            }
+            HttpContext.Current.Session["sortingType"] = sortingType;
+
             var sortedList = Model.subregisters.OrderBy(o => o.name).ToList();
             if (sortingType == "name_desc")
             {

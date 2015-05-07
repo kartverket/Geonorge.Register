@@ -30,6 +30,8 @@ namespace Kartverket.Register.Controllers
         {
             setAccessRole();
 
+            Session["sortingType"] = null;
+
             return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 

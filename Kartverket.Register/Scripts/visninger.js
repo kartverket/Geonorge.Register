@@ -61,7 +61,11 @@ function sLink(tittel, defaultSort) {
         sortingClass = '';
         sortTitle = '';
         sortingParam = defaultSort;
+    }
 
+    if (sortingParam.indexOf('Requirement') > -1)
+    {
+        sortTitle = "Sortert etter logisk rekkefølge" ;
     }
 
     return "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam + "'>" + tittel + "</a>"

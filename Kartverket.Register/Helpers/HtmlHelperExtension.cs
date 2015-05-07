@@ -284,32 +284,32 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingType == "inspireRequirement")
             {
-                var inspireRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.inspireRequirement.description);
+                var inspireRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.inspireRequirement.sortOrder);
                 sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "inspireRequirement_desc")
             {
-                var inspireRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.description);
+                var inspireRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.sortOrder);
                 sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalRequirement")
             {
-                var nationalRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalRequirement.description);
+                var nationalRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalRequirement.sortOrder);
                 sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalRequirement_desc")
             {
-                var nationalRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.description);
+                var nationalRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.sortOrder);
                 sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalSeasRequirement")
             {
-                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.description);
+                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.sortOrder);
                 sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalSeasRequirement_desc")
             {
-                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.description);
+                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.sortOrder);
                 sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "description")

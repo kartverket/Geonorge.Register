@@ -3,19 +3,30 @@
 
 @{
     ViewBag.Title = @Model.name;
-    var documentOwner = ViewBag.registerItemOwner;
+    var documentOwner = ViewBag.documentOwner;
 }
 
 @section breadcrumb {
+
+   @if (Model.register.containedItemClass == "Document")
+   {
+    <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+    <li><a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+    <li class="active">@Html.DisplayFor(model => model.name)</li>
+    
+   }
+   else
+   {
     <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
     <li class="active">@Html.DisplayFor(model => model.name)</li>
+   }
 }
 <div class="page-header">
     <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
     <hr>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    @if (Model.register.containedItemClass == "Document")
+    @*@if (Model.register.containedItemClass == "Document")
         {
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <br />
@@ -28,7 +39,7 @@
             </div>
         }
         else
-        {
+        {*@
             <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
                 ID: <a href="/register/@Model.register.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
                 <p>
@@ -47,7 +58,7 @@
                     <hr>
                 </div>
             </div>
-        }
+        @*}*@
 
         <br />
 
@@ -57,7 +68,9 @@
         }
         @if (Model.register.containedItemClass == "Document")
         {
-            <div class="tab-content">
+            @Html.Partial("_detailsDocuments")
+
+            @*<div class="tab-content">
                 <div class="tab-pane active" id="gjeldende">
                     @Html.Partial("_currentVersionDocument", Model)
                 </div>
@@ -67,7 +80,7 @@
                 <div class="tab-pane" id="forslag">
                     @Html.Partial("_suggestedDocuments", Model)
                 </div>
-            </div>
+            </div>*@
         }
         @if (Model.register.containedItemClass == "Dataset")
         {
@@ -90,8 +103,14 @@
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <p>            
-          
-        <a href="/register/@Model.register.seoname">Tilbake</a>
+            @if (Model.register.containedItemClass == "Document")
+            {
+                <a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+            }
+            else { 
+                <a href="/register/@Model.register.seoname">Tilbake</a>
+            }
+        
 
         @if (Request.IsAuthenticated)
         {

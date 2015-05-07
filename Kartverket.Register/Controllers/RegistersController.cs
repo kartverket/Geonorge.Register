@@ -157,8 +157,9 @@ namespace Kartverket.Register.Controllers
 
         }
 
+        [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
         [Route("register/{registername}/{submitter}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname)
+        public ActionResult DetailsRegisterItem(string registername, string itemname, int version)
         {
 
             var queryResultsRegisterItem = from o in db.RegisterItems

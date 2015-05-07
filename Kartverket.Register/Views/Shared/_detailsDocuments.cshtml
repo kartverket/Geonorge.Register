@@ -1,10 +1,41 @@
-﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@model Kartverket.Register.Models.Document
+﻿@using Kartverket.Register.Helpers
 
-<div>
-    <div class="tab-content">
-        <div class="tab-pane active" id="home">
-            @Html.Partial("_currentVersionDocuments", Model)
+<div class="row result-row metadata">
+    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
+            @{
+                string thumb = "/Content/pdf.jpg";
+                if (Model.thumbnail != null)
+                {
+                    thumb = Model.thumbnail;
+                }
+            }
+            @if (Model.documentUrl.Contains("ikke angitt"))
+            {
+                <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+            }
+            else
+            {
+                <a href="@Html.DisplayFor(model => Model.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+            }
         </div>
-    </div>  
+        <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+            <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @Model.name">
+                <span class="glyphicon glyphicon-download-alt"> </span><span class="download-text">Last ned</span>
+            </a><br />
+            @if (Request.IsAuthenticated)
+            {
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == Model.documentowner.name && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                {
+                    <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
+                    <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">Slett</a>
+                }
+            }
+        </div>
+    </div>
+   
 </div>
-
+<hr />

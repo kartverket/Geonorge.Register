@@ -159,14 +159,36 @@ namespace Kartverket.Register.Controllers
 
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
         [Route("register/{registername}/{submitter}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname, int version)
+        public ActionResult DetailsRegisterItem(string registername, string itemname, int? version)
         {
+            //Guid? documentId = null;
+            Guid? systId = null;
+            
+            if (version != null)
+            {
+                var queryResultDocument = from d in db.Documents
+                                          where d.seoname == itemname && d.register.seoname == registername && d.versionNumber == version
+                                          select d.systemId;
 
-            var queryResultsRegisterItem = from o in db.RegisterItems
-                                           where o.seoname == itemname && o.register.seoname == registername
-                                           select o.systemId;
+                systId = queryResultDocument.FirstOrDefault();
 
-            Guid systId = queryResultsRegisterItem.First();
+                //var queryResultsRegisterItem = from o in db.RegisterItems
+                //                               where o.seoname == itemname && o.register.seoname == registername && o.systemId == documentId
+                //                               select o.systemId;
+
+                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                ViewBag.documentOwner = document.documentowner.name;
+                ViewBag.version = document.versionNumber;
+                //systId = queryResultsRegisterItem.FirstOrDefault();
+            }
+            else { 
+                var queryResultsRegisterItem = from o in db.RegisterItems
+                                               where o.seoname == itemname && o.register.seoname == registername 
+                                               select o.systemId;
+
+                systId = queryResultsRegisterItem.FirstOrDefault();
+            }
+           
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
             if (registerItem.register.containedItemClass == "Document")

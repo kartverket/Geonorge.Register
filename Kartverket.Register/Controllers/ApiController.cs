@@ -130,6 +130,12 @@ namespace Kartverket.Register.Controllers
 
                 var d = (EPSG)item;
                 tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
+                tmp.inspireRequirement = d.inspireRequirement.description;
+                tmp.nationalRequirement = d.nationalRequirement.description;
+                tmp.nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
+                tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
+                tmp.verticalReferenceSystem = d.verticalReferenceSystem;
+                tmp.dimension = d.dimension != null ? d.dimension.description : "";
             }
             
 
@@ -172,6 +178,12 @@ namespace Kartverket.Register.Controllers
                 tmp.itemclass = "EPSG";
                 var d = (EPSG)item;
                 tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
+                tmp.inspireRequirement = d.inspireRequirement.description;
+                tmp.nationalRequirement = d.nationalRequirement.description;
+                tmp.nationalSeasRequirement = d.nationalSeasRequirement !=null ? d.nationalSeasRequirement.description : "";
+                tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
+                tmp.verticalReferenceSystem = d.verticalReferenceSystem;
+                tmp.dimension = d.dimension != null ? d.dimension.description : "";
             }
             else tmp.itemclass = "RegisterItem";
 

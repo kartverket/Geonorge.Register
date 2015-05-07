@@ -424,6 +424,10 @@
     <Compile Include="Migrations\201504301149248_UpdateLastVersionNumber.Designer.cs">
       <DependentUpon>201504301149248_UpdateLastVersionNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505070917186_RequirementSortOrder.cs" />
+    <Compile Include="Migrations\201505070917186_RequirementSortOrder.Designer.cs">
+      <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -794,6 +798,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504301149248_UpdateLastVersionNumber.resx">
       <DependentUpon>201504301149248_UpdateLastVersionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505070917186_RequirementSortOrder.resx">
+      <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

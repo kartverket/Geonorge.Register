@@ -40,11 +40,11 @@ namespace Kartverket.Register.Migrations
             );
 
             context.requirements.AddOrUpdate(
-                new Requirement { value = "Mandatory", description = "Påkrevd" },
-                new Requirement { value = "Conditional", description = "Betinget" },
-                new Requirement { value = "Recommended", description = "Anbefalt" },
-                new Requirement { value = "Optional", description = "Valgfritt" },
-                new Requirement { value = "Notset", description = "Ikke angitt" }     
+                new Requirement { value = "Mandatory", description = "Påkrevd", sortOrder = 0 },
+                new Requirement { value = "Conditional", description = "Betinget",sortOrder = 2 },
+                new Requirement { value = "Recommended", description = "Anbefalt", sortOrder = 1 },
+                new Requirement { value = "Optional", description = "Valgfritt", sortOrder = 3 },
+                new Requirement { value = "Notset", description = "Ikke angitt", sortOrder = 4 }     
             );
 
             context.DOKThemes.AddOrUpdate(

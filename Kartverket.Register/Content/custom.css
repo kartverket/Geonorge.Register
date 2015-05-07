@@ -181,6 +181,10 @@
 	font-size: 15px;
 }
 
+.search-results.table-view .col-actions a{
+	font-size: 0px !important;
+}
+
 .search-results.table-view h4, .search-results.table-view h5, .search-results.table-view .label, .search-results.table-view .btn {
 	margin-top: 2px;
 	margin-bottom: 0px;
@@ -224,17 +228,16 @@
 	font-size: 10px!important;
 }
 
-/*.search-results.table-view .col-actions a, .search-results.table-view .col-actions img{
+.search-results.table-view .col-actions span{
 	width: 25%;
-	font-size: 0!important;
-	float: left;
-}*/
-
-.search-results.table-view .col-actions a, .search-results.table-view .col-actions.status {
-	width: 25%;
-	font-size: 12px!important;
+	font-size: 15px !important;
 	float: left;
 }
+
+.search-results.table-view .col-actions a {
+	font-size: 0px;
+}
+
 
 .search-results.table-view .col-actions img {
 	margin-top: 10px;
@@ -342,6 +345,14 @@
 
 .search-results.document.list-view .orglogo {
     display: none;
+}
+
+.search-results.document.table-view .col-actions a {
+	font-size: 15px !important;
+}
+
+.search-results.document.table-view .col-actions span {
+	font-size: 0px !important;
 }
 
 /* Kodelister */

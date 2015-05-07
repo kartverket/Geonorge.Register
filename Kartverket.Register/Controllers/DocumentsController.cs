@@ -357,19 +357,29 @@ namespace Kartverket.Register.Controllers
 
                     Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
 
+                    // Finn ny gjeldende versjon
+                    var queryResultsVersionsDocument = from o in db.Documents
+                                                       where o.versioningId == versjonsgruppe.systemId && o.systemId != document.systemId
+                                                       select o;
+
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
                     {
+                        //Endre status på nåværende gjeldende versjon
+                        foreach (Document item in queryResultsVersionsDocument)
+                        {
+                            if (item.statusId == "Valid")
+                            {
+                                item.statusId = "Superseded";
+                            }
+                        }
+
+                        // sett dette dokumentet til å være ny gjeldende versjon
                         versjonsgruppe.currentVersion = originalDocument.systemId;
                         originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion == originalDocument.systemId)
+                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion == originalDocument.systemId)
                     {
-                        // Finn ny gjeldende versjon
-                        var queryResultsVersionsDocument = from o in db.Documents
-                                                           where o.versioningId == versjonsgruppe.systemId && o.systemId != document.systemId
-                                                           select o;
-
                         if (queryResultsVersionsDocument.Count() > 0)
                         {
                             if (queryResultsVersionsDocument.Count() == 1)
@@ -382,7 +392,7 @@ namespace Kartverket.Register.Controllers
                             {
                                 foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted))
                                 {
-                                    if (item.statusId == "Valid")
+                                    if (item.statusId == "Superseded")
                                     {
                                         versjonsgruppe.currentVersion = item.systemId;
                                         break;
@@ -397,11 +407,9 @@ namespace Kartverket.Register.Controllers
 
                             }
                         }
-
-                        originalDocument.dateAccepted = null;
                         originalDocument.statusId = document.statusId;
                     }
-                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion != originalDocument.systemId)
+                    else
                     {
                         originalDocument.dateAccepted = null;
                         originalDocument.statusId = document.statusId;

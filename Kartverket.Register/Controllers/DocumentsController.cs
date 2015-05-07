@@ -395,6 +395,7 @@ namespace Kartverket.Register.Controllers
                                     if (item.statusId == "Superseded")
                                     {
                                         versjonsgruppe.currentVersion = item.systemId;
+                                        item.statusId = "Valid";
                                         break;
                                     }
                                 }

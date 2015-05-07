@@ -186,6 +186,7 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.epsgcode != null) originalEPSG.epsgcode = ePSG.epsgcode;
                 if (ePSG.verticalReferenceSystem != null) originalEPSG.verticalReferenceSystem = ePSG.verticalReferenceSystem;
                 if (ePSG.horizontalReferenceSystem != null) originalEPSG.horizontalReferenceSystem = ePSG.horizontalReferenceSystem;
+                if (ePSG.dimensionId != null) originalEPSG.dimensionId = ePSG.dimensionId;
                 if (ePSG.sosiReferencesystem != null) originalEPSG.sosiReferencesystem = ePSG.sosiReferencesystem;
                 if (ePSG.externalReference != null) originalEPSG.externalReference = ePSG.externalReference;
                 if (ePSG.inspireRequirementId != null) originalEPSG.inspireRequirementId = ePSG.inspireRequirementId;
@@ -349,6 +350,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
             ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
             ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
+            ViewBag.dimensionId = new SelectList(db.Dimensions, "value", "description", ePSG.dimensionId);
         }
 
         private void ValidationName(EPSG epsg, string registername)

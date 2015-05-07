@@ -51,6 +51,9 @@ namespace Kartverket.Register.Models
         public string verticalReferenceSystem { get; set; }
         [Display(Name = "Horisontalt referansesystem:")]
         public string horizontalReferenceSystem { get; set; }
+        [ForeignKey("dimensionId")]
+        public virtual Dimension dimension { get; set; }
+        public string dimensionId { get; set; }
 
 	}//end EPSG
 

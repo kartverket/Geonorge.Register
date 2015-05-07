@@ -432,12 +432,17 @@
     <Compile Include="Migrations\201505071035162_HoizontalAndVertRefSys.Designer.cs">
       <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505071122307_Dimension.cs" />
+    <Compile Include="Migrations\201505071122307_Dimension.Designer.cs">
+      <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
+    <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -808,6 +813,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505071035162_HoizontalAndVertRefSys.resx">
       <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505071122307_Dimension.resx">
+      <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

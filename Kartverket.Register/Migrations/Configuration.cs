@@ -87,6 +87,11 @@ namespace Kartverket.Register.Migrations
                 new ContainedItemClass { value = "Organization", description ="Organisasjoner" }
             );
 
+            context.Dimensions.AddOrUpdate(
+                new Kartverket.Register.Models.Dimension { value = "horizontal", description = "Horisontalt" },
+                new Kartverket.Register.Models.Dimension { value = "vertical", description = "Vertikalt" },
+                new Kartverket.Register.Models.Dimension { value = "compound", description = "Sammensatt" }
+            );
 
 
             //Register produktspesifikasjon = new Register 

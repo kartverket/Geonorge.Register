@@ -511,25 +511,28 @@ namespace Kartverket.Register.Controllers
                 {
                     if (queryResultsVersionsDocument.Count() == 1)
                     {
-                        versjonsgruppe.currentVersion = queryResultsVersionsDocument.FirstOrDefault().systemId;
+                        Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                     }
                     // Sett gjeldende versjon ut fra status...
                     else
                     {
-                        queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted);
-                        foreach (var item in queryResultsVersionsDocument)
+                        foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted))
                         {
-                            if (item.statusId == "Valid")
+                            if (item.statusId == "Superseded")
                             {
                                 versjonsgruppe.currentVersion = item.systemId;
+                                item.statusId = "Valid";
                                 break;
                             }
                         }
                         if (versjonsgruppe.currentVersion == document.systemId)
                         {
-                            Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                            Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                             versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                         }
+                        //db.SaveChanges();
+
                     }
                 }
             }

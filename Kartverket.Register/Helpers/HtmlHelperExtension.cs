@@ -160,11 +160,11 @@ namespace Kartverket.Register.Helpers
             {
                 sortedList = Model.items.OrderByDescending(o => o.name).ToList();
             }
-            if (sortingType == "submitter")
+            else if (sortingType == "submitter")
             {
                 sortedList = Model.items.OrderBy(o => o.submitter.name).ToList();
             }
-            if (sortingType == "submitter_desc")
+            else if (sortingType == "submitter_desc")
             {
                 sortedList = Model.items.OrderByDescending(o => o.submitter.name).ToList();
             }
@@ -210,8 +210,6 @@ namespace Kartverket.Register.Helpers
                 var documentOwner = Model.items.OfType<Document>().OrderByDescending(o => o.documentowner.name);
                 sortedList = documentOwner.Cast<RegisterItem>().ToList();
             }
-
-
             else if (sortingType == "datasetOwner")
             {
                 var datasetOwner = Model.items.OfType<Dataset>().OrderBy(o => o.datasetowner.name);
@@ -222,7 +220,6 @@ namespace Kartverket.Register.Helpers
                 var datasetOwner = Model.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
                 sortedList = datasetOwner.Cast<RegisterItem>().ToList();
             }
-
             else if (sortingType == "distributionFormat")
             {
                 var distributionFormat = Model.items.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
@@ -233,7 +230,6 @@ namespace Kartverket.Register.Helpers
                 var distributionFormat = Model.items.OfType<Dataset>().OrderByDescending(o => o.DistributionFormat);
                 sortedList = distributionFormat.Cast<RegisterItem>().ToList();
             }
-
             else if (sortingType == "wmsUrl")
             {
                 var wmsUrl = Model.items.OfType<Dataset>().OrderBy(o => o.WmsUrl);
@@ -244,7 +240,6 @@ namespace Kartverket.Register.Helpers
                 var wmsUrl = Model.items.OfType<Dataset>().OrderByDescending(o => o.WmsUrl);
                 sortedList = wmsUrl.Cast<RegisterItem>().ToList();
             }
-
             else if (sortingType == "theme")
             {
                 var theme = Model.items.OfType<Dataset>().OrderBy(o => o.theme.value);
@@ -255,7 +250,6 @@ namespace Kartverket.Register.Helpers
                 var theme = Model.items.OfType<Dataset>().OrderByDescending(o => o.theme.value);
                 sortedList = theme.Cast<RegisterItem>().ToList();
             }
-
             else if (sortingType == "epsg")
             {
                 var epsg = Model.items.OfType<EPSG>().OrderBy(o => o.epsgcode);
@@ -266,7 +260,6 @@ namespace Kartverket.Register.Helpers
                 var epsg = Model.items.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
                 sortedList = epsg.Cast<RegisterItem>().ToList();
             }
-
             else if (sortingType == "sosiReferencesystem")
             {
                 var sosiReferencesystem = Model.items.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
@@ -277,7 +270,65 @@ namespace Kartverket.Register.Helpers
                 var sosiReferencesystem = Model.items.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
                 sortedList = sosiReferencesystem.Cast<RegisterItem>().ToList();
             }
-            
+            else if (sortingType == "inspireRequirement")
+            {
+                var inspireRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.inspireRequirement.description);
+                sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "inspireRequirement_desc")
+            {
+                var inspireRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.description);
+                sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "nationalRequirement")
+            {
+                var nationalRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalRequirement.description);
+                sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "nationalRequirement_desc")
+            {
+                var nationalRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.description);
+                sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "nationalSeasRequirement")
+            {
+                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.description);
+                sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "nationalSeasRequirement_desc")
+            {
+                var nationalSeasRequirement = Model.items.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.description);
+                sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "description")
+            {
+                sortedList = Model.items.OrderBy(o => o.description).ToList();
+            }
+            else if (sortingType == "description_desc")
+            {
+                sortedList = Model.items.OrderByDescending(o => o.description).ToList();
+            }
+            else if (sortingType == "codevalue")
+            {
+                var codevalue = Model.items.OfType<CodelistValue>().OrderBy(o => o.value);
+                sortedList = codevalue.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "codevalue_desc")
+            {
+                var codevalue = Model.items.OfType<CodelistValue>().OrderByDescending(o => o.value);
+                sortedList = codevalue.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "number")
+            {
+                var number = Model.items.OfType<Organization>().OrderBy(o => o.number);
+                sortedList = number.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "number_desc")
+            {
+                var number = Model.items.OfType<Organization>().OrderByDescending(o => o.number);
+                sortedList = number.Cast<RegisterItem>().ToList();
+            }
+                    
             return sortedList;
         }
 
@@ -289,11 +340,11 @@ namespace Kartverket.Register.Helpers
             {
                 sortedList = Model.subregisters.OrderByDescending(o => o.name).ToList();
             }
-            if (sortingType == "submitter")
+            else if (sortingType == "submitter")
             {
                 sortedList = Model.subregisters.OrderBy(o => o.owner.name).ToList();
             }
-            if (sortingType == "submitter_desc")
+            else if (sortingType == "submitter_desc")
             {
                 sortedList = Model.subregisters.OrderByDescending(o => o.owner.name).ToList();
             }
@@ -329,6 +380,25 @@ namespace Kartverket.Register.Helpers
             {
                 sortedList = Model.subregisters.OrderByDescending(o => o.dateAccepted).ToList();
             }
+
+            else if (sortingType == "description")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.description).ToList();
+            }
+            else if (sortingType == "description_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.description).ToList();
+            }
+
+            else if (sortingType == "owner")
+            {
+                sortedList = Model.subregisters.OrderBy(o => o.owner.name).ToList();
+            }
+            else if (sortingType == "owner_desc")
+            {
+                sortedList = Model.subregisters.OrderByDescending(o => o.owner.name).ToList();
+            }
+
             return sortedList;
         }
     }

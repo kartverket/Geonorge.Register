@@ -308,7 +308,7 @@
 }
 
 .search-results.document.table-view .col-actions h4 {
-	width: 50%;
+	width: 100%;
 }
 
 .search-results.document.table-view .table-heading .col-actions{
@@ -567,7 +567,7 @@
 }
 
 .search-results.dataset.table-view .col-information a{
-    width: 25%;
+    width: 100%;
     font-size: 14px !important;
     float: left;
 }

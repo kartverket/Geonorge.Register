@@ -184,6 +184,8 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
                 if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
                 if (ePSG.epsgcode != null) originalEPSG.epsgcode = ePSG.epsgcode;
+                if (ePSG.verticalReferenceSystem != null) originalEPSG.verticalReferenceSystem = ePSG.verticalReferenceSystem;
+                if (ePSG.horizontalReferenceSystem != null) originalEPSG.horizontalReferenceSystem = ePSG.horizontalReferenceSystem;
                 if (ePSG.sosiReferencesystem != null) originalEPSG.sosiReferencesystem = ePSG.sosiReferencesystem;
                 if (ePSG.externalReference != null) originalEPSG.externalReference = ePSG.externalReference;
                 if (ePSG.inspireRequirementId != null) originalEPSG.inspireRequirementId = ePSG.inspireRequirementId;

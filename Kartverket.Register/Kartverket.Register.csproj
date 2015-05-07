@@ -428,6 +428,10 @@
     <Compile Include="Migrations\201505070917186_RequirementSortOrder.Designer.cs">
       <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505071035162_HoizontalAndVertRefSys.cs" />
+    <Compile Include="Migrations\201505071035162_HoizontalAndVertRefSys.Designer.cs">
+      <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -801,6 +805,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505070917186_RequirementSortOrder.resx">
       <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505071035162_HoizontalAndVertRefSys.resx">
+      <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

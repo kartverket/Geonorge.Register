@@ -340,6 +340,37 @@ namespace Kartverket.Register.Helpers
                 var number = Model.items.OfType<Organization>().OrderByDescending(o => o.number);
                 sortedList = number.Cast<RegisterItem>().ToList();
             }
+            else if (sortingType == "verticalReferenceSystem")
+            {
+                var verticalReferenceSystem = Model.items.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
+                sortedList = verticalReferenceSystem.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "verticalReferenceSystem_desc")
+            {
+                var verticalReferenceSystem = Model.items.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
+                sortedList = verticalReferenceSystem.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "horizontalReferenceSystem")
+            {
+                var horizontalReferenceSystem = Model.items.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
+                sortedList = horizontalReferenceSystem.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "horizontalReferenceSystem_desc")
+            {
+                var horizontalReferenceSystem = Model.items.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
+                sortedList = horizontalReferenceSystem.Cast<RegisterItem>().ToList();
+            }
+
+            else if (sortingType == "dimension")
+            {
+                var dimension = Model.items.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.description);
+                sortedList = dimension.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dimension_desc")
+            {
+                var dimension = Model.items.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
+                sortedList = dimension.Cast<RegisterItem>().ToList();
+            }
                     
             return sortedList;
         }

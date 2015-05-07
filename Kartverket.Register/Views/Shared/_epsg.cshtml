@@ -61,6 +61,33 @@
                         <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
                     }
 
+                    @if (item.verticalReferenceSystem == null)
+                    {
+                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
+                    }
+
+                    @if (item.horizontalReferenceSystem == null)
+                    {
+                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
+                    }
+
+                    @if (item.dimensionId == null)
+                    {
+                        <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                    }
+
                     @if (item.sosiReferencesystem == null)
                     {
                         <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>

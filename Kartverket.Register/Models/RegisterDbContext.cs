@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Document> Documents { get; set; }
         public virtual DbSet<EPSG> EPSGs { get; set; }
         public virtual DbSet<Requirement> requirements { get; set; }
+        public virtual DbSet<Dimension> Dimensions { get; set; }
         public DbSet<Kartverket.DOK.Models.DokDataset> DokDatasets { get; set; }
         public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
         public virtual DbSet<Sorting> Sorting { get; set; }

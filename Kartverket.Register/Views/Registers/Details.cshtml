@@ -10,6 +10,13 @@
     <li class="active">@Html.DisplayFor(model => model.name)</li>
 }
 
+<script>
+    $(function () {
+        var menu_state = localStorage.setItem("navtabselected", "gjeldende");
+    }
+)
+</script>
+
 <div class="page-header">
     <h2 class="h-md" id="registerName">@Html.DisplayFor(model => model.name)</h2>
     <hr>
@@ -165,9 +172,4 @@
     </div>
 </div>
 
-<script>
-    $(function () {
-        var menu_state = localStorage.setItem("navtabselected", "gjeldende");
-    }
-)
-</script>
+

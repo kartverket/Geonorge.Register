@@ -350,16 +350,16 @@ namespace Kartverket.Register.Controllers
                 }
                 if (document.statusId != null)
                 {
-                    // Sett dokumentet som gjeldende versjon
+                    // Finn versjonsgruppen
                     var queryResultsVersions = from o in db.Versions
                                                where o.systemId == document.versioningId
                                                select o;
 
                     Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
 
-                    // Finn ny gjeldende versjon
+                    // Finn alle dokumenter i versjonegruppen
                     var queryResultsVersionsDocument = from o in db.Documents
-                                                       where o.versioningId == versjonsgruppe.systemId && o.systemId != document.systemId
+                                                       where o.versioningId == versjonsgruppe.systemId
                                                        select o;
 
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
@@ -370,6 +370,7 @@ namespace Kartverket.Register.Controllers
                             if (item.statusId == "Valid")
                             {
                                 item.statusId = "Superseded";
+                                item.modified = DateTime.Now;
                             }
                         }
 
@@ -378,44 +379,39 @@ namespace Kartverket.Register.Controllers
                         originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid" && versjonsgruppe.currentVersion == originalDocument.systemId)
+                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
-                        if (queryResultsVersionsDocument.Count() > 0)
+                        if (queryResultsVersionsDocument.Count() > 1)
                         {
-                            if (queryResultsVersionsDocument.Count() == 1)
+                            // Sett gjeldende versjon ut fra status...                            
+                            foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.modified))
                             {
-                                Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                                if (item.statusId == "Superseded" && item.systemId != document.systemId)
+                                {
+                                    versjonsgruppe.currentVersion = item.systemId;
+                                    item.statusId = "Valid";
+                                    item.modified = DateTime.Now;
+                                    break;
+                                }
+                            }
+                            if (versjonsgruppe.currentVersion == document.systemId)
+                            {
+                                Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                                 versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                             }
-                            // Sett gjeldende versjon ut fra status...
-                            else
-                            {
-                                foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted))
-                                {
-                                    if (item.statusId == "Superseded")
-                                    {
-                                        versjonsgruppe.currentVersion = item.systemId;
-                                        item.statusId = "Valid";
-                                        break;
-                                    }
-                                }
-                                if (versjonsgruppe.currentVersion == document.systemId)
-                                {
-                                    Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
-                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                                }
-                                //db.SaveChanges();
+                            originalDocument.statusId = document.statusId;
 
-                            }
                         }
-                        originalDocument.statusId = document.statusId;
+                        else
+                        {
+                            originalDocument.statusId = document.statusId;
+                        }
                     }
-                    else
-                    {
-                        originalDocument.dateAccepted = null;
+                    else {
                         originalDocument.statusId = document.statusId;
                     }
                 }
+                                
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
@@ -509,31 +505,23 @@ namespace Kartverket.Register.Controllers
 
                 if (queryResultsVersionsDocument.Count() != 0)
                 {
-                    if (queryResultsVersionsDocument.Count() == 1)
+                    // Sett gjeldende versjon ut fra status...
+                    foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.modified))
                     {
-                        Document nyGjeldendeVersjon = queryResultsVersionsDocument.FirstOrDefault();
+                        if (item.statusId == "Superseded")
+                        {
+                            versjonsgruppe.currentVersion = item.systemId;
+                            item.statusId = "Valid";
+                            item.modified = DateTime.Now;
+                            break;
+                        }
+                    }
+                    if (versjonsgruppe.currentVersion == document.systemId)
+                    {
+                        Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                         versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                     }
-                    // Sett gjeldende versjon ut fra status...
-                    else
-                    {
-                        foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted))
-                        {
-                            if (item.statusId == "Superseded")
-                            {
-                                versjonsgruppe.currentVersion = item.systemId;
-                                item.statusId = "Valid";
-                                break;
-                            }
-                        }
-                        if (versjonsgruppe.currentVersion == document.systemId)
-                        {
-                            Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
-                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                        }
-                        //db.SaveChanges();
-
-                    }
+                    //db.SaveChanges();                    
                 }
             }
 

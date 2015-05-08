@@ -63,7 +63,7 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin")
             {
                 return View();
             }
@@ -190,7 +190,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 Viewbags(dataset);
                 return View(dataset);
@@ -340,7 +340,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 return View(dataset);
             }

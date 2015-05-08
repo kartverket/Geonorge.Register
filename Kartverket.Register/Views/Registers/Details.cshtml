@@ -46,89 +46,90 @@
         {
             sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
         }
-        else {
+        else
+        {
             sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
         }
-}
+    }
 
-    
+
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="page-header">
             <hr>
         </div>
 
-            @if (Model.containedItemClass == "Organization")
+        @if (Model.containedItemClass == "Organization")
+        {
+            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "CodelistValue")
+        {
+            @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Document")
+        {
+            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Register")
+        {
+            if (ViewBag.SortOrder == "name_desc")
             {
-                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "CodelistValue")
+            else if (ViewBag.SortOrder == "submitter")
             {
-                @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "Document")
+            else if (ViewBag.SortOrder == "submitter_desc")
             {
-                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "Dataset")
+            else if (ViewBag.SortOrder == "status")
             {
-                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "EPSG")
+            else if (ViewBag.SortOrder == "status_desc")
             {
-                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "Register")
+            else if (ViewBag.SortOrder == "dateSubmitted")
             {
-                if (ViewBag.SortOrder == "name_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "submitter")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "submitter_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "status")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "status_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "dateSubmitted")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "dateSubmitted_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "modified")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "modified_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "dateAccepted")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else if (ViewBag.SortOrder == "dateAccepted_desc")
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }
-                else
-                {
-                    @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-                }                 
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
+            else if (ViewBag.SortOrder == "dateSubmitted_desc")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+            else if (ViewBag.SortOrder == "modified")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+            else if (ViewBag.SortOrder == "modified_desc")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+            else if (ViewBag.SortOrder == "dateAccepted")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+            else if (ViewBag.SortOrder == "dateAccepted_desc")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+            else
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+        }
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -138,21 +139,9 @@
         {
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
-                if (Model.containedItemClass == "Organization")
-                {
-                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå ny organisasjon i @Model.name </a>
-                }
                 if (Model.containedItemClass == "Document")
                 {
                     <a href="/dokument/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
-                }
-                if (Model.containedItemClass == "Dataset")
-                {
-                    <a href="/dataset/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>                    
-                }
-                if (Model.containedItemClass == "EPSG")
-                {
-                    <a href="/epsg-koder/ny">| Foreslå ny epsg kode i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
@@ -165,6 +154,17 @@
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
+                if (Model.containedItemClass == "Organization")
+                {
+                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå ny organisasjon i @Model.name </a>
+                }
+                if (Model.containedItemClass == "Dataset")
+                {
+                    <a href="/dataset/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>
+                } if (Model.containedItemClass == "EPSG")
+                {
+                    <a href="/epsg-koder/ny">| Foreslå ny epsg kode i @Model.name </a>
+                }
                 <span>| </span><a href="/endre/@Model.seoname">Endre</a>
                 <span>| </span><a href="/slett/@Model.seoname">Slett</a>
             }

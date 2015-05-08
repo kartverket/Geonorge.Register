@@ -124,7 +124,7 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin")
             {
                 return View(); 
             }
@@ -220,7 +220,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 Viewbags(organization);
                 return View(organization);
@@ -353,7 +353,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == organization.submitter.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 return View(organization);
             }

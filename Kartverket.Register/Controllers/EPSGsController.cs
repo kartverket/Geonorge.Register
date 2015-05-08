@@ -58,7 +58,7 @@ namespace Kartverket.Register.Controllers
             //Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
             //string registerStatus = register.statusId;
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin")
             {
                 return View();
             }
@@ -148,7 +148,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 Viewbags(ePSG);
                 return View(ePSG);
@@ -248,7 +248,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == ePSG.submitter.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 return View(ePSG);
             }

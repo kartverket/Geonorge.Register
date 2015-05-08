@@ -600,12 +600,18 @@
 
 /* EPSG */
 
+
+
 .search-results.epsg.table-view .table-heading>div {
 	float: left;
 }
 
+.search-results.epsg.table-view .table-heading{
+    height: 40px;
+}
+
 .search-results.epsg.table-view .col-title{
-	width: 40%;
+	width: 24%;
 	float: left;
 
 }
@@ -616,18 +622,31 @@
 
 
 .search-results.epsg.table-view .col-actions{
-	width: 30%;
-	float: left;
+	width: 35%;
+}
+
+.search-results.epsg.table-view .col-information{
+	width: 41%;
 }
 
 
 .search-results.epsg.table-view .col-actions p, .search-results.epsg.table-view .table-heading .col-actions h4{
-	width: 33.333%;
-float: left;
+	width: 19%;
+    float: left;
+	padding: 0;
+}
+
+.search-results.epsg.table-view .col-information p, .search-results.epsg.table-view .table-heading .col-information h4{
+	width: 25%;
+    float: left;
 	padding: 0;
 }
 
 .search-results.epsg.table-view .col-actions span{
+	display: none;
+}
+
+.search-results.epsg.table-view .col-information span{
 	display: none;
 }
 

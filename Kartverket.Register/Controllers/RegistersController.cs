@@ -35,41 +35,6 @@ namespace Kartverket.Register.Controllers
             return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 
-        // GET: Registers/Details/5
-        [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page, string export)
-        {
-            var queryResults = from o in db.Registers
-                               where o.name == name || o.seoname == name
-                               select o.systemId;
-
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;            
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
-
-            if(register.parentRegisterId != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-            }
-
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
-
-            
-            if (!string.IsNullOrEmpty(export))
-            {
-                return exportCodelist(register, export);
-            }
-
-            return View(register);
-        }
-
         private ActionResult exportCodelist(Kartverket.Register.Models.Register register, string export)
         {
             if (export == "csv")
@@ -114,25 +79,6 @@ namespace Kartverket.Register.Controllers
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
-
-                //XDocument xdoc = new XDocument
-                //    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                //        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                //        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                //        new XAttribute(gmlNs + "id", register.seoname),
-                //        new XElement(gmlNs + "description"),
-                //        new XElement(gmlNs + "identifier",
-                //            new XAttribute("codeSpace", nameSpace), register.name),
-
-                //        from k in db.CodelistValues.ToList()
-                //        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                //        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
-                //          new XElement(gmlNs + "description", k.description),
-                //          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
-                //          new XElement(gmlNs + "name", k.name)
-                //          ))));
-
-
                 XElement xdoc =
                     new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
@@ -158,6 +104,42 @@ namespace Kartverket.Register.Controllers
             return View(register);
 
         }
+
+        // GET: Registers/Details/5
+        [Route("register/{name}")]
+        public ActionResult Details(string name, string sorting, int? page, string export, string filterVertikalt, string filterHorisontalt )
+        {
+            var queryResults = from o in db.Registers
+                               where o.name == name || o.seoname == name
+                               select o.systemId;
+
+            Guid systId = queryResults.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+            }
+
+            if (register == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            if (!string.IsNullOrEmpty(export))
+            {
+                return exportCodelist(register, export);
+            }
+
+            return View(register);
+        }
+
 
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
         [Route("register/{registername}/{submitter}/{itemname}/")]

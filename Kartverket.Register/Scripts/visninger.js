@@ -164,7 +164,25 @@ function SortBy(sort) {
     var selected = sort.options[sort.selectedIndex].text;
     localStorage.setItem("sortering", selected);
     document.sortering.submit();
+}
 
+function Filter() {
+    var filterVertikalt = document.getElementById("filterVertikalt");
+    var filterHorisontalt = document.getElementById("filterHorisontalt");
+    var inspireRequirement = document.getElementById("inspireRequirement");
+    var nationalRequirement = document.getElementById("nationalRequirement");
+    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+
+    var selectedfilterVertikalt = filterVertikalt;
+    var selectedfilterHorisontalt = filterHorisontalt;
+    var selectedInspireRequirement = inspireRequirement.options[inspireRequirement.selectedIndex].text;
+    var selectedNationalRequirement = nationalRequirement.options[nationalRequirement.selectedIndex].text;
+    var selectedNationalSeaRequirement = nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
+
+    //localStorage.setItem("Inspire", selectedInspireRequirement);
+    //localStorage.setItem("National", selectedNationalRequirement);
+    //localStorage.setItem("Sea", selectedNationalSeaRequirement);
+    document.filtering.submit();
 }
 
 $(document).ready(function () {

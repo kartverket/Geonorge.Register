@@ -22,25 +22,28 @@
     </div>
     <div class="col-sm-7 col-md-7 col-lg-7">
         @if (register == "EPSG koder")
-        { <form action="/register/epsg-koder/" method="get">
+        { <form action="/register/epsg-koder/" method="get" name="filtering">
             <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
                 <b>Filter:</b>
             </div>
             <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
-                <input type="checkbox" name="filterVertikalt" value="vertikalt"><span>Vertikalt</span><br />
-                <input type="checkbox" name="filterHorisontalt" value="horisontalt"><span>Horisontalt</span>
+                <input type="checkbox" id="filterVertikalt" name="filterVertikalt" value="vertikalt" onchange="Filter()"><span>Vertikalt</span><br />
+                <input type="checkbox" id="filterHorisontalt" name="filterHorisontalt" value="horisontalt" onchange="Filter()"><span>Horisontalt</span>
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
-                <span>Inspire krav</span>
-                @Html.DropDownList("inspireRequirement", null, "", new { @class = "pull-right" })<br />
-                <span>Nasjonalt krav</span>
-                @Html.DropDownList("nationalRequirement", null, "", new { @class = "pull-right" })<br />
-                <span>Havområder</span>
-                @Html.DropDownList("nationalSeaRequirement", null, "", new { @class = "pull-right" })
+                <div onchange="Filter()" class="pull-right" id="inspireRequirementId">
+                    <label style="font-weight:normal;" for="inspireRequirement">Inspire krav:</label>@Html.DropDownList("inspireRequirement", "")<br />
+                </div>
+                <div onchange="Filter()" class="pull-right" id="nationalRequirementId">
+                    <label style="font-weight:normal;" for="nationalRequirement">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", "")<br />
+                </div>
+                <div onchange="Filter()" class="pull-right" id="nationalSeaRequirementId">
+                    <label style="font-weight:normal;" for="nationalSeaRequirement">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
+                </div>
             </div>
-            <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
-                <input type="submit" value="Filtrer">
-            </div>
+            @*<div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
+                    <input type="submit" value="Filtrer">
+                </div>*@
         </form>
         }
     </div>
@@ -49,7 +52,6 @@
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
-                    <input type="hidden" value=""/>
                 </div>
             </form>
         </div>

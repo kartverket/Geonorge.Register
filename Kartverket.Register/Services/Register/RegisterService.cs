@@ -30,9 +30,29 @@ namespace Kartverket.Register.Services.Versioning
                 {
                     filterHorisontalt = item.horizontalReferenceSystem;
                 }
+                else {
+                    if (!string.IsNullOrEmpty(item.horizontalReferenceSystem))
+                    {
+                        filterHorisontalt = item.horizontalReferenceSystem;
+                    }
+                    else {
+                        filterHorisontalt = "ikke angitt horisontalt referansesystem";
+                    }
+                }
                 if (filterVertikalt == null)
                 {
                     filterVertikalt = item.verticalReferenceSystem;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(item.verticalReferenceSystem))
+                    {
+                        filterVertikalt = item.verticalReferenceSystem;
+                    }
+                    else
+                    {
+                        filterVertikalt = "ikke angitt vertikalt referansesystem";
+                    }
                 }
                 if (filterInspire == null)
                 {
@@ -72,10 +92,10 @@ namespace Kartverket.Register.Services.Versioning
             {
                 register = register,
                 registerItems = filterEpsg,
-                documentItems = null,
-                datasetItems = null,
-                organizationItems = null,
-                codeItems = null
+                //documentItems = null,
+                //datasetItems = null,
+                //organizationItems = null,
+                //codeItems = null
             };
         }
     }

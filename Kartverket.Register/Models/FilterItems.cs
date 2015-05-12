@@ -9,11 +9,11 @@ namespace Kartverket.Register.Models
     {
         public virtual Register register { get; set; }
         public virtual List<RegisterItem> registerItems { get; set; }
-        public virtual List<EPSG> epsgItems { get; set; }
-        public virtual List<Document> documentItems { get; set; }
-        public virtual List<Dataset> datasetItems { get; set; }
-        public virtual List<Organization> organizationItems { get; set; }
-        public virtual List<CodelistValue> codeItems { get; set; }
+        //public virtual List<EPSG> epsgItems { get; set; }
+        //public virtual List<Document> documentItems { get; set; }
+        //public virtual List<Dataset> datasetItems { get; set; }
+        //public virtual List<Organization> organizationItems { get; set; }
+        //public virtual List<CodelistValue> codeItems { get; set; }
 
         public FilterItems()
         {
@@ -24,11 +24,11 @@ namespace Kartverket.Register.Models
         {
             register = otherResult.register;
             registerItems = otherResult.registerItems;
-            epsgItems = otherResult.epsgItems;
-            documentItems = otherResult.documentItems;
-            datasetItems = otherResult.datasetItems;
-            organizationItems = otherResult.organizationItems;
-            codeItems = otherResult.codeItems;
+            //epsgItems = otherResult.epsgItems;
+            //documentItems = otherResult.documentItems;
+            //datasetItems = otherResult.datasetItems;
+            //organizationItems = otherResult.organizationItems;
+            //codeItems = otherResult.codeItems;
         }    
     }
 }

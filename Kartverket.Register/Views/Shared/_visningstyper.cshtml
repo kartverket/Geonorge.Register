@@ -4,10 +4,10 @@
     var owner = ViewBag.owner;
     var ownerSEO = ViewBag.ownerSEO;
     var subregister = ViewBag.subregister;
-    
+
     var kontroller = "/register/" + registerSEO;
     if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
-    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" +subregister; }
+    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" + subregister; }
 
 }
 <div class="row">
@@ -21,37 +21,38 @@
         </div>
     </div>
     <div class="col-sm-7 col-md-7 col-lg-7">
-       @if (register == "EPSG koder")
-                { <form action="/register/epsg-koder/" method="get">
+        @if (register == "EPSG koder")
+        { <form action="/register/epsg-koder/" method="get">
             <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
                 <b>Filter:</b>
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">         
+            <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
                 <input type="checkbox" name="filterVertikalt" value="vertikalt"><span>Vertikalt</span><br />
                 <input type="checkbox" name="filterHorisontalt" value="horisontalt"><span>Horisontalt</span>
             </div>
-            <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">               
+            <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
                 <span>Inspire krav</span>
-                @Html.DropDownList("inspireRequirement", null, "", new { @class = "pull-right" })<br/>
+                @Html.DropDownList("inspireRequirement", null, "", new { @class = "pull-right" })<br />
                 <span>Nasjonalt krav</span>
-                @Html.DropDownList("nationalRequirement", null, "", new { @class = "pull-right" })<br /> 
+                @Html.DropDownList("nationalRequirement", null, "", new { @class = "pull-right" })<br />
                 <span>Havområder</span>
                 @Html.DropDownList("nationalSeaRequirement", null, "", new { @class = "pull-right" })
             </div>
             <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
-            <input type="submit" value="Filtrer">
+                <input type="submit" value="Filtrer">
             </div>
         </form>
-       }
+        }
     </div>
     <div class="col-sm-3 col-md-3 col-lg-3">
         <div id="sortBox" class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
+                    <input type="hidden" value=""/>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<hr/>
+<hr />

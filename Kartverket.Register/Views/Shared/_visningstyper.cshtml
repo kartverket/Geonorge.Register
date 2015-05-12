@@ -11,7 +11,7 @@
 
 }
 <div class="row">
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-2 col-md-2 col-lg-2">
         <div class="view-navigation">
             <ul class="nav nav-pills text-center">
                 <li><a onclick="listView()" id="button-listView" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
@@ -20,18 +20,31 @@
             </ul>
         </div>
     </div>
-    <div class="col-sm-4 col-md-4 col-lg-4" style="margin-top:-30px;">
-    @if (register == "EPSG koder")
-	{
-		<b>Filter:</b>
-        <form action="/register/epsg-koder/" method="get">
-            <input type="checkbox" name="filterVertikalt" value="vertikalt">Vertikalt &nbsp;
-            <input type="checkbox" name="filterHorisontalt" value="horisontalt">Horisontalt
+    <div class="col-sm-7 col-md-7 col-lg-7">
+       @if (register == "EPSG koder")
+                { <form action="/register/epsg-koder/" method="get">
+            <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
+                <b>Filter:</b>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">         
+                <input type="checkbox" name="filterVertikalt" value="vertikalt"><span>Vertikalt</span><br />
+                <input type="checkbox" name="filterHorisontalt" value="horisontalt"><span>Horisontalt</span>
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">               
+                <span>Inspire krav</span>
+                @Html.DropDownList("inspireRequirement", null, "", new { @class = "pull-right" })<br/>
+                <span>Nasjonalt krav</span>
+                @Html.DropDownList("nationalRequirement", null, "", new { @class = "pull-right" })<br /> 
+                <span>Havområder</span>
+                @Html.DropDownList("nationalSeaRequirement", null, "", new { @class = "pull-right" })
+            </div>
+            <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
             <input type="submit" value="Filtrer">
+            </div>
         </form>
-	}        
+       }
     </div>
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-3 col-md-3 col-lg-3">
         <div id="sortBox" class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
@@ -41,3 +54,4 @@
         </div>
     </div>
 </div>
+<hr/>

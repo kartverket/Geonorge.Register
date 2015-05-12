@@ -3,6 +3,12 @@
 @using Kartverket.Register.Helpers
 @using PagedList;
 @using PagedList.Mvc;
+
+@{
+    var inspireRequirement = ViewBag.inspireRequirement;
+    var nationalRequirement = ViewBag.nationalRequirement;
+    var seaRequirement = ViewBag.nationalSeaRequirement;
+}
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
@@ -16,121 +22,124 @@
 
 </div>
 <div class="register epsg search-results">
-    @*lage egne stiler for dataset*@
-    @foreach (EPSG item in Model)
+    @if (Model.Count() != 0)
     {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    @if (item.register.parentRegister != null)
-                    {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </h3>
-                        </a>
-                    }
-                    else
-                    {
+
+        foreach (EPSG item in Model)
+        {
+            <div class="row result-row metadata">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                    <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                        @*@if (item.register.parentRegisterId != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        else
+                        {*@
                         <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
                             <h3 class="role-button" style="font-size: 15px;">
                                 @item.name
                             </h3>
                         </a>
-                    }
-                    <p>
-                        @item.description
-                    </p>
+                        
+                        <p>
+                            @item.description
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
+
+                        @if (item.epsgcode == null)
+                        {
+                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
+                        }
+
+                        @if (item.sosiReferencesystem == null)
+                        {
+                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                        }
+
+                        @if (item.verticalReferenceSystem == null)
+                        {
+                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
+                        }
+
+                        @if (item.horizontalReferenceSystem == null)
+                        {
+                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
+                        }
+
+                        @if (item.dimensionId == null)
+                        {
+                            <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                        }
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
+                        @if (item.inspireRequirement == null)
+                        {
+                            <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Inspire krav: @item.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
+                        }
+
+                        @if (item.nationalRequirement == null)
+                        {
+                            <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Nasjonalt krav: @item.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
+                        }
+
+                        @if (item.nationalSeasRequirement == null)
+                        {
+                            <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Nasjonalt krav for havområde: @item.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
+                        }
+
+                        @if (item.sosiReferencesystem == null)
+                        {
+                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>
+                        }
+                    </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
 
-                    @if (item.epsgcode == null)
-                    {
-                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
-                    }
-
-                    @if (item.sosiReferencesystem == null)
-                    {
-                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
-                    }
-
-                    @if (item.verticalReferenceSystem == null)
-                    {
-                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
-                    }
-
-                    @if (item.horizontalReferenceSystem == null)
-                    {
-                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
-                    }
-
-                    @if (item.dimensionId == null)
-                    {
-                        <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
-                    }
-
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
-                    @if (item.inspireRequirement == null)
-                    {
-                        <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
-                    }
-                    else
-                    {
-                        <p title="Inspire krav: @item.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
-                    }
-
-                    @if (item.nationalRequirement == null)
-                    {
-                        <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
-                    }
-                    else
-                    {
-                        <p title="Nasjonalt krav: @item.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
-                    }
-
-                    @if (item.nationalSeasRequirement == null)
-                    {
-                        <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
-                    }
-                    else
-                    {
-                        <p title="Nasjonalt krav for havområde: @item.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
-                    }
-
-                    @if (item.sosiReferencesystem == null)
-                    {
-                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>
-                    }
-                </div>
             </div>
-
-        </div>
-        <hr />
+            <hr />
+        }
     }
 </div>
 

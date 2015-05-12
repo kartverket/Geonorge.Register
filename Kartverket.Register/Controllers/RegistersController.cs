@@ -22,6 +22,7 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         private IVersioningService _versioningService;
+        private IRegisterService _registerService;
         
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -105,21 +106,73 @@ namespace Kartverket.Register.Controllers
 
         }
 
+        //// GET: Registers/Details/5
+        //[Route("register/{name}")]
+        //public ActionResult Details(string name, string sorting, int? page, string export, string filterVertikalt, string filterHorisontalt, string InspireRequirement, string nationalRequirement, string nationalSeaRequirement)
+        //{
+        //    var queryResults = from o in db.Registers
+        //                       where o.name == name || o.seoname == name
+        //                       select o.systemId;
+
+        //    Guid systId = queryResults.First();
+        //    Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+        //    ViewBag.page = page;
+        //    ViewBag.SortOrder = sorting;
+        //    ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+        //    ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.register = register.name;
+        //    ViewBag.registerSEO = register.seoname;
+
+        //    if (register.parentRegisterId != null)
+        //    {
+        //        ViewBag.parentRegister = register.parentRegister.name;
+        //    }
+
+        //    if (register == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+
+        //    if (!string.IsNullOrEmpty(export))
+        //    {
+        //        return exportCodelist(register, export);
+        //    }
+
+        //    return View(register);
+        //}
+
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page, string export, string filterVertikalt, string filterHorisontalt )
+        public ActionResult Details(string name, string sorting, int? page, string export, FilterParameters filter)
         {
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
-                               select o.systemId;
+                               select o;
 
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            RegisterVeiwModel model;
+            Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
+            if (register.containedItemClass == "EPSG")
+            {
+                _registerService = new RegisterService(db);
+                FilterItems filterItems = _registerService.Filter(register, filter);
+                model = new RegisterVeiwModel(filterItems);
+
+            }
+            else{
+                model = new RegisterVeiwModel(register);
+            }
+            
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
+            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
 
             if (register.parentRegisterId != null)
             {
@@ -131,13 +184,12 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-
             if (!string.IsNullOrEmpty(export))
             {
                 return exportCodelist(register, export);
             }
 
-            return View(register);
+            return View(model);
         }
 
 

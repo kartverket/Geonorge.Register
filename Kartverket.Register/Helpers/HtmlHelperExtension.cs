@@ -153,7 +153,7 @@ namespace Kartverket.Register.Helpers
 
 
         // SORTERING av registeritems
-        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(List<RegisterItem> registerItems, String sortingType)
+        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
         {
 
             if (string.IsNullOrEmpty(sortingType)) 
@@ -167,208 +167,208 @@ namespace Kartverket.Register.Helpers
             HttpContext.Current.Session["sortingType"] = sortingType;
 
 
-            var sortedList = registerItems.OrderBy(o => o.name).ToList();
+            var sortedList = register.items.OrderBy(o => o.name).ToList();
             if (sortingType == "name_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.name).ToList();
+                sortedList = register.items.OrderByDescending(o => o.name).ToList();
             }
             else if (sortingType == "submitter")
             {
-                sortedList = registerItems.OrderBy(o => o.submitter.name).ToList();
+                sortedList = register.items.OrderBy(o => o.submitter.name).ToList();
             }
             else if (sortingType == "submitter_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.submitter.name).ToList();
+                sortedList = register.items.OrderByDescending(o => o.submitter.name).ToList();
             }
             else if (sortingType == "status")
             {
-                sortedList = registerItems.OrderBy(o => o.status.description).ToList();
+                sortedList = register.items.OrderBy(o => o.status.description).ToList();
             }
             else if (sortingType == "status_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.status.description).ToList();
+                sortedList = register.items.OrderByDescending(o => o.status.description).ToList();
             }
             else if (sortingType == "dateSubmitted")
             {
-                sortedList = registerItems.OrderBy(o => o.dateSubmitted).ToList();
+                sortedList = register.items.OrderBy(o => o.dateSubmitted).ToList();
             }
             else if (sortingType == "dateSubmitted_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.dateSubmitted).ToList();
+                sortedList = register.items.OrderByDescending(o => o.dateSubmitted).ToList();
             }
             else if (sortingType == "modified")
             {
-                sortedList = registerItems.OrderBy(o => o.modified).ToList();
+                sortedList = register.items.OrderBy(o => o.modified).ToList();
             }
             else if (sortingType == "modified_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.modified).ToList();
+                sortedList = register.items.OrderByDescending(o => o.modified).ToList();
             }
             else if (sortingType == "dateAccepted")
             {
-                sortedList = registerItems.OrderBy(o => o.dateAccepted).ToList();
+                sortedList = register.items.OrderBy(o => o.dateAccepted).ToList();
             }
             else if (sortingType == "dateAccepted_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.dateAccepted).ToList();
+                sortedList = register.items.OrderByDescending(o => o.dateAccepted).ToList();
             }
             else if (sortingType == "documentOwner")
             {
-                var documentOwner = registerItems.OfType<Document>().OrderBy(o => o.documentowner.name);
+                var documentOwner = register.items.OfType<Document>().OrderBy(o => o.documentowner.name);
                 sortedList = documentOwner.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "documentOwner_desc")
             {
-                var documentOwner = registerItems.OfType<Document>().OrderByDescending(o => o.documentowner.name);
+                var documentOwner = register.items.OfType<Document>().OrderByDescending(o => o.documentowner.name);
                 sortedList = documentOwner.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "datasetOwner")
             {
-                var datasetOwner = registerItems.OfType<Dataset>().OrderBy(o => o.datasetowner.name);
+                var datasetOwner = register.items.OfType<Dataset>().OrderBy(o => o.datasetowner.name);
                 sortedList = datasetOwner.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "datasetOwner_desc")
             {
-                var datasetOwner = registerItems.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
+                var datasetOwner = register.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
                 sortedList = datasetOwner.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "distributionFormat")
             {
-                var distributionFormat = registerItems.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
+                var distributionFormat = register.items.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
                 sortedList = distributionFormat.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "distributionFormat_desc")
             {
-                var distributionFormat = registerItems.OfType<Dataset>().OrderByDescending(o => o.DistributionFormat);
+                var distributionFormat = register.items.OfType<Dataset>().OrderByDescending(o => o.DistributionFormat);
                 sortedList = distributionFormat.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "wmsUrl")
             {
-                var wmsUrl = registerItems.OfType<Dataset>().OrderBy(o => o.WmsUrl);
+                var wmsUrl = register.items.OfType<Dataset>().OrderBy(o => o.WmsUrl);
                 sortedList = wmsUrl.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "wmsUrl_desc")
             {
-                var wmsUrl = registerItems.OfType<Dataset>().OrderByDescending(o => o.WmsUrl);
+                var wmsUrl = register.items.OfType<Dataset>().OrderByDescending(o => o.WmsUrl);
                 sortedList = wmsUrl.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "theme")
             {
-                var theme = registerItems.OfType<Dataset>().OrderBy(o => o.theme.value);
+                var theme = register.items.OfType<Dataset>().OrderBy(o => o.theme.value);
                 sortedList = theme.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "theme_desc")
             {
-                var theme = registerItems.OfType<Dataset>().OrderByDescending(o => o.theme.value);
+                var theme = register.items.OfType<Dataset>().OrderByDescending(o => o.theme.value);
                 sortedList = theme.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "epsg")
             {
-                var epsg = registerItems.OfType<EPSG>().OrderBy(o => o.epsgcode);
+                var epsg = register.items.OfType<EPSG>().OrderBy(o => o.epsgcode);
                 sortedList = epsg.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "epsg_desc")
             {
-                var epsg = registerItems.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
+                var epsg = register.items.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
                 sortedList = epsg.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "sosiReferencesystem")
             {
-                var sosiReferencesystem = registerItems.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
+                var sosiReferencesystem = register.items.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
                 sortedList = sosiReferencesystem.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "sosiReferencesystem_desc")
             {
-                var sosiReferencesystem = registerItems.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
+                var sosiReferencesystem = register.items.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
                 sortedList = sosiReferencesystem.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "inspireRequirement")
             {
-                var inspireRequirement = registerItems.OfType<EPSG>().OrderBy(o => o.inspireRequirement.sortOrder);
+                var inspireRequirement = register.items.OfType<EPSG>().OrderBy(o => o.inspireRequirement.sortOrder);
                 sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "inspireRequirement_desc")
             {
-                var inspireRequirement = registerItems.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.sortOrder);
+                var inspireRequirement = register.items.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.sortOrder);
                 sortedList = inspireRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalRequirement")
             {
-                var nationalRequirement = registerItems.OfType<EPSG>().OrderBy(o => o.nationalRequirement.sortOrder);
+                var nationalRequirement = register.items.OfType<EPSG>().OrderBy(o => o.nationalRequirement.sortOrder);
                 sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalRequirement_desc")
             {
-                var nationalRequirement = registerItems.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.sortOrder);
+                var nationalRequirement = register.items.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.sortOrder);
                 sortedList = nationalRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalSeasRequirement")
             {
-                var nationalSeasRequirement = registerItems.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.sortOrder);
+                var nationalSeasRequirement = register.items.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.sortOrder);
                 sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "nationalSeasRequirement_desc")
             {
-                var nationalSeasRequirement = registerItems.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.sortOrder);
+                var nationalSeasRequirement = register.items.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.sortOrder);
                 sortedList = nationalSeasRequirement.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "description")
             {
-                sortedList = registerItems.OrderBy(o => o.description).ToList();
+                sortedList = register.items.OrderBy(o => o.description).ToList();
             }
             else if (sortingType == "description_desc")
             {
-                sortedList = registerItems.OrderByDescending(o => o.description).ToList();
+                sortedList = register.items.OrderByDescending(o => o.description).ToList();
             }
             else if (sortingType == "codevalue")
             {
-                var codevalue = registerItems.OfType<CodelistValue>().OrderBy(o => o.value);
+                var codevalue = register.items.OfType<CodelistValue>().OrderBy(o => o.value);
                 sortedList = codevalue.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "codevalue_desc")
             {
-                var codevalue = registerItems.OfType<CodelistValue>().OrderByDescending(o => o.value);
+                var codevalue = register.items.OfType<CodelistValue>().OrderByDescending(o => o.value);
                 sortedList = codevalue.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "number")
             {
-                var number = registerItems.OfType<Organization>().OrderBy(o => o.number);
+                var number = register.items.OfType<Organization>().OrderBy(o => o.number);
                 sortedList = number.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "number_desc")
             {
-                var number = registerItems.OfType<Organization>().OrderByDescending(o => o.number);
+                var number = register.items.OfType<Organization>().OrderByDescending(o => o.number);
                 sortedList = number.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "verticalReferenceSystem")
             {
-                var verticalReferenceSystem = registerItems.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
+                var verticalReferenceSystem = register.items.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
                 sortedList = verticalReferenceSystem.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "verticalReferenceSystem_desc")
             {
-                var verticalReferenceSystem = registerItems.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
+                var verticalReferenceSystem = register.items.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
                 sortedList = verticalReferenceSystem.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "horizontalReferenceSystem")
             {
-                var horizontalReferenceSystem = registerItems.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
+                var horizontalReferenceSystem = register.items.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
                 sortedList = horizontalReferenceSystem.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "horizontalReferenceSystem_desc")
             {
-                var horizontalReferenceSystem = registerItems.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
+                var horizontalReferenceSystem = register.items.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
                 sortedList = horizontalReferenceSystem.Cast<RegisterItem>().ToList();
             }
 
             else if (sortingType == "dimension")
             {
-                var dimension = registerItems.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.description);
+                var dimension = register.items.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.description);
                 sortedList = dimension.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "dimension_desc")
             {
-                var dimension = registerItems.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
+                var dimension = register.items.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
                 sortedList = dimension.Cast<RegisterItem>().ToList();
             }
                     

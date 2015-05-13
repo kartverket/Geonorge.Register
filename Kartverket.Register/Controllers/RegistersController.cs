@@ -152,18 +152,11 @@ namespace Kartverket.Register.Controllers
                                where o.name == name || o.seoname == name
                                select o;
 
-            RegisterVeiwModel model;
             Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
-            if (register.containedItemClass == "EPSG")
-            {
-                _registerService = new RegisterService(db);
-                FilterItems filterItems = _registerService.Filter(register, filter);
-                model = new RegisterVeiwModel(filterItems);
-
-            }
-            else{
-                model = new RegisterVeiwModel(register);
-            }
+            
+            //Hjelpemetode Sjekk om noen av filterparametrene er satt        TODO!    
+            _registerService = new RegisterService(db);
+            register = _registerService.Filter(register, filter);                
             
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
@@ -189,7 +182,7 @@ namespace Kartverket.Register.Controllers
                 return exportCodelist(register, export);
             }
 
-            return View(model);
+            return View(register);
         }
 
 

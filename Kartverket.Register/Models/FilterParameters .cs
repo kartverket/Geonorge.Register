@@ -11,7 +11,7 @@ namespace Kartverket.Register.Models
         {
             
         }
-
+        public string text { get; set; }
         public string filterVertikalt { get; set; }
         public string filterHorisontalt { get; set; }
         public string InspireRequirement { get; set; }

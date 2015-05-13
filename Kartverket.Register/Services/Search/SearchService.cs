@@ -437,12 +437,12 @@ namespace Kartverket.Register.Services.Search
 
             else if (register.containedItemClass == "Register")
             {
-                var queryResults = (from d in _dbContext.Registers
-                                    where d.parentRegister.name == register.parentRegister.name
+                var queryResults = from d in _dbContext.Registers
+                                    where d.parentRegister.name == register.name
                                     && d.parentRegister.containedItemClass == register.containedItemClass
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text))
-                                    select d);
+                                    select d;
 
                 if (queryResults.Count() > 0)
                 {

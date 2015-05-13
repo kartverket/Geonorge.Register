@@ -13,6 +13,7 @@ using System.Text;
 using System.Xml.Linq;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services.Search;
 
 namespace Kartverket.Register.Controllers
 {
@@ -23,6 +24,7 @@ namespace Kartverket.Register.Controllers
 
         private IVersioningService _versioningService;
         private IRegisterService _registerService;
+        private ISearchService _searchService;
         
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -153,7 +155,12 @@ namespace Kartverket.Register.Controllers
                                select o;
 
             Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
-            
+
+            if (!string.IsNullOrWhiteSpace(filter.text))
+            {
+                _searchService = new SearchService(db);
+                register = _searchService.Search(register, filter.text);   
+            }
             //Hjelpemetode Sjekk om noen av filterparametrene er satt        TODO!    
             _registerService = new RegisterService(db);
             register = _registerService.Filter(register, filter);                

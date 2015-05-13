@@ -203,6 +203,335 @@ namespace Kartverket.Register.Services.Search
 
         }
 
+        public Kartverket.Register.Models.Register Search(Kartverket.Register.Models.Register register, string text)
+        {
+            List<RegisterItem> registerItems = new List<RegisterItem>();
+            List<Kartverket.Register.Models.Register> subregisters = new List<Kartverket.Register.Models.Register>();
+
+            if (register.containedItemClass == "Organization")
+            {
+                var queryResults = (from o in _dbContext.Organizations
+                                    where o.name.Contains(text)
+                                    || o.description.Contains(text)
+                                    || o.shortname.Contains(text)
+                                    select o.systemId);
+                
+                if (queryResults.Count() > 0)
+	            {
+		            foreach (var item in queryResults)
+	                {
+		                Organization organisasjon = _dbContext.Organizations.Find(item);
+                        registerItems.Add(organisasjon);
+                    }
+	            }
+               
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
+            else if (register.containedItemClass == "Document")
+            {
+                var queryResults = (from d in _dbContext.Documents
+                                    where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
+                                    && (d.name.Contains(text)
+                                    || d.description.Contains(text)
+                                    || d.documentowner.name.Contains(text))
+                                    select d.systemId);
+                
+                if (queryResults.Count() > 0)
+	            {
+		            foreach (var item in queryResults)
+	                {
+		                Document document = _dbContext.Documents.Find(item);
+                        registerItems.Add(document);
+                    }
+	            }
+               
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
+            else if (register.containedItemClass == "Dataset")
+            {
+                var queryResults = (from d in _dbContext.Datasets
+                                    where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
+                                    && (d.name.Contains(text)
+                                    || d.description.Contains(text)
+                                    || d.datasetowner.name.Contains(text))
+                                    select d.systemId);
+                
+                if (queryResults.Count() > 0)
+	            {
+		            foreach (var item in queryResults)
+	                {
+		                Dataset dataset = _dbContext.Datasets.Find(item);
+                        registerItems.Add(dataset);
+                    }
+	            }
+               
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
+            else if (register.containedItemClass == "EPSG")
+            {
+                var queryResults = (from e in _dbContext.EPSGs
+                                    where e.name.Contains(text)
+                                    || e.description.Contains(text)
+                                    || e.epsgcode.Contains(text)
+                                    select e.systemId);
+                
+                if (queryResults.Count() > 0)
+	            {
+		            foreach (var item in queryResults)
+	                {
+		                EPSG epsg = _dbContext.EPSGs.Find(item);
+                        registerItems.Add(epsg);
+                    }
+	            }
+               
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
+            else if (register.containedItemClass == "Register")
+            {
+                var queryResults = (from d in _dbContext.Registers
+                                    where d.parentRegister.name == register.parentRegister.name
+                                    && d.parentRegister.containedItemClass == register.containedItemClass
+                                    && (d.name.Contains(text)
+                                    || d.description.Contains(text))
+                                    select d.systemId);
+
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResults)
+                    {
+                        Kartverket.Register.Models.Register subregister = _dbContext.Registers.Find(item);
+                        subregisters.Add(subregister);
+                    }
+
+                }
+
+                // Finnes det organisasjoner i dette registeret?
+                var queryResultsOrganization = from o in _dbContext.Organizations
+                                               where o.register.parentRegister.name.Contains(register.name) && (
+                                               o.register.name.Contains(text)
+                                               || o.register.description.Contains(text)
+                                               || o.register.name.Contains(text)
+                                               || o.name.Contains(text)
+                                               || o.description.Contains(text))
+                                               select o.systemId;
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResultsOrganization)
+                    {
+                        Organization organization = _dbContext.Organizations.Find(item);
+                        registerItems.Add(organization);
+                    }
+
+                }
+
+                // Finnes det Document i dette registeret?
+                var queryResultsDocument = from d in _dbContext.Documents
+                                           where d.register.parentRegister.name.Contains(register.name) && (
+                                               d.register.name.Contains(text)
+                                           || d.name.Contains(text)
+                                           || d.description.Contains(text)
+                                           || d.documentowner.name.Contains(text))
+                                           select d.systemId;
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResultsDocument)
+                    {
+                        Document document = _dbContext.Documents.Find(item);
+                        registerItems.Add(document);
+                    }
+
+                }
+
+                // Finnes det Datasett i dette registeret?
+                var queryResultsDataset = from d in _dbContext.Datasets
+                                          where d.register.parentRegister.name.Contains(register.name) && (
+                                          d.register.name.Contains(text)
+                                          || d.name.Contains(text)
+                                          || d.description.Contains(text)
+                                          || d.datasetowner.name.Contains(text))
+                                          select d.systemId;
+
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResultsDataset)
+                    {
+                        Dataset dataset = _dbContext.Datasets.Find(item);
+                        registerItems.Add(dataset);
+                    }
+
+                }
+
+                // Finnes det Koder i dette registeret?
+                var queryResultsKodelister = from d in _dbContext.CodelistValues
+                                             where d.register.parentRegister.name.Contains(register.name) && (
+                                                d.register.name.Contains(text)
+                                             || d.name.Contains(text)
+                                             || d.description.Contains(text)
+                                             || d.value.Contains(text))
+                                             select d.systemId;
+
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResultsDataset)
+                    {
+                        CodelistValue codelistValue = _dbContext.CodelistValues.Find(item);
+                        registerItems.Add(codelistValue);
+                    }
+
+                }
+
+                // Finnes det Epsg-koder i dette registeret?
+                var queryResultsEpsg = from e in _dbContext.EPSGs
+                                       where e.register.parentRegister.name.Contains(register.name) && (
+                                       e.register.name.Contains(text)
+                                       || e.name.Contains(text)
+                                       || e.description.Contains(text)
+                                       || e.epsgcode.Contains(text))
+                                       select e.systemId;
+
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResultsDataset)
+                    {
+                        EPSG epsg = _dbContext.EPSGs.Find(item);
+                        registerItems.Add(epsg);
+                    }
+
+                }
+
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+            else { return register; }
+        }
 
         public SearchResult Search(SearchParameters parameters)
         {

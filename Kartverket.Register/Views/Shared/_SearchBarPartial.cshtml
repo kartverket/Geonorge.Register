@@ -9,46 +9,56 @@
 </script>
 
 @{
+    var kontroller = "/search/";
+
+    if (ViewBag.registerSEO != null)
+    {
+        kontroller = "/register/" + ViewBag.registerSEO + "/";    
+    }
+    
     var searchRegister = ViewBag.searchRegister;
     var register = ViewBag.register;
 
     if (searchRegister != null)
     {
-        register = ViewBag.searchRegister;        
+        register = ViewBag.searchRegister;  
     }
     else { 
         if (register == null)
         { 
             register = "Alle registre";
         } 
-    } 
+    }
+
     
 }
 
-<form action="~/search/" class="col-md-offset-2 col-md-8 searchbar">
-   
-    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)"/>
-     
+
+
+<form action="@kontroller" class="col-md-offset-2 col-md-8 searchbar">
+
+    <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)" />
+
     <h1 class="h-md" id="register-heading">Søk i register</h1>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
-                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
-                    <span id="registerSelected">@register</span>
-                    <span class="caret" style="float:right; margin-top:9px;"></span>
-                </button>
-            <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">     
-                
+            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown">
+                <span id="registerSelected">@register</span>
+                <span class="caret" style="float:right; margin-top:9px;"></span>
+            </button>
+            <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">
+
                 <li tabindex="0" onclick="registerName('Alle registre')" class="left-edge-registre"><a href="@Html.RegistryUrl()">Alle registre</a></li>
                 <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">Objektregisteret</a></li>
 
                 @foreach (var item in HtmlHelperExtensions.Registers().OrderBy(r => r.name))
                 {
                     <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/@item.seoname">@item.name</a></li>
-                }                          
+                }
             </ul>
         </div><!-- /input-group-btn -->
-        <input name="text" type="text" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")"/>
+        <input name="text" type="text" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
             <button class="btn" type="submit">Søk</button>
         </span>

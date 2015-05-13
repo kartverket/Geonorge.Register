@@ -390,6 +390,51 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
+            else if (register.containedItemClass == "CodelistValue")
+            {
+                var queryResults = (from e in _dbContext.CodelistValues
+                                    where e.name.Contains(text)
+                                    || e.description.Contains(text)
+                                    || e.value.Contains(text)
+                                    select e);
+
+                if (queryResults.Count() > 0)
+                {
+                    foreach (var item in queryResults)
+                    {
+                        CodelistValue code = item;
+                        registerItems.Add(code);
+                    }
+                }
+
+                return new Kartverket.Register.Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
             else if (register.containedItemClass == "Register")
             {
                 var queryResults = (from d in _dbContext.Registers

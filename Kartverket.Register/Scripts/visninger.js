@@ -201,18 +201,38 @@ function Filter() {
     var inspireRequirement = document.getElementById("inspireRequirement");
     var nationalRequirement = document.getElementById("nationalRequirement");
     var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+    
+    if (qP('filterVertikalt') != "") {        
+        filterVertikalt.checked;
+    }
+    if (qP('filterHorisontalt') != "") {        
+        filterHorisontalt.checked;
+    }
+    inspireRequirement.options[inspireRequirement.selectedIndex].text;
+    nationalRequirement.options[nationalRequirement.selectedIndex].text;
+    nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
 
-    var selectedfilterVertikalt = filterVertikalt;
-    var selectedfilterHorisontalt = filterHorisontalt;
-    var selectedInspireRequirement = inspireRequirement.options[inspireRequirement.selectedIndex].text;
-    var selectedNationalRequirement = nationalRequirement.options[nationalRequirement.selectedIndex].text;
-    var selectedNationalSeaRequirement = nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
-
-    //localStorage.setItem("Inspire", selectedInspireRequirement);
-    //localStorage.setItem("National", selectedNationalRequirement);
-    //localStorage.setItem("Sea", selectedNationalSeaRequirement);
     document.filtering.submit();
+
+
 }
+
+function filterDefault() {
+
+    alert('HeiUtNy');
+
+    var filterVertikalt = document.getElementById("filterVertikalt");
+    var filterHorisontalt = document.getElementById("filterHorisontalt");
+    var inspireRequirement = document.getElementById("inspireRequirement");
+    var nationalRequirement = document.getElementById("nationalRequirement");
+    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+   
+    if (qP("filterVertikalt") != "") {        
+        filterVertikalt.checked;
+    }
+}
+
+
 
 $(document).ready(function () {
     var visningstype = localStorage.getItem("visningstype");

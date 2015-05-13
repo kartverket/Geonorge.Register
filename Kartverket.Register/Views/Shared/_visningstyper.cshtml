@@ -4,6 +4,8 @@
     var owner = ViewBag.owner;
     var ownerSEO = ViewBag.ownerSEO;
     var subregister = ViewBag.subregister;
+    var selectedVertical = ViewBag.selectedVertical;
+    var selectedHorizontal = ViewBag.selectedHorizontal;
 
     var kontroller = "/register/" + registerSEO;
     if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
@@ -22,13 +24,19 @@
     </div>
     <div class="col-sm-7 col-md-7 col-lg-7">
         @if (register == "EPSG koder")
-        { <form action="/register/epsg-koder/" method="get" name="filtering">
+        { 
+        <form action="/register/epsg-koder/" method="get" name="filtering">
+            <input type="hidden" name="text" value="" />
             <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
                 <b>Filter:</b>
             </div>
             <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
-                <input type="checkbox" id="filterVertikalt" name="filterVertikalt" value="vertikalt" onchange="Filter()"><span>Vertikalt</span><br />
-                <input type="checkbox" id="filterHorisontalt" name="filterHorisontalt" value="horisontalt" onchange="Filter()"><span>Horisontalt</span>
+                @*<label style="font-weight:normal;" for="filterVertikalt">Vertikalt</label>@Html.CheckBox("filterVertikalt", new { value = selectedVertical, onchange = "Filter()" });
+                <label style="font-weight:normal;" for="filterHorisontalt">Horisontalt</label>@Html.CheckBox("filterHorisontalt", new { value = selectedVertical, onchange = "Filter()" });*@
+                @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterVertikalt">Vertikalt</label><br />
+                @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterHorisontalt">Horisontalt</label>
+
+
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
                 <div onchange="Filter()" class="pull-right" id="inspireRequirementId">
@@ -41,9 +49,6 @@
                     <label style="font-weight:normal;" for="nationalSeaRequirement">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
                 </div>
             </div>
-            @*<div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
-                    <input type="submit" value="Filtrer">
-                </div>*@
         </form>
         }
     </div>

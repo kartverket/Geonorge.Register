@@ -41,6 +41,7 @@
         var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
         int pageSize = 50;
         int pageNumber = (page ?? 1);
+        var search = ViewBag.search;
 
         if (Model.containedItemClass != "Register")
         {
@@ -171,5 +172,3 @@
         }
     </div>
 </div>
-
-

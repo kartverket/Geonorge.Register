@@ -163,8 +163,9 @@ namespace Kartverket.Register.Controllers
             }
             //Hjelpemetode Sjekk om noen av filterparametrene er satt        TODO!    
             _registerService = new RegisterService(db);
-            register = _registerService.Filter(register, filter);                
-            
+            register = _registerService.Filter(register, filter);
+
+            ViewBag.search = filter.text;
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");

@@ -1,0 +1,508 @@
+﻿@model List<Kartverket.Register.Models.Register>
+@using PagedList;
+@using PagedList.Mvc;
+@using Kartverket.Register.Models
+
+{
+    
+}
+@foreach (Register reg in Model)
+{
+    if (reg.containedItemClass == "Organization")
+    {
+        <h3>Organisasjoner</h3>
+        foreach (Organization item in reg.items)
+        {
+            <div class="row result-row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding col-img">
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/" title="@item.name">
+                                <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name">
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/" title="@item.name">
+                                <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name">
+                            </a>
+                        }
+
+                    </div>
+
+                    <div class="col-no-padding-xs col-xs-8 col-sm-8 col-md-8 col-lg-8 col-title">
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+
+                        <p class="col-title" title="Organisasjonsnummer: @item.number">
+                            @Html.DisplayFor(modelItem => item.number)
+                        </p>
+                        <p class="col-title">
+                            @Html.DisplayFor(modelItem => item.description)
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <hr />
+        }
+    }
+    if (reg.containedItemClass == "CodelistValue")
+    {
+        <h3>Kodelisteverdier i @reg.name</h3>
+        foreach (CodelistValue item in reg.items)
+        {
+            <div class="row result-row metadata">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                    <div class="col-title col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-descripton">
+                        <p>@item.description</p>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
+                        @if (item.value != null)
+                        {
+                            <p title="Kodeverdi: @item.value"><span>Kodeverdi: </span>@item.value</p>
+                        }
+                        else
+                        {
+                            <p title="Kodeverdi: Ikke angitt"><span>Kodeverdi: </span>Ikke angitt</p>
+                        }
+                    </div>
+                    <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
+                        @if (item.status == null)
+                        {
+                            <p title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+        }
+    }
+    if (reg.containedItemClass == "Document")
+    {
+        <h3>Dokumenter i @reg.name</h3>
+        foreach (Document item in reg.items)
+        {
+            if (item.versioning.currentVersion == item.systemId)
+            {
+
+                <div class="row result-row metadata">
+                    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                            @{
+                string thumb = "/Content/pdf.jpg";
+                if (item.thumbnail != null)
+                {
+                    thumb = item.thumbnail;
+                }
+                            }
+                            @if (item.documentUrl.Contains("ikke angitt"))
+                            {
+                                <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+                            }
+                            else
+                            {
+                                <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                            }
+                        </div>
+                        <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+
+
+                            @if (item.register.parentRegister != null)
+                            {
+                                <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                    <h3 class="role-button" style="font-size: 15px;">
+                                        @item.name
+                                    </h3>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                    <h3 class="role-button" style="font-size: 15px;">
+                                        @item.name
+                                    </h3>
+                                </a>
+                            }
+                            <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
+                                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                            </a>
+                            <div class="orglogo">
+                                <a href="/register/@item.register.seoname/@item.documentowner.seoname/">
+                                    @Html.DisplayFor(modelItem => item.documentowner.name)
+                                </a>
+                            </div>
+                            <p class=" ">
+                                @Html.DisplayFor(modelItem => item.description)
+                            </p>
+                        </div>
+                        <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                            @if (item.documentUrl.Contains("ikke angitt"))
+                            {
+                                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
+                                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                                </a><br />
+                            }
+                            else
+                            {
+                                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
+                                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                                </a><br />
+                            }
+                        </div>
+                        <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
+
+                            @if (item.status == null)
+                            {
+                                <p><span>Status: </span>Ikke angitt</p>
+                            }
+                            else
+                            {
+                                <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <hr />
+            }
+
+        }
+    }
+    if (reg.containedItemClass == "Dataset")
+    {
+        <h3>Datasett i @reg.name</h3>
+        foreach (Dataset item in reg.items)
+        {
+            <div class="row result-row metadata">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                    <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
+
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                                <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name">
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                                <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
+                            </a>
+                        }
+
+                    </div>
+                    <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+                        @if (item.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                            <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                        </a>
+                        <div class="orglogo">
+                            <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                                @Html.DisplayFor(modelItem => item.datasetowner.name)
+                            </a>
+                        </div>
+                        <br />
+                        <div class="">
+                            @if (item.description != null)
+                            {
+                                <p>
+                                    @if (item.description.Length < 80)
+                                    {
+                                        @item.description.Substring(0, item.description.Length)
+                                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/" title="Vis mer info om @item.name">vis mer info</a>
+                                    }
+                                    else
+                                    {
+                                        @item.description.Substring(0, 80)<text>...</text>
+                                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/" title="Vis mer info om @item.name">vis mer info</a>
+                                    }
+                                </p>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                        <ul style="list-style-type:none">
+                            @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
+                            {
+                                <li>
+                                    <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    &nbsp;
+                                </li>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
+                            {
+                                <li>
+                                    <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    &nbsp;
+                                </li>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
+                            {
+                                <li>
+                                    <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned tegneregler for @item.name"><span class="glyphicon glyphicon-picture"></span>Kartografi</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    &nbsp;
+                                </li>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
+                            {
+                                <li>
+                                    <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    &nbsp;
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                    <div class="col-information col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-right col-actions">
+                        <ul style="list-style-type:none">
+                            @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
+                            {
+                                <li title="Sosi: Ja">
+                                    <span>SOSI:</span> ja
+                                </li>
+                            }
+                            else
+                            {
+                                <li title="Sosi: Nei">
+                                    <span>SOSI:</span> Nei
+                                </li>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
+                            {
+                                <li>
+                                    <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li>
+                                    &nbsp;
+                                </li>
+                            }
+                            @if (item.status == null)
+                            {
+                                <li title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</li>
+                            }
+                            else
+                            {
+                                <li title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            }
+                            @if (item.ThemeGroupId != null)
+                            {
+                                <li title="Temagruppe: @item.theme.description">
+                                    <span>Gruppe: </span>@item.theme.description
+                                </li>
+                            }
+                            else
+                            {
+                                <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
+                            }
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <hr />
+        }
+    }
+    if (reg.containedItemClass == "EPSG")
+    {
+        <h3>EPSG-koder</h3>
+        foreach (EPSG item in reg.items)
+        {
+            <div class="row result-row metadata">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                    <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                        @if (item.register.parentRegisterId != null)
+                        {
+                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                                <h3 class="role-button" style="font-size: 15px;">
+                                    @item.name
+                                </h3>
+                            </a>
+                        }
+
+                        <p>
+                            @item.description
+                        </p>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
+
+                        @if (item.epsgcode == null)
+                        {
+                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
+                        }
+
+                        @if (item.sosiReferencesystem == null)
+                        {
+                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                        }
+
+                        @if (item.verticalReferenceSystem == null)
+                        {
+                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
+                        }
+
+                        @if (item.horizontalReferenceSystem == null)
+                        {
+                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
+                        }
+
+                        @if (item.dimensionId == null)
+                        {
+                            <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                        }
+
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
+                        @if (item.inspireRequirement == null)
+                        {
+                            <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Inspire krav: @item.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
+                        }
+
+                        @if (item.nationalRequirement == null)
+                        {
+                            <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Nasjonalt krav: @item.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
+                        }
+
+                        @if (item.nationalSeasRequirement == null)
+                        {
+                            <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
+                        }
+                        else
+                        {
+                            <p title="Nasjonalt krav for havområde: @item.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
+                        }
+
+                        @if (item.sosiReferencesystem == null)
+                        {
+                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
+                        }
+                        else
+                        {
+                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis</a></p>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <hr />
+        }
+    }
+}
+

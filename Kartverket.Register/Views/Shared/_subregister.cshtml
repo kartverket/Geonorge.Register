@@ -6,6 +6,11 @@
 
 @{
     var register = ViewBag.register;
+    var search = ViewBag.search;
+    var page2 = ViewBag.page;
+    var currentFilter = ViewBag.currentFilter;
+    int pageSize = 50;
+    int pageNumber = (page2 ?? 1);
 }
 
 <div class="search-filter-wrapper">
@@ -21,6 +26,10 @@
 </div>
 
 <div class="register registersub search-results">
+    @if (!string.IsNullOrWhiteSpace(search))
+    {
+        <h3>@Model.ElementAt(0).parentRegister.name</h3>
+    }
     @foreach (var item in Model)
     {
         if (item.parentRegister.name == register)
@@ -45,9 +54,14 @@
         }
         <hr />
     }
+
+    @if (!string.IsNullOrWhiteSpace(search))
+    {
+        @Html.Partial("_searchResultSubregisters", Model.ToList())
+    }
 </div>
 
-        
+
 
 <div class="search-filter-wrapper">
     <br /><br />

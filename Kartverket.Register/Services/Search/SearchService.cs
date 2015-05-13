@@ -214,13 +214,13 @@ namespace Kartverket.Register.Services.Search
                                     where o.name.Contains(text)
                                     || o.description.Contains(text)
                                     || o.shortname.Contains(text)
-                                    select o.systemId);
+                                    select o);
                 
                 if (queryResults.Count() > 0)
 	            {
 		            foreach (var item in queryResults)
 	                {
-		                Organization organisasjon = _dbContext.Organizations.Find(item);
+		                Organization organisasjon = item;
                         registerItems.Add(organisasjon);
                     }
 	            }
@@ -260,13 +260,13 @@ namespace Kartverket.Register.Services.Search
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
                                     || d.documentowner.name.Contains(text))
-                                    select d.systemId);
+                                    select d);
                 
                 if (queryResults.Count() > 0)
 	            {
 		            foreach (var item in queryResults)
 	                {
-		                Document document = _dbContext.Documents.Find(item);
+		                Document document = item;
                         registerItems.Add(document);
                     }
 	            }
@@ -306,13 +306,13 @@ namespace Kartverket.Register.Services.Search
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
                                     || d.datasetowner.name.Contains(text))
-                                    select d.systemId);
+                                    select d);
                 
                 if (queryResults.Count() > 0)
 	            {
 		            foreach (var item in queryResults)
 	                {
-		                Dataset dataset = _dbContext.Datasets.Find(item);
+		                Dataset dataset = item;
                         registerItems.Add(dataset);
                     }
 	            }
@@ -351,13 +351,13 @@ namespace Kartverket.Register.Services.Search
                                     where e.name.Contains(text)
                                     || e.description.Contains(text)
                                     || e.epsgcode.Contains(text)
-                                    select e.systemId);
+                                    select e);
                 
                 if (queryResults.Count() > 0)
 	            {
 		            foreach (var item in queryResults)
 	                {
-		                EPSG epsg = _dbContext.EPSGs.Find(item);
+                        EPSG epsg = item;
                         registerItems.Add(epsg);
                     }
 	            }
@@ -397,13 +397,13 @@ namespace Kartverket.Register.Services.Search
                                     && d.parentRegister.containedItemClass == register.containedItemClass
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text))
-                                    select d.systemId);
+                                    select d);
 
                 if (queryResults.Count() > 0)
                 {
                     foreach (var item in queryResults)
                     {
-                        Kartverket.Register.Models.Register subregister = _dbContext.Registers.Find(item);
+                        Kartverket.Register.Models.Register subregister = item;
                         subregisters.Add(subregister);
                     }
 
@@ -417,12 +417,12 @@ namespace Kartverket.Register.Services.Search
                                                || o.register.name.Contains(text)
                                                || o.name.Contains(text)
                                                || o.description.Contains(text))
-                                               select o.systemId;
+                                               select o;
                 if (queryResults.Count() > 0)
                 {
                     foreach (var item in queryResultsOrganization)
                     {
-                        Organization organization = _dbContext.Organizations.Find(item);
+                        Organization organization = item;
                         registerItems.Add(organization);
                     }
 
@@ -435,12 +435,12 @@ namespace Kartverket.Register.Services.Search
                                            || d.name.Contains(text)
                                            || d.description.Contains(text)
                                            || d.documentowner.name.Contains(text))
-                                           select d.systemId;
+                                           select d;
                 if (queryResults.Count() > 0)
                 {
                     foreach (var item in queryResultsDocument)
                     {
-                        Document document = _dbContext.Documents.Find(item);
+                        Document document = item;
                         registerItems.Add(document);
                     }
 
@@ -453,13 +453,13 @@ namespace Kartverket.Register.Services.Search
                                           || d.name.Contains(text)
                                           || d.description.Contains(text)
                                           || d.datasetowner.name.Contains(text))
-                                          select d.systemId;
+                                          select d;
 
                 if (queryResults.Count() > 0)
                 {
                     foreach (var item in queryResultsDataset)
                     {
-                        Dataset dataset = _dbContext.Datasets.Find(item);
+                        Dataset dataset = item;
                         registerItems.Add(dataset);
                     }
 
@@ -472,13 +472,13 @@ namespace Kartverket.Register.Services.Search
                                              || d.name.Contains(text)
                                              || d.description.Contains(text)
                                              || d.value.Contains(text))
-                                             select d.systemId;
+                                             select d;
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResultsDataset)
+                    foreach (var item in queryResultsKodelister)
                     {
-                        CodelistValue codelistValue = _dbContext.CodelistValues.Find(item);
+                        CodelistValue codelistValue = item;
                         registerItems.Add(codelistValue);
                     }
 
@@ -491,13 +491,13 @@ namespace Kartverket.Register.Services.Search
                                        || e.name.Contains(text)
                                        || e.description.Contains(text)
                                        || e.epsgcode.Contains(text))
-                                       select e.systemId;
+                                       select e;
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResultsDataset)
+                    foreach (var item in queryResultsEpsg)
                     {
-                        EPSG epsg = _dbContext.EPSGs.Find(item);
+                        EPSG epsg = item;
                         registerItems.Add(epsg);
                     }
 

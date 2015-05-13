@@ -156,15 +156,69 @@ namespace Kartverket.Register.Helpers
         public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
         {
 
+            string text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
+            string filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
+            string filterHorisontalt = HttpContext.Current.Request.QueryString["filterHorisontalt"] != null ? HttpContext.Current.Request.QueryString["filterHorisontalt"].ToString() : "";
+            string InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
+            string nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
+            string nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+
             if (string.IsNullOrEmpty(sortingType)) 
             {
                 if (HttpContext.Current.Session != null && HttpContext.Current.Session["sortingType"] != null) 
                 {
                     sortingType = HttpContext.Current.Session["sortingType"].ToString();
-                    HttpContext.Current.Response.Redirect(HttpContext.Current.Request.Path + "?sorting=" + sortingType);
+
+
+                    if (HttpContext.Current.Session["text"] != null)
+                        text = HttpContext.Current.Session["text"].ToString();
+
+                    if (HttpContext.Current.Session["filterVertikalt"] != null)
+                        filterVertikalt = HttpContext.Current.Session["filterVertikalt"].ToString();
+
+                    if (HttpContext.Current.Session["filterHorisontalt"] != null)
+                        filterHorisontalt = HttpContext.Current.Session["filterHorisontalt"].ToString();
+
+                    if (HttpContext.Current.Session["InspireRequirement"] != null)
+                        InspireRequirementParam = HttpContext.Current.Session["InspireRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["nationalRequirement"] != null)
+                        nationalRequirementParam = HttpContext.Current.Session["nationalRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["nationalSeaRequirement"] != null)
+                        nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
+
+                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
+
+                    if (text != "")
+                        redirect = redirect + "&text=" + text;
+
+                    if (filterVertikalt != "")
+                        redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+
+                    if (filterHorisontalt != "")
+                        redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+
+                    if (InspireRequirementParam != "")
+                        redirect = redirect + "&InspireRequirement=" + InspireRequirementParam;
+
+                    if (nationalRequirementParam != "")
+                        redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
+
+                    if (nationalSeaRequirementParam != "")
+                        redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+
+                    HttpContext.Current.Response.Redirect(redirect);
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
+
+            HttpContext.Current.Session["text"] = text;
+            HttpContext.Current.Session["filterVertikalt"] = filterVertikalt;
+            HttpContext.Current.Session["filterHorisontalt"] = filterHorisontalt;
+            HttpContext.Current.Session["InspireRequirement"] = InspireRequirementParam;
+            HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
+            HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
 
 
             var sortedList = register.items.OrderBy(o => o.name).ToList();

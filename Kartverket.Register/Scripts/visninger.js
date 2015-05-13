@@ -68,7 +68,36 @@ function sLink(tittel, defaultSort) {
         sortTitle = "Sortert etter logisk rekkefølge" ;
     }
 
-    return "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam + "'>" + tittel + "</a>"
+    var text = qP('text');
+    var filterVertikalt = qP('filterVertikalt');
+    var filterHorisontalt = qP('filterHorisontalt');
+    var InspireRequirement = qP('InspireRequirement');
+    var nationalRequirement = qP('nationalRequirement');
+    var nationalSeaRequirement = qP('nationalSeaRequirement');
+
+    var linkSort = "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+
+    if (text != '')
+        linkSort = linkSort + '&text=' + text;
+
+    if (filterVertikalt != '')
+        linkSort = linkSort + '&filterVertikalt=' + filterVertikalt;
+
+    if (filterHorisontalt != '')
+        linkSort = linkSort + '&filterHorisontalt=' + filterHorisontalt;
+
+    if (InspireRequirement != '')
+        linkSort = linkSort + '&InspireRequirement=' + InspireRequirement;
+
+    if (nationalRequirement != '')
+        linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;
+
+    if (nationalSeaRequirement != '')
+        linkSort = linkSort + '&nationalSeaRequirement=' + nationalSeaRequirement;
+
+    linkSort = linkSort + "'>" + tittel + "</a>";
+
+    return linkSort;
 }
 
 

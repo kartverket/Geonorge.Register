@@ -207,7 +207,7 @@ namespace Kartverket.Register.Helpers
                     }
 
                     if (InspireRequirementParam != "")
-                        redirect = redirect + "&InspireRequirement=" + InspireRequirementParam;
+                        redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
 
                     if (nationalRequirementParam != "")
                         redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
@@ -492,7 +492,7 @@ namespace Kartverket.Register.Helpers
                     }
 
                     if (InspireRequirementParam != "")
-                        redirect = redirect + "&InspireRequirement=" + InspireRequirementParam;
+                        redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
 
                     if (nationalRequirementParam != "")
                         redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;

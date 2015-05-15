@@ -71,7 +71,7 @@ function sLink(tittel, defaultSort) {
     var text = qP('text');
     var filterVertikalt = qP('filterVertikalt');
     var filterHorisontalt = qP('filterHorisontalt');
-    var InspireRequirement = qP('InspireRequirement');
+    var InspireRequirement = qP('inspireRequirement');
     var nationalRequirement = qP('nationalRequirement');
     var nationalSeaRequirement = qP('nationalSeaRequirement');
 
@@ -87,7 +87,7 @@ function sLink(tittel, defaultSort) {
         linkSort = linkSort + '&filterHorisontalt=' + filterHorisontalt;
 
     if (InspireRequirement != '')
-        linkSort = linkSort + '&InspireRequirement=' + InspireRequirement;
+        linkSort = linkSort + '&inspireRequirement=' + InspireRequirement;
 
     if (nationalRequirement != '')
         linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;

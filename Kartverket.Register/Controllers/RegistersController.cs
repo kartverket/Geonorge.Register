@@ -33,7 +33,7 @@ namespace Kartverket.Register.Controllers
         {
             setAccessRole();
 
-            Session["sortingType"] = null;
+            removeSessionSearchParams();
 
             return View(db.Registers.OrderBy(r => r.name).ToList());
         }
@@ -516,6 +516,19 @@ namespace Kartverket.Register.Controllers
             }
 
             
+        }
+
+        private void removeSessionSearchParams() 
+        {
+
+            Session["sortingType"] = null;
+            Session["text"] = null;
+            Session["filterVertikalt"] = null;
+            Session["filterHorisontalt"] = null;
+            Session["InspireRequirement"] = null;
+            Session["nationalRequirement"] = null;
+            Session["nationalSeaRequirement"] = null;
+        
         }
 
         private string FindRegisterOwner(string registername)

@@ -163,10 +163,11 @@ namespace Kartverket.Register.Helpers
             string nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
             string nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
 
-            if (string.IsNullOrEmpty(sortingType)) 
+            if (HttpContext.Current.Request.QueryString.Count < 1)
             {
-                if (HttpContext.Current.Session != null && HttpContext.Current.Session["sortingType"] != null) 
+                if (HttpContext.Current.Session != null) 
                 {
+                    if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sortingType))
                     sortingType = HttpContext.Current.Session["sortingType"].ToString();
 
 
@@ -193,11 +194,17 @@ namespace Kartverket.Register.Helpers
                     if (text != "")
                         redirect = redirect + "&text=" + text;
 
-                    if (filterVertikalt != "")
+                    if (filterVertikalt != "") {
+                        if (filterVertikalt.Contains(","))
+                            filterVertikalt = filterVertikalt.Replace(",false", "");
                         redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                    }
 
-                    if (filterHorisontalt != "")
+                    if (filterHorisontalt != "") {
+                        if (filterHorisontalt.Contains(","))
+                            filterHorisontalt = filterHorisontalt.Replace(",false", "");
                         redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                    }
 
                     if (InspireRequirementParam != "")
                         redirect = redirect + "&InspireRequirement=" + InspireRequirementParam;
@@ -439,11 +446,12 @@ namespace Kartverket.Register.Helpers
             string nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
             string nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
 
-            if (string.IsNullOrEmpty(sortingType))
+            if (HttpContext.Current.Request.QueryString.Count < 1)
             {
-                if (HttpContext.Current.Session != null && HttpContext.Current.Session["sortingType"] != null)
+                if (HttpContext.Current.Session != null)
                 {
-                    sortingType = HttpContext.Current.Session["sortingType"].ToString();
+                    if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sortingType))
+                        sortingType = HttpContext.Current.Session["sortingType"].ToString();
 
 
                     if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
@@ -470,10 +478,18 @@ namespace Kartverket.Register.Helpers
                         redirect = redirect + "&text=" + text;
 
                     if (filterVertikalt != "")
+                    {
+                        if (filterVertikalt.Contains(","))
+                            filterVertikalt = filterVertikalt.Replace(",false", "");
                         redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                    }
 
                     if (filterHorisontalt != "")
+                    {
+                        if (filterHorisontalt.Contains(","))
+                            filterHorisontalt = filterHorisontalt.Replace(",false", "");
                         redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                    }
 
                     if (InspireRequirementParam != "")
                         redirect = redirect + "&InspireRequirement=" + InspireRequirementParam;
@@ -495,6 +511,7 @@ namespace Kartverket.Register.Helpers
             HttpContext.Current.Session["InspireRequirement"] = InspireRequirementParam;
             HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
             HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+
 
             var sortedList = Model.subregisters.OrderBy(o => o.name).ToList();
             if (sortingType == "name_desc")

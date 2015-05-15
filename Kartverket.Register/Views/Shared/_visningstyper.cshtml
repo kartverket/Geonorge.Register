@@ -26,7 +26,8 @@
         @if (register == "EPSG koder")
         { 
         <form action="/register/epsg-koder/" method="get" name="filtering">
-            <input type="hidden" name="text" value="" />
+            <input type="hidden" name="text" value="@ViewBag.search" />
+            <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
             <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
                 <b>Filter:</b>
             </div>
@@ -58,6 +59,12 @@
                 <div class="pull-right" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
                 </div>
+                <input type="hidden" name="text" value="@ViewBag.search" />
+                @Html.Hidden("filterVertikalt")
+                @Html.Hidden("filterHorisontalt")
+                @Html.Hidden("inspireRequirement")
+                @Html.Hidden("nationalRequirement")
+                @Html.Hidden("nationalSeaRequirementId")
             </form>
         </div>
     </div>

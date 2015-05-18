@@ -85,45 +85,34 @@ namespace Kartverket.Register.Services.Versioning
         private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
         {            
             bool filterHorisontalt = filter.filterHorisontalt;
-            string filterHorisontalTekst;
-            string filterVertikalTekst;
             bool filterVertikalt = filter.filterVertikalt;
+            string filterDimensjon;
             string filterInspire = filter.InspireRequirement;
             string filterNational = filter.nationalRequirement;
             string filterNationalSea = filter.nationalSeaRequirement;
             
             foreach (EPSG item in register.items)
-            {               
-                if (!filterHorisontalt)
+            {
+                if (filterHorisontalt && filterVertikalt)
                 {
-                    filterHorisontalTekst = item.horizontalReferenceSystem;
+                    filterDimensjon = "compound";
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(item.horizontalReferenceSystem))
+                    if (filterHorisontalt)
                     {
-                        filterHorisontalTekst = item.horizontalReferenceSystem;
+                        filterDimensjon = "horizontal";
+                    }
+                    else if (filterVertikalt)
+                    {
+                        filterDimensjon = "vertical";
                     }
                     else
                     {
-                        filterHorisontalTekst = "ikke angitt horisontalt referansesystem";
+                        filterDimensjon = item.dimensionId;
                     }
                 }
-                if (!filterVertikalt)
-                {
-                    filterVertikalTekst = item.verticalReferenceSystem;
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(item.verticalReferenceSystem))
-                    {
-                        filterVertikalTekst = item.verticalReferenceSystem;
-                    }
-                    else
-                    {
-                        filterVertikalTekst = "ikke angitt vertikalt referansesystem";
-                    }
-                }
+                
                 if (filterInspire == null)
                 {
                     filterInspire = item.inspireRequirement.value;
@@ -138,8 +127,7 @@ namespace Kartverket.Register.Services.Versioning
                 }
 
                 var queryResult = from e in _dbContext.EPSGs
-                                  where e.horizontalReferenceSystem == filterHorisontalTekst
-                                  && e.verticalReferenceSystem == filterVertikalTekst
+                                  where e.dimensionId == filterDimensjon
                                   && e.inspireRequirement.value == filterInspire
                                   && e.nationalRequirement.value == filterNational
                                   && e.nationalSeasRequirement.value == filterNationalSea

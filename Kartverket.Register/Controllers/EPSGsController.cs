@@ -50,13 +50,7 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            //var queryResults = from o in db.Registers
-            //                       where o.seoname == "epsg-koder"
-            //                       select o.systemId;
-
-            //Guid systId = queryResults.First();
-            //Kartverket.Register.Models.Register register = db.Registers.Find(systId); 
-            //string registerStatus = register.statusId;
+            ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
 
             if (role == "nd.metadata_admin")
             {
@@ -72,16 +66,20 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("epsg-koder/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(EPSG epsg)
+        public ActionResult Create(EPSG epsgKode)
         {
-            ValidationName(epsg, "epsg-koder");
+            ValidationName(epsgKode, "epsg-koder");
+
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
 
             if (ModelState.IsValid)
             {
-                epsg.systemId = Guid.NewGuid();
-                if (epsg.name == null)
+                epsgKode.systemId = Guid.NewGuid();
+                if (epsgKode.name == null)
                 {
-                    epsg.name = "ikke angitt";
+                    epsgKode.name = "ikke angitt";
                 }
 
                 var queryResultsRegister = from o in db.Registers
@@ -89,18 +87,18 @@ namespace Kartverket.Register.Controllers
                                            select o.systemId;
                 Guid regId = queryResultsRegister.First();
 
-                epsg.systemId = Guid.NewGuid();
-                epsg.modified = DateTime.Now;
-                epsg.dateSubmitted = DateTime.Now;
-                epsg.registerId = regId;
-                epsg.statusId = "Submitted";
-                epsg.submitter = null;
-                epsg.inspireRequirementId = "Notset";
-                epsg.nationalRequirementId = "Notset";
-                epsg.nationalSeasRequirementId = "Notset";
-                epsg.seoname = MakeSeoFriendlyString(epsg.name);
+                epsgKode.systemId = Guid.NewGuid();
+                epsgKode.modified = DateTime.Now;
+                epsgKode.dateSubmitted = DateTime.Now;
+                epsgKode.registerId = regId;
+                epsgKode.statusId = "Submitted";
+                epsgKode.submitter = null;
+                epsgKode.inspireRequirementId = "Notset";
+                epsgKode.nationalRequirementId = "Notset";
+                epsgKode.nationalSeasRequirementId = "Notset";
+                epsgKode.seoname = MakeSeoFriendlyString(epsgKode.name);
 
-                db.RegisterItems.Add(epsg);
+                db.RegisterItems.Add(epsgKode);
                 db.SaveChanges();
 
                 string organizationLogin = GetSecurityClaim("organization");
@@ -112,16 +110,17 @@ namespace Kartverket.Register.Controllers
                 Guid orgId = queryResults.First();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
-                epsg.submitterId = orgId;
-                epsg.submitter = submitterOrganisasjon;
+                epsgKode.submitterId = orgId;
+                epsgKode.submitter = submitterOrganisasjon;
 
-                db.Entry(epsg).State = EntityState.Modified;
+                db.Entry(epsgKode).State = EntityState.Modified;
 
                 db.SaveChanges();
                 return Redirect("/register/epsg-koder");
             }
 
-            return View(epsg);
+            ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+            return View(epsgKode);
         }
 
         // GET: EPSGs/Edit/5

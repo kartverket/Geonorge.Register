@@ -32,22 +32,20 @@
                 <b>Filter:</b>
             </div>
             <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
-                @*<label style="font-weight:normal;" for="filterVertikalt">Vertikalt</label>@Html.CheckBox("filterVertikalt", new { value = selectedVertical, onchange = "Filter()" });
-                <label style="font-weight:normal;" for="filterHorisontalt">Horisontalt</label>@Html.CheckBox("filterHorisontalt", new { value = selectedVertical, onchange = "Filter()" });*@
-                @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterVertikalt">Vertikalt</label><br />
-                @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterHorisontalt">Horisontalt</label>
+                @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt">Vertikalt</label><br />
+                @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt">Horisontalt</label>
 
 
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
                 <div onchange="Filter()" class="pull-right" id="inspireRequirementId">
-                    <label style="font-weight:normal;" for="inspireRequirement">Inspire krav:</label>@Html.DropDownList("inspireRequirement", "")<br />
+                    <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav:</label>@Html.DropDownList("inspireRequirement", "")<br />
                 </div>
                 <div onchange="Filter()" class="pull-right" id="nationalRequirementId">
-                    <label style="font-weight:normal;" for="nationalRequirement">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", "")<br />
+                    <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", "")<br />
                 </div>
                 <div onchange="Filter()" class="pull-right" id="nationalSeaRequirementId">
-                    <label style="font-weight:normal;" for="nationalSeaRequirement">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
+                    <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
                 </div>
             </div>
         </form>

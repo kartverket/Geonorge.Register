@@ -289,7 +289,7 @@ namespace Kartverket.Register.Controllers
         // GET: Documents/Edit/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(string registername, string documentname, int vnr)
+        public ActionResult Edit(string registername, string documentname, int? vnr)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
@@ -446,7 +446,7 @@ namespace Kartverket.Register.Controllers
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        public ActionResult Delete(string registername, string documentname, int vnr)
+        public ActionResult Delete(string registername, string documentname, int? vnr)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");

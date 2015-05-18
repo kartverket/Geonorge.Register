@@ -193,7 +193,7 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBagSubregister(Kartverket.Register.Models.Register register)
         {
-            ViewBag.containedItemClassID = new SelectList(db.ContainedItemClass.OrderBy(s => s.description).Where(s => s.value == "CodelistValue"), "value", "description", String.Empty);
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
             ViewBag.parentRegister = register.name;
             ViewBag.parentRegisterSEO = register.seoname;
         }
@@ -223,14 +223,12 @@ namespace Kartverket.Register.Controllers
                 {
                     subregister.name = "ikke angitt";
                 }
-
                 subregister.systemId = Guid.NewGuid();
                 subregister.modified = DateTime.Now;
                 subregister.dateSubmitted = DateTime.Now;
                 subregister.statusId = "Submitted";
                 subregister.seoname = MakeSeoFriendlyString(subregister.name);
                 subregister.parentRegisterId = regId;
-                subregister.containedItemClass = "CodelistValue";
 
                 db.Registers.Add(subregister);
                 db.SaveChanges();

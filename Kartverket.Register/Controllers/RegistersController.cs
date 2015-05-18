@@ -292,6 +292,7 @@ namespace Kartverket.Register.Controllers
                 register.dateSubmitted = DateTime.Now;
                 register.statusId = "Submitted";
                 register.seoname = MakeSeoFriendlyString(register.name);
+                register.containedItemClass = "Register";
 
                 db.Registers.Add(register);
                 db.SaveChanges();
@@ -313,8 +314,8 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 return Redirect("/");
             }
-
-            return Redirect("/");
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+            return View();
         }
 
 

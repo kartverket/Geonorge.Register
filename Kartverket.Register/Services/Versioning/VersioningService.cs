@@ -19,7 +19,7 @@ namespace Kartverket.Register.Services.Versioning
         {
             // Finn versjonsgruppen
             var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
-                                           where ri.register.seoname == registername && ri.register.parentRegisterId == null
+                                           where ri.register.seoname == registername
                                            && ri.seoname == itemname
                                            select ri.versioningId;
 
@@ -27,7 +27,7 @@ namespace Kartverket.Register.Services.Versioning
 
 
 
-            
+
 
             List<RegisterItem> suggestionsItems = new List<RegisterItem>();
             List<RegisterItem> historicalItems = new List<RegisterItem>();
@@ -35,7 +35,6 @@ namespace Kartverket.Register.Services.Versioning
             // finne Gjeldende versjon
             var queryResults = from ri in _dbContext.RegisterItems
                                where ri.register.seoname == registername
-                                && ri.register.parentRegisterId == null
                                 && ri.statusId == "Valid"
                                 && ri.versioningId == vnr
                                select ri;
@@ -44,68 +43,63 @@ namespace Kartverket.Register.Services.Versioning
             List<RegisterItem> validVersions = queryResults.ToList();
             if (queryResults.Count() > 1)
             {
-                
+
                 foreach (RegisterItem item in validVersions)
                 {
                     if (item.dateAccepted > currentVersion.dateAccepted)
                     {
                         currentVersion = item;
-                    }                    
+                    }
                 }
 
             }
-            else {
+            else
+            {
                 currentVersion = queryResults.FirstOrDefault();
             }
 
-            
-            
+
+
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
-                            where ri.register.seoname == registername
-                            && ri.register.parentRegisterId == null
-                            && ri.versioningId == vnr
-                            && (ri.status.value == "Submitted" 
-                            || ri.status.value == "Proposal"
-                            || ri.status.value == "InProgress"
-                            || ri.status.value == "NotAccepted"
-                            || ri.status.value == "Accepted"
-                            || ri.status.value == "Experimental"
-                            || ri.status.value == "Candidate")
-                            select ri;
+                           where ri.register.seoname == registername
+                           && ri.versioningId == vnr
+                           && (ri.status.value == "Submitted"
+                           || ri.status.value == "Proposal"
+                           || ri.status.value == "InProgress"
+                           || ri.status.value == "NotAccepted"
+                           || ri.status.value == "Accepted"
+                           || ri.status.value == "Experimental"
+                           || ri.status.value == "Candidate")
+                           select ri;
 
             foreach (RegisterItem item in queryResults)
-	        {
-                suggestionsItems.Add(item);		 
-	        }
+            {
+                suggestionsItems.Add(item);
+            }
 
-            if (currentVersion == null){
+            if (currentVersion == null)
+            {
                 currentVersion = queryResults.FirstOrDefault();
-            }            
+            }
 
             //finne alle historiske versjoner
-             var queryResultsHistorical = from ri in _dbContext.RegisterItems
-                                           where ri.register.seoname == registername
-                                            && ri.register.parentRegisterId == null
-                                            && ri.versioningId == currentVersion.versioningId
-                                            && (ri.status.value == "Deprecated"
-                                            || ri.status.value == "Superseded"
-                                            || ri.status.value == "Retired")
-                                          select ri;
+            var queryResultsHistorical = from ri in _dbContext.RegisterItems
+                                         where ri.register.seoname == registername
+                                          && ri.versioningId == currentVersion.versioningId
+                                          && (ri.status.value == "Deprecated"
+                                          || ri.status.value == "Superseded"
+                                          || ri.status.value == "Retired")
+                                         select ri;
 
-             
-            
-            if (queryResultsHistorical.Count() != 0)
+            historicalItems = queryResultsHistorical.ToList();
+
+            if (queryResultsHistorical != null)
             {
                 if (currentVersion == null)
                 {
                     currentVersion = queryResults.FirstOrDefault();
                 }
-
-            foreach (RegisterItem item in queryResultsHistorical)
-	        {
-                historicalItems.Add(item);
-            }
             }
             foreach (RegisterItem item in validVersions)
             {

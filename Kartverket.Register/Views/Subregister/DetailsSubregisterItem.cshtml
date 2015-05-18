@@ -108,8 +108,6 @@
                     }
                     if (Model.register.containedItemClass == "Document")
                     {
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/slett">Slett</a>
                         <span> | </span><a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
                     }
                     if (Model.register.containedItemClass == "Dataset")

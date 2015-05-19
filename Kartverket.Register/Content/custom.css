@@ -352,7 +352,11 @@
 }
 
 .search-results.document.table-view .col-actions span {
-	font-size: 15px !important;
+	font-size: 15px!important;
+}
+
+.search-results.document.table-view .table-heading .col-actions a {
+    font-size: 14px!important;
 }
 
 /* Kodelister */

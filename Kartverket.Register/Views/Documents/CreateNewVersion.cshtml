@@ -19,6 +19,14 @@
     <input type="hidden" name="registerId" id="registerId" value="@Model.registerId" />
     <input type="hidden" name="versioningId" id="versioningId" value="@Model.versioningId" />
     <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versioning.lastVersionNumber" />
+
+    if (Model.register.parentRegisterId != null)
+    {
+        <input type="hidden" name="parentRegister" id="parentRegister" value="@Model.register.parentRegister.seoname" />
+        <input type="hidden" name="parentRegisterOwner" id="parentRegisterOwner" value="@Model.register.parentRegister.owner.seoname" />
+    }
+
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

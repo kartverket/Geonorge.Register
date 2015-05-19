@@ -46,15 +46,22 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Create
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
-        public ActionResult Create(string registername)
+        public ActionResult Create(string registername, string parentRegister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
+                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
             ViewBag.registername = register.name;
             ViewBag.registerSEO = registername;
 
@@ -74,19 +81,25 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
         {
-            ValidationName(document, registername);
+
             // Finn systemId til aktuelt register.
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
+            string parentRegisterOwner = null;
+            if (register.parentRegisterId != null)
+            {
+                parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+            ValidationName(document, register);
             if (ModelState.IsValid)
             {
                 //Tildel verdi til dokumentobjektet
@@ -160,7 +173,19 @@ namespace Kartverket.Register.Controllers
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
 
-                return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);               
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+            }
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
             }
             ViewBag.registername = register.name;
             ViewBag.registerSEO = register.seoname;
@@ -171,9 +196,9 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/CreateNewVersion
         [Authorize]
-        [Route("dokument/{parentregister}/{registerowner}/{registername}/{submitter}/{itemname}/ny")]
-        [Route("dokument/{registername}/{submitter}/{itemname}/ny")]
-        public ActionResult CreateNewVersion(string parentregister, string registername, string itemname)
+        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
+        public ActionResult CreateNewVersion(string parentRegister, string registername, string itemname)
         {
 
             string role = GetSecurityClaim("role");
@@ -181,7 +206,7 @@ namespace Kartverket.Register.Controllers
 
             var queryResults = from o in db.Documents
                                where o.seoname == itemname && o.register.seoname == registername &&
-                               (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.seoname == null)
+                               (o.register.parentRegister.seoname == parentRegister || o.register.parentRegister.seoname == null)
                                && o.versioning.currentVersion == o.systemId
                                select o.systemId;
             Guid systId = queryResults.FirstOrDefault();
@@ -212,10 +237,10 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/ny")]
-        [Route("dokument/{registername}/{itemowner}/{itemname}/ny")]
+        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentregister, string registername, string itemname)
+        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname)
         {
 
             if (ModelState.IsValid)
@@ -279,7 +304,14 @@ namespace Kartverket.Register.Controllers
                 versjonsgruppe.lastVersionNumber = document.versionNumber;
                 db.SaveChanges();
 
-                return Redirect("/register/versjoner/" + registername + "/" + document.submitter.seoname + "/" + document.seoname);
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
             }
 
             return View(document);
@@ -288,14 +320,16 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Edit/5
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(string registername, string documentname, int? vnr)
+        public ActionResult Edit(string registername, string documentname, int? vnr, string parentRegister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
                                where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -325,19 +359,28 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
+        public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
             // Henter orginaldokumentet
             var queryResults = from o in db.Documents
                                where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == document.versionNumber
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
             Document originalDocument = db.Documents.Find(systId);
 
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
             //Validering av navnet
-            ValidationName(document, registername);
+            ValidationName(document, register);
 
             if (ModelState.IsValid)
             {
@@ -407,11 +450,12 @@ namespace Kartverket.Register.Controllers
                             originalDocument.statusId = document.statusId;
                         }
                     }
-                    else {
+                    else
+                    {
                         originalDocument.statusId = document.statusId;
                     }
                 }
-                                
+
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
@@ -437,7 +481,15 @@ namespace Kartverket.Register.Controllers
                 Viewbags(document);
 
                 //Retur? Gjeldende versjon!!
-                return Redirect("/register/versjoner/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                }
             }
             Viewbags(document);
             return View(originalDocument);
@@ -445,14 +497,16 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Delete/5
         [Authorize]
+        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        public ActionResult Delete(string registername, string documentname, int? vnr)
+        public ActionResult Delete(string registername, string documentname, int? vnr, string parentregister, string parentregisterowner)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
                                where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -475,18 +529,25 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber)
+        public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
 
             //Finn dokumentet som skal slettes
             var queryResults = from o in db.Documents
                                where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == versionNumber
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
             Document document = db.Documents.Find(systId);
+
+            string parent = null;
+            if (document.register.parentRegisterId != null)
+            {
+                parent = document.register.parentRegister.seoname;
+            }
 
             //Finn versjonsgruppen dokumentet ligger i.
             var queryResultsVersions = from o in db.Versions
@@ -527,6 +588,12 @@ namespace Kartverket.Register.Controllers
 
             db.RegisterItems.Remove(document);
             db.SaveChanges();
+
+            if (parent != null)
+            {
+                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
+            }
+
             return Redirect("/register/" + registername);
         }
 
@@ -605,7 +672,7 @@ namespace Kartverket.Register.Controllers
             MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
             string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v "+ document.versionNumber + ".jpg");
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v " + document.versionNumber + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
             document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
         }
@@ -638,10 +705,14 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private void ValidationName(Document document, string registername)
+        private void ValidationName(Document document, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername && o.versioningId != document.versioningId
+                                      where o.name == document.name &&
+                                      o.systemId != document.systemId &&
+                                      o.register.name == register.name &&
+                                      o.versioningId != document.versioningId &&
+                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

@@ -29,11 +29,11 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        [Route("subregister/{registername}/{owner}/{subregister}")]
-        public ActionResult Details(string registername, string owner, string subregister, string sorting, int? page, string export)
+        [Route("subregister/{parentRegister}/{owner}/{subregister}")]
+        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export)
         {
             var queryResultsSubregister = from r in db.Registers
-                                          where r.seoname == subregister && r.parentRegister.seoname == registername
+                                          where r.seoname == subregister && r.parentRegister.seoname == parentRegister
                                           select r.systemId;
 
             if (queryResultsSubregister.Count() > 0)

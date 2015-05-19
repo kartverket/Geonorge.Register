@@ -81,9 +81,15 @@
                 }
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {
-                    @*<span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/rediger/">Endre</a>
-                    <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/slett">Slett</a>*@
-                    <span> | </span><a href="/dokument/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    if (Model.currentVersion.register.parentRegisterId != null)
+                    {
+                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    }
+                    else
+                    {
+                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    }
+
                 }
                 if (Model.currentVersion.register.containedItemClass == "Dataset")
                 {

@@ -150,7 +150,8 @@
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye dokument i @Model.name </a>
+                    @*<a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye dokument i @Model.name </a>*@
+                    <a href="/dokument/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {

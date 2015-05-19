@@ -25,17 +25,21 @@
 
 <h3>Er du sikker på at du vil slette "@Model.name"?</h3>
 <div>
-    @*<h4>@Model.name</h4>*@
     <hr />
     <dl class="dl-horizontal"></dl>
 
     @using (Html.BeginForm())
     {
-        @*@Html.AntiForgeryToken()*@
-
         <div class="form-actions no-color">
             <input type="submit" value="Slett" class="btn btn-default" /> |
-            <a href="/register/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.datasetowner.name)/@Html.ToUrl(Model.name)/">Tilbake</a>
+            @if (Model.register.parentRegisterId != null)
+            {
+                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/@Model.register.seoname/@Model.datasetowner.seoname/@Model.seoname/">Tilbake</a>
+            }
         </div>
     }
 </div>

@@ -606,19 +606,6 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-
-        private string FindRegisterOwner(string registername)
-        {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
-        }
-
         private string GetSecurityClaim(string type)
         {
             string result = null;

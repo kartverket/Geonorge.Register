@@ -112,8 +112,8 @@
                     }
                     if (Model.register.containedItemClass == "Dataset")
                     {
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
                     }
                     if (Model.register.containedItemClass == "EPSG")
                     {

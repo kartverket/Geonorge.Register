@@ -155,7 +155,7 @@
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye datasett i @Model.name </a>
+                    <a href="/dataset/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {

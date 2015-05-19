@@ -162,9 +162,11 @@
                 if (Model.containedItemClass == "Dataset")
                 {
                     <a href="/dataset/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>
-                } if (Model.containedItemClass == "EPSG")
+                } 
+                if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">| Foreslå ny epsg kode i @Model.name </a>
+                    <a href="/epsg/@Model.seoname/ny">| Foreslå ny epsg kode i @Model.name </a>
+            
                 }
                 <span>| </span><a href="/endre/@Model.seoname">Endre</a>
                 <span>| </span><a href="/slett/@Model.seoname">Slett</a>

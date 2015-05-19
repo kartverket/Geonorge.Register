@@ -366,7 +366,7 @@ namespace Kartverket.Register.Controllers
                                where o.register.seoname == subregister && o.register.parentRegister.seoname == registername
                                select o.systemId;
 
-            if (queryResultsRegisterItem.Count() > 0)
+            if (queryResultsRegisterItem != null)
             {
                 ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
                 return View(register);

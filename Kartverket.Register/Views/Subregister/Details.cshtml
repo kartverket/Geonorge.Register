@@ -159,11 +159,11 @@
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">| Foreslå nye epsg koder i @Model.name </a>
+                    <a href="/epsg/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye epsg koder i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="/subregister/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
+                    <a href="subregister/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {

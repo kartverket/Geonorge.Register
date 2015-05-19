@@ -117,8 +117,8 @@
                     }
                     if (Model.register.containedItemClass == "EPSG")
                     {
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
                     }
                     if (Model.register.containedItemClass == "CodelistValue")
                     {

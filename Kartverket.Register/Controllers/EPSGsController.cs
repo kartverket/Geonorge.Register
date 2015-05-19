@@ -28,7 +28,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Details/5
         public ActionResult Details(Guid? id)
-        {            
+        {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -43,10 +43,25 @@ namespace Kartverket.Register.Controllers
 
         // GET: EPSGs/Create
         [Authorize]
-        [Route("epsg-koder/ny")]
-        public ActionResult Create()
+        [Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
+        [Route("epsg/{registername}/ny")]
+        public ActionResult Create(string registername, string parentRegister)
         {
-            string registerOwner = FindRegisterOwner("epsg-koder");
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = registername;
+
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -64,12 +79,26 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("epsg-koder/ny")]
+        [Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
+        [Route("epsg/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(EPSG epsgKode)
+        public ActionResult Create(EPSG epsgKode, string registername, string parentRegister)
         {
-            ValidationName(epsgKode, "epsg-koder");
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
 
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string parentRegisterOwner = null;
+            if (register.parentRegisterId != null)
+            {
+                parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+
+            ValidationName(epsgKode, register);
+
+            //Hjelp til å finne ut hvorfor evt ModelState ikke er valid.
             var errors = ModelState.Select(x => x.Value.Errors)
                            .Where(y => y.Count > 0)
                            .ToList();
@@ -81,11 +110,6 @@ namespace Kartverket.Register.Controllers
                 {
                     epsgKode.name = "ikke angitt";
                 }
-
-                var queryResultsRegister = from o in db.Registers
-                                           where o.name == "EPSG koder"
-                                           select o.systemId;
-                Guid regId = queryResultsRegister.First();
 
                 epsgKode.systemId = Guid.NewGuid();
                 epsgKode.modified = DateTime.Now;
@@ -116,26 +140,41 @@ namespace Kartverket.Register.Controllers
                 db.Entry(epsgKode).State = EntityState.Modified;
 
                 db.SaveChanges();
-                return Redirect("/register/epsg-koder");
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
+                }
             }
 
             ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = register.seoname;
             return View(epsgKode);
         }
 
         // GET: EPSGs/Edit/5
         [Authorize]
-        [Route("epsg-koder/{epsgname}/rediger")]
-        public ActionResult Edit(string epsgname)
+        [Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
+        [Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
+        public ActionResult Edit(string registername, string epsgname, int? vnr, string parentRegister)
         {
-            string registerOwner = FindRegisterOwner("epsg-koder");
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            
             var queryResultsEpsg = from o in db.EPSGs
-                                    where o.seoname == epsgname
-                                    select o.systemId;
+                                   where o.seoname == epsgname &&
+                                   o.register.seoname == registername &&
+                                   (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                                   select o.systemId;
             Guid systId = queryResultsEpsg.First();
 
             if (systId == null)
@@ -160,19 +199,29 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("epsg-koder/{epsgname}/rediger")]
+        [Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
+        [Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
         //[ValidateAntiForgeryToken]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
-        public ActionResult Edit(EPSG ePSG, string epsgname)
+        public ActionResult Edit(EPSG ePSG, string epsgname, string parentRegister, string registername)
         {
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
+                                           && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
             EPSG epsg = db.EPSGs.Find(systId);
 
-            ValidationName(ePSG, "epsg-koder");
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            ValidationName(ePSG, register);
 
             if (ModelState.IsValid)
             {
@@ -212,30 +261,35 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
 
                 Viewbags(ePSG);
-                return Redirect("/register/epsg-koder/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);        
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + originalEPSG.register.parentRegister.seoname + "/" + originalEPSG.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/" + registername + "/" + originalEPSG.submitter.seoname + "/" + originalEPSG.seoname);
+                }
 
             }
-            
             Viewbags(ePSG);
-            
             return View(epsg);
         }
 
-        
 
         // GET: EPSGs/Delete/5
         [Authorize]
-        [Route("epsg-koder/{epsgname}/slett")]
-        public ActionResult Delete(string epsgname)
+        [Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
+        [Route("epsg/{registername}/{organization}/{epsgname}/slett")]
+        public ActionResult Delete(string epsgname, string registername, string parentregister)
         {
-            string registerOwner = FindRegisterOwner("epsg-koder");
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            
             var queryResultsOrganisasjon = from o in db.EPSGs
-                                            where o.seoname == epsgname
-                                            select o.systemId;
+                                           where o.seoname == epsgname
+                                           && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                                           select o.systemId;
             Guid systId = queryResultsOrganisasjon.First();
 
             if (systId == null)
@@ -257,20 +311,34 @@ namespace Kartverket.Register.Controllers
         // POST: EPSGs/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("epsg-koder/{epsgname}/slett")]
+        [Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
+        [Route("epsg/{registername}/{organization}/{epsgname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string epsgname)
+        public ActionResult DeleteConfirmed(string epsgname, string registername, string parentregister, string parentregisterowner)
         {
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
+                                           && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
-
             EPSG ePSG = db.EPSGs.Find(systId);
+
+            string parent = null;
+            if (ePSG.register.parentRegisterId != null)
+            {
+                parent = ePSG.register.parentRegister.seoname;
+            }
+
             db.RegisterItems.Remove(ePSG);
             db.SaveChanges();
-            return Redirect("/register/epsg-koder");
+
+            if (parent != null)
+            {
+                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
+            }
+            return Redirect("/register/" + registername);
         }
 
         protected override void Dispose(bool disposing)
@@ -352,10 +420,13 @@ namespace Kartverket.Register.Controllers
             ViewBag.dimensionId = new SelectList(db.Dimensions, "value", "description", ePSG.dimensionId);
         }
 
-        private void ValidationName(EPSG epsg, string registername)
+        private void ValidationName(EPSG epsg, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.EPSGs
-                                      where o.name == epsg.name && o.systemId != epsg.systemId && o.register.seoname == registername
+                                      where o.name == epsg.name && 
+                                      o.systemId != epsg.systemId && 
+                                      o.register.name == register.name &&
+                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

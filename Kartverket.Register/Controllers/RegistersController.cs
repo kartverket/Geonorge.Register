@@ -426,10 +426,13 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
-            var queryResultsRegisterItem = from o in db.RegisterItems
+            var queryResultsRegisterItem = ((from o in db.RegisterItems
                                            where o.register.seoname == registername
                                            || o.register.parentRegister.seoname == registername
-                                           select o.systemId;
+                                           select o.systemId).Union(
+                                           from r in db.Registers
+                                           where r.parentRegister.seoname == registername
+                                           select r.systemId));
 
             if (queryResultsRegisterItem.Count() > 0)
             {

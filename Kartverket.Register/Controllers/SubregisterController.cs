@@ -377,11 +377,15 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
-            var queryResultsRegisterItem = from o in db.RegisterItems
-                                           where o.register.seoname == subregister && o.register.parentRegister.seoname == registername
-                                           select o.systemId;
+            var queryResultsRegisterItem = ((from o in db.RegisterItems
+                                             where (o.register.seoname == subregister && o.register.parentRegister.seoname == registername)
+                                             || (o.register.parentRegister.seoname == subregister && (o.register.parentRegister.parentRegisterId == null || o.register.parentRegister.parentRegister.seoname == registername))
+                                             select o.systemId).Union(
+                                           from r in db.Registers
+                                           where r.parentRegister.seoname == subregister && (r.parentRegister.parentRegisterId == null || r.parentRegister.parentRegister.seoname == registername)
+                                           select r.systemId));
 
-            if (queryResultsRegisterItem != null)
+            if (queryResultsRegisterItem.Count() > 0)
             {
                 ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
                 return View(register);
@@ -400,7 +404,7 @@ namespace Kartverket.Register.Controllers
                 db.Registers.Remove(register);
                 db.SaveChanges();
 
-                if (register.parentRegister.parentRegisterId != null)
+                if (parentParentRegisterName != null)
                 {
                     return Redirect("/subregister/" + parentParentRegisterName + "/" + parentParentRegisterOwner + "/" + registername);
                 }

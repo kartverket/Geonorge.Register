@@ -146,11 +146,10 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
+                    <a href="/organisasjoner/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    @*<a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye dokument i @Model.name </a>*@
                     <a href="/dokument/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
@@ -167,7 +166,6 @@
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
-                    @*<a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>*@
                     <a href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
                 }
             }

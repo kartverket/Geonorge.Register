@@ -5,18 +5,29 @@
     ViewBag.Title = UI.CreateNew;
     var registername = ViewBag.registername;
     var registerSEO = ViewBag.registerSEO;
+    var registerOwner = ViewBag.registerOwner;
     ViewBag.Title = registername;
+    var parentregister = ViewBag.parentRegister;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@registerSEO">@registername</a></li>
-    <li class="active">Ny</li>
+    @if (parentregister != null)
+    {
+        <li><a href="/register/@parentregister">@parentregister</a></li>
+        <li><a href="/subregister/@parentregister/@registerOwner/@registername">@registername</a></li>
+        <li class="active">Ny</li>
+    }
+    else
+    {
+        <li><a href="/register/@registerSEO">@registername</a></li>
+        <li class="active">Ny</li>
+    }
 }
 <h2>Foreslå ny organisasjon i @registername</h2>
 
 @using (Html.BeginForm("Create", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-
+    <input type="hidden" value="@parentregister" id="parentRegister" name="parentRegister" />
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -86,7 +97,14 @@
 }
 
 <div>
-    <a href="/register/@registerSEO">Tilbake</a>
+    @if (parentregister != null)
+    {
+        <a href="/subregister/@parentregister/@registerOwner/@registerSEO">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@registerSEO/">Tilbake</a>
+    }
 </div>
 
 @section Scripts {

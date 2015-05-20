@@ -109,18 +109,26 @@ namespace Kartverket.Register.Controllers
 
         //// GET: Organizations/Create
         [Authorize]
+        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("organisasjoner/{registername}/ny")]
-        public ActionResult Create(string registername)
+        public ActionResult Create(string registername, string parentRegister)
         {
-            ViewBag.registerSEO = registername;
+            
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername || o.name == registername
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            ViewBag.registername = register.name;
 
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = registername;
+            
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -136,20 +144,27 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("organisasjoner/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername)
+        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister)
         {
-            ValidationName(organization, registername);
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername
+                                       && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string parentRegisterOwner = null;
+            if (register.parentRegisterId != null)
+            {
+                parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+            ValidationName(organization, register);
             
             if (ModelState.IsValid)
             {
-                var queryResultsRegister = from o in db.Registers
-                                           where o.name == registername
-                                           select o.systemId;
-                Guid regId = queryResultsRegister.First();
-                Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
                 organization.systemId = Guid.NewGuid();
                 if (organization.name == null) { organization.name = "ikke angitt"; }
                 organization.modified = DateTime.Now;
@@ -185,31 +200,47 @@ namespace Kartverket.Register.Controllers
 
                 if (register.parentRegister != null)
                 {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername);
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
                 }
                 else
                 {
-                    return Redirect("/register/" + registername);
+                    return Redirect("/register/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
                 }
             }
-
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = registername;
             return View(organization);
         }
 
 
         //// GET: Organizations/Edit/5
         [Authorize]
+        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/rediger")]
-        public ActionResult Edit(string registername, string submitter, string organisasjon)
+        public ActionResult Edit(string registername, string submitter, string organisasjon, string parentRegister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == organisasjon && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
+
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername
+                                       && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             if (systId == null)
             {
@@ -222,14 +253,23 @@ namespace Kartverket.Register.Controllers
             }
             if (role == "nd.metadata_admin")
             {
-                Viewbags(organization);
+                ViewbagsOrganization(organization, register);
                 return View(organization);
             }
             return HttpNotFound();
         }
 
-        private void Viewbags(Kartverket.Register.Models.Organization organization)
+        
+
+        private void ViewbagsOrganization(Kartverket.Register.Models.Organization organization, Kartverket.Register.Models.Register register)
         {
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = register.seoname;
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
         }
@@ -240,23 +280,27 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("organisasjoner/{registernameOrganization}/{submitterOrganization}/{organisasjon}/rediger")]
-        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registernameOrganization, string organisasjon)
+        [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
+        [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/rediger")]
+        public ActionResult Edit(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string organisasjon, string parentRegister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.name == registernameOrganization
+                                       where o.seoname == registername
+                                       && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
+
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
           
             var queryResultsOrganisasjon = from o in db.Organizations
-                                           where o.seoname == organisasjon && o.register.seoname == registernameOrganization
+                                           where o.seoname == organisasjon && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
             Organization originalOrganization = db.Organizations.Find(systId);
 
-            ValidationName(organization, registernameOrganization);
+            ValidationName(organization, register);
 
             var errors = ModelState.Select(x => x.Value.Errors)
                            .Where(y => y.Count > 0)
@@ -313,33 +357,35 @@ namespace Kartverket.Register.Controllers
                 originalOrganization.modified = DateTime.Now;
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
-                Viewbags(organization);
+                ViewbagsOrganization(organization, register);
 
 
                 if (register.parentRegister != null)
                 {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registernameOrganization + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
+                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + originalOrganization.register.seoname + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);
                 }
                 else
                 {
-                    return Redirect("/register/" + registernameOrganization + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
+                    return Redirect("/register/" + originalOrganization.register.seoname + "/" + originalOrganization.submitter.seoname + "/" + originalOrganization.seoname);    
                 }
                             
             }
-            Viewbags(organization);
+            ViewbagsOrganization(organization, register);
             return View(originalOrganization);
         }
 
         // GET: Organizations/Delete/5
         [Authorize]
+        [Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
-        public ActionResult Delete(string registername, string submitter, string organisasjon)
+        public ActionResult Delete(string registername, string submitter, string organisasjon, string parentregister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
             
             var queryResults = from o in db.Organizations
                                             where o.seoname == organisasjon && o.register.seoname == registername
+                                            && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                             select o.systemId;
 
             Guid systId = queryResults.First();
@@ -362,29 +408,27 @@ namespace Kartverket.Register.Controllers
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon)
+        public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon, string parentregister, string parentregisterowner)
         {
-            var queryResultsRegister = from o in db.Registers
-                                       where o.name == registername
-                                       select o.systemId;
-            Guid regId = queryResultsRegister.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == organisasjon
+                                           && o.register.seoname == registername
+                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.First();
 
-            Organization originalOrganization = db.Organizations.Find(systId);
+            Organization originalOrganization = db.Organizations.Find(systId);            
+            
             db.Organizations.Remove(originalOrganization);
             db.SaveChanges();
 
-            if (register.parentRegister != null)
+            if (parentregister != null)
             {
-                return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername);
+                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
             }
             else
             {
@@ -456,10 +500,13 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        private void ValidationName(Organization organization, string registername)
+        private void ValidationName(Organization organization, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.Organizations
-                                      where o.name == organization.name && o.systemId != organization.systemId && o.register.name == registername
+                                      where o.name == organization.name 
+                                      && o.systemId != organization.systemId 
+                                      && o.register.name == register.name
+                                      && (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

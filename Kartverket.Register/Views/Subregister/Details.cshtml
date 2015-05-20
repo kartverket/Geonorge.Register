@@ -138,7 +138,15 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
+
+        @if (Model.parentRegister.parentRegisterId != null)
+        {
+            <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
+        }        
 
         @if (Request.IsAuthenticated)
         {
@@ -162,7 +170,7 @@
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="subregister/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
+                    <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {

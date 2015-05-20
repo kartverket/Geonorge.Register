@@ -3,18 +3,32 @@
 @{
     ViewBag.Title = UI.CreateNew;
     var parentRegisterSEO = ViewBag.parentRegisterSEO;
+    var parentRegisterOwner = ViewBag.parentRegisterOwner;
     var parentRegister = ViewBag.parentRegister;
+    var register = ViewBag.register;
+    var registerSEO = ViewBag.registerSEO;
+    
 }
 
 @section breadcrumb {
 
-        <li><a href="/register/@parentRegisterSEO"></a>@parentRegister</li>
+    @if (parentRegister != null)
+    {   <li><a href="/register/@parentRegisterSEO">@parentRegister</a></li>
+        <li><a href="/subregister/@parentRegisterSEO/@parentRegisterOwner/@registerSEO">@register</a></li>
         <li class="active">Ny</li>
+    }
+    else
+    {
+        <li><a href="/register/@registerSEO">@register</a></li>
+        <li class="active">Ny</li>
+    }
+        
 }
 
-<h2>Foreslå nytt register i @parentRegister</h2>
+<h2>Foreslå nytt register i @register</h2>
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <input type="hidden" value="@parentRegisterSEO" id="registerparant" name="registerparant" />
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -60,8 +74,15 @@
 }
 
 <div>
-
-    <a href="/register/@parentRegisterSEO/">Tilbake</a>
+    @if (parentRegister != null)
+    {
+        <a href="/subregister/@parentRegisterSEO/@parentRegisterOwner/@registerSEO">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@registerSEO/">Tilbake</a>
+    }
+    
 
 </div>
 

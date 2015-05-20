@@ -16,7 +16,6 @@
 
     @Html.Partial("_visningstyper")
 </div> 
-
     <div class="register document search-results">
         @foreach (Document item in Model)
         {
@@ -47,7 +46,7 @@
 
                             @if (item.register.parentRegister != null)
                             {
-                                <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
                                     <h3 class="role-button" style="font-size: 15px;">
                                         @item.name
                                     </h3>

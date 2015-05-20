@@ -254,10 +254,11 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 if (!String.IsNullOrWhiteSpace(parentregister))
                 {
-                    return Redirect("/subregister/" + parentregister + "/" + parentRegisterOwner + "/" + registername);
+                    return Redirect("/subregister/" + parentregister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
-                else {
-                    return Redirect("/register/" + registername);
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
                 
             }
@@ -354,10 +355,10 @@ namespace Kartverket.Register.Controllers
 
                 if(originalCodelistValue.register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname  + "/" + registername);
+                    return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname + "/" + registername + "/" + originalCodelistValue.submitter.seoname + "/" + originalCodelistValue.seoname);
                 }
-                
-                return Redirect("/register/" + originalCodelistValue.register.seoname);
+
+                return Redirect("/register/" + originalCodelistValue.register.seoname + "/" + originalCodelistValue.submitter.seoname + "/" + originalCodelistValue.seoname);
             }
             Viewbags(originalCodelistValue);
             return View(originalCodelistValue);

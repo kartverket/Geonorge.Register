@@ -13,11 +13,16 @@ namespace Kartverket.Register.Migrations
         {
             AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = false;
-            
+
         }
 
         protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)
         {
+            // OBS!! Seed funksjonen kjører ikke i debugging
+
+
+            RegisterDbContext db = new RegisterDbContext();
+
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -38,11 +43,11 @@ namespace Kartverket.Register.Migrations
             );
 
             context.requirements.AddOrUpdate(
-                new Requirement { value = "Mandatory", description = "Påkrevd" },
-                new Requirement { value = "Conditional", description = "Betinget" },
-                new Requirement { value = "Recommended", description = "Anbefalt" },
-                new Requirement { value = "Optional", description = "Valgfritt" },
-                new Requirement { value = "Notset", description = "Ikke angitt" }     
+                new Requirement { value = "Mandatory", description = "Påkrevd", sortOrder = 0 },
+                new Requirement { value = "Conditional", description = "Betinget", sortOrder = 2 },
+                new Requirement { value = "Recommended", description = "Anbefalt", sortOrder = 1 },
+                new Requirement { value = "Optional", description = "Valgfritt", sortOrder = 3 },
+                new Requirement { value = "Notset", description = "Ikke angitt", sortOrder = 4 }
             );
 
             context.DOKThemes.AddOrUpdate(
@@ -64,27 +69,32 @@ namespace Kartverket.Register.Migrations
             context.Sorting.AddOrUpdate(
                 //new Sorting { value = "name", description = "Navn"},
                 new Sorting { value = "name_desc", description = "Navn å-a" },
-                new Sorting { value = "submitter", description = "Innsender a-å"},
+                new Sorting { value = "submitter", description = "Innsender a-å" },
                 new Sorting { value = "submitter_desc", description = "Innsender å-a" },
                 new Sorting { value = "status", description = "Status a-å", },
                 new Sorting { value = "status_desc", description = "Status å-a" },
                 new Sorting { value = "dateSubmitted_desc", description = "Innsendt dato synkende" },
                 new Sorting { value = "dateSubmitted", description = "Innsendt dato stigende" },
-                new Sorting { value = "modified", description = "Endret dato stigende"},
+                new Sorting { value = "modified", description = "Endret dato stigende" },
                 new Sorting { value = "modified_desc", description = "Endret dato synkende" },
-                new Sorting { value = "dateAccepted", description = "Godkjent dato stigende"},
+                new Sorting { value = "dateAccepted", description = "Godkjent dato stigende" },
                 new Sorting { value = "dateAccepted_desc", description = "Godkjent dato synkende" }
             );
 
             context.ContainedItemClass.AddOrUpdate(
                 new ContainedItemClass { value = "Register", description = "Register" },
-                new ContainedItemClass { value = "CodelistValue", description ="Kodeverdier" },
-                new ContainedItemClass { value = "Dataset", description ="Datasett" },
-                new ContainedItemClass { value = "Document", description ="Dokumenter" },
-                new ContainedItemClass { value = "EPSG", description ="EPSG koder" },
-                new ContainedItemClass { value = "Organization", description ="Organisasjoner" }
+                new ContainedItemClass { value = "CodelistValue", description = "Kodeverdier" },
+                new ContainedItemClass { value = "Dataset", description = "Datasett" },
+                new ContainedItemClass { value = "Document", description = "Dokumenter" },
+                new ContainedItemClass { value = "EPSG", description = "EPSG koder" },
+                new ContainedItemClass { value = "Organization", description = "Organisasjoner" }
             );
 
+            context.Dimensions.AddOrUpdate(
+                new Kartverket.Register.Models.Dimension { value = "horizontal", description = "Horisontalt" },
+                new Kartverket.Register.Models.Dimension { value = "vertical", description = "Vertikalt" },
+                new Kartverket.Register.Models.Dimension { value = "compound", description = "Sammensatt" }
+            );
 
 
             //Register produktspesifikasjon = new Register 
@@ -358,6 +368,99 @@ namespace Kartverket.Register.Migrations
             //        externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
             //    }
             //);
+
+
+            //FixSubmitter
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET submitterId = '10087020-F17C-45E1-8542-02ACBCF3D8A3' WHERE  (documentownerId IS NULL)");
+
+            context.Registers.AddOrUpdate(
+                new Register
+                {
+                    systemId = Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    dateAccepted = DateTime.Now,
+                    name = "Det offentlige kartgrunnlaget",
+                    description = "Det offentlige kartgrunnlaget beskrives i plan- og bygningslovens paragraf 2-1 og kart- og planforskriften og skal være er en samling geografiske kvalitetsdata, såkalt offentlige autoritative data. Disse skal være valgt ut og tilrettelagt for å være et egnet kunnskapsgrunnlag for de mest vesentlige behovene som følger av plan- og bygningsloven.",
+                    containedItemClass = "Dataset",
+                    statusId = "Valid",
+                    seoname = "det-offentlige-kartgrunnlaget",
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                }
+            );
+
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET statusId = 'Submitted' WHERE  (statusId IS NULL)");
+
+
+
+            //UpdateVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versionNumber = 1 WHERE  (versionNumber=0)");
+            //UpdateRegisterVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET versionNumber = 1 WHERE  (versionNumber=0)");
+            //AddItemsToVersionTable
+            context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, containedItemClass as containedItemClass FROM Registers WHERE versioningId IS NULL");
+            context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems WHERE versioningId IS NULL");
+
+            //UpdateRegisterItemsVersioningId
+            var queryResultsVersions = from r in db.Versions
+                                       select r;
+
+            List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
+
+            var queryResultsRegisterItems = from r in db.RegisterItems
+                                            select r;
+            List<RegisterItem> registerItems = queryResultsRegisterItems.ToList();
+
+
+            foreach (Kartverket.Register.Models.Version v in versions)
+            {
+                foreach (RegisterItem ri in registerItems)
+                {
+                    if (v.currentVersion == ri.systemId)
+                    {
+                        ri.versioningId = v.systemId;
+                        string versjonsID = ri.versioningId.ToString();
+                        string systemID = ri.systemId.ToString();
+
+                        context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
+                    }
+                }
+            }
+
+
+
+            //UpdateRegistersVersioningId
+
+            var queryResultsVersions2 = from r in db.Versions
+                                        select r;
+
+            List<Kartverket.Register.Models.Version> versions2 = queryResultsVersions2.ToList();
+
+            var queryResultsRegisterItems2 = from r in db.Registers
+                                             select r;
+            List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems2.ToList();
+
+
+            foreach (Kartverket.Register.Models.Version v in versions)
+            {
+                foreach (Kartverket.Register.Models.Register r in registers)
+                {
+                    if (v.currentVersion == r.systemId)
+                    {
+                        r.versioningId = v.systemId;
+                        string versjonsID = r.versioningId.ToString();
+                        string systemID = r.systemId.ToString();
+
+                        context.Database.ExecuteSqlCommand("UPDATE Registers SET versioningId = '" + versjonsID + "' WHERE (systemId = '" + systemID + "')");
+                    }
+                }
+            }
+
+            //UpdateLastVersionNumber
+            context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
+
         }
     }
 }
+

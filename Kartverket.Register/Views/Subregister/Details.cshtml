@@ -138,7 +138,15 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
+
+        @if (Model.parentRegister.parentRegisterId != null)
+        {
+            <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
+        }        
 
         @if (Request.IsAuthenticated)
         {
@@ -146,27 +154,26 @@
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
+                    <a href="/organisasjoner/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Html.ToUrl(Model.name)/ny">| Foreslå nye dokument i @Model.name </a>
+                    <a href="/dokument/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Html.ToUrl(Model.name)/ny">| Foreslå nye datasett i @Model.name </a>
+                    <a href="/dataset/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg-koder/ny">| Foreslå nye epsg koder i @Model.name </a>
+                    <a href="/epsg/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye epsg koder i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="/subregister/ny">| Foreslå nytt register i @Model.name </a>
+                    <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
-                    @*<a href="/kodeliste/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>*@
                     <a href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
                 }
             }

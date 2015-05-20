@@ -14,5 +14,17 @@ namespace Kartverket.Register.Models.Api
 
         public string logo { get; set; }
         public string documentreference { get; set; }
+
+        public string inspireRequirement { get; set; }
+        public string nationalRequirement { get; set; }
+        public string nationalSeasRequirement { get; set; }
+
+        public string verticalReferenceSystem { get; set; }
+        public string horizontalReferenceSystem { get; set; }
+        public string dimension { get; set; }
+        
+            
+            
+        
     }
 }

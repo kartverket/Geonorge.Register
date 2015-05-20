@@ -23,8 +23,6 @@
 
 @using (Html.BeginForm())
 {
-    @*@Html.AntiForgeryToken()*@
-
     <div class="form-horizontal">
         <h4>@Model.name</h4>
         <hr />
@@ -55,22 +53,6 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.dateSubmitted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.dateSubmitted, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.dateSubmitted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.modified, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.modified, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.modified, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
         <div class="form-group">
             @Html.LabelFor(model => model.statusId, "Status:", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -78,22 +60,6 @@
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.registerId, "registerId", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("registerId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.registerId, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.epsgcode, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -108,6 +74,30 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.sosiReferencesystem, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.sosiReferencesystem, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.verticalReferenceSystem, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.verticalReferenceSystem, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.verticalReferenceSystem, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.dimensionId, "Dimensjon:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("dimensionId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.dimensionId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.horizontalReferenceSystem, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.horizontalReferenceSystem, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.horizontalReferenceSystem, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -176,5 +166,18 @@
 }
 
 <div>
-    <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+    @if (Model.register.parentRegisterId != null)
+    {
+        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+    }
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

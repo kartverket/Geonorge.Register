@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models
         public string RegisteItemUrlDataset { get; set; }
         public string subregisterItemUrl { get; set; }
         public string ParentRegisterUrl { get; set; }
+        public string ObjektkatalogUrl { get; set; }   
         public string Submitter { get; set; }
         public string Shortname { get; set; }
         public string DatasetOwner { get; set; }
@@ -34,6 +35,8 @@ namespace Kartverket.Register.Models
         public string ParentRegisterSeoname { get; set; }
         public string ParentregisterOwner { get; set; }
         public string CodelistValue { get; set; }
+        public string Type { get; set; }
+        public Guid? currentVersion { get; set; }
         
     }
 }

@@ -18,14 +18,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Kartverket.Register.Models
 {
 	public class Version {
-        [Key]
-    
+        [Key]    
         public Guid systemId { get; set; }
-
-        public string versionInfo { get; set; }
+        public string containedItemClass { get; set; }
+        public Guid currentVersion { get; set; }
+        public int lastVersionNumber { get; set; }
         
-
-
 	}//end Version
 
 }//end namespace Datamodell

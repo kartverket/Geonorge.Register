@@ -4,30 +4,67 @@
     var owner = ViewBag.owner;
     var ownerSEO = ViewBag.ownerSEO;
     var subregister = ViewBag.subregister;
-    
+    var selectedVertical = ViewBag.selectedVertical;
+    var selectedHorizontal = ViewBag.selectedHorizontal;
+
     var kontroller = "/register/" + registerSEO;
     if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
-    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" +subregister; }
+    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" + subregister; }
 
 }
 <div class="row">
-    <div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="col-sm-2 col-md-2 col-lg-2">
         <div class="view-navigation">
             <ul class="nav nav-pills text-center">
                 <li><a onclick="listView()" id="button-listView" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
-                <li><a onclick="galleryView()" id="button-galleryView" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                @*<li><a onclick="galleryView()" id="button-galleryView" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>*@
                 <li><a onclick="tableView()" id="button-tableView" class="" title="Tabellvisning"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
             </ul>
         </div>
     </div>
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        @if (register == "EPSG koder")
+        { 
+        <form action="/register/epsg-koder/" method="get" name="filtering">
+            <input type="hidden" name="text" value="@ViewBag.search" />
+            <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
+            <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
+                <b>Filter:</b>
+            </div>
+            <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
+                @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt">Vertikalt</label><br />
+                @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt">Horisontalt</label>
 
-    <div class="col-sm-6 col-md-6 col-lg-6">
-        <div class="pagination pagination-sm pull-right">
+
+            </div>
+            <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
+                <div onchange="Filter()" class="pull-right" id="inspireRequirementId">
+                    <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav:</label>@Html.DropDownList("inspireRequirement", "")<br />
+                </div>
+                <div onchange="Filter()" class="pull-right" id="nationalRequirementId">
+                    <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", "")<br />
+                </div>
+                <div onchange="Filter()" class="pull-right" id="nationalSeaRequirementId">
+                    <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
+                </div>
+            </div>
+        </form>
+        }
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+        <div id="sortBox" class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
                 <div class="pull-right" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
                 </div>
+                <input type="hidden" name="text" value="@ViewBag.search" />
+                @Html.Hidden("filterVertikalt")
+                @Html.Hidden("filterHorisontalt")
+                @Html.Hidden("inspireRequirement")
+                @Html.Hidden("nationalRequirement")
+                @Html.Hidden("nationalSeaRequirementId")
             </form>
         </div>
     </div>
 </div>
+<hr />

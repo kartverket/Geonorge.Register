@@ -7,7 +7,6 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class SearchResultItemViewModel
     {
-
         public string RegisterName { get; set; }
         public string RegisterDescription { get; set; }
         public string RegisterItemName { get; set; }
@@ -26,6 +25,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string ParentRegisterUrl { get; set; }
         public string RegisteItemUrlDocument { get; set; }
         public string RegisteItemUrlDataset { get; set; }
+        public string ObjektkatalogUrl { get; set; }   
         public string DatasetOwner { get; set; }
         public Guid? ParentRegisterId { get; set; }
         public string ParentRegisterName { get; set; }
@@ -33,6 +33,8 @@ namespace Kartverket.Register.Models.ViewModels
         public string ParentRegisterSeoname { get; set; }
         public string ParentregisterOwner { get; set; }
         public string CodelistValue { get; set; }
+        public string Type { get; set; }
+        public Guid? currentVersion { get; set; }
 
         private SearchResultItemViewModel(SearchResultItem item)
         {
@@ -56,8 +58,9 @@ namespace Kartverket.Register.Models.ViewModels
             ParentRegisterUrl = item.ParentRegisterUrl;
             RegisteItemUrlDataset = item.RegisteItemUrlDataset;
             RegisteItemUrlDocument = item.RegisteItemUrlDocument;
-
-
+            ObjektkatalogUrl = item.ObjektkatalogUrl;
+            Type = item.Type;
+            currentVersion = item.currentVersion;
 
 
 

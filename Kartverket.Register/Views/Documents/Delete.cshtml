@@ -16,7 +16,7 @@
     else
     {
         <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/register/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li><a href="/register/versjoner/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
         <li class="active">Slett</li>
     }
 }
@@ -25,17 +25,28 @@
 
 <h3>Er du sikker på at du vil slette "@Model.name"?</h3>
 <div>
-    @*<h4>@Model.name</h4>*@
     <hr />
     <dl class="dl-horizontal"></dl>
 
     @using (Html.BeginForm())
     {
-        @*@Html.AntiForgeryToken()*@
-
+        @Html.HiddenFor(model => model.versionNumber)
         <div class="form-actions no-color">
             <input type="submit" value="Slett" class="btn btn-default" /> |
-            <a href="/register/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.documentowner.name)/@Html.ToUrl(Model.name)/">Tilbake</a>
+
+            @if (Model.register.parentRegisterId != null)
+            {
+                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/versjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+            }
+
         </div>
     }
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

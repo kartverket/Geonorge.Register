@@ -78,14 +78,14 @@
                     <div class="view-navigation">
                         <ul class="nav nav-pills text-center">
                             <li><a onclick="listView()" id="button-listView" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>
-                            <li><a onclick="galleryView()" id="button-galleryView" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>
+                            @*<li><a onclick="galleryView()" id="button-galleryView" class="" title="Gallerivisning"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Galleri</a></li>*@
                             <li><a onclick="tableView()" id="button-tableView" class="" title="Tabellvisning"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Tabell</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <div class="pagination pagination-sm pull-right">
+                    <div id="sortBox" class="pagination pagination-sm pull-right">
                         <form action="/register/@Html.ToUrl(Model.Register)/@Html.ToUrl(Model.Owner)" name="sortering" method="get">
                             <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @Model.Register)" />
                             <input name="owner" type="hidden" id="owner" value="@(Request.QueryString["owner"] != null ? Request.QueryString["owner"].ToString() : Model.Owner)" />

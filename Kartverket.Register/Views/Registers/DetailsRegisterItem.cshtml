@@ -4,144 +4,153 @@
 @{
     ViewBag.Title = @Model.name;
     var documentOwner = ViewBag.documentOwner;
-    var datasetOwner = ViewBag.datasetOwner;
+    var version = ViewBag.version;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model.name)</li>
+
+    @if (Model.register.containedItemClass == "Document")
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+        <li class="active">@Html.DisplayFor(model => model.name)</li>
+
+    }
+    else
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li class="active">@Html.DisplayFor(model => model.name)</li>
+    }
 }
 <div class="page-header">
     <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
     <hr>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
+    @*@if (Model.register.containedItemClass == "Document")
+        {
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <br />
 
-        <p>
-            @Html.DisplayFor(model => model.description)
-        </p>
-
-        @if (Model.register.containedItemClass != "Organization")
-        {        
-            if (Model.status == null)
-            {
-                <span>Status: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
-            }
-            if (Model.submitter == null)
-            {
-                <span>Innsender: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
-            }
-            if (@documentOwner != null)
-            {
-                <span>Eier: @documentOwner </span><br />
-            }
-            if (@datasetOwner != null)
-            {
-                <span>Eier: @datasetOwner </span><br />
-            }
-            if (Model.currentVersion == null)
-            {
-                <span>Versjon: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-            }
+                <ul class="nav nav-tabs nav-tabs-topp" style="clear:both">
+                    <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Gjeldende</a></li>
+                    <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
+                    <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>Historiske</a></li>
+                </ul>
+            </div>
         }
-       
-
+        else
+        {*@
+    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
+        ID: <a href="/register/@Model.register.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
+        <p>
+            @Model.description
+        </p>
+        <span>Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
+        <span>Innsender: @Model.submitter.name</span><br>
+        <span>Versjon: @Model.versionNumber</span><br>
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
-        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
-        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
+        <span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>
+        <span class="small">Endret: @Html.DisplayFor(model => model.modified)</span>
     </div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="page-header">
             <hr>
         </div>
+    </div>
+    @*}*@
 
+    <br />
 
-        @if (Model.register.containedItemClass == "Organization")
-        {
-            @Html.Partial("_detailsOrganization")
-        }
+    @if (Model.register.containedItemClass == "Organization")
+    {
+        @Html.Partial("_detailsOrganization")
+    }
+    @if (Model.register.containedItemClass == "Document")
+    {
+        @Html.Partial("_detailsDocuments")
+
+        @*<div class="tab-content">
+                <div class="tab-pane active" id="gjeldende">
+                    @Html.Partial("_currentVersionDocument", Model)
+                </div>
+                <div class="tab-pane" id="historiske">
+                    @Html.Partial("_histroicalDocuments", Model)
+                </div>
+                <div class="tab-pane" id="forslag">
+                    @Html.Partial("_suggestedDocuments", Model)
+                </div>
+            </div>*@
+    }
+    @if (Model.register.containedItemClass == "Dataset")
+    {
+        @Html.Partial("_detailsDataset")
+    }
+    @if (Model.register.containedItemClass == "EPSG")
+    {
+        @Html.Partial("_detailsEpsg")
+    }
+    @if (Model.register.containedItemClass == "Register")
+    {
+        @Html.Partial("_detailsSubregister")
+    }
+    @if (Model.register.containedItemClass == "CodelistValue")
+    {
+        @Html.Partial("_detailsCodelistValue")
+    }
+
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <p>
         @if (Model.register.containedItemClass == "Document")
         {
-            @Html.Partial("_detailsDocuments")
+            <a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
         }
-        @if (Model.register.containedItemClass == "Dataset")
+        else
         {
-            @Html.Partial("_detailsDataset")
-        }
-        @if (Model.register.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_detailsEpsg")
-        }
-        @if (Model.register.containedItemClass == "Register")
-        {
-            @Html.Partial("_detailsSubregister")
-        }
-        @if (Model.register.containedItemClass == "CodelistValue")
-        {
-            @Html.Partial("_detailsCodelistValue")
-        }
-        
-    </div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <hr />
-        <p>            
-          
             <a href="/register/@Model.register.seoname">Tilbake</a>
+        }
 
-            @if (Request.IsAuthenticated)
+
+        @if (Request.IsAuthenticated)
+        {
+
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
             {
-                
-                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || 
-                    (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
-                    (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
-                {        
-                    if (Model.register.containedItemClass == "Organization")
-                    {
-                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
-                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "Document")
-                    {
-                        <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/rediger/">Endre</a>
-                        <span> | </span><a href="/dokument/@Model.register.seoname/@documentOwner/@Model.seoname/slett">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "Dataset")
-                    {
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "EPSG")
-                    {
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "CodelistValue")
-                    {
-                        <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Endre</a>
-                        <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-                    }
 
+                if (Model.register.containedItemClass == "Document")
+                {
+                    <span> | </span><a href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a> 
+                }
 
+                if (Model.register.containedItemClass == "CodelistValue")
+                {
+                    <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
                 }
             }
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            {
+                if (Model.register.containedItemClass == "Organization")
+                {
+                    <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+                }
+                if (Model.register.containedItemClass == "Dataset")
+                {
+                    <span> | </span><a href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                    <span> | </span><a href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+                } if (Model.register.containedItemClass == "EPSG")
+                {
+                    <span>| </span><a href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
+                }
+            }
+        }
 
-        </p>
-    </div>
+    </p>
 </div>

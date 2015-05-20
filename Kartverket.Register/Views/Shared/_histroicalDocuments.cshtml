@@ -1,0 +1,44 @@
+﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
+
+
+@if (Model.historical.Count() == 0)
+{
+    <p>Ingen historiske dokumenter av @Model.currentVersion.name</p>
+}
+else
+{
+    <table class="table table-responsive">
+        <tr>
+            <th>
+                Tittel
+            </th>
+            <th>
+                Eier
+            </th>
+            <th>
+                Versjon
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+        @foreach (Kartverket.Register.Models.Document item in Model.historical)
+        {
+        <tr>
+            <td>
+                <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
+            </td>
+            <td title="Eier: @item.documentowner.name">
+                @Html.DisplayFor(modelItem => item.documentowner.name)
+            </td>
+            <td title="Versjonsnummer: @item.versionNumber">
+                @Html.DisplayFor(modelItem => item.versionNumber)
+            </td>
+            <td title="Status: @item.status.description">
+                @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
+            </td>
+        </tr>
+        }
+    </table>
+}

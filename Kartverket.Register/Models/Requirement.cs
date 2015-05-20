@@ -11,5 +11,6 @@ namespace Kartverket.Register.Models
         [Key]
         public string value { get; set; }
         public string description { get; set; }
+        public int sortOrder { get; set; }
     }
 }

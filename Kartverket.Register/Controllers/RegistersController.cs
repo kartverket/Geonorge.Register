@@ -11,55 +11,31 @@ using System.Text.RegularExpressions;
 using PagedList;
 using System.Text;
 using System.Xml.Linq;
+using Kartverket.Register.Services.Versioning;
+using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services.Search;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class RegistersController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
 
+        private IVersioningService _versioningService;
+        private IRegisterService _registerService;
+        private ISearchService _searchService;
         
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         // GET: Registers
         public ActionResult Index()
         {
             setAccessRole();
 
+            removeSessionSearchParams();
+
             return View(db.Registers.OrderBy(r => r.name).ToList());
-        }
-
-        // GET: Registers/Details/5
-        [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page, string export)
-        {
-            var queryResults = from o in db.Registers
-                               where o.name == name || o.seoname == name
-                               select o.systemId;
-
-            Guid systId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;            
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
-
-            if(register.parentRegisterId != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-            }
-
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
-
-            
-            if (!string.IsNullOrEmpty(export))
-            {
-                return exportCodelist(register, export);
-            }
-
-            return View(register);
         }
 
         private ActionResult exportCodelist(Kartverket.Register.Models.Register register, string export)
@@ -106,25 +82,6 @@ namespace Kartverket.Register.Controllers
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
-
-                //XDocument xdoc = new XDocument
-                //    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                //        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                //        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                //        new XAttribute(gmlNs + "id", register.seoname),
-                //        new XElement(gmlNs + "description"),
-                //        new XElement(gmlNs + "identifier",
-                //            new XAttribute("codeSpace", nameSpace), register.name),
-
-                //        from k in db.CodelistValues.ToList()
-                //        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                //        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
-                //          new XElement(gmlNs + "description", k.description),
-                //          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
-                //          new XElement(gmlNs + "name", k.name)
-                //          ))));
-
-
                 XElement xdoc =
                     new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
@@ -151,18 +108,128 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        [Route("register/{registername}/{submitter}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname)
+        //// GET: Registers/Details/5
+        //[Route("register/{name}")]
+        //public ActionResult Details(string name, string sorting, int? page, string export, string filterVertikalt, string filterHorisontalt, string InspireRequirement, string nationalRequirement, string nationalSeaRequirement)
+        //{
+        //    var queryResults = from o in db.Registers
+        //                       where o.name == name || o.seoname == name
+        //                       select o.systemId;
+
+        //    Guid systId = queryResults.First();
+        //    Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+        //    ViewBag.page = page;
+        //    ViewBag.SortOrder = sorting;
+        //    ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+        //    ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description");
+        //    ViewBag.register = register.name;
+        //    ViewBag.registerSEO = register.seoname;
+
+        //    if (register.parentRegisterId != null)
+        //    {
+        //        ViewBag.parentRegister = register.parentRegister.name;
+        //    }
+
+        //    if (register == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+
+
+        //    if (!string.IsNullOrEmpty(export))
+        //    {
+        //        return exportCodelist(register, export);
+        //    }
+
+        //    return View(register);
+        //}
+
+        // GET: Registers/Details/5
+        [Route("register/{name}")]
+        public ActionResult Details(string name, string sorting, int? page, string export, FilterParameters filter)
         {
+            var queryResults = from o in db.Registers
+                               where o.name == name || o.seoname == name
+                               select o;
+
+            Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(filter.text))
+            {
+                _searchService = new SearchService(db);
+                register = _searchService.Search(register, filter.text);   
+            }
+            //Hjelpemetode Sjekk om noen av filterparametrene er satt        TODO!    
+            _registerService = new RegisterService(db);
+            register = _registerService.Filter(register, filter);
+
+            ViewBag.search = filter.text;
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
+            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+            }
+
+            if (register == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (!string.IsNullOrEmpty(export))
+            {
+                return exportCodelist(register, export);
+            }
+
+            return View(register);
+        }
+
+
+        [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
+        [Route("register/{registername}/{submitter}/{itemname}/")]
+        public ActionResult DetailsRegisterItem(string registername, string itemname, int? version)
+        {
+            //Guid? documentId = null;
+            Guid? systId = null;
             
-            var queryResultsRegisterItem = from o in db.RegisterItems
-                                            where o.seoname == itemname && o.register.seoname == registername
-                                            select o.systemId;
-            
-            Guid systId = queryResultsRegisterItem.First();
+            if (version != null)
+            {
+                var queryResultDocument = from d in db.Documents
+                                          where d.seoname == itemname && d.register.seoname == registername && d.versionNumber == version
+                                          select d.systemId;
+
+                systId = queryResultDocument.FirstOrDefault();
+
+                //var queryResultsRegisterItem = from o in db.RegisterItems
+                //                               where o.seoname == itemname && o.register.seoname == registername && o.systemId == documentId
+                //                               select o.systemId;
+
+                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                ViewBag.documentOwner = document.documentowner.name;
+                ViewBag.version = document.versionNumber;
+                //systId = queryResultsRegisterItem.FirstOrDefault();
+            }
+            else { 
+                var queryResultsRegisterItem = from o in db.RegisterItems
+                                               where o.seoname == itemname && o.register.seoname == registername 
+                                               select o.systemId;
+
+                systId = queryResultsRegisterItem.FirstOrDefault();
+            }
+           
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
-            if (registerItem.register.containedItemClass == "Document") {
+            if (registerItem.register.containedItemClass == "Document")
+            {
                 Kartverket.Register.Models.Document document = db.Documents.Find(systId);
                 ViewBag.documentOwner = document.documentowner.name;
             }
@@ -172,9 +239,18 @@ namespace Kartverket.Register.Controllers
                 Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
                 ViewBag.datasetOwner = dataset.datasetowner.name;
             }
-                return View(registerItem);    
+            return View(registerItem);
         }
 
+        [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}/")]
+        public ActionResult DetailsRegisterItemVersions(string registername, string itemname, string registerItemOwner)
+        {
+            _versioningService = new VersioningService(db);
+            VersionsItem versionsItem = _versioningService.Versions(registername, itemname);
+            RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
+            ViewBag.registerItemOwner = registerItemOwner;
+            return View(model);           
+        }
 
         // GET: subregister/Create
         [Authorize]
@@ -216,6 +292,7 @@ namespace Kartverket.Register.Controllers
                 register.dateSubmitted = DateTime.Now;
                 register.statusId = "Submitted";
                 register.seoname = MakeSeoFriendlyString(register.name);
+                register.containedItemClass = "Register";
 
                 db.Registers.Add(register);
                 db.SaveChanges();
@@ -237,8 +314,8 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 return Redirect("/");
             }
-
-            return Redirect("/");
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+            return View();
         }
 
 
@@ -349,10 +426,13 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
-            var queryResultsRegisterItem = from o in db.RegisterItems
+            var queryResultsRegisterItem = ((from o in db.RegisterItems
                                            where o.register.seoname == registername
                                            || o.register.parentRegister.seoname == registername
-                                           select o.systemId;
+                                           select o.systemId).Union(
+                                           from r in db.Registers
+                                           where r.parentRegister.seoname == registername
+                                           select r.systemId));
 
             if (queryResultsRegisterItem.Count() > 0)
             {
@@ -442,6 +522,19 @@ namespace Kartverket.Register.Controllers
             
         }
 
+        private void removeSessionSearchParams() 
+        {
+
+            Session["sortingType"] = null;
+            Session["text"] = null;
+            Session["filterVertikalt"] = null;
+            Session["filterHorisontalt"] = null;
+            Session["InspireRequirement"] = null;
+            Session["nationalRequirement"] = null;
+            Session["nationalSeaRequirement"] = null;
+        
+        }
+
         private string FindRegisterOwner(string registername)
         {
             var queryResults = from o in db.Registers
@@ -498,6 +591,12 @@ namespace Kartverket.Register.Controllers
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
         }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
+        }
+
     }
 
 }

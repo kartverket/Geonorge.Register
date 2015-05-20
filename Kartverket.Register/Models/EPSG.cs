@@ -47,6 +47,15 @@ namespace Kartverket.Register.Models
         [Display(Name = "Beskrivelse av krav:")]
         public string nationalSeasRequirementDescription { get; set; }
 
+        [Display(Name = "Vertikalt referansesystem:")]
+        public string verticalReferenceSystem { get; set; }
+        [Display(Name = "Horisontalt referansesystem:")]
+        public string horizontalReferenceSystem { get; set; }
+        [Display(Name = "Dimensjon:")]
+        [ForeignKey("dimensionId")]
+        public virtual Dimension dimension { get; set; }
+        public string dimensionId { get; set; }
+
 	}//end EPSG
 
 }//end namespace Datamodell

@@ -6,6 +6,11 @@
 
 @{
     var register = ViewBag.register;
+    var search = ViewBag.search;
+    var page2 = ViewBag.page;
+    var currentFilter = ViewBag.currentFilter;
+    int pageSize = 50;
+    int pageNumber = (page2 ?? 1);
 }
 
 <div class="search-filter-wrapper">
@@ -14,18 +19,20 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
         </li>
     </ul>
     @Html.Partial("_visningstyper")
 </div>
 
 <div class="register registersub search-results">
-    @foreach (var item in Model)
+    @if (!string.IsNullOrWhiteSpace(search) && Model.Count > 0)
     {
-        if (item.parentRegister.name == register)
-        {
-            <div class="row result-row metadata">
+        <h3>@Model.ElementAt(0).parentRegister.name</h3>
+    }
+@foreach (var item in Model)
+{
+        <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-title col-sm-4 col-md-4 col-lg-4">
                         <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
@@ -42,12 +49,16 @@
                     </div>
                 </div>
             </div>
-        }
         <hr />
+    }
+
+    @if (!string.IsNullOrWhiteSpace(search))
+    {
+        @Html.Partial("_searchResultSubregisters", Model.ToList())
     }
 </div>
 
-        
+
 
 <div class="search-filter-wrapper">
     <br /><br />
@@ -56,7 +67,7 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
         </li>
     </ul>
 </div>

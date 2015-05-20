@@ -82,87 +82,104 @@
             {
                 foreach (var item in Model.Result.Items)
                 {
-                    <tr>
-                        <td width="20%">
+                    if (item.currentVersion == item.SystemID || item.currentVersion == null)
+                    {
+                        <tr>
+                            <td width="20%">
 
-                        @if (item.RegisterItemName == null)
-                        {
-                            <b><a href="@item.SubregisterUrl">@item.RegisterName</a></b>
-                        }
-                        else
-                        {
-                            if (item.ParentRegisterName == null)
-                            {
-                                if (item.Discriminator == "Document")
+                                @if (item.RegisterItemName == null)
                                 {
-                                   <b><a href="@item.RegisteItemUrlDocument">@item.RegisterItemName</a></b>
+                                    <b><a href="@item.SubregisterUrl">@item.RegisterName</a></b>
                                 }
-                                else if (item.Discriminator == "Dataset")
+                                else
                                 {
-                                    <b><a href="@item.RegisteItemUrlDataset">@item.RegisterItemName</a></b>
+                                    if (item.ParentRegisterName == null)
+                                    {
+                                        if (item.Discriminator == "Document")
+                                        {
+                                            <b><a href="@item.RegisteItemUrlDocument">@item.RegisterItemName</a></b>
+                                        }
+                                        else if (item.Discriminator == "Dataset")
+                                        {
+                                            <b><a href="@item.RegisteItemUrlDataset">@item.RegisterItemName</a></b>
+                                        }
+                                        else if (item.Discriminator == "Objektregister")
+                                        {
+                                            <b><a href="@item.ObjektkatalogUrl">@item.RegisterItemName</a></b>
+                                        }
+                                        else
+                                        {
+                                            <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <b><a href="@item.subregisterItemUrl">@item.RegisterItemName</a></b>
+                                    }
                                 }
-                                else { 
-                                    <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
+                            </td>
+                            <td width="50%">
+                                @if (item.RegisterItemName == null)
+                                {
+                                    @item.RegisterDescription
                                 }
-                            }
-                            else
-                            {
-                                <b><a href="@item.subregisterItemUrl">@item.RegisterItemName</a></b>
-                            }
-                        }
-                        </td>
-                        <td width="50%">
-                            @if (item.RegisterItemName == null) { 
-                                @item.RegisterDescription
-                            }
-                            else
-                            {
-                                @item.RegisterItemDescription
-                            }
-                        </td>
-                        <td width="10%">
-                            @if (item.Discriminator == "Organization" && item.RegisterItemName != null)
-                            {
-                                <span>Organisasjon</span>
-                            }
-                            @if (item.Discriminator == "Dataset" && item.RegisterItemName != null)
-                            {
-                                <span>Datasett</span>
-                            }
-                            @if (item.Discriminator == "Document" && item.RegisterItemName != null)
-                            {
-                                <span>Dokument</span>
-                            }
-                            @if (item.Discriminator == "CodelistValue" && item.RegisterItemName != null)
-                            {
-                                <span>Kode</span>
-                            }
-                            @if (item.Discriminator == "EPSG" && item.RegisterItemName != null)
-                            {
-                                <span>Epsg-kode</span>
-                            }
-                            @if (item.RegisterItemName == null)
-                            {
-                                <span>Register</span>
-                            }
+                                else
+                                {
+                                    @item.RegisterItemDescription
+                                }
+                            </td>
+                            <td width="10%">
+                                @if (item.Discriminator == "Organization" && item.RegisterItemName != null)
+                                {
+                                    <span>Organisasjon</span>
+                                }
+                                @if (item.Discriminator == "Dataset" && item.RegisterItemName != null)
+                                {
+                                    <span>Datasett</span>
+                                }
+                                @if (item.Discriminator == "Document" && item.RegisterItemName != null)
+                                {
+                                    <span>Dokument</span>
+                                }
+                                @if (item.Discriminator == "CodelistValue" && item.RegisterItemName != null)
+                                {
+                                    <span>Kode</span>
+                                }
+                                @if (item.Discriminator == "EPSG" && item.RegisterItemName != null)
+                                {
+                                    <span>Epsg-kode</span>
+                                }
+                                @if (item.Discriminator == "Objektregister")
+                                {
+                                    <span>@item.Type</span>
+                                }
+                                @if (item.RegisterItemName == null)
+                                {
+                                    <span>Register</span>
+                                }
 
-                        </td>
-                        <td width="20%">
-                            @if (item.ParentRegisterName == null)
-                            {
-                                <a href="/register/@item.RegisterSeoname">@item.RegisterName</a>
-                            }
-                            else
-                            {
-                                <p> 
-                                    <a href="@item.ParentRegisterUrl">@item.ParentRegisterName </a><span class="glyphicon glyphicon-chevron-right"></span>
-                                    <a href="@item.SubregisterUrl">@item.RegisterName</a>
-                                </p>
+                            </td>
+                            <td width="20%">
+                                @if (item.Discriminator == "Objektregister")
+                                {
+                                    <a href="@Html.ObjektkatalogUrl()">@item.RegisterName</a>
+                                }
+                                else if (item.ParentRegisterName == null)
+                                {
+                                    <a href="/register/@item.RegisterSeoname">@item.RegisterName</a>
+                                }
+                                else
+                                {
+                                    <p>
+                                        <a href="@item.ParentRegisterUrl">@item.ParentRegisterName </a><span class="glyphicon glyphicon-chevron-right"></span>
+                                        <a href="@item.SubregisterUrl">@item.RegisterName</a>
+                                    </p>
 
-                            }
-                        </td>
+                                }
+                            </td>
 
-                    </tr>
+                        </tr>
+                    }
                 }
             }
         </table>

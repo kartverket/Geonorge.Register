@@ -11,12 +11,16 @@ using System.IO;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using Kartverket.Register.Services.Versioning;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class DocumentsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Documents
         public ActionResult Index()
@@ -42,18 +46,24 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Create
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
-        public ActionResult Create(string registername)
+        public ActionResult Create(string registername, string parentRegister)
         {
-            
-            ViewBag.registerSEO = registername;
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
+                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
             ViewBag.registername = register.name;
+            ViewBag.registerSEO = registername;
 
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
@@ -63,7 +73,7 @@ namespace Kartverket.Register.Controllers
                 return View();
             }
             return HttpNotFound();
-            
+
         }
 
         // POST: Documents/Create
@@ -71,31 +81,38 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
-        {            
-            ValidationName(document, registername);
-       
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
+        {
+
+            // Finn systemId til aktuelt register.
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            string parentRegisterOwner = null;
+            if (register.parentRegisterId != null)
+            {
+                parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+            ValidationName(document, register);
             if (ModelState.IsValid)
             {
-                var queryResultsRegister = from o in db.Registers
-                                           where o.seoname == registername
-                                           select o.systemId;
-
-                Guid regId = queryResultsRegister.First();
-                Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
+                //Tildel verdi til dokumentobjektet
                 document.systemId = Guid.NewGuid();
                 document.modified = DateTime.Now;
                 document.dateSubmitted = DateTime.Now;
                 document.registerId = regId;
-                document.statusId = "Submitted";     
+                document.statusId = "Submitted";
+                document.versionNumber = 1;
 
                 if (document.name == null || document.name.Length == 0)
                 {
                     document.name = "ikke angitt";
-                    document.seoname = document.systemId.ToString();
                 }
 
                 if (document.description == null || document.description.Length == 0)
@@ -103,24 +120,159 @@ namespace Kartverket.Register.Controllers
                     document.description = "ikke angitt";
                 }
 
-                document.seoname = MakeSeoFriendlyString(document.name);               
+                document.seoname = MakeSeoFriendlyString(document.name);
 
+
+                //Dokument og thumbnail
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-           
                 if (documentfile != null)
                 {
-                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname);
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name, register.seoname, document.versionNumber);
                     if (document.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url, registername);
-                    }               
+                    }
                 }
                 if (thumbnail != null)
                 {
-                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname);
-                } 
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
+                }
 
-                if (document.documentUrl == null) {
+                if (document.documentUrl == null)
+                {
+                    document.documentUrl = "ikke angitt";
+                }
+
+                // Opprette versjonering av et element
+                Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
+                versjoneringsGruppe.systemId = Guid.NewGuid();
+                versjoneringsGruppe.currentVersion = document.systemId;
+                versjoneringsGruppe.containedItemClass = "Documents";
+                versjoneringsGruppe.lastVersionNumber = document.versionNumber;
+                document.versioningId = versjoneringsGruppe.systemId;
+
+                db.Entry(versjoneringsGruppe).State = EntityState.Modified;
+                db.Versions.Add(versjoneringsGruppe);
+
+                // Hente innsender og eier ut fra innlogget bruker
+                string organizationLogin = GetSecurityClaim("organization");
+                var queryResults = from o in db.Organizations
+                                   where o.name == organizationLogin
+                                   select o.systemId;
+
+                Guid orgId = queryResults.First();
+                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+                document.submitterId = orgId;
+                document.submitter = submitterOrganisasjon;
+                document.documentowner = submitterOrganisasjon;
+                document.documentownerId = orgId;
+
+
+                // Legger inn det nye dokumentet i db
+                db.Entry(document).State = EntityState.Modified;
+                db.RegisterItems.Add(document);
+                db.SaveChanges();
+
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+            }
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = register.seoname;
+            return View(document);
+        }
+
+
+
+        // GET: Documents/CreateNewVersion
+        [Authorize]
+        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
+        public ActionResult CreateNewVersion(string parentRegister, string registername, string itemname)
+        {
+
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            var queryResults = from o in db.Documents
+                               where o.seoname == itemname && o.register.seoname == registername &&
+                               (o.register.parentRegister.seoname == parentRegister || o.register.parentRegister.seoname == null)
+                               && o.versioning.currentVersion == o.systemId
+                               select o.systemId;
+            Guid systId = queryResults.FirstOrDefault();
+
+
+            if (systId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Document document = db.Documents.Find(systId);
+
+            if (document == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            {
+                Viewbags(document);
+                return View(document);
+            }
+            return HttpNotFound();
+
+        }
+
+        // POST: Documents/CreateNewVersion
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Authorize]
+        [Route("dokument/versjon/{parentRegister}/{parentRegisterOwner}/{registername}/{itemOwner}/{itemname}/ny")]
+        [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
+        //[ValidateAntiForgeryToken]
+        public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname)
+        {
+
+            if (ModelState.IsValid)
+            {
+                document.systemId = Guid.NewGuid();
+                document.modified = DateTime.Now;
+                document.dateSubmitted = DateTime.Now;
+                document.statusId = "Submitted";
+                document.versionNumber++;
+
+                if (document.description == null || document.description.Length == 0)
+                {
+                    document.description = "ikke angitt";
+                }
+                document.seoname = MakeSeoFriendlyString(document.name);
+
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+
+                if (documentfile != null)
+                {
+                    document.documentUrl = url + SaveFileToDisk(documentfile, document.name + "v" + document.versionNumber, registername, document.versionNumber);
+                    if (document.documentUrl.Contains(".pdf"))
+                    {
+                        GenerateThumbnail(document, documentfile, url, registername);
+                    }
+                }
+                if (thumbnail != null)
+                {
+                    document.thumbnail = url + SaveFileToDisk(thumbnail, document.name + "v" + document.versionNumber, registername, document.versionNumber);
+                }
+                if (document.documentUrl == null)
+                {
                     document.documentUrl = "ikke angitt";
                 }
 
@@ -139,12 +291,27 @@ namespace Kartverket.Register.Controllers
                 document.documentownerId = orgId;
 
                 db.Entry(document).State = EntityState.Modified;
-                //db.SaveChanges();
-
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
 
-                return Redirect("/register/" + registername);
+                //Oppdater versjoneringsgruppen
+                var queryResultVersions = from v in db.Versions
+                                          where v.systemId == document.versioningId
+                                          select v.systemId;
+
+                Guid vSystId = queryResultVersions.FirstOrDefault();
+                Kartverket.Register.Models.Version versjonsgruppe = db.Versions.Find(vSystId);
+                versjonsgruppe.lastVersionNumber = document.versionNumber;
+                db.SaveChanges();
+
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                }
             }
 
             return View(document);
@@ -153,34 +320,36 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Edit/5
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(string registername, string documentname)
+        public ActionResult Edit(string registername, string documentname, int? vnr, string parentRegister)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
-                                where o.seoname == documentname && o.register.seoname == registername
-                                select o.systemId;
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                               select o.systemId;
 
             Guid systId = queryResults.First();
-            
+
 
             if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Document document = db.Documents.Find(systId);
-                
+
             if (document == null)
             {
                 return HttpNotFound();
             }
-                
+
             if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
             {
                 Viewbags(document);
-		        return View(document);
+                return View(document);
             }
             return HttpNotFound();
         }
@@ -190,17 +359,28 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
+        public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
+            // Henter orginaldokumentet
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname && o.register.seoname == registername
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == document.versionNumber
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
             Document originalDocument = db.Documents.Find(systId);
 
-            ValidationName(document, registername);
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            //Validering av navnet
+            ValidationName(document, register);
 
             if (ModelState.IsValid)
             {
@@ -209,27 +389,80 @@ namespace Kartverket.Register.Controllers
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
-                    originalDocument.documentUrl = document.documentUrl; 
+                    originalDocument.documentUrl = document.documentUrl;
                 }
                 if (document.statusId != null)
                 {
-                    originalDocument.statusId = document.statusId;
-                    if (originalDocument.statusId != "Accepted" && document.statusId == "Accepted")
+                    // Finn versjonsgruppen
+                    var queryResultsVersions = from o in db.Versions
+                                               where o.systemId == document.versioningId
+                                               select o;
+
+                    Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
+
+                    // Finn alle dokumenter i versjonegruppen
+                    var queryResultsVersionsDocument = from o in db.Documents
+                                                       where o.versioningId == versjonsgruppe.systemId
+                                                       select o;
+
+                    if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
                     {
+                        //Endre status på nåværende gjeldende versjon
+                        foreach (Document item in queryResultsVersionsDocument)
+                        {
+                            if (item.statusId == "Valid")
+                            {
+                                item.statusId = "Superseded";
+                                item.modified = DateTime.Now;
+                            }
+                        }
+
+                        // sett dette dokumentet til å være ny gjeldende versjon
+                        versjonsgruppe.currentVersion = originalDocument.systemId;
                         originalDocument.dateAccepted = DateTime.Now;
+                        originalDocument.statusId = document.statusId;
                     }
-                    if (originalDocument.statusId == "Accepted" && document.statusId != "Accepted")
+                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
-                        originalDocument.dateAccepted = null;
+                        if (queryResultsVersionsDocument.Count() > 1)
+                        {
+                            // Sett gjeldende versjon ut fra status...                            
+                            foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.modified))
+                            {
+                                if (item.statusId == "Superseded" && item.systemId != document.systemId)
+                                {
+                                    versjonsgruppe.currentVersion = item.systemId;
+                                    item.statusId = "Valid";
+                                    item.modified = DateTime.Now;
+                                    break;
+                                }
+                            }
+                            if (versjonsgruppe.currentVersion == document.systemId)
+                            {
+                                Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
+                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            }
+                            originalDocument.statusId = document.statusId;
+
+                        }
+                        else
+                        {
+                            originalDocument.statusId = document.statusId;
+                        }
+                    }
+                    else
+                    {
+                        originalDocument.statusId = document.statusId;
                     }
                 }
+
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                
+
                 if (documentfile != null)
                 {
-                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname);
+                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
                     if (originalDocument.documentUrl.Contains(".pdf"))
                     {
                         GenerateThumbnail(document, documentfile, url, registername);
@@ -239,7 +472,7 @@ namespace Kartverket.Register.Controllers
 
                 if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
                 {
-                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname);
+                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
                 }
 
                 originalDocument.modified = DateTime.Now;
@@ -247,7 +480,16 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(document);
 
-                return Redirect("/register/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                //Retur? Gjeldende versjon!!
+
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/versjoner/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                }
             }
             Viewbags(document);
             return View(originalDocument);
@@ -255,15 +497,17 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Delete/5
         [Authorize]
+        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        public ActionResult Delete(string registername, string documentname)
+        public ActionResult Delete(string registername, string documentname, int? vnr, string parentregister, string parentregisterowner)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.Documents
-                                where o.seoname == documentname && o.register.seoname == registername 
-                                select o.systemId;
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == vnr
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               select o.systemId;
 
             Guid systId = queryResults.First();
 
@@ -280,24 +524,76 @@ namespace Kartverket.Register.Controllers
             {
                 return View(document);
             }
-                return HttpNotFound();
+            return HttpNotFound();
         }
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
-        //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string registername, string documentname)
+        public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
+
+            //Finn dokumentet som skal slettes
             var queryResults = from o in db.Documents
-                               where o.seoname == documentname && o.register.seoname == registername
+                               where o.seoname == documentname && o.register.seoname == registername && o.versionNumber == versionNumber
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
-
             Document document = db.Documents.Find(systId);
+
+            string parent = null;
+            if (document.register.parentRegisterId != null)
+            {
+                parent = document.register.parentRegister.seoname;
+            }
+
+            //Finn versjonsgruppen dokumentet ligger i.
+            var queryResultsVersions = from o in db.Versions
+                                       where o.currentVersion == systId
+                                       select o;
+
+            Kartverket.Register.Models.Version versjonsgruppe = queryResultsVersions.FirstOrDefault();
+
+            //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
+            // Finn alle dokumenter i versjonsgruppen
+            if (queryResultsVersions.Count() != 0)
+            {
+                var queryResultsVersionsDocument = from o in db.Documents
+                                                   where o.versioningId == versjonsgruppe.systemId && o.systemId != systId
+                                                   select o;
+
+                if (queryResultsVersionsDocument.Count() != 0)
+                {
+                    // Sett gjeldende versjon ut fra status...
+                    foreach (var item in queryResultsVersionsDocument.OrderByDescending(o => o.modified))
+                    {
+                        if (item.statusId == "Superseded")
+                        {
+                            versjonsgruppe.currentVersion = item.systemId;
+                            item.statusId = "Valid";
+                            item.modified = DateTime.Now;
+                            break;
+                        }
+                    }
+                    if (versjonsgruppe.currentVersion == document.systemId)
+                    {
+                        Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
+                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                    }
+                    //db.SaveChanges();                    
+                }
+            }
+
             db.RegisterItems.Remove(document);
             db.SaveChanges();
+
+            if (parent != null)
+            {
+                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
+            }
+
             return Redirect("/register/" + registername);
         }
 
@@ -308,19 +604,6 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-        private string FindRegisterOwner(string registername)
-        {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
         }
 
         private string GetSecurityClaim(string type)
@@ -375,20 +658,20 @@ namespace Kartverket.Register.Controllers
             string seofilename;
             MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
-            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_" + seofilename + "." + filtype); 
-            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + ".jpg");
+            string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+            string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v " + document.versionNumber + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
             document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
         }
 
 
-        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register)
+        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
         {
             string filtype;
             string seofilename;
             MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
 
-            string filename = register + "_" + name + "_" + seofilename + "." + filtype;                       
+            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
             file.SaveAs(path);
             return filename;
@@ -409,10 +692,14 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private void ValidationName(Document document, string registername)
+        private void ValidationName(Document document, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.Documents
-                                      where o.name == document.name && o.systemId != document.systemId && o.register.seoname == registername
+                                      where o.name == document.name &&
+                                      o.systemId != document.systemId &&
+                                      o.register.name == register.name &&
+                                      o.versioningId != document.versioningId &&
+                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -427,6 +714,11 @@ namespace Kartverket.Register.Controllers
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
             ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Log.Error("Error", filterContext.Exception);
         }
 
     }

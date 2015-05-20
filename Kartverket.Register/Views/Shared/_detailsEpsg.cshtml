@@ -3,39 +3,92 @@
 <div class="row result-row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
-            <p><b>@Html.DisplayFor(model => model.epsgcode)</b></p>
+            @if (Model.epsgcode == null)
+            {
+                <p title="EPSG-kode: @Model.epsgcode"><span>EPSG: </span> - </p>
+            }
+            else
+            {
+                <p title="EPSG-kode: @Model.epsgcode"><b><span>EPSG: </span>@Html.DisplayFor(modelItem => Model.epsgcode)</b></p>
+            }
         </div>
-        <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 top-padding">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
 
+            @if (Model.sosiReferencesystem == null)
+            {
+                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+            }
+            else
+            {
+                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
+            }
+
+            @if (Model.verticalReferenceSystem == null)
+            {
+                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+            }
+            else
+            {
+                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
+            }
+
+            @if (Model.horizontalReferenceSystem == null)
+            {
+                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+            }
+            else
+            {
+                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
+            }
+
+            @if (Model.dimensionId == null)
+            {
+                <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+            }
+            else
+            {
+                <p title="Dimensjon: @Model.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
+            }
+
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-information">
             @if (Model.inspireRequirement == null)
             {
-                <span>Inspirekrav: Ikke angitt</span><br />
+                <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
             }
             else
             {
-                <span>Inspirekrav: @Html.DisplayFor(model => model.inspireRequirement.description)</span><br />
-            }
-            @if (Model.nationalRequirement == null)
-            {
-                <span>Nasjonalt krav: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Nasjonalt krav: @Html.DisplayFor(model => model.nationalRequirement.description)</span><br />
-            }
-            @if (Model.nationalSeasRequirement == null)
-            {
-                <span>Nasjonalt krav for havområder: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Nasjonalt krav for havområder: @Html.DisplayFor(model => model.nationalSeasRequirement.description)</span><br />
+                <p title="Inspire krav: @Model.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
             }
 
-        </div>
-        <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
-            <p>Ekstern referanse: <a href="@Html.DisplayFor(model => model.externalReference)" title="Vis ekstern referanse">Vis</a></p>
+            @if (Model.nationalRequirement == null)
+            {
+                <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
+            }
+            else
+            {
+                <p title="Nasjonalt krav: @Model.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
+            }
+
+            @if (Model.nationalSeasRequirement == null)
+            {
+                <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
+            }
+            else
+            {
+                <p title="Nasjonalt krav for havområde: @Model.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
+            }
+
+            @if (Model.sosiReferencesystem == null)
+            {
+                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span> - </p>
+            }
+            else
+            {
+                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span><a href="@Model.externalReference">Vis</a></p>
+            }
         </div>
     </div>
 </div>
 
+<hr/>

@@ -16,9 +16,12 @@ using Kartverket.DOK.Service;
 
 namespace Kartverket.Register.Controllers
 {
+    [HandleError]
     public class DatasetsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Datasets
         public ActionResult Index()
@@ -44,39 +47,48 @@ namespace Kartverket.Register.Controllers
 
         // GET: Datasets/Create
         [Authorize]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(string registername)
+        public ActionResult Create(string registername, string parentRegister)
         {
             ViewBag.registername = registername;
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("dataset");
 
             var queryResults = from o in db.Registers
-                               where o.seoname == registername
+                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.registerOwner = register.parentRegister.owner.seoname;
+                ViewBag.parentRegister = register.parentRegister.seoname;
+            }
+
+            ViewBag.registername = register.name;
+            ViewBag.registerSEO = registername;
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin")
             {
                 return View();
             }
             return HttpNotFound();
         }
-              
-        
+
+
         // POST: Datasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string uuid)
+        public ActionResult Create(Dataset dataset, string registername, string uuid, string parentRegister, string registerowner)
         {
-
             if (uuid != null)
             {
                 var model = new Dataset();
@@ -89,19 +101,27 @@ namespace Kartverket.Register.Controllers
                     TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
                 }
 
+                if (parentRegister != null)
+                {
+                    ViewBag.registerOwner = registerowner;
+                    ViewBag.parentRegister = parentRegister;
+                }
+
                 ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
                 ViewBag.registername = registername;
+                ViewBag.registerSEO = registername;
                 return View(model);
             }
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
-            ValidationName(dataset, registername);
+            ValidationName(dataset, register);
 
             if (ModelState.IsValid)
             {
@@ -143,17 +163,36 @@ namespace Kartverket.Register.Controllers
                 db.RegisterItems.Add(dataset);
                 db.SaveChanges();
                 ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
-                return Redirect("/register/" + registername);
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + dataset.register.parentRegister.seoname + "/" + dataset.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + dataset.datasetowner.seoname + "/" + dataset.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/" + registername + "/" + dataset.datasetowner.seoname + "/" + dataset.seoname);
+                }
 
             }
+            if (parentRegister != null)
+            {
+                ViewBag.registerOwner = registerowner;
+                ViewBag.parentRegister = parentRegister;
+            }
+
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            ViewBag.registername = registername;
+            ViewBag.registerSEO = registername;
             return View(dataset);
         }
 
-        private void ValidationName(Dataset dataset, string registername)
+        private void ValidationName(Dataset dataset, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.Datasets
-                                      where o.name == dataset.name && o.systemId != dataset.systemId && o.register.seoname == registername
+                                      where o.name == dataset.name &&
+                                      o.systemId != dataset.systemId &&
+                                      o.register.name == register.name &&
+                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -164,20 +203,22 @@ namespace Kartverket.Register.Controllers
 
         // GET: Datasets/Edit/5
         [Authorize]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
         [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
-        public ActionResult Edit(string registername, string datasetname)
+        public ActionResult Edit(string registername, string datasetname, string parentRegister)
         {
-            string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
 
             var queryResults = from o in db.Datasets
-                                where o.seoname == datasetname && o.register.seoname == registername
-                                select o.systemId;
+                               where o.seoname == datasetname &&
+                               o.register.seoname == registername &&
+                               (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                               select o.systemId;
 
             Guid systId = queryResults.First();
-           
+
             if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -187,7 +228,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 Viewbags(dataset);
                 return View(dataset);
@@ -209,9 +250,10 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dataset/{registername}/{organizationpar}/{datasetname}/rediger")]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
+        [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription)
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister)
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
@@ -220,7 +262,15 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.First();
             Dataset originalDataset = db.Datasets.Find(systId);
 
-            ValidationName(dataset, registername);
+            //Finn registerobjektet
+            var queryResultsRegister = from o in db.Registers
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       select o.systemId;
+
+            Guid regId = queryResultsRegister.First();
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+
+            ValidationName(dataset, register);
 
             if (dataset.name == null)
             {
@@ -242,13 +292,11 @@ namespace Kartverket.Register.Controllers
                 Viewbags(model);
                 return View(model);
             }
-            
-           
 
             if (ModelState.IsValid)
             {
-                
-                if (dataset.name != null) originalDataset.name = dataset.name; 
+
+                if (dataset.name != null) originalDataset.name = dataset.name;
                 originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
                 originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
@@ -277,54 +325,41 @@ namespace Kartverket.Register.Controllers
                 originalDataset.Notes = dataset.Notes;
                 originalDataset.ThemeGroupId = dataset.ThemeGroupId;
                 originalDataset.datasetthumbnail = dataset.datasetthumbnail;
-                
-               
+
+
                 originalDataset.modified = DateTime.Now;
                 db.Entry(originalDataset).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(originalDataset);
 
-                return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
+                if (!String.IsNullOrWhiteSpace(parentRegister))
+                {
+                    return Redirect("/subregister/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
+                }
+                else
+                {
+                    return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
+                }
             }
             Viewbags(originalDataset);
             return View(originalDataset);
         }
 
-        //public ActionResult UpdateFromMetadata(string systemId, string uuid, bool dontUpdateDescription)
-        //{
 
-        //    var model = db.Datasets.Find(Guid.Parse(systemId));
-
-        //        string originalDescription = model.description;
-
-        //        try
-        //        {
-        //            new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-        //        }
-
-        //        if (dontUpdateDescription) model.description = originalDescription;
-
-        //        Viewbags(model);
-        //        return View("Edit", model);
-            
-        //}
         // GET: Documents/Delete/5
         [Authorize]
+        [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
-        public ActionResult Delete(string registername, string datasetname)
+        public ActionResult Delete(string registername, string datasetname, string parentregister, string parentregisterowner)
         {
-            string registerOwner = FindRegisterOwner(registername);
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            
+
             var queryResults = from o in db.Datasets
-                                where o.seoname == datasetname && o.register.seoname == registername
-                                select o.systemId;
+                               where o.seoname == datasetname && o.register.seoname == registername
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               select o.systemId;
 
             Guid systId = queryResults.First();
 
@@ -337,7 +372,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == dataset.submitter.name.ToLower() || user.ToLower() == dataset.datasetowner.name.ToLower())
+            if (role == "nd.metadata_admin")
             {
                 return View(dataset);
             }
@@ -346,19 +381,33 @@ namespace Kartverket.Register.Controllers
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string registername, string datasetname)
+        public ActionResult DeleteConfirmed(string registername, string datasetname, string parentregister, string parentregisterowner)
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
+                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
-
             Dataset dataset = db.Datasets.Find(systId);
+
+            string parent = null;
+            if (dataset.register.parentRegisterId != null)
+            {
+                parent = dataset.register.parentRegister.seoname;
+            }
+
             db.RegisterItems.Remove(dataset);
             db.SaveChanges();
+
+            if (parent != null)
+            {
+                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
+            }
+
             return Redirect("/register/" + registername);
         }
 
@@ -417,18 +466,9 @@ namespace Kartverket.Register.Controllers
             return encodedUrl;
         }
 
-        private string FindRegisterOwner(string registername)
+        protected override void OnException(ExceptionContext filterContext)
         {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
+            Log.Error("Error", filterContext.Exception);
         }
-
-
     }
 }

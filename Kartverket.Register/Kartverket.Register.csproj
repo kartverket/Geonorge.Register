@@ -187,6 +187,7 @@
     <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -379,15 +380,76 @@
     <Compile Include="Migrations\201504131034276_addTargetNamespace.Designer.cs">
       <DependentUpon>201504131034276_addTargetNamespace.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504160713095_AddVersionNumber.cs" />
+    <Compile Include="Migrations\201504160713095_AddVersionNumber.Designer.cs">
+      <DependentUpon>201504160713095_AddVersionNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504160716419_UpdateVersionNumber.cs" />
+    <Compile Include="Migrations\201504160716419_UpdateVersionNumber.Designer.cs">
+      <DependentUpon>201504160716419_UpdateVersionNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161151003_AddRegisterItemVersion.cs" />
+    <Compile Include="Migrations\201504161151003_AddRegisterItemVersion.Designer.cs">
+      <DependentUpon>201504161151003_AddRegisterItemVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161200599_UpdateVersionTabel.cs" />
+    <Compile Include="Migrations\201504161200599_UpdateVersionTabel.Designer.cs">
+      <DependentUpon>201504161200599_UpdateVersionTabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161204282_AddRegisterVersion.cs" />
+    <Compile Include="Migrations\201504161204282_AddRegisterVersion.Designer.cs">
+      <DependentUpon>201504161204282_AddRegisterVersion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161206023_UpdateRegisterVersionNumber.cs" />
+    <Compile Include="Migrations\201504161206023_UpdateRegisterVersionNumber.Designer.cs">
+      <DependentUpon>201504161206023_UpdateRegisterVersionNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161342135_AddVersionContainedItemClass.cs" />
+    <Compile Include="Migrations\201504161342135_AddVersionContainedItemClass.Designer.cs">
+      <DependentUpon>201504161342135_AddVersionContainedItemClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504161345371_AddItemsToVersionTable.cs" />
+    <Compile Include="Migrations\201504161345371_AddItemsToVersionTable.Designer.cs">
+      <DependentUpon>201504161345371_AddItemsToVersionTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504170700237_UpdateRegisterItemsVersioningId.cs" />
+    <Compile Include="Migrations\201504170700237_UpdateRegisterItemsVersioningId.Designer.cs">
+      <DependentUpon>201504170700237_UpdateRegisterItemsVersioningId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504170758062_UpdateRegistersVersioningId.cs" />
+    <Compile Include="Migrations\201504170758062_UpdateRegistersVersioningId.Designer.cs">
+      <DependentUpon>201504170758062_UpdateRegistersVersioningId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504301149248_UpdateLastVersionNumber.cs" />
+    <Compile Include="Migrations\201504301149248_UpdateLastVersionNumber.Designer.cs">
+      <DependentUpon>201504301149248_UpdateLastVersionNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505070917186_RequirementSortOrder.cs" />
+    <Compile Include="Migrations\201505070917186_RequirementSortOrder.Designer.cs">
+      <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505071035162_HoizontalAndVertRefSys.cs" />
+    <Compile Include="Migrations\201505071035162_HoizontalAndVertRefSys.Designer.cs">
+      <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505071122307_Dimension.cs" />
+    <Compile Include="Migrations\201505071122307_Dimension.Designer.cs">
+      <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
+    <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
+    <Compile Include="Models\NotFoundModel.cs" />
+    <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\Sorting.cs" />
+    <Compile Include="Models\FilterItems.cs" />
+    <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringViewModel.cs" />
@@ -412,6 +474,8 @@
     <Compile Include="Models\SearchResultItem.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Version.cs" />
+    <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultViewModel.cs" />
     <Compile Include="Models\ViewModels\SearchViewModel.cs" />
@@ -427,6 +491,10 @@
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
     <Compile Include="Services\Search\SearchService.cs" />
+    <Compile Include="Services\Register\IRegisterService.cs" />
+    <Compile Include="Services\Register\RegisterService.cs" />
+    <Compile Include="Services\Versioning\IVersioningService.cs" />
+    <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\gsdll32.dll">
@@ -492,6 +560,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\visninger.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
@@ -561,6 +630,13 @@
     <Content Include="Views\Subregister\Index.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
+    <Content Include="Views\Documents\CreateNewVersion.cshtml" />
+    <Content Include="Views\Shared\_currentVersionDocument.cshtml" />
+    <Content Include="Views\Shared\_histroicalDocuments.cshtml" />
+    <Content Include="Views\Shared\_suggestedDocuments.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Registers\DetailsRegisterItemVersions.cshtml" />
+    <Content Include="Views\Shared\_searchResultSubregisters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -704,6 +780,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504131034276_addTargetNamespace.resx">
       <DependentUpon>201504131034276_addTargetNamespace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504160713095_AddVersionNumber.resx">
+      <DependentUpon>201504160713095_AddVersionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504160716419_UpdateVersionNumber.resx">
+      <DependentUpon>201504160716419_UpdateVersionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161151003_AddRegisterItemVersion.resx">
+      <DependentUpon>201504161151003_AddRegisterItemVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161200599_UpdateVersionTabel.resx">
+      <DependentUpon>201504161200599_UpdateVersionTabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161204282_AddRegisterVersion.resx">
+      <DependentUpon>201504161204282_AddRegisterVersion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161206023_UpdateRegisterVersionNumber.resx">
+      <DependentUpon>201504161206023_UpdateRegisterVersionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161342135_AddVersionContainedItemClass.resx">
+      <DependentUpon>201504161342135_AddVersionContainedItemClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504161345371_AddItemsToVersionTable.resx">
+      <DependentUpon>201504161345371_AddItemsToVersionTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504170700237_UpdateRegisterItemsVersioningId.resx">
+      <DependentUpon>201504170700237_UpdateRegisterItemsVersioningId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504170758062_UpdateRegistersVersioningId.resx">
+      <DependentUpon>201504170758062_UpdateRegistersVersioningId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504301149248_UpdateLastVersionNumber.resx">
+      <DependentUpon>201504301149248_UpdateLastVersionNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505070917186_RequirementSortOrder.resx">
+      <DependentUpon>201505070917186_RequirementSortOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505071035162_HoizontalAndVertRefSys.resx">
+      <DependentUpon>201505071035162_HoizontalAndVertRefSys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505071122307_Dimension.resx">
+      <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,0 +1,115 @@
+﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = @Model.currentVersion.name;
+    var documentOwner = ViewBag.registerItemOwner;
+}
+
+@section breadcrumb {
+    <li><a href="/register/@Model.currentVersion.register.seoname">@Html.DisplayFor(model => model.currentVersion.register.name)</a></li>
+    <li class="active">@Html.DisplayFor(model => model.currentVersion.name)</li>
+}
+@*<div class="page-header">
+    <h2 class="h-md">@Html.DisplayFor(model => model.currentVersion.name)</h2>
+    <hr>
+</div>*@
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
+            <li> <h2 class="h-md">@Html.DisplayFor(model => model.currentVersion.name)</h2> </li>
+            <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">Gjeldende</a></li>
+            <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">Forslag</a></li>
+            <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">Historiske</a></li>
+        </ul>
+            <br />
+    </div>
+
+        @if (Model.currentVersion.register.containedItemClass == "Organization")
+        {
+            @Html.Partial("_detailsOrganization")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Document")
+        {
+            <div class="tab-content">
+                <div class="tab-pane active" id="gjeldende">
+                    @Html.Partial("_currentVersionDocument", Model)
+                </div>
+                <div class="tab-pane" id="historiske">
+                    @Html.Partial("_histroicalDocuments", Model)
+                </div>
+                <div class="tab-pane" id="forslag">
+                    @Html.Partial("_suggestedDocuments", Model)
+                </div>
+            </div>
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_detailsDataset")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_detailsEpsg")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Register")
+        {
+            @Html.Partial("_detailsSubregister")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
+        {
+            @Html.Partial("_detailsCodelistValue")
+        }
+        
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <p>            
+          
+        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
+
+        @if (Request.IsAuthenticated)
+        {
+                
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || 
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.currentVersion.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+            {        
+                if (Model.currentVersion.register.containedItemClass == "Organization")
+                {
+                    <span>| </span><a href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                }
+                if (Model.currentVersion.register.containedItemClass == "Document")
+                {
+                    if (Model.currentVersion.register.parentRegisterId != null)
+                    {
+                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    }
+                    else
+                    {
+                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    }
+
+                }
+                if (Model.currentVersion.register.containedItemClass == "Dataset")
+                {
+                    <span> | </span><a href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Endre</a>
+                    <span> | </span><a href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                }
+                if (Model.currentVersion.register.containedItemClass == "EPSG")
+                {
+                    <span>| </span><a href="/epsg-koder/@Model.currentVersion.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
+                }
+                if (Model.currentVersion.register.containedItemClass == "CodelistValue")
+                {
+                    <span>| </span><a href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Endre</a>
+                    <span>| </span><a href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                }
+
+
+            }
+        }
+
+    </p>
+</div>

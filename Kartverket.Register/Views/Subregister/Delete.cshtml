@@ -25,7 +25,7 @@
             <input type="submit" value="Slett" class="btn btn-default" /> <br/>
             @Html.ValidationMessage("ErrorMessageDelete") <br/>
             <br />
-            <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
+                <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/">Tilbake</a>
         </div>
     }
 </div>

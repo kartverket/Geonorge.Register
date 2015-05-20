@@ -10,7 +10,7 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
         </li>
     </ul>
 
@@ -20,6 +20,9 @@
     <div class="register document search-results">
         @foreach (Document item in Model)
         {
+            if (item.versioning.currentVersion == item.systemId)
+            {
+            
             <div class="row result-row metadata">
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
@@ -42,55 +45,65 @@
                     <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
                         
 
-                        @if (item.register.parentRegister != null)
+                            @if (item.register.parentRegister != null)
+                            {
+                                <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                    <h3 class="role-button" style="font-size: 15px;">
+                                        @item.name
+                                    </h3>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
+                                    <h3 class="role-button" style="font-size: 15px;">
+                                        @item.name
+                                    </h3>
+                                </a>
+                            }
+                                <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
+                                    <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                                </a>
+                                <div class="orglogo">
+                                    <a href="/register/@item.register.seoname/@item.documentowner.seoname/">
+                                        @Html.DisplayFor(modelItem => item.documentowner.name)
+                                    </a>
+                                </div>
+                            <p class=" ">
+                                @Html.DisplayFor(modelItem => item.description)
+                            </p>
+                        </div>
+                        <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                            @if (item.documentUrl.Contains("ikke angitt"))
+                            {
+                                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
+                                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                                </a><br />
+                            }
+                            else
+                            {
+                                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
+                                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                                </a><br />
+                            }
+                        </div>
+                        <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
+
+                        @if (item.status == null)
                         {
-                            <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
-                                <h3 class="role-button" style="font-size: 18px;">
-                                    @item.name
-                                </h3>
-                            </a>
+                            <p><span>Status: </span>Ikke angitt</p>
                         }
                         else
                         {
-                            <a class="" href="/register/@item.register.seoname/@item.documentowner.seoname/@item.seoname/">
-                                <h3 class="role-button" style="font-size: 18px;">
-                                    @item.name
-                                </h3>
-                            </a>
+                            <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                         }
-                            <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname/">
-                                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
-                            </a>
-                            <div class="orglogo">
-                                <a href="/register/@item.register.seoname/@item.documentowner.seoname/">
-                                    @Html.DisplayFor(modelItem => item.documentowner.name)
-                                </a>
-                            </div>
-                        <p class=" ">
-                            @Html.DisplayFor(modelItem => item.description)
-                        </p>
-                    </div>
-                    <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
-                            <span class="glyphicon glyphicon-download-alt"> </span>Last ned
-                        </a><br />
-                    </div>
-                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
+                        </div>
 
-                    @if (item.status == null)
-                    {
-                        <p><span>Status: </span>Ikke angitt</p>
-                    }
-                    else
-                    {
-                        <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
-                    }
                     </div>
 
                 </div>
-
-            </div>
-            <hr />
+                <hr />
+            }
         }
     </div>
 
@@ -102,7 +115,7 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
         </li>
     </ul>
 </div>

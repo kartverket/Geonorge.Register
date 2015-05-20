@@ -44,14 +44,14 @@
         {
             <span>Eier: @documentOwner </span><br />
         }
-        @if (Model.currentVersion == null)
+        @*@if (Model.currentVersion == null)
         {
             <span>Versjon: Ikke angitt</span><br />
         }
         else
         {
             <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-        }
+        }*@
 
 
     </div>
@@ -103,23 +103,22 @@
                 {
                     if (Model.register.containedItemClass == "Organization")
                     {
-                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
-                        <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+                        <span>| </span><a href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
+                        <span>| </span><a href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
                     }
                     if (Model.register.containedItemClass == "Document")
                     {
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dokument/@Html.ToUrl(Model.register.name)/@documentOwner/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        @*<span> | </span><a href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>*@
                     }
                     if (Model.register.containedItemClass == "Dataset")
                     {
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/rediger/">Endre</a>
-                        <span> | </span><a href="/dataset/@Html.ToUrl(Model.register.name)/@Html.ToUrl(Model.submitter.name)/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
                     }
                     if (Model.register.containedItemClass == "EPSG")
                     {
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/rediger">Endre</a>
-                        <span>| </span><a href="/epsg-koder/@Html.ToUrl(Model.name)/slett">Slett</a>
+                        <span> | </span><a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
                     }
                     if (Model.register.containedItemClass == "CodelistValue")
                     {

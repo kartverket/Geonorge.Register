@@ -119,9 +119,14 @@
 
 <hr />
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <p>
+       @if (Model.register.parentRegisterId != null)
+       {
+        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+       }
+       else
+       {
         <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
-    </p>
+       }
 </div>
 
 @section Scripts {

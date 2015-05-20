@@ -1,4 +1,7 @@
 function listView() {
+
+    $("#sortBox").show();
+
     $(".table-heading").remove();
 
     // Buttons   
@@ -30,17 +33,86 @@ function galleryView() {
 
 }
 
+function qP(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || ""
+}
+
+function sLink(tittel, defaultSort) {
+
+    sortingSelected = qP('sorting');
+
+    if (sortingSelected == "")
+        sortingSelected = "name";
+
+    if (sortingSelected == defaultSort)
+    {
+        sortingClass = 'sorted-asc';
+        sortTitle = 'Sortert fra A til Å';
+        sortingParam = defaultSort + '_desc';
+    }
+    else if (sortingSelected.indexOf('_desc') > -1 && sortingSelected == defaultSort + '_desc')
+    {
+        sortingClass = 'sorted-desc';
+        sortTitle = 'Sortert fra Å til A';
+        sortingParam = defaultSort;
+    }
+    else
+    {
+        sortingClass = '';
+        sortTitle = '';
+        sortingParam = defaultSort;
+    }
+
+    if (sortingParam.indexOf('Requirement') > -1)
+    {
+        sortTitle = "Sortert etter logisk rekkefølge" ;
+    }
+
+    var text = qP('text');
+    var filterVertikalt = qP('filterVertikalt');
+    var filterHorisontalt = qP('filterHorisontalt');
+    var InspireRequirement = qP('inspireRequirement');
+    var nationalRequirement = qP('nationalRequirement');
+    var nationalSeaRequirement = qP('nationalSeaRequirement');
+
+    var linkSort = "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+
+    if (text != '')
+        linkSort = linkSort + '&text=' + text;
+
+    if (filterVertikalt != '')
+        linkSort = linkSort + '&filterVertikalt=' + filterVertikalt;
+
+    if (filterHorisontalt != '')
+        linkSort = linkSort + '&filterHorisontalt=' + filterHorisontalt;
+
+    if (InspireRequirement != '')
+        linkSort = linkSort + '&inspireRequirement=' + InspireRequirement;
+
+    if (nationalRequirement != '')
+        linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;
+
+    if (nationalSeaRequirement != '')
+        linkSort = linkSort + '&nationalSeaRequirement=' + nationalSeaRequirement;
+
+    linkSort = linkSort + "'>" + tittel + "</a>";
+
+    return linkSort;
+}
 
 
 function tableView() {
+
+    $("#sortBox").hide();
+
     $(".table-heading").remove();
     $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
-    $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4><h4>Eier</h4></div><div class='space'>.</div><div class='col-actions'><h4>Status</h4></div></div>");
-    $('.search-results.organization').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Organisasjonsnavn</h4><h4>Organisasjonsnummer</h4></div></div>");
-    $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4></div><div class='col-actions'><h4>ESPG</h4><h4>Sosi ref. system</h4><h4>Ekstern ref.</h4></div><div class='col-actions'><h4>Inspire krav</h4><h4>Nasjonalt krav</h4><h4>Nasjonalt krav for havområder</h4></div></div></div>");
-    $('.search-results.registersub').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Registernavn</h4></div><div class='col-descripton'><h4>Beskrivelse</h4></div><div class='col-information'><h4>Eier</h4></div></div>");
-    $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Tittel</h4><h4>Eier</h4></div><div class='col-actions'>Informasjon</div><div class='col-information'><h4>SOSI</h4><h4>WMS</h4><h4>Status</h4><h4>Temagruppe</h4></div></div></div>");
-    $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>Navn</h4></div><div class='col-descripton'><h4>Beskrivelse</h4></div><div class='col-actions'><h4>Kodeverdi</h4></div><div class='col-information'><h4>Status</h4></div></div>");
+    $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "documentOwner") + "</h4></div><div class='space'>&nbsp;</div><div class='col-actions'><h4>" + sLink("Status", "status") + "</h4></div></div>");
+    $('.search-results.organization').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Organisasjonsnavn", "name") + "</h4><h4>" + sLink("Organisasjonsnummer", "number") + "</h4></div></div>");
+    $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4></div><div class='col-actions'><h4>" + sLink("EPSG", "epsg") + "</h4><h4>" + sLink("SOSI", "sosiReferencesystem") + "</h4><h4>" + sLink("Vertikalt", "verticalReferenceSystem") + "</h4><h4>" + sLink("Horisontalt", "horizontalReferenceSystem") + "</h4><h4>" + sLink("Dimensjon", "dimension") + "</h4></div><div class='col-information'><h4>" + sLink("Inspire", "inspireRequirement") + "</h4><h4>" + sLink("Nasjonalt", "nationalRequirement") + "</h4><h4>" + sLink("Havområder", "nationalSeasRequirement") + "</h4><h4>Referanser</h4></div></div></div>");
+    $('.search-results.registersub').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Registernavn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-information'><h4>" + sLink("Eier", "owner") + "</h4></div></div>");
+    $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "datasetOwner") + "</h4></div><div class='col-actions'>Informasjon</div><div class='col-information'><h4>" + sLink("SOSI", "distributionFormat") + "</h4><h4>" + sLink("WMS", "wmsUrl") + "</h4><h4>" + sLink("Status", "status") + "</h4><h4>" + sLink("Temagruppe", "theme") + "</h4></div></div></div>");
+    $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-actions'><h4>" + sLink("Kodeverdi", "codevalue") + "</h4></div><div class='col-information'><h4>" + sLink("Status", "status") + "</h4></div></div>");
 
     // Buttons
     $('#button-listView').removeClass('active');
@@ -121,8 +193,46 @@ function SortBy(sort) {
     var selected = sort.options[sort.selectedIndex].text;
     localStorage.setItem("sortering", selected);
     document.sortering.submit();
+}
+
+function Filter() {
+    var filterVertikalt = document.getElementById("filterVertikalt");
+    var filterHorisontalt = document.getElementById("filterHorisontalt");
+    var inspireRequirement = document.getElementById("inspireRequirement");
+    var nationalRequirement = document.getElementById("nationalRequirement");
+    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+    
+    if (qP('filterVertikalt') != "") {        
+        filterVertikalt.checked;
+    }
+    if (qP('filterHorisontalt') != "") {        
+        filterHorisontalt.checked;
+    }
+    inspireRequirement.options[inspireRequirement.selectedIndex].text;
+    nationalRequirement.options[nationalRequirement.selectedIndex].text;
+    nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
+
+    document.filtering.submit();
+
 
 }
+
+function filterDefault() {
+
+    alert('HeiUtNy');
+
+    var filterVertikalt = document.getElementById("filterVertikalt");
+    var filterHorisontalt = document.getElementById("filterHorisontalt");
+    var inspireRequirement = document.getElementById("inspireRequirement");
+    var nationalRequirement = document.getElementById("nationalRequirement");
+    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+   
+    if (qP("filterVertikalt") != "") {        
+        filterVertikalt.checked;
+    }
+}
+
+
 
 $(document).ready(function () {
     var visningstype = localStorage.getItem("visningstype");
@@ -138,9 +248,6 @@ $(document).ready(function () {
         }
     }
 });
-
-
-
 
 // Loading animation
 /*

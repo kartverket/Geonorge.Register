@@ -258,7 +258,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else
                 {
-                    return Redirect("/register/versjoner/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
+                    return Redirect("/register/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
                 
             }

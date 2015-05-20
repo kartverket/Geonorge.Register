@@ -146,7 +146,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else
                 {
-                    return Redirect("/register/versjoner/" + registername + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
+                    return Redirect("/register/" + registername + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
                 }
             }
 

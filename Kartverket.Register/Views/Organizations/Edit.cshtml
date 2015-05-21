@@ -8,10 +8,17 @@
 @section breadcrumb {
     @if (Model.register.parentRegisterId != null)
     {
-        <li><a href="/register/@Model.register.parentRegister.seoname">@Html.DisplayFor(model => model.register.parentRegister.name)</a></li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
-        <li class="active">Rediger</li>
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Rediger</li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Model.name</a></li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
     }
     else
     {
@@ -119,14 +126,14 @@
 
 <hr />
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-       @if (Model.register.parentRegisterId != null)
-       {
+    @if (Model.register.parentRegisterId != null)
+    {
         <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
-       }
-       else
-       {
+    }
+    else
+    {
         <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
-       }
+    }
 </div>
 
 @section Scripts {

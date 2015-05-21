@@ -56,27 +56,28 @@ namespace Kartverket.Register.Helpers
             return isInRole;
         }
 
-        public static List<Kartverket.Register.Models.Register> Registers() { 
+        public static List<Kartverket.Register.Models.Register> Registers()
+        {
             RegisterDbContext db = new RegisterDbContext();
-            
+
             var queryResults = from o in db.Registers
                                where o.parentRegisterId == null
                                select o;
 
             List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
             foreach (var item in queryResults)
-	        {
-		        RegistersList.Add(item);
-	        }
+            {
+                RegistersList.Add(item);
+            }
             RegistersList.OrderBy(r => r.name);
 
-            return RegistersList; 
+            return RegistersList;
         }
 
         public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
-           bool isInRole = false;
-           foreach (var c in claims)
+            bool isInRole = false;
+            foreach (var c in claims)
             {
                 if (c.Type == "role")
                 {
@@ -88,7 +89,7 @@ namespace Kartverket.Register.Helpers
                 }
             }
 
-           return isInRole;
+            return isInRole;
         }
 
         public static string GeonorgeUrl(this HtmlHelper helper)
@@ -165,10 +166,10 @@ namespace Kartverket.Register.Helpers
 
             if (HttpContext.Current.Request.QueryString.Count < 1)
             {
-                if (HttpContext.Current.Session != null) 
+                if (HttpContext.Current.Session != null)
                 {
                     if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sortingType))
-                    sortingType = HttpContext.Current.Session["sortingType"].ToString();
+                        sortingType = HttpContext.Current.Session["sortingType"].ToString();
 
 
                     if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
@@ -194,13 +195,15 @@ namespace Kartverket.Register.Helpers
                     if (text != "")
                         redirect = redirect + "&text=" + text;
 
-                    if (filterVertikalt != "") {
+                    if (filterVertikalt != "")
+                    {
                         if (filterVertikalt.Contains(","))
                             filterVertikalt = filterVertikalt.Replace(",false", "");
                         redirect = redirect + "&filterVertikalt=" + filterVertikalt;
                     }
 
-                    if (filterHorisontalt != "") {
+                    if (filterHorisontalt != "")
+                    {
                         if (filterHorisontalt.Contains(","))
                             filterHorisontalt = filterHorisontalt.Replace(",false", "");
                         redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
@@ -432,7 +435,7 @@ namespace Kartverket.Register.Helpers
                 var dimension = register.items.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
                 sortedList = dimension.Cast<RegisterItem>().ToList();
             }
-                    
+
             return sortedList;
         }
 
@@ -578,6 +581,70 @@ namespace Kartverket.Register.Helpers
             }
 
             return sortedList;
+        }
+
+        public static Kartverket.Register.Models.Register mainRegister(Kartverket.Register.Models.Register register)
+        {
+            Kartverket.Register.Models.Register parentRegister;
+            if (register.parentRegister != null)
+            {
+                parentRegister = register.parentRegister;
+                parentRegister = getParentRegister(parentRegister);
+
+                return parentRegister;
+            }
+            else
+            {
+                return register;
+            }
+
+        }
+
+        private static Kartverket.Register.Models.Register getParentRegister(Kartverket.Register.Models.Register register)
+        {
+            Kartverket.Register.Models.Register parentRegister;
+            if (register.parentRegister != null)
+            {
+                parentRegister = register.parentRegister;
+                parentRegister = getParentRegister(parentRegister);
+                return parentRegister;
+            }
+            else { 
+                return register;
+            }
+            
+        }
+
+
+        //public static List<Kartverket.Register.Models.Register> parentRegisterList(Kartverket.Register.Models.Register model)
+        //{
+        //    List<Models.Register> parentsList = new List<Models.Register>();
+        //    Models.Register register = model;
+        //    Models.Register mainRegister;
+
+        //    if (register.parentRegister != null)
+        //    {
+        //        parentsList.Add(model.parentRegister);
+        //        register = model.parentRegister;
+
+        //        register = hasParentRegister(model, parentsList, register);
+        //    }
+        //    else {
+        //        mainRegister = register;
+        //    }
+
+        //}
+
+        private static Models.Register hasParentRegister(Kartverket.Register.Models.Register model, List<Models.Register> parentsList, Models.Register register)
+        {
+            if (register.parentRegister != null)
+            {
+                parentsList.Add(model.parentRegister);
+                register = model.parentRegister;
+
+                register = hasParentRegister(model, parentsList, register);
+            }
+            return register;
         }
     }
 }

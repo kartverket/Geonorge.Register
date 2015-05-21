@@ -83,6 +83,9 @@
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -92,6 +95,9 @@
     </Reference>
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="SolrNet">
+      <HintPath>..\packages\SolrNet.0.4.0.4001\lib\SolrNet.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -499,6 +505,7 @@
   <ItemGroup>
     <Content Include="bin\gsdll32.dll">
     </Content>
+    <Content Include="changelog.txt" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="lib\gsdll32.dll">
@@ -637,6 +644,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Registers\DetailsRegisterItemVersions.cshtml" />
     <Content Include="Views\Shared\_searchResultSubregisters.cshtml" />
+    <Content Include="SolrNet.chm" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

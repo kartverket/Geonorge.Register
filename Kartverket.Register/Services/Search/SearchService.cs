@@ -1101,33 +1101,6 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
-                System.Net.WebClient c = new System.Net.WebClient();
-                c.Encoding = System.Text.Encoding.UTF8;
-                var data = c.DownloadString(System.Web.Configuration.WebConfigurationManager.AppSettings["ObjektkatalogUrl"] + "api/search/?text=" + parameters.Text + "&limit=1000");
-                var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-
-                var objectKats = response["Results"];
-
-                List<SearchResultItem> objList =  new List<SearchResultItem>();
-
-                foreach (var obj in objectKats) {
-
-                    objList.Add(new SearchResultItem 
-                    {
-                        RegisterName = "Objektregister",
-                        RegisterItemName = obj["name"] != null ? obj["name"].ToString() : null,
-                        RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
-                        Discriminator = "Objektregister",
-                        ObjektkatalogUrl = obj["url"] != null ? obj["url"].ToString() : null,
-                        Type = obj["type"] != null ? obj["type"].ToString() : null
-                    });
-                    
-                }
-
-                
-
-                var qObjList = objList.AsQueryable();
-
 
                 var queryResult = (from d in _dbContext.Registers
                                     where d.parentRegister.containedItemClass == "Register"
@@ -1327,38 +1300,71 @@ namespace Kartverket.Register.Services.Search
 
 
                 var queryResultsList = queryResult.ToList();
-                var queryResultsListObjektKat =
-                (from o in qObjList
-                 select new SearchResultItem
-                 {
-                     ParentRegisterId = null,
-                     ParentRegisterName = null,
-                     ParentRegisterDescription = null,
-                     ParentRegisterSeoname = null,
-                     ParentregisterOwner = null,
-                     RegisterName = o.RegisterName,
-                     RegisterDescription = null,
-                     RegisterItemName = o.RegisterItemName,
-                     RegisterItemDescription = o.RegisterItemDescription,
-                     RegisterID = new Guid(),
-                     SystemID = new Guid(),
-                     Discriminator = o.Discriminator,
-                     RegisterSeoname = null,
-                     RegisterItemSeoname = null,
-                     DocumentOwner = null,
-                     DatasetOwner = null,
-                     RegisterItemUpdated = new System.DateTime(),
-                     RegisterItemStatus = null,
-                     Submitter = null,
-                     Shortname = null,
-                     CodelistValue = null,
-                     ObjektkatalogUrl = o.ObjektkatalogUrl,
-                     Type = o.Type,
-                     currentVersion = o.currentVersion
-                 }
-                );
 
-                var queryResultsListAll = queryResultsList.Concat(queryResultsListObjektKat.ToList()).ToList();
+                IQueryable<SearchResultItem> queryResultsListObjektKat = null;
+
+                if (parameters.IncludeObjektkatalog) 
+                { 
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+                    var data = c.DownloadString(System.Web.Configuration.WebConfigurationManager.AppSettings["ObjektkatalogUrl"] + "api/search/?text=" + parameters.Text + "&limit=1000");
+                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+
+                    var objectKats = response["Results"];
+
+                    List<SearchResultItem> objList = new List<SearchResultItem>();
+
+                    foreach (var obj in objectKats)
+                    {
+
+                        objList.Add(new SearchResultItem
+                        {
+                            RegisterName = "Objektregister",
+                            RegisterItemName = obj["name"] != null ? obj["name"].ToString() : null,
+                            RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
+                            Discriminator = "Objektregister",
+                            ObjektkatalogUrl = obj["url"] != null ? obj["url"].ToString() : null,
+                            Type = obj["type"] != null ? obj["type"].ToString() : null
+                        });
+
+                    }
+
+                    var qObjList = objList.AsQueryable();
+
+                    queryResultsListObjektKat =
+                    (from o in qObjList
+                     select new SearchResultItem
+                     {
+                         ParentRegisterId = null,
+                         ParentRegisterName = null,
+                         ParentRegisterDescription = null,
+                         ParentRegisterSeoname = null,
+                         ParentregisterOwner = null,
+                         RegisterName = o.RegisterName,
+                         RegisterDescription = null,
+                         RegisterItemName = o.RegisterItemName,
+                         RegisterItemDescription = o.RegisterItemDescription,
+                         RegisterID = new Guid(),
+                         SystemID = new Guid(),
+                         Discriminator = o.Discriminator,
+                         RegisterSeoname = null,
+                         RegisterItemSeoname = null,
+                         DocumentOwner = null,
+                         DatasetOwner = null,
+                         RegisterItemUpdated = new System.DateTime(),
+                         RegisterItemStatus = null,
+                         Submitter = null,
+                         Shortname = null,
+                         CodelistValue = null,
+                         ObjektkatalogUrl = o.ObjektkatalogUrl,
+                         Type = o.Type,
+                         currentVersion = o.currentVersion
+                     }
+                    );
+
+                }
+
+                var queryResultsListAll = queryResultsListObjektKat != null ? queryResultsList.Concat(queryResultsListObjektKat.ToList()).ToList() : queryResultsList.ToList();
                 var queryResults = queryResultsListAll;
 
                 int NumFound = queryResultsListAll.Count();

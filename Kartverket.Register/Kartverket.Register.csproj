@@ -195,6 +195,7 @@
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
@@ -453,6 +454,7 @@
     <Compile Include="Models\FilterResult.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
+    <Compile Include="Models\RegisterIndexDoc.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\FilterItems.cs" />
     <Compile Include="Models\VersionsItem.cs" />
@@ -492,13 +494,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IndexDocumentCreator.cs" />
+    <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
+    <Compile Include="Services\RegisterIndexer.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
     <Compile Include="Services\Search\SearchService.cs" />
     <Compile Include="Services\Register\IRegisterService.cs" />
     <Compile Include="Services\Register\RegisterService.cs" />
+    <Compile Include="Services\SolrIndexDocumentCreator.cs" />
+    <Compile Include="Services\SolrIndexer.cs" />
+    <Compile Include="Services\SolrRegisterIndexer.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
     <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
@@ -644,7 +652,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Registers\DetailsRegisterItemVersions.cshtml" />
     <Content Include="Views\Shared\_searchResultSubregisters.cshtml" />
-    <Content Include="SolrNet.chm" />
+    <Content Include="Views\Index\Reindex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

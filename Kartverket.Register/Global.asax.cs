@@ -8,6 +8,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Formatter;
 using System;
 using System.Web;
+using SolrNet;
 
 namespace Kartverket.Register
 {
@@ -29,6 +30,11 @@ namespace Kartverket.Register
 
             GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter());
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
+
+            log4net.Config.XmlConfigurator.Configure();
+
+            Startup.Init<RegisterIndexDoc>("http://localhost:8983/solr/register");
+
         }
 
         protected void Session_Start()

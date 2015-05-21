@@ -14,6 +14,11 @@ namespace Kartverket.Register
     {
         public static void Configure(ContainerBuilder builder)
         {
+            // in app
+            builder.RegisterType<SolrRegisterIndexer>().As<RegisterIndexer>();
+            builder.RegisterType<SolrIndexer>().As<Indexer>();
+            builder.RegisterType<SolrIndexDocumentCreator>().As<IndexDocumentCreator>();
+
             builder.RegisterControllers(typeof(MvcApplication).Assembly).PropertiesAutowired();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).PropertiesAutowired();
             builder.RegisterModule(new AutofacWebTypesModule());
@@ -29,6 +34,7 @@ namespace Kartverket.Register
 
             // dependency resolver for Web API
             GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
+
         }
     }
 }

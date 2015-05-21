@@ -20,6 +20,14 @@ namespace Kartverket.Register.Models
         public int Offset { get; set; }
         public string OrderBy { get; set; }
 
+        bool objektkatalog = true;
+
+        public bool IncludeObjektkatalog
+        {
+            get { return this.objektkatalog; }
+            set { this.objektkatalog = value; }
+        }
+
 
     }
 }

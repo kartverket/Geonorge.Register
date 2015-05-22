@@ -2,6 +2,7 @@
 @using PagedList;
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
+﻿@using Kartverket.Register.Helpers
 
 
 @{
@@ -30,6 +31,7 @@
     {
         <h3>@Model.ElementAt(0).parentRegister.name</h3>
     }
+    
 @foreach (var item in Model)
 {
         <div class="row result-row metadata">
@@ -45,6 +47,7 @@
                         <p>@item.description</p>
                     </div>
                     <div class="col-no-padding-xs col-information col-sm-2 col-md-2 col-lg-2">
+                        <p title="Innhold: @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)"><span>Innhold: </span> @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</p>
                         <p title="Eier: @item.owner.name"><span>Eier: </span> @item.owner.name</p>
                     </div>
                 </div>

@@ -420,6 +420,10 @@
     display: none;
 }
 
+.search-results.codelist.table-view .col-actions a {
+    font-size: 14px !important;
+}
+
 
 
 
@@ -579,16 +583,16 @@
 /* subregister */
 
 .search-results.registersub.table-view .col-title{
-	width: 40%;
+	width: 25%;
 	float: left;
 }
 .search-results.registersub.table-view .col-descripton{
-	width: 50%;
+	width: 40%;
 	float: left;
 }
 
 .search-results.registersub.table-view .col-information{
-	width: 10%;
+	width: 35%;
 	float: left;
 }
 
@@ -600,6 +604,15 @@
     display: none;
 }
 
+.search-results.registersub.table-view .col-information li, .search-results.registersub.table-view .table-heading .col-information h4{
+	float: left;
+	width: 50%;
+}
+
+.search-results.registersub.table-view .col-information p {
+    width: 50%;
+    float: left;
+}
 
 
 /* EPSG */

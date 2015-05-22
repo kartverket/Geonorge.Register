@@ -56,6 +56,36 @@ namespace Kartverket.Register.Helpers
             return isInRole;
         }
 
+        public static string lovligInnhold(string containedItemClass)
+        {
+            if (containedItemClass == "Document")
+            {
+                return "Dokumenter";
+            }
+            else if (containedItemClass == "Dataset")
+            {
+                return "Datasett";
+            }
+            else if (containedItemClass == "EPSG")
+            {
+                return "EPSG-koder";
+            }
+            else if (containedItemClass == "Organization")
+            {
+                return "Organisasjoner";
+            }
+            else if (containedItemClass == "CodelistValue")
+            {
+                return "Kodelister";
+            }
+            else if (containedItemClass == "Register")
+            {
+                return "Registre";
+            }
+
+            return "";
+        }
+
         public static List<Kartverket.Register.Models.Register> Registers()
         {
             RegisterDbContext db = new RegisterDbContext();

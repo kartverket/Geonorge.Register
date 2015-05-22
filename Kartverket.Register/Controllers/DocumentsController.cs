@@ -661,7 +661,7 @@ namespace Kartverket.Register.Controllers
             string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
             string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
             GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
-            document.thumbnail = url + register + "_thumbnail_" + document.name + ".jpg";
+            document.thumbnail = url + register + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
         }
 
 

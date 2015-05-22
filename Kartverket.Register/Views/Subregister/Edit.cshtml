@@ -19,6 +19,12 @@
             parent = parent.parentRegister;
         }
     }
+    else
+    {
+        <li><a href="/register/@Model.parentRegister.seoname">@Model.parentRegister.name</a></li>
+        <li class=""><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
+        <li class="active">Rediger</li>
+    }
 }
 
 <h2>@ViewBag.Title</h2>

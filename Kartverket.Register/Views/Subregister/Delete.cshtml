@@ -20,6 +20,12 @@
             parent = parent.parentRegister;
         }
     }
+    else
+    {
+        <li><a href="/register/@Model.parentRegister.seoname">@Model.parentRegister.name</a></li>
+        <li class=""><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
+        <li class="active">Slett</li>
+    }
 }
 
 <h2>Slett</h2>

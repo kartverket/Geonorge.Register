@@ -47,20 +47,19 @@ namespace Kartverket.Register.Controllers
         [Route("epsg/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
+            EPSG ePSg = new EPSG();
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            ePSg.register = register;
 
             if (register.parentRegisterId != null)
             {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
+                ePSg.register.parentRegister = register.parentRegister;
             }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = registername;
 
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
@@ -69,7 +68,7 @@ namespace Kartverket.Register.Controllers
 
             if (role == "nd.metadata_admin")
             {
-                return View();
+                return View(ePSg);
             }
             return HttpNotFound();
         }
@@ -151,13 +150,6 @@ namespace Kartverket.Register.Controllers
             }
 
             ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
-            }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = register.seoname;
             return View(epsgKode);
         }
 

@@ -50,27 +50,26 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
+            Document document = new Document();
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            document.register = register;
 
             if (register.parentRegisterId != null)
             {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
+                document.register.parentRegister = register.parentRegister;
             }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = registername;
 
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
-                return View();
+                return View(document);
             }
             return HttpNotFound();
 
@@ -182,13 +181,7 @@ namespace Kartverket.Register.Controllers
                     return Redirect("/register/versjoner/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
                 }
             }
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
-            }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = register.seoname;
+            
             return View(document);
         }
 

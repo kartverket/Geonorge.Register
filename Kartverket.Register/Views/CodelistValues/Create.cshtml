@@ -1,33 +1,38 @@
 ﻿@model Kartverket.Register.Models.CodelistValue
+﻿@using Kartverket.Register.Helpers
 
 @{
-   
-    var registername = ViewBag.registername;
-    var registerOwner = ViewBag.registerOwner;
-    var parentregister = ViewBag.parentRegister;
-    ViewBag.Title = registername;
+    ViewBag.Title = Model.register.name;
 }
 
 <h2>Ny</h2>
-@if (parentregister != null)
+@if (Model.register.parentRegister != null)
 {
-    <a href="/kodeliste/@parentregister/@registerOwner/@registername/ny/import" class="btn btn-default pull-right">Importer</a>
+    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
 }
 else
 {
-    <a href="/kodeliste/@registername/ny/import" class="btn btn-default pull-right">Importer</a>
+    <a href="/kodeliste/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
 }
 
 @section breadcrumb {
-    @if (parentregister != null)
+    @if (Model.register.parentRegister != null)
     {
-        <li><a href="/register/@parentregister">@parentregister</a></li>
-        <li><a href="/subregister/@parentregister/@registerOwner/@registername">@registername</a></li>
-        <li class="active">Ny</li>
+
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Ny</li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
     }
     else
     {
-        <li><a href="/register/@registername">@registername</a></li>
+        <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
         <li class="active">Ny</li>
     }
 }
@@ -35,10 +40,13 @@ else
 
 @using (Html.BeginForm("Create", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="hidden" value="@parentregister" id="parentregister" name="parentregister" />
+    if (Model.register.parentRegister != null)
+    {
+        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
+    }
 
     <div class="form-horizontal">
-        <h4>Foreslå ny @registername kode</h4>
+        <h4>Foreslå ny @Model.register.name kode</h4>
         
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -76,13 +84,13 @@ else
 
 <div>
 
-    @if (parentregister != null)
+    @if (Model.register.parentRegister != null)
     {
-        <a href="/subregister/@parentregister/@registerOwner/@registername">Tilbake</a>
+        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
     }
     else
     {
-        <a href="/register/@registername/">Tilbake</a>
+        <a href="/register/@Model.register.seoname/">Tilbake</a>
     }
     
 </div>

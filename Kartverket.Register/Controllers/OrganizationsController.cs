@@ -113,7 +113,7 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
-            
+            Organization organisasjon = new Organization();
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername || o.name == registername
                                        && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
@@ -121,21 +121,19 @@ namespace Kartverket.Register.Controllers
 
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            organisasjon.register = register;
 
             if (register.parentRegisterId != null)
             {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
+                organisasjon.register.parentRegister = register.parentRegister;
             }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = registername;
             
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             if (role == "nd.metadata_admin")
             {
-                return View(); 
+                return View(organisasjon); 
             }
             return HttpNotFound();
         }
@@ -208,13 +206,6 @@ namespace Kartverket.Register.Controllers
                     return Redirect("/register/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
                 }
             }
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
-            }
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = registername;
             return View(organization);
         }
 

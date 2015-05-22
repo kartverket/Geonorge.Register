@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/ny")]
         public ActionResult Create(string registername, string parentRegister)
         {
-            ViewBag.registername = registername;
+            Dataset dataset = new Dataset();
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("dataset");
 
@@ -61,20 +61,18 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            dataset.register = register;
 
             if (register.parentRegisterId != null)
             {
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
+                dataset.register.parentRegister = register.parentRegister;
             }
 
-            ViewBag.registername = register.name;
-            ViewBag.registerSEO = registername;
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
             if (role == "nd.metadata_admin")
             {
-                return View();
+                return View(dataset);
             }
             return HttpNotFound();
         }
@@ -101,16 +99,8 @@ namespace Kartverket.Register.Controllers
                     TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
                 }
 
-                if (parentRegister != null)
-                {
-                    ViewBag.registerOwner = registerowner;
-                    ViewBag.parentRegister = parentRegister;
-                }
-
                 ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
                 ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-                ViewBag.registername = registername;
-                ViewBag.registerSEO = registername;
                 return View(model);
             }
 
@@ -173,16 +163,10 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
-            if (parentRegister != null)
-            {
-                ViewBag.registerOwner = registerowner;
-                ViewBag.parentRegister = parentRegister;
-            }
-
+            
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.registername = registername;
-            ViewBag.registerSEO = registername;
+        
             return View(dataset);
         }
 

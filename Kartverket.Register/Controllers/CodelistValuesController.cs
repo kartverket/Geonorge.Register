@@ -73,7 +73,7 @@ namespace Kartverket.Register.Controllers
         {
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
-                                        select o.systemId;
+                                       select o.systemId;
             Guid sysId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
 
@@ -110,8 +110,8 @@ namespace Kartverket.Register.Controllers
 
                             string organizationLogin = GetSecurityClaim("organization");
                             var queryResultsOrganization = from o in db.Organizations
-                                                            where o.name == organizationLogin
-                                                            select o.systemId;
+                                                           where o.name == organizationLogin
+                                                           select o.systemId;
                             Guid orgId = queryResultsOrganization.First();
                             Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
@@ -129,11 +129,11 @@ namespace Kartverket.Register.Controllers
                         }
                     }
                     if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
-	                {
-		                ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
+                    {
+                        ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
                         ViewbagImport(register);
                         return View();
-	                }
+                    }
                 }
 
                 if (register.parentRegisterId != null)
@@ -145,8 +145,8 @@ namespace Kartverket.Register.Controllers
             ViewbagImport(register);
             return View();
         }
-        
-        
+
+
         // GET: CodelistValues/Details/5
         public ActionResult Details(Guid? id)
         {
@@ -168,24 +168,25 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
+            CodelistValue codeListValue = new CodelistValue();
             var queryResults = from o in db.Registers
                                where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            codeListValue.register = register;
 
-            if(register.parentRegisterId != null){
-                ViewBag.registerOwner = register.parentRegister.owner.seoname;
-                ViewBag.parentRegister = register.parentRegister.seoname;
+            if (register.parentRegisterId != null)
+            {
+                codeListValue.register.parentRegister = register.parentRegister;
             }
-            ViewBag.registername = registername;
-                        string role = GetSecurityClaim("role");
+            string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
-                return View();
+                return View(codeListValue);
             }
             return HttpNotFound();
         }
@@ -200,11 +201,11 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister) 
+                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);            
+            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null)
             {
@@ -260,9 +261,8 @@ namespace Kartverket.Register.Controllers
                 {
                     return Redirect("/register/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
-                
+
             }
-            ViewBag.registername = registername;
             return View(codelistValue);
         }
 
@@ -276,7 +276,7 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -310,7 +310,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -353,7 +353,7 @@ namespace Kartverket.Register.Controllers
                 Viewbags(codelistValue);
 
 
-                if(originalCodelistValue.register.parentRegisterId != null)
+                if (originalCodelistValue.register.parentRegisterId != null)
                 {
                     return Redirect("/subregister/" + originalCodelistValue.register.parentRegister.seoname + "/" + originalCodelistValue.register.owner.seoname + "/" + registername + "/" + originalCodelistValue.submitter.seoname + "/" + originalCodelistValue.seoname);
                 }
@@ -374,7 +374,7 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -403,7 +403,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister) 
+                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
                                select o.systemId;
 
             Guid systId = queryResults.First();
@@ -414,8 +414,8 @@ namespace Kartverket.Register.Controllers
             {
                 parent = codelistValue.register.parentRegister.seoname;
             }
-            
-           
+
+
             db.RegisterItems.Remove(codelistValue);
             db.SaveChanges();
             if (parent != null)
@@ -458,8 +458,8 @@ namespace Kartverket.Register.Controllers
         private void ValidationName(CodelistValue codelistValue, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.CodelistValues
-                                      where o.name == codelistValue.name && 
-                                            o.systemId != codelistValue.systemId && 
+                                      where o.name == codelistValue.name &&
+                                            o.systemId != codelistValue.systemId &&
                                             o.register.name == register.name &&
                                             (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
@@ -473,9 +473,9 @@ namespace Kartverket.Register.Controllers
         private bool ValidationNameImport(CodelistValue codelistValue, Kartverket.Register.Models.Register register)
         {
             var queryResultsDataset = from o in db.CodelistValues
-                                      where o.name == codelistValue.name && 
-                                            o.systemId != codelistValue.systemId && 
-                                            o.register.name == register.name && 
+                                      where o.name == codelistValue.name &&
+                                            o.systemId != codelistValue.systemId &&
+                                            o.register.name == register.name &&
                                             (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
                                       select o.systemId;
 

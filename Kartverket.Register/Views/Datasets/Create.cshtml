@@ -1,28 +1,32 @@
 ﻿@model Kartverket.Register.Models.Dataset
+﻿@using Kartverket.Register.Helpers
 
-@{    
-    var registername = ViewBag.registername;
-    ViewBag.Title = registername;
-    var parentregister = ViewBag.parentRegister;
-    var registerOwner = ViewBag.registerOwner;
-    var registerSEO = ViewBag.registerSEO;
+@{
+    ViewBag.Title = Model.register.name;
 }
 @section breadcrumb {
-    @if (parentregister != null)
+    @if (Model.register.parentRegister != null)
     {
-        <li><a href="/register/@parentregister">@parentregister</a></li>
-        <li><a href="/subregister/@parentregister/@registerOwner/@registername">@registername</a></li>
-        <li class="active">Ny</li>
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Ny</li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
     }
     else
     {
-        <li><a href="/register/@registerSEO">@registername</a></li>
+        <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
         <li class="active">Ny</li>
     }
 }
 
-<h2>Foreslå nytt datasett i @registername</h2>
-<hr/>
+<h2>Foreslå nytt datasett i @Model.register.name</h2>
+<hr />
 <div class="row">
     <div class="col-sm-6 col-sm-offset-2">
         <div class="panel panel-info">
@@ -44,8 +48,10 @@
 </div>
 
 @using (Html.BeginForm("Create", "Datasets", FormMethod.Post))
-{
-    <input type="hidden" value="@parentregister" id="parentRegister" name="parentRegister" />
+{   if (Model.register.parentRegister != null)
+    {
+        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
+    }
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -161,13 +167,13 @@
     </div>
 }
 
-@if (parentregister != null)
+@if (Model.register.parentRegister != null)
 {
-    <a href="/subregister/@parentregister/@registerOwner/@registerSEO">Tilbake</a>
+    <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
 }
 else
 {
-    <a href="/register/@registerSEO/">Tilbake</a>
+    <a href="/register/@Model.register.seoname/">Tilbake</a>
 }
 
 @section Scripts {

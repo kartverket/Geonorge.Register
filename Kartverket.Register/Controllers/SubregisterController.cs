@@ -104,24 +104,6 @@ namespace Kartverket.Register.Controllers
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
 
-                //XDocument xdoc = new XDocument
-                //    (new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                //        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                //        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                //        new XAttribute(gmlNs + "id", register.seoname),
-                //        new XElement(gmlNs + "description"),
-                //        new XElement(gmlNs + "identifier",
-                //            new XAttribute("codeSpace", nameSpace), register.name),
-
-                //        from k in db.CodelistValues.ToList()
-                //        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                //        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
-                //          new XElement(gmlNs + "description", k.description),
-                //          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
-                //          new XElement(gmlNs + "name", k.name)
-                //          ))));
-
-
                 XElement xdoc =
                     new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
                         new XAttribute(XNamespace.Xmlns + "gml", gmlNs),

@@ -4,6 +4,15 @@
     ViewBag.Title = UI.Edit;
 }
 
+@section breadcrumb {
+
+    <li><a href="/register/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+    <li class="active">Rediger</li>
+}
+
+
+
+
 <h2>@ViewBag.Title</h2>
 
 @using (Html.BeginForm("Edit", "Registers", FormMethod.Post, new { enctype = "multipart/form-data" }))

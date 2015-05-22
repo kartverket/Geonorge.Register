@@ -3,13 +3,20 @@
 @using PagedList;
 
 @{
-    ViewBag.Title = @Model.name;
+    ViewBag.Title = @Model.name; 
+    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
+    Kartverket.Register.Models.Register parent = Model.parentRegister;
 }
 
 @section breadcrumb {
-
-    <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model.name)</li>
+    
+    <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+    <li class="active pull-right">@Model.name</li>
+    @while (parent != null && parent != mainRegister)
+    {
+    <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+    parent = parent.parentRegister;
+    }
 
 }
 
@@ -24,13 +31,14 @@
             @Html.DisplayFor(model => model.description)
         </p>
         @if (Model.targetNamespace == null)
-	    {
+        {
             <span>Navnerom: Ikke angitt</span>
-	    }
-        else{
+        }
+        else
+        {
             <span>Navnerom: @Html.DisplayFor(model => model.targetNamespace)</span>
         }
-            
+
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -146,7 +154,7 @@
         else
         {
             <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
-        }        
+        }
 
         @if (Request.IsAuthenticated)
         {
@@ -185,7 +193,7 @@
                 <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/rediger">| Endre @Model.name </a>
                 <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/slett">| slette @Model.name </a> //"subregister/{registername}/{owner}/{subregister}/slett")
             }
-           
+
         }
     </div>
 </div>

@@ -173,22 +173,28 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
+            Kartverket.Register.Models.Register nyttRegister = new Kartverket.Register.Models.Register();
+
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
                                        && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
                                        select o.systemId;
             Guid regId = queryResultsRegister.First();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
+            nyttRegister.parentRegister = register;
 
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
             ViewBagSubregister(register);
 
+            if (register.parentRegister != null)
+            {
+                nyttRegister.parentRegister.parentRegister = register.parentRegister;
+            }
 
             if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
             {
-                return View();
+                return View(nyttRegister);
             }
             return HttpNotFound();
         }

@@ -1,34 +1,41 @@
 ﻿@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = UI.CreateNew;
-    var parentRegisterSEO = ViewBag.parentRegisterSEO;
-    var parentRegisterOwner = ViewBag.parentRegisterOwner;
-    var parentRegister = ViewBag.parentRegister;
-    var register = ViewBag.register;
-    var registerSEO = ViewBag.registerSEO;
-    
 }
 
 @section breadcrumb {
 
-    @if (parentRegister != null)
-    {   <li><a href="/register/@parentRegisterSEO">@parentRegister</a></li>
-        <li><a href="/subregister/@parentRegisterSEO/@parentRegisterOwner/@registerSEO">@register</a></li>
-        <li class="active">Ny</li>
+
+    @if (Model.parentRegister.parentRegister != null)
+    {
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
+        Kartverket.Register.Models.Register parent = Model.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Ny</li>
+        while (parent != null && parent != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+            parent = parent.parentRegister;
+        }
     }
+
     else
     {
-        <li><a href="/register/@registerSEO">@register</a></li>
+        <li><a href="/register/@Model.parentRegister.seoname">@Model.parentRegister.name</a></li>
         <li class="active">Ny</li>
     }
-        
+
 }
 
-<h2>Foreslå nytt register i @register</h2>
+<h2>Foreslå nytt register i @Model.parentRegister.name</h2>
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="hidden" value="@parentRegisterSEO" id="registerparant" name="registerparant" />
+{   
+    if (Model.parentRegister.parentRegister != null)
+    {
+        <input type="hidden" value="@Model.parentRegister.parentRegister.seoname" id="registerparant" name="registerparant" />
+    }
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -74,15 +81,15 @@
 }
 
 <div>
-    @if (parentRegister != null)
+    @if (Model.parentRegister.parentRegister != null)
     {
-        <a href="/subregister/@parentRegisterSEO/@parentRegisterOwner/@registerSEO">Tilbake</a>
+        <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
     }
     else
     {
-        <a href="/register/@registerSEO/">Tilbake</a>
+        <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
     }
-    
+
 
 </div>
 

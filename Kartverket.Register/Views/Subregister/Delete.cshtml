@@ -1,15 +1,24 @@
 ﻿@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = "Slett";
 }
 
 @section breadcrumb {
-    @if (Model.parentRegisterId != null)
+
+    @if (Model.parentRegister.parentRegister != null)
     {
-        <li><a href="/register/@Model.parentRegister.seoname">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
-        <li class="active">Slett</li>
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
+        Kartverket.Register.Models.Register parent = Model.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Slett</li>
+        <li class="pull-right"><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
+        while (parent != null && parent != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+            parent = parent.parentRegister;
+        }
     }
 }
 
@@ -19,13 +28,14 @@
 <div>
     <hr />
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
 
         <div class="form-actions no-color">
-            <input type="submit" value="Slett" class="btn btn-default" /> <br/>
-            @Html.ValidationMessage("ErrorMessageDelete") <br/>
+            <input type="submit" value="Slett" class="btn btn-default" /> <br />
+            @Html.ValidationMessage("ErrorMessageDelete") <br />
             <br />
-                <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/">Tilbake</a>
+            <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/">Tilbake</a>
         </div>
     }
 </div>

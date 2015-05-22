@@ -3,16 +3,25 @@
 
 @{
     ViewBag.Title = @Model.name;
+    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+    Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     var documentOwner = ViewBag.documentOwner;
 }
 
+
 @section breadcrumb {
 
-    <li><a href="/register/@Model.register.parentRegister.seoname">@Html.DisplayFor(model => model.register.parentRegister.name)</a></li>
-    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model.name)</li>
-
+    <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+    <li class="active pull-right">@Model.name</li>
+    <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+    @while (parent != null && parent != mainRegister)
+    {
+        <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+        parent = parent.parentRegister;
+    }
 }
+
+
 <div class="page-header">
     <h2 class="h-md">@Html.DisplayFor(model => model.name)</h2>
     <hr>
@@ -45,13 +54,13 @@
             <span>Eier: @documentOwner </span><br />
         }
         @*@if (Model.currentVersion == null)
-        {
-            <span>Versjon: Ikke angitt</span><br />
-        }
-        else
-        {
-            <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-        }*@
+            {
+                <span>Versjon: Ikke angitt</span><br />
+            }
+            else
+            {
+                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
+            }*@
 
 
     </div>
@@ -91,7 +100,7 @@
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <hr />
-        <p>           
+        <p>
             <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
 
             @if (Request.IsAuthenticated)
@@ -126,7 +135,7 @@
                         <span> | </span><a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/">Slett</a>
 
                         @*<span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
-                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
+                            <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
                     }
                 }
             }

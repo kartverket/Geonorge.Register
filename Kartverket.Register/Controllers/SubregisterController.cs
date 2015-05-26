@@ -38,7 +38,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsSubregister.Count() > 0)
             {
-                Guid systId = queryResultsSubregister.First();
+                Guid systId = queryResultsSubregister.FirstOrDefault();
                 Kartverket.Register.Models.Register register = db.Registers.Find(systId);
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
@@ -99,7 +99,6 @@ namespace Kartverket.Register.Controllers
                     }
                 }
 
-
                 XNamespace ns = "http://www.opengis.net/gml/3.2";
                 XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
                 XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
@@ -121,9 +120,6 @@ namespace Kartverket.Register.Controllers
                           new XElement(gmlNs + "name", k.name)
                           )));
 
-                //byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
-                //return File(data, "text/xml", register.name + "_kodeliste.xml");
-
                 return new XmlResult(xdoc);
             }
             return View(register);
@@ -138,7 +134,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
             if (registerItem.register.containedItemClass == "Document")
@@ -159,9 +155,9 @@ namespace Kartverket.Register.Controllers
 
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
-                                       && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
+                                       && o.parentRegister.seoname == parentregister
                                        select o.systemId;
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             nyttRegister.parentRegister = register;
 
@@ -201,10 +197,8 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
         [Route("subregister/{registerName}/ny")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Kartverket.Register.Models.Register subRegister, string registerName, string registerparant)
         {
-
             var errors = ModelState.Select(x => x.Value.Errors)
                           .Where(y => y.Count > 0)
                           .ToList();
@@ -212,9 +206,9 @@ namespace Kartverket.Register.Controllers
             ValidationName(subRegister, registerName);
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registerName && (o.parentRegister.seoname == registerparant || o.parentRegisterId == null)
+                                       where o.seoname == registerName && o.parentRegister.seoname == registerparant
                                        select o.systemId;
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             if (ModelState.IsValid)
@@ -240,7 +234,7 @@ namespace Kartverket.Register.Controllers
                                    where o.name == organizationLogin
                                    select o.systemId;
 
-                Guid orgId = queryResults.First();
+                Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 subRegister.ownerId = submitterOrganisasjon.systemId;
@@ -270,7 +264,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
@@ -296,7 +290,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
 
             ValidationName(register, registername);
@@ -343,7 +337,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
@@ -362,15 +356,15 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             var queryResultsRegisterItem = ((from o in db.RegisterItems
                                              where (o.register.seoname == subregister && o.register.parentRegister.seoname == registername)
-                                             || (o.register.parentRegister.seoname == subregister && (o.register.parentRegister.parentRegisterId == null || o.register.parentRegister.parentRegister.seoname == registername))
+                                             || (o.register.parentRegister.seoname == subregister && o.register.parentRegister.parentRegister.seoname == registername)
                                              select o.systemId).Union(
                                            from r in db.Registers
-                                           where r.parentRegister.seoname == subregister && (r.parentRegister.parentRegisterId == null || r.parentRegister.parentRegister.seoname == registername)
+                                           where r.parentRegister.seoname == subregister && r.parentRegister.parentRegister.seoname == registername
                                            select r.systemId));
 
             if (queryResultsRegisterItem.Count() > 0)

@@ -31,8 +31,9 @@
 {
     if (Model.register.parentRegister != null)
     {
-        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
+        <input type="hidden" value="@Model.register.parentRegister.seoname" id="registerParent" name="registerParent" />
     }
+    <input type="hidden" value="@Model.register.seoname" id="registername" name="registername" />
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

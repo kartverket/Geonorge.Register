@@ -2,7 +2,6 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = UI.CreateNew;
     ViewBag.Title = Model.register.name;
 }
 
@@ -38,7 +37,6 @@
     }
 
     <div class="form-horizontal">
-        <h4>Foreslå nytt dokument i @Model.register.name</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

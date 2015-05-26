@@ -56,10 +56,10 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("dataset");
 
             var queryResults = from o in db.Registers
-                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
+                               where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
             dataset.register = register;
 
@@ -105,10 +105,10 @@ namespace Kartverket.Register.Controllers
             }
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             ValidationName(dataset, register);
@@ -139,7 +139,7 @@ namespace Kartverket.Register.Controllers
                                    where o.name == organizationLogin
                                    select o.systemId;
 
-                Guid orgId = queryResults.First();
+                Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 dataset.submitterId = orgId;
@@ -163,7 +163,7 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
-            
+            dataset.register = register;
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
         
@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
                                       where o.name == dataset.name &&
                                       o.systemId != dataset.systemId &&
                                       o.register.name == register.name &&
-                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
+                                      o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -198,10 +198,10 @@ namespace Kartverket.Register.Controllers
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname &&
                                o.register.seoname == registername &&
-                               (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                               o.register.parentRegister.seoname == parentRegister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
             if (systId == null)
             {
@@ -243,15 +243,15 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == datasetname && o.register.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Dataset originalDataset = db.Datasets.Find(systId);
 
             //Finn registerobjektet
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             ValidationName(dataset, register);
@@ -342,10 +342,10 @@ namespace Kartverket.Register.Controllers
 
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
-                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
             if (systId == null)
             {
@@ -372,10 +372,10 @@ namespace Kartverket.Register.Controllers
         {
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname && o.register.seoname == registername
-                               && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Dataset dataset = db.Datasets.Find(systId);
 
             string parent = null;

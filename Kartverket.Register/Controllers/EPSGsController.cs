@@ -49,10 +49,10 @@ namespace Kartverket.Register.Controllers
         {
             EPSG ePSg = new EPSG();
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             ePSg.register = register;
 
@@ -84,10 +84,10 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(EPSG epsgKode, string registername, string parentRegister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null)
@@ -130,7 +130,7 @@ namespace Kartverket.Register.Controllers
                                    where o.name == organizationLogin
                                    select o.systemId;
 
-                Guid orgId = queryResults.First();
+                Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 epsgKode.submitterId = orgId;
@@ -148,7 +148,7 @@ namespace Kartverket.Register.Controllers
                     return Redirect("/register/" + registername + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
                 }
             }
-
+            epsgKode.register = register;
             ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
             return View(epsgKode);
         }
@@ -165,9 +165,9 @@ namespace Kartverket.Register.Controllers
             var queryResultsEpsg = from o in db.EPSGs
                                    where o.seoname == epsgname &&
                                    o.register.seoname == registername &&
-                                   (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                                   o.register.parentRegister.seoname == parentRegister
                                    select o.systemId;
-            Guid systId = queryResultsEpsg.First();
+            Guid systId = queryResultsEpsg.FirstOrDefault();
 
             if (systId == null)
             {
@@ -200,17 +200,17 @@ namespace Kartverket.Register.Controllers
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            && o.register.seoname == registername
-                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentRegister)
+                                           && o.register.parentRegister.seoname == parentRegister
                                            select o.systemId;
 
-            Guid systId = queryResultsOrganisasjon.First();
+            Guid systId = queryResultsOrganisasjon.FirstOrDefault();
             EPSG epsg = db.EPSGs.Find(systId);
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentRegister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             ValidationName(ePSG, register);
@@ -280,9 +280,9 @@ namespace Kartverket.Register.Controllers
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            && o.register.seoname == registername
-                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                                           && o.register.parentRegister.seoname == parentregister
                                            select o.systemId;
-            Guid systId = queryResultsOrganisasjon.First();
+            Guid systId = queryResultsOrganisasjon.FirstOrDefault();
 
             if (systId == null)
             {
@@ -311,10 +311,10 @@ namespace Kartverket.Register.Controllers
             var queryResultsOrganisasjon = from o in db.EPSGs
                                            where o.seoname == epsgname
                                            && o.register.seoname == registername
-                                           && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                                           && o.register.parentRegister.seoname == parentregister
                                            select o.systemId;
 
-            Guid systId = queryResultsOrganisasjon.First();
+            Guid systId = queryResultsOrganisasjon.FirstOrDefault();
             EPSG ePSG = db.EPSGs.Find(systId);
 
             string parent = null;
@@ -340,20 +340,6 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-
-
-        private string FindRegisterOwner(string registername)
-        {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
         }
 
         private string GetSecurityClaim(string type)
@@ -418,7 +404,7 @@ namespace Kartverket.Register.Controllers
                                       where o.name == epsg.name && 
                                       o.systemId != epsg.systemId && 
                                       o.register.name == register.name &&
-                                      (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
+                                      o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)

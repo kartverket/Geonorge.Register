@@ -99,52 +99,11 @@ namespace Kartverket.Register.Controllers
                           new XElement(gmlNs + "name", k.name)
                           )));
 
-                //byte[] data = Encoding.UTF8.GetBytes(xdoc.ToString());
-                //return File(data, "text/xml", register.name + "_kodeliste.xml");
-
                 return new XmlResult(xdoc);
             }
             return View(register);
 
-        }
-
-        //// GET: Registers/Details/5
-        //[Route("register/{name}")]
-        //public ActionResult Details(string name, string sorting, int? page, string export, string filterVertikalt, string filterHorisontalt, string InspireRequirement, string nationalRequirement, string nationalSeaRequirement)
-        //{
-        //    var queryResults = from o in db.Registers
-        //                       where o.name == name || o.seoname == name
-        //                       select o.systemId;
-
-        //    Guid systId = queryResults.First();
-        //    Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-        //    ViewBag.page = page;
-        //    ViewBag.SortOrder = sorting;
-        //    ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-        //    ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description");
-        //    ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description");
-        //    ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description");
-        //    ViewBag.register = register.name;
-        //    ViewBag.registerSEO = register.seoname;
-
-        //    if (register.parentRegisterId != null)
-        //    {
-        //        ViewBag.parentRegister = register.parentRegister.name;
-        //    }
-
-        //    if (register == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-
-
-        //    if (!string.IsNullOrEmpty(export))
-        //    {
-        //        return exportCodelist(register, export);
-        //    }
-
-        //    return View(register);
-        //}
+        }        
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
@@ -209,14 +168,9 @@ namespace Kartverket.Register.Controllers
 
                 systId = queryResultDocument.FirstOrDefault();
 
-                //var queryResultsRegisterItem = from o in db.RegisterItems
-                //                               where o.seoname == itemname && o.register.seoname == registername && o.systemId == documentId
-                //                               select o.systemId;
-
                 Kartverket.Register.Models.Document document = db.Documents.Find(systId);
                 ViewBag.documentOwner = document.documentowner.name;
                 ViewBag.version = document.versionNumber;
-                //systId = queryResultsRegisterItem.FirstOrDefault();
             }
             else { 
                 var queryResultsRegisterItem = from o in db.RegisterItems
@@ -274,7 +228,6 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [HttpPost]
         [Route("ny/")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Kartverket.Register.Models.Register register)
         {
             ValidationName(register);
@@ -303,7 +256,7 @@ namespace Kartverket.Register.Controllers
                                    where o.name == organizationLogin
                                    select o.systemId;
 
-                Guid orgId = queryResults.First();
+                Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 register.ownerId = submitterOrganisasjon.systemId;
@@ -330,7 +283,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
@@ -359,7 +312,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             ValidationName(register);
             Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
             if (ModelState.IsValid)
@@ -403,7 +356,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
@@ -423,7 +376,7 @@ namespace Kartverket.Register.Controllers
                                where o.seoname == registername
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
 
             var queryResultsRegisterItem = ((from o in db.RegisterItems
@@ -533,18 +486,6 @@ namespace Kartverket.Register.Controllers
             Session["nationalRequirement"] = null;
             Session["nationalSeaRequirement"] = null;
         
-        }
-
-        private string FindRegisterOwner(string registername)
-        {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid regId = queryResults.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-            string registerOwner = register.owner.name;
-            return registerOwner;
         }
 
         private void ValidationName(Kartverket.Register.Models.Register register)

@@ -76,40 +76,6 @@ namespace Kartverket.Register.Controllers
             return View(model);
         }
 
-        //// GET: Registers/Details/5
-        //[Route("register/{registername}/{itemOwner}/")]
-        //public ActionResult DetailsFilter(string registername, string itemOwner, string sorting, int? page) 
-        //{
-        //    var queryResults = from o in db.Registers
-        //                       where o.name == registername || o.seoname == registername
-        //                       select o.systemId;
-
-        //    var queryResultsOrganization = from o in db.Organizations
-        //                                   where o.seoname == itemOwner 
-        //                                   select o.systemId;
-
-        //    Guid orgId = queryResultsOrganization.First();
-        //    Kartverket.Register.Models.Organization organisasjon = db.Organizations.Find(orgId);
-        //    Guid systId = queryResults.First();
-        //    Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            
-        //    ViewBag.page = page;
-        //    ViewBag.SortOrder = sorting;
-        //    ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-        //    ViewBag.register = register.seoname;
-        //    ViewBag.owner = organisasjon.name;
-        //    ViewBag.ownerLogo = organisasjon.logoFilename;
-        //    ViewBag.ownerSEO = organisasjon.seoname;
-        //    ViewBag.searchRegister = register.name;
-        //    ViewBag.registerSEO = register.seoname;
-
-        //    if (register == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(register);
-        //}
-
         protected override void OnException(ExceptionContext filterContext)
         {
             Log.Error("Error", filterContext.Exception);

@@ -34,7 +34,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Import(string registername, string parentregister)
         {
             var queryResults = from o in db.Registers
-                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
+                               where o.seoname == registername && o.parentRegister.seoname == parentregister
                                select o.systemId;
 
             Guid sysId = queryResults.FirstOrDefault();
@@ -72,9 +72,9 @@ namespace Kartverket.Register.Controllers
         public ActionResult Import(HttpPostedFileBase csvfile, string registername, string parentregister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
                                        select o.systemId;
-            Guid sysId = queryResultsRegister.First();
+            Guid sysId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
 
             if (csvfile != null)
@@ -112,7 +112,7 @@ namespace Kartverket.Register.Controllers
                             var queryResultsOrganization = from o in db.Organizations
                                                            where o.name == organizationLogin
                                                            select o.systemId;
-                            Guid orgId = queryResultsOrganization.First();
+                            Guid orgId = queryResultsOrganization.FirstOrDefault();
                             Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                             codelistValue.submitterId = orgId;
@@ -170,10 +170,10 @@ namespace Kartverket.Register.Controllers
         {
             CodelistValue codeListValue = new CodelistValue();
             var queryResults = from o in db.Registers
-                               where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentregister)
+                               where o.seoname == registername && o.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
             codeListValue.register = register;
 
@@ -201,10 +201,10 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister)
         {
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null)
@@ -242,7 +242,7 @@ namespace Kartverket.Register.Controllers
                                    where o.name == organizationLogin
                                    select o.systemId;
 
-                Guid orgId = queryResults.First();
+                Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
 
                 codelistValue.submitterId = orgId;
@@ -263,6 +263,7 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
+            codelistValue.register = register;
             return View(codelistValue);
         }
 
@@ -276,10 +277,10 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
             if (systId == null)
             {
@@ -310,17 +311,17 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
             var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.name == null || o.parentRegister.seoname == parentregister)
+                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
                                        select o.systemId;
 
-            Guid regId = queryResultsRegister.First();
+            Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             ValidationName(codelistValue, register);
@@ -374,10 +375,10 @@ namespace Kartverket.Register.Controllers
             string user = GetSecurityClaim("organization");
 
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
             if (systId == null)
             {
@@ -403,10 +404,10 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
         {
             var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && (o.register.parentRegister.name == null || o.register.parentRegister.seoname == parentregister)
+                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
-            Guid systId = queryResults.First();
+            Guid systId = queryResults.FirstOrDefault();
 
             CodelistValue codelistValue = db.CodelistValues.Find(systId);
             string parent = null;
@@ -461,7 +462,7 @@ namespace Kartverket.Register.Controllers
                                       where o.name == codelistValue.name &&
                                             o.systemId != codelistValue.systemId &&
                                             o.register.name == register.name &&
-                                            (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
+                                            o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -476,7 +477,7 @@ namespace Kartverket.Register.Controllers
                                       where o.name == codelistValue.name &&
                                             o.systemId != codelistValue.systemId &&
                                             o.register.name == register.name &&
-                                            (o.register.parentRegister == null || o.register.parentRegisterId == register.parentRegisterId)
+                                            o.register.parentRegisterId == register.parentRegisterId
                                       select o.systemId;
 
             if (queryResultsDataset.Count() > 0)
@@ -511,31 +512,6 @@ namespace Kartverket.Register.Controllers
 
             return encodedUrl;
         }
-
-        //private void FinnesNavnFraFor(string registername, CodelistValue codelistValue, int versjonsnr)
-        //{
-        //    CodelistValue testname = new CodelistValue();
-
-        //    testname = codelistValue;
-        //    if (testname.name.Contains("("))
-        //    {
-        //        string[] nametab = testname.name.Split('(', ')');
-        //        string name = nametab[0];
-        //        int vnr = Convert.ToInt32(nametab[1]) + 1;
-
-        //        testname.name = name + "(" + vnr + ")";
-        //    }
-        //    else { 
-        //        testname.name += "(2)";
-        //    }
-
-        //    if (!ValidationNameImport(codelistValue, registername))
-        //    {
-        //        FinnesNavnFraFor(registername, testname, versjonsnr);
-        //    }
-
-        //    codelistValue.name = testname.name;
-        //}
 
         private void Viewbags(CodelistValue codelistValue)
         {

@@ -30,16 +30,22 @@ namespace Kartverket.Register.Services
 
         public void RunIndexingOn(string systemID)
         {
-            //Get systemID
-            //var register;
-            //if (register == null)
-            //{
-            //    _indexer.RemoveIndexDocument(systemID);
-            //}
-            //else {
-            //    RegisterIndexDoc registerIndexDoc = _indexDocumentCreator.CreateIndexDoc(new SearchResult(register));
-            //    _indexer.Index(registerIndexDoc);
-            //}
+
+             _indexer.RemoveIndexDocument(systemID);
+
+             SearchParameters parameters = new SearchParameters();
+             parameters.Text = systemID;
+             parameters.Limit = 1;
+             parameters.Register = "Alle registre";
+             parameters.IncludeObjektkatalog = false;
+             SearchResult searchResult = _searchService.Search(parameters);
+
+             if (searchResult != null && searchResult.Items.Count > 0) 
+             { 
+                 List<RegisterIndexDoc> indexDocs = _indexDocumentCreator.CreateIndexDocs(searchResult.Items);
+                 _indexer.Index(indexDocs);
+             }
+
         }
 
         private void RunSearch()

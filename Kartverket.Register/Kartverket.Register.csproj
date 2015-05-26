@@ -653,6 +653,8 @@
     <Content Include="Views\Registers\DetailsRegisterItemVersions.cshtml" />
     <Content Include="Views\Shared\_searchResultSubregisters.cshtml" />
     <Content Include="Views\Index\Reindex.cshtml" />
+    <Content Include="Views\Index\Index.cshtml" />
+    <Content Include="Views\Index\IndexSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

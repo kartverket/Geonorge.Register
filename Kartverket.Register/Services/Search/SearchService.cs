@@ -1101,11 +1101,14 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
+                Guid systemIDSearch = new Guid();
+                Guid.TryParse(parameters.Text, out systemIDSearch);
 
                 var queryResult = (from d in _dbContext.Registers
                                     where d.parentRegister.containedItemClass == "Register"
                                     && (d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text))
+                                    || d.description.Contains(parameters.Text)
+                                    || d.systemId.Equals(systemIDSearch))
                                     select new SearchResultItem
                                     {
                                         ParentRegisterId = d.parentRegisterId,
@@ -1139,6 +1142,7 @@ namespace Kartverket.Register.Services.Search
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.value.Contains(parameters.Text)
+                                     || d.systemId.Equals(systemIDSearch)
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
@@ -1172,6 +1176,7 @@ namespace Kartverket.Register.Services.Search
                                      || o.register.name.Contains(parameters.Text)
                                      || o.name.Contains(parameters.Text)
                                      || o.description.Contains(parameters.Text)
+                                     || o.systemId.Equals(systemIDSearch)
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = o.register.parentRegisterId,
@@ -1204,6 +1209,7 @@ namespace Kartverket.Register.Services.Search
                                     || d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.documentowner.name.Contains(parameters.Text)
+                                    || d.systemId.Equals(systemIDSearch)
                                     select new SearchResultItem
                                     {
                                         ParentRegisterId = d.register.parentRegisterId,
@@ -1236,6 +1242,7 @@ namespace Kartverket.Register.Services.Search
                                      || d.name.Contains(parameters.Text)
                                      || d.description.Contains(parameters.Text)
                                      || d.datasetowner.name.Contains(parameters.Text)
+                                     || d.systemId.Equals(systemIDSearch)
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
@@ -1269,6 +1276,7 @@ namespace Kartverket.Register.Services.Search
                                     || e.name.Contains(parameters.Text)
                                     || e.description.Contains(parameters.Text)
                                     || e.epsgcode.Contains(parameters.Text)
+                                    || e.systemId.Equals(systemIDSearch)
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = e.register.parentRegisterId,

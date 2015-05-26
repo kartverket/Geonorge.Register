@@ -20,7 +20,7 @@ namespace Kartverket.Register.Controllers
             _indexer = indexer;
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
             Log.Info("Run indexing of entire register.");
@@ -55,7 +55,7 @@ namespace Kartverket.Register.Controllers
             return View();
         }
 
-        //[Authorize]
+        [Authorize]
         public ActionResult ReIndex()
         {
             string role = GetSecurityClaim("role");

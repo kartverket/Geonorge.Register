@@ -39,6 +39,9 @@
             <span>Navnerom: @Html.DisplayFor(model => model.targetNamespace)</span>
         }
 
+            <br/><span>Lovlig innhold: @HtmlHelperExtensions.lovligInnhold(Model.containedItemClass)</span>
+        
+
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">

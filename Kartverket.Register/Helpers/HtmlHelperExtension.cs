@@ -76,7 +76,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (containedItemClass == "CodelistValue")
             {
-                return "Kodelister";
+                return "Kodeverdier";
             }
             else if (containedItemClass == "Register")
             {

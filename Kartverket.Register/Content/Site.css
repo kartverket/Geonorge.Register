@@ -94,4 +94,13 @@ h4 a.sorted-desc:after {
     content: ' \25B2';
 }
 
+
+.geonorge-container .result-header hr {
+  border-bottom: 1px solid #8C4799;
+  border-top: none;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  margin-top: 15px;
+}
+
 /*# sourceMappingURL=page-footer.css.map *

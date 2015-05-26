@@ -9,6 +9,7 @@ using Kartverket.Register.Formatter;
 using System;
 using System.Web;
 using SolrNet;
+using System.Web.Configuration;
 
 namespace Kartverket.Register
 {
@@ -33,7 +34,7 @@ namespace Kartverket.Register
 
             log4net.Config.XmlConfigurator.Configure();
 
-            Startup.Init<RegisterIndexDoc>("http://localhost:8983/solr/register");
+            Startup.Init<RegisterIndexDoc>(WebConfigurationManager.AppSettings["IndexServerPath"]);
 
         }
 

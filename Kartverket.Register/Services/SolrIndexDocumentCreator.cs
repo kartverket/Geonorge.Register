@@ -50,6 +50,36 @@ namespace Kartverket.Register.Services
             {
 
                 indexDoc.SystemID = item.SystemID;
+                indexDoc.CodelistValue = item.CodelistValue;
+                indexDoc.currentVersion = item.currentVersion;
+                indexDoc.DatasetOwner = item.DatasetOwner;
+                indexDoc.Discriminator = item.Discriminator;
+                indexDoc.DocumentOwner = item.DocumentOwner;
+                indexDoc.ObjektkatalogUrl = item.ObjektkatalogUrl;
+                indexDoc.ParentRegisterDescription = item.ParentRegisterDescription;
+                indexDoc.ParentRegisterId = item.ParentRegisterId;
+                indexDoc.ParentRegisterName = item.ParentRegisterName;
+                indexDoc.ParentregisterOwner = item.ParentregisterOwner;
+                indexDoc.ParentRegisterSeoname = item.ParentRegisterSeoname;
+                indexDoc.ParentRegisterUrl = item.ParentRegisterUrl;
+                indexDoc.RegisteItemUrl = item.RegisteItemUrl;
+                indexDoc.RegisteItemUrlDataset = item.RegisteItemUrlDataset;
+                indexDoc.RegisteItemUrlDocument = item.RegisteItemUrlDocument;
+                indexDoc.RegisterDescription = item.RegisterDescription;
+                indexDoc.RegisterID = item.RegisterID;
+                indexDoc.RegisterItemDescription = item.RegisterItemDescription;
+                indexDoc.RegisterItemName = item.RegisterItemName;
+                indexDoc.RegisterItemSeoname = item.RegisterItemSeoname;
+                indexDoc.RegisterItemStatus = item.RegisterItemStatus;
+                indexDoc.RegisterItemUpdated = item.RegisterItemUpdated;
+                indexDoc.RegisterName = item.RegisterName;
+                indexDoc.RegisterSeoname = item.RegisterSeoname;
+                indexDoc.Shortname = item.Shortname;
+                indexDoc.Submitter = item.Submitter;
+                indexDoc.subregisterItemUrl = item.subregisterItemUrl;
+                indexDoc.SubregisterUrl = item.SubregisterUrl;
+                indexDoc.Type = item.Type;
+
                 Log.Info(string.Format("Indexing register with systemID={0}", indexDoc.SystemID));
 
 

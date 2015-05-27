@@ -98,5 +98,9 @@ namespace Kartverket.Register.Models
         [SolrField("currentVersion")]
         public Guid? currentVersion { get; set; }
 
+        //Search score?
+        [SolrField("score")]
+        public double? Score { get; set; }
+
     }
 }

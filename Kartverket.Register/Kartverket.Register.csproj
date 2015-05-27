@@ -450,6 +450,8 @@
     <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\Dimension.cs" />
+    <Compile Include="Models\Facet.cs" />
+    <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -501,6 +503,7 @@
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
+    <Compile Include="Services\Search\SearchIndexService.cs" />
     <Compile Include="Services\Search\SearchService.cs" />
     <Compile Include="Services\Register\IRegisterService.cs" />
     <Compile Include="Services\Register\RegisterService.cs" />

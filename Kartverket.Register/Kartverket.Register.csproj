@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ApiController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controllers\ApiSearchController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DisplayDatasetController.cs" />
@@ -446,8 +447,11 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
+    <Compile Include="Models\Api\FacetInput.cs" />
+    <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
+    <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Facet.cs" />

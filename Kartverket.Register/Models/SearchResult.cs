@@ -7,12 +7,13 @@ namespace Kartverket.Register.Models
 {
     public class SearchResult
     {
-        public List<SearchResultItem> Items { get; set; }
-        public List<Facet> Facets { get; set; }
-        //public List<Filter> ItemsFilter { get; set; }
         public int NumFound { get; set; }
         public int Limit { get; set; }
         public int Offset { get; set; }
+        public List<SearchResultItem> Items { get; set; }
+        public List<Facet> Facets { get; set; }
+        //public List<Filter> ItemsFilter { get; set; }
+
 
         public SearchResult()
         {

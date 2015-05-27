@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = Model.register.name;
+    ViewBag.Title = "Foreslå ny organisasjon";
 }
 
 @section breadcrumb {
@@ -25,7 +25,9 @@
         <li class="active">Ny</li>
     }
 }
-<h2>Foreslå ny organisasjon i @Model.register.name</h2>
+<h2>Foreslå</h2>
+<h4>Foreslå ny organisasjon i @Model.register.name</h4>
+<hr />
 
 @using (Html.BeginForm("Create", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -35,7 +37,6 @@
     }
     <input type="hidden" value="@Model.register.seoname" id="registername" name="registername" />
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
@@ -93,25 +94,22 @@
                 @Html.ValidationMessageFor(model => model.largeLogo, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
-            </div>
-        </div>
     </div>
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+        @if (Model.register.parentRegister != null)
+        {
+            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.register.seoname/">Tilbake</a>
+        }
+    </div>
+
 }
 
-<div>
-    @if (Model.register.parentRegister != null)
-    {
-        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.register.seoname/">Tilbake</a>
-    }
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

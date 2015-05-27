@@ -789,3 +789,7 @@ z-index: 600;
     display: block;
     padding: 10px 80px !important;
 }*/
+
+.btn-space {
+    margin-right:2px;
+}

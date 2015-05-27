@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Slett" + Model.name;
 }
 
 @section breadcrumb {
@@ -30,15 +30,13 @@
 
 <h2>Slett</h2>
 
-<h3>Er du sikker på at du vil slette @Model.name</h3>
-<div>
-    <hr />
-
+<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<hr />
     @using (Html.BeginForm())
     {
 
         <div class="form-actions no-color">
-            <input type="submit" value="Slett" class="btn btn-default" />
+            <input type="submit" value="Slett" class="btn btn-default pull-right" />
 
             @if (Model.register.parentRegisterId != null)
             {
@@ -48,8 +46,6 @@
             {
                 <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
             }
-
-
         </div>
     }
-</div>
+

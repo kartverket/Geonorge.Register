@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = UI.CreateNew;
+    ViewBag.Title = "Foreslå nytt register";
 }
 
 @section breadcrumb {
@@ -29,15 +29,17 @@
 
 }
 
-<h2>Foreslå nytt register i @Model.parentRegister.name</h2>
+<h2>Foreslå</h2>
+<h4>Foreslå nytt register i @Model.parentRegister.name</h4>
+<hr />
 @using (Html.BeginForm("Create", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{   
+{
     if (Model.parentRegister.parentRegister != null)
     {
         <input type="hidden" value="@Model.parentRegister.parentRegister.seoname" id="registerparant" name="registerparant" />
     }
     <div class="form-horizontal">
-        <hr />
+        >
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
@@ -73,27 +75,19 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
-            </div>
+            <hr />
+            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+            @if (Model.parentRegister.parentRegister != null)
+            {
+                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
+            }
         </div>
     </div>
 }
-
-<div>
-    @if (Model.parentRegister.parentRegister != null)
-    {
-        <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
-    }
-
-
-</div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

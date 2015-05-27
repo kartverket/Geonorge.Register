@@ -3,19 +3,19 @@
 @using PagedList;
 
 @{
-    ViewBag.Title = @Model.name; 
+    ViewBag.Title = @Model.name;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
     Kartverket.Register.Models.Register parent = Model.parentRegister;
 }
 
 @section breadcrumb {
-    
+
     <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
     <li class="active pull-right">@Model.name</li>
     @while (parent != null && parent != mainRegister)
     {
-    <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-    parent = parent.parentRegister;
+        <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+        parent = parent.parentRegister;
     }
 
 }
@@ -39,8 +39,8 @@
             <span>Navnerom: @Html.DisplayFor(model => model.targetNamespace)</span>
         }
 
-            <br/><span>Lovlig innhold: @HtmlHelperExtensions.lovligInnhold(Model.containedItemClass)</span>
-        
+        <br /><span>Lovlig innhold: @HtmlHelperExtensions.lovligInnhold(Model.containedItemClass)</span>
+
 
 
     </div>
@@ -147,45 +147,35 @@
             }
         }
     </div>
-
+    
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-        @if (Model.parentRegister.parentRegisterId != null)
-        {
-            <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
-        }
-
         @if (Request.IsAuthenticated)
         {
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a href="/organisasjoner/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye organisasjoner i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">Foreslå nye organisasjoner i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Document")
                 {
-                    <a href="/dokument/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt dokument i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">Foreslå nytt dokument i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
-                    <a href="/dataset/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå nytt datasett i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">Foreslå nytt datasett i @Model.name </a>
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a href="/epsg/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nye epsg koder i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">Foreslå nye epsg koder i @Model.name </a>
                 }
                 if (Model.containedItemClass == "Register")
                 {
-                    <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">| Foreslå nytt register i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/ny">Foreslå nytt register i @Model.name </a>
                 }
                 if (Model.containedItemClass == "CodelistValue")
                 {
-                    <a href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">| Foreslå ny kode i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">Foreslå ny kode i @Model.name </a>
                 }
             }
 
@@ -193,10 +183,17 @@
 
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
-                <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/rediger">| Endre @Model.name </a>
-                <a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/slett">| slette @Model.name </a> //"subregister/{registername}/{owner}/{subregister}/slett")
-            }
-
+                <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/rediger">Rediger @Model.name </a>
+                <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/slett">Slett @Model.name </a> //"subregister/{registername}/{owner}/{subregister}/slett")
+            }            
+        }
+        @if (Model.parentRegister.parentRegisterId != null)
+        {
+            <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.parentRegister.seoname">Tilbake</a>
         }
     </div>
 </div>

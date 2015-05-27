@@ -1,21 +1,20 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = UI.CreateNew;
-    var parentRegisterSEO = ViewBag.parentRegisterSEO;
+    ViewBag.Title = "Foreslå nytt register";
 }
 
 @section breadcrumb {
-
-    <li><a href="/register/@parentRegisterSEO">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
     <li class="active">Ny</li>
 }
 
-<h2>Foreslå nytt register</h2>
+<h2>Foreslå</h2>
+<h4>Foreslå nytt register</h4>
+<hr />
+
 @using (Html.BeginForm("Create", "Registers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
@@ -41,22 +40,14 @@
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
-            </div>
-        </div>
     </div>
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+        <a href="/">Tilbake</a>
+    </div>
+
 }
-
-<div>
-
-    <a href="/">Tilbake</a>
-
-</div>
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

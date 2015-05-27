@@ -1,7 +1,7 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = UI.Edit;
+    ViewBag.Title = "Rediger " + Model.name;
 }
 
 @section breadcrumb {
@@ -10,16 +10,13 @@
     <li class="active">Rediger</li>
 }
 
-
-
-
-<h2>@ViewBag.Title</h2>
+<h2>Rediger</h2>
+<h4>@Model.name</h4>
+<hr />
 
 @using (Html.BeginForm("Edit", "Registers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">
-        <h4>@Html.DisplayName(Model.name)</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.systemId)
         @Html.HiddenFor(model => model.parentRegisterId)
@@ -55,18 +52,14 @@
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lagre" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+        <a href="/register/@Model.seoname">Tilbake</a>
+    </div>
 
-<div>
-    <a href="/register/@Model.seoname">Tilbake</a>
-</div>
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

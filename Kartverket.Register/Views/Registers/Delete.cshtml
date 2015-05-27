@@ -1,7 +1,7 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = "Slett";
+    ViewBag.Title = "Slett" + Model.name;
 }
 
 @section breadcrumb {
@@ -13,18 +13,17 @@
 
 <h2>Slett</h2>
 
-<h3>Er du sikker på at du vil slette @Model.name</h3>
-<div>
-    <hr />
+<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+@Html.ValidationMessage("ErrorMessageDelete")
+<hr />
 
-    @using (Html.BeginForm())
-    {
+@using (Html.BeginForm())
+{
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Slett" class="btn btn-default" /> <br/>
-            @Html.ValidationMessage("ErrorMessageDelete") <br />
-            <br />
-            <a href="/register/@Model.seoname/">Tilbake</a>
-        </div>
-    }
-</div>
+    <div class="form-actions no-color">
+        <input type="submit" value="Slett" class="btn btn-default pull-right" />
+        
+        <a href="/register/@Model.seoname/">Tilbake</a>
+    </div>
+}
+

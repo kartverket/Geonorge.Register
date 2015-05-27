@@ -103,54 +103,52 @@
 </div>
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <p>
-        @if (Model.register.containedItemClass == "Document")
-        {
-            <a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.register.seoname">Tilbake</a>
-        }
+    <hr />
 
+    @if (Request.IsAuthenticated)
+    {
 
-        @if (Request.IsAuthenticated)
+        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
+            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
+            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
         {
 
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+            if (Model.register.containedItemClass == "Document")
             {
-
-                if (Model.register.containedItemClass == "Document")
-                {
-                    <span> | </span><a href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a> 
-                }
-
-                if (Model.register.containedItemClass == "CodelistValue")
-                {
-                    <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-                }
+                <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
             }
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+
+            if (Model.register.containedItemClass == "CodelistValue")
             {
-                if (Model.register.containedItemClass == "Organization")
-                {
-                    <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Dataset")
-                {
-                    <span> | </span><a href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
-                    <span> | </span><a href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-                } if (Model.register.containedItemClass == "EPSG")
-                {
-                    <span>| </span><a href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-                }
+                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
             }
         }
+        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+        {
+            if (Model.register.containedItemClass == "Organization")
+            {
+               <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+            }
+            if (Model.register.containedItemClass == "Dataset")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+            } if (Model.register.containedItemClass == "EPSG")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
+            }
+        }
+    }
 
-    </p>
+    @if (Model.register.containedItemClass == "Document")
+    {
+        <a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@Model.register.seoname">Tilbake</a>
+    }
 </div>

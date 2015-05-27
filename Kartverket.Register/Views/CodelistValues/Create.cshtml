@@ -2,10 +2,10 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = Model.register.name;
+    ViewBag.Title = "Foreslå ny kodeverdi";
 }
 
-<h2>Ny</h2>
+<h2>Foreslå</h2>
 @if (Model.register.parentRegister != null)
 {
     <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
@@ -46,8 +46,8 @@ else
     }
 
     <div class="form-horizontal">
-        <h4>Foreslå ny @Model.register.name kode</h4>
-        
+        <h4>Foreslå ny kodeverdi i @Model.register.name</h4>
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -73,24 +73,21 @@ else
                 @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
-            </div>
-        </div>
+    </div>
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+        @if (Model.register.parentRegister != null)
+        {
+            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.register.seoname/">Tilbake</a>
+        }
     </div>
 }
 
-<div>
-
-    @if (Model.register.parentRegister != null)
-    {
-        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.register.seoname/">Tilbake</a>
-    }
-    
-</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -63,10 +63,7 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <p>            
-          
-        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
-
+        <hr />
         @if (Request.IsAuthenticated)
         {
                 
@@ -76,40 +73,40 @@
             {        
                 if (Model.currentVersion.register.containedItemClass == "Organization")
                 {
-                    <span>| </span><a href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
                 }
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {
                     if (Model.currentVersion.register.parentRegisterId != null)
                     {
-                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
                     }
                     else
                     {
-                        <span> | </span><a href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
                     }
 
                 }
                 if (Model.currentVersion.register.containedItemClass == "Dataset")
                 {
-                    <span> | </span><a href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Endre</a>
-                    <span> | </span><a href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
                 }
                 if (Model.currentVersion.register.containedItemClass == "EPSG")
                 {
-                    <span>| </span><a href="/epsg-koder/@Model.currentVersion.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/rediger">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
                 }
                 if (Model.currentVersion.register.containedItemClass == "CodelistValue")
                 {
-                    <span>| </span><a href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Endre</a>
-                    <span>| </span><a href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
                 }
 
 
             }
         }
+        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
 
-    </p>
 </div>

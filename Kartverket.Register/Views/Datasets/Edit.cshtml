@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Rediger " + Model.name;
 }
 
 @section breadcrumb {
@@ -29,7 +29,7 @@
 
 }
 
-<h2>Edit</h2>
+<h2>Rediger</h2>
 <h4>@Model.name</h4>
 <hr />
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -69,6 +69,7 @@
 {
     @Html.HiddenFor(model => model.systemId)
     @Html.HiddenFor(model => model.registerId)
+
     <div class="form-horizontal">
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -201,20 +202,17 @@
         @Html.Hidden("dontUpdateDescription", false)
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lagre" class="btn btn-default" />
-            </div>
+            <hr />
+            <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+            @if (Model.register.parentRegisterId != null)
+            {
+                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/@Model.register.seoname/@Model.datasetowner.seoname/@Model.seoname/">Tilbake</a>
+            }
+
         </div>
     </div>
 }
-
-<div>
-    @if (Model.register.parentRegisterId != null)
-    {
-        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.register.seoname/@Model.datasetowner.seoname/@Model.seoname/">Tilbake</a>
-    }
-</div>

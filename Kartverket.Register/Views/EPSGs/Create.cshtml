@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "EPSG";
+    ViewBag.Title = "Foreslå ny EPSG-kode";
 }
 
 @section breadcrumb {
@@ -26,7 +26,9 @@
     }
 }
 
-<h2>Foreslå ny Epsg kode</h2>
+<h2>Foreslå</h2>
+<h4>Foreslå ny EPSG-kode i @Model.register.name</h4>
+<hr />
 
 @using (Html.BeginForm("Create", "EPSGs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -35,8 +37,6 @@
         <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
     }
     <div class="form-horizontal">
-        <h4>EPSG</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -103,23 +103,20 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Foreslå" class="btn btn-default" />
-            </div>
+            <hr />
+            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+            @if (Model.register.parentRegister != null)
+            {
+                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/@Model.register.seoname/">Tilbake</a>
+            }
         </div>
     </div>
 }
 
-<div>
-    @if (Model.register.parentRegister != null)
-    {
-        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.register.seoname/">Tilbake</a>
-    }
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

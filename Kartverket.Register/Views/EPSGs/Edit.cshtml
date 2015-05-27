@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Rediger " + Model.name;
 }
 @section breadcrumb {
     @if (Model.register.parentRegisterId != null)
@@ -26,13 +26,14 @@
         <li class="active">Rediger</li>
     }
 }
-<h2>Endre</h2>
+
+<h2>Rediger</h2>
+<h4>@Model.name</h4>
+<hr />
 
 @using (Html.BeginForm())
 {
     <div class="form-horizontal">
-        <h4>@Model.name</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.systemId)
 
@@ -165,26 +166,23 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Lagre" class="btn btn-default" />
-            </div>
+            <hr />
+            <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+            @if (Model.register.parentRegisterId != null)
+            {
+                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+            }
+            else
+            {
+                <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+            }
         </div>
     </div>
 }
 
-<div>
-    @if (Model.register.parentRegisterId != null)
-    {
-        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
-    }
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
 
 

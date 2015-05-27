@@ -3,4 +3,10 @@
     a[href]:after {
         content: none !important;
     }
+
+    .search-results.dataset.list-view .col-img img {
+        max-height:100px;
+        min-height:100px;
+    }
+
 }

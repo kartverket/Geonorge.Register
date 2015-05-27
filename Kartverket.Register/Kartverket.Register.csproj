@@ -447,11 +447,14 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
+    <Compile Include="Models\Api\Facet.cs" />
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
     <Compile Include="Models\Api\Register.cs" />
+    <Compile Include="Models\Api\RegisterData.cs" />
     <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\Api\SearchParameters.cs" />
+    <Compile Include="Models\Api\SearchResult.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\Facet.cs" />

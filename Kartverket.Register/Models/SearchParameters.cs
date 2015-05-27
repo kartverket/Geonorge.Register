@@ -37,7 +37,7 @@ namespace Kartverket.Register.Models
 
         public void AddDefaultFacetsIfMissing(List<string> additionalFacets)
         {
-            var defaultFacets = new List<string> { "Type" };
+            var defaultFacets = new List<string> { "Discriminator" };
 
             if (additionalFacets.Any())
             {

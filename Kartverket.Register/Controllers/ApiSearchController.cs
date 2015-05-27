@@ -8,7 +8,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services.Search;
 using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.Api.SearchParameters;
-using SearchResult = Kartverket.Register.Models.SearchResult;
+using SearchResult = Kartverket.Register.Models.Api.SearchResult;
 using System;
 
 namespace Kartverket.Register.Controllers

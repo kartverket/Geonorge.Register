@@ -53,7 +53,7 @@ namespace Kartverket.Register.Services.Search
                     FilterQueries = BuildFilterQueries(parameters),
                     OrderBy = order,
                     Rows = parameters.Limit,
-                    Start = parameters.Offset - 1, //solr is zero-based - we use one-based indexing in api
+                    Start = parameters.Offset -1,
                     Facet = BuildFacetParameters(parameters),
 
                     Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "Type",

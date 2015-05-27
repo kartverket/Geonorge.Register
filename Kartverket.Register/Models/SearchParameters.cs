@@ -19,6 +19,7 @@ namespace Kartverket.Register.Models
         public int Limit { get; set; }
         public int Offset { get; set; }
         public string OrderBy { get; set; }
+        public List<FacetParameter> Facets { get; set; }
 
         bool objektkatalog = true;
 

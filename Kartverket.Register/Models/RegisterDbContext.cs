@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Kartverket.Register.Models
 {
@@ -37,6 +38,52 @@ namespace Kartverket.Register.Models
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Kartverket.DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
+        }
+
+        public override int SaveChanges()
+        {
+            int result = 0;
+
+            var entityList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified);
+            foreach (var entity in entityList)
+            {
+                var reg = entity.Entity as Register;
+                var regItem = entity.Entity as RegisterItem;
+
+                if (reg != null) {
+                    result = Save();
+                    Index(reg.systemId);
+                }
+                else if (regItem != null) 
+                {
+                    result = Save();
+                    Index(regItem.systemId);
+                }
+                else { result = Save(); }
+
+            }
+
+            return result;
+        }
+
+
+        void Index(System.Guid systemID)
+        {
+            string id = systemID.ToString();
+            string url = "http://" + System.Web.HttpContext.Current.Request.Url.Host + ":" + System.Web.HttpContext.Current.Request.Url.Port + "/IndexSingle/" + id;
+            System.Net.WebClient c = new System.Net.WebClient();
+            try 
+            { 
+                var data = c.DownloadString(url);
+            }
+            catch (System.Exception ex) {
+            
+            }
+
+        }
+
+        int Save() {
+            return base.SaveChanges();
         }
     }
 }

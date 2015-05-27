@@ -224,8 +224,7 @@ namespace Kartverket.Register.Services.Search
                         new SolrQuery("registerText:"+ text + "*^40"),
                         new SolrQuery("registerItemText:"+ text + "*^40"),
                         new SolrQuery("allText:" + text + "^1.2"),
-                        new SolrQuery("allText:" + text + "*^1.1"),
-                        new SolrQuery("!boost b=typenumber")
+                        new SolrQuery("allText:" + text + "*^1.1")
                     });
                 }
                 else
@@ -241,8 +240,7 @@ namespace Kartverket.Register.Services.Search
                         new SolrQuery("allText:" + text + "^1.2"),
                         new SolrQuery("allText:" + text + "*^1.1"),
                         new SolrQuery("allText:" + text + "~1"),   //Fuzzy
-                        new SolrQuery("allText2:" + text + ""), //Stemmer
-                        new SolrQuery("!boost b=typenumber")
+                        new SolrQuery("allText2:" + text + "") //Stemmer
                         //new SolrQuery("allText3:" + text)        //Fonetisk
                     });
                 }

@@ -11,6 +11,7 @@ namespace Kartverket.Register.Models
         {
             Offset = 1;
             Limit = 50;
+            Facets = new List<FacetParameter>();
         }
 
         public string Owner { get; set; }
@@ -29,6 +30,27 @@ namespace Kartverket.Register.Models
             set { this.objektkatalog = value; }
         }
 
+        public void AddDefaultFacetsIfMissing()
+        {
+            AddDefaultFacetsIfMissing(new List<string>());
+        }
 
+        public void AddDefaultFacetsIfMissing(List<string> additionalFacets)
+        {
+            var defaultFacets = new List<string> { "Type" };
+
+            if (additionalFacets.Any())
+            {
+                defaultFacets.AddRange(additionalFacets);
+            }
+
+            foreach (var defaultFacet in defaultFacets)
+            {
+                if (Facets.All(f => f.Name != defaultFacet))
+                {
+                    Facets.Add(new FacetParameter { Name = defaultFacet });
+                }
+            }
+        }
     }
 }

@@ -16,10 +16,18 @@ namespace Kartverket.Register
             config.EnableCors(cors);
 
             config.Routes.MapHttpRoute(
+                   name: "SearchApi",
+                   routeTemplate: "api/search/{search}",
+                   defaults: new { controller = "ApiSearch", search = RouteParameter.Optional }
+            );
+
+            config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+
             config.Formatters.Add(new SyndicationFeedFormatter());
             config.Formatters.Add(new CsvFormatter());
             

@@ -17,12 +17,11 @@
 </div>
 
 <div class="register dataset search-results">
-    @*lage egne stiler for dataset*@
     @foreach (Dataset item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-img col-xs-2 col-sm-2 col-md-2 col-lg-2">
 
                     @if (item.register.parentRegister != null)
                     {
@@ -33,12 +32,12 @@
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
-                                <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
+                            <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
                         </a>
-                    }                                                 
+                    }
 
                 </div>
-                <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+                <div class="col-title col-xs-4 col-sm-4 col-md-5 col-lg-5">
                     @if (item.register.parentRegister != null)
                     {
                         <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
@@ -54,15 +53,15 @@
                                 @item.name
                             </h3>
                         </a>
-                    }                   
+                    }
+                    <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                    </a>
+                    <div class="orglogo">
                         <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
-                            <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                            @Html.DisplayFor(modelItem => item.datasetowner.name)
                         </a>
-                        <div class="orglogo">
-                            <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
-                                @Html.DisplayFor(modelItem => item.datasetowner.name)
-                            </a>
-                        </div>
+                    </div>
                     <br />
                     <div class="">
                         @if (item.description != null)
@@ -82,7 +81,7 @@
                         }
                     </div>
                 </div>
-                <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                <div class="col-actions col-xs-3 col-sm-3 col-md-2 col-lg-2">
                     <ul style="list-style-type:none">
                         @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
                         {
@@ -135,7 +134,7 @@
 
                     </ul>
                 </div>
-                <div class="col-information col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 pull-right col-actions">
+                <div class="col-information col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
                     <ul style="list-style-type:none">
                         @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                         {
@@ -155,9 +154,10 @@
                             <li>
                                 <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
                             </li>
-                            
+
                         }
-                        else { 
+                        else
+                        {
                             <li>
                                 &nbsp;
                             </li>

@@ -580,6 +580,18 @@
     float: left;
 }
 
+.search-results.dataset.list-view .col-actions {
+    margin-top:20px;
+}
+
+.search-results.dataset.list-view .col-information {
+    margin-top:20px;
+}
+
+
+
+
+
 /* subregister */
 
 .search-results.registersub.table-view .col-title{

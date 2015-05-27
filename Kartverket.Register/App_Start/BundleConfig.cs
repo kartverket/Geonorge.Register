@@ -29,6 +29,7 @@ namespace Kartverket.Register
                      "~/Content/navbar.css",
                      "~/Content/searchbar.css",
                      "~/Content/statusIcons.css",
+                     "~/Content/print.css",
                      "~/Content/custom.css",
                      "~/Content/site.css"));
 

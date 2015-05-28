@@ -35,7 +35,7 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
         ID: <a href="/register/@registerSeoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <img src="@Url.Content("~/data/organizations/" + Model.FilterResult.Items.ElementAt(0).documentUrl)" class="img-responsive img-small-logo" alt="@OwnerName" />
+        <img src="@Url.Content("~/data/organizations/" +  Model.FilterResult.Items.ElementAt(0).datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => Model.FilterResult.Items.ElementAt(0).datasetowner.name)" />
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -74,7 +74,7 @@
             </ul>
 
             <div class="row">
-                <div class="col-sm-9 col-md-9 col-lg-9">
+                <div class="col-sm-9 col-md-9 col-lg-9 hidden-print">
                     <div class="view-navigation">
                         <ul class="nav nav-pills text-center">
                             <li><a onclick="listView()" id="button-listView" class="active" title="Listevisning"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Liste</a></li>

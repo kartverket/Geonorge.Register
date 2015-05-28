@@ -3,12 +3,12 @@
 <div itemscope itemtype="http://schema.org/Dataset">
     
     <div class="col-sm-3 pull-right">
-        <img src="@Model.datasetthumbnail" class="img-responsive" alt="Miniatyrbilde av @Model.name" />
+        <img src="@Model.datasetthumbnail" class="img-responsive miniatyrbilde" alt="Miniatyrbilde av @Model.name" />
     </div>
     
-    <div class="row">
+    <div class="row dataset">
         <div class="col-sm-8">
-            <div class="col-sm-8">
+            <div class="col-sm-8 no-page-break">
                <h3>Produktinformasjon</h3>
                
                 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
@@ -29,14 +29,14 @@
                 }
             </div>
         </div>
-        <div class="col-sm-8">
-            <div class="col-sm-4">
-                <h3>Distribusjon</h3>               
+        <div class="col-sm-8 no-page-break">
+            <div class="col-sm-4 ">
+                <h3>Distribusjon</h3>
                 @if (!string.IsNullOrWhiteSpace(Model.DistributionUrl))
                 {
                     <p><a href="@Model.DistributionUrl" class="btn btn-primary">Last ned datasett</a></p>
                 }
-                
+
                 @if (!string.IsNullOrWhiteSpace(Model.DistributionFormat))
                 {
                     <p><strong> Format:</strong> @Model.DistributionFormat</p>
@@ -47,7 +47,7 @@
                         <strong>Område:</strong> <span itemprop="name">@Model.DistributionArea</span>
                     </p>
                 }
-                
+
             </div>
             @if (!string.IsNullOrWhiteSpace(Model.WmsUrl))
             {
@@ -59,7 +59,7 @@
             }
         </div>
         <div class="col-sm-8">
-            <div class="col-sm-8">
+            <div class="col-sm-8 no-page-break">
                 @if (!string.IsNullOrWhiteSpace(Model.Notes))
                 {
                     <h3>Merknad</h3>

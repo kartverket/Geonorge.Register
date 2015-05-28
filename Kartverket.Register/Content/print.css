@@ -1,9 +1,21 @@
 ﻿@media print {
 
+    /*Fjerner alle urler i utskriften*/
     a[href]:after {
         content: none !important;
     }
 
+    /*Bestemmer at det ikke skal settes et page break midt i en listing av et registeritem på et register. */
+    .result-row {
+        
+    }
+
+    .no-page-break {
+        page-break-inside: avoid;
+    }
+
+
+    /*Datasett registervisning*/
     .search-results.dataset.list-view .col-img {
         width: 20%;
     }
@@ -24,16 +36,11 @@
         width: 100%;
     }
 
-    .result-row {
-        page-break-inside: avoid;
-    }
 
-    footer {
-        align-content:center;
-    }
+    /*Datasett detaljside*/
 
-    .search-results.dataset.table-view .beskrivelse-print {
-        display: none !important;
+    .miniatyrbilde {
+        max-height: 180px;
+        max-width: 180px;
     }
-
 }

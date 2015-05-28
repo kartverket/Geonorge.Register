@@ -31,7 +31,7 @@ namespace Kartverket.Register.Services.Search
             if (parameters.OrderBy == "title")
             {
                 order = new[] { new SortOrder("RegisterItemName", Order.ASC) };
-            }     
+            }
             else if (parameters.OrderBy == "date_updated")
             {
                 order = new[] { new SortOrder("RegisterItemUpdated", Order.DESC) };

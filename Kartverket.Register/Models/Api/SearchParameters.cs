@@ -11,15 +11,40 @@ namespace Kartverket.Register.Models.Api
        
         public int offset { get; set; } 
         public int limit { get; set; } 
-        public List<FacetParameter> facets { get; set; }
+        public List<FacetInput> facets { get; set; }
+        public string orderby { get; set; }
 
         public SearchParameters()
         {
-            facets = new List<FacetParameter>();
+            facets = new List<FacetInput>();
             
             limit = 10;
             offset = 1;
-        } 
+        }
+
+        public void AddDefaultFacetsIfMissing()
+        {
+            AddDefaultFacetsIfMissing(new List<string>());
+        }
+
+        public void AddDefaultFacetsIfMissing(List<string> additionalFacets)
+        {
+            var defaultFacets = new List<string> { "theme", "Type" };
+
+            if (additionalFacets.Any())
+            {
+                defaultFacets.AddRange(additionalFacets);
+            }
+
+            foreach (var defaultFacet in defaultFacets)
+            {
+                if (facets.All(f => f.name != defaultFacet))
+                {
+                    facets.Add(new FacetInput { name = defaultFacet });
+                }
+            }
+        }
+
     }
 
     

@@ -59,13 +59,13 @@ namespace Kartverket.Register.Controllers
             };
         }
 
-        private List<FacetParameter> CreateFacetParameters(IEnumerable<FacetParameter> facets)
+        private List<FacetParameter> CreateFacetParameters(IEnumerable<FacetInput> facets)
         {
             return facets
                 .Select(item => new FacetParameter
                 {
-                    Name = item.Name,
-                    Value = item.Value
+                    Name = item.name,
+                    Value = item.value
                 })
                 .ToList();
         }

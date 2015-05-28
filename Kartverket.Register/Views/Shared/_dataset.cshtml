@@ -55,31 +55,37 @@
                         </a>
                     }
                     <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
-                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                        <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                     </a>
                     <div class="orglogo">
                         <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
                             @Html.DisplayFor(modelItem => item.datasetowner.name)
                         </a>
                     </div>
+
+                    <a class="visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                        Eier: @Html.DisplayFor(modelItem => item.datasetowner.name)
+                    </a>
+
                     <br />
-                    <div class="">
+                    <div class="hidden-print">
                         @if (item.description != null)
                         {
                             <p>
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/" title="Vis mer info om @item.name">vis mer info</a>
                                 }
                             </p>
                         }
                     </div>
+                    <p class="visible-print">@item.description</p>
                 </div>
                 <div class="col-actions col-xs-6 col-sm-3 col-md-2 col-lg-2">
                     <ul style="list-style-type:none">

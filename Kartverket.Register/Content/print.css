@@ -4,25 +4,23 @@
         content: none !important;
     }
 
-    .search-results.dataset.list-view .col-img{
-        width:20%;
+    .search-results.dataset.list-view .col-img {
+        width: 20%;
     }
 
-    .search-results.dataset.list-view .col-title{
-        width:80%;
+    .search-results.dataset.list-view .col-title {
+        width: 80%;
     }
 
-    .search-results.dataset.list-view .col-information{
-        width:100%;
+    .search-results.dataset.list-view .col-information {
+        width: 100%;
     }
 
-    .search-results.dataset.list-view .col-actions{
-        width:50%;
+    .search-results.dataset.list-view .col-actions {
+        width: 50%;
     }
 
     .search-results.dataset.list-view {
-        width:100%;
+        width: 100%;
     }
-
-
 }

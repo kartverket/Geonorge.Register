@@ -94,14 +94,36 @@ namespace Kartverket.Register.Services
 
         private string getOrganizationName(SearchResultItem item)
         {
+            string organizationSEO = "";
             if (!string.IsNullOrWhiteSpace(item.DocumentOwner))
-                return item.DocumentOwner;
+                organizationSEO = item.DocumentOwner;
             else if (!string.IsNullOrWhiteSpace(item.DatasetOwner))
-                return item.DatasetOwner;
+                organizationSEO = item.DatasetOwner;
             else if (!string.IsNullOrWhiteSpace(item.ParentregisterOwner))
-                return item.ParentregisterOwner;
+                organizationSEO = item.ParentregisterOwner;
             else
-                return item.Submitter;
+                organizationSEO = item.Submitter;
+
+            return mapOrganizationSeoName(organizationSEO);
+        }
+
+        private string mapOrganizationSeoName(string seoName)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            string organizationName = seoName;
+
+            var queryResultsRegisterItem = from o in db.RegisterItems
+                                           where o.seoname == seoName
+                                           select o.name;
+
+            var name = queryResultsRegisterItem.FirstOrDefault();
+
+            organizationName = name.ToString();
+
+            db.Dispose();
+            
+            return organizationName;
         }
 
 

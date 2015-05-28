@@ -92,7 +92,7 @@ namespace Kartverket.Register.Models
         [SolrField("CodelistValue")]
         public string CodelistValue { get; set; }
 
-        [SolrField("Type")]
+        [SolrField("type")]
         public string Type { get; set; }
 
         [SolrField("currentVersion")]
@@ -104,6 +104,9 @@ namespace Kartverket.Register.Models
 
         [SolrField("theme")]
         public string theme { get; set; }
+
+        [SolrField("organization")]
+        public string Organization { get; set; }
 
     }
 }

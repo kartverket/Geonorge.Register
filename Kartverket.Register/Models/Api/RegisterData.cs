@@ -15,6 +15,7 @@ namespace Kartverket.Register.Models.Api
         public string RegisterName { get; set; }
         public string RegisterDescription { get; set; }
         public string RegisterUrl { get; set; }
+        public string Organization { get; set; }
 
 
         public RegisterData(SearchResultItem item)
@@ -27,6 +28,7 @@ namespace Kartverket.Register.Models.Api
             RegisterName = item.RegisterName;
             RegisterDescription = item.RegisterDescription;
             RegisterUrl = item.ParentRegisterUrl;
+            Organization = item.organization;
             
         }
 

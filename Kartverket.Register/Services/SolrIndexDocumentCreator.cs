@@ -79,6 +79,7 @@ namespace Kartverket.Register.Services
                 indexDoc.subregisterItemUrl = item.subregisterItemUrl;
                 indexDoc.SubregisterUrl = item.SubregisterUrl;
                 indexDoc.Type = getTypeName(item.Discriminator);
+                indexDoc.Organization = getOrganizationName(item);
 
                 Log.Info(string.Format("Indexing register with systemID={0}", indexDoc.SystemID));
 
@@ -91,32 +92,44 @@ namespace Kartverket.Register.Services
             return indexDoc;
         }
 
+        private string getOrganizationName(SearchResultItem item)
+        {
+            if (!string.IsNullOrWhiteSpace(item.DocumentOwner))
+                return item.DocumentOwner;
+            else if (!string.IsNullOrWhiteSpace(item.DatasetOwner))
+                return item.DatasetOwner;
+            else if (!string.IsNullOrWhiteSpace(item.ParentregisterOwner))
+                return item.ParentregisterOwner;
+            else
+                return item.Submitter;
+        }
+
 
         public static string getTypeName(string containedItemClass)
         {
             if (containedItemClass == "Document")
             {
-                return "Dokumenter";
+                return "dokumenter";
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Datasett";
+                return "datasett";
             }
             else if (containedItemClass == "EPSG")
             {
-                return "EPSG-koder";
+                return "epsg-koder";
             }
             else if (containedItemClass == "Organization")
             {
-                return "Organisasjoner";
+                return "organisasjoner";
             }
             else if (containedItemClass == "CodelistValue")
             {
-                return "Kodeverdier";
+                return "kodeverdier";
             }
             else if (containedItemClass == "Register")
             {
-                return "Registre";
+                return "registre";
             }
 
             return null;

@@ -38,6 +38,7 @@ namespace Kartverket.Register.Models
         public string Type { get; set; }
         public Guid? currentVersion { get; set; }
         public string theme { get; set; }
+        public string organization { get; set; }
         
     }
 }

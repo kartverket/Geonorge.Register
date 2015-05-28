@@ -57,7 +57,7 @@ namespace Kartverket.Register.Services.Search
                     Facet = BuildFacetParameters(parameters),
 
                     Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "Type",
-                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" }
+                    "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" }
                     
 
                 });
@@ -171,7 +171,8 @@ namespace Kartverket.Register.Services.Search
                         SubregisterUrl = doc.SubregisterUrl,
                         SystemID = doc.SystemID,
                         Type = doc.Type,
-                        theme = doc.theme
+                        theme = doc.theme,
+                        organization = doc.Organization
                        
                     };
                     items.Add(item);

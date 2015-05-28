@@ -7,7 +7,7 @@
 
     /*Bestemmer at det ikke skal settes et page break midt i en listing av et registeritem på et register. */
     .result-row {
-        
+        page-break-inside: avoid;
     }
 
     .no-page-break {

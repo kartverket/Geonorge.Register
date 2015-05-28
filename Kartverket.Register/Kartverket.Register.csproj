@@ -526,6 +526,7 @@
     <Content Include="changelog.txt" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\mobil.css" />
     <Content Include="Content\print.css" />
     <Content Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

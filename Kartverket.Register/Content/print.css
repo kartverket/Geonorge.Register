@@ -23,4 +23,12 @@
     .search-results.dataset.list-view {
         width: 100%;
     }
+
+    .result-row {
+        page-break-inside: avoid;
+    }
+
+    footer {
+        align-content:center;
+    }
 }

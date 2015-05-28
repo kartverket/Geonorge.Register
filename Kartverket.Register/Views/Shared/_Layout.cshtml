@@ -48,7 +48,7 @@
                 <li><a href="/">Registrene</a></li>
                 @RenderSection("breadcrumb", false)
             </ol>
-            <div class="menu clearfix">
+            <div class="menu clearfix hidden-print">
                 <div class="pull-right">
                     @if (Request.IsAuthenticated)
                     {

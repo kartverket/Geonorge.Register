@@ -102,7 +102,7 @@
 
 </div>
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
     <hr />
 
     @if (Request.IsAuthenticated)
@@ -145,10 +145,10 @@
 
     @if (Model.register.containedItemClass == "Document")
     {
-        <a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+        <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
     }
     else
     {
-        <a href="/register/@Model.register.seoname">Tilbake</a>
+        <a class="hidden-print" href="/register/@Model.register.seoname">Tilbake</a>
     }
 </div>

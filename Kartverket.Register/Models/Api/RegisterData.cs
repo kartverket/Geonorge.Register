@@ -23,7 +23,7 @@ namespace Kartverket.Register.Models.Api
             Name = item.RegisterItemName;
             Url = item.RegisteItemUrl;
             Description = item.RegisterItemDescription;
-            Type = item.Discriminator;
+            Type = item.Type;
             RegisterName = item.RegisterName;
             RegisterDescription = item.RegisterDescription;
             RegisterUrl = item.ParentRegisterUrl;

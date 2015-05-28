@@ -102,5 +102,8 @@ namespace Kartverket.Register.Models
         [SolrField("score")]
         public double? Score { get; set; }
 
+        [SolrField("theme")]
+        public string theme { get; set; }
+
     }
 }

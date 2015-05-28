@@ -78,7 +78,7 @@ namespace Kartverket.Register.Services
                 indexDoc.Submitter = item.Submitter;
                 indexDoc.subregisterItemUrl = item.subregisterItemUrl;
                 indexDoc.SubregisterUrl = item.SubregisterUrl;
-                indexDoc.Type = item.Type;
+                indexDoc.Type = getTypeName(item.Discriminator);
 
                 Log.Info(string.Format("Indexing register with systemID={0}", indexDoc.SystemID));
 
@@ -89,6 +89,37 @@ namespace Kartverket.Register.Services
                 Log.Error(e);
             }
             return indexDoc;
+        }
+
+
+        public static string getTypeName(string containedItemClass)
+        {
+            if (containedItemClass == "Document")
+            {
+                return "Dokumenter";
+            }
+            else if (containedItemClass == "Dataset")
+            {
+                return "Datasett";
+            }
+            else if (containedItemClass == "EPSG")
+            {
+                return "EPSG-koder";
+            }
+            else if (containedItemClass == "Organization")
+            {
+                return "Organisasjoner";
+            }
+            else if (containedItemClass == "CodelistValue")
+            {
+                return "Kodeverdier";
+            }
+            else if (containedItemClass == "Register")
+            {
+                return "Registre";
+            }
+
+            return null;
         }
 
     }

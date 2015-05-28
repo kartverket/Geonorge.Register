@@ -31,4 +31,9 @@
     footer {
         align-content:center;
     }
+
+    .search-results.dataset.table-view .beskrivelse-print {
+        display: none !important;
+    }
+
 }

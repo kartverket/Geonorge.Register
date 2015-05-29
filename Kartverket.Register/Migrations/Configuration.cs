@@ -21,9 +21,6 @@ namespace Kartverket.Register.Migrations
         {
             // OBS!! Seed funksjonen kjører ikke i debugging
 
-
-            RegisterDbContext db = new RegisterDbContext();
-
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -48,6 +45,8 @@ namespace Kartverket.Register.Migrations
                 new accessType { accessLevel = 2, description = "Editor" },
                 new accessType { accessLevel = 3, description = "Alle" }
             );
+
+            context.SaveChanges();
 
             context.requirements.AddOrUpdate(
                 new Requirement { value = "Mandatory", description = "Påkrevd", sortOrder = 0 },
@@ -473,12 +472,12 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems WHERE versioningId IS NULL");
 
             //UpdateRegisterItemsVersioningId
-            var queryResultsVersions = from r in db.Versions
+            var queryResultsVersions = from r in context.Versions
                                        select r;
 
             List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
 
-            var queryResultsRegisterItems = from r in db.RegisterItems
+            var queryResultsRegisterItems = from r in context.RegisterItems
                                             select r;
             List<RegisterItem> registerItems = queryResultsRegisterItems.ToList();
 
@@ -502,12 +501,12 @@ namespace Kartverket.Register.Migrations
 
             //UpdateRegistersVersioningId
 
-            var queryResultsVersions2 = from r in db.Versions
+            var queryResultsVersions2 = from r in context.Versions
                                         select r;
 
             List<Kartverket.Register.Models.Version> versions2 = queryResultsVersions2.ToList();
 
-            var queryResultsRegisterItems2 = from r in db.Registers
+            var queryResultsRegisterItems2 = from r in context.Registers
                                              select r;
             List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems2.ToList();
 

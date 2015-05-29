@@ -6,6 +6,7 @@ namespace Kartverket.Register.Migrations
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using Helpers;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Kartverket.Register.Models.RegisterDbContext>
     {
@@ -368,6 +369,69 @@ namespace Kartverket.Register.Migrations
             //        externalReference = "http://spatialreference.org/ref/epsg/etrs89-utm-zone-29n/"
             //    }
             //);
+
+
+
+            //Lage register for veiledningsdokumenter
+            context.Registers.AddOrUpdate(
+                new Register
+                {
+                    systemId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "Veiledningsdokumenter",
+                    description = "Inneholder veiledningsdokumenter",
+                    containedItemClass = "Register",
+                    statusId = "Submitted",
+                    seoname = "veiledningsdokumenter",
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                },
+
+                new Register
+                {
+                    systemId = Guid.Parse("29729311-ba8e-46b2-a140-f3398cc735a0"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "Veileder",
+                    description = "Inneholder dokumenter av typen veileder",
+                    containedItemClass = "Document",
+                    statusId = "Submitted",
+                    parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
+                    seoname = "veileder",
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                },
+
+                new Register
+                {
+                    systemId = Guid.Parse("0a4fb286-30c7-48dd-ad52-feb554c1ae3e"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "Standard",
+                    description = "inne standard veiledningsdokumenter",
+                    containedItemClass = "Document",
+                    statusId = "Submitted",
+                    seoname = "standard",
+                    parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                },
+
+                new Register
+                {
+                    systemId = Guid.Parse("46d50753-1d83-4901-87cf-7e7e053fbc2e"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    name = "Teknisk dokumentasjon",
+                    description = "Inneholder dokumenter med teknisk dokumentasjon",
+                    containedItemClass = "Document",
+                    statusId = "Submitted",
+                    seoname = "teknisk-dokumentasjon",
+                    parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                }
+
+
+                );
+
 
 
             //FixSubmitter

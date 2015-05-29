@@ -43,6 +43,12 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Proposal", description = "Forslag" }
             );
 
+            context.AccessTypes.AddOrUpdate(
+                new accessType { accessLevel = 1, description = "Administrator" },
+                new accessType { accessLevel = 2, description = "Editor" },
+                new accessType { accessLevel = 3, description = "Alle" }
+            );
+
             context.requirements.AddOrUpdate(
                 new Requirement { value = "Mandatory", description = "Påkrevd", sortOrder = 0 },
                 new Requirement { value = "Conditional", description = "Betinget", sortOrder = 2 },
@@ -523,6 +529,10 @@ namespace Kartverket.Register.Migrations
 
             //UpdateLastVersionNumber
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
+
+            //UpdateAccessId
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (AccessId IS NULL)");
+
 
         }
     }

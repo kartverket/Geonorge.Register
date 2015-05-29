@@ -62,6 +62,9 @@ namespace Kartverket.Register.Models
         public Guid? versioningId { get; set; }
         public virtual Version versioning { get; set; }
         public int versionNumber { get; set; }
+        [ForeignKey("access")]
+        public int? accessId { get; set; }
+        public virtual accessType access { get; set; }
 
 
 

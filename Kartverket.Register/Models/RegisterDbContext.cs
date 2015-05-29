@@ -14,6 +14,7 @@ namespace Kartverket.Register.Models
         // marking DbSet with virtual makes it testable
         public virtual DbSet<Version> Versions { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
+        public virtual DbSet<accessType> AccessTypes { get; set; }
         public virtual DbSet<DOKTheme> DOKThemes { get; set; }
         public virtual DbSet<Register> Registers { get; set; }
         public virtual DbSet<Organization> Organizations { get; set; }
@@ -52,12 +53,12 @@ namespace Kartverket.Register.Models
 
                 if (reg != null) {
                     result = Save();
-                    Index(reg.systemId);
+                    //Index(reg.systemId);
                 }
                 else if (regItem != null) 
                 {
                     result = Save();
-                    Index(regItem.systemId);
+                    //Index(regItem.systemId);
                 }
                 else { result = Save(); }
 

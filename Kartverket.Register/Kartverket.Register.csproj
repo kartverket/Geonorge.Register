@@ -444,9 +444,18 @@
     <Compile Include="Migrations\201505071122307_Dimension.Designer.cs">
       <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505291228141_AddAccessType.cs" />
+    <Compile Include="Migrations\201505291228141_AddAccessType.Designer.cs">
+      <DependentUpon>201505291228141_AddAccessType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505291246391_AddAccessId.cs" />
+    <Compile Include="Migrations\201505291246391_AddAccessId.Designer.cs">
+      <DependentUpon>201505291246391_AddAccessId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
+    <Compile Include="Models\AccessType.cs" />
     <Compile Include="Models\Api\Facet.cs" />
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
@@ -852,6 +861,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505071122307_Dimension.resx">
       <DependentUpon>201505071122307_Dimension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505291228141_AddAccessType.resx">
+      <DependentUpon>201505291228141_AddAccessType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505291246391_AddAccessId.resx">
+      <DependentUpon>201505291246391_AddAccessId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

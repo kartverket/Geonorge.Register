@@ -239,13 +239,13 @@ namespace Kartverket.Register.Controllers
                 {
                     register.name = "ikke angitt";
                 }
-
+                
                 register.systemId = Guid.NewGuid();
                 register.modified = DateTime.Now;
                 register.dateSubmitted = DateTime.Now;
                 register.statusId = "Submitted";
                 register.seoname = MakeSeoFriendlyString(register.name);
-                register.containedItemClass = "Register";
+                register.containedItemClass = register.containedItemClass;
 
                 db.Registers.Add(register);
                 db.SaveChanges();
@@ -306,7 +306,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("endre/{registername}")]
         [Authorize]
-        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername)
+        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
         {
             var queryResults = from o in db.Registers
                                where o.seoname == registername
@@ -531,6 +531,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 
         protected override void OnException(ExceptionContext filterContext)

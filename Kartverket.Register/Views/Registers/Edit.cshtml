@@ -52,6 +52,38 @@
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                @Html.LabelFor(model => model.accessId, "Tilgang til å foreslå, endre og slette registeroppføringer")
+                <br /><small>Kun Admin kan endre status. For Editor gjelder endre og slette kun egne oppføringer</small> <br /><br />
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                @if (Model.accessId == 1)
+                {
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @checked = "checked", @class = "col-md-1", })
+                }
+                else
+                {
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", })
+                }
+                <label class="col-md-4" for=" admin">Admin</label>
+
+                @if (Model.accessId == 2)
+                {
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @checked = "checked", @class = "col-md-1" })                    
+                }
+                else{
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
+                }
+                <label class="col-md-4" for="editor">Admin + Editor</label>
+            </div>
+        </div>
+        
+
+
     </div>
     <div class="form-group">
         <hr />

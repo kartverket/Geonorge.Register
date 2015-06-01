@@ -389,7 +389,8 @@ namespace Kartverket.Register.Migrations
                     containedItemClass = "Register",
                     statusId = "Submitted",
                     seoname = "veiledningsdokumenter",
-                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
                 },
 
                 new Register
@@ -403,7 +404,8 @@ namespace Kartverket.Register.Migrations
                     statusId = "Submitted",
                     parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
                     seoname = "veileder",
-                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
                 },
 
                 new Register
@@ -417,7 +419,8 @@ namespace Kartverket.Register.Migrations
                     statusId = "Submitted",
                     seoname = "standard",
                     parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
-                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
                 },
 
                 new Register
@@ -431,11 +434,12 @@ namespace Kartverket.Register.Migrations
                     statusId = "Submitted",
                     seoname = "teknisk-dokumentasjon",
                     parentRegisterId = Guid.Parse("b2e5f822-994f-47f5-ac52-cd4153d55197"),
-                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3")
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
                 }
 
-
                 );
+                context.SaveChanges();
 
 
 
@@ -529,8 +533,8 @@ namespace Kartverket.Register.Migrations
             //UpdateLastVersionNumber
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
 
-            //UpdateAccessId
-            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (AccessId IS NULL)");
+            ////UpdateAccessId
+            //context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (AccessId IS NULL)");
 
 
         }

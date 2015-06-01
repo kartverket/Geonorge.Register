@@ -38,6 +38,25 @@ namespace Kartverket.Register.Helpers
             return result;
         }
 
+
+        public static bool accessRegister(Kartverket.Register.Models.Register register)
+        {
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            if ((register.accessId == 1) && role == "nd.metadata_admin")
+            {
+                return true;
+            }
+            if (register.accessId == 2 && (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor"))
+            {
+                return true;                
+            }
+            return false;
+        }
+
+
+
         public static bool IsGeonorgeAdmin(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
             bool isInRole = false;
@@ -676,5 +695,27 @@ namespace Kartverket.Register.Helpers
             }
             return register;
         }
+
+        public static string GetSecurityClaim(string type)
+        {
+            string result = null;
+            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    result = claim.Value;
+                    break;
+                }
+            }
+
+            // bad hack, must fix BAAT
+            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            {
+                result = "Kartverket";
+            }
+
+            return result;
+        }
     }
+
 }

@@ -49,6 +49,19 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
+
+        [Route("api/kodelister/{systemid}")]
+        [HttpGet]
+        public IHttpActionResult GetRegisterBySystemId(string systemid)
+        {
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+            var it = db.Registers.Where(w => w.systemId == new Guid(systemid)).FirstOrDefault();
+
+            return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+        }
+
+
         [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname)
@@ -136,6 +149,12 @@ namespace Kartverket.Register.Controllers
                 tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
                 tmp.verticalReferenceSystem = d.verticalReferenceSystem;
                 tmp.dimension = d.dimension != null ? d.dimension.description : "";
+            }
+
+            if (item is CodelistValue) 
+            {
+                var c = (CodelistValue)item;
+                tmp.codevalue = c.value;
             }
             
 

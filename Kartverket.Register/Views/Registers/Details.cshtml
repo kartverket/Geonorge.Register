@@ -151,7 +151,6 @@
                     <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.seoname/ny">Foreslå nytt register i @Model.name </a>
                 }
             }
-            
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
                 if (Model.containedItemClass == "Organization")
@@ -165,7 +164,6 @@
                 if (Model.containedItemClass == "EPSG")
                 {
                     <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.seoname/ny">Foreslå ny epsg kode i @Model.name </a>
-
                 }
                 <a class="btn btn-default btn-space pull-right" href="/endre/@Model.seoname">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/slett/@Model.seoname">Slett</a>

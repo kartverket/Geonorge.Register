@@ -438,8 +438,6 @@ namespace Kartverket.Register.Migrations
                 }
 
                 );
-                
-                context.SaveChanges();
 
 
             //FixSubmitter
@@ -527,12 +525,17 @@ namespace Kartverket.Register.Migrations
                     }
                 }
             }
+            
+            //UpdateAccessId
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (name = 'Organisasjoner' OR name = 'EPSG koder')");
 
             //UpdateLastVersionNumber
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
 
-            ////UpdateAccessId
-            //context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (AccessId IS NULL)");
+            //UpdateAccessId
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
+
+            
 
 
         }

@@ -78,7 +78,8 @@ namespace Kartverket.Register.Services.Versioning
                 targetNamespace = register.targetNamespace,
                 versioning = register.versioning,
                 versioningId = register.versioningId,
-                versionNumber = register.versionNumber
+                versionNumber = register.versionNumber,
+                accessId = register.accessId,
             };
         }
 

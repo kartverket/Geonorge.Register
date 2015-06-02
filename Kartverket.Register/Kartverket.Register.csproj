@@ -563,6 +563,9 @@
     <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\XmlDocument.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="bin\gsdll32.dll">
     </Content>
@@ -732,7 +735,6 @@
     <Content Include="Views\Index\IndexSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

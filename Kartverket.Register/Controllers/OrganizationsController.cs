@@ -131,11 +131,11 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
-                return View(organisasjon); 
+                return View(organisasjon);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Organizations/Create
@@ -244,12 +244,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && org.register.accessId == 2 && org.submitter.name == user))
             {
                 ViewbagsOrganization(org, register);
                 return View(org);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         
@@ -392,11 +392,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && organization.register.accessId == 2 && organization.submitter.name == user))
             {
                 return View(organization);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Registers/Delete/5

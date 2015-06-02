@@ -157,6 +157,7 @@ namespace Kartverket.Register.Controllers
                                        where o.seoname == registername
                                        && o.parentRegister.seoname == parentregister
                                        select o.systemId;
+
             Guid regId = queryResultsRegister.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
             nyttRegister.parentRegister = register;
@@ -170,7 +171,12 @@ namespace Kartverket.Register.Controllers
                 nyttRegister.parentRegister.parentRegister = register.parentRegister;
             }
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin")
+            {
+                return View(nyttRegister);
+            }
+
+            if ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2)
             {
                 return View(nyttRegister);
             }
@@ -266,14 +272,20 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-
+            
+            Viewbags(register);
             if (register == null)
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == register.owner.name.ToLower() || user.ToLower() == register.owner.name.ToLower())
+
+            if (role == "nd.metadata_admin")
             {
-                Viewbags(register);
+                return View(register);
+            }
+
+            if ((role == "nd.metadata" || user == register.owner.name) && register.accessId == 2)
+            {
                 return View(register);
             }
             return HttpNotFound();
@@ -303,6 +315,7 @@ namespace Kartverket.Register.Controllers
                 if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
                 if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
+                originalRegister.accessId = register.accessId;
 
                 originalRegister.modified = DateTime.Now;
                 if (register.statusId != null)
@@ -333,6 +346,9 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/{owner}/{subregister}/slett")]
         public ActionResult Delete(string registername, string owner, string subregister)
         {
+
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
             var queryResults = from o in db.Registers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
@@ -344,7 +360,17 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            return View(register);
+
+            if (role == "nd.metadata_admin")
+            {
+                return View(register);
+            }
+
+            if ((role == "nd.metadata" || user == register.owner.name) && register.accessId == 2)
+            {
+                return View(register);
+            }
+            return HttpNotFound();
         }
 
         // POST: Subregister/Delete/5

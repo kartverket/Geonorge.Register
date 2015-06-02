@@ -12,7 +12,10 @@ namespace Kartverket.Register.Models.Api
         /// </summary>
         public string text { get; set; }
        
-        public int offset { get; set; } 
+        public int offset { get; set; }
+        /// <summary>
+        /// Begrenser hvor mange treff som returneres. Default er 100
+        /// </summary>
         public int limit { get; set; } 
         public List<FacetInput> facets { get; set; }
         public string orderby { get; set; }
@@ -21,7 +24,7 @@ namespace Kartverket.Register.Models.Api
         {
             facets = new List<FacetInput>();
             
-            limit = 10;
+            limit = 100;
             offset = 1;
         }
 

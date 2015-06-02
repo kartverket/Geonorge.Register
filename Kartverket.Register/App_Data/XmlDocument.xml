@@ -491,6 +491,11 @@
             Fritekst søkestrengen
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchParameters.limit">
+            <summary>
+            Begrenser hvor mange treff som returneres. Default er 100
+            </summary>
+        </member>
         <member name="T:Resources.UI">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

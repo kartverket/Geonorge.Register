@@ -108,9 +108,7 @@
     @if (Request.IsAuthenticated)
     {
 
-        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
-            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
-            (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+        if (HtmlHelperExtensions.accessRegisterItem(Model))
         {
 
             if (Model.register.containedItemClass == "Document")
@@ -123,12 +121,10 @@
                 <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
             }
-        }
-        if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
-        {
+
             if (Model.register.containedItemClass == "Organization")
             {
-               <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
             }
             if (Model.register.containedItemClass == "Dataset")

@@ -61,9 +61,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) ||
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.currentVersion.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == item.documentowner.name && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
                 {
                     <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
                     @*<a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@Model.currentVersion.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="slett @item.name">Slett</a>*@

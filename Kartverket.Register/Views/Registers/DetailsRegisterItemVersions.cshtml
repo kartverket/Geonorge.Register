@@ -66,11 +66,9 @@
         <hr />
         @if (Request.IsAuthenticated)
         {
-                
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || 
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization").ToLower() == Model.currentVersion.submitter.name.ToLower() && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)) ||
-                (Html.GetSecurityClaim(System.Security.Claims.ClaimsPrincipal.Current.Claims, "organization") == @documentOwner && Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
-            {        
+
+            if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
+            {      
                 if (Model.currentVersion.register.containedItemClass == "Organization")
                 {
                     <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
@@ -86,8 +84,7 @@
                     {
                         <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
                     }
-
-                }
+                }                
                 if (Model.currentVersion.register.containedItemClass == "Dataset")
                 {
                     <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Rediger</a>

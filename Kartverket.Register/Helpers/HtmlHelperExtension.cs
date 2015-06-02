@@ -50,7 +50,50 @@ namespace Kartverket.Register.Helpers
             }
             if (register.accessId == 2 && (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor"))
             {
-                return true;                
+                return true;
+            }
+            return false;
+        }
+
+        public static bool accessRegisterItem(RegisterItem item)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            if ((item.register.accessId == 1 || item.register.accessId == 2) && role == "nd.metadata_admin")
+            {
+                return true;
+            }
+
+            if (item.register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor"))
+            {
+                if (item.register.containedItemClass == "Document")
+                {
+                    Kartverket.Register.Models.Document document = db.Documents.Find(item.systemId);
+                    if (document.documentowner.name == user)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+
+                if (item.register.containedItemClass == "Dataset")
+                {
+                    Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(item.systemId);
+                    if (dataset.datasetowner.name == user)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+
+                if (item.submitter.name == user)
+                {
+                    return true;
+                }
+                return false;
             }
             return false;
         }
@@ -658,10 +701,11 @@ namespace Kartverket.Register.Helpers
                 parentRegister = getParentRegister(parentRegister);
                 return parentRegister;
             }
-            else { 
+            else
+            {
                 return register;
             }
-            
+
         }
 
 

@@ -151,7 +151,7 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         @if (Request.IsAuthenticated)
         {
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) || Html.IsGeonorgeEditor(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            if (HtmlHelperExtensions.accessRegister(Model))
             {
                 if (Model.containedItemClass == "Organization")
                 {
@@ -178,8 +178,6 @@
                     <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.parentRegister.seoname/@Model.owner.seoname/@Model.seoname/ny">Foreslå ny kode i @Model.name </a>
                 }
             }
-
-
 
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {

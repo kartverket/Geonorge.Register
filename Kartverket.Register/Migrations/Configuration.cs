@@ -69,7 +69,6 @@ namespace Kartverket.Register.Migrations
               new DOKTheme { value = "Samferdsel", description = "Samferdsel" },
               new DOKTheme { value = "Basis geodata", description = "Basis geodata" },
               new DOKTheme { value = "Natur", description = "Natur" }
-
             );
 
             context.Sorting.AddOrUpdate(
@@ -439,8 +438,8 @@ namespace Kartverket.Register.Migrations
                 }
 
                 );
+                
                 context.SaveChanges();
-
 
 
             //FixSubmitter
@@ -460,12 +459,11 @@ namespace Kartverket.Register.Migrations
                     seoname = "det-offentlige-kartgrunnlaget",
                     managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
                 }
             );
 
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET statusId = 'Submitted' WHERE  (statusId IS NULL)");
-
-
 
             //UpdateVersionNumber
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET versionNumber = 1 WHERE  (versionNumber=0)");

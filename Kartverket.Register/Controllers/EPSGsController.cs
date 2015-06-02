@@ -66,11 +66,11 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
 
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(ePSg);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: EPSG/Create
@@ -178,12 +178,13 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name == user))
             {
                 Viewbags(ePSG);
                 return View(ePSG);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: EPSGs/Edit/5
@@ -293,11 +294,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name == user))
             {
+                Viewbags(ePSG);
                 return View(ePSG);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: EPSGs/Delete/5

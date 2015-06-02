@@ -67,11 +67,11 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(document);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
 
         }
 
@@ -216,12 +216,12 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && document.register.accessId == 2))
             {
                 Viewbags(document);
                 return View(document);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
 
         }
 
@@ -338,12 +338,12 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && document.register.accessId == 2 && document.documentowner.name == user))
             {
                 Viewbags(document);
                 return View(document);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Documents/Edit/5
@@ -512,11 +512,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == document.submitter.name.ToLower() || user.ToLower() == document.documentowner.name.ToLower())
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && document.register.accessId == 2 && document.documentowner.name == user))
             {
+                Viewbags(document);
                 return View(document);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Documents/Delete/5

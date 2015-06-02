@@ -43,12 +43,12 @@ namespace Kartverket.Register.Controllers
             ViewbagImport(register);
 
             string role = GetSecurityClaim("role");
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View();
-            }
-            else
-                return HttpNotFound("Ingen tilgang");
+            }            
+            return HttpNotFound("Ingen tilgang");
         }
 
         private void ViewbagImport(Kartverket.Register.Models.Register register)
@@ -184,11 +184,11 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(codeListValue);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: CodelistValues/Create
@@ -293,12 +293,12 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || user.ToLower() == codelistValue.submitter.name.ToLower())
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name == user) )
             {
                 Viewbags(codelistValue);
                 return View(codelistValue);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: CodelistValues/Edit/5
@@ -389,11 +389,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || user.ToLower() == codelistValue.submitter.name.ToLower())
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name == user))
             {
+                Viewbags(codelistValue);
                 return View(codelistValue);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: CodelistValues/Delete/5

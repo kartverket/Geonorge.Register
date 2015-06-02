@@ -62,7 +62,7 @@ namespace Kartverket.Register.Helpers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if ((item.register.accessId == 1 || item.register.accessId == 2) && role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin")
             {
                 return true;
             }

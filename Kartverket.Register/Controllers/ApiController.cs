@@ -12,13 +12,13 @@ using System.Web.Http;
 
 namespace Kartverket.Register.Controllers
 {
-    public class Api1Controller : ApiController
+    public class ApiRootController : ApiController
     {
         private RegisterDbContext db = new RegisterDbContext();
 
         private readonly ISearchService _searchService;
 
-        public Api1Controller(ISearchService searchService)
+        public ApiRootController(ISearchService searchService)
         {
             _searchService = searchService;
         }

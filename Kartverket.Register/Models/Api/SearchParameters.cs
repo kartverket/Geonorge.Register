@@ -7,6 +7,9 @@ namespace Kartverket.Register.Models.Api
 {
     public class SearchParameters
     {
+        /// <summary>
+        /// Fritekst søkestrengen
+        /// </summary>
         public string text { get; set; }
        
         public int offset { get; set; } 

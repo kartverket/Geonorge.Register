@@ -3,10 +3,12 @@ using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using System.Web.Configuration;
+using System.Web.Http.Description;
 
 namespace Kartverket.Register.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods:"*")]
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class OrganizationsApiController : ApiController
     {
         private readonly IOrganizationService _organizationService;

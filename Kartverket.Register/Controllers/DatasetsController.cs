@@ -70,11 +70,11 @@ namespace Kartverket.Register.Controllers
 
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(dataset);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
 
@@ -212,12 +212,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && dataset.register.accessId == 2 && dataset.datasetowner.name == user))
             {
                 Viewbags(dataset);
                 return View(dataset);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         private void Viewbags(Dataset dataset)
@@ -356,11 +356,12 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && dataset.register.accessId == 2 && dataset.datasetowner.name == user))
             {
+                Viewbags(dataset);
                 return View(dataset);
             }
-            return HttpNotFound();
+            return HttpNotFound("Ingen tilgang");
         }
 
         // POST: Documents/Delete/5

@@ -72,7 +72,7 @@ namespace Kartverket.Register.Helpers
                 if (item.register.containedItemClass == "Document")
                 {
                     Kartverket.Register.Models.Document document = db.Documents.Find(item.systemId);
-                    if (document.documentowner.name == user)
+                    if (document.documentowner.name.ToLower() == user.ToLower())
                     {
                         return true;
                     }
@@ -82,14 +82,14 @@ namespace Kartverket.Register.Helpers
                 if (item.register.containedItemClass == "Dataset")
                 {
                     Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(item.systemId);
-                    if (dataset.datasetowner.name == user)
+                    if (dataset.datasetowner.name.ToLower() == user.ToLower())
                     {
                         return true;
                     }
                     return false;
                 }
 
-                if (item.submitter.name == user)
+                if (item.submitter.name.ToLower() == user.ToLower())
                 {
                     return true;
                 }

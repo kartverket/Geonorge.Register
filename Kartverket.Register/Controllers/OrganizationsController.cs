@@ -244,7 +244,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && org.register.accessId == 2 && org.submitter.name == user))
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && org.register.accessId == 2 && org.submitter.name.ToLower() == user.ToLower()))
             {
                 ViewbagsOrganization(org, register);
                 return View(org);
@@ -393,7 +393,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && organization.register.accessId == 2 && organization.submitter.name == user))
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && organization.register.accessId == 2 && organization.submitter.name.ToLower() == user.ToLower()))
             {
                 return View(organization);
             }

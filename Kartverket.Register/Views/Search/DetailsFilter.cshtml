@@ -5,9 +5,9 @@
 
 @{
     
-    var registerSeoname = ViewBag.registerSeo;
-    var OwnerName = ViewBag.ownerName;
-    var registerName = ViewBag.RegisterName;
+    string registerSeoname = ViewBag.registerSeo;
+    string OwnerName = ViewBag.ownerName;
+    string registerName = ViewBag.RegisterName;
     ViewBag.Title = registerName + "" + OwnerName;
     
     
@@ -34,8 +34,19 @@
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        ID: <a href="/register/@registerSeoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <img src="@Url.Content("~/data/organizations/" +  Model.FilterResult.Items.ElementAt(0).datasetowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => Model.FilterResult.Items.ElementAt(0).datasetowner.name)" />
+        ID: <a href="/register/@registerSeoname/@Html.ToUrl(OwnerName)">http://@Request.Url.Host@Request.Url.LocalPath </a>
+        
+        @if (Model.FilterResult.Items.ElementAt(0) != null)
+        {
+            if (Model.FilterResult.Items.ElementAt(0).register.containedItemClass == "Document")
+            {
+                <img src="@Url.Content("~/data/organizations/" +  Model.FilterResult.Items.ElementAt(0).documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => Model.FilterResult.Items.ElementAt(0).datasetowner.name)" />
+            }
+            else if (Model.FilterResult.Items.ElementAt(0).register.containedItemClass == "Dataset")
+            {
+                <img src="@Url.Content("~/data/organizations/" +  Model.FilterResult.Items.ElementAt(0).documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => Model.FilterResult.Items.ElementAt(0).datasetowner.name)" />
+            }
+        }
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

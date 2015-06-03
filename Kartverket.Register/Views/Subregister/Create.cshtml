@@ -80,14 +80,14 @@
             <div class="form-group">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    @Html.LabelFor(model => model.accessId, "Tilgang til å foreslå, endre og slette egne registeroppføringer")
-                    <br /><small>Kun Admin kan endre status</small> <br /><br />
+                    @Html.LabelFor(model => model.accessId, "Tilgang til registeret")
+                    <br /><small>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang </small> <br /><br />
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
-                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", @checked = "checked" })
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Kun administrator skal ha tilgang til dette registeret", @class = "col-md-1", @checked = "checked" })
                     <label class="col-md-4" for=" admin">Admin</label>
-                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Editor får låv til å forslå, endre og slette egne registeroppføringer. (status kan kun endres av administrator)", @class = "col-md-1" })
                     <label class="col-md-4" for="editor">Admin + Editor</label>
                 </div>
             </div>

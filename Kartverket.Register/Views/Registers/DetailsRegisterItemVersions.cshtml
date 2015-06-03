@@ -12,7 +12,7 @@
     @if (Model.currentVersion.register.parentRegister != null)
     {
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li><a href="/register/@Model.currentVersion.register.seoname/">@Model.currentVersion.register.name</a></li>
+        <li><a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/">@Model.currentVersion.register.name</a></li>
         <li class="active pull-right">@Model.currentVersion.name</li>
         while (parent != null && parent != mainRegister)
         {
@@ -114,6 +114,15 @@
 
             }
         }
-        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
+        
+        @if (@Model.currentVersion.register.parentRegister != null)
+        {
+            <a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
+        }
+        
 
 </div>

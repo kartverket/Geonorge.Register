@@ -17,12 +17,13 @@ namespace Kartverket.Register.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ApiSearchController : ApiController
     {
-        private readonly SearchIndexService _searchService;
+
+        private readonly ISearchIndexService _searchIndexService;
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ApiSearchController()
+        public ApiSearchController(ISearchIndexService searchService)
         {
-            _searchService = new SearchIndexService();
+            _searchIndexService = searchService;
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Kartverket.Register.Controllers
 
                 Models.SearchParameters searchParameters = CreateSearchParameters(parameters);
                 searchParameters.AddDefaultFacetsIfMissing();
-                Models.SearchResult searchResult = _searchService.Search(searchParameters);
+                Models.SearchResult searchResult = _searchIndexService.Search(searchParameters);
 
 
                 return new SearchResult(searchResult);
@@ -58,7 +59,9 @@ namespace Kartverket.Register.Controllers
                 Text = parameters.text,
                 Facets = CreateFacetParameters(parameters.facets),
                 Offset = parameters.offset,
-                Limit = parameters.limit
+                Limit = parameters.limit,
+                OrderBy = parameters.orderby,
+                IncludeObjektkatalog = false
             };
         }
 

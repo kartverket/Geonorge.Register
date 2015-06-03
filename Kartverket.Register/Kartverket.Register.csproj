@@ -552,6 +552,7 @@
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
+    <Compile Include="Services\Search\ISearchIndexService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
     <Compile Include="Services\Search\SearchIndexService.cs" />
     <Compile Include="Services\Search\SearchService.cs" />

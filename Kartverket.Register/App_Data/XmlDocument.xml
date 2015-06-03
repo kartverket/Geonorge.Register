@@ -491,9 +491,24 @@
             Fritekst søkestrengen
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchParameters.offset">
+            <summary>
+            Gå til valgt posisjon i resultatet. Default er 1.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.limit">
             <summary>
-            Begrenser hvor mange treff som returneres. Default er 100
+            Begrenser hvor mange treff som returneres. Default er 100.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchParameters.facets">
+            <summary>
+            Begrenser resultat på fasett. Returnerte fasetter er er "theme" , "type", "organization".
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchParameters.orderby">
+            <summary>
+            Verdier for sortering er: "name", "date_updated", "score". Dersom ingen kriterier er oppgitt sorteres den på "name", ellers er default score
             </summary>
         </member>
         <member name="T:Resources.UI">

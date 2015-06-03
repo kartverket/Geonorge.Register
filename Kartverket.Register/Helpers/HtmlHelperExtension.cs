@@ -44,11 +44,11 @@ namespace Kartverket.Register.Helpers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            if ((register.accessId == 1) && role == "nd.metadata_admin")
+            if (role == "nd.metadata_admin")
             {
                 return true;
             }
-            if (register.accessId == 2 && (role == "nd.metadata_admin" || role == "nd.metadata" || role == "nd.metadata_editor"))
+            if (register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor"))
             {
                 return true;
             }

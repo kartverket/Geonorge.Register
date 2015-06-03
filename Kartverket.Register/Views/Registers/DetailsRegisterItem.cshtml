@@ -3,8 +3,8 @@
 
 @{
     ViewBag.Title = @Model.name;
-    var documentOwner = ViewBag.documentOwner;
-    var datasetOwner = ViewBag.datasetOwner;
+    string documentOwner = ViewBag.documentOwner;
+    string datasetOwner = ViewBag.datasetOwner;
     var version = ViewBag.version;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
     Kartverket.Register.Models.Register parent = Model.register.parentRegister;
@@ -19,7 +19,7 @@
             <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
             <li class="active pull-right">@Model.name</li>
             <li class=""><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
-            <li class="pull-right"><a href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            <li class="pull-right"><a href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Alle versjoner av @Model.name</a></li>
             while (parent != null && parent != mainRegister)
             {
                 <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
@@ -31,7 +31,7 @@
         {
             <li><a href="/register/@Model.register.seoname/">@Model.register.name</a></li>
             <li class="active pull-right">@Model.name</li>
-            <li class="pull-right"><a href="/subregister/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            <li class="pull-right"><a href="/register/versjoner/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Alle versjoner av @Model.name</a></li>
         }
 
 
@@ -143,11 +143,11 @@
             {
                 if (Model.register.parentRegisterId != null)
                 {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon</a>
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
                 }
                 else
                 {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon</a>
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
                 }
             }
 
@@ -178,11 +178,11 @@
     {
         if (Model.register.parentRegister != null)
         {
-            <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+            <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Tilbake</a>
         }
         else
         {
-            <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+            <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Tilbake</a>
         }
 
     }

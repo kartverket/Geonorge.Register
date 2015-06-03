@@ -15,11 +15,11 @@ namespace Kartverket.Register.Services.Versioning
             _dbContext = dbContext;
         }
 
-        public VersionsItem Versions(string registername, string itemname)
+        public VersionsItem Versions(string registername, string parantRegister, string itemname)
         {
             // Finn versjonsgruppen
             var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
-                                           where ri.register.seoname == registername
+                                           where ri.register.seoname == registername && ri.register.parentRegister.seoname == parantRegister
                                            && ri.seoname == itemname
                                            select ri.versioningId;
 
@@ -92,9 +92,12 @@ namespace Kartverket.Register.Services.Versioning
                                           || ri.status.value == "Retired")
                                          select ri;
 
-            historicalItems = queryResultsHistorical.ToList();
+            foreach (RegisterItem item in queryResults)
+            {
+                historicalItems.Add(item);
+            }
 
-            if (queryResultsHistorical != null)
+            if (historicalItems != null)
             {
                 if (currentVersion == null)
                 {

@@ -734,6 +734,7 @@
     <Content Include="Views\Index\Reindex.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Index\IndexSingle.cshtml" />
+    <Content Include="Views\Subregister\DetailsSubregisterItemVersions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

@@ -6,15 +6,34 @@
     var documentOwner = ViewBag.documentOwner;
     var datasetOwner = ViewBag.datasetOwner;
     var version = ViewBag.version;
+    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+    Kartverket.Register.Models.Register parent = Model.register.parentRegister;
 }
 
 @section breadcrumb {
 
     @if (Model.register.containedItemClass == "Document")
     {
-        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
-        <li class="active">@Html.DisplayFor(model => model.name)</li>
+        if (parent != null)
+        {
+            <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+            <li class="active pull-right">@Model.name</li>
+            <li class=""><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+            <li class="pull-right"><a href="subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            while (parent != null && parent != mainRegister)
+            {
+                <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+                parent = parent.parentRegister;
+            }
+
+        }
+        else
+        {
+            <li><a href="/register/@Model.register.seoname/">@Model.register.name</a></li>
+            <li class="active pull-right">@Model.name</li>
+            <li class="pull-right"><a href="register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+        }
+
 
     }
     else
@@ -122,7 +141,14 @@
 
             if (Model.register.containedItemClass == "Document")
             {
-                <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
+                if (Model.register.parentRegisterId != null)
+                {
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
+                }
+                else
+                {
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@documentOwner/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>
+                }
             }
 
             if (Model.register.containedItemClass == "CodelistValue")
@@ -150,7 +176,7 @@
 
     @if (Model.register.containedItemClass == "Document")
     {
-        <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+        <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
     }
     else
     {

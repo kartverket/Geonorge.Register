@@ -174,7 +174,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
-                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                    return Redirect("/subregister/versjoner/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
-                    return Redirect("/subregister/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
+                    return Redirect("/subregister/versjoner/" + parentRegister + "/" + parentRegisterOwner + "/" + registername + "/" + document.documentowner.seoname + "/" + document.seoname);
                 }
                 else
                 {
@@ -476,7 +476,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
-                    return Redirect("/subregister/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
+                    return Redirect("/subregister/versjoner/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + originalDocument.documentowner.seoname + "/" + originalDocument.seoname);
                 }
                 else
                 {

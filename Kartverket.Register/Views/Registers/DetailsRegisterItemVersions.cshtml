@@ -4,16 +4,26 @@
 @{
     ViewBag.Title = @Model.currentVersion.name;
     var documentOwner = ViewBag.registerItemOwner;
+    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.currentVersion.register);
+    Kartverket.Register.Models.Register parent = Model.currentVersion.register.parentRegister;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.currentVersion.register.seoname">@Html.DisplayFor(model => model.currentVersion.register.name)</a></li>
-    <li class="active">@Html.DisplayFor(model => model.currentVersion.name)</li>
+    @if (Model.currentVersion.register.parentRegister != null)
+    {
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li><a href="/register/@Model.currentVersion.register.seoname/">@Model.currentVersion.register.name</a></li>
+        <li class="active pull-right">@Model.currentVersion.name</li>
+        while (parent != null && parent != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+            parent = parent.parentRegister;
+        }
+    }
+    
+    
 }
-@*<div class="page-header">
-    <h2 class="h-md">@Html.DisplayFor(model => model.currentVersion.name)</h2>
-    <hr>
-</div>*@
+
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">

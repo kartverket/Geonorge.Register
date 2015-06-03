@@ -11,6 +11,8 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using Kartverket.Register.Services.Versioning;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Controllers
 {
@@ -34,12 +36,11 @@ namespace Kartverket.Register.Controllers
         {
             var queryResultsSubregister = from r in db.Registers
                                           where r.seoname == subregister && r.parentRegister.seoname == parentRegister
-                                          select r.systemId;
+                                          select r;
 
             if (queryResultsSubregister.Count() > 0)
             {
-                Guid systId = queryResultsSubregister.FirstOrDefault();
-                Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+                Kartverket.Register.Models.Register register = queryResultsSubregister.FirstOrDefault();
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");

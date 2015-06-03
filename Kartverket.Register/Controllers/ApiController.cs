@@ -23,6 +23,9 @@ namespace Kartverket.Register.Controllers
             _searchService = searchService;
         }
 
+        /// <summary>
+        /// List top level registers. Use id in response to navigate.
+        /// </summary>
         [Route("api/register")]
         [HttpGet]
         public IHttpActionResult GetRegisters()
@@ -38,6 +41,10 @@ namespace Kartverket.Register.Controllers
             return Ok(list);
         }
 
+        /// <summary>
+        /// Gets register by name
+        /// </summary>
+        /// <param name="seoname">The search engine optimized name of the register</param>
         [Route("api/register/{seoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterByName(string seoname)
@@ -49,7 +56,10 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
-
+        /// <summary>
+        /// Gets codelist by systemid
+        /// </summary>
+        /// <param name="systemid">The uniqueidentifier for the register</param>
         [Route("api/kodelister/{systemid}")]
         [HttpGet]
         public IHttpActionResult GetRegisterBySystemId(string systemid)
@@ -61,7 +71,12 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
-
+        /// <summary>
+        /// Gets register item by register- organization- and registeritem-name 
+        /// </summary>
+        /// <param name="seoname">The search engine optimized name of the register</param>
+        /// <param name="orgseoname">The search engine optimized name of the organization</param>
+        /// <param name="itemseoname">The search engine optimized name of the register item</param>
         [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname)
@@ -72,22 +87,24 @@ namespace Kartverket.Register.Controllers
 
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
-        
-        //Søket skal gi "Mine registerdata"
+
+        /// <summary>
+        /// List items for specific organization 
+        /// </summary>
+        /// <param name="name">The name of the organization</param>
         [Route("api/register/search/organisasjon/{name}")]
         [HttpGet]
         public IHttpActionResult SearchByOrganizationName(string name)
         {
             List<Kartverket.Register.Models.Api.Item> resultat = new List<Models.Api.Item>();
 
-            //Hvilke orgnavn er aktuelle?
             SearchParameters parameters = new SearchParameters();
             parameters.Text = name;
 
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext); 
 
             SearchResult searchResult = _searchService.Search(parameters);
-            //registry -> register -> containeditems
+
             foreach (var it in searchResult.Items)
             {
                 resultat.Add(Convert(it, urlHelper));

@@ -29,7 +29,7 @@ namespace Kartverket.Register.Controllers
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext); 
             var list = new List<Models.Api.Register>();
-            foreach (var l in db.Registers)
+            foreach (var l in db.Registers.Include("owner").Include("manager").Where(w => w.parentRegisterId == null))
             {
 
                 list.Add(ConvertRegister(l,urlHelper));

@@ -102,7 +102,7 @@ namespace Kartverket.Register.Controllers
             var tmp = new Models.Api.Register
             {
                 label = item.name,
-                id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + item.seoname,              
+                id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + item.seoname,              
                 contentsummary = item.description
                
             };
@@ -132,10 +132,10 @@ namespace Kartverket.Register.Controllers
                 
 
             if (item.submitter != null) {
-                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname  + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else {
-                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname  + "/ikke-angitt/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
             }
          
             if (item is EPSG)
@@ -169,11 +169,11 @@ namespace Kartverket.Register.Controllers
 
             if (item.submitter != null)
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
             }
             if (item.status != null) tmp.status = item.status.description;
             if (item is Document)

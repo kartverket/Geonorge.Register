@@ -179,7 +179,7 @@
                 }
             }
 
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            if (HtmlHelperExtensions.accessRegisterOwner(Model))
             {
                 <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/rediger">Rediger @Model.name </a>
                 <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname/slett">Slett @Model.name </a> //"subregister/{registername}/{owner}/{subregister}/slett")

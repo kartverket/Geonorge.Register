@@ -219,7 +219,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             if (ModelState.IsValid)
-            {
+            {                
                 subRegister.systemId = Guid.NewGuid();
                 if (subRegister.name == null)
                 {

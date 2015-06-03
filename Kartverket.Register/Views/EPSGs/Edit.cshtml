@@ -61,13 +61,19 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.statusId, "Status:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @if (Request.IsAuthenticated)
+        {
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.epsgcode, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -181,8 +187,8 @@
 }
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
 
 

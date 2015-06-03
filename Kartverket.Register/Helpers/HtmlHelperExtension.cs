@@ -55,6 +55,22 @@ namespace Kartverket.Register.Helpers
             return false;
         }
 
+        public static bool accessRegisterOwner(Kartverket.Register.Models.Register register)
+        {
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
+            if (role == "nd.metadata_admin")
+            {
+                return true;
+            }
+            if (register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor") && register.owner.name.ToLower() == user.ToLower())
+            {
+                return true;
+            }
+            return false;
+        }
+
         public static bool accessRegisterItem(RegisterItem item)
         {
             RegisterDbContext db = new RegisterDbContext();

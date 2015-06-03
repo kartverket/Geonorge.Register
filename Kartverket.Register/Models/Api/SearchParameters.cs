@@ -8,23 +8,23 @@ namespace Kartverket.Register.Models.Api
     public class SearchParameters
     {
         /// <summary>
-        /// Fritekst søkestrengen
+        /// The text to search for
         /// </summary>
         public string text { get; set; }
         /// <summary>
-        /// Gå til valgt posisjon i resultatet. Default er 1.
+        /// This param indicates an offset into the list of constraints to allow paging. Default is 1.
         /// </summary>
         public int offset { get; set; }
         /// <summary>
-        /// Begrenser hvor mange treff som returneres. Default er 100.
+        /// This param indicates the maximum number of constraint counts that should be returned. Default is 100.
         /// </summary>
         public int limit { get; set; }
         /// <summary>
-        /// Begrenser resultat på fasett. Returnerte fasetter er er "theme" , "type", "organization".
+        /// Limits the list to facets. Ex. <![CDATA[ &facets[0]name=organization&facets[0]value=Kartverket]]>. Facets result is grouped by  "theme" , "type", "organization".
         /// </summary>
         public List<FacetInput> facets { get; set; }
         /// <summary>
-        /// Verdier for sortering er: "name", "date_updated", "score". Dersom ingen kriterier er oppgitt sorteres den på "name", ellers er default score
+        /// Values to order by is: "name", "date_updated", "score". No search criteria is ordered by "name", else default is "score"
         /// </summary>
         public string orderby { get; set; }
 

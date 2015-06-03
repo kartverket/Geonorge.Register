@@ -27,7 +27,7 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
-        /// Søk mot hele registeret
+        /// Register search
         /// </summary>
         public SearchResult Get([System.Web.Http.ModelBinding.ModelBinder(typeof(SM.General.Api.FieldValueModelBinder))] SearchParameters parameters)
         {

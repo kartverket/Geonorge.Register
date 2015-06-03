@@ -6,7 +6,7 @@
 @model Collection<ApiDescription>
 
 @{
-    ViewBag.Title = "Register API hjelpe-sider";
+    ViewBag.Title = "Help Page";
 
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
@@ -23,9 +23,9 @@
 <div id="body" class="help-page">
     <section class="featured">
         <div class="content-wrapper">
-            <h2>Sammendrag</h2>
+            <h2>Description</h2>
             <p>
-                Api for integrasjon mot register
+                Api for register integration
             </p>
         </div>
     </section>

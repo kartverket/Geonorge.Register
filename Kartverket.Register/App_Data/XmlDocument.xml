@@ -483,32 +483,132 @@
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>
-            Søk mot hele registeret
+            Register search
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
+            <summary>
+            The name of the facet field
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Facet.FacetResults">
+            <summary>
+            The facet result
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Facet.FacetValue.Name">
+            <summary>
+            The name of the facet result
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.Facet.FacetValue.Count">
+            <summary>
+            The number of items that has this facet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FacetInput.name">
+            <summary>
+            The name of the facet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.FacetInput.value">
+            <summary>
+            The value of the facet
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Id">
+            <summary>
+            The uniqueidentifier
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Name">
+            <summary>
+            The name, title for the register item
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Url">
+            <summary>
+            The url to view the register item
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Description">
+            <summary>
+            The description for register item
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Type">
+            <summary>
+            The type of register
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.RegisterName">
+            <summary>
+            The name of the register
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.RegisterDescription">
+            <summary>
+            The description of the register
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.RegisterUrl">
+            <summary>
+            The url of the register
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.RegisterData.Organization">
+            <summary>
+            Register owner/responsible
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.text">
             <summary>
-            Fritekst søkestrengen
+            The text to search for
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.offset">
             <summary>
-            Gå til valgt posisjon i resultatet. Default er 1.
+            This param indicates an offset into the list of constraints to allow paging. Default is 1.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.limit">
             <summary>
-            Begrenser hvor mange treff som returneres. Default er 100.
+            This param indicates the maximum number of constraint counts that should be returned. Default is 100.
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.facets">
             <summary>
-            Begrenser resultat på fasett. Returnerte fasetter er er "theme" , "type", "organization".
+            Limits the list to facets. Ex. <![CDATA[ &facets[0]name=organization&facets[0]value=Kartverket]]>. Facets result is grouped by  "theme" , "type", "organization".
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Api.SearchParameters.orderby">
             <summary>
-            Verdier for sortering er: "name", "date_updated", "score". Dersom ingen kriterier er oppgitt sorteres den på "name", ellers er default score
+            Values to order by is: "name", "date_updated", "score". No search criteria is ordered by "name", else default is "score"
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchResult.NumFound">
+            <summary>
+            Number of items found
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchResult.Limit">
+            <summary>
+            The maximum number of constraint counts that is returned
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchResult.Offset">
+            <summary>
+            The offset into the list
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchResult.Results">
+            <summary>
+            Items in the searchresult
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.SearchResult.Facets">
+            <summary>
+            Result grouped by facets
             </summary>
         </member>
         <member name="T:Resources.UI">

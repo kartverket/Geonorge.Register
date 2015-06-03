@@ -78,7 +78,7 @@ namespace Kartverket.Register.Models
                 var data = c.DownloadString(url);
             }
             catch (System.Exception ex) {
-            
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
 
         }

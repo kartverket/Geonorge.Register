@@ -22,7 +22,7 @@
     </title>
     @RenderSection("head", false)
     @Styles.Render("~/Content/css")
-    
+
     @Html.Partial("_Analytics")
 
     @Scripts.Render("~/bundles/jquery")
@@ -37,19 +37,19 @@
     <div id="logo-on-sm">
         <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
     </div>
-    
+
     @Html.Partial("_NavbarPartial")
-    
+
     <div class="body-content">
-        
+
         <div class="container">
             <ol class="breadcrumb pull-left">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
                 <li><a href="/">Registrene</a></li>
                 @RenderSection("breadcrumb", false)
             </ol>
-            <div class="menu clearfix hidden-print">
-                <div class="pull-right">
+            <div class="menu clearfix hidden-print" style="padding-top: 40px">
+                <div class=" pull-right">
                     @if (Request.IsAuthenticated)
                     {
                         string username = "";
@@ -67,6 +67,7 @@
                         <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
                     }
                 </div>
+
             </div>
 
             @if (TempData["success"] != null)
@@ -109,15 +110,15 @@
                         <p>© 2014 - Kartverket</p>
                         <p>Versjon @Html.ApplicationVersionNumber()</p>
                         <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
-                            <!--
-                            @if (User.Identity.IsAuthenticated)
+                        <!--
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
                             {
-                                foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-                                {
-                                    <p>@c.Type = @c.Value</p>
-                                }
+                                <p>@c.Type = @c.Value</p>
                             }
-                            -->
+                        }
+                        -->
 
 
                     </div>
@@ -128,6 +129,6 @@
 
     </footer>
 
-    
+
 </body>
 </html>

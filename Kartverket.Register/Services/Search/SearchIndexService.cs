@@ -11,7 +11,7 @@ using System;
 
 namespace Kartverket.Register.Services.Search
 {
-    public class SearchIndexService
+    public class SearchIndexService : ISearchIndexService
     {
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -28,7 +28,7 @@ namespace Kartverket.Register.Services.Search
 
             ISolrQuery query = BuildQuery(parameters);
             var order =new[] {new SortOrder("score", Order.DESC)};
-            if (parameters.OrderBy == "title")
+            if (parameters.OrderBy == "name")
             {
                 order = new[] { new SortOrder("RegisterItemName", Order.ASC) };
             }

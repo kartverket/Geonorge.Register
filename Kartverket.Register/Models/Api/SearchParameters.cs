@@ -11,13 +11,21 @@ namespace Kartverket.Register.Models.Api
         /// Fritekst søkestrengen
         /// </summary>
         public string text { get; set; }
-       
+        /// <summary>
+        /// Gå til valgt posisjon i resultatet. Default er 1.
+        /// </summary>
         public int offset { get; set; }
         /// <summary>
-        /// Begrenser hvor mange treff som returneres. Default er 100
+        /// Begrenser hvor mange treff som returneres. Default er 100.
         /// </summary>
-        public int limit { get; set; } 
+        public int limit { get; set; }
+        /// <summary>
+        /// Begrenser resultat på fasett. Returnerte fasetter er er "theme" , "type", "organization".
+        /// </summary>
         public List<FacetInput> facets { get; set; }
+        /// <summary>
+        /// Verdier for sortering er: "name", "date_updated", "score". Dersom ingen kriterier er oppgitt sorteres den på "name", ellers er default score
+        /// </summary>
         public string orderby { get; set; }
 
         public SearchParameters()

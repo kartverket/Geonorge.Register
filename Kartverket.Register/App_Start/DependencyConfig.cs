@@ -26,6 +26,7 @@ namespace Kartverket.Register
             builder.RegisterType<RegisterDbContext>().InstancePerRequest().AsSelf();
             builder.RegisterType<OrganizationsService>().As<IOrganizationService>();
             builder.RegisterType<SearchService>().As<ISearchService>();
+            builder.RegisterType<SearchIndexService>().As<ISearchIndexService>();
 
             var container = builder.Build();
 

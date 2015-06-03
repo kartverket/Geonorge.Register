@@ -19,8 +19,6 @@ namespace Kartverket.Register.Migrations
 
         protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)
         {
-            // OBS!! Seed funksjonen kjører ikke i debugging
-
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -443,6 +441,7 @@ namespace Kartverket.Register.Migrations
             //FixSubmitter
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET submitterId = '10087020-F17C-45E1-8542-02ACBCF3D8A3' WHERE  (documentownerId IS NULL)");
 
+            //Add dok-register
             context.Registers.AddOrUpdate(
                 new Register
                 {

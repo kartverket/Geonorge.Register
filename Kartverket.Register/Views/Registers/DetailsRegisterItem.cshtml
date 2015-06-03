@@ -31,7 +31,7 @@
         {
             <li><a href="/register/@Model.register.seoname/">@Model.register.name</a></li>
             <li class="active pull-right">@Model.name</li>
-            <li class="pull-right"><a href="subregister/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            <li class="pull-right"><a href="/subregister/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Alle versjoner av @Model.name</a></li>
         }
 
 
@@ -176,7 +176,15 @@
 
     @if (Model.register.containedItemClass == "Document")
     {
-        <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+        if (Model.register.parentRegister != null)
+        {
+            <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@documentOwner/@Model.seoname">Tilbake</a>
+        }
+
     }
     else
     {

@@ -20,6 +20,11 @@
             parent = parent.parentRegister;
         }
     }
+    else
+    {
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">@Model.currentVersion.name</li>
+    }
     
     
 }

@@ -56,7 +56,7 @@ namespace Kartverket.Register.Services.Search
                     Start = parameters.Offset -1,
                     Facet = BuildFacetParameters(parameters),
 
-                    Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "Type",
+                    Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",
                     "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" }
                     
 

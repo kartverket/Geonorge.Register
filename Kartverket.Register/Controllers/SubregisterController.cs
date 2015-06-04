@@ -317,6 +317,8 @@ namespace Kartverket.Register.Controllers
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
                 if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                 originalRegister.accessId = register.accessId;
+                originalRegister.parentRegisterId = register.parentRegisterId;
+                
 
                 originalRegister.modified = DateTime.Now;
                 if (register.statusId != null)
@@ -336,7 +338,14 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(register);
 
-                return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
+                if (originalRegister.parentRegisterId == null)
+                {
+                    return Redirect("/register/" + originalRegister.seoname);
+                }
+                else { 
+                    return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
+                }
+                
             }
             Viewbags(register);
             return View(originalRegister);
@@ -498,6 +507,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
+            ViewBag.parentRegisterId = new SelectList(db.Registers.Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
         }
 
         protected override void OnException(ExceptionContext filterContext)

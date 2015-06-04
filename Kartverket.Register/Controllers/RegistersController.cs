@@ -336,6 +336,7 @@ namespace Kartverket.Register.Controllers
                     if (register.managerId != null) originalRegister.managerId = register.managerId;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                     originalRegister.accessId = register.accessId;
+                    originalRegister.parentRegisterId = register.parentRegisterId;
 
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null)
@@ -355,7 +356,11 @@ namespace Kartverket.Register.Controllers
                     db.SaveChanges();
                     Viewbags(register);
 
-                    return Redirect("/register/" + register.name);
+                    if (register.parentRegisterId != null)
+                    {
+                        return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);    
+                    }
+                    return Redirect("/register/" + originalRegister.name);
                 }
                 Viewbags(register);
                 return View(originalRegister);
@@ -561,6 +566,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
+            ViewBag.parentRegisterId = new SelectList(db.Registers.Where(r => r.containedItemClass == "Register").OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 

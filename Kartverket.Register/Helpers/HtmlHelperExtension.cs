@@ -694,7 +694,7 @@ namespace Kartverket.Register.Helpers
         public static Kartverket.Register.Models.Register mainRegister(Kartverket.Register.Models.Register register)
         {
             Kartverket.Register.Models.Register parentRegister;
-            if (register.parentRegister != null)
+            if (register.parentRegisterId != null)
             {
                 parentRegister = register.parentRegister;
                 parentRegister = getParentRegister(parentRegister);
@@ -711,7 +711,7 @@ namespace Kartverket.Register.Helpers
         private static Kartverket.Register.Models.Register getParentRegister(Kartverket.Register.Models.Register register)
         {
             Kartverket.Register.Models.Register parentRegister;
-            if (register.parentRegister != null)
+            if (register.parentRegisterId != null)
             {
                 parentRegister = register.parentRegister;
                 parentRegister = getParentRegister(parentRegister);

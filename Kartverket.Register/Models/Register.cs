@@ -48,8 +48,11 @@ namespace Kartverket.Register.Models
         public DateTime modified { get; set; }
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
+        
+        [Required(ErrorMessage = "Det må settes lovlig innhold for registeret")]
         [Display(Name = "Lovlig innhold")]
         public string containedItemClass { get; set; }
+        
         public virtual ICollection<RegisterItem> items { get; set; }
         [ForeignKey("parentRegister")]
         public Guid? parentRegisterId { get; set; }

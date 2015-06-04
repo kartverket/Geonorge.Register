@@ -486,6 +486,10 @@
     <Compile Include="Migrations\201505291318236_changeIdentity.Designer.cs">
       <DependentUpon>201505291318236_changeIdentity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506041002303_UpdateContainedItemClass.cs" />
+    <Compile Include="Migrations\201506041002303_UpdateContainedItemClass.Designer.cs">
+      <DependentUpon>201506041002303_UpdateContainedItemClass.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -929,6 +933,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505291318236_changeIdentity.resx">
       <DependentUpon>201505291318236_changeIdentity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506041002303_UpdateContainedItemClass.resx">
+      <DependentUpon>201506041002303_UpdateContainedItemClass.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

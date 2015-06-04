@@ -27,7 +27,11 @@
 <p>Velg csv fil i UTF-8 med kodeliste...</p>
 @using (Html.BeginForm("Import", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    <input type="hidden" value="@parentRegisterSeoName" id="parentregister" name="parentregister" />
+    if (parentregister != null)
+    {
+        <input type="hidden" value="@parentRegisterSeoName" id="parentregister" name="parentregister" />
+    }
+
     <div class="form-horizontal">
         <hr />
         <div class="form-group">

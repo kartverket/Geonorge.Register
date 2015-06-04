@@ -6,7 +6,7 @@
 }
 
 <h2>Foreslå</h2>
-@if (Model.register.parentRegister != null)
+@if (Model.register.parentRegisterId != null)
 {
     <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
 }
@@ -40,7 +40,7 @@ else
 
 @using (Html.BeginForm("Create", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    if (Model.register.parentRegister != null)
+    if (Model.register.parentRegisterId != null)
     {
         <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
     }

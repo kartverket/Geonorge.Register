@@ -227,6 +227,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
@@ -490,6 +491,14 @@
     <Compile Include="Migrations\201506041002303_UpdateContainedItemClass.Designer.cs">
       <DependentUpon>201506041002303_UpdateContainedItemClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506041416294_addNamespace.cs" />
+    <Compile Include="Migrations\201506041416294_addNamespace.Designer.cs">
+      <DependentUpon>201506041416294_addNamespace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506050651519_DeleteColumnsInNameSpace.cs" />
+    <Compile Include="Migrations\201506050651519_DeleteColumnsInNameSpace.Designer.cs">
+      <DependentUpon>201506050651519_DeleteColumnsInNameSpace.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -508,6 +517,7 @@
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
     <Compile Include="Models\FilterResult.cs" />
+    <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
@@ -740,6 +750,11 @@
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Index\IndexSingle.cshtml" />
     <Content Include="Views\Subregister\DetailsSubregisterItemVersions.cshtml" />
+    <Content Include="Views\Shared\_nameSpace.cshtml" />
+    <Content Include="Views\NameSpaces\Create.cshtml" />
+    <Content Include="Views\NameSpaces\Delete.cshtml" />
+    <Content Include="Views\NameSpaces\Edit.cshtml" />
+    <Content Include="Views\Shared\_detailsNameSpace.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />
@@ -936,6 +951,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506041002303_UpdateContainedItemClass.resx">
       <DependentUpon>201506041002303_UpdateContainedItemClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506041416294_addNamespace.resx">
+      <DependentUpon>201506041416294_addNamespace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506050651519_DeleteColumnsInNameSpace.resx">
+      <DependentUpon>201506050651519_DeleteColumnsInNameSpace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

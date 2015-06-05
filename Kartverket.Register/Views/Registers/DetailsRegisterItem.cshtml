@@ -60,14 +60,27 @@
             </div>
         }
         else
-        {*@
+        *@
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         ID: <a href="/register/@Model.register.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <p>
-            @Model.description
-        </p>
+        <br/>
+        
+        @if (Model.register.containedItemClass != "NameSpace")
+        {
+            <p>
+                @Model.description
+            </p>
+        }
         <span>Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
-        <span>Innsender: @Model.submitter.name</span><br>
+        @if (Model.register.containedItemClass == "NameSpace")
+        {
+            <span>Eier: @Model.submitter.name</span><br>
+        }
+        else
+        {
+            <span>Innsender: @Model.submitter.name</span><br>
+        }
+              
         <span>Versjon: @Model.versionNumber</span><br>
         @if (datasetOwner != null)
         {
@@ -87,12 +100,10 @@
             <hr>
         </div>
     </div>
-    @*}*@
-
     <br />
 
     @if (Model.register.containedItemClass == "Organization")
-    {
+    { 
         @Html.Partial("_detailsOrganization")
     }
     @if (Model.register.containedItemClass == "Document")
@@ -126,6 +137,10 @@
     @if (Model.register.containedItemClass == "CodelistValue")
     {
         @Html.Partial("_detailsCodelistValue")
+    }
+    @if (Model.register.containedItemClass == "NameSpace")
+    {
+        @Html.Partial("_detailsNameSpace")
     }
 
 </div>
@@ -166,10 +181,16 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-            } if (Model.register.containedItemClass == "EPSG")
+            } 
+            if (Model.register.containedItemClass == "EPSG")
             {
                 <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
+            }
+            if (Model.register.containedItemClass == "NameSpace")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
             }
         }
     }

@@ -424,6 +424,74 @@
     font-size: 14px !important;
 }
 
+/* Navnerom */
+
+.search-results.namespace.table-view .table-heading .col-title{
+	width: 50%;
+	float: left;
+}
+
+.search-results.namespace.table-view .col-title {
+    width: 50%;
+}
+
+.search-results.namespace.table-view .col-title a{
+    width: 100%;
+}
+
+.search-results.namespace.table-view .table-heading .col-descripton{
+	width: 10%;
+	float: left;
+}
+.search-results.namespace.table-view .col-descripton {
+    width: 10%;
+    float: left;
+}
+.search-results.namespace.table-view .col-descripton p {
+    width: 100%;
+    float: left;
+}
+
+.search-results.namespace.table-view .col-descripton span {
+    display: none;
+}
+
+.search-results.namespace.table-view .table-heading .col-actions{
+	width: 10%;
+	float: left;
+}
+
+.search-results.namespace.table-view .col-actions{
+	width: 10%;
+	float: left;
+}
+
+.search-results.namespace.table-view .table-heading .col-information{
+	width: 30%;
+	float: left;
+}
+
+.search-results.namespace.table-view .col-information{
+	width: 30%;
+	float: left;
+}
+
+.search-results.namespace.table-view .col-information span {
+    display: none;
+}
+
+.search-results.namespace.table-view .col-actions span {
+    display: none;
+}
+
+.search-results.namespace.gallery-view i {
+    display: none;
+}
+
+.search-results.namespace.table-view .col-actions a {
+    font-size: 14px !important;
+}
+
 
 
 

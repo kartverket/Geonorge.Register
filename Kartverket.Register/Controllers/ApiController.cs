@@ -34,7 +34,6 @@ namespace Kartverket.Register.Controllers
             var list = new List<Models.Api.Register>();
             foreach (var l in db.Registers.Include("owner").Include("manager").Where(w => w.parentRegisterId == null))
             {
-
                 list.Add(ConvertRegister(l,urlHelper));
             }
             

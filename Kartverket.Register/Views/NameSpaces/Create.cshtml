@@ -1,8 +1,8 @@
-﻿@model Kartverket.Register.Models.Document
-﻿@using Kartverket.Register.Helpers
+﻿@model Kartverket.Register.Models.NameSpace
+@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt dokument";
+    ViewBag.Title = "Foreslå nytt navnerom";
 }
 
 @section breadcrumb {
@@ -28,10 +28,10 @@
 }
 
 <h2>Foreslå</h2>
-<h4>Foreslå nytt dokument i @Model.register.name</h4>
+<h4>Foreslå nytt navnerom</h4>
 <hr />
 
-@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Create", "NameSpaces", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     if (Model.register.parentRegister != null)
     {
@@ -40,17 +40,17 @@
 
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, "Innhold", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
@@ -58,20 +58,13 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="documentfile">Dokument-fil:</label>
+            @Html.LabelFor(model => model.serviceUrl, "URL til tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="file" name="documentfile" />
+                @Html.EditorFor(model => model.serviceUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.serviceUrl, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="thumbnail" />
-                @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
-                Hvis ikke noe er valgt genereres forsiden av dokumentet som thumbnail
-            </div>
-        </div>
     </div>
     <div class="form-group">
         <hr />
@@ -85,6 +78,7 @@
             <a href="/register/@Model.register.seoname/">Tilbake</a>
         }
     </div>
+
 }
 
 @section Scripts {

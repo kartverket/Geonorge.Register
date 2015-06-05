@@ -20,7 +20,7 @@ namespace Kartverket.Register.Services.Versioning
             List<RegisterItem> registerItems = new List<RegisterItem>();
 
             if (register.containedItemClass == "EPSG")
-            {   
+            {
                 FilterEPSGkode(register, filter, registerItems);
             }
             else if (register.containedItemClass == "Document")
@@ -50,6 +50,14 @@ namespace Kartverket.Register.Services.Versioning
                 {
                     registerItems.Add(item);
                 }
+            }
+            else if (register.containedItemClass == "NameSpace")
+            {
+                foreach (NameSpace item in register.items)
+                {
+                    registerItems.Add(item);
+                }
+
             }
 
 
@@ -84,14 +92,14 @@ namespace Kartverket.Register.Services.Versioning
         }
 
         private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
-        {            
+        {
             bool filterHorisontalt = filter.filterHorisontalt;
             bool filterVertikalt = filter.filterVertikalt;
             string filterDimensjon;
             string filterInspire = filter.InspireRequirement;
             string filterNational = filter.nationalRequirement;
             string filterNationalSea = filter.nationalSeaRequirement;
-            
+
             foreach (EPSG item in register.items)
             {
                 if (filterHorisontalt && filterVertikalt)
@@ -113,7 +121,7 @@ namespace Kartverket.Register.Services.Versioning
                         filterDimensjon = item.dimensionId;
                     }
                 }
-                
+
                 if (filterInspire == null)
                 {
                     filterInspire = item.inspireRequirement.value;

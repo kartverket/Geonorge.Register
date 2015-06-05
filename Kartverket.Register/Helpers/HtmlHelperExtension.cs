@@ -160,7 +160,10 @@ namespace Kartverket.Register.Helpers
             {
                 return "Registre";
             }
-
+            else if (containedItemClass == "NameSpace")
+            {
+                return "Navnerom";
+            }
             return "";
         }
 
@@ -260,7 +263,8 @@ namespace Kartverket.Register.Helpers
             return encodedUrl;
         }
 
-
+                    
+        
         // SORTERING av registeritems
         public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
         {

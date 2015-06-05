@@ -42,7 +42,7 @@
         int pageSize = 50;
         int pageNumber = (page ?? 1);
         var search = ViewBag.search;
-
+       
         if (Model.containedItemClass != "Register")
         {
             sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
@@ -52,8 +52,6 @@
             sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
         }
     }
-
-
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="page-header">
@@ -80,56 +78,13 @@
         {
             @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
         }
+        @if (Model.containedItemClass == "NameSpace")
+        {
+            @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
+        }
         @if (Model.containedItemClass == "Register")
         {
-            if (ViewBag.SortOrder == "name_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "submitter")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "submitter_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "status")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "status_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "dateSubmitted")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "dateSubmitted_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "modified")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "modified_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "dateAccepted")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else if (ViewBag.SortOrder == "dateAccepted_desc")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-            else
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
+            @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
         }
     </div>
 
@@ -153,7 +108,7 @@
 
                 if (Model.containedItemClass == "Organization")
                 {
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.seoname/ny">Foreslå ny organisasjon i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.seoname/ny">Foreslå ny organisasjon </a>
                 }
                 if (Model.containedItemClass == "Dataset")
                 {
@@ -161,7 +116,11 @@
                 }
                 if (Model.containedItemClass == "EPSG")
                 {
-                    <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.seoname/ny">Foreslå ny epsg kode i @Model.name </a>
+                    <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.seoname/ny">Foreslå ny epsg kode </a>
+                }
+                if (Model.containedItemClass == "NameSpace")
+                {
+                    <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.seoname/ny">Foreslå nytt navnerom</a>
                 }
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))

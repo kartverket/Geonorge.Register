@@ -1,0 +1,102 @@
+﻿@model Kartverket.Register.Models.NameSpace
+@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = "Rediger " + Model.name;
+}
+@section breadcrumb {
+    @if (Model.register.parentRegisterId != null)
+    {
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Rediger</li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Model.name</a></li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
+    }
+    else
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Rediger</li>
+    }
+}
+
+<h2>Rediger</h2>
+<h4>@Model.name</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.systemId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.description, "Innhold", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.submitterId, "Innsender:", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (Request.IsAuthenticated)
+        {
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.serviceUrl, "URL til tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.serviceUrl, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.serviceUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <hr />
+        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+        @if (Model.register.parentRegisterId != null)
+        {
+            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+        }
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

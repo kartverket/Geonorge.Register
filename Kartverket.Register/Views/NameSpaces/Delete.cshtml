@@ -1,0 +1,53 @@
+﻿@model Kartverket.Register.Models.NameSpace
+@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = "Slett " + Model.name;
+}
+
+@section breadcrumb {
+    @if (Model.register.parentRegisterId != null)
+    {
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li class="active pull-right">Slett</li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Model.name</a></li>
+        <li class="pull-right"><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li class="pull-right"><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
+    }
+    else
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li class="active">Slett</li>
+    }
+}
+
+<h2>Slett</h2>
+
+<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    <div class="form-actions no-color">
+        <input type="submit" value="Slett" class="btn btn-default pull-right" />
+        @if (Model.register.parentRegisterId != null)
+        {
+            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
+        }
+        else
+        {
+            <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
+        }
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

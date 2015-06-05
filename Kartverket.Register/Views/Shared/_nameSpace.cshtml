@@ -1,0 +1,90 @@
+﻿﻿@using Kartverket.Register.Helpers
+@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
+@using PagedList;
+@using PagedList.Mvc;
+@using Kartverket.Register.Models
+
+<div class="search-filter-wrapper">
+    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
+        <li class="active">
+            <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
+        </li>
+        <li class="pull-right">
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
+        </li>
+    </ul>
+    @Html.Partial("_visningstyper")
+</div>
+
+<div class="register namespace search-results">
+
+    @foreach (NameSpace item in Model)
+    {
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                <div class="col-title col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    @if (item.register.parentRegister != null)
+                    {
+                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                            <h3 class="role-button" style="font-size: 15px;">
+                                @item.name
+                            </h3>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
+                            <h3 class="role-button" style="font-size: 15px;">
+                                @item.name
+                            </h3>
+                        </a>
+                    }
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-information">
+                    <a href="/register/@item.register.seoname/@item.submitter.seoname/">
+                        @Html.DisplayFor(modelItem => item.submitter.name)
+                    </a>
+
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-descripton">
+                    @if (item.description == null)
+                    {
+                        <p title="Innhold er ikke angitt for @item.name."><span>Tjeneste: </span>Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p title="Link til innholdet i @item.name"><span>Innhold: </span><a href="@item.description">Vis</a></p>
+                    }
+                </div>
+                <div class="col-actions col-xs-6 col-sm-6 col-md-2 col-lg-2">
+                    @if (item.serviceUrl == null)
+                    {
+                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p title="URL til tjeneste i navnerommet @item.name"><span>Tjeneste: </span><a href="@item.serviceUrl">Vis</a></p>
+                    }
+                </div>
+            </div>
+
+        </div>
+        <hr />
+    }
+
+</div>
+
+<br />
+
+<div class="search-filter-wrapper">
+
+    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
+        <li class="active">
+            <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
+        </li>
+        <li class="pull-right">
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
+        </li>
+    </ul>
+</div>
+

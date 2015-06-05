@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<CodelistValue> CodelistValues { get; set; }
         public virtual DbSet<Dataset> Datasets { get; set; }
         public virtual DbSet<Document> Documents { get; set; }
+        public virtual DbSet<NameSpace> NameSpases { get; set; }
         public virtual DbSet<EPSG> EPSGs { get; set; }
         public virtual DbSet<Requirement> requirements { get; set; }
         public virtual DbSet<Dimension> Dimensions { get; set; }

@@ -128,6 +128,7 @@ namespace Kartverket.Register.Controllers
 
             return tmp;
         }
+
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
         {
             var tmp = ConvertRegister(item,urlHelper);

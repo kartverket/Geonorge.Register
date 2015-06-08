@@ -208,6 +208,12 @@ namespace Kartverket.Register.Controllers
                 var d = (Organization)item;
                 tmp.logo = d.logoFilename;
             }
+            else if (item is NameSpace)
+            {
+                tmp.itemclass = "NameSpace";
+                var d = (NameSpace)item;
+                tmp.serviceUrl = d.serviceUrl;
+            }
             else if (item is EPSG)
             {
                 tmp.itemclass = "EPSG";

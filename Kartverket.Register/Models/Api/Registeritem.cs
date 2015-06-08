@@ -23,7 +23,9 @@ namespace Kartverket.Register.Models.Api
         public string horizontalReferenceSystem { get; set; }
         public string dimension { get; set; }
 
-        public string codevalue { get; set; }    
+        public string codevalue { get; set; }
+
+        public string serviceUrl { get; set; }
             
         
     }

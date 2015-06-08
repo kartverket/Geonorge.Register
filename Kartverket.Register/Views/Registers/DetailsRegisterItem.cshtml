@@ -62,7 +62,18 @@
         else
         *@
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        ID: <a href="/register/@Model.register.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
+        @if (Model.register.containedItemClass == "Document")
+        {
+            <p>ID: <a href="/register/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+        }
+        else if (Model.register.containedItemClass == "Dataset")
+        {
+            <p>ID: <a href="/register/@Model.register.seoname/@Html.ToUrl(datasetOwner)/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+        }
+        else
+        {
+            <p>ID: <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+        }
         <br/>
         
         @if (Model.register.containedItemClass != "NameSpace")

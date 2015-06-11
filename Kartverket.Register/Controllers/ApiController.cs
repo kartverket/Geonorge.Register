@@ -30,13 +30,13 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisters()
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext); 
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var list = new List<Models.Api.Register>();
             foreach (var l in db.Registers.Include("owner").Include("manager").Where(w => w.parentRegisterId == null))
             {
-                list.Add(ConvertRegister(l,urlHelper));
+                list.Add(ConvertRegister(l, urlHelper));
             }
-            
+
             return Ok(list);
         }
 
@@ -44,12 +44,13 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="seoname">The search engine optimized name of the register</param>
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
         [Route("api/register/{seoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterByName(string seoname)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-            
+
             var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
 
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
@@ -76,6 +77,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="seoname">The search engine optimized name of the register</param>
         /// <param name="orgseoname">The search engine optimized name of the organization</param>
         /// <param name="itemseoname">The search engine optimized name of the register item</param>
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
         [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname)
@@ -100,7 +102,7 @@ namespace Kartverket.Register.Controllers
             SearchParameters parameters = new SearchParameters();
             parameters.Text = name;
 
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext); 
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
 
             SearchResult searchResult = _searchService.Search(parameters);
 
@@ -110,28 +112,35 @@ namespace Kartverket.Register.Controllers
             }
 
             return Ok(resultat);
-            
+
         }
 
         private Models.Api.Register ConvertRegister(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
         {
+            string registerId = "";
+            if (item.parentRegisterId != null)
+            {
+                registerId = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
+            }
+            else
+            {
+                registerId = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + item.seoname;
+            }
             var tmp = new Models.Api.Register
             {
                 label = item.name,
-                id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + item.seoname,              
-                contentsummary = item.description,      
-                //containedSubRegisters = new List<Models.Api.Register>()                            
+                id = registerId,
+                contentsummary = item.description,
             };
             if (item.owner != null) tmp.owner = item.owner.name;
             if (item.manager != null) tmp.manager = item.manager.name;
-            
 
             return tmp;
         }
 
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
         {
-            var tmp = ConvertRegister(item,urlHelper);
+            var tmp = ConvertRegister(item, urlHelper);
             if (item.items != null) tmp.containeditems = new List<Models.Api.Registeritem>();
             tmp.containedSubRegisters = new List<Models.Api.Register>();
             var queryResultParentRegister = from r in db.Registers
@@ -147,7 +156,7 @@ namespace Kartverket.Register.Controllers
             {
                 tmp.containeditems.Add(ConvertRegisterItem(item, d, urlHelper));
             }
-            
+
             return tmp;
         }
 
@@ -155,16 +164,18 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
-           
-                
 
-            if (item.submitter != null) {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+            if (reg.parentRegisterId != null)
+            {
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
-            else {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
+            else
+            {
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
-         
+
+
+
             if (item is EPSG)
             {
 
@@ -178,12 +189,12 @@ namespace Kartverket.Register.Controllers
                 tmp.dimension = d.dimension != null ? d.dimension.description : "";
             }
 
-            if (item is CodelistValue) 
+            if (item is CodelistValue)
             {
                 var c = (CodelistValue)item;
                 tmp.codevalue = c.value;
             }
-            
+
 
 
             return tmp;
@@ -194,14 +205,16 @@ namespace Kartverket.Register.Controllers
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
 
-            if (item.submitter != null)
+            if (reg.parentRegisterId != null)
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
+                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
+
+
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
 
@@ -234,7 +247,7 @@ namespace Kartverket.Register.Controllers
                 tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
                 tmp.inspireRequirement = d.inspireRequirement.description;
                 tmp.nationalRequirement = d.nationalRequirement.description;
-                tmp.nationalSeasRequirement = d.nationalSeasRequirement !=null ? d.nationalSeasRequirement.description : "";
+                tmp.nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
                 tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
                 tmp.verticalReferenceSystem = d.verticalReferenceSystem;
                 tmp.dimension = d.dimension != null ? d.dimension.description : "";
@@ -247,18 +260,18 @@ namespace Kartverket.Register.Controllers
 
         private Models.Api.Item Convert(SearchResultItem searchitem, System.Web.Mvc.UrlHelper urlHelper)
         {
-            var tmp= new Models.Api.Item
+            var tmp = new Models.Api.Item
             {
                 name = searchitem.RegisterItemName,
                 description = searchitem.RegisterItemDescription,
                 status = searchitem.RegisterItemStatus,
                 updated = searchitem.RegisterItemUpdated,
                 author = searchitem.DocumentOwner,
-                showUrl =  searchitem.RegisteItemUrl,
+                showUrl = searchitem.RegisteItemUrl,
                 editUrl = null
-                
+
             };
-            
+
             return tmp;
         }
     }

@@ -16,7 +16,6 @@ namespace Kartverket.Register.Formatter
 {
     public class SKOSFormatter : MediaTypeFormatter
     {
-        private RegisterDbContext db = new RegisterDbContext();
         private readonly string rdf = "application/rdf+xml";
 
         public SKOSFormatter()

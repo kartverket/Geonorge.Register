@@ -119,8 +119,8 @@ namespace Kartverket.Register.Controllers
             {
                 label = item.name,
                 id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + item.seoname,              
-                contentsummary = item.description
-               
+                contentsummary = item.description,      
+                //containedSubRegisters = new List<Models.Api.Register>()                            
             };
             if (item.owner != null) tmp.owner = item.owner.name;
             if (item.manager != null) tmp.manager = item.manager.name;
@@ -133,6 +133,16 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = ConvertRegister(item,urlHelper);
             if (item.items != null) tmp.containeditems = new List<Models.Api.Registeritem>();
+            tmp.containedSubRegisters = new List<Models.Api.Register>();
+            var queryResultParentRegister = from r in db.Registers
+                                            where r.parentRegisterId == item.systemId
+                                            select r;
+
+            foreach (var reg in queryResultParentRegister)
+            {
+                tmp.containedSubRegisters.Add(ConvertRegister(reg, urlHelper));
+            }
+
             foreach (var d in item.items)
             {
                 tmp.containeditems.Add(ConvertRegisterItem(item, d, urlHelper));
@@ -193,6 +203,8 @@ namespace Kartverket.Register.Controllers
                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/api/register/" + reg.seoname + "/ikke-angitt/" + item.seoname;
             }
             if (item.status != null) tmp.status = item.status.description;
+            if (item.description != null) tmp.description = item.description;
+
             if (item is Document)
             {
                 tmp.itemclass = "Document";

@@ -15,5 +15,6 @@ namespace Kartverket.Register.Models.Api
         public string manager { get; set; }
         public string controlbody { get; set; }
         public List<Registeritem> containeditems { get; set; }
+        public List<Register> containedSubRegisters { get; set; }
     }
 }

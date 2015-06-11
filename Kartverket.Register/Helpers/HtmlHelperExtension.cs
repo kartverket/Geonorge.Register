@@ -780,6 +780,7 @@ namespace Kartverket.Register.Helpers
 
             return result;
         }
+        
     }
 
 }

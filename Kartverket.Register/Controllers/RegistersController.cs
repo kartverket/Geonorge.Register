@@ -101,6 +101,49 @@ namespace Kartverket.Register.Controllers
 
                 return new XmlResult(xdoc);
             }
+
+            //else if (export == "skos")
+            //{
+            //    //var queryResult = from x in db.CodelistValues
+            //    //                  select x.value;
+
+            //    string targetNamespace = "";
+            //    string nameSpace = "";
+            //    if (register.targetNamespace != null)
+            //    {
+            //        nameSpace = register.targetNamespace;
+            //        if (register.targetNamespace.EndsWith("/"))
+            //        {
+            //            targetNamespace = register.targetNamespace + register.seoname;
+            //        }
+            //        else
+            //        {
+            //            targetNamespace = register.targetNamespace + "/" + register.seoname;
+            //        }
+            //    }
+
+            //    XNamespace ns = "http://www.opengis.net/gml/3.2";
+            //    XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
+            //    XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
+            //    XElement xdoc =
+            //        new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
+            //            new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
+            //            new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
+            //            new XAttribute(gmlNs + "id", register.seoname),
+            //            new XElement(gmlNs + "description"),
+            //            new XElement(gmlNs + "identifier",
+            //                new XAttribute("codeSpace", nameSpace), register.name),
+
+            //            from k in db.CodelistValues.ToList()
+            //            where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
+            //            select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
+            //              new XElement(gmlNs + "description", k.description),
+            //              new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
+            //              new XElement(gmlNs + "name", k.name)
+            //              )));
+
+            //    return new XmlResult(xdoc);
+            //}
             return View(register);
 
         }        

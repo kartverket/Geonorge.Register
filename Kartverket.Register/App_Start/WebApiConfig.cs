@@ -30,7 +30,9 @@ namespace Kartverket.Register
 
             config.Formatters.Add(new SyndicationFeedFormatter());
             config.Formatters.Add(new CsvFormatter());
-            
+            config.Formatters.Add(new SKOSFormatter());
+
+
             config.Formatters.JsonFormatter.SerializerSettings.Re‌ferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();

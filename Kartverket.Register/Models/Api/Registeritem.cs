@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models.Api
         public string status { get; set; }
         public string description { get; set; }
         public string seoname { get; set; }
+        public string owner { get; set; }
 
         public string logo { get; set; }
         public string documentreference { get; set; }

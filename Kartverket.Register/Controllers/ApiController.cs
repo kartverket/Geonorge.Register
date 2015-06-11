@@ -132,8 +132,8 @@ namespace Kartverket.Register.Controllers
                 id = registerId,
                 contentsummary = item.description,
             };
-            if (item.owner != null) tmp.owner = item.owner.name;
-            if (item.manager != null) tmp.manager = item.manager.name;
+            if (item.owner != null) tmp.owner = item.owner.seoname;
+            if (item.manager != null) tmp.manager = item.manager.seoname;
 
             return tmp;
         }
@@ -164,6 +164,7 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
+            tmp.owner = item.submitter.seoname;
 
             if (reg.parentRegisterId != null)
             {
@@ -174,11 +175,8 @@ namespace Kartverket.Register.Controllers
                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
 
-
-
             if (item is EPSG)
             {
-
                 var d = (EPSG)item;
                 tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
                 tmp.inspireRequirement = d.inspireRequirement.description;
@@ -195,7 +193,17 @@ namespace Kartverket.Register.Controllers
                 tmp.codevalue = c.value;
             }
 
+            if (item is Document)
+            {
+                var d = (Document)item;
+                tmp.owner = d.documentowner.seoname;
+            }
 
+            if (item is Dataset)
+            {
+                var d = (Dataset)item;
+                tmp.owner = d.datasetowner.seoname;
+            }
 
             return tmp;
         }
@@ -217,6 +225,7 @@ namespace Kartverket.Register.Controllers
 
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
+            if (item.submitter != null) tmp.owner = item.submitter.seoname;
 
             if (item is Document)
             {

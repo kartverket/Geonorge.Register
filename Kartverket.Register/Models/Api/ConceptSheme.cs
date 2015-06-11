@@ -24,6 +24,7 @@ namespace Kartverket.Register.Models.Api
                 Registeritem item = (Registeritem)models;
                 id = item.id;
                 name = item.label;
+                owner = item.owner;
                 if (!string.IsNullOrWhiteSpace(item.description))
                 {
                     description = item.description;
@@ -42,6 +43,7 @@ namespace Kartverket.Register.Models.Api
                 Register register = (Register)models;
                 id = register.id;
                 name = register.label;
+                owner = register.owner;
                 if (!string.IsNullOrWhiteSpace(register.contentsummary))
                 {
                     description = register.contentsummary;

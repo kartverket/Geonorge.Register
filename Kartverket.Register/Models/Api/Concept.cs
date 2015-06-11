@@ -14,6 +14,7 @@ namespace Kartverket.Register.Models.Api
         public string seoname { get; set; }
         public string description { get; set; }
         public string codevalue { get; set; }
+        public string owner { get; set; }
 
         public Concept(object models) {
             
@@ -23,6 +24,7 @@ namespace Kartverket.Register.Models.Api
                 id = register.id;
                 name = register.label;
                 seoname = MakeSeoFriendlyString(register.label);
+                owner = register.owner;
 
                 if (!string.IsNullOrWhiteSpace(register.contentsummary))
                 {
@@ -39,6 +41,7 @@ namespace Kartverket.Register.Models.Api
                 id = item.id;
                 name = item.label;
                 seoname = MakeSeoFriendlyString(item.label);
+                owner = item.owner;
                 if (!string.IsNullOrWhiteSpace(item.description))
                 {
                     description = item.description;

@@ -57,8 +57,9 @@ namespace Kartverket.Register.Formatter
             XNamespace ns = "http://www.opengis.net/gml/3.2";
             XNamespace skosNs = "http://www.w3.org/2004/02/skos/core#";
             XNamespace rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-            XNamespace dctermsNs = "http://purl.org/dc/terms/";                     
-            XNamespace baseXML = conceptSheme.id;
+            XNamespace dctermsNs = "http://purl.org/dc/terms/";
+
+            XNamespace baseXML = conceptSheme.id.Replace(conceptSheme.seoname, null);
 
             XElement xdoc =
                 new XElement(rdfNs + "RDF", new XAttribute(XNamespace.Xmlns + "skos", skosNs),
@@ -72,7 +73,7 @@ namespace Kartverket.Register.Formatter
                         ),
 
                     from c in conceptSheme.concepts
-                    select new XElement(skosNs + "Concept", new XAttribute(rdfNs + "about", conceptSheme.seoname + "/" + c.seoname), 
+                    select new XElement(skosNs + "Concept", new XAttribute(rdfNs + "about", conceptSheme.seoname + "/" + c.owner +  "/" + c.seoname), 
                         new XElement(skosNs + "inSheme", new XAttribute(rdfNs + "resource", conceptSheme.seoname)),
                         new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.seoname)),
                         new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),

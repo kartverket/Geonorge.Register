@@ -38,13 +38,13 @@
 
             </div>
             <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
-                <div onchange="Filter()" class="pull-right" id="inspireRequirementId">
+                <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="inspireRequirementId">
                     <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav:</label>@Html.DropDownList("inspireRequirement", "")<br />
                 </div>
-                <div onchange="Filter()" class="pull-right" id="nationalRequirementId">
+                <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalRequirementId">
                     <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", "")<br />
                 </div>
-                <div onchange="Filter()" class="pull-right" id="nationalSeaRequirementId">
+                <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalSeaRequirementId">
                     <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", "")<br />
                 </div>
             </div>
@@ -54,7 +54,7 @@
     <div class="col-sm-3 col-md-3 col-lg-3">
         <div id="sortBox" class="pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
-                <div class="pull-right" onchange="SortBy()">
+                <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
                 </div>
                 <input type="hidden" name="text" value="@ViewBag.search" />

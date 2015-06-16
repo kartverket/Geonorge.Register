@@ -37,6 +37,7 @@ namespace Kartverket.Register
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/Scripts/visninger.js",
+                "~/Scripts/chosen.jquery.js",
                 "~/Scripts/tabs.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,

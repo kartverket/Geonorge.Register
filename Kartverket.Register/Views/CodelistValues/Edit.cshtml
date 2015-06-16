@@ -119,7 +119,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.broaderItemId, "narrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <select data-placeholder="velg kodeverdier" multiple class="chosen-search search-choice-disabled form-control" tabindex="18" id="multiple-label-example">
+                    <select data-placeholder="velg kodeverdier" multiple class="form-control" tabindex="18" id="multiple-label-example">
                         <option value=""></option>
                         @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                         {

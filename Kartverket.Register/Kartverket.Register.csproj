@@ -595,6 +595,7 @@
     <Content Include="changelog.txt" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\img\chosen-sprite.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\mobil.css" />
     <Content Include="Content\print.css" />

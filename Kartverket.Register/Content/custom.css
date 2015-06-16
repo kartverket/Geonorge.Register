@@ -889,3 +889,19 @@ z-index: 600;
     font-family: "Glyphicons Halflings";
     content: "";
 }
+
+.chosen-container-single .chosen-single div b::before {
+  font-family: "Glyphicons Halflings";
+  content: "";
+}
+
+.sorter .chosen-container-single .chosen-single abbr {
+    position: unset;
+    top: 6px;
+    right: 26px;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: transparent url("img/chosen-sprite.png") no-repeat scroll -42px 1px;
+    font-size: 1px;
+}

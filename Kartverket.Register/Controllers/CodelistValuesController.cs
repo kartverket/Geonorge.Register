@@ -186,6 +186,7 @@ namespace Kartverket.Register.Controllers
 
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
+                ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name");
                 return View(codeListValue);
             }
             return HttpNotFound("Ingen tilgang");
@@ -263,6 +264,7 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
+            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name", codelistValue.broaderItemId);
             codelistValue.register = register;
             return View(codelistValue);
         }
@@ -519,6 +521,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", codelistValue.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
+            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name", codelistValue.broaderItemId);
         }
 
         protected override void OnException(ExceptionContext filterContext)

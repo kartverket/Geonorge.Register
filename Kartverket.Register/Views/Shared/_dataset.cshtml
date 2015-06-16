@@ -92,7 +92,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
                         {
                             <li>
-                                <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
+                                <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green btn-link" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span>Metadata</a>
                             </li>
                         }
                         else
@@ -104,7 +104,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
                         {
                             <li>
-                                <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
+                                <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue btn-link" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span>Produktark</a>
                             </li>
                         }
                         else
@@ -116,7 +116,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
                         {
                             <li>
-                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green" title="Last ned tegneregler for @item.name"><span class="glyphicon glyphicon-picture"></span>Tegneregler</a>
+                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green btn-link" title="Last ned tegneregler for @item.name"><span class="glyphicon glyphicon-picture"></span>Tegneregler</a>
                             </li>
                         }
                         else
@@ -128,7 +128,7 @@
                         @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
                         {
                             <li>
-                                <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
+                                <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue btn-link" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span>Produktspesifikasjon</a>
                             </li>
                         }
                         else

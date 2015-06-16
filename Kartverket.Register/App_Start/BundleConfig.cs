@@ -32,10 +32,12 @@ namespace Kartverket.Register
                      "~/Content/print.css",
                      "~/Content/mobil.css",
                      "~/Content/custom.css",
+                     "~/Content/chosen.css",
                      "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/Scripts/visninger.js",
+                "~/Scripts/chosen.jquery.js",
                 "~/Scripts/tabs.js"));
 
             // Set EnableOptimizations to false for debugging. For more information,

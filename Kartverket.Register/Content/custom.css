@@ -1,4 +1,4 @@
-#autocomplete{
+﻿#autocomplete{
 	background: none;
 }
 
@@ -872,4 +872,36 @@ z-index: 600;
 
 .btn-space {
     margin-right:2px;
+}
+
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+    background: transparent none repeat scroll 0% 0%;
+    top: 3px;
+    font-size: 11px;
+    color: #777;
+    padding-left: 3px;
+    margin-right: 5px;
+    border-left: 1px solid #DDD;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close::before {
+    font-family: "Glyphicons Halflings";
+    content: "";
+}
+
+.chosen-container-single .chosen-single div b::before {
+  font-family: "Glyphicons Halflings";
+  content: "";
+}
+
+.sorter .chosen-container-single .chosen-single abbr {
+    position: unset;
+    top: 6px;
+    right: 26px;
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: transparent url("img/chosen-sprite.png") no-repeat scroll -42px 1px;
+    font-size: 1px;
 }

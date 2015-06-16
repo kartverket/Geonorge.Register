@@ -39,7 +39,7 @@ namespace Kartverket.Register.Services.Versioning
                                 && ri.versioningId == vnr
                                select ri;
 
-            RegisterItem currentVersion = currentVersion = queryResults.FirstOrDefault();
+            RegisterItem currentVersion = queryResults.FirstOrDefault();
             List<RegisterItem> validVersions = queryResults.ToList();
             if (queryResults.Count() > 1)
             {
@@ -53,12 +53,6 @@ namespace Kartverket.Register.Services.Versioning
                 }
 
             }
-            else
-            {
-                currentVersion = queryResults.FirstOrDefault();
-            }
-
-
 
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
@@ -92,7 +86,7 @@ namespace Kartverket.Register.Services.Versioning
                                           || ri.status.value == "Retired")
                                          select ri;
 
-            foreach (RegisterItem item in queryResults)
+            foreach (RegisterItem item in queryResultsHistorical)
             {
                 historicalItems.Add(item);
             }
@@ -101,7 +95,7 @@ namespace Kartverket.Register.Services.Versioning
             {
                 if (currentVersion == null)
                 {
-                    currentVersion = queryResults.FirstOrDefault();
+                    currentVersion = queryResultsHistorical.FirstOrDefault();
                 }
             }
             foreach (RegisterItem item in validVersions)

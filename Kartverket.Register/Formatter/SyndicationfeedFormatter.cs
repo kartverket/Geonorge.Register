@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Models;
+﻿
 using Kartverket.Register.Models.Api;
 using System;
 using System.Collections.Generic;
@@ -26,7 +26,7 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedType = (type) =>
         {
-            if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>))
+            if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>) || type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) || type == typeof(List<Kartverket.Register.Models.Api.Register>))
                 return true;
             else
                 return false;
@@ -48,6 +48,8 @@ namespace Kartverket.Register.Formatter
             {
                 if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>))
                     BuildSyndicationFeed(value, writeStream, content.Headers.ContentType.MediaType);
+                else if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) || type == typeof(List<Kartverket.Register.Models.Api.Register>))
+                    BuildSyndicationFeedRegister(value, writeStream, content.Headers.ContentType.MediaType);
             });
         }
 
@@ -99,6 +101,76 @@ namespace Kartverket.Register.Formatter
                 Content = new TextSyndicationContent(u.description)
             };
             item.Authors.Add(new SyndicationPerson() { Name = u.author });
+            return item;
+        }
+
+        private void BuildSyndicationFeedRegister(object models, Stream stream, string contenttype)
+        {
+            List<SyndicationItem> items = new List<SyndicationItem>();
+            var feed = new SyndicationFeed();
+           
+
+            if (models is IEnumerable<Kartverket.Register.Models.Api.Register>)
+            {
+
+                feed.Title = new TextSyndicationContent("Register Feed");
+           
+                var enumerator = ((IEnumerable<Kartverket.Register.Models.Api.Register>)models).GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    items.Add(BuildSyndicationRegister(enumerator.Current));
+                }
+            }
+            else
+            {
+                feed.Title = new TextSyndicationContent(((Kartverket.Register.Models.Api.Register)models).label);
+
+                foreach (var item in ((Kartverket.Register.Models.Api.Register)models).containeditems)
+                {
+                    items.Add(BuildSyndicationRegisterItem(item));
+                }
+                
+            }
+
+            feed.Items = items;
+
+            using (XmlWriter writer = XmlWriter.Create(stream))
+            {
+                if (string.Equals(contenttype, atom))
+                {
+                    Atom10FeedFormatter atomformatter = new Atom10FeedFormatter(feed);
+                    atomformatter.WriteTo(writer);
+                }
+                else
+                {
+                    Rss20FeedFormatter rssformatter = new Rss20FeedFormatter(feed);
+                    rssformatter.WriteTo(writer);
+                }
+            }
+        }
+        private SyndicationItem BuildSyndicationRegisterItem(Kartverket.Register.Models.Api.Registeritem u)
+        {
+            var item = new SyndicationItem()
+            {
+                Title = new TextSyndicationContent(u.label),
+                BaseUri = new Uri(u.id),
+                LastUpdatedTime = DateTime.Now,
+                Content = new TextSyndicationContent(u.description)
+            };
+            item.Authors.Add(new SyndicationPerson() { Name = u.owner });
+            return item;
+        }
+
+        private SyndicationItem BuildSyndicationRegister(Kartverket.Register.Models.Api.Register u)
+        {
+            var item = new SyndicationItem()
+            {
+                Title = new TextSyndicationContent(u.label),
+                BaseUri = new Uri(u.id),
+                LastUpdatedTime = u.lastUpdated,
+                Content = new TextSyndicationContent(u.contentsummary)
+            };
+            item.Authors.Add(new SyndicationPerson() { Name = u.manager });
             return item;
         }
     }

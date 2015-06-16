@@ -131,6 +131,7 @@ namespace Kartverket.Register.Controllers
                 label = item.name,
                 id = registerId,
                 contentsummary = item.description,
+                lastUpdated = item.modified
             };
             if (item.owner != null) tmp.owner = item.owner.seoname;
             if (item.manager != null) tmp.manager = item.manager.seoname;

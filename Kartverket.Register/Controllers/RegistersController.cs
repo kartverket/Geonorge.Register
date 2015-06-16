@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Search;
+using System.Web.Routing;
 
 namespace Kartverket.Register.Controllers
 {
@@ -150,8 +151,13 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        public ActionResult Details(string name, string sorting, int? page, string export, FilterParameters filter)
+        [Route("register/{name}/no-{format}")]
+        public ActionResult Details(string name, string sorting, int? page, string export, string? format, FilterParameters filter)
         {
+            //if (format.HasValue)
+            //{
+            //    if (format.Value == "atom") RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary {{ "seoname", name }});
+            //}
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
                                select o;

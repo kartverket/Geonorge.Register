@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 
 
@@ -19,16 +20,17 @@ namespace Kartverket.Register.Models
 	public class CodelistValue : RegisterItem {
         public CodelistValue() 
         {
-            //this.subvalues = new HashSet<CodelistValue>();
-            
+            this.narrowerItems = new HashSet<CodelistValue>();            
         }
         public const string DataDirectory = "codelistImport/";
-        [Display(Name = "Kodeverdi")]
+        [Display(Name = "Kodeverdi")]        
         public string value { get; set; }
-        //public virtual CodelistValue parent { get; set; }
-        //public virtual ICollection<CodelistValue> subvalues { get; set; }
 
-		
+        [ForeignKey("broaderItem")]
+        public Guid? broaderItemId { get; set; }
+        public virtual CodelistValue broaderItem { get; set; }
+
+        public virtual ICollection<CodelistValue> narrowerItems { get; set; }
 
 	}//end CodelistValue
 

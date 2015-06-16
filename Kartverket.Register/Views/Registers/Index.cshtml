@@ -10,8 +10,7 @@
         <hr>
     </div>
 
-
-    <table class="table">
+    <table class="table table-responsive">
         <tr>
             <th>
                 Navn
@@ -40,8 +39,7 @@
         @foreach (var item in Model)
         {
             if (item.parentRegisterId == null)
-            {
-
+            {                
                 <tr>
                     <td>
                         <strong><a href="/register/@item.seoname">@item.name</a></strong>
@@ -58,7 +56,7 @@
                         else
                         {
                             @Html.DisplayFor(modelItem => item.owner.name)
-                        }
+                        }           
                     </td>
                     @*<td>
                         @if (item.statusId == null)

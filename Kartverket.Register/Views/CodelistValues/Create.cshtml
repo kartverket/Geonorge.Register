@@ -73,6 +73,50 @@ else
                 @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        <hr />
+        <h4>Hierarkiske kodelister</h4>
+        <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+        <br /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.broaderItemId, "broaderItems", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="dropdown">
+                    <select class="form-control searchbar dropdown" data-toggle="dropdown">
+
+                            <option value="">--Velg broaderitem--</option>
+
+                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                        {
+                            <optgroup label="@register.name">
+                                @foreach (var code in register.items.OrderBy(c => c.name))
+                                {
+                                    <option value="@code.systemId">@code.name</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.broaderItemId, "narrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                    <option value=""></option>
+                    @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                    {
+                        <optgroup label="@register.name">
+                            @foreach (var code in register.items.OrderBy(c => c.name))
+                            {
+                                <option value="@code.systemId">@code.name</option>
+                            }
+                        </optgroup>
+                    }
+                </select>
+            </div>
+        </div>
     </div>
     <div class="form-group">
         <hr />
@@ -88,6 +132,16 @@ else
     </div>
 }
 
-@section Scripts {
+@section scripts {
+
+    <script src="~/Scripts/chosen.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".chosen-select").chosen();
+            $("select").chosen();
+        });
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
+
+
 }

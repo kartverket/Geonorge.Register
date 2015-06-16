@@ -185,6 +185,24 @@ namespace Kartverket.Register.Helpers
             return RegistersList;
         }
 
+        public static List<Kartverket.Register.Models.Register> CodelistRegister()
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResults = from o in db.Registers
+                               where o.containedItemClass == "CodelistValue"
+                               select o;
+
+            List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
+            foreach (var item in queryResults)
+            {
+                RegistersList.Add(item);
+            }
+            RegistersList.OrderBy(r => r.name);
+
+            return RegistersList;
+        }
+
         public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
             bool isInRole = false;

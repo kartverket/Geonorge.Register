@@ -74,32 +74,34 @@ else
             </div>
         </div>
 
-        <hr />
-        <h4>Hierarkiske kodelister</h4>
-        <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
-        <br /><br />
-        <div class="form-group">
-            @Html.LabelFor(model => model.broaderItemId, "broaderItems", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="dropdown">
-                    <select class="form-control searchbar dropdown" data-toggle="dropdown">
+        @if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+        {
+            <hr />
+            <h4>Hierarkiske kodelister</h4>
+            <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+            <br /><br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.broaderItemId, "broaderItems", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="dropdown">
+                        <select class="form-control searchbar dropdown" data-toggle="dropdown">
 
                             <option value="">--Velg broaderitem--</option>
 
-                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                        {
-                            <optgroup label="@register.name">
-                                @foreach (var code in register.items.OrderBy(c => c.name))
-                                {
-                                    <option value="@code.systemId">@code.name</option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
+                            @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                            {
+                                <optgroup label="@register.name">
+                                    @foreach (var code in register.items.OrderBy(c => c.name))
+                                    {
+                                        <option value="@code.systemId">@code.name</option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.broaderItemId, "narrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -117,6 +119,7 @@ else
                 </select>
             </div>
         </div>
+        }
     </div>
     <div class="form-group">
         <hr />

@@ -407,7 +407,8 @@ namespace Kartverket.Register.Controllers
                                 item.statusId = "Superseded";
                                 item.modified = DateTime.Now;
                             }
-                        }
+                        } 
+                        db.SaveChanges();
 
                         // sett dette dokumentet til å være ny gjeldende versjon
                         versjonsgruppe.currentVersion = originalDocument.systemId;
@@ -425,10 +426,11 @@ namespace Kartverket.Register.Controllers
                                 {
                                     versjonsgruppe.currentVersion = item.systemId;
                                     item.statusId = "Valid";
-                                    item.modified = DateTime.Now;
+                                    item.modified = DateTime.Now;                                    
                                     break;
                                 }
                             }
+                            db.SaveChanges();
                             if (versjonsgruppe.currentVersion == document.systemId)
                             {
                                 Document nyGjeldendeVersjon = queryResultsVersionsDocument.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();

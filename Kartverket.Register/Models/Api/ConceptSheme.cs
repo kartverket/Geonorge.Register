@@ -16,6 +16,8 @@ namespace Kartverket.Register.Models.Api
         public List<Concept> concepts { get; set; }
         public string codelistValue { get; set; }
         public string owner { get; set; }
+        public string broader { get; set; }
+        public List<string> narrower { get; set; }
 
         public ConceptSheme(object models)
         {            
@@ -36,6 +38,18 @@ namespace Kartverket.Register.Models.Api
                 seoname = MakeSeoFriendlyString(item.label);
                 codelistValue = item.codevalue;  
                 concepts = new List<Concept>();
+                if (item.broader != null)
+                {
+                    broader = item.broader;
+                }
+                else
+                {
+                    broader = "";
+                }
+                if (item.narrower != null)
+                {
+                    narrower = item.narrower;
+                }
                 
             }
             if (models is Register)
@@ -55,6 +69,7 @@ namespace Kartverket.Register.Models.Api
                 codelistValue = "";
                 seoname = MakeSeoFriendlyString(register.label);
                 concepts = new List<Concept>();
+                broader = "";
 
                 foreach (Register reg in register.containedSubRegisters)
                 {

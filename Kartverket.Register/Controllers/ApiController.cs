@@ -192,6 +192,16 @@ namespace Kartverket.Register.Controllers
             {
                 var c = (CodelistValue)item;
                 tmp.codevalue = c.value;
+                if (c.broaderItemId != null)
+	            {
+                    tmp.broader = c.broaderItem.seoname;
+	            }
+                if (c.narrowerItems != null) {
+                    foreach (var narrowItem in c.narrowerItems)
+                    {
+                        tmp.narrower.Add(narrowItem.seoname);
+                    }
+                }
             }
 
             if (item is Document)

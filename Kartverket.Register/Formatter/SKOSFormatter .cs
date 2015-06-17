@@ -58,7 +58,6 @@ namespace Kartverket.Register.Formatter
             XNamespace skosNs = "http://www.w3.org/2004/02/skos/core#";
             XNamespace rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
             XNamespace dctermsNs = "http://purl.org/dc/terms/";
-
             XNamespace baseXML = conceptSheme.id.Replace(conceptSheme.seoname, null);
 
             XElement xdoc =
@@ -78,8 +77,8 @@ namespace Kartverket.Register.Formatter
                         new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.seoname)),
                         new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),
-                        //new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", "broaderItem")),
-                        //new XElement(skosNs + "narrower", new XAttribute(rdfNs + "resource", "narrowerItem")),
+                        new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)),                        
+                        //new XElement(skosNs + "narrower", new XAttribute(rdfNs + "resource", "narrowerItem")), 
                         new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id))
                       ));
 

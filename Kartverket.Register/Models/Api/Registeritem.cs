@@ -29,7 +29,9 @@ namespace Kartverket.Register.Models.Api
         public string codevalue { get; set; }
 
         public string serviceUrl { get; set; }
-            
-        
+
+        public string broader { get; set; }
+        public List<string> narrower { get; set; }
+
     }
 }

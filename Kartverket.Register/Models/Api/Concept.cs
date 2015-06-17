@@ -15,12 +15,15 @@ namespace Kartverket.Register.Models.Api
         public string description { get; set; }
         public string codevalue { get; set; }
         public string owner { get; set; }
+        public string broader { get; set; }
+        public List<string> narrower { get; set; }
 
-        public Concept(object models) {
-            
+        public Concept(object models)
+        {
+
             if (models is Register)
             {
-                Register register = (Register)models;                
+                Register register = (Register)models;
                 id = register.id;
                 name = register.label;
                 seoname = MakeSeoFriendlyString(register.label);
@@ -30,10 +33,13 @@ namespace Kartverket.Register.Models.Api
                 {
                     description = register.contentsummary;
                 }
-                else {
+                else
+                {
                     description = "";
-                }               
+                }
                 codevalue = "";
+                broader = "";
+
             }
             else if (models is Registeritem)
             {
@@ -58,7 +64,20 @@ namespace Kartverket.Register.Models.Api
                 else
                 {
                     codevalue = "";
-                }  
+                }
+                if (item.broader != null)
+                {
+                    broader = item.broader;
+                }
+                else
+                {
+                    broader = "";
+                }
+                if (item.narrower != null)
+                {
+                    narrower = item.narrower;
+                }
+
             }
         }
 

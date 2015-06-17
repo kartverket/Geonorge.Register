@@ -109,11 +109,11 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}/no-{format}")]
-        public ActionResult Details(string name, string sorting, int? page, string export, string? format, FilterParameters filter)
+        public ActionResult Details(string name, string sorting, int? page, string export, string format, FilterParameters filter)
         {
             //if (format.HasValue)
             //{
-            //    if (format.Value == "atom") RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary {{ "seoname", name }});
+            //    if (format.Value == "atom") RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
             //}
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name

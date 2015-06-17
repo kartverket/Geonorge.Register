@@ -81,15 +81,15 @@ else
             <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
             <br /><br />
             <div class="form-group">
-                @Html.LabelFor(model => model.broaderItemId, "broaderItems", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.broaderItem, "BroaderItem", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="dropdown">
-                        <select class="form-control searchbar dropdown" data-toggle="dropdown">
+                        <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
                             <option selected="selected"></option>
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {                                
                                 <optgroup label="@register.name">
-                                    @foreach (var code in register.items.OrderBy(c => c.name))
+                                    @foreach (Kartverket.Register.Models.CodelistValue code in register.items.OrderBy(c => c.name))
                                     {
                                         <option value="@code.systemId">@code.name</option>
                                     }
@@ -99,15 +99,15 @@ else
                     </div>
                 </div>
             </div>
-
+    
             <div class="form-group">
-                @Html.LabelFor(model => model.broaderItemId, "narrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.narrowerItems, "NarrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <select data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                    <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
                         @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                         {
                             <optgroup label="@register.name">
-                                @foreach (var code in register.items.OrderBy(c => c.name))
+                                @foreach (Kartverket.Register.Models.CodelistValue code in register.items.OrderBy(c => c.name))
                                 {
                                     <option value="@code.systemId">@code.name</option>
                                 }

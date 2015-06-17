@@ -47,7 +47,7 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View();
-            }            
+            }
             return HttpNotFound("Ingen tilgang");
         }
 
@@ -199,7 +199,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         [Route("kodeliste/{registername}/ny")]
-        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister)
+        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, List<Guid> narrower, Guid? broader)
         {
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername && o.parentRegister.seoname == parentregister
@@ -233,6 +233,19 @@ namespace Kartverket.Register.Controllers
                     codelistValue.description = "ikke angitt";
                 }
 
+                if (narrower != null)
+                {
+                    foreach (Guid narrowerItem in narrower)
+                    {
+                        CodelistValue item = db.CodelistValues.Find(narrowerItem);
+                        codelistValue.narrowerItems.Add(item);
+                    }
+                }
+                if (broader != null)
+                {
+                    codelistValue.broaderItemId = broader;
+                }
+
                 codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
@@ -264,7 +277,7 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
-            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name", codelistValue.broaderItemId);
+            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItem.systemId), "systemId", "name", codelistValue.broaderItem);
             codelistValue.register = register;
             return View(codelistValue);
         }
@@ -295,7 +308,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()) )
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()))
             {
                 Viewbags(codelistValue);
                 return View(codelistValue);
@@ -310,7 +323,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("kodeliste/{registername}/{submitterCodelist}/{itemname}/rediger")]
-        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister)
+        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader)
         {
             var queryResults = from o in db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
@@ -350,11 +363,23 @@ namespace Kartverket.Register.Controllers
                     }
                 }
 
+                if (narrower != null)
+                {
+                    foreach (Guid narrowerItem in narrower)
+                    {
+                        CodelistValue item = db.CodelistValues.Find(narrowerItem);
+                        originalCodelistValue.narrowerItems.Add(item);
+                    }
+                }
+                else {
+                    originalCodelistValue.narrowerItems = null;
+                }                
+                originalCodelistValue.broaderItemId = broader;
+
                 originalCodelistValue.modified = DateTime.Now;
                 db.Entry(originalCodelistValue).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(codelistValue);
-
 
                 if (originalCodelistValue.register.parentRegisterId != null)
                 {
@@ -418,7 +443,10 @@ namespace Kartverket.Register.Controllers
             {
                 parent = codelistValue.register.parentRegister.seoname;
             }
-
+            codelistValue.broaderItem = null;
+            codelistValue.narrowerItems.Clear();
+            db.Entry(codelistValue).State = EntityState.Modified;
+            db.SaveChanges();
 
             db.RegisterItems.Remove(codelistValue);
             db.SaveChanges();
@@ -521,7 +549,7 @@ namespace Kartverket.Register.Controllers
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", codelistValue.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
-            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name", codelistValue.broaderItemId);
+            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name), "systemId", "name", codelistValue.broaderItemId);
         }
 
         protected override void OnException(ExceptionContext filterContext)

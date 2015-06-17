@@ -28,7 +28,7 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("broaderItem")]
         public Guid? broaderItemId { get; set; }
-        public virtual CodelistValue broaderItem { get; set; }
+        public virtual RegisterItem broaderItem { get; set; }
 
         public virtual ICollection<CodelistValue> narrowerItems { get; set; }
 

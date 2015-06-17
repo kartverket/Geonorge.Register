@@ -62,7 +62,6 @@ namespace Kartverket.Register.Models
                     //Index(regItem.systemId);
                 }
                 else { result = Save(); }
-
             }
 
             return result;
@@ -81,7 +80,6 @@ namespace Kartverket.Register.Models
             catch (System.Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
-
         }
 
         int Save() {

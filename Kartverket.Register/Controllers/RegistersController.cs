@@ -108,13 +108,15 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
-        [Route("register/{name}/no-{format}")]
-        public ActionResult Details(string name, string sorting, int? page, string export, string format, FilterParameters filter)
+        //[Route("register/{name}/no/{format}")]
+        //[Route("register/{name}~{format}")]
+        public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
-            //if (format.HasValue)
-            //{
-            //    if (format.Value == "atom") RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
-            //}
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                if (format == "atom") return RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
+                if (format == "skos") return Redirect("/api/register/" + name);
+            }
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
                                select o;
@@ -150,9 +152,9 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (!string.IsNullOrEmpty(export))
+            if (!string.IsNullOrEmpty(format))
             {
-                return exportCodelist(register, export);
+                return exportCodelist(register, format);
             }
 
             return View(register);
@@ -443,7 +445,7 @@ namespace Kartverket.Register.Controllers
 
 
         protected override void Dispose(bool disposing)
-        {
+         {
             if (disposing)
             {
                 db.Dispose();

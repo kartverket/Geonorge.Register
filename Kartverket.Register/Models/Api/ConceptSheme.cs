@@ -16,8 +16,8 @@ namespace Kartverket.Register.Models.Api
         public List<Concept> concepts { get; set; }
         public string codelistValue { get; set; }
         public string owner { get; set; }
-        public string broader { get; set; }
-        public List<string> narrower { get; set; }
+        public virtual string broader { get; set; }
+        public List<Registeritem> narrower { get; set; }
 
         public ConceptSheme(object models)
         {            
@@ -40,7 +40,7 @@ namespace Kartverket.Register.Models.Api
                 concepts = new List<Concept>();
                 if (item.broader != null)
                 {
-                    broader = item.broader;
+                    broader = item.broader.id;
                 }
                 else
                 {

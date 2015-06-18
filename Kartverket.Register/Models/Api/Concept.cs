@@ -16,7 +16,7 @@ namespace Kartverket.Register.Models.Api
         public string codevalue { get; set; }
         public string owner { get; set; }
         public string broader { get; set; }
-        public List<string> narrower { get; set; }
+        public List<Registeritem> narrower { get; set; }
 
         public Concept(object models)
         {
@@ -67,12 +67,12 @@ namespace Kartverket.Register.Models.Api
                 }
                 if (item.broader != null)
                 {
-                    broader = item.broader;
+                    broader = item.broader.id;
                 }
-                else
-                {
+                else {
                     broader = "";
                 }
+
                 if (item.narrower != null)
                 {
                     narrower = item.narrower;

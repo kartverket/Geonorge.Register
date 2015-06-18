@@ -56,6 +56,21 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
+        ///// <summary>
+        ///// Gets subregister by name
+        ///// </summary>
+        ///// <param name="seoname">The search engine optimized name of the register</param>
+        //[Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
+        //[HttpGet]
+        //public IHttpActionResult GetRegisterByName(string seoname, string parentregister)
+        //{
+        //    var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+
+        //    var it = db.Registers.Where(w => w.seoname == seoname && w.parentRegister.seoname == parentregister).FirstOrDefault();
+
+        //    return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+        //}
+
         /// <summary>
         /// Gets codelist by systemid
         /// </summary>
@@ -84,10 +99,27 @@ namespace Kartverket.Register.Controllers
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
-            var rit = db.RegisterItems.Where(w => w.seoname == itemseoname).FirstOrDefault();
+            var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname).FirstOrDefault();
 
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
+
+        ///// <summary>
+        ///// Gets register item by register- organization- and registeritem-name 
+        ///// </summary>
+        ///// <param name="seoname">The search engine optimized name of the register</param>
+        ///// <param name="orgseoname">The search engine optimized name of the organization</param>
+        ///// <param name="itemseoname">The search engine optimized name of the register item</param>
+        //[Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
+        //[HttpGet]
+        //public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname, string parentregister)
+        //{
+        //    var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+        //    var it = db.Registers.Where(w => w.seoname == seoname && w.parentRegister.seoname == parentregister).FirstOrDefault();
+        //    var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname && w.register.parentRegister.seoname == parentregister).FirstOrDefault();
+
+        //    return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
+        //}
 
         /// <summary>
         /// List items for specific organization 
@@ -194,12 +226,13 @@ namespace Kartverket.Register.Controllers
                 tmp.codevalue = c.value;
                 if (c.broaderItemId != null)
 	            {
-                    tmp.broader = c.broaderItem.seoname;
+                    tmp.broader = ConvertRegisterItemDetails(item.register, c.broaderItem, urlHelper);
 	            }
                 if (c.narrowerItems != null) {
+                    tmp.narrower = new List<Models.Api.Registeritem>();
                     foreach (var narrowItem in c.narrowerItems)
                     {
-                        tmp.narrower.Add(narrowItem.seoname);
+                        tmp.narrower.Add(ConvertRegisterItemDetails(c.register, narrowItem, urlHelper));
                     }
                 }
             }
@@ -271,6 +304,23 @@ namespace Kartverket.Register.Controllers
                 tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
                 tmp.verticalReferenceSystem = d.verticalReferenceSystem;
                 tmp.dimension = d.dimension != null ? d.dimension.description : "";
+            }
+            else if (item is CodelistValue)
+            {
+                var c = (CodelistValue)item;
+                tmp.codevalue = c.value;
+                if (c.broaderItemId != null)
+                {
+                    tmp.broader = ConvertRegisterItem(item.register, c.broaderItem, urlHelper);
+                }
+                if (c.narrowerItems != null)
+                {
+                    tmp.narrower = new List<Models.Api.Registeritem>();
+                    foreach (var narrowItem in c.narrowerItems)
+                    {
+                        tmp.narrower.Add(ConvertRegisterItem(c.register, narrowItem, urlHelper));
+                    }
+                }
             }
             else tmp.itemclass = "RegisterItem";
 

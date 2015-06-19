@@ -108,6 +108,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
+        [Route("register/{name}.{format}")]
         //[Route("register/{name}/no/{format}")]
         //[Route("register/{name}~{format}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
@@ -115,7 +116,10 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(format))
             {
                 if (format == "atom") return RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
-                if (format == "skos") return Redirect("/api/register/" + name);
+                if (format == "skos")
+                {                    
+                    return Redirect("/api/register/" + name + "." + format + "/");
+                }
             }
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name

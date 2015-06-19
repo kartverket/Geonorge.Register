@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Http;
 
@@ -45,13 +47,13 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="seoname">The search engine optimized name of the register</param>
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
-        [Route("api/register/{seoname}")]
+        [Route("api/register/{seoname}.{format}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterByName(string seoname)
+        public IHttpActionResult GetRegisterByName(string seoname, string format)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
 
-            var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
+            var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();            
 
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
@@ -100,7 +102,8 @@ namespace Kartverket.Register.Controllers
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
             var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname).FirstOrDefault();
-
+            
+            
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
 

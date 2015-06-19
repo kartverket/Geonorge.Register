@@ -50,7 +50,7 @@ namespace Kartverket.Register.Controllers
         [Route("api/register/{seoname}.{format}")]
         [Route("api/register/{seoname}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterByName(string seoname, string format)
+        public IHttpActionResult GetRegisterByName(string seoname)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();           

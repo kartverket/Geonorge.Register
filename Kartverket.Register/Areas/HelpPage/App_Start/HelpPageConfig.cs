@@ -45,6 +45,18 @@ namespace Kartverket.Register.Areas.HelpPage
             //    {typeof(IEnumerable<string>), new string[]{"sample 1", "sample 2"}}
             //});
 
+
+            Kartverket.Register.Models.Api.SearchResult s2 = new Kartverket.Register.Models.Api.SearchResult(new Kartverket.Register.Models.SearchResult() { Limit = 100, NumFound = 1, Offset = 0 });
+            Register.Models.Api.RegisterData r = new Register.Models.Api.RegisterData() { Id = "adac574a-1672-4e9f-a55a-e222d943476d", Name = "GLO-kart", Url = "https://register.dev.geonorge.no/register/organisasjoner/kartverket/glo-kart", Description = "Kartsamarbeid mellom kommunene Gausdal, Lillehammer og Øyer.", Type = "organisasjoner", RegisterName = "Organisasjoner", RegisterDescription = "Inneholder oversikt over organisasjoner og deres logo ", RegisterUrl = "https://register.dev.geonorge.no/register/", Organization = "Kartverket" };
+            s2.Results = new List<Register.Models.Api.RegisterData>();
+            s2.Results.Add(r);
+
+            config.SetSampleObjects(new Dictionary<Type, object>
+            {
+                {typeof(string), "sample string"},
+                {typeof(Kartverket.Register.Models.Api.SearchResult), s2}
+            });
+
             // Extend the following to provide factories for types not handled automatically (those lacking parameterless
             // constructors) or for which you prefer to use non-default property values. Line below provides a fallback
             // since automatic handling will fail and GeneratePageResult handles only a single type.
@@ -66,6 +78,7 @@ namespace Kartverket.Register.Areas.HelpPage
             //// Uncomment the following to use "1234" directly as the request sample for media type "text/plain" on the controller named "Values"
             //// and action named "Put".
             //config.SetSampleRequest("1234", new MediaTypeHeaderValue("text/plain"), "Values", "Put");
+            config.SetSampleRequest("/api/search/?text=kart", new MediaTypeHeaderValue("application/x-www-form-urlencoded"), "ApiSearch", "Get");
 
             //// Uncomment the following to use the image on "../images/aspNetHome.png" directly as the response sample for media type "image/png"
             //// on the controller named "Values" and action named "Get" with parameter "id".

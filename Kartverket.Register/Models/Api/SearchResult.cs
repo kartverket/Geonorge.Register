@@ -12,8 +12,8 @@ namespace Kartverket.Register.Models.Api
             Limit = searchResult.Limit;
             Offset = searchResult.Offset;
             NumFound = searchResult.NumFound;
-            Results = RegisterData.CreateFromList(searchResult.Items);
-            Facets = Facet.CreateFromList(searchResult.Facets);
+            Results = (searchResult.Items != null) ? RegisterData.CreateFromList(searchResult.Items) : null;
+            Facets = (searchResult.Facets != null) ? Facet.CreateFromList(searchResult.Facets) : null;
         }
         /// <summary>
         /// Number of items found

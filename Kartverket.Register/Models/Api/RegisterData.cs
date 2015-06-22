@@ -7,6 +7,7 @@ namespace Kartverket.Register.Models.Api
 {
     public class RegisterData
     {
+        public RegisterData() { }
         /// <summary>
         /// The uniqueidentifier
         /// </summary>

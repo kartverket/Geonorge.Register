@@ -54,12 +54,12 @@ namespace Kartverket.Register.Models
 
                 if (reg != null) {
                     result = Save();
-                    //Index(reg.systemId);
+                    Index(reg.systemId);
                 }
                 else if (regItem != null) 
                 {
                     result = Save();
-                    //Index(regItem.systemId);
+                    Index(regItem.systemId);
                 }
                 else { result = Save(); }
             }

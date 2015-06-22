@@ -21,32 +21,76 @@ namespace Kartverket.Register.Services
 
         public void Index(IEnumerable<RegisterIndexDoc> docs)
         {
-            Log.Info(string.Format("Indexing {0} docs", docs.Count()));
-            _solr.AddRange(docs);
-            _solr.Commit();
+            try 
+            { 
+                Log.Info(string.Format("Indexing {0} docs", docs.Count()));
+                _solr.AddRange(docs);
+                _solr.Commit();
+            }
+            catch (SolrNet.Exceptions.SolrConnectionException)
+            {
+                Log.Error("Connection to solr failed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error:" + ex.Message);
+            }
         }
 
         public void DeleteIndex()
         {
-            Log.Info("Deletes intire index for reindexing");
-            SolrQuery sq = new SolrQuery("*:*");
-            _solr.Delete(sq);
-            _solr.Commit();
+            try
+            { 
+                Log.Info("Deletes intire index for reindexing");
+                SolrQuery sq = new SolrQuery("*:*");
+                _solr.Delete(sq);
+                _solr.Commit();
+            }
+            catch (SolrNet.Exceptions.SolrConnectionException)
+            {
+                Log.Error("Connection to solr failed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error:" + ex.Message);
+            }
         }
 
         public void Index(RegisterIndexDoc doc)
         {
             Log.Info(string.Format("Indexing single document systemID={0}", doc.SystemID));
-            _solr.Add(doc);
-            _solr.Commit();
+            try
+            {
+                _solr.Add(doc);
+                _solr.Commit();
+            }
+            catch (SolrNet.Exceptions.SolrConnectionException)
+            {
+                Log.Error("Connection to solr failed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error:" + ex.Message);
+            }
         }
 
 
         public void RemoveIndexDocument(string systemID)
         {
-            Log.Info(string.Format("Removes document systemID={0} from index", systemID));
-            _solr.Delete(systemID);
-            _solr.Commit();
+            try
+            {
+                Log.Info(string.Format("Removes document systemID={0} from index", systemID));
+                _solr.Delete(systemID);
+                _solr.Commit();
+            }
+            catch (SolrNet.Exceptions.SolrConnectionException)
+            {
+                Log.Error("Connection to solr failed");
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error:" + ex.Message);
+            }
         }
     }
 }

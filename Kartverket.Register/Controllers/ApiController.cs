@@ -47,7 +47,7 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="seoname">The search engine optimized name of the register</param>
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
-        [Route("api/register/{seoname}.{format}")]
+        [Route("api/register/{seoname}.{ext}")]
         [Route("api/register/{seoname}")]
         [HttpGet]
         public IHttpActionResult GetRegisterByName(string seoname)

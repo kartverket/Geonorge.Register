@@ -34,6 +34,8 @@ namespace Kartverket.Register
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("json", "true", "application/json"));
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("json", "application/json"));
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("xml", "application/xml"));
 
             log4net.Config.XmlConfigurator.Configure();
 

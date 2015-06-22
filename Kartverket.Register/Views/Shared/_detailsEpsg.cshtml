@@ -79,7 +79,7 @@
                 <p title="Nasjonalt krav for havområde: @Model.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
             }
 
-            @if (Model.sosiReferencesystem == null)
+            @if (item.externalReference == null)
             {
                 <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span> - </p>
             }

@@ -10,6 +10,7 @@ using System;
 using System.Web;
 using SolrNet;
 using System.Web.Configuration;
+using System.Net.Http.Formatting;
 
 namespace Kartverket.Register
 {
@@ -31,6 +32,8 @@ namespace Kartverket.Register
 
             GlobalConfiguration.Configuration.Formatters.Add(new SyndicationFeedFormatter());
             //Database.SetInitializer<RegisterDbContext>(new RegisterInitializer());
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("json", "true", "application/json"));
 
             log4net.Config.XmlConfigurator.Configure();
 

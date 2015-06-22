@@ -118,7 +118,7 @@ namespace Kartverket.Register.Controllers
                 if (format == "atom") return RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
                 if (format == "skos")
                 {                    
-                    return Redirect("/api/register/" + name");
+                    return Redirect("/api/register/" + name + "." + format + "/");
                 }
             }
             var queryResults = from o in db.Registers

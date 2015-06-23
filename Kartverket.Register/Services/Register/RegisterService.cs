@@ -61,8 +61,6 @@ namespace Kartverket.Register.Services.Register
 
             }
 
-
-
             return new Kartverket.Register.Models.Register
             {
                 systemId = register.systemId,
@@ -183,8 +181,27 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "application/csv";
                 return "json";
             }
-
             return null;           
+        }
+
+        public Kartverket.Register.Models.Register GetRegisterByName(string registerName)
+        {
+            var queryResults = from r in _dbContext.Registers
+                               where r.name == registerName || r.seoname == registerName
+                               select r;
+
+            Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
+            return register;
+        }
+
+        public Kartverket.Register.Models.Register GetSubRegisterByNameAndParent(string registerName, string parentRegisterName)
+        {
+            var queryResultsSubregister = from r in _dbContext.Registers
+                                          where r.seoname == registerName && r.parentRegister.seoname == parentRegisterName
+                                          select r;
+
+            Kartverket.Register.Models.Register register = queryResultsSubregister.FirstOrDefault();
+            return register;
         }
     }
 }

@@ -30,11 +30,15 @@ namespace Kartverket.Register.Controllers
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public RegistersController()
+        {
+            _registerService = new RegisterService(db);
+        }
+
         // GET: Registers
         public ActionResult Index()
         {
             setAccessRole();
-
             removeSessionSearchParams();
 
             return View(db.Registers.OrderBy(r => r.name).ToList());
@@ -44,7 +48,6 @@ namespace Kartverket.Register.Controllers
         {
             if (export == "csv")
             {
-
                 string text = "Kode; Initialverdi; Beskrivelse\n";
 
                 foreach (CodelistValue item in register.items)
@@ -55,9 +58,7 @@ namespace Kartverket.Register.Controllers
 
                     text += item.name + ";" + item.value + ";" + removedBreaksDescription + "\n";
                 }
-
                 byte[] data = Encoding.UTF8.GetBytes(text);
-
                 return File(data, "text/csv", register.name + "_kodeliste.csv");
             }
 
@@ -104,18 +105,13 @@ namespace Kartverket.Register.Controllers
                 return new XmlResult(xdoc);
             }
             return View(register);
-
         }
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}.{format}")]
-        //[Route("register/{name}/no/{format}")]
-        //[Route("register/{name}~{format}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
-            _registerService = new RegisterService(db);
-
             if (string.IsNullOrWhiteSpace(format))
             {
                 format = _registerService.ContentNegotiation(ControllerContext);
@@ -124,12 +120,8 @@ namespace Kartverket.Register.Controllers
             {
                 return Redirect("/api/register/" + name + "." + format);
             }
-
-            var queryResults = from o in db.Registers
-                               where o.name == name || o.seoname == name
-                               select o;
-
-            Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
+            
+            Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(name);
 
             if (!string.IsNullOrWhiteSpace(filter.text))
             {
@@ -158,6 +150,7 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
+            //TODO skal inn i en egen formatter!!
             if (!string.IsNullOrEmpty(format))
             {
                 return exportCodelist(register, format);
@@ -168,10 +161,24 @@ namespace Kartverket.Register.Controllers
 
 
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
-        [Route("register/{registername}/{submitter}/{itemname}/")]
-        public ActionResult DetailsRegisterItem(string registername, string itemname, int? version)
+        [Route("register/{registername}/{itemOwner}/{itemname}/")]
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
         {
-            //Guid? documentId = null;
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+            }
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                if (version != null)
+                {
+                    return Redirect("api/register/versjoner/" + registername + "/" + itemowner + "/" + itemname + "/" + version + "." + format);
+                }
+                else {
+                    return Redirect("api/register/" + registername + "/" + itemowner + "/" + itemname + "." + format);
+                }
+            }
+
             Guid? systId = null;
 
             if (version != null)
@@ -181,8 +188,8 @@ namespace Kartverket.Register.Controllers
                                           select d.systemId;
 
                 systId = queryResultDocument.FirstOrDefault();
-
                 Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+
                 ViewBag.documentOwner = document.documentowner.name;
                 ViewBag.version = document.versionNumber;
             }
@@ -301,17 +308,13 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(registername);
 
             if (register == null)
             {
                 return HttpNotFound();
             }
+            
             if (role == "nd.metadata_admin")
             {
                 Viewbags(register);

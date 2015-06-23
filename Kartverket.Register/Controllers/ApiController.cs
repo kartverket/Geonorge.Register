@@ -46,6 +46,7 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="seoname">The search engine optimized name of the register</param>
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}.{ext}")]
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
         [Route("api/register/{seoname}.{ext}")]
         [Route("api/register/{seoname}")]
@@ -94,6 +95,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="seoname">The search engine optimized name of the register</param>
         /// <param name="orgseoname">The search engine optimized name of the organization</param>
         /// <param name="itemseoname">The search engine optimized name of the register item</param>
+        [Route("api/register/versjoner/{seoname}/{orgseoname}/{itemseoname}/{version}/no")]
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
         [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
         [HttpGet]

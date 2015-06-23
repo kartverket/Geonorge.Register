@@ -13,6 +13,7 @@ using System.Xml.Linq;
 using System.IO;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,6 +23,12 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private IRegisterService _registerService;
+
+        public SubregisterController()
+        {
+            _registerService = new RegisterService(db);
+        }
 
         // GET: Subregister
         public ActionResult Index()
@@ -31,16 +38,22 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
+        [Route("subregister/{parentRegister}/{owner}/{subregister}.{format}")]
         [Route("subregister/{parentRegister}/{owner}/{subregister}")]
-        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export)
+        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format)
         {
-            var queryResultsSubregister = from r in db.Registers
-                                          where r.seoname == subregister && r.parentRegister.seoname == parentRegister
-                                          select r;
-
-            if (queryResultsSubregister.Count() > 0)
+            if (string.IsNullOrWhiteSpace(format))
             {
-                Kartverket.Register.Models.Register register = queryResultsSubregister.FirstOrDefault();
+                format = _registerService.ContentNegotiation(ControllerContext);
+            }
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                return Redirect("/api/subregister/" + parentRegister + "/" + owner + "/" + subregister + "." + format);
+            }
+
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(subregister, parentRegister);
+            if (register != null)
+            {
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
@@ -53,10 +66,13 @@ namespace Kartverket.Register.Controllers
                 {
                     return HttpNotFound();
                 }
+
+                //TODO, egen formatter
                 if (!string.IsNullOrEmpty(export))
                 {
                     return exportCodelist(register, export);
                 }
+
                 return View(register);
             }
             return HttpNotFound();
@@ -219,7 +235,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = db.Registers.Find(regId);
 
             if (ModelState.IsValid)
-            {                
+            {
                 subRegister.systemId = Guid.NewGuid();
                 if (subRegister.name == null)
                 {
@@ -273,7 +289,7 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResults.FirstOrDefault();
             Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            
+
             Viewbags(register);
             if (register == null)
             {
@@ -318,7 +334,7 @@ namespace Kartverket.Register.Controllers
                 if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                 originalRegister.accessId = register.accessId;
                 originalRegister.parentRegisterId = register.parentRegisterId;
-                
+
 
                 originalRegister.modified = DateTime.Now;
                 if (register.statusId != null)
@@ -342,10 +358,11 @@ namespace Kartverket.Register.Controllers
                 {
                     return Redirect("/register/" + originalRegister.seoname);
                 }
-                else { 
+                else
+                {
                     return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
                 }
-                
+
             }
             Viewbags(register);
             return View(originalRegister);

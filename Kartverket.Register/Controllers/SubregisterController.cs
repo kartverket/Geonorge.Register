@@ -43,7 +43,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format)
         {
             string ApiRedirectUrl = GetApiUrl(ref format);
-            if (string.IsNullOrWhiteSpace(ApiRedirectUrl))
+            if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
             {
                 return Redirect(ApiRedirectUrl);
             }
@@ -145,7 +145,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname, string format)
         {
             string ApiRedirectUrl = GetApiUrl(ref format);
-            if (string.IsNullOrWhiteSpace(ApiRedirectUrl))
+            if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
             {
                 return Redirect(ApiRedirectUrl);
             }

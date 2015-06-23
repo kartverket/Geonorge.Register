@@ -42,13 +42,10 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{subregister}")]
         public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format)
         {
-            if (string.IsNullOrWhiteSpace(format))
+            string ApiRedirectUrl = GetApiUrl(ref format);
+            if (string.IsNullOrWhiteSpace(ApiRedirectUrl))
             {
-                format = _registerService.ContentNegotiation(ControllerContext);
-            }
-            if (!string.IsNullOrWhiteSpace(format))
-            {
-                return Redirect("/api/subregister/" + parentRegister + "/" + owner + "/" + subregister + "." + format);
+                return Redirect(ApiRedirectUrl);
             }
 
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(subregister, parentRegister);
@@ -143,9 +140,15 @@ namespace Kartverket.Register.Controllers
 
         }
 
+        [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
         [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]
-        public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname)
+        public ActionResult DetailsSubregisterItem(string registername, string owner, string subregister, string itemname, string format)
         {
+            string ApiRedirectUrl = GetApiUrl(ref format);
+            if (string.IsNullOrWhiteSpace(ApiRedirectUrl))
+            {
+                return Redirect(ApiRedirectUrl);
+            }
 
             var queryResults = from o in db.RegisterItems
                                where o.seoname == itemname && o.register.seoname == subregister && o.register.parentRegister.seoname == registername
@@ -532,5 +535,22 @@ namespace Kartverket.Register.Controllers
             Log.Error("Error", filterContext.Exception);
         }
 
+        private string GetApiUrl(ref string format)
+        {
+            string ApiRedirectUrl = null;
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                ApiRedirectUrl = "/api/" + Request.FilePath;
+            }
+            else
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+                if (!string.IsNullOrWhiteSpace(format))
+                {
+                    ApiRedirectUrl = "/api/" + Request.FilePath + "." + format;
+                }
+            }
+            return ApiRedirectUrl;
+        }
     }
 }

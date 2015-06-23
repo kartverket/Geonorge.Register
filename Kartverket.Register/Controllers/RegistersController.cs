@@ -221,6 +221,7 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
 
+        //TODO - API
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}/")]
         public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner)

@@ -112,22 +112,26 @@ namespace Kartverket.Register.Controllers
         [Route("register/{name}.{format}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
-            if (string.IsNullOrWhiteSpace(format))
-            {
-                format = _registerService.ContentNegotiation(ControllerContext);
-            }
             if (!string.IsNullOrWhiteSpace(format))
             {
-                return Redirect("/api/register/" + name + "." + format);
+                return Redirect("/api/" + Request.FilePath);
             }
-            
+            else
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+                if (!string.IsNullOrWhiteSpace(format))
+                {
+                    return Redirect("/api/" + Request.FilePath + "." + format);
+                }
+            }
+
             Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(name);
 
             if (!string.IsNullOrWhiteSpace(filter.text))
             {
                 _searchService = new SearchService(db);
                 register = _searchService.Search(register, filter.text);
-            }      
+            }
             register = _registerService.Filter(register, filter);
 
             ViewBag.search = filter.text;
@@ -159,23 +163,22 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-
+        [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no.{format}")]
+        [Route("register/{registername}/{itemOwner}/{itemname}.{format}/")]
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
         [Route("register/{registername}/{itemOwner}/{itemname}/")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
         {
-            if (string.IsNullOrWhiteSpace(format))
-            {
-                format = _registerService.ContentNegotiation(ControllerContext);
-            }
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (version != null)
+                return Redirect("/api/" + Request.FilePath);
+            }
+            else
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+                if (!string.IsNullOrWhiteSpace(format))
                 {
-                    return Redirect("api/register/versjoner/" + registername + "/" + itemowner + "/" + itemname + "/" + version + "." + format);
-                }
-                else {
-                    return Redirect("api/register/" + registername + "/" + itemowner + "/" + itemname + "." + format);
+                    return Redirect("/api/" + Request.FilePath + "." + format);
                 }
             }
 
@@ -314,7 +317,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             if (role == "nd.metadata_admin")
             {
                 Viewbags(register);

@@ -95,6 +95,9 @@ namespace Kartverket.Register.Controllers
         /// <param name="seoname">The search engine optimized name of the register</param>
         /// <param name="orgseoname">The search engine optimized name of the organization</param>
         /// <param name="itemseoname">The search engine optimized name of the register item</param>
+        [Route("api/register/versjoner/{seoname}/{orgseoname}/{itemseoname}/{version}/no.{ext}")]
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}.{ext}")]
+        [Route("api/register/{seoname}/{orgseoname}/{itemseoname}.{ext}")]        
         [Route("api/register/versjoner/{seoname}/{orgseoname}/{itemseoname}/{version}/no")]
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
         [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
@@ -104,8 +107,7 @@ namespace Kartverket.Register.Controllers
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
             var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname).FirstOrDefault();
-            
-            
+                        
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
 

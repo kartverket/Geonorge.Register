@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Kartverket.Register.Services.Versioning
+namespace Kartverket.Register.Services.Register
 {
     public class RegisterService : IRegisterService
     {

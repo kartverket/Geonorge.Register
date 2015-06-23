@@ -15,6 +15,7 @@ using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Search;
 using System.Web.Routing;
+using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Controllers
 {

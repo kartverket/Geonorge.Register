@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Kartverket.Register.Services.Versioning
+namespace Kartverket.Register.Services.Register
 {
     public interface IRegisterService
     {

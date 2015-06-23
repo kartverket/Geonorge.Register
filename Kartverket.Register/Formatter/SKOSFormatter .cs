@@ -21,6 +21,7 @@ namespace Kartverket.Register.Formatter
         public SKOSFormatter()
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(rdf));
+            MediaTypeMappings.Add(new UriPathExtensionMapping("skos", "application/rdf+xml"));
         }
 
         Func<Type, bool> SupportedTypeSKOS = (type) =>
@@ -51,7 +52,7 @@ namespace Kartverket.Register.Formatter
         }
 
         private void BuildSKOSFeed(object models, Stream stream, string contenttype)
-        {
+            {
             ConceptSheme conceptSheme = new ConceptSheme(models);
 
             XNamespace ns = "http://www.opengis.net/gml/3.2";

@@ -26,7 +26,7 @@ namespace Kartverket.Register.Controllers
         private IVersioningService _versioningService;
         private IRegisterService _registerService;
         private ISearchService _searchService;
-        
+
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET: Registers
@@ -59,7 +59,7 @@ namespace Kartverket.Register.Controllers
 
                 return File(data, "text/csv", register.name + "_kodeliste.csv");
             }
-            
+
             else if (export == "gml")
             {
                 //var queryResult = from x in db.CodelistValues
@@ -101,10 +101,10 @@ namespace Kartverket.Register.Controllers
                           )));
 
                 return new XmlResult(xdoc);
-            }           
+            }
             return View(register);
 
-        }        
+        }
 
         // GET: Registers/Details/5
         [Route("register/{name}")]
@@ -113,14 +113,17 @@ namespace Kartverket.Register.Controllers
         //[Route("register/{name}~{format}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
+            _registerService = new RegisterService(db);
+
+            if (string.IsNullOrWhiteSpace(format))
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+            }
             if (!string.IsNullOrWhiteSpace(format))
             {
-                if (format == "atom") return RedirectToAction("GetRegisterByName", "ApiRoot", new RouteValueDictionary { { "seoname", name } });
-                if (format == "skos")
-                {                    
-                    return Redirect("/api/register/" + name + "." + format + "/");
-                }
+                return Redirect("/api/register/" + name + "." + format);
             }
+
             var queryResults = from o in db.Registers
                                where o.name == name || o.seoname == name
                                select o;
@@ -130,10 +133,8 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(filter.text))
             {
                 _searchService = new SearchService(db);
-                register = _searchService.Search(register, filter.text);   
-            }
-            //Hjelpemetode Sjekk om noen av filterparametrene er satt        TODO!    
-            _registerService = new RegisterService(db);
+                register = _searchService.Search(register, filter.text);
+            }      
             register = _registerService.Filter(register, filter);
 
             ViewBag.search = filter.text;
@@ -171,7 +172,7 @@ namespace Kartverket.Register.Controllers
         {
             //Guid? documentId = null;
             Guid? systId = null;
-            
+
             if (version != null)
             {
                 var queryResultDocument = from d in db.Documents
@@ -184,14 +185,15 @@ namespace Kartverket.Register.Controllers
                 ViewBag.documentOwner = document.documentowner.name;
                 ViewBag.version = document.versionNumber;
             }
-            else { 
+            else
+            {
                 var queryResultsRegisterItem = from o in db.RegisterItems
-                                               where o.seoname == itemname && o.register.seoname == registername 
+                                               where o.seoname == itemname && o.register.seoname == registername
                                                select o.systemId;
 
                 systId = queryResultsRegisterItem.FirstOrDefault();
             }
-           
+
             Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
             if (registerItem.register.containedItemClass == "Document")
@@ -208,7 +210,7 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
 
-        [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]    
+        [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}/")]
         public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner)
         {
@@ -216,7 +218,7 @@ namespace Kartverket.Register.Controllers
             VersionsItem versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
             ViewBag.registerItemOwner = registerItemOwner;
-            return View(model);           
+            return View(model);
         }
 
         // GET: Register/Create
@@ -370,7 +372,7 @@ namespace Kartverket.Register.Controllers
 
                     if (register.parentRegisterId != null)
                     {
-                        return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);    
+                        return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
                     }
                     return Redirect("/register/" + originalRegister.name);
                 }
@@ -449,7 +451,7 @@ namespace Kartverket.Register.Controllers
 
 
         protected override void Dispose(bool disposing)
-         {
+        {
             if (disposing)
             {
                 db.Dispose();
@@ -460,7 +462,7 @@ namespace Kartverket.Register.Controllers
         private string HasAccessToRegister()
         {
             string role = GetSecurityClaim("role");
-                        
+
             bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
             bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata"); //nd.metadata_editor
 
@@ -472,7 +474,8 @@ namespace Kartverket.Register.Controllers
             {
                 return "editor";
             }
-            else {
+            else
+            {
                 return "guest";
             }
         }
@@ -519,10 +522,10 @@ namespace Kartverket.Register.Controllers
                 Session["user"] = "guest";
             }
 
-            
+
         }
 
-        private void removeSessionSearchParams() 
+        private void removeSessionSearchParams()
         {
 
             Session["sortingType"] = null;
@@ -532,7 +535,7 @@ namespace Kartverket.Register.Controllers
             Session["InspireRequirement"] = null;
             Session["nationalRequirement"] = null;
             Session["nationalSeaRequirement"] = null;
-        
+
         }
 
         private void ValidationName(Kartverket.Register.Models.Register register)
@@ -547,7 +550,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-      
+
         private static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();

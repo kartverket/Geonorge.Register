@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Kartverket.Register.Services.Versioning
 {
@@ -154,6 +155,36 @@ namespace Kartverket.Register.Services.Versioning
                 filterNational = filter.nationalRequirement;
                 filterNationalSea = filter.nationalSeaRequirement;
             }
+        }
+
+
+        public string ContentNegotiation(ControllerContext context)
+        {
+            HttpResponseBase response = context.HttpContext.Response;
+            HttpRequestBase request = context.HttpContext.Request;
+
+            if (request.AcceptTypes.Contains("application/json"))
+            {
+                response.ContentType = "application/json";
+                return "json";    
+            }
+            if (request.AcceptTypes.Contains("application/xml"))
+            {
+                response.ContentType = "application/xml";
+                return "xml";
+            }
+            if (request.AcceptTypes.Contains("application/rdf+xml"))
+            {
+                response.ContentType = "application/xml+rdf";
+                return "skos";
+            }
+            if (request.AcceptTypes.Contains("application/csv"))
+            {
+                response.ContentType = "application/csv";
+                return "json";
+            }
+
+            return null;           
         }
     }
 }

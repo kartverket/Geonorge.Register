@@ -20,6 +20,7 @@ namespace Kartverket.Register
 
         protected void Application_Start()
         {
+            
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Migrations.Configuration>());
 
             AreaRegistration.RegisterAllAreas();
@@ -36,6 +37,10 @@ namespace Kartverket.Register
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("json", "true", "application/json"));
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("json", "application/json"));
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("xml", "application/xml"));
+            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("skos", "application/rdf+xml"));
+            //GlobalConfiguration.Configuration.Formatters.Add(new SKOSFormatter());
+
+
 
             log4net.Config.XmlConfigurator.Configure();
 

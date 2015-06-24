@@ -11,20 +11,20 @@
                 <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
                    @if (item.register.parentRegister != null)
                    {
-                    <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                    <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.datasetowner.seoname/@item.seoname">
                         <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name">
                     </a>
                    }
                    else
                    {
-                    <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname/">
+                    <a class="" href="/register/@item.register.seoname/@item.datasetowner.seoname/@item.seoname">
                             <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
                     </a>
                    }                
 
                 </div>
                 <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
-                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.submitter.name)/@Html.ToUrl(item.name)/">
+                    <a class="" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.submitter.name)/@Html.ToUrl(item.name)">
                         <h3 class="role-button" style="font-size: 18px;">
                             @item.name
                         </h3>
@@ -39,12 +39,12 @@
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)">vis mer info</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)/">vis mer info</a>
+                                    <a href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)">vis mer info</a>
                                 }
                             </p>
                         }

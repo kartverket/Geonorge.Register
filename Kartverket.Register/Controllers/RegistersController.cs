@@ -166,7 +166,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no.{format}")]
         [Route("register/{registername}/{itemOwner}/{itemname}.{format}/")]
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
-        [Route("register/{registername}/{itemOwner}/{itemname}/")]
+        [Route("register/{registername}/{itemOwner}/{itemname}")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
         {
             if (!string.IsNullOrWhiteSpace(format))
@@ -223,7 +223,7 @@ namespace Kartverket.Register.Controllers
 
         //TODO - API
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
-        [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}/")]
+        [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}")]
         public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner)
         {
             _versioningService = new VersioningService(db);
@@ -235,7 +235,7 @@ namespace Kartverket.Register.Controllers
 
         // GET: Register/Create
         [Authorize]
-        [Route("ny/")]
+        [Route("ny")]
         public ActionResult Create()
         {
             string role = GetSecurityClaim("role");
@@ -254,7 +254,7 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
-        [Route("ny/")]
+        [Route("ny")]
         public ActionResult Create(Kartverket.Register.Models.Register register)
         {
             string role = GetSecurityClaim("role");

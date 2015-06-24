@@ -108,7 +108,12 @@
 
 
 <div class="search-filter-wrapper">
-    <br /><br />
+    <div class="nav col-sm-12 col-md-12 col-lg-12">
+        <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn" title="Atom feed"><img src="~/Content/img/rss.png" /> ATOM</a>
+        <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn" title="rss feed"><img src="~/Content/img/rss.png" /> RSS</a>
+        <br /><br /><br />
+    </div>
+
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>

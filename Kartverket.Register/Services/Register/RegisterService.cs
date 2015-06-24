@@ -176,10 +176,20 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "application/xml+rdf";
                 return "skos";
             }
-            if (request.AcceptTypes.Contains("application/csv"))
+            if (request.AcceptTypes.Contains("application/atom+xml"))
             {
-                response.ContentType = "application/csv";
-                return "json";
+                response.ContentType = "application/atom+xml";
+                return "atom";
+            }
+            if (request.AcceptTypes.Contains("application/rss+xml"))
+            {
+                response.ContentType = "application/rss+xml";
+                return "rss";
+            }
+            if (request.AcceptTypes.Contains("text/csv"))
+            {
+                response.ContentType = "text/csv";
+                return "csv";
             }
             return null;           
         }

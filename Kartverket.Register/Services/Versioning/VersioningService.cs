@@ -21,43 +21,26 @@ namespace Kartverket.Register.Services.Versioning
             var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
                                            where ri.register.seoname == registername && ri.register.parentRegister.seoname == parantRegister
                                            && ri.seoname == itemname
-                                           select ri.versioningId;
+                                           select ri.versioning;
 
-            Guid? vnr = queryResultsRegisteritem.FirstOrDefault();
-
-
-
-
+            Kartverket.Register.Models.Version versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
+            Guid? versjonsGruppeId = versjonsGruppe.systemId;
+            Guid currentVersionId = versjonsGruppe.currentVersion;
 
             List<RegisterItem> suggestionsItems = new List<RegisterItem>();
             List<RegisterItem> historicalItems = new List<RegisterItem>();
 
-            // finne Gjeldende versjon
+            // finne Gjeldende versjon i versjonsgruppen
             var queryResults = from ri in _dbContext.RegisterItems
-                               where ri.register.seoname == registername
-                                && ri.statusId == "Valid"
-                                && ri.versioningId == vnr
+                               where ri.systemId == currentVersionId
                                select ri;
 
             RegisterItem currentVersion = queryResults.FirstOrDefault();
-            List<RegisterItem> validVersions = queryResults.ToList();
-            if (queryResults.Count() > 1)
-            {
-
-                foreach (RegisterItem item in validVersions)
-                {
-                    if (item.dateAccepted > currentVersion.dateAccepted)
-                    {
-                        currentVersion = item;
-                    }
-                }
-
-            }
 
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
                            where ri.register.seoname == registername
-                           && ri.versioningId == vnr
+                           && ri.versioningId == versjonsGruppeId
                            && (ri.status.value == "Submitted"
                            || ri.status.value == "Proposal"
                            || ri.status.value == "InProgress"
@@ -72,10 +55,6 @@ namespace Kartverket.Register.Services.Versioning
                 suggestionsItems.Add(item);
             }
 
-            if (currentVersion == null)
-            {
-                currentVersion = queryResults.FirstOrDefault();
-            }
 
             //finne alle historiske versjoner
             var queryResultsHistorical = from ri in _dbContext.RegisterItems
@@ -91,20 +70,6 @@ namespace Kartverket.Register.Services.Versioning
                 historicalItems.Add(item);
             }
 
-            if (historicalItems != null)
-            {
-                if (currentVersion == null)
-                {
-                    currentVersion = queryResultsHistorical.FirstOrDefault();
-                }
-            }
-            foreach (RegisterItem item in validVersions)
-            {
-                if (item != currentVersion)
-                {
-                    historicalItems.Add(item);
-                }
-            }
 
             return new VersionsItem
             {

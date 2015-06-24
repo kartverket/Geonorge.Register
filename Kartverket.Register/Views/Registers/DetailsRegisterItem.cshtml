@@ -165,7 +165,7 @@
         if (HtmlHelperExtensions.accessRegisterItem(Model))
         {
 
-            if (Model.register.containedItemClass == "Document")
+            @*if (Model.register.containedItemClass == "Document")
             {
                 if (Model.register.parentRegisterId != null)
                 {
@@ -175,7 +175,7 @@
                 {
                     <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
                 }
-            }
+            }*@
 
             if (Model.register.containedItemClass == "CodelistValue")
             {

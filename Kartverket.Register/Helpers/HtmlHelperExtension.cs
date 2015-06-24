@@ -256,6 +256,11 @@ namespace Kartverket.Register.Helpers
             return MakeSeoFriendlyString(name);
         }
 
+        public static string urlFormat(HttpRequestBase request, string format) {
+            string url = request.FilePath + "." + format;
+            return url;
+        }
+
         public static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();

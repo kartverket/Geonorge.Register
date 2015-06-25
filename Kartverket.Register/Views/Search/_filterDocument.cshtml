@@ -50,11 +50,11 @@
 
                         @if (item.status == null)
                         {
-                            <p><span>Status: </span>Ikke angitt</p>
+                            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</p>
                         }
                         else
                         {
-                            <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                         }
                     </div>
 

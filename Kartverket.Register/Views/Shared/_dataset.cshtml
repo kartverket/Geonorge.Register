@@ -170,11 +170,11 @@
                         }
                         @if (item.status == null)
                         {
-                            <li title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</li>
+                            <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</li>
                         }
                         else
                         {
-                            <li title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {

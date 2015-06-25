@@ -25,17 +25,17 @@ namespace Kartverket.Register.Migrations
             //  to avoid creating duplicate seed data. E.g.
             //
             context.Statuses.AddOrUpdate(
-                new Status { value = "Submitted", description = "Sendt inn" },
-                new Status { value = "NotAccepted", description = "Ikke godkjent" },
-                new Status { value = "Accepted", description = "Godkjent" },
-                new Status { value = "Valid", description = "Gyldig" },
-                new Status { value = "Experimental", description = "Utkast" },
-                new Status { value = "Deprecated", description = "Utdatert" },
-                new Status { value = "Superseded", description = "Erstattet" },
-                new Status { value = "Retired", description = "Utgått" },
-                new Status { value = "Candidate", description = "Kandidat" },
-                new Status { value = "InProgress", description = "I prosess" },
-                new Status { value = "Proposal", description = "Forslag" }
+                new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
+                new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
+                new Status { value = "Accepted", description = "Godkjent", group = "suggested" },
+                new Status { value = "Valid", description = "Gyldig", group = "current" },
+                new Status { value = "Experimental", description = "Utkast", group = "suggested" },
+                new Status { value = "Deprecated", description = "Utdatert", group = "historical" },
+                new Status { value = "Superseded", description = "Erstattet", group = "historical"},
+                new Status { value = "Retired", description = "Utgått", group = "historical" },
+                new Status { value = "Candidate", description = "Kandidat", group = "suggested" },
+                new Status { value = "InProgress", description = "I prosess", group = "suggested" },
+                new Status { value = "Proposal", description = "Forslag", group = "suggested"}
             );
 
             context.AccessTypes.AddOrUpdate(

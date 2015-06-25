@@ -82,7 +82,7 @@
                 @Model.description
             </p>
         }
-        <span>Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
+        <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
         @if (Model.register.containedItemClass == "NameSpace")
         {
             <span>Eier: @Model.submitter.name</span><br>

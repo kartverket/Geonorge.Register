@@ -35,11 +35,11 @@
         </p>
         @if (Model.status == null)
         {
-            <span>Status: Ikke angitt</span><br />
+            <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: Ikke angitt</span><br />
         }
         else
         {
-            <span title="@HtmlHelperExtensions.StatusBeskrivelse()">Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+            <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
         }
         @if (Model.submitter == null)
         {
@@ -95,46 +95,46 @@
         {
             @Html.Partial("_detailsCodelistValue")
         }
-        
+
     </div>
-   
+
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <hr />
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
+        <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
 
-            @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated)
+        {
+
+            if (HtmlHelperExtensions.accessRegisterItem(Model))
             {
-
-                if (HtmlHelperExtensions.accessRegisterItem(Model))
+                if (Model.register.containedItemClass == "Organization")
                 {
-                    if (Model.register.containedItemClass == "Organization")
-                    {
-                        <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
-                        <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "Document")
-                    {
-                        @*<span> | </span><a href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>*@
-                    }
-                    if (Model.register.containedItemClass == "Dataset")
-                    {
-                        <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                        <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "EPSG")
-                    {
-                        <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                        <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
-                    }
-                    if (Model.register.containedItemClass == "CodelistValue")
-                    {
-                        <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                        <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
+                }
+                if (Model.register.containedItemClass == "Document")
+                {
+                    @*<span> | </span><a href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>*@
+                }
+                if (Model.register.containedItemClass == "Dataset")
+                {
+                    <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
+                    <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
+                }
+                if (Model.register.containedItemClass == "EPSG")
+                {
+                    <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
+                    <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
+                }
+                if (Model.register.containedItemClass == "CodelistValue")
+                {
+                    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
+                    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
 
-                        @*<span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
-                            <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
-                    }
+                    @*<span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
+                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
                 }
             }
+        }
     </div>
 </div>

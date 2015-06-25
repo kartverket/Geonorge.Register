@@ -19,16 +19,7 @@ namespace Kartverket.Register.Models {
         [Key]
         public string value { get; set; }
         public string description { get; set; }
-        //public Submitted;
-        //public NotAccepted;
-        //public Accepted;
-        //public Valid;
-        //public Experimental;
-        //public Deprecated;
-        //public Superseded;
-        //public Retired;
-
-		
+        public string group { get; set; }
 
 	}//end Status
 

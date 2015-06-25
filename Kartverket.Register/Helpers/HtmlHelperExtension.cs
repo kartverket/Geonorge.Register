@@ -807,8 +807,33 @@ namespace Kartverket.Register.Helpers
 
         public static string StatusBeskrivelse()
         {
-            return "<b>Gjeldende:</b>/n Gyldig /n <b>Forslag:</b> /n ";
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResults = from s in db.Statuses
+                               select s;
+
+            string forslag = "Forslag:&#013";
+            string gyldig = "Gyldig:&#013";
+            string historiske = "Historiske:&#013";
+
+            foreach (Status s in queryResults)
+            {
+                if (s.group == "suggested")
+                {
+                    forslag += "- " + s.description + "&#013";
+                }
+                if (s.group == "historical")
+                {
+                    historiske += "- " + s.description + "&#013";
+                }
+                if (s.group == "current")
+                {
+                    gyldig += "- " + s.description + "&#013"; 
+                }
+            }
+
+            string beskrivelse = "Mulige statuser:&#013&#013" + forslag + "&#013" + gyldig + "&#013" + historiske;
+            return beskrivelse;
         }
     }
-
 }

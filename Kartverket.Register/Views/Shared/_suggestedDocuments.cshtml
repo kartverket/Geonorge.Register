@@ -37,7 +37,7 @@
                     <td title="Versjonsnummer: @item.versionNumber">
                         @Html.DisplayFor(modelItem => item.versionNumber)
                     </td>
-                    <td title="Status: @item.status.description">
+                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>
                 </tr>

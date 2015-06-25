@@ -508,6 +508,10 @@
     <Compile Include="Migrations\201506170935037_UpdateBroaderItem.Designer.cs">
       <DependentUpon>201506170935037_UpdateBroaderItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506250747160_AddStatusGroup.cs" />
+    <Compile Include="Migrations\201506250747160_AddStatusGroup.Designer.cs">
+      <DependentUpon>201506250747160_AddStatusGroup.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -978,6 +982,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506170935037_UpdateBroaderItem.resx">
       <DependentUpon>201506170935037_UpdateBroaderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506250747160_AddStatusGroup.resx">
+      <DependentUpon>201506250747160_AddStatusGroup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

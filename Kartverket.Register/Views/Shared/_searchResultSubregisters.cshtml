@@ -2,6 +2,7 @@
 @using PagedList;
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
+﻿@using Kartverket.Register.Helpers
 
 
 @foreach (Register reg in Model)
@@ -107,11 +108,11 @@
                         <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
                             @if (item.status == null)
                             {
-                                <p title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</p>
+                                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</p>
                             }
                             else
                             {
-                                <p title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                             }
                         </div>
                     </div>
@@ -199,11 +200,11 @@
 
                                 @if (item.status == null)
                                 {
-                                    <p><span>Status: </span>Ikke angitt</p>
+                                    <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</p>
                                 }
                                 else
                                 {
-                                    <p><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                                    <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                                 }
                             </div>
 
@@ -368,11 +369,11 @@
                                 }
                                 @if (item.status == null)
                                 {
-                                    <li title="Status: Ikke angitt"><span>Status: </span>Ikke angitt</li>
+                                    <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</li>
                                 }
                                 else
                                 {
-                                    <li title="Status: @item.status.description"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                                    <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
                                 }
                                 @if (item.ThemeGroupId != null)
                                 {

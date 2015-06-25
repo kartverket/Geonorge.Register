@@ -275,7 +275,7 @@ namespace Kartverket.Register.Controllers
                     register.modified = DateTime.Now;
                     register.dateSubmitted = DateTime.Now;
                     register.statusId = "Submitted";
-                    register.seoname = MakeSeoFriendlyString(register.name);
+                    register.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
                     register.containedItemClass = register.containedItemClass;
 
                     db.Registers.Add(register);
@@ -352,7 +352,7 @@ namespace Kartverket.Register.Controllers
                 Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
                 if (ModelState.IsValid)
                 {
-                    if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = MakeSeoFriendlyString(originalRegister.name);
+                    if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.owner != null) originalRegister.ownerId = register.ownerId;
                     if (register.managerId != null) originalRegister.managerId = register.managerId;
@@ -556,32 +556,6 @@ namespace Kartverket.Register.Controllers
             {
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
-        }
-
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private void Viewbags(Kartverket.Register.Models.Register register)

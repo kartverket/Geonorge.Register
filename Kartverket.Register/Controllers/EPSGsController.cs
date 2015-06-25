@@ -119,7 +119,7 @@ namespace Kartverket.Register.Controllers
                 epsgKode.inspireRequirementId = "Notset";
                 epsgKode.nationalRequirementId = "Notset";
                 epsgKode.nationalSeasRequirementId = "Notset";
-                epsgKode.seoname = MakeSeoFriendlyString(epsgKode.name);
+                epsgKode.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(epsgKode.name);
 
                 db.RegisterItems.Add(epsgKode);
                 db.SaveChanges();
@@ -220,7 +220,7 @@ namespace Kartverket.Register.Controllers
             {
                 EPSG originalEPSG = db.EPSGs.Find(systId);
 
-                if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = MakeSeoFriendlyString(originalEPSG.name);
+                if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalEPSG.name);
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
                 if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;
@@ -363,31 +363,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private void Viewbags(EPSG ePSG)

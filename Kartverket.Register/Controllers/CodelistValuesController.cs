@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
                             codelistValue.dateSubmitted = DateTime.Now;
                             codelistValue.registerId = register.systemId;
                             codelistValue.statusId = "Submitted";
-                            codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+                            codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
 
                             db.RegisterItems.Add(codelistValue);
                             db.SaveChanges();
@@ -246,7 +246,7 @@ namespace Kartverket.Register.Controllers
                     codelistValue.broaderItemId = broader;
                 }
 
-                codelistValue.seoname = MakeSeoFriendlyString(codelistValue.name);
+                codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
 
@@ -344,7 +344,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (codelistValue.name != null) originalCodelistValue.name = codelistValue.name; originalCodelistValue.seoname = MakeSeoFriendlyString(originalCodelistValue.name);
+                if (codelistValue.name != null) originalCodelistValue.name = codelistValue.name; originalCodelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalCodelistValue.name);
                 if (codelistValue.description != null) originalCodelistValue.description = codelistValue.description;
                 if (codelistValue.statusId != null) originalCodelistValue.statusId = codelistValue.statusId;
                 if (codelistValue.submitterId != null) originalCodelistValue.submitterId = codelistValue.submitterId;
@@ -517,31 +517,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return true;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private void Viewbags(CodelistValue codelistValue)

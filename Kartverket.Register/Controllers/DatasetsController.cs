@@ -131,7 +131,7 @@ namespace Kartverket.Register.Controllers
                 {
                     dataset.description = "ikke angitt";
                 }
-                dataset.seoname = MakeSeoFriendlyString(dataset.name);
+                dataset.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(dataset.name);
 
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -281,7 +281,7 @@ namespace Kartverket.Register.Controllers
             {
 
                 if (dataset.name != null) originalDataset.name = dataset.name;
-                originalDataset.seoname = MakeSeoFriendlyString(originalDataset.name);
+                originalDataset.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDataset.name);
                 originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
                 if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
@@ -424,31 +424,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         protected override void OnException(ExceptionContext filterContext)

@@ -78,7 +78,7 @@ namespace Kartverket.Register.Controllers
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
                 organization.statusId = "Submitted";
-                organization.seoname = MakeSeoFriendlyString(organization.name);
+                organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
 
                 organization.logoFilename = org[3];
                 organization.largeLogo = org[3];
@@ -97,7 +97,6 @@ namespace Kartverket.Register.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Organization organization = db.Organizations.Find(id);
-            //organization.seoname = MakeSeoFriendlyString(organization.name);
             db.SaveChanges();
             if (organization == null)
             {
@@ -170,7 +169,7 @@ namespace Kartverket.Register.Controllers
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
                 organization.statusId = "Submitted";
-                organization.seoname = MakeSeoFriendlyString(organization.name);
+                organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -304,7 +303,7 @@ namespace Kartverket.Register.Controllers
                 if (org.name != null)
                 {
                     originalOrganization.name = org.name;
-                    originalOrganization.seoname = MakeSeoFriendlyString(org.name);
+                    originalOrganization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(org.name);
                 }
                 if (org.submitterId != null)
                 {
@@ -459,31 +458,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)

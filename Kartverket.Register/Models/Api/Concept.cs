@@ -26,7 +26,7 @@ namespace Kartverket.Register.Models.Api
                 Register register = (Register)models;
                 id = register.id;
                 name = register.label;
-                seoname = MakeSeoFriendlyString(register.label);
+                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.label);
                 owner = register.owner;
 
                 if (!string.IsNullOrWhiteSpace(register.contentsummary))
@@ -46,7 +46,7 @@ namespace Kartverket.Register.Models.Api
                 Registeritem item = (Registeritem)models;
                 id = item.id;
                 name = item.label;
-                seoname = MakeSeoFriendlyString(item.label);
+                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item.label);
                 owner = item.owner;
                 if (!string.IsNullOrWhiteSpace(item.description))
                 {
@@ -79,31 +79,6 @@ namespace Kartverket.Register.Models.Api
                 }
 
             }
-        }
-
-        public static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
     }
 }

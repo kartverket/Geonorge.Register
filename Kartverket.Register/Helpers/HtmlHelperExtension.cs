@@ -803,7 +803,12 @@ namespace Kartverket.Register.Helpers
 
             return result;
         }
-        
+
+
+        public static string StatusBeskrivelse()
+        {
+            return "<b>Gjeldende:</b>/n Gyldig /n <b>Forslag:</b> /n ";
+        }
     }
 
 }

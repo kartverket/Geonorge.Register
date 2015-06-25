@@ -91,7 +91,7 @@ namespace Kartverket.Register.Controllers
                 nameSpace.registerId = register.systemId;
                 nameSpace.statusId = "Submitted";
                 nameSpace.submitter = null;
-                nameSpace.seoname = MakeSeoFriendlyString(nameSpace.name);
+                nameSpace.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(nameSpace.name);
 
                 db.RegisterItems.Add(nameSpace);
                 db.SaveChanges();
@@ -148,7 +148,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (nameSpace.name != null) originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = MakeSeoFriendlyString(originalNameSpace.name);
+                if (nameSpace.name != null) originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalNameSpace.name);
                 if (nameSpace.description != null) originalNameSpace.description = nameSpace.description;
                 if (nameSpace.submitterId != null) originalNameSpace.submitterId = nameSpace.submitterId;
                 if (nameSpace.statusId != null) originalNameSpace.statusId = nameSpace.statusId;
@@ -259,31 +259,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private Models.Register GetRegister(string registername, string parentRegister)

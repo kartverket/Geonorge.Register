@@ -119,7 +119,7 @@ namespace Kartverket.Register.Controllers
                     document.description = "ikke angitt";
                 }
 
-                document.seoname = MakeSeoFriendlyString(document.name);
+                document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
 
 
                 //Dokument og thumbnail
@@ -247,7 +247,7 @@ namespace Kartverket.Register.Controllers
                 {
                     document.description = "ikke angitt";
                 }
-                document.seoname = MakeSeoFriendlyString(document.name);
+                document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
 
@@ -376,7 +376,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = MakeSeoFriendlyString(originalDocument.name);
+                if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
@@ -622,31 +622,6 @@ namespace Kartverket.Register.Controllers
             return result;
         }
 
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
-        }
-
         private void GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url, string register)
         {
             string filtype;
@@ -683,7 +658,7 @@ namespace Kartverket.Register.Controllers
                 {
                     break;
                 }
-                seofilename += MakeSeoFriendlyString(item) + "_";
+                seofilename += Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item) + "_";
             }
         }
 

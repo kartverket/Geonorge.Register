@@ -184,7 +184,7 @@ namespace Kartverket.Register.Controllers
 
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
-            ViewBagSubregister(register);
+            ViewBagSubregister(register, parentregister);
 
             if (register.parentRegister != null)
             {
@@ -203,18 +203,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        private void ViewBagSubregister(Kartverket.Register.Models.Register register)
-        {
-            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-                ViewBag.parentRegisterSEO = register.parentRegister.seoname;
-                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
-            }
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
-        }
+        
 
         // POST: subregister/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -248,7 +237,7 @@ namespace Kartverket.Register.Controllers
                 subRegister.modified = DateTime.Now;
                 subRegister.dateSubmitted = DateTime.Now;
                 subRegister.statusId = "Submitted";
-                subRegister.seoname = MakeSeoFriendlyString(subRegister.name);
+                subRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(subRegister.name);
                 subRegister.parentRegisterId = regId;
 
                 db.Registers.Add(subRegister);
@@ -269,12 +258,14 @@ namespace Kartverket.Register.Controllers
                 db.Entry(subRegister).State = EntityState.Modified;
 
                 db.SaveChanges();
-                ViewBagSubregister(register);
+                ViewBagSubregister(register, registerparant);
 
                 return Redirect("/subregister/" + subRegister.parentRegister.seoname + "/" + subRegister.parentRegister.owner.seoname + "/" + subRegister.seoname);
 
             }
-            ViewBagSubregister(register);
+            ViewBagSubregister(register, registerparant);
+            
+            
             return View(subRegister);
         }
 
@@ -330,7 +321,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = MakeSeoFriendlyString(originalRegister.name);
+                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
                 if (register.description != null) originalRegister.description = register.description;
                 if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;
@@ -464,6 +455,19 @@ namespace Kartverket.Register.Controllers
 
         // *********************** Hjelpemetoder
 
+        private void ViewBagSubregister(Kartverket.Register.Models.Register register, string parentRegister)
+        {
+            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
+            if (parentRegister != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+                ViewBag.parentRegisterSEO = register.parentRegister.seoname;
+                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+            ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
+        }
+        
         private void ValidationName(Kartverket.Register.Models.Register subRegister, string register)
         {
             var queryResultsDataset = from o in db.Registers
@@ -495,31 +499,6 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
-        }
-
-        private static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
 
         private void Viewbags(Kartverket.Register.Models.Register register)

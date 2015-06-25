@@ -20,7 +20,7 @@ namespace Kartverket.Register.Models.Api
         public List<Registeritem> narrower { get; set; }
 
         public ConceptSheme(object models)
-        {            
+        {
             if (models is Registeritem)
             {
                 Registeritem item = (Registeritem)models;
@@ -34,9 +34,9 @@ namespace Kartverket.Register.Models.Api
                 else
                 {
                     description = "";
-                }  
-                seoname = MakeSeoFriendlyString(item.label);
-                codelistValue = item.codevalue;  
+                }
+                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item.label);
+                codelistValue = item.codevalue;
                 concepts = new List<Concept>();
                 if (item.broader != null)
                 {
@@ -50,7 +50,7 @@ namespace Kartverket.Register.Models.Api
                 {
                     narrower = item.narrower;
                 }
-                
+
             }
             if (models is Register)
             {
@@ -65,9 +65,9 @@ namespace Kartverket.Register.Models.Api
                 else
                 {
                     description = "";
-                }  
+                }
                 codelistValue = "";
-                seoname = MakeSeoFriendlyString(register.label);
+                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.label);
                 concepts = new List<Concept>();
                 broader = "";
 
@@ -84,31 +84,6 @@ namespace Kartverket.Register.Models.Api
                     concepts.Add(conceptItem);
                 }
             }
-        }
-
-        public static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
-
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
-
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
-
-            return encodedUrl;
         }
     }
 }

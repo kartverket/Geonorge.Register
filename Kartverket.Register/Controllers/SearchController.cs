@@ -41,44 +41,44 @@ namespace Kartverket.Register.Controllers
 
 
 
-        // GET: Registers/Details/5
-        [Route("register/{registername}/{itemOwner}/")]
-        public ActionResult DetailsFilter(SearchParameters parameters, string registername, string itemOwner, string sorting, int? page)
-        {
-            var queryresults = from r in db.Organizations
-                               where r.seoname == itemOwner
-                               select r.name;
+    //    // GET: Registers/Details/5
+    //    [Route("register/{registername}/{itemOwner}/")]
+    //    public ActionResult DetailsFilter(SearchParameters parameters, string registername, string itemOwner, string sorting, int? page)
+    //    {
+    //        var queryresults = from r in db.Organizations
+    //                           where r.seoname == itemOwner
+    //                           select r.name;
 
-            ViewBag.ownerName = queryresults.FirstOrDefault();
+    //        ViewBag.ownerName = queryresults.FirstOrDefault();
 
-            var queryresultsRegister = from r in db.Registers
-                               where r.seoname == registername
-                               select r.name;
+    //        var queryresultsRegister = from r in db.Registers
+    //                           where r.seoname == registername
+    //                           select r.name;
 
-            ViewBag.RegisterName = queryresultsRegister.FirstOrDefault();
+    //        ViewBag.RegisterName = queryresultsRegister.FirstOrDefault();
             
-            if (sorting != null)
-            {
-                parameters.OrderBy = sorting;
-            }
-            else {
-                sorting = parameters.OrderBy;
-            }
-            parameters.Owner = itemOwner;
-            parameters.Register = registername;
+    //        if (sorting != null)
+    //        {
+    //            parameters.OrderBy = sorting;
+    //        }
+    //        else {
+    //            sorting = parameters.OrderBy;
+    //        }
+    //        parameters.Owner = itemOwner;
+    //        parameters.Register = registername;
 
-            ViewBag.searchRegister = parameters.Register;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description", parameters.OrderBy);
-            ViewBag.registerSeo = registername;
-            FilterResult filterResult = _searchService.Filter(parameters);
-            FilteringViewModel model = new FilteringViewModel(parameters, filterResult);
+    //        ViewBag.searchRegister = parameters.Register;
+    //        ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description", parameters.OrderBy);
+    //        ViewBag.registerSeo = registername;
+    //        FilterResult filterResult = _searchService.Filter(parameters);
+    //        FilteringViewModel model = new FilteringViewModel(parameters, filterResult);
 
-            return View(model);
-        }
+    //        return View(model);
+    //    }
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            Log.Error("Error", filterContext.Exception);
-        }
+    //    protected override void OnException(ExceptionContext filterContext)
+    //    {
+    //        Log.Error("Error", filterContext.Exception);
+    //    }
     }
 }

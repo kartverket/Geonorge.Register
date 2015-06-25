@@ -110,6 +110,7 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}.{format}")]
+        [Route("register/{name}/{itemOwner}/")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
             if (!string.IsNullOrWhiteSpace(format))

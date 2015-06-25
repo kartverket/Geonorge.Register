@@ -59,11 +59,11 @@
                                 </h3>
                             </a>
                         }
-                        <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
+                        <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname?text=@item.documentowner.name">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
                         <div class="orglogo">
-                            <a href="/register/@item.register.seoname/@item.documentowner.seoname">
+                            <a href="/register/@item.register.seoname/@item.documentowner.seoname?text=@item.documentowner.name">
                                 @Html.DisplayFor(modelItem => item.documentowner.name)
                             </a>
                         </div>

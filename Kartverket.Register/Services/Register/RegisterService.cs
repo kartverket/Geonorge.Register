@@ -26,17 +26,32 @@ namespace Kartverket.Register.Services.Register
             }
             else if (register.containedItemClass == "Document")
             {
-                foreach (Document item in register.items)
+                if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
                 {
-                    registerItems.Add(item);
+                    FilterOrganisasjonDocument(register, filter, registerItems);
+                }
+                else
+                {
+                    foreach (Document item in register.items)
+                    {
+                        registerItems.Add(item);
+                    }
                 }
             }
             else if (register.containedItemClass == "Dataset")
             {
-                foreach (Dataset item in register.items)
+                if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
                 {
-                    registerItems.Add(item);
+                    FilterOrganisasjonDataset(register, filter, registerItems);
                 }
+                else
+                {
+                    foreach (Dataset item in register.items)
+                    {
+                        registerItems.Add(item);
+                    }
+                }
+
             }
             else if (register.containedItemClass == "CodelistValue")
             {
@@ -88,6 +103,28 @@ namespace Kartverket.Register.Services.Register
                 versionNumber = register.versionNumber,
                 accessId = register.accessId,
             };
+        }
+
+        private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
+        {
+            foreach (Document item in register.items)
+            {
+                if (item.documentowner.seoname == filter.filterOrganization)
+                {
+                    filterRegisterItems.Add(item);
+                }
+            }
+        }
+
+        private void FilterOrganisasjonDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
+        {
+            foreach (Dataset item in register.items)
+            {
+                if (item.datasetowner.seoname == filter.filterOrganization)
+                {
+                    filterRegisterItems.Add(item);
+                }
+            }
         }
 
         private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
@@ -164,7 +201,7 @@ namespace Kartverket.Register.Services.Register
             if (request.AcceptTypes.Contains("application/json"))
             {
                 response.ContentType = "application/json";
-                return "json";    
+                return "json";
             }
             if (request.AcceptTypes.Contains("application/xml"))
             {
@@ -191,7 +228,7 @@ namespace Kartverket.Register.Services.Register
                 response.ContentType = "text/csv";
                 return "csv";
             }
-            return null;           
+            return null;
         }
 
         public Kartverket.Register.Models.Register GetRegisterByName(string registerName)

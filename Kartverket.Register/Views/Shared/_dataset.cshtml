@@ -54,11 +54,11 @@
                             </h3>
                         </a>
                     }
-                    <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name?text=@item.datasetowner.name">
+                    <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
                         <img src="@Url.Content("~/data/organizations/" +  item.datasetowner.logoFilename)" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
                     </a>
                     <div class="orglogo">
-                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname?text=@item.datasetowner.name" title="Datasett eier: @item.datasetowner.name">
+                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
                             @Html.DisplayFor(modelItem => item.datasetowner.name)
                         </a>
                     </div>

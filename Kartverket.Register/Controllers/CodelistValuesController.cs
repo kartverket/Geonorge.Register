@@ -10,15 +10,24 @@ using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Text;
+using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class CodelistValuesController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
 
+        private RegisterDbContext db = new RegisterDbContext();
+        private IRegisterService _registerService;
+        private IRegisterItemService _registerItemService;
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        public CodelistValuesController()
+        {
+            _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
+        }
 
         // GET: CodelistValues
         public ActionResult Index()
@@ -26,7 +35,6 @@ namespace Kartverket.Register.Controllers
             var registerItems = db.RegisterItems.Include(c => c.register).Include(c => c.status).Include(c => c.submitter);
             return View(registerItems.ToList());
         }
-
 
         [Authorize]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
@@ -169,12 +177,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername && o.parentRegister.seoname == parentregister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentregister);
             codeListValue.register = register;
 
             if (register.parentRegisterId != null)
@@ -201,12 +204,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny")]
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, List<Guid> narrower, Guid? broader)
         {
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentregister);
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null)
             {
@@ -219,7 +217,7 @@ namespace Kartverket.Register.Controllers
                 codelistValue.systemId = Guid.NewGuid();
                 codelistValue.modified = DateTime.Now;
                 codelistValue.dateSubmitted = DateTime.Now;
-                codelistValue.registerId = regId;
+                codelistValue.registerId = register.systemId;
                 codelistValue.statusId = "Submitted";
 
                 if (codelistValue.name == null || codelistValue.name.Length == 0)
@@ -235,15 +233,11 @@ namespace Kartverket.Register.Controllers
 
                 if (narrower != null)
                 {
-                    foreach (Guid narrowerItem in narrower)
-                    {
-                        CodelistValue item = db.CodelistValues.Find(narrowerItem);
-                        codelistValue.narrowerItems.Add(item);
-                    }
+                    _registerItemService.SetNarrowerItems(narrower, codelistValue);
                 }
                 if (broader != null)
                 {
-                    codelistValue.broaderItemId = broader;
+                    _registerItemService.SetBroaderItem(broader.Value, codelistValue);
                 }
 
                 codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
@@ -371,9 +365,10 @@ namespace Kartverket.Register.Controllers
                         originalCodelistValue.narrowerItems.Add(item);
                     }
                 }
-                else {
+                else
+                {
                     originalCodelistValue.narrowerItems = null;
-                }                
+                }
                 originalCodelistValue.broaderItemId = broader;
 
                 originalCodelistValue.modified = DateTime.Now;

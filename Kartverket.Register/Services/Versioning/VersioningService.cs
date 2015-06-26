@@ -27,15 +27,15 @@ namespace Kartverket.Register.Services.Versioning
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
             Guid currentVersionId = versjonsGruppe.currentVersion;
 
-            List<RegisterItem> suggestionsItems = new List<RegisterItem>();
-            List<RegisterItem> historicalItems = new List<RegisterItem>();
+            List<Kartverket.Register.Models.RegisterItem> suggestionsItems = new List<Kartverket.Register.Models.RegisterItem>();
+            List<Kartverket.Register.Models.RegisterItem> historicalItems = new List<Kartverket.Register.Models.RegisterItem>();
 
             // finne Gjeldende versjon i versjonsgruppen
             var queryResults = from ri in _dbContext.RegisterItems
                                where ri.systemId == currentVersionId
                                select ri;
 
-            RegisterItem currentVersion = queryResults.FirstOrDefault();
+            Kartverket.Register.Models.RegisterItem currentVersion = queryResults.FirstOrDefault();
 
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
@@ -50,7 +50,7 @@ namespace Kartverket.Register.Services.Versioning
                            || ri.status.value == "Candidate")
                            select ri;
 
-            foreach (RegisterItem item in queryResults)
+            foreach (Kartverket.Register.Models.RegisterItem item in queryResults)
             {
                 suggestionsItems.Add(item);
             }
@@ -65,7 +65,7 @@ namespace Kartverket.Register.Services.Versioning
                                           || ri.status.value == "Retired")
                                          select ri;
 
-            foreach (RegisterItem item in queryResultsHistorical)
+            foreach (Kartverket.Register.Models.RegisterItem item in queryResultsHistorical)
             {
                 historicalItems.Add(item);
             }

@@ -82,7 +82,6 @@ namespace Kartverket.Register.Formatter
                         new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                         new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),                
-                        //new XElement(skosNs + "narrower", new XAttribute(rdfNs + "resource", "narrowerItem")), 
                         new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id)),
                         new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)),
                         new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", c.broader)) 

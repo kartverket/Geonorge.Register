@@ -18,7 +18,7 @@ namespace Kartverket.Register.Services.Register
 
         public Kartverket.Register.Models.Register Filter(Kartverket.Register.Models.Register register, FilterParameters filter)
         {
-            List<RegisterItem> registerItems = new List<RegisterItem>();
+            List<Kartverket.Register.Models.RegisterItem> registerItems = new List<Kartverket.Register.Models.RegisterItem>();
 
             if (register.containedItemClass == "EPSG")
             {
@@ -105,7 +105,7 @@ namespace Kartverket.Register.Services.Register
             };
         }
 
-        private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
+        private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
         {
             foreach (Document item in register.items)
             {
@@ -116,7 +116,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterOrganisasjonDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
+        private void FilterOrganisasjonDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
         {
             foreach (Dataset item in register.items)
             {
@@ -127,7 +127,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<RegisterItem> filterRegisterItems)
+        private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
         {
             bool filterHorisontalt = filter.filterHorisontalt;
             bool filterVertikalt = filter.filterVertikalt;

@@ -205,7 +205,7 @@ namespace Kartverket.Register.Services.Search
 
         public Kartverket.Register.Models.Register Search(Kartverket.Register.Models.Register register, string text)
         {
-            List<RegisterItem> registerItems = new List<RegisterItem>();
+            List<Kartverket.Register.Models.RegisterItem> registerItems = new List<Kartverket.Register.Models.RegisterItem>();
             List<Kartverket.Register.Models.Register> subregisters = new List<Kartverket.Register.Models.Register>();
 
             if (register.containedItemClass == "Organization")

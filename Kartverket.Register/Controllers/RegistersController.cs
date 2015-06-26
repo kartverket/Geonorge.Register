@@ -32,6 +32,7 @@ namespace Kartverket.Register.Controllers
 
         public RegistersController()
         {
+            _searchService = new SearchService(db);
             _registerService = new RegisterService(db);
         }
 
@@ -130,7 +131,6 @@ namespace Kartverket.Register.Controllers
 
             if (!string.IsNullOrWhiteSpace(filter.text))
             {
-                _searchService = new SearchService(db);
                 register = _searchService.Search(register, filter.text);
             }
             register = _registerService.Filter(register, filter);

@@ -580,6 +580,8 @@
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
+    <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
+    <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
     <Compile Include="Services\Search\ISearchIndexService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />

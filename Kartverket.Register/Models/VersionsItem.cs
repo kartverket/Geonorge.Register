@@ -8,8 +8,8 @@ namespace Kartverket.Register.Models
     public class VersionsItem
     {
         public virtual RegisterItem currentVersion { get; set; }
-        public virtual List<RegisterItem> historical { get; set; }
-        public virtual List<RegisterItem> suggestions { get; set; }
+        public virtual List<Kartverket.Register.Models.RegisterItem> historical { get; set; }
+        public virtual List<Kartverket.Register.Models.RegisterItem> suggestions { get; set; }
 
         public VersionsItem()
         {

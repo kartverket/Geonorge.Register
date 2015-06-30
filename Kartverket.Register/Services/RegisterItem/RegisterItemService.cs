@@ -19,15 +19,53 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public void SetNarrowerItems(List<Guid> narrowerList, CodelistValue codelistValue)
         {
-            foreach (Guid narrowerId in narrowerList)
+            if (codelistValue.narrowerItems != null)
             {
-                CodelistValue narrowerItem = _dbContext.CodelistValues.Find(narrowerId);
-                codelistValue.narrowerItems.Add(narrowerItem);
-                narrowerItem.broaderItemId = codelistValue.systemId;
-                narrowerItem.modified = DateTime.Now;
-                //_dbContext.Entry(narrowerItem).State = EntityState.Modified;
-            }                       
-            //_dbContext.SaveChanges();
+                bool skalSlette = true;
+                CodelistValue kodeSomSkalSlettes = null;
+                List<CodelistValue> koderSomSkalSlettes = new List<CodelistValue>();
+
+                foreach (CodelistValue narrower in codelistValue.narrowerItems)
+                {
+                    if (narrowerList != null)
+                    {
+                        foreach (Guid idNewNarrower in narrowerList)
+                        {
+                            if (idNewNarrower == narrower.systemId)
+                            {
+                                skalSlette = false;
+                            }
+                        }
+                    }
+                    kodeSomSkalSlettes = narrower;
+
+                    if (skalSlette == true)
+                    {
+                        CodelistValue NarrowerItemsBroader = (CodelistValue)getItemById(kodeSomSkalSlettes.systemId);
+                        if (NarrowerItemsBroader == kodeSomSkalSlettes)
+                        {
+                            NarrowerItemsBroader.broaderItemId = null;
+                        }
+                        koderSomSkalSlettes.Add(kodeSomSkalSlettes);
+                    }
+                    skalSlette = true;
+                }
+                foreach (CodelistValue item in koderSomSkalSlettes)
+                {
+                    codelistValue.narrowerItems.Remove(item);
+                }
+            }
+
+            if (narrowerList != null)
+            {
+                foreach (Guid narrowerId in narrowerList)
+                {
+                    CodelistValue narrowerItem = _dbContext.CodelistValues.Find(narrowerId);
+                    codelistValue.narrowerItems.Add(narrowerItem);
+                    narrowerItem.broaderItemId = codelistValue.systemId;
+                    narrowerItem.modified = DateTime.Now;
+                }
+            }
         }
 
         public void SetBroaderItem(Guid broader, CodelistValue codelistValue)
@@ -43,9 +81,22 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryresult = from ri in _dbContext.RegisterItems
                               where ri.systemId == id
                               select ri;
-            
+
             Kartverket.Register.Models.RegisterItem item = queryresult.FirstOrDefault();
-            return item;            
+            return item;
         }
+
+        //public void SetNarrowerItems(List<Guid> narrowerItems, CodelistValue codelistValue)
+        //{
+        //    foreach (Guid narrowerId in narrowerItems)
+        //    {
+        //        codelistValue
+        //    }
+        //}
+
+        //public void SetBroaderItem(Guid broader, CodelistValue codelistValue)
+        //{
+
+        //}
     }
 }

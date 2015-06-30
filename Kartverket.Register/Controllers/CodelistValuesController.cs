@@ -241,9 +241,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
-
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-
                 string organizationLogin = GetSecurityClaim("organization");
 
                 var queryResults = from o in db.Organizations
@@ -252,12 +250,10 @@ namespace Kartverket.Register.Controllers
 
                 Guid orgId = queryResults.FirstOrDefault();
                 Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
                 codelistValue.submitterId = orgId;
                 codelistValue.submitter = submitterOrganisasjon;
 
                 db.Entry(codelistValue).State = EntityState.Modified;
-                //db.SaveChanges();
 
                 db.RegisterItems.Add(codelistValue);
                 db.SaveChanges();
@@ -269,7 +265,6 @@ namespace Kartverket.Register.Controllers
                 {
                     return Redirect("/register/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
-
             }
             ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItem.systemId), "systemId", "name", codelistValue.broaderItem);
             codelistValue.register = register;
@@ -326,15 +321,8 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.FirstOrDefault();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentregister);
             ValidationName(codelistValue, register);
-
 
             if (ModelState.IsValid)
             {
@@ -357,19 +345,21 @@ namespace Kartverket.Register.Controllers
                     }
                 }
 
-                if (narrower != null)
+                _registerItemService.SetNarrowerItems(narrower, originalCodelistValue);
+
+                //else if (narrower == null && originalCodelistValue.narrowerItems != null)
+                //{
+                //     _registerItemService.removeNarrowerItems(narrower, originalCodelistValue);
+                //}
+
+                if (broader != null)
                 {
-                    foreach (Guid narrowerItem in narrower)
-                    {
-                        CodelistValue item = db.CodelistValues.Find(narrowerItem);
-                        originalCodelistValue.narrowerItems.Add(item);
-                    }
+                    _registerItemService.SetBroaderItem(broader.Value, codelistValue);
                 }
-                else
-                {
-                    originalCodelistValue.narrowerItems = null;
-                }
-                originalCodelistValue.broaderItemId = broader;
+                //else if (narrower == null && originalCodelistValue.narrowerItems != null) {
+                //    _registerItemService.removeBroaderItem(narrower, originalCodelistValue);
+                //}
+
 
                 originalCodelistValue.modified = DateTime.Now;
                 db.Entry(originalCodelistValue).State = EntityState.Modified;
@@ -516,7 +506,6 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(CodelistValue codelistValue)
         {
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", codelistValue.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", codelistValue.submitterId);
             ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name), "systemId", "name", codelistValue.broaderItemId);

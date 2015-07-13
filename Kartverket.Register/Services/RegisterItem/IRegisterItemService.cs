@@ -14,5 +14,6 @@ namespace Kartverket.Register.Services.RegisterItem
         void SetNarrowerItems(List<Guid> narrowerItems, CodelistValue codelistValue);
         void SetBroaderItem(Guid broader, CodelistValue codelistValue);
         void SetBroaderItem(CodelistValue codelistValue);
+        void RemoveBroaderAndNarrower(CodelistValue codelistValue);
     }
 }

@@ -427,8 +427,9 @@ namespace Kartverket.Register.Controllers
             {
                 parent = codelistValue.register.parentRegister.seoname;
             }
-            codelistValue.broaderItem = null;
-            codelistValue.narrowerItems.Clear();
+
+            _registerItemService.RemoveBroaderAndNarrower(codelistValue);
+
             db.Entry(codelistValue).State = EntityState.Modified;
             db.SaveChanges();
 

@@ -81,7 +81,7 @@ else
             <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
             <br /><br />
             <div class="form-group">
-                @Html.LabelFor(model => model.broaderItem, "BroaderItem", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="dropdown">
                         <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
@@ -101,7 +101,7 @@ else
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.narrowerItems, "NarrowerItems", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
                         @foreach (var register in HtmlHelperExtensions.CodelistRegister())

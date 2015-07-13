@@ -904,3 +904,6 @@ z-index: 600;
     font-size: 1px;
 }
 
+.chosen-container-single .chosen-single {
+    min-width: 150px !important;
+}

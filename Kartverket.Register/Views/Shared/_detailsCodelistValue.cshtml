@@ -3,9 +3,54 @@
 <div>
     <div class="row result-row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
+            <div class="hidden-xs col-sm-12 col-md-6 col-lg-6 top-padding">
 
-              Kodeverdi: @Html.DisplayFor(c => c.value) 
+                Kodeverdi: @Html.DisplayFor(c => c.value)
+
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-6">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h4>Hierarkisk inndeling</h4>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <p><strong>Mer generelt begrep</strong></p>
+                    @if (Model.broaderItemId != null)
+                    {
+                        if (Model.register.parentRegister != null)
+                        {
+                            <a class="" href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">
+                                @Model.name
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="" href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">
+                                @Model.name
+                            </a>
+                        }
+                    }
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <p><strong>Mer spesialiserte begrep</strong></p>
+
+                    @foreach (Kartverket.Register.Models.CodelistValue narrower in Model.narrowerItems)
+                    {
+                        if (narrower.register.parentRegister != null)
+                        {
+                            <p><a class="" href="/subregister/@narrower.register.parentRegister.seoname/@narrower.register.parentRegister.owner.seoname/@narrower.register.seoname/@narrower.submitter.seoname/@narrower.seoname">
+                                @narrower.name
+                            </a></p>
+                        }
+                        else
+                        {
+                            <p><a class="" href="/register/@narrower.register.seoname/@narrower.submitter.seoname/@narrower.seoname">
+                                @narrower.name
+                            </a></p>
+                        }
+                    }
+                </div>
 
             </div>
         </div>

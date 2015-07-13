@@ -67,16 +67,12 @@ namespace Kartverket.Register.Models.Api
                 }
                 if (item.broader != null)
                 {
-                    broader = item.broader.id;
+                    broader = item.broader;
                 }
                 else {
                     broader = "";
                 }
 
-                if (item.narrower != null)
-                {
-                    narrower = item.narrower;
-                }
 
             }
         }

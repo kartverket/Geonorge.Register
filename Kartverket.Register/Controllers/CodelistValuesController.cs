@@ -220,7 +220,7 @@ namespace Kartverket.Register.Controllers
                 codelistValue.registerId = register.systemId;
                 codelistValue.statusId = "Submitted";
 
-                if (codelistValue.name == null || codelistValue.name.Length == 0)
+                if (string.IsNullOrWhiteSpace(codelistValue.name))
                 {
                     codelistValue.name = "ikke angitt";
                     codelistValue.seoname = codelistValue.systemId.ToString();
@@ -344,22 +344,21 @@ namespace Kartverket.Register.Controllers
                         originalCodelistValue.dateAccepted = null;
                     }
                 }
-
-                _registerItemService.SetNarrowerItems(narrower, originalCodelistValue);
-
-                //else if (narrower == null && originalCodelistValue.narrowerItems != null)
-                //{
-                //     _registerItemService.removeNarrowerItems(narrower, originalCodelistValue);
-                //}
-
-                if (broader != null)
+                if ((originalCodelistValue.narrowerItems != null && originalCodelistValue.narrowerItems.Count() != 0) || narrower != null)
                 {
-                    _registerItemService.SetBroaderItem(broader.Value, codelistValue);
+                    _registerItemService.SetNarrowerItems(narrower, originalCodelistValue);
                 }
-                //else if (narrower == null && originalCodelistValue.narrowerItems != null) {
-                //    _registerItemService.removeBroaderItem(narrower, originalCodelistValue);
-                //}
-
+                
+                if (broader != null || originalCodelistValue.broaderItemId != null)
+                {
+                    if (broader == null)
+                    {
+                        _registerItemService.SetBroaderItem(originalCodelistValue);
+                    }
+                    else { 
+                         _registerItemService.SetBroaderItem(broader.Value, originalCodelistValue);
+                    }                   
+                }
 
                 originalCodelistValue.modified = DateTime.Now;
                 db.Entry(originalCodelistValue).State = EntityState.Modified;

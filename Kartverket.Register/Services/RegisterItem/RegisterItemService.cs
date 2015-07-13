@@ -68,12 +68,34 @@ namespace Kartverket.Register.Services.RegisterItem
             }
         }
 
+        //public void SetBroaderItem(Guid broader, CodelistValue codelistValue)
+        //{
+        //    codelistValue.broaderItemId = broader;
+        //    //_dbContext.SaveChanges();
+        //    CodelistValue broaderItem = (CodelistValue)getItemById(broader);
+        //    broaderItem.narrowerItems.Add(codelistValue);
+        //}
+
         public void SetBroaderItem(Guid broader, CodelistValue codelistValue)
         {
+            if (codelistValue.broaderItemId != null)
+            {
+                CodelistValue originalBroaderItem = (CodelistValue)codelistValue.broaderItem;
+                originalBroaderItem.narrowerItems.Remove(codelistValue);
+            }
             codelistValue.broaderItemId = broader;
-            _dbContext.SaveChanges();
             CodelistValue broaderItem = (CodelistValue)getItemById(broader);
             broaderItem.narrowerItems.Add(codelistValue);
+        }
+
+        public void SetBroaderItem(CodelistValue originalCodelistValue)
+        {
+            if (originalCodelistValue.broaderItemId != null)
+            {
+                CodelistValue originalBroaderItem = (CodelistValue)originalCodelistValue.broaderItem;
+                originalBroaderItem.narrowerItems.Remove(originalCodelistValue);
+            }
+            originalCodelistValue.broaderItemId = null;
         }
 
         private Kartverket.Register.Models.RegisterItem getItemById(Guid id)

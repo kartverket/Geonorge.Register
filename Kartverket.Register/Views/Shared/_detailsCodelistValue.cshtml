@@ -20,14 +20,14 @@
                     {
                         if (Model.register.parentRegister != null)
                         {
-                            <a class="" href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">
-                                @Model.name
+                            <a class="" href="/subregister/@Model.broaderItem.register.parentRegister.seoname/@Model.broaderItem.register.parentRegister.owner.seoname/@Model.broaderItem.register.seoname/@Model.broaderItem.submitter.seoname/@Model.broaderItem.seoname">
+                                @Model.broaderItem.name
                             </a>
                         }
                         else
                         {
-                            <a class="" href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">
-                                @Model.name
+                            <a class="" href="/register/@Model.broaderItem.register.seoname/@Model.broaderItem.submitter.seoname/@Model.broaderItem.seoname">
+                                @Model.broaderItem.name
                             </a>
                         }
                     }

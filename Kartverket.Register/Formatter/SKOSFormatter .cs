@@ -73,18 +73,18 @@ namespace Kartverket.Register.Formatter
                         new XElement(dctermsNs + "description", conceptSheme.description, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                         new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", conceptSheme.broader)),  
-                        new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", conceptSheme.broader)) 
+                        //new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", conceptSheme.broader)) 
                         ),
 
                     from c in conceptSheme.concepts
-                    select new XElement(skosNs + "Concept", new XAttribute(rdfNs + "about", c.id), 
-                        new XElement(skosNs + "inSheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
+                    select new XElement(skosNs + "Concept", new XAttribute(rdfNs + "about", c.id),
+                        new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                         new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
                         new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),                
                         new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id)),
                         new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)),
-                        new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", c.broader)) 
+                        //new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", c.broader)) 
                       ));
 
             using (XmlWriter writer = XmlWriter.Create(stream))

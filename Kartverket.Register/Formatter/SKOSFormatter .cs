@@ -68,7 +68,7 @@ namespace Kartverket.Register.Formatter
                     new XAttribute(XNamespace.Xmlns + "rdf", rdfNs),
                     new XAttribute(XNamespace.Xmlns + "dcterms", dctermsNs),
                     new XAttribute(XNamespace.Xml + "base", baseXML),
-                    new XElement(skosNs + "ConceptScheme", new XAttribute(rdfNs + "about", conceptSheme.seoname),
+                    new XElement(skosNs + "ConceptScheme", new XAttribute(rdfNs + "about", conceptSheme.id),
                         new XElement(skosNs + "prefLabel", conceptSheme.name, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "description", conceptSheme.description, new XAttribute(XNamespace.Xml + "lang", "no")),
                         new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", conceptSheme.id)),

@@ -1,12 +1,12 @@
 ﻿﻿@using Kartverket.Register.Helpers
 
 <div class="text-right pull-right">
-  
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default" title="Atom feed"><span class="fa fa-rss"></span> ATOM</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default" title="rss feed"><span class="fa fa-rss"></span> RSS</a>
-    <a href="@Request.Url&export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span> CSV</a>
-    <a href="@Request.Url&export=gml" class="btn btn-sm btn-default" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span> GML</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default" title="Eksporter til SKOS/RDF(Beta)"><span class="glyphicon glyphicon-export"></span> RDF</a>
-
+    <a href="/Help" class="btn btn-sm btn-default" title="Hjelp til API og formater(Beta)"><span class="glyphicon glyphicon-export"></span> API</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default" title="Vis Atom feed(Beta)"><span class="fa fa-rss"></span> ATOM</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default" title="Vis rss feed(Beta)"><span class="fa fa-rss"></span> RSS</a>
+    <a href="@Request.Url&export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV(Beta)"><span class="glyphicon glyphicon-export"></span> CSV</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "gml")" class="btn btn-sm btn-default" title="Vis GML Dictionary(Beta)"><span class="glyphicon glyphicon-export"></span> GML</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default" title="Vis SKOS/RDF(Beta)"><span class="glyphicon glyphicon-export"></span> RDF</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "json")" class="btn btn-sm btn-default" title="Vis JSON(Beta)"><span class="glyphicon glyphicon-export"></span> JSON</a>
 </div>
 <div class="clearfix"></div>

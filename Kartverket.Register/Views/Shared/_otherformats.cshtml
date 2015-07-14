@@ -1,12 +1,12 @@
 ﻿﻿@using Kartverket.Register.Helpers
 
-<div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
-    <a href="/Help" class="btn btn-sm btn-default pull-right" title="Hjelp til API og formater"><span class="glyphicon glyphicon-export"></span>API</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default pull-right" title="Atom feed"><img src="~/Content/img/rss.png" />ATOM</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default pull-right" title="rss feed"><img src="~/Content/img/rss.png" />RSS</a>
-    <a href="@Request.Url&export=csv" class="btn btn-sm btn-default pull-right" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span>CSV</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "gml")" class="btn btn-sm btn-default pull-right" title="Eksporter til GML Dictionary"><span class="glyphicon glyphicon-export"></span>GML</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default pull-right" title="Eksporter til SKOS/RDF(Beta)"><span class="glyphicon glyphicon-export"></span>RDF</a>
-    <a href="@HtmlHelperExtensions.urlFormat(Request, "json")" class="btn btn-sm btn-default pull-right" title="Eksporter til JSON(Beta)"><span class="glyphicon glyphicon-export"></span>JSON</a>
+<div class="text-right pull-right">
+  
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default" title="Atom feed"><span class="fa fa-rss"></span> ATOM</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default" title="rss feed"><span class="fa fa-rss"></span> RSS</a>
+    <a href="@Request.Url&export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span> CSV</a>
+    <a href="@Request.Url&export=gml" class="btn btn-sm btn-default" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span> GML</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default" title="Eksporter til SKOS/RDF(Beta)"><span class="glyphicon glyphicon-export"></span> RDF</a>
 
 </div>
+<div class="clearfix"></div>

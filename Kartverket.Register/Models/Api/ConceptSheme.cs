@@ -40,17 +40,12 @@ namespace Kartverket.Register.Models.Api
                 concepts = new List<Concept>();
                 if (item.broader != null)
                 {
-                    broader = item.broader.id;
+                    broader = item.broader;
                 }
                 else
                 {
                     broader = "";
                 }
-                if (item.narrower != null)
-                {
-                    narrower = item.narrower;
-                }
-
             }
             if (models is Register)
             {

@@ -234,15 +234,16 @@ namespace Kartverket.Register.Controllers
             {
                 var c = (CodelistValue)item;
                 tmp.codevalue = c.value;
+
                 if (c.broaderItemId != null)
-	            {
-                    tmp.broader = ConvertRegisterItemDetails(item.register, c.broaderItem, urlHelper);
-	            }
-                if (c.narrowerItems != null) {
-                    tmp.narrower = new List<Models.Api.Registeritem>();
-                    foreach (var narrowItem in c.narrowerItems)
+                {
+                    if (c.register.parentRegisterId != null)
                     {
-                        tmp.narrower.Add(ConvertRegisterItemDetails(c.register, narrowItem, urlHelper));
+                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                    }
+                    else
+                    {
+                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                 }
             }
@@ -322,14 +323,13 @@ namespace Kartverket.Register.Controllers
                 tmp.codevalue = c.value;
                 if (c.broaderItemId != null)
                 {
-                    tmp.broader = ConvertRegisterItem(item.register, c.broaderItem, urlHelper);
-                }
-                if (c.narrowerItems != null)
-                {
-                    tmp.narrower = new List<Models.Api.Registeritem>();
-                    foreach (var narrowItem in c.narrowerItems)
+                    if (c.register.parentRegisterId != null)
                     {
-                        tmp.narrower.Add(ConvertRegisterItem(c.register, narrowItem, urlHelper));
+                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                    }
+                    else
+                    {
+                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                 }
             }

@@ -103,4 +103,9 @@ h4 a.sorted-desc:after {
   margin-top: 15px;
 }
 
+/* Bugfix when switching from table-view to list-view*/
+#sorting_chosen {
+    width: auto!important;
+}
+
 /*# sourceMappingURL=page-footer.css.map *

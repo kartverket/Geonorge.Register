@@ -21,7 +21,7 @@ namespace Kartverket.Register.Formatter
         public SKOSFormatter()
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(rdf));
-            MediaTypeMappings.Add(new UriPathExtensionMapping("skos", "application/rdf+xml"));
+            MediaTypeMappings.Add(new UriPathExtensionMapping("rdf", rdf));
         }
 
         Func<Type, bool> SupportedTypeSKOS = (type) =>

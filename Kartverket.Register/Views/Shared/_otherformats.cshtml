@@ -1,0 +1,11 @@
+﻿﻿@using Kartverket.Register.Helpers
+
+<div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
+    @*TODO! Gjør det samme som med skos!*@
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default pull-right" title="Atom feed"><img src="~/Content/img/rss.png" />ATOM</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default pull-right" title="rss feed"><img src="~/Content/img/rss.png" />RSS</a>
+    <a href="@Request.Url&export=csv" class="btn btn-sm btn-default pull-right" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span>CSV</a>
+    <a href="@Request.Url&export=gml" class="btn btn-sm btn-default pull-right" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span>GML</a>
+    <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default pull-right" title="Eksporter til SKOS/RDF(Beta)"><span class="glyphicon glyphicon-export"></span>RDF</a>
+
+</div>

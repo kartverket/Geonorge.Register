@@ -22,8 +22,8 @@ namespace Kartverket.Register.Formatter
         {
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(atom));
             SupportedMediaTypes.Add(new MediaTypeHeaderValue(rss));
-            MediaTypeMappings.Add(new UriPathExtensionMapping("rss", "application/rss+xml"));
-            MediaTypeMappings.Add(new UriPathExtensionMapping("atom", "application/atom+xml"));
+            MediaTypeMappings.Add(new UriPathExtensionMapping("rss", rss));
+            MediaTypeMappings.Add(new UriPathExtensionMapping("atom", atom));
         }
 
         Func<Type, bool> SupportedType = (type) =>

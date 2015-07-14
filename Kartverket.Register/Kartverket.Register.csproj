@@ -776,6 +776,7 @@
     <Content Include="Views\NameSpaces\Delete.cshtml" />
     <Content Include="Views\NameSpaces\Edit.cshtml" />
     <Content Include="Views\Shared\_detailsNameSpace.cshtml" />
+    <Content Include="Views\Shared\_otherformats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

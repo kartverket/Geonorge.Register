@@ -65,8 +65,7 @@
             {
                 @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "CodelistValue")
-            {
+            @if (Model.containedItemClass == "CodelistValue")  
             {
                 @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
             }

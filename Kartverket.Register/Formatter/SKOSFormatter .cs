@@ -47,7 +47,7 @@ namespace Kartverket.Register.Formatter
             return Task.Factory.StartNew(() =>
             {
                 if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
-                    BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);
+                    BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);                
             });
         }
 
@@ -90,6 +90,7 @@ namespace Kartverket.Register.Formatter
             using (XmlWriter writer = XmlWriter.Create(stream))
             {
                 xdoc.WriteTo(writer);
+                
             }
         }
     }

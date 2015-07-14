@@ -168,7 +168,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 if (filterNationalSea == null)
                 {
-                    filterNationalSea = item.nationalRequirement.value;
+                    filterNationalSea = item.nationalSeasRequirement.value;
                 }
 
                 var queryResult = from e in _dbContext.EPSGs

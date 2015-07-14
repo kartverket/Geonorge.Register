@@ -67,7 +67,6 @@
             }
             @if (Model.containedItemClass == "CodelistValue")
             {
-            {
                 @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
             }
             @if (Model.containedItemClass == "Document")

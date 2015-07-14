@@ -1,6 +1,7 @@
 ﻿using Kartverket.Register.Formatter;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -31,8 +32,9 @@ namespace Kartverket.Register
             config.Formatters.Add(new SyndicationFeedFormatter());
             config.Formatters.Add(new CsvFormatter());
             config.Formatters.Add(new SKOSFormatter());
+            config.Formatters.Add(new GMLFormatter());
 
-
+            config.Formatters.JsonFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("json", "application/json"));
             config.Formatters.JsonFormatter.SerializerSettings.Re‌ferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();

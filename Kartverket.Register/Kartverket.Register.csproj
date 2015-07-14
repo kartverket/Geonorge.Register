@@ -234,6 +234,7 @@
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
+    <Compile Include="Formatter\GMLFormatter.cs" />
     <Compile Include="Formatter\SKOSFormatter .cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
     <Compile Include="Global.asax.cs">

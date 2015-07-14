@@ -605,6 +605,8 @@
     <Content Include="changelog.txt" />
     <Content Include="Content\chosen.css" />
     <Content Include="Content\custom.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\PagedList.css" />
@@ -671,6 +673,11 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="readme.txt" />

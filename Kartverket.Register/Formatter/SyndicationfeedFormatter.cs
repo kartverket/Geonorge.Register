@@ -126,7 +126,9 @@ namespace Kartverket.Register.Formatter
             else
             {
                 feed.Title = new TextSyndicationContent(((Kartverket.Register.Models.Api.Register)models).label);
-
+                feed.LastUpdatedTime = ((Kartverket.Register.Models.Api.Register)models).lastUpdated;
+                feed.Id = ((Kartverket.Register.Models.Api.Register)models).id;
+                feed.Links.Add(new SyndicationLink() { Title = ((Kartverket.Register.Models.Api.Register)models).label, Uri = new Uri((((Kartverket.Register.Models.Api.Register)models).id)) });
                 foreach (var item in ((Kartverket.Register.Models.Api.Register)models).containeditems)
                 {
                     items.Add(BuildSyndicationRegisterItem(item));
@@ -156,10 +158,13 @@ namespace Kartverket.Register.Formatter
             {
                 Title = new TextSyndicationContent(u.label),
                 BaseUri = new Uri(u.id),
-                LastUpdatedTime = DateTime.Now,
-                Content = new TextSyndicationContent(u.description)
+                LastUpdatedTime = u.lastUpdated,
+                Content = new TextSyndicationContent(u.description),
+                Id = u.id
             };
+            item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
+            item.Categories.Add(new SyndicationCategory() { Name = u.status });
             return item;
         }
 
@@ -170,7 +175,8 @@ namespace Kartverket.Register.Formatter
                 Title = new TextSyndicationContent(u.label),
                 BaseUri = new Uri(u.id),
                 LastUpdatedTime = u.lastUpdated,
-                Content = new TextSyndicationContent(u.contentsummary)
+                Content = new TextSyndicationContent(u.contentsummary),
+                Id = u.id
             };
             item.Authors.Add(new SyndicationPerson() { Name = u.manager });
             return item;

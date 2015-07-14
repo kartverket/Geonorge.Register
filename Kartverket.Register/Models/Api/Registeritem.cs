@@ -33,5 +33,7 @@ namespace Kartverket.Register.Models.Api
         public virtual Registeritem broader { get; set; }
         public List<Registeritem> narrower { get; set; }
 
+        public DateTime lastUpdated { get; set; }
+
     }
 }

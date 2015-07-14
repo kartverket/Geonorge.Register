@@ -24,15 +24,19 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         ID: <a href="/register/@Model.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <p>
-            @Html.DisplayFor(model => model.description)
-        </p>
+        <br />
+            Navn: @Html.DisplayFor(model => model.name)
+        <br />
+            Beskrivelse: @Html.DisplayFor(model => model.description)
+       
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2">
         <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
         <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
     </div>
+
+    
 
     @{
         var page = ViewBag.page;
@@ -54,39 +58,46 @@
     }
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="page-header">
-            <hr>
+        
+        <div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
+            @*TODO! Gjør det samme som med skos!*@
+            <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default pull-right" title="Atom feed"><img src="~/Content/img/rss.png" /> ATOM</a>
+            <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default pull-right" title="rss feed"><img src="~/Content/img/rss.png" /> RSS</a>
+            <a href="@Request.Url&export=csv" class="btn btn-sm btn-default pull-right" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span>CSV</a>
+            <a href="@Request.Url&export=gml" class="btn btn-sm btn-default pull-right" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span>GML (Beta)</a>
+            <a href="@HtmlHelperExtensions.urlFormat(Request, "skos")" class="btn btn-sm btn-default pull-right" title="Eksporter til SKOS(Beta)"><span class="glyphicon glyphicon-export"></span>SKOS (Beta)</a>
+            
         </div>
 
-        @if (Model.containedItemClass == "Organization")
-        {
-            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "CodelistValue")
-        {
-            @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Document")
-        {
-            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "NameSpace")
-        {
-            @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Register")
-        {
-            @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-        }
-    </div>
+            @if (Model.containedItemClass == "Organization")
+            {
+                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "CodelistValue")
+            {
+                @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Document")
+            {
+                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Dataset")
+            {
+                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "EPSG")
+            {
+                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "NameSpace")
+            {
+                @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Register")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         @if (Request.IsAuthenticated)

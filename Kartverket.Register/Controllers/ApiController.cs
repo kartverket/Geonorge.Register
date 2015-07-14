@@ -204,8 +204,11 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
-            tmp.owner = item.submitter.seoname;
-
+            
+            tmp.lastUpdated = item.modified;
+            if (item.submitter != null) tmp.owner = item.submitter.name;
+            if (item.status != null) tmp.status = item.status.description;
+            if (item.description != null) tmp.description = item.description;
             if (reg.parentRegisterId != null)
             {
                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
@@ -247,13 +250,13 @@ namespace Kartverket.Register.Controllers
             if (item is Document)
             {
                 var d = (Document)item;
-                tmp.owner = d.documentowner.seoname;
+                tmp.owner = d.documentowner.name;
             }
 
             if (item is Dataset)
             {
                 var d = (Dataset)item;
-                tmp.owner = d.datasetowner.seoname;
+                tmp.owner = d.datasetowner.name;
             }
 
             return tmp;
@@ -276,7 +279,8 @@ namespace Kartverket.Register.Controllers
 
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
-            if (item.submitter != null) tmp.owner = item.submitter.seoname;
+            if (item.submitter != null) tmp.owner = item.submitter.name;
+            tmp.lastUpdated = item.modified;
 
             if (item is Document)
             {

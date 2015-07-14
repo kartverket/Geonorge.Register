@@ -33,6 +33,7 @@ namespace Kartverket.Register
                      "~/Content/mobil.css",
                      "~/Content/custom.css",
                      "~/Content/chosen.css",
+                     "~/Content/font-awesome.css",
                      "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(

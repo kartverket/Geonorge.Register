@@ -260,7 +260,11 @@ namespace Kartverket.Register.Controllers
                 var d = (Dataset)item;
                 tmp.owner = d.datasetowner.name;
             }
-
+            if (item is NameSpace)
+            {
+                var n = (NameSpace)item;
+                tmp.serviceUrl = n.serviceUrl;
+            }
             return tmp;
         }
 

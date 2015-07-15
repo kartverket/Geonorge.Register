@@ -104,6 +104,12 @@ h4 a.sorted-desc:after {
     margin-bottom: 20px;
 }
 
+
+.chosen-container .chosen-results li.highlighted{
+    background-image: none;
+    background-color: #337AB7;
+}
+
 /* Bugfix when switching from table-view to list-view*/
 #sorting_chosen, #inspireRequirement_chosen,  #nationalRequirement_chosen, #nationalSeaRequirement_chosen{
     width: auto!important;

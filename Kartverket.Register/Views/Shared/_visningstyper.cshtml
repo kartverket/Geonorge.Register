@@ -28,24 +28,27 @@
         <form action="/register/epsg-koder/" method="get" name="filtering">
             <input type="hidden" name="text" value="@ViewBag.search" />
             <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
-            <div class="col-sm-2 col-md-2 col-lg-2" style="margin-top:-5px;">
-                <b>Filter:</b>
+            <div class="col-xs-12 col-sm-4 col-md-5 col-lg-6">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <b>Filter:</b>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt"> @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" }) Vertikalt</label>
+                        <label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt"> @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" }) Horisontalt</label>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-3 col-md-3 col-lg-3" style="margin-top:-30px;">
-                @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt">Vertikalt</label><br />
-                @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" })<label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt">Horisontalt</label>
-
-
-            </div>
-            <div class="col-sm-5 col-md-5 col-lg-5" style="margin-top:-30px;">
+            
+            <div class="col-xs-12 col-sm-5 col-md-6 col-lg-6">
                 <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="inspireRequirementId">
-                    <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav:</label>@Html.DropDownList("inspireRequirement", null, "")<br />
+                    <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav: @Html.DropDownList("inspireRequirement", null, "")</label>
                 </div>
                 <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalRequirementId">
-                    <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonakt krav:</label>@Html.DropDownList("nationalRequirement", null, "")<br />
+                    <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonakt krav: @Html.DropDownList("nationalRequirement", null, "")</label>
                 </div>
                 <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalSeaRequirementId">
-                    <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder:</label>@Html.DropDownList("nationalSeaRequirement", null, "")<br />
+                    <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder: @Html.DropDownList("nationalSeaRequirement", null, "")</label>
                 </div>
             </div>
         </form>

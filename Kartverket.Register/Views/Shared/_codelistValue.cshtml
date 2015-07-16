@@ -79,11 +79,9 @@
 <div class="search-filter-wrapper">
 
     <div class="margin-top nav nav-pills col-sm-12 col-md-12 col-lg-12">
-        @*TODO! Gjør det samme som med skos!*@
-        <a href="@Request.Url&export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span>CSV</a>
-        <a href="@Request.Url&export=gml" class="btn btn-sm btn-default" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span>GML (Beta)</a>
-        <a href="@HtmlHelperExtensions.urlFormat(Request, "skos")" class="btn btn-sm btn-default" title="Eksporter til SKOS(Beta)"><span class="glyphicon glyphicon-export"></span>SKOS (Beta)</a>
-        <br /><br /><br />   
+        <a href="@Request.Url?export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV"><span class="glyphicon glyphicon-export"></span> Eksporter til CSV</a>
+        <a href="@Request.Url?export=gml" class="btn btn-sm btn-default" title="Eksporter til GML (Beta)"><span class="glyphicon glyphicon-export"></span> Eksporter til GML (Beta)</a>
+        <br /><br /><br />    
     </div>
     
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">

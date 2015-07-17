@@ -54,7 +54,13 @@ namespace Kartverket.Register.Controllers
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                ViewBag.register = register.parentRegister.name;
+                Kartverket.Register.Models.Register parent = register.parentRegister;
+                while (parent.parentRegisterId != null)
+                {
+                    parent = parent.parentRegister;
+                }
+                ViewBag.register = parent.name;
+
                 ViewBag.registerSEO = register.parentRegister.seoname;
                 ViewBag.ownerSEO = owner;
                 ViewBag.subregister = subregister;
@@ -172,14 +178,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             Kartverket.Register.Models.Register nyttRegister = new Kartverket.Register.Models.Register();
-
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
-                                       && o.parentRegister.seoname == parentregister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentregister);
             nyttRegister.parentRegister = register;
 
             string role = GetSecurityClaim("role");

@@ -85,6 +85,9 @@
 
         foreach (Kartverket.Register.Models.RegisterItem item in reg.items)
         {
+            mainRegister = HtmlHelperExtensions.mainRegister(item.register);
+            parent = item.register.parentRegister;
+            
             <tr>
                 <td width="20%">
                     @if (item.register.parentRegister != null)
@@ -117,7 +120,7 @@
                     <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
                         <li><a href="/">Registrene</a></li>
                         <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-                        <li class="active pull-right"><a href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname">@reg.name</a></li>
+                        <li class="active pull-right"><a href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@reg.seoname">@item.name</a></li>
                         @while (parent != null && parent != mainRegister)
                         {
                             <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>

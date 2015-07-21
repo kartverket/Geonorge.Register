@@ -14,6 +14,7 @@ using System.IO;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.Search;
 
 namespace Kartverket.Register.Controllers
 {
@@ -24,10 +25,12 @@ namespace Kartverket.Register.Controllers
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IRegisterService _registerService;
+        private ISearchService _searchService;
 
         public SubregisterController()
         {
             _registerService = new RegisterService(db);
+            _searchService = new SearchService(db);
         }
 
         // GET: Subregister
@@ -40,7 +43,7 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details/5
         [Route("subregister/{parentRegister}/{owner}/{subregister}.{format}")]
         [Route("subregister/{parentRegister}/{owner}/{subregister}")]
-        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format)
+        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format, FilterParameters filter)
         {
             string ApiRedirectUrl = GetApiUrl(ref format);
             if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
@@ -51,19 +54,26 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(subregister, parentRegister);
             if (register != null)
             {
+                if (!string.IsNullOrWhiteSpace(filter.text))
+                {
+                    register = _searchService.Search(register, filter.text);
+                }
+                register = _registerService.Filter(register, filter);
+
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;
                 ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                Kartverket.Register.Models.Register parent = register.parentRegister;
-                while (parent.parentRegisterId != null)
-                {
-                    parent = parent.parentRegister;
-                }
-                ViewBag.register = parent.name;
+                //Kartverket.Register.Models.Register parent = register.parentRegister;
+                //while (parent.parentRegisterId != null)
+                //{
+                //    parent = parent.parentRegister;
+                //}
+                ViewBag.register = register.name;
 
                 ViewBag.registerSEO = register.parentRegister.seoname;
                 ViewBag.ownerSEO = owner;
                 ViewBag.subregister = subregister;
+                ViewBag.search = filter.text;
 
                 if (register == null)
                 {

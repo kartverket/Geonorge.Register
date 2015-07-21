@@ -438,9 +438,9 @@ namespace Kartverket.Register.Services.Search
             else if (register.containedItemClass == "CodelistValue")
             {
                 var queryResults = (from e in _dbContext.CodelistValues
-                                    where e.name.Contains(text)
+                                    where e.register.systemId == register.systemId && (e.name.Contains(text)
                                     || e.description.Contains(text)
-                                    || e.value.Contains(text)
+                                    || e.value.Contains(text))
                                     select e);
 
                 if (queryResults.Count() > 0)
@@ -482,134 +482,87 @@ namespace Kartverket.Register.Services.Search
 
             else if (register.containedItemClass == "Register")
             {
-                var queryResults = from d in _dbContext.Registers
-                                   where d.parentRegister.name == register.name
-                                   && d.parentRegister.containedItemClass == register.containedItemClass
-                                   && (d.name.Contains(text)
-                                   || d.description.Contains(text))
-                                   select d;
+                //Finn alle subregistre
+                List<Models.Register> allSubregisters = GetSubregisters(register);
+                ICollection<Models.RegisterItem> searchResultItems = new List<Models.RegisterItem>();
+                ICollection<Models.Register> searchResultSub = new List<Models.Register>();
+                bool itemSearchResult = false;
 
-                if (queryResults.Count() > 0)
+                //Gå gjennom alle subregistre og finn ut hva de inneholder og om innholdet samsvarer med søkestrengen. 
+                foreach (Models.Register sub in allSubregisters)
                 {
-                    foreach (var item in queryResults)
+                    if (sub.items.Count != 0)
                     {
-                        Kartverket.Register.Models.Register subregister = item;
-                        subregisters.Add(subregister);
+                        foreach (var item in sub.items)
+                        {
+                            searchResultItems.Add(item);
+                        }
+                        sub.items.Clear();
+                        foreach (Models.RegisterItem item in searchResultItems)
+                        {
+                            if (item.name.Contains(text) || (!string.IsNullOrWhiteSpace(item.description) && item.description.Contains(text)))
+                            {
+                                sub.items.Add(item);
+                                itemSearchResult = true;
+                            }
+                        }
+                        if (itemSearchResult)
+                        {
+                            subregisters.Add(sub);
+                        }
+                        itemSearchResult = false;
+                        searchResultItems.Clear();
                     }
 
-                }
-
-                // Finnes det organisasjoner i dette registeret?
-                var queryResultsOrganization = from o in _dbContext.Organizations
-                                               where o.register.parentRegister.name.Contains(register.name) && (
-                                               o.register.name.Contains(text)
-                                               || o.register.description.Contains(text)
-                                               || o.register.name.Contains(text)
-                                               || o.name.Contains(text)
-                                               || o.description.Contains(text))
-                                               select o;
-                if (queryResults.Count() > 0)
-                {
-                    foreach (var item in queryResultsOrganization)
+                    if (sub.subregisters.Count != 0)
                     {
-                        Organization organization = item;
-                        registerItems.Add(organization);
+                        foreach (var subReg in sub.subregisters)
+                        {
+                            searchResultSub.Add(subReg);
+                        }
+                        sub.subregisters.Clear();
+                        foreach (Models.Register reg in searchResultSub)
+                        {
+                            if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text)))
+                            {
+                                sub.subregisters.Add(reg);
+                            }
+                        }
+                        searchResultItems.Clear();
                     }
-
                 }
 
-                // Finnes det Document i dette registeret?
-                var queryResultsDocument = from d in _dbContext.Documents
-                                           where d.register.parentRegister.name.Contains(register.name) && (
-                                               d.register.name.Contains(text)
-                                           || d.name.Contains(text)
-                                           || d.description.Contains(text)
-                                           || d.documentowner.name.Contains(text))
-                                           select d;
-                if (queryResults.Count() > 0)
+                //Gå igjennom alle subregistrene og finn de subregistrene som samsvarer med søkestrengen..
+                List<Models.Register> moreSubregisters = new List<Models.Register>();
+                foreach (var reg in allSubregisters)
                 {
-                    foreach (var item in queryResultsDocument)
+                    bool finnesFraFor = false;
+                    if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text)))
                     {
-                        Document document = item;
-                        registerItems.Add(document);
+                        if (subregisters.Count() != 0)
+                        {                            
+                            foreach (Models.Register r in subregisters)
+                            {
+                                if (r == reg)
+                                {
+                                    finnesFraFor = true;
+                                }
+                                if (!finnesFraFor)
+                                {
+                                    subregisters.Add(reg);
+                                }
+                                finnesFraFor = false;
+                            }
+                        }
+                        else {
+                            moreSubregisters.Add(reg);
+                        }
                     }
-
                 }
-
-                // Finnes det Datasett i dette registeret?
-                var queryResultsDataset = from d in _dbContext.Datasets
-                                          where d.register.parentRegister.name.Contains(register.name) && (
-                                          d.register.name.Contains(text)
-                                          || d.name.Contains(text)
-                                          || d.description.Contains(text)
-                                          || d.datasetowner.name.Contains(text))
-                                          select d;
-
-                if (queryResults.Count() > 0)
+                foreach (Models.Register reg in moreSubregisters)
                 {
-                    foreach (var item in queryResultsDataset)
-                    {
-                        Dataset dataset = item;
-                        registerItems.Add(dataset);
-                    }
-
-                }
-
-                // Finnes det Koder i dette registeret?
-                var queryResultsKodelister = from d in _dbContext.CodelistValues
-                                             where d.register.parentRegister.name.Contains(register.name) && (
-                                                d.register.name.Contains(text)
-                                             || d.name.Contains(text)
-                                             || d.description.Contains(text)
-                                             || d.value.Contains(text))
-                                             select d;
-
-                if (queryResults.Count() > 0)
-                {
-                    foreach (var item in queryResultsKodelister)
-                    {
-                        CodelistValue codelistValue = item;
-                        registerItems.Add(codelistValue);
-                    }
-
-                }
-
-                // Finnes det navenrom i dette registeret?
-                var queryResultsNameSpace = from d in _dbContext.NameSpases
-                                             where d.register.parentRegister.name.Contains(register.name) && (
-                                                d.register.name.Contains(text)
-                                             || d.name.Contains(text)
-                                             || d.description.Contains(text))
-                                             select d;
-
-                if (queryResults.Count() > 0)
-                {
-                    foreach (var item in queryResultsNameSpace)
-                    {
-                        NameSpace nameSpace = item;
-                        registerItems.Add(nameSpace);
-                    }
-
-                }
-
-                // Finnes det Epsg-koder i dette registeret?
-                var queryResultsEpsg = from e in _dbContext.EPSGs
-                                       where e.register.parentRegister.name.Contains(register.name) && (
-                                       e.register.name.Contains(text)
-                                       || e.name.Contains(text)
-                                       || e.description.Contains(text)
-                                       || e.epsgcode.Contains(text))
-                                       select e;
-
-                if (queryResults.Count() > 0)
-                {
-                    foreach (var item in queryResultsEpsg)
-                    {
-                        EPSG epsg = item;
-                        registerItems.Add(epsg);
-                    }
-
-                }
+                    subregisters.Add(reg);
+                }                
 
                 return new Kartverket.Register.Models.Register
                 {
@@ -640,6 +593,51 @@ namespace Kartverket.Register.Services.Search
             }
             else { return register; }
         }
+
+        private List<Models.Register> GetSubregisters(Kartverket.Register.Models.Register register)
+        {
+            List<Models.Register> subRegisterList = new List<Models.Register>();
+            //Finn alle subregisterne
+            var queryResult = from r in _dbContext.Registers
+                              where r.parentRegister.name == register.name
+                              select r;
+
+            List<Models.Register> resultList = queryResult.ToList();
+
+            foreach (Models.Register sub in resultList)
+            {
+                subRegisterList.Add(sub);
+                if (sub.containedItemClass == "Register")
+                {
+                    List<Models.Register> nextLevelOfSubregisters = GetSubregisters(sub);
+                    foreach (Models.Register nextLevel in nextLevelOfSubregisters)
+                    {
+                        subRegisterList.Add(nextLevel);
+                    }
+                }
+            }
+            return subRegisterList;
+        }
+
+        //private List<Models.Register> GetNextLevelOfSubregisters(Kartverket.Register.Models.Register register)
+        //{
+
+        //    List<Models.Register> subRegisterList = new List<Models.Register>();
+        //    //Finn alle subregisterne
+        //    var queryResult = from r in _dbContext.Registers
+        //                      where r.parentRegister.name == register.name
+        //                      select r;
+
+        //    foreach (Models.Register sub in queryResult)
+        //    {
+        //        subRegisterList.Add(sub);
+        //        if (sub.containedItemClass == "Register")
+        //        {
+
+        //        }
+        //    }
+        //    return queryResult.ToList();
+        //}
 
         public SearchResult Search(SearchParameters parameters)
         {
@@ -1046,37 +1044,37 @@ namespace Kartverket.Register.Services.Search
                                          currentVersion = o.versioning.currentVersion
                                      }).Union(
                                      (from o in _dbContext.NameSpases
-                                     where o.register.parentRegister.name.Contains(parameters.Register) && (
-                                        o.register.name.Contains(parameters.Text)
-                                     || o.register.description.Contains(parameters.Text)
-                                     || o.register.name.Contains(parameters.Text)
-                                     || o.name.Contains(parameters.Text)
-                                     || o.description.Contains(parameters.Text))
-                                     select new SearchResultItem
-                                     {
-                                         ParentRegisterId = o.register.parentRegisterId,
-                                         ParentRegisterName = o.register.parentRegister.name,
-                                         ParentRegisterDescription = o.register.parentRegister.description,
-                                         ParentRegisterSeoname = o.register.parentRegister.seoname,
-                                         ParentregisterOwner = o.register.parentRegister.owner.seoname,
-                                         RegisterName = o.register.name,
-                                         RegisterDescription = o.register.description,
-                                         RegisterItemName = o.name,
-                                         RegisterItemDescription = o.description,
-                                         RegisterID = o.registerId,
-                                         SystemID = o.systemId,
-                                         Discriminator = o.register.containedItemClass,
-                                         RegisterSeoname = o.register.seoname,
-                                         RegisterItemSeoname = o.seoname,
-                                         DocumentOwner = null,
-                                         DatasetOwner = null,
-                                         RegisterItemUpdated = o.modified,
-                                         RegisterItemStatus = o.statusId,
-                                         Submitter = o.submitter.seoname,
-                                         Shortname = null,
-                                         CodelistValue = null,
-                                         currentVersion = o.versioning.currentVersion
-                                     }).Union(
+                                      where o.register.parentRegister.name.Contains(parameters.Register) && (
+                                         o.register.name.Contains(parameters.Text)
+                                      || o.register.description.Contains(parameters.Text)
+                                      || o.register.name.Contains(parameters.Text)
+                                      || o.name.Contains(parameters.Text)
+                                      || o.description.Contains(parameters.Text))
+                                      select new SearchResultItem
+                                      {
+                                          ParentRegisterId = o.register.parentRegisterId,
+                                          ParentRegisterName = o.register.parentRegister.name,
+                                          ParentRegisterDescription = o.register.parentRegister.description,
+                                          ParentRegisterSeoname = o.register.parentRegister.seoname,
+                                          ParentregisterOwner = o.register.parentRegister.owner.seoname,
+                                          RegisterName = o.register.name,
+                                          RegisterDescription = o.register.description,
+                                          RegisterItemName = o.name,
+                                          RegisterItemDescription = o.description,
+                                          RegisterID = o.registerId,
+                                          SystemID = o.systemId,
+                                          Discriminator = o.register.containedItemClass,
+                                          RegisterSeoname = o.register.seoname,
+                                          RegisterItemSeoname = o.seoname,
+                                          DocumentOwner = null,
+                                          DatasetOwner = null,
+                                          RegisterItemUpdated = o.modified,
+                                          RegisterItemStatus = o.statusId,
+                                          Submitter = o.submitter.seoname,
+                                          Shortname = null,
+                                          CodelistValue = null,
+                                          currentVersion = o.versioning.currentVersion
+                                      }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.parentRegister.name.Contains(parameters.Register) && (
                                         d.register.name.Contains(parameters.Text)
@@ -1362,39 +1360,39 @@ namespace Kartverket.Register.Services.Search
                                          currentVersion = o.versioning.currentVersion
                                      }).Union(
                                      (from o in _dbContext.NameSpases
-                                     where o.register.name.Contains(parameters.Text)
-                                     || o.register.description.Contains(parameters.Text)
-                                     || o.register.name.Contains(parameters.Text)
-                                     || o.name.Contains(parameters.Text)
-                                     || o.description.Contains(parameters.Text)
-                                     || o.systemId.Equals(systemIDSearch)
-                                     select new SearchResultItem
-                                     {
-                                         ParentRegisterId = o.register.parentRegisterId,
-                                         ParentRegisterName = o.register.parentRegister.name,
-                                         ParentRegisterDescription = o.register.parentRegister.description,
-                                         ParentRegisterSeoname = o.register.parentRegister.seoname,
-                                         ParentregisterOwner = o.register.parentRegister.owner.seoname,
-                                         RegisterName = o.register.name,
-                                         RegisterDescription = o.register.description,
-                                         RegisterItemName = o.name,
-                                         RegisterItemDescription = o.description,
-                                         RegisterID = o.registerId,
-                                         SystemID = o.systemId,
-                                         Discriminator = o.register.containedItemClass,
-                                         RegisterSeoname = o.register.seoname,
-                                         RegisterItemSeoname = o.seoname,
-                                         DocumentOwner = null,
-                                         DatasetOwner = null,
-                                         RegisterItemUpdated = o.modified,
-                                         RegisterItemStatus = o.statusId,
-                                         Submitter = o.submitter.seoname,
-                                         Shortname = null,
-                                         CodelistValue = null,
-                                         ObjektkatalogUrl = null,
-                                         Type = null,
-                                         currentVersion = o.versioning.currentVersion
-                                     }).Union(
+                                      where o.register.name.Contains(parameters.Text)
+                                      || o.register.description.Contains(parameters.Text)
+                                      || o.register.name.Contains(parameters.Text)
+                                      || o.name.Contains(parameters.Text)
+                                      || o.description.Contains(parameters.Text)
+                                      || o.systemId.Equals(systemIDSearch)
+                                      select new SearchResultItem
+                                      {
+                                          ParentRegisterId = o.register.parentRegisterId,
+                                          ParentRegisterName = o.register.parentRegister.name,
+                                          ParentRegisterDescription = o.register.parentRegister.description,
+                                          ParentRegisterSeoname = o.register.parentRegister.seoname,
+                                          ParentregisterOwner = o.register.parentRegister.owner.seoname,
+                                          RegisterName = o.register.name,
+                                          RegisterDescription = o.register.description,
+                                          RegisterItemName = o.name,
+                                          RegisterItemDescription = o.description,
+                                          RegisterID = o.registerId,
+                                          SystemID = o.systemId,
+                                          Discriminator = o.register.containedItemClass,
+                                          RegisterSeoname = o.register.seoname,
+                                          RegisterItemSeoname = o.seoname,
+                                          DocumentOwner = null,
+                                          DatasetOwner = null,
+                                          RegisterItemUpdated = o.modified,
+                                          RegisterItemStatus = o.statusId,
+                                          Submitter = o.submitter.seoname,
+                                          Shortname = null,
+                                          CodelistValue = null,
+                                          ObjektkatalogUrl = null,
+                                          Type = null,
+                                          currentVersion = o.versioning.currentVersion
+                                      }).Union(
                                    (from d in _dbContext.Documents
                                     where d.register.name.Contains(parameters.Text)
                                     || d.name.Contains(parameters.Text)

@@ -13,7 +13,7 @@
 
     if (ViewBag.registerSEO != null)
     {
-        kontroller = "/register/" + ViewBag.registerSEO + "/";    
+        kontroller = Request.Url.LocalPath; // "/register/" + ViewBag.registerSEO + "/";    
     }
     
     var searchRegister = ViewBag.searchRegister;

@@ -75,6 +75,10 @@ namespace Kartverket.Register.Services.Register
                 }
 
             }
+            else 
+            {
+                registerItems = register.items.ToList();
+            }
 
             return new Kartverket.Register.Models.Register
             {

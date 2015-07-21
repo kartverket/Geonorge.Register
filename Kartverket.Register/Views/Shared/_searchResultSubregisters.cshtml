@@ -26,6 +26,60 @@
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(reg);
         Kartverket.Register.Models.Register parent = reg.parentRegister;
 
+        <tr>
+            <td width="20%">
+                @if (reg.parentRegister != null)
+                {
+                    <a class="" href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname/">
+                        <p class="role-button" style="font-size: 15px;">
+                            @reg.name
+                        </p>
+                    </a>
+                }
+                else
+                {
+                    <a class="" href="/register/@reg.seoname/">
+                        <h3 class="role-button" style="font-size: 15px;">
+                            @reg.name
+                        </h3>
+                    </a>
+                }
+            </td>
+            @*<td width="40%">
+                    @if (reg.description == null)
+                    {
+                        @reg.description
+                    }
+                </td>*@
+            <td width="20%">
+                <span>@HtmlHelperExtensions.Type(reg.parentRegister.containedItemClass)</span>
+            </td>
+            <td width="60%">
+                @if (reg.parentRegisterId == null)
+                {
+                    <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
+                        <li><a href="/">Registrene</a></li>
+                        <li class=""><a href="/register/@reg.seoname">@reg.name</a></li>
+                    </ol>
+                }
+                else
+                {
+                    <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
+                        <li><a href="/">Registrene</a></li>
+                        <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
+                        <li class="active pull-right"><a href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname">@reg.name</a></li>
+                        @while (parent != null && parent != mainRegister)
+                        {
+                            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+                            parent = parent.parentRegister;
+                        }
+                    </ol>
+                }
+
+            </td>
+
+        </tr>
+
         foreach (Kartverket.Register.Models.RegisterItem item in reg.items)
         {
             <tr>
@@ -54,7 +108,7 @@
                         }
                     </td>*@
                 <td width="20%">
-                    <span>@HtmlHelperExtensions.lovligInnhold(reg.containedItemClass)</span>
+                    <span>@HtmlHelperExtensions.Type(reg.containedItemClass)</span>
                 </td>
                 <td width="60%">
                     <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
@@ -68,120 +122,6 @@
                         }
 
                     </ol>
-                </td>
-
-            </tr>
-        }
-
-        foreach (Kartverket.Register.Models.Register item in reg.subregisters)
-        {
-            <tr>
-                <td width="20%">
-                    @if (item.parentRegister != null)
-                    {
-                        <a class="" href="/subregister/@item.parentRegister.seoname/@item.parentRegister.owner.seoname/@item.seoname/">
-                            <p class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </p>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="" href="/register/@item.seoname/">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </h3>
-                        </a>
-                    }
-                </td>
-                @*<td width="40%">
-                        @if (item.description == null)
-                        {
-                            @item.description
-                        }
-                    </td>*@
-                <td width="20%">
-                    <span>@HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</span>
-                </td>
-                <td width="60%">
-                    @if (item.parentRegisterId == null)
-                    {
-                        <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                            <li><a href="/">Registrene</a></li>
-                            <li class=""><a href="/register/@item.seoname">@item.name</a></li>
-                        </ol>
-                    }
-                    else
-                    {
-                        <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                            <li><a href="/">Registrene</a></li>
-                            <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-                            <li class="active pull-right"><a href="/subregister/@item.parentRegister.seoname/@item.parentRegister.owner.seoname/@item.seoname">@item.name</a></li>
-                            @while (parent != null && parent != mainRegister)
-                            {
-                                <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-                                parent = parent.parentRegister;
-                            }
-                        </ol>
-                    }
-
-                </td>
-
-            </tr>
-        }
-
-        if (reg.subregisters.Count() == 0 && reg.items.Count() == 0)
-        {
-            <tr>
-                <td width="20%">
-                    @if (reg.parentRegister != null)
-                    {
-                        <a class="" href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname/">
-                            <p class="role-button" style="font-size: 15px;">
-                                @reg.name
-                            </p>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="" href="/register/@reg.seoname/">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @reg.name
-                            </h3>
-                        </a>
-                    }
-                </td>
-                @*<td width="40%">
-                        @if (reg.description == null)
-                        {
-                            @reg.description
-                        }
-                    </td>*@
-                <td width="20%">
-                    <span>@HtmlHelperExtensions.lovligInnhold(reg.containedItemClass)</span>
-                </td>
-                <td width="60%">
-                    @if (reg.parentRegisterId == null)
-                    {
-                        <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                            <li><a href="/">Registrene</a></li>
-                            <li class=""><a href="/register/@reg.seoname">@reg.name</a></li>
-                        </ol>
-                    }
-                    else
-                    {
-                        <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                            <li><a href="/">Registrene</a></li>
-                            <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-                            <li class="active pull-right"><a href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname">@reg.name</a></li>
-                            @while (parent != null && parent != mainRegister)
-                            {
-                                <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-                                parent = parent.parentRegister;
-                            }
-                        </ol>
-                    }
-
                 </td>
 
             </tr>

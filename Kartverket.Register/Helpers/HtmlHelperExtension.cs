@@ -167,6 +167,39 @@ namespace Kartverket.Register.Helpers
             return "";
         }
 
+        public static string Type(string containedItemClass)
+        {
+            if (containedItemClass == "Document")
+            {
+                return "Dokument";
+            }
+            else if (containedItemClass == "Dataset")
+            {
+                return "Datasett";
+            }
+            else if (containedItemClass == "EPSG")
+            {
+                return "EPSG-kode";
+            }
+            else if (containedItemClass == "Organization")
+            {
+                return "Organisasjon";
+            }
+            else if (containedItemClass == "CodelistValue")
+            {
+                return "Kodeverdi";
+            }
+            else if (containedItemClass == "Register")
+            {
+                return "Register";
+            }
+            else if (containedItemClass == "NameSpace")
+            {
+                return "Navnerom";
+            }
+            return "";
+        }
+
         public static List<Kartverket.Register.Models.Register> Registers()
         {
             RegisterDbContext db = new RegisterDbContext();

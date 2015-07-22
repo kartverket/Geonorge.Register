@@ -1616,10 +1616,7 @@ namespace Kartverket.Register.Services.Search
                     NumFound = NumFound
                 };
             }
-
             //return new SearchResult();
-
-
         }
 
         private static IQueryable<Models.Filter> SortingQueryResults(SearchParameters parameters, IQueryable<Models.Filter> queryResults, int skip)

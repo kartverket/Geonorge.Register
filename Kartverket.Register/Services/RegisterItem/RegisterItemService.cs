@@ -116,17 +116,47 @@ namespace Kartverket.Register.Services.RegisterItem
             return item;
         }
 
-        //public void SetNarrowerItems(List<Guid> narrowerItems, CodelistValue codelistValue)
-        //{
-        //    foreach (Guid narrowerId in narrowerItems)
-        //    {
-        //        codelistValue
-        //    }
-        //}
+        public Kartverket.Register.Models.RegisterItem getCurrentRegisterItem(string parentregister, string register, string name) {
 
-        //public void SetBroaderItem(Guid broader, CodelistValue codelistValue)
-        //{
+            var queryResults = from o in _dbContext.RegisterItems
+                               where (o.seoname == name || o.name == name) && 
+                               (o.register.seoname == register || o.register.name == register) &&
+                               (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
+                               && o.versioning.currentVersion == o.systemId
+                               select o;
+            Kartverket.Register.Models.RegisterItem registerItem = queryResults.FirstOrDefault();
 
-        //}
+            return registerItem;
+        }
+
+        public Models.Version GetVersionGroup(Guid? versioningId) {
+            var queryResultVersions = from v in _dbContext.Versions
+                                      where v.systemId == versioningId
+                                      select v;
+
+            Kartverket.Register.Models.Version versjonsgruppe = queryResultVersions.FirstOrDefault();
+            return versjonsgruppe;
+        }
+
+        public Models.RegisterItem GetRegisterItemByVersionNr(string parentRegister, string register, string item, int? vnr) {
+            var queryResults = from o in _dbContext.RegisterItems
+                               where (o.seoname == item || o.name == item) && 
+                               (o.register.seoname == register || o.register.name == register) && 
+                               o.versionNumber == vnr && 
+                               (o.register.parentRegister.seoname == parentRegister || o.register.parentRegister.name == parentRegister)
+                               select o;
+
+            Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+            return registerItem;
+        }
+
+        public List<Models.RegisterItem> GetAllVersionsOfDocument(Guid versjonsGruppeId) {
+            var queryResultsVersionsDocument = from o in _dbContext.RegisterItems
+                                               where o.versioningId == versjonsGruppeId
+                                               select o;
+
+            List<Models.RegisterItem> versions = queryResultsVersionsDocument.ToList();
+            return versions;
+        }
     }
 }

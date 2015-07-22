@@ -289,7 +289,8 @@ namespace Kartverket.Register.Helpers
             return MakeSeoFriendlyString(name);
         }
 
-        public static string urlFormat(HttpRequestBase request, string format) {
+        public static string urlFormat(HttpRequestBase request, string format)
+        {
             string url = request.FilePath + "." + format;
             return url;
         }
@@ -319,8 +320,8 @@ namespace Kartverket.Register.Helpers
             return encodedUrl;
         }
 
-                    
-        
+
+
         // SORTERING av registeritems
         public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
         {
@@ -861,12 +862,32 @@ namespace Kartverket.Register.Helpers
                 }
                 if (s.group == "current")
                 {
-                    gyldig += "- " + s.description + "&#013"; 
+                    gyldig += "- " + s.description + "&#013";
                 }
             }
 
             string beskrivelse = "Mulige statuser:&#013&#013" + forslag + "&#013" + gyldig + "&#013" + historiske;
             return beskrivelse;
+        }
+
+        public static string VersionsInSubregisterURL(string parentRegister, string parentRegisterOwner, string register, string itemOwner, string item)
+        {
+            return "/subregister/versjoner/" + parentRegister + "/" + parentRegisterOwner + "/" + register + "/" + itemOwner + "/" + item;
+        }
+
+        public static string VersionsUrl(string register, string ItemOwner, string item)
+        {
+           return "/register/versjoner/" + register + "/" + ItemOwner + "/" + item;
+        }
+
+        public static string SubRegisterUrl(string parentregister, string parentregisterowner, string registername)
+        {
+            return "/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername;
+        }
+
+        internal static string RegisterUrl(string registername)
+        {
+            return "/register/" + registername;
         }
     }
 }

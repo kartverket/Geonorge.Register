@@ -319,7 +319,6 @@ namespace Kartverket.Register.Controllers
                 if (document.statusId != null)
                 {
                     Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
-
                     // Finn alle dokumenter i versjonegruppen
                     var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
@@ -386,6 +385,7 @@ namespace Kartverket.Register.Controllers
                     {
                         originalDocument.statusId = document.statusId;
                     }
+                    originalDocument.statusId = document.statusId;
                 }
 
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;

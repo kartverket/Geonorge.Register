@@ -299,7 +299,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
         {
-            Document originalDocument = (Document)_registerItemService.getCurrentRegisterItem(parentRegister, registername, documentname);
+            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
 
             ValidationName(document, register);

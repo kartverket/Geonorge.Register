@@ -309,6 +309,9 @@ namespace Kartverket.Register.Controllers
                 if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
+                if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
+                if (document.approvalReference != null) originalDocument.approvalReference = document.approvalReference;
+                
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
                     originalDocument.documentUrl = document.documentUrl;
@@ -331,12 +334,26 @@ namespace Kartverket.Register.Controllers
                             }
                         }
                         db.SaveChanges();
-
                         // sett dette dokumentet til å være ny gjeldende versjon
                         versjonsgruppe.currentVersion = originalDocument.systemId;
-                        originalDocument.dateAccepted = DateTime.Now;
+                        //originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
+                    if ((document.statusId == "Accepted" || document.statusId == "Valid") || (document.statusId != "NotAccepted" && document.dateAccepted != null))
+                    {
+                        originalDocument.Accepted = true;
+                    }
+                    if (document.statusId == "NotAccepted")
+                    {
+                        originalDocument.Accepted = false;
+                        originalDocument.dateAccepted = null;
+                    }
+                    if (document.dateAccepted != null) originalDocument.dateAccepted = document.dateAccepted;
+                    if (document.statusId == "Accepted" && document.dateAccepted == null)
+                    {
+                        originalDocument.dateAccepted = DateTime.Now;
+                    }
+
                     else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
                         if (allVersions.Count() > 1)

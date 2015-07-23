@@ -907,3 +907,20 @@ z-index: 600;
 .chosen-container-single .chosen-single {
     min-width: 150px !important;
 }
+
+/*Kalendersymbol plassering*/
+.ui-button {
+	display: inline-block;
+	position: absolute !important;
+	padding: 0;
+	line-height: normal;
+	margin-right: .1em;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	overflow: visible; /* removes extra width in IE */
+}
+
+.chosen-container {
+    width: 100% !important;
+}

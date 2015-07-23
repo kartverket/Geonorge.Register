@@ -28,31 +28,46 @@ namespace Kartverket.Register.Models
         [Key]
         public Guid systemId { get; set; }
         //public virtual ICollection<Version> replaces { get; set; }
+        
         [Display(Name = "Navn:")]
         public string name { get; set; }
+        
         [Display(Name = "Beskrivelse:")]
         public string description { get; set; }
+        
         [ForeignKey("submitter")]
         [Display(Name = "Innsender:")]
         public Guid? submitterId { get; set; }
         public virtual Organization submitter { get; set; }
+
+        [Display(Name = "Dato innsendt:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
+
+        [Display(Name = "Dato endret:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
+        
         [ForeignKey("status")]
         [Display(Name = "Status:")]
         public string statusId { get; set; }
         public virtual Status status { get; set; }
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+
+        [Display(Name = "Dato godkjent:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
+
+        [Display(Name = "Register:")]
         public virtual Register register { get; set; }
         [ForeignKey("register")]
         public Guid registerId { get; set; }
         public string seoname { get; set; }
+
         [ForeignKey("versioning")]
         public Guid? versioningId { get; set; }
         public virtual Version versioning { get; set; }
+
+        [Display(Name = "Versjonsnummer:")]
         public int versionNumber { get; set; }
 
 

@@ -21,14 +21,34 @@
         @Resources.UI.AppPageTitle
     </title>
     @RenderSection("head", false)
+    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/jqueryui")
 
     @Html.Partial("_Analytics")
 
-    @Scripts.Render("~/bundles/jquery")
+    
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/js")
+    <script>
+        $(function(){
+            $(".jqueryui-marker-datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                showOn: "button"
+            }).css("display", "inline-block")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Velg dato",
+                text: false
+            });
+        });
+    </script>
     @RenderSection("scripts", false)
+
+   
+    
 
 </head>
 

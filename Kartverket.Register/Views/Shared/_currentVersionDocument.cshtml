@@ -32,7 +32,7 @@
                 <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
             }
         </div>
-        <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+        <div class="col-no-padding-xs col-title col-sm-4 col-md-4 col-lg-4">
             <h3 class="role-button" style="font-size: 18px;">
                 @item.name
             </h3>
@@ -44,7 +44,7 @@
                 @Html.DisplayFor(modelItem => item.description)
             </p>
         </div>
-        <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
+        <div class="col-no-padding-xs col-actions col-xs-12 col-sm-2 col-md-2 col-lg-2">
             @if (item.documentUrl.Contains("ikke angitt"))
             {
                 <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
@@ -57,7 +57,7 @@
                     <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                 </a><br />
             }
-            
+
 
             @if (Request.IsAuthenticated)
             {
@@ -75,7 +75,7 @@
                 }
             }
         </div>
-        <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
+        <div class="col-no-padding-xs col-xs-12 col-sm-4 col-md-4 col-lg-4 col-information pull-right">
 
             @if (item.status == null)
             {
@@ -94,11 +94,21 @@
             {
                 <p>Endret: @Html.DisplayFor(modelItem => item.modified)</p>
             }
-            @if (item.statusId == "Valid" && item.dateAccepted != null)
+            @if (item.Accepted == true)
             {
-                <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+                if (item.dateAccepted != null)
+                {
+                    <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+                }
+                if (item.approvalDocument != null)
+                {
+                    <p>Godkjenningsdokument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
+                }
+                if (item.approvalReference != null)
+                {
+                    <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalDocument)">Vis</a></p>
+                }
             }
         </div>
     </div>
 </div>
-

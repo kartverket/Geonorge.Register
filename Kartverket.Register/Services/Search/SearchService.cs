@@ -64,7 +64,7 @@ namespace Kartverket.Register.Services.Search
 
                 queryResults = SortingQueryResults(parameters, queryResults, skip);
 
-                foreach (Filter doc in queryResults)
+                foreach (Filter doc in queryResults.ToList())
                 {
                     var item = new Filter
                     {
@@ -146,7 +146,7 @@ namespace Kartverket.Register.Services.Search
                 skip = skip - 1;
                 queryResults = SortingQueryResults(parameters, queryResults, skip);
 
-                foreach (Filter dat in queryResults)
+                foreach (Filter dat in queryResults.ToList())
                 {
                     var item = new Filter
                     {
@@ -218,7 +218,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         Organization organisasjon = item;
                         registerItems.Add(organisasjon);
@@ -264,7 +264,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         Document document = item;
                         registerItems.Add(document);
@@ -309,7 +309,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         NameSpace nameSpace = item;
                         registerItems.Add(nameSpace);
@@ -355,7 +355,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         Dataset dataset = item;
                         registerItems.Add(dataset);
@@ -400,7 +400,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         EPSG epsg = item;
                         registerItems.Add(epsg);
@@ -445,7 +445,7 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-                    foreach (var item in queryResults)
+                    foreach (var item in queryResults.ToList())
                     {
                         CodelistValue code = item;
                         registerItems.Add(code);
@@ -493,7 +493,7 @@ namespace Kartverket.Register.Services.Search
                 {
                     if (sub.items.Count != 0)
                     {
-                        foreach (var item in sub.items)
+                        foreach (var item in sub.items.ToList())
                         {
                             searchResultItems.Add(item);
                         }
@@ -516,7 +516,7 @@ namespace Kartverket.Register.Services.Search
 
                     if (sub.subregisters.Count != 0)
                     {
-                        foreach (var subReg in sub.subregisters)
+                        foreach (var subReg in sub.subregisters.ToList())
                         {
                             searchResultSub.Add(subReg);
                         }
@@ -549,7 +549,7 @@ namespace Kartverket.Register.Services.Search
                                 }
                                 if (!finnesFraFor)
                                 {
-                                    subregisters.Add(reg);
+                                    moreSubregisters.Add(reg);
                                 }
                                 finnesFraFor = false;
                             }

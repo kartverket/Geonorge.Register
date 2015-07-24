@@ -338,7 +338,7 @@ namespace Kartverket.Register.Controllers
                         //originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    if ((document.statusId == "Accepted" || document.statusId == "Valid") || (document.statusId != "NotAccepted" && document.dateAccepted != null))
+                    if ((document.statusId == "Accepted" || (document.statusId != "NotAccepted" && document.dateAccepted != null))
                     {
                         originalDocument.Accepted = true;
                     }

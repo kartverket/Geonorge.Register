@@ -353,6 +353,12 @@ namespace Kartverket.Register.Controllers
                         originalDocument.dateAccepted = DateTime.Now;
                     }
 
+                    if ((document.statusId != "Accepted" || document.statusId == null) && document.dateAccepted == null)
+                    {
+                        originalDocument.Accepted = false;
+                        originalDocument.dateAccepted = document.dateAccepted;
+                    }
+
                     else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
                         if (allVersions.Count() > 1)
@@ -387,6 +393,7 @@ namespace Kartverket.Register.Controllers
                     }
                     originalDocument.statusId = document.statusId;
                 }
+
 
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 

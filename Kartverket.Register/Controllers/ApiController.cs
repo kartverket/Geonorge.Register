@@ -11,6 +11,7 @@ using System.Net.Http.Headers;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Kartverket.Register.Controllers
 {
@@ -78,6 +79,7 @@ namespace Kartverket.Register.Controllers
         /// Gets codelist by systemid
         /// </summary>
         /// <param name="systemid">The uniqueidentifier for the register</param>
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("api/kodelister/{systemid}")]
         [HttpGet]
         public IHttpActionResult GetRegisterBySystemId(string systemid)

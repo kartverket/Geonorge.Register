@@ -4,6 +4,10 @@
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
 
+@{
+    var registerName = ViewBag.register;
+}
+
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
         <li class="active">
@@ -16,7 +20,7 @@
 
     @Html.Partial("_visningstyper")
 </div>
-<div class="register document search-results">
+<div class="register document search-results @registerName">
     @foreach (Document item in Model)
     {
         if (item.versioning.currentVersion == item.systemId)

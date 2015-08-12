@@ -44,28 +44,24 @@ function sLink(tittel, defaultSort) {
     if (sortingSelected == "")
         sortingSelected = "name";
 
-    if (sortingSelected == defaultSort)
-    {
+    if (sortingSelected == defaultSort) {
         sortingClass = 'sorted-asc';
         sortTitle = 'Sortert fra A til Å';
         sortingParam = defaultSort + '_desc';
     }
-    else if (sortingSelected.indexOf('_desc') > -1 && sortingSelected == defaultSort + '_desc')
-    {
+    else if (sortingSelected.indexOf('_desc') > -1 && sortingSelected == defaultSort + '_desc') {
         sortingClass = 'sorted-desc';
         sortTitle = 'Sortert fra Å til A';
         sortingParam = defaultSort;
     }
-    else
-    {
+    else {
         sortingClass = '';
         sortTitle = '';
         sortingParam = defaultSort;
     }
 
-    if (sortingParam.indexOf('Requirement') > -1)
-    {
-        sortTitle = "Sortert etter logisk rekkefølge" ;
+    if (sortingParam.indexOf('Requirement') > -1) {
+        sortTitle = "Sortert etter logisk rekkefølge";
     }
 
     var text = qP('text');
@@ -124,66 +120,55 @@ function tableView() {
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
+    function fixedtableheader(cssClass, full, large, medium, small) {
+        $(window).scroll(function () {
+            if ($(window).width() >= 1183) {
+                if ($(window).scrollTop() > full) {
+                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - full + "px" });
+                    $("." + cssClass + " .table-heading").css("background-color", "white");
+                    $("." + cssClass + " .table-heading").css("z-index", "400");
+                } else {
+                    $("." + cssClass + " .table-heading").css("top", "0");
+                }
+            }
+            else if ($(window).width() < 1183 && $(window).width() > 992) {
+                if ($(window).scrollTop() > large) {
+                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - large + "px" });
+                    $("." + cssClass + " .table-heading").css("background-color", "white");
+                    $("." + cssClass + " .table-heading").css("z-index", "400");
+                } else {
+                    $("." + cssClass + " .table-heading").css("top", "0");
+                }
+            } else if ($(window).width() < 992 && $(window).width() >= 750) {
+                if ($(window).scrollTop() > medium) {
+                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - medium + "px" });
+                    $("." + cssClass + " .table-heading").css("background-color", "white");
+                    $("." + cssClass + " .table-heading").css("z-index", "400")
+                } else {
+                    $("." + cssClass + " .table-heading").css("top", "0");
+                }
+            } else if ($(window).width() < 750) {
+                if ($(window).scrollTop() > small) {
+                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - small + "px" });
+                    $("." + cssClass + " .table-heading").css("background-color", "white");
+                    $("." + cssClass + " .table-heading").css("z-index", "400")
+                } else {
+                    $("." + cssClass + " .table-heading").css("top", "0");
+                }
+            } else {
+                $("." + cssClass + " .table-heading").css("top", "0");
+            }
+        });
+    }
 
-    $(window).scroll(function () {
-        if ($(window).width() >= 992) {
-            if ($(window).scrollTop() > 555) {
-                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 555 + "px" });
-                $(".organization .table-heading").css("background-color", "white");
-                $(".organization .table-heading").css("z-index", "400");
-            } else {
-                $(".organization .table-heading").css("top", "0");
-            }
-        } else if ($(window).width() < 992 && $(window).width() >= 750) {
-            if ($(window).scrollTop() > 605) {
-                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 605 + "px" });
-                $(".organization .table-heading").css("background-color", "white");
-                $(".organization .table-heading").css("z-index", "400")
-            } else {
-                $(".organization .table-heading").css("top", "0");
-            }
-        } else if ($(window).width() < 750) {
-            if ($(window).scrollTop() > 630) {
-                $(".organization .table-heading").css({ "top": ($(window).scrollTop()) - 630 + "px" });
-                $(".organization .table-heading").css("background-color", "white");
-                $(".organization .table-heading").css("z-index", "400")
-            } else {
-                $(".organization .table-heading").css("top", "0");
-            }
-        } else {
-            $(".organization .table-heading").css("top", "0");
-        }
-    });
-
-    /*  $(window).scroll(function () {
-          if ($(window).scrollTop() > 330) {
-              $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 330 + "px" });
-              $(".kartkatalog .table-heading").css("background-color", "white");
-              $(".kartkatalog .table-heading").css("z-index", "400");
-              if ($(window).width() < 992) {
-                  $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 348 + "px" });
-              }
-              if ($(window).width() < 750) {
-                  $(".kartkatalog .table-heading").css({ "top": ($(window).scrollTop()) - 367 + "px" });
-              }
-          } else {
-              $(".kartkatalog .table-heading").css("top", "0");
-          }
-          if ($(window).scrollTop() > 610) {
-              $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 610 + "px" });
-              $(".document .table-heading").css("background-color", "white");
-              $(".document .table-heading").css("z-index", "400");
-              if ($(window).width() < 992) {
-                  $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 678 + "px" });
-              }
-              if ($(window).width() < 750) {
-                  $(".document .table-heading").css({ "top": ($(window).scrollTop()) - 682 + "px" });
-              }
-          } else {
-              $(".document .table-heading").css("top", "0");
-          }
-      });
-      */
+    fixedtableheader("dataset", 658, 678, 785, 697); // Det offentlige kartgrunnlaget
+    fixedtableheader("epsg", 649, 726, 785, 775); // EPSG koder
+    fixedtableheader("applikasjonsskjema", 618, 638, 705, 640); // GML applikasjonskjema
+    fixedtableheader("registersub", 618, 638, 705, 640); // Kodelister og tegneregler
+    fixedtableheader("organization", 618, 638, 705, 640); // Organisasjoner
+    fixedtableheader("Produktark", 618, 638, 705, 640); // Produktark
+    fixedtableheader("Produktspesifikasjoner", 618, 638, 725, 640); // Produktspesifikasjoner
+    fixedtableheader("Tegneregler", 618, 638, 705, 640); // Tegneregler
 
     localStorage.setItem("visningstype", "tabell");
 
@@ -202,11 +187,11 @@ function Filter() {
     var inspireRequirement = document.getElementById("inspireRequirement");
     var nationalRequirement = document.getElementById("nationalRequirement");
     var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
-    
-    if (qP('filterVertikalt') != "") {        
+
+    if (qP('filterVertikalt') != "") {
         filterVertikalt.checked;
     }
-    if (qP('filterHorisontalt') != "") {        
+    if (qP('filterHorisontalt') != "") {
         filterHorisontalt.checked;
     }
     inspireRequirement.options[inspireRequirement.selectedIndex].text;
@@ -227,8 +212,8 @@ function filterDefault() {
     var inspireRequirement = document.getElementById("inspireRequirement");
     var nationalRequirement = document.getElementById("nationalRequirement");
     var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
-   
-    if (qP("filterVertikalt") != "") {        
+
+    if (qP("filterVertikalt") != "") {
         filterVertikalt.checked;
     }
 }

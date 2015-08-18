@@ -113,8 +113,8 @@ namespace Kartverket.Register.Controllers
                 document.registerId = register.systemId;
                 document.statusId = "Submitted";
                 document.versionNumber = 1;
-                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname = 
-                Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name); 
+                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname =
+                Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
                 if (string.IsNullOrWhiteSpace(document.description)) document.description = "ikke angitt";
 
                 //Dokument og thumbnail
@@ -128,7 +128,7 @@ namespace Kartverket.Register.Controllers
                     }
                 }
                 if (thumbnail != null) document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
-                if (document.documentUrl == null) document.documentUrl = "ikke angitt";                
+                if (document.documentUrl == null) document.documentUrl = "ikke angitt";
 
                 // Opprette versjonering av et element
                 Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
@@ -276,7 +276,7 @@ namespace Kartverket.Register.Controllers
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, vnr);          
+            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, vnr);
             if (document == null)
             {
                 return HttpNotFound();
@@ -306,12 +306,32 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (document.name != null) originalDocument.name = document.name; originalDocument.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDocument.name);
+                if (document.name != null) originalDocument.name = document.name;
+                originalDocument.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
                 if (document.approvalReference != null) originalDocument.approvalReference = document.approvalReference;
-                
+                if (document.Accepted == true)
+                {
+                    originalDocument.Accepted = true;
+                    originalDocument.dateAccepted = DateTime.Now;
+                }
+                else
+                {
+                    originalDocument.Accepted = false;
+                    originalDocument.dateAccepted = null;
+                }
+                if (document.dateAccepted != null)
+                {
+                    originalDocument.Accepted = true;
+                    originalDocument.dateAccepted = document.dateAccepted;
+                }
+                else
+                {
+                    originalDocument.dateAccepted = null;
+                }
+
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
                 {
                     originalDocument.documentUrl = document.documentUrl;
@@ -338,26 +358,24 @@ namespace Kartverket.Register.Controllers
                         //originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    if (document.statusId == "Accepted" || (document.statusId != "NotAccepted" && document.dateAccepted != null))
-                    {
-                        originalDocument.Accepted = true;
-                    }
-                    if (document.statusId == "NotAccepted")
-                    {
-                        originalDocument.Accepted = false;
-                        originalDocument.dateAccepted = null;
-                    }
-                    if (document.dateAccepted != null) originalDocument.dateAccepted = document.dateAccepted;
-                    if (document.statusId == "Accepted" && document.dateAccepted == null)
-                    {
-                        originalDocument.dateAccepted = DateTime.Now;
-                    }
-
-                    if ((document.statusId != "Accepted" || document.statusId == null) && document.dateAccepted == null)
-                    {
-                        originalDocument.Accepted = false;
-                        originalDocument.dateAccepted = document.dateAccepted;
-                    }
+                    //if (document.statusId == "Accepted" || (document.statusId != "NotAccepted" && document.dateAccepted != null))
+                    //{
+                    //    originalDocument.Accepted = true;
+                    //}
+                    //if (document.statusId == "NotAccepted")
+                    //{
+                    //    originalDocument.Accepted = false;
+                    //    originalDocument.dateAccepted = null;
+                    //}
+                    //if (document.statusId == "Accepted" && document.dateAccepted == null)
+                    //{
+                    //    originalDocument.dateAccepted = DateTime.Now;
+                    //}
+                    //if ((document.statusId != "Accepted" || document.statusId == null) && document.dateAccepted == null)
+                    //{
+                    //    originalDocument.Accepted = false;
+                    //    originalDocument.dateAccepted = document.dateAccepted;
+                    //}
 
                     else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
@@ -394,7 +412,6 @@ namespace Kartverket.Register.Controllers
                     originalDocument.statusId = document.statusId;
                 }
 
-
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
@@ -423,7 +440,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
-                    return Redirect(HtmlHelperExtensions.VersionsInSubregisterURL(parentRegister, register.parentRegister.owner.seoname, registername, originalDocument.documentowner.seoname, originalDocument.seoname));                   
+                    return Redirect(HtmlHelperExtensions.VersionsInSubregisterURL(parentRegister, register.parentRegister.owner.seoname, registername, originalDocument.documentowner.seoname, originalDocument.seoname));
                 }
                 else
                 {
@@ -492,7 +509,7 @@ namespace Kartverket.Register.Controllers
                     {
                         Document nyGjeldendeVersjon = (Document)documentVersions.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                         versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                    }               
+                    }
                 }
             }
 

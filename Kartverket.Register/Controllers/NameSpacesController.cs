@@ -156,11 +156,11 @@ namespace Kartverket.Register.Controllers
            
                 if (nameSpace.statusId != null)
                 {
-                    if (nameSpace.statusId == "Accepted" && originalNameSpace.statusId != "Accepted")
+                    if (nameSpace.statusId == "Valid" && originalNameSpace.statusId != "Valid")
                     {
                         originalNameSpace.dateAccepted = DateTime.Now;
                     }
-                    if (originalNameSpace.statusId == "Accepted" && nameSpace.statusId != "Accepted")
+                    if (originalNameSpace.statusId == "Valid" && nameSpace.statusId != "Valid")
                     {
                         originalNameSpace.dateAccepted = null;
                     }

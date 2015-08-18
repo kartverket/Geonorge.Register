@@ -343,11 +343,11 @@ namespace Kartverket.Register.Controllers
                 if (register.statusId != null)
                 {
                     originalRegister.statusId = register.statusId;
-                    if (originalRegister.statusId != "Accepted" && register.statusId == "Accepted")
+                    if (originalRegister.statusId != "Valid" && register.statusId == "Valid")
                     {
                         originalRegister.dateAccepted = DateTime.Now;
                     }
-                    if (originalRegister.statusId == "Accepted" && register.statusId != "Accepted")
+                    if (originalRegister.statusId == "Valid" && register.statusId != "Valid")
                     {
                         originalRegister.dateAccepted = null;
                     }

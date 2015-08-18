@@ -287,11 +287,11 @@ namespace Kartverket.Register.Controllers
                 if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
                 if (dataset.statusId != null)
                 {
-                    if (dataset.statusId == "Accepted" && originalDataset.statusId != "Accepted")
+                    if (dataset.statusId == "Valid" && originalDataset.statusId != "Valid")
                     {
                         originalDataset.dateAccepted = DateTime.Now;
                     }
-                    if (originalDataset.statusId == "Accepted" && dataset.statusId != "Accepted")
+                    if (originalDataset.statusId == "Valid" && dataset.statusId != "Valid")
                     {
                         originalDataset.dateAccepted = null;
                     }

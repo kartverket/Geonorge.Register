@@ -24,18 +24,19 @@ namespace Kartverket.Register.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
+            
             context.Statuses.AddOrUpdate(
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
-                new Status { value = "Accepted", description = "Godkjent", group = "suggested" },
+                //new Status { value = "Accepted", description = "Godkjent", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
-                new Status { value = "Experimental", description = "Utkast", group = "suggested" },
-                new Status { value = "Deprecated", description = "Utdatert", group = "historical" },
+                //new Status { value = "Experimental", description = "Utkast", group = "suggested" },
+                //new Status { value = "Deprecated", description = "Utdatert", group = "historical" },
                 new Status { value = "Superseded", description = "Erstattet", group = "historical"},
-                new Status { value = "Retired", description = "Utgått", group = "historical" },
-                new Status { value = "Candidate", description = "Kandidat", group = "suggested" },
-                new Status { value = "InProgress", description = "I prosess", group = "suggested" },
-                new Status { value = "Proposal", description = "Forslag", group = "suggested"}
+                new Status { value = "Retired", description = "Utgått", group = "historical" }
+                //new Status { value = "Candidate", description = "Kandidat", group = "suggested" },
+                //new Status { value = "InProgress", description = "I prosess", group = "suggested" },
+                //new Status { value = "Proposal", description = "Forslag", group = "suggested"}
             );
 
             context.AccessTypes.AddOrUpdate(
@@ -533,9 +534,7 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
 
             //UpdateAccessId
-            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
-
-            
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");        
 
 
         }

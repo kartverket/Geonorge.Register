@@ -238,11 +238,11 @@ namespace Kartverket.Register.Controllers
                 if (ePSG.nationalSeasRequirementDescription != null) originalEPSG.nationalSeasRequirementDescription = ePSG.nationalSeasRequirementDescription;
                 if (ePSG.statusId != null)
                 {
-                    if (ePSG.statusId == "Accepted" && originalEPSG.statusId != "Accepted")
+                    if (ePSG.statusId == "Valid" && originalEPSG.statusId != "Valid")
                     {
                         originalEPSG.dateAccepted = DateTime.Now;
                     }
-                    if (originalEPSG.statusId == "Accepted" && ePSG.statusId != "Accepted")
+                    if (originalEPSG.statusId == "Valid" && ePSG.statusId != "Valid")
                     {
                         originalEPSG.dateAccepted = null;
                     }

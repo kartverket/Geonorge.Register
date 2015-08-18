@@ -42,12 +42,12 @@ namespace Kartverket.Register.Services.Versioning
                            where ri.register.seoname == registername
                            && ri.versioningId == versjonsGruppeId
                            && (ri.status.value == "Submitted"
-                           || ri.status.value == "Proposal"
-                           || ri.status.value == "InProgress"
-                           || ri.status.value == "NotAccepted"
-                           || ri.status.value == "Accepted"
-                           || ri.status.value == "Experimental"
-                           || ri.status.value == "Candidate")
+                           //|| ri.status.value == "Proposal"
+                           //|| ri.status.value == "InProgress"
+                           || ri.status.value == "NotAccepted")
+                           //|| ri.status.value == "Accepted"
+                           //|| ri.status.value == "Experimental"
+                           //|| ri.status.value == "Candidate"                           
                            select ri;
 
             foreach (Kartverket.Register.Models.RegisterItem item in queryResults)
@@ -60,9 +60,9 @@ namespace Kartverket.Register.Services.Versioning
             var queryResultsHistorical = from ri in _dbContext.RegisterItems
                                          where ri.register.seoname == registername
                                           && ri.versioningId == currentVersion.versioningId
-                                          && (ri.status.value == "Deprecated"
-                                          || ri.status.value == "Superseded"
+                                          && (ri.status.value == "Superseded"
                                           || ri.status.value == "Retired")
+                                          //ri.status.value == "Deprecated"                                          
                                          select ri;
 
             foreach (Kartverket.Register.Models.RegisterItem item in queryResultsHistorical)

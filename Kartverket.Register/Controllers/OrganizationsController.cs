@@ -335,11 +335,11 @@ namespace Kartverket.Register.Controllers
                 }
                 if (org.statusId != null)
                 {
-                    if (org.statusId == "Accepted" && originalOrganization.statusId != "Accepted")
+                    if (org.statusId == "Valid" && originalOrganization.statusId != "Valid")
                     {
                         originalOrganization.dateAccepted = DateTime.Now;
                     }
-                    if (originalOrganization.statusId == "Accepted" && org.statusId != "Accepted")
+                    if (originalOrganization.statusId == "Valid" && org.statusId != "Valid")
                     {
                         originalOrganization.dateAccepted = null;
                     }

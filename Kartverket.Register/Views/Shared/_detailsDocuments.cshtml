@@ -37,18 +37,15 @@
             {
                 if (HtmlHelperExtensions.accessRegisterItem(Model))
                 {
-                    if (Model.register.parentRegisterId != null)
+                    if ((Model.statusId == "Submitted" || Model.statusId == "NotAccepted" || Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
                     {
-                        if ((Model.statusId == "Submitted" || Model.statusId == "Proposal" || Model.statusId == "InProgress" || Model.statusId == "NotAccepted" || Model.statusId == "Accepted" || Model.statusId == "Experimental" || Model.statusId == "Candidate") || Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                        if (Model.register.parentRegisterId != null)
                         {
                             <a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
                             <a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">Slett</a>
                         }
-                    }
-                    else
-                    {
-                        if ((Model.statusId == "Submitted" || Model.statusId == "Proposal" || Model.statusId == "InProgress" || Model.statusId == "NotAccepted" || Model.statusId == "Accepted" || Model.statusId == "Experimental" || Model.statusId == "Candidate") || Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
-                        {
+                        else
+                        {                            
                             <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
                             <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">Slett</a>
                         }

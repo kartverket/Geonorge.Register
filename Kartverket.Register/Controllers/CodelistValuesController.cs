@@ -335,12 +335,13 @@ namespace Kartverket.Register.Controllers
                 if (codelistValue.statusId != null)
                 {
                     originalCodelistValue.statusId = codelistValue.statusId;
-                    if (originalCodelistValue.statusId != "Accepted" && codelistValue.statusId == "Accepted")
+                    if (originalCodelistValue.statusId != "Valid" && codelistValue.statusId == "Valid")
                     {
                         originalCodelistValue.dateAccepted = DateTime.Now;
                     }
-                    if (originalCodelistValue.statusId == "Accepted" && codelistValue.statusId != "Accepted")
+                    if (originalCodelistValue.statusId == "Valid" && codelistValue.statusId != "Valid")
                     {
+
                         originalCodelistValue.dateAccepted = null;
                     }
                 }
@@ -348,16 +349,17 @@ namespace Kartverket.Register.Controllers
                 {
                     _registerItemService.SetNarrowerItems(narrower, originalCodelistValue);
                 }
-                
+
                 if (broader != null || originalCodelistValue.broaderItemId != null)
                 {
                     if (broader == null)
                     {
                         _registerItemService.SetBroaderItem(originalCodelistValue);
                     }
-                    else { 
-                         _registerItemService.SetBroaderItem(broader.Value, originalCodelistValue);
-                    }                   
+                    else
+                    {
+                        _registerItemService.SetBroaderItem(broader.Value, originalCodelistValue);
+                    }
                 }
 
                 originalCodelistValue.modified = DateTime.Now;

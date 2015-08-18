@@ -517,6 +517,18 @@
     <Compile Include="Migrations\201507220628272_addApprovalFieldsToDocuments.Designer.cs">
       <DependentUpon>201507220628272_addApprovalFieldsToDocuments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508180823260_UpdateStatusRegisters.cs" />
+    <Compile Include="Migrations\201508180823260_UpdateStatusRegisters.Designer.cs">
+      <DependentUpon>201508180823260_UpdateStatusRegisters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508180829156_UpdateStatusRegisteritems.cs" />
+    <Compile Include="Migrations\201508180829156_UpdateStatusRegisteritems.Designer.cs">
+      <DependentUpon>201508180829156_UpdateStatusRegisteritems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508180920123_DeleteStatuses.cs" />
+    <Compile Include="Migrations\201508180920123_DeleteStatuses.Designer.cs">
+      <DependentUpon>201508180920123_DeleteStatuses.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1040,6 +1052,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507220628272_addApprovalFieldsToDocuments.resx">
       <DependentUpon>201507220628272_addApprovalFieldsToDocuments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508180823260_UpdateStatusRegisters.resx">
+      <DependentUpon>201508180823260_UpdateStatusRegisters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508180829156_UpdateStatusRegisteritems.resx">
+      <DependentUpon>201508180829156_UpdateStatusRegisteritems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508180920123_DeleteStatuses.resx">
+      <DependentUpon>201508180920123_DeleteStatuses.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

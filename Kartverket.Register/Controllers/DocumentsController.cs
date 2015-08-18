@@ -61,12 +61,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Document document = new Document();
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && (o.parentRegister.seoname == null || o.parentRegister.seoname == parentRegister)
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
             document.register = register;
 
             if (register.parentRegisterId != null)
@@ -76,7 +71,7 @@ namespace Kartverket.Register.Controllers
 
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
+          
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(document);
@@ -113,8 +108,8 @@ namespace Kartverket.Register.Controllers
                 document.registerId = register.systemId;
                 document.statusId = "Submitted";
                 document.versionNumber = 1;
-                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname =
-                Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
+                
+                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
                 if (string.IsNullOrWhiteSpace(document.description)) document.description = "ikke angitt";
 
                 //Dokument og thumbnail
@@ -176,12 +171,6 @@ namespace Kartverket.Register.Controllers
 
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-            var queryResults = from o in db.Documents
-                               where o.seoname == itemname && o.register.seoname == registername &&
-                               o.register.parentRegister.seoname == parentRegister
-                               && o.versioning.currentVersion == o.systemId
-                               select o.systemId;
 
             Document document = (Document)_registerItemService.getCurrentRegisterItem(parentRegister, registername, itemname);
             if (document == null)
@@ -301,7 +290,6 @@ namespace Kartverket.Register.Controllers
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
-
             ValidationName(document, register);
 
             if (ModelState.IsValid)
@@ -317,11 +305,12 @@ namespace Kartverket.Register.Controllers
                     originalDocument.Accepted = true;
                     originalDocument.dateAccepted = DateTime.Now;
                 }
-                else
+                else if(document.Accepted == false)
                 {
                     originalDocument.Accepted = false;
                     originalDocument.dateAccepted = null;
                 }
+
                 if (document.dateAccepted != null)
                 {
                     originalDocument.Accepted = true;
@@ -336,9 +325,11 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.documentUrl = document.documentUrl;
                 }
+
                 if (document.statusId != null)
                 {
                     Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
+                    
                     // Finn alle dokumenter i versjonegruppen
                     var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
@@ -353,30 +344,12 @@ namespace Kartverket.Register.Controllers
                             }
                         }
                         db.SaveChanges();
+                        
                         // sett dette dokumentet til å være ny gjeldende versjon
                         versjonsgruppe.currentVersion = originalDocument.systemId;
-                        //originalDocument.dateAccepted = DateTime.Now;
                         originalDocument.statusId = document.statusId;
                     }
-                    //if (document.statusId == "Accepted" || (document.statusId != "NotAccepted" && document.dateAccepted != null))
-                    //{
-                    //    originalDocument.Accepted = true;
-                    //}
-                    //if (document.statusId == "NotAccepted")
-                    //{
-                    //    originalDocument.Accepted = false;
-                    //    originalDocument.dateAccepted = null;
-                    //}
-                    //if (document.statusId == "Accepted" && document.dateAccepted == null)
-                    //{
-                    //    originalDocument.dateAccepted = DateTime.Now;
-                    //}
-                    //if ((document.statusId != "Accepted" || document.statusId == null) && document.dateAccepted == null)
-                    //{
-                    //    originalDocument.Accepted = false;
-                    //    originalDocument.dateAccepted = document.dateAccepted;
-                    //}
-
+                    
                     else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
                         if (allVersions.Count() > 1)

@@ -61,7 +61,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                if (HtmlHelperExtensions.accessRegisterItem(item))
                 {
                     if (@Model.currentVersion.register.parentRegister != null)
                     {

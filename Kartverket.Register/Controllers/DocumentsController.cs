@@ -71,7 +71,7 @@ namespace Kartverket.Register.Controllers
 
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-          
+
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
             {
                 return View(document);
@@ -108,7 +108,7 @@ namespace Kartverket.Register.Controllers
                 document.registerId = register.systemId;
                 document.statusId = "Submitted";
                 document.versionNumber = 1;
-                
+
                 if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
                 if (string.IsNullOrWhiteSpace(document.description)) document.description = "ikke angitt";
 
@@ -304,18 +304,19 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.Accepted = true;
                     originalDocument.dateAccepted = DateTime.Now;
+
+                    if (document.dateAccepted != null)
+                    {
+                        originalDocument.Accepted = true;
+                        originalDocument.dateAccepted = document.dateAccepted;
+                    }
                 }
-                else if(document.Accepted == false)
+                else if (document.Accepted == false)
                 {
                     originalDocument.Accepted = false;
                     originalDocument.dateAccepted = null;
                 }
 
-                if (document.dateAccepted != null)
-                {
-                    originalDocument.Accepted = true;
-                    originalDocument.dateAccepted = document.dateAccepted;
-                }
                 else
                 {
                     originalDocument.dateAccepted = null;
@@ -329,7 +330,7 @@ namespace Kartverket.Register.Controllers
                 if (document.statusId != null)
                 {
                     Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
-                    
+
                     // Finn alle dokumenter i versjonegruppen
                     var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
                     if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
@@ -344,12 +345,12 @@ namespace Kartverket.Register.Controllers
                             }
                         }
                         db.SaveChanges();
-                        
+
                         // sett dette dokumentet til å være ny gjeldende versjon
                         versjonsgruppe.currentVersion = originalDocument.systemId;
                         originalDocument.statusId = document.statusId;
                     }
-                    
+
                     else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
                     {
                         if (allVersions.Count() > 1)

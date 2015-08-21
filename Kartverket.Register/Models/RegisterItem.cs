@@ -22,7 +22,6 @@ namespace Kartverket.Register.Models
     {
         public RegisterItem()
         {
-
             //this.replaces = new HashSet<Version>();
         }
         [Key]
@@ -57,6 +56,18 @@ namespace Kartverket.Register.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
+        [Display(Name = "Dato ikke godkjent:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? dateNotAccepted { get; set; }
+
+        [Display(Name = "Dato erstattet:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? dateSuperseded { get; set; }
+
+        [Display(Name = "Dato utgått:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? DateRetired { get; set; }
+
         [Display(Name = "Register:")]
         public virtual Register register { get; set; }
         [ForeignKey("register")]
@@ -69,6 +80,18 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Versjonsnummer:")]
         public int versionNumber { get; set; }
+
+        [Display(Name = "Dokument url:")]
+        public string documentUrl { get; set; }
+
+        [Display(Name = "Godkjennongsdokument:")]
+        public string approvalDocument { get; set; }
+
+        [Display(Name = "Godkjenningsreferanse:")]
+        public string approvalReference { get; set; }
+        
+        [Display(Name = "Godkjent")]
+        public bool? Accepted { get; set; }
 
 
 

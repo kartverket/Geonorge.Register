@@ -20,20 +20,12 @@ namespace Kartverket.Register.Models
         // logos will be stored in this directory
         public const string DataDirectory = "documents/";
 
-        [Display(Name = "Thumbnail:")]
+        [Display(Name = "Miniatyrbilde:")]
         public string thumbnail { get; set; }
         [Display(Name = "Dokumenteier:")]
         [ForeignKey("documentowner")]
         public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
-        [Display(Name = "Dokument url:")]
-        public string documentUrl { get; set; }
-        [Display(Name = "Godkjennongsdokument:")]
-        public string approvalDocument { get; set; }
-        [Display(Name = "Godkjenningsreferanse:")]
-        public string approvalReference { get; set; }
-        [Display(Name = "Godkjent")]
-        public bool? Accepted { get; set; }
         
 	}//end Document
 }//end namespace Datamodell

@@ -64,10 +64,7 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
             document.register = register;
 
-            if (register.parentRegisterId != null)
-            {
-                document.register.parentRegister = register.parentRegister;
-            }
+            if (register.parentRegisterId != null) document.register.parentRegister = register.parentRegister;
 
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
@@ -87,18 +84,15 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
         {
             // Finn register         
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
 
             string parentRegisterOwner = null;
-            if (register.parentRegisterId != null)
-            {
-                parentRegisterOwner = register.parentRegister.owner.seoname;
-            }
+            if (register.parentRegisterId != null) parentRegisterOwner = register.parentRegister.owner.seoname;
             ValidationName(document, register);
+
             if (ModelState.IsValid)
             {
                 //Tildel verdi til dokumentobjektet
@@ -168,7 +162,6 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/versjon/{registername}/{itemOwner}/{itemname}/ny")]
         public ActionResult CreateNewVersion(string parentRegister, string registername, string itemname)
         {
-
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
@@ -271,7 +264,8 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && document.register.accessId == 2 && document.documentowner.name.ToLower() == user.ToLower()))
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor")
+                && document.register.accessId == 2 && document.documentowner.name.ToLower() == user.ToLower()))
             {
                 Viewbags(document);
                 return View(document);
@@ -286,10 +280,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail)
+        public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
             Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
+            Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
 
             if (ModelState.IsValid)
@@ -300,65 +295,46 @@ namespace Kartverket.Register.Controllers
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
                 if (document.approvalReference != null) originalDocument.approvalReference = document.approvalReference;
-                if (document.Accepted == true)
-                {
-                    originalDocument.Accepted = true;
-                    originalDocument.dateAccepted = DateTime.Now;
 
-                    if (document.dateAccepted != null)
+                // Finn alle dokumenter i versjonegruppen
+                var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
+
+                originalDocument.Accepted = document.Accepted;
+                if (document.Accepted == true && originalDocument.statusId == "Submitted")
+                {
+                    //Endre status på nåværende gjeldende versjon
+                    foreach (Document item in allVersions)
                     {
-                        originalDocument.Accepted = true;
+                        if (item.statusId == "Valid")
+                        {
+                            item.statusId = "Superseded";
+                            item.modified = DateTime.Now;
+                            // TODO dato erstattet
+                        }
+                    }
+                    db.SaveChanges();
+                    //Sett dette dokumentet som ny gjeldende versjon
+                    versjonsgruppe.currentVersion = originalDocument.systemId;
+                    originalDocument.statusId = "Valid";
+                    if (!string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
+                    {
                         originalDocument.dateAccepted = document.dateAccepted;
                     }
-                }
-                else if (document.Accepted == false)
-                {
-                    originalDocument.Accepted = false;
-                    originalDocument.dateAccepted = null;
+                    else {
+                        originalDocument.dateAccepted = DateTime.Now;
+                    }                    
                 }
 
-                else
+                if (retired || document.Accepted == false)
                 {
-                    originalDocument.dateAccepted = null;
-                }
-
-                if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
-                {
-                    originalDocument.documentUrl = document.documentUrl;
-                }
-
-                if (document.statusId != null)
-                {
-                    Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
-
-                    // Finn alle dokumenter i versjonegruppen
-                    var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
-                    if (originalDocument.statusId != "Valid" && document.statusId == "Valid")
-                    {
-                        //Endre status på nåværende gjeldende versjon
-                        foreach (Document item in allVersions)
-                        {
-                            if (item.statusId == "Valid")
-                            {
-                                item.statusId = "Superseded";
-                                item.modified = DateTime.Now;
-                            }
-                        }
-                        db.SaveChanges();
-
-                        // sett dette dokumentet til å være ny gjeldende versjon
-                        versjonsgruppe.currentVersion = originalDocument.systemId;
-                        originalDocument.statusId = document.statusId;
-                    }
-
-                    else if (originalDocument.statusId == "Valid" && document.statusId != "Valid")
-                    {
+                    if (originalDocument.statusId == "Valid")
+                    {   
                         if (allVersions.Count() > 1)
                         {
                             // Sett gjeldende versjon ut fra status...                            
-                            foreach (var item in allVersions.OrderByDescending(o => o.modified))
+                            foreach (var item in allVersions.Where(o => o.statusId == "Superseded").OrderByDescending(o => o.dateAccepted))
                             {
-                                if (item.statusId == "Superseded" && item.systemId != document.systemId)
+                                if (item.systemId != document.systemId)
                                 {
                                     versjonsgruppe.currentVersion = item.systemId;
                                     item.statusId = "Valid";
@@ -372,20 +348,23 @@ namespace Kartverket.Register.Controllers
                                 Document nyGjeldendeVersjon = (Document)allVersions.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                                 versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                             }
-                            originalDocument.statusId = document.statusId;
-                        }
-                        else
-                        {
-                            originalDocument.statusId = document.statusId;
                         }
                     }
-                    else
+                    if (originalDocument.statusId == "Submitted" || originalDocument.statusId == "Valid")
                     {
-                        originalDocument.statusId = document.statusId;
+                        originalDocument.statusId = "NotAccepted";
                     }
-                    originalDocument.statusId = document.statusId;
+                    if (retired)
+                    {
+                        originalDocument.statusId = "Retired";
+                        // sett dato for retiredment. 
+                    }                                       
                 }
 
+                if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
+                {
+                    originalDocument.documentUrl = document.documentUrl;
+                }
                 if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
 
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;

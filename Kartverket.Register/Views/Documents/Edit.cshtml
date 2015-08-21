@@ -19,22 +19,29 @@
         }
         if (document.getElementById('accepted').checked == false && document.getElementById('not-accepted').checked == false) {
             disable();
+            document.getElementById('retired').hidden = true;
+        }
+
+        if ((document.getElementById('accepted').checked == true || document.getElementById('not-accepted').checked == true) && @Model.statusId != "Superseded") {
+            document.getElementById('retired').hidden = false;
+        }
+
+        if (@Model.statusId == "Retired" || @Model.statusId == "Superseded") {
+            document.getElementById('accepted').disabled == true
+            document.getElementById('not-accepted').disabled == true
         }
     }
 
     function disable() {
-        document.getElementById('approvalDate').disabled = true;
-        document.getElementById('approvalDoc').disabled = true;
-        document.getElementById('approvalRef').disabled = true;
-        $("#statusId option[value='Valid']").attr("disabled", "disabled");
+        document.getElementById('approvalDate').hidden = true;
+        document.getElementById('approvalDoc').hidden = true;
+        document.getElementById('approvalRef').hidden = true;
     }
 
     function enable() {
-        document.getElementById('approvalDate').disabled = false;
-        document.getElementById('approvalDoc').disabled = false;
-        document.getElementById('approvalRef').disabled = false;
-        $("#statusId option[value='Submitted']").attr("disabled", "disabled");
-        $("#statusId option[value='NotAccepted']").attr("disabled", "disabled");
+        document.getElementById('approvalDate').hidden = false;
+        document.getElementById('approvalDoc').hidden = false;
+        document.getElementById('approvalRef').hidden = false;
     }
 
 
@@ -76,6 +83,7 @@
         @Html.HiddenFor(model => model.registerId)
         @Html.HiddenFor(model => model.versionNumber)
         @Html.HiddenFor(model => model.versioningId)
+        @Html.HiddenFor(model => model.statusId)
 
         @if (Request.IsAuthenticated)
         {
@@ -89,9 +97,19 @@
                     <div class="col-md-1">
                         @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) Nei
                     </div>
+                    <div class="col-md-1" id="retired">
+                        @Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "form-control" } }) Utgått
+                    </div>
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.statusId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <p>@Model.status.description</p>
+                    </div>
+                </div>
+
+                <div class="form-group" id="approvalDate">
                     @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
@@ -99,27 +117,19 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="approvalDoc">
                     @Html.LabelFor(model => model.approvalDocument, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.approvalDocument, new { htmlAttributes = new { @id = "approvalDoc", @class = "form-control" } })
+                        @Html.EditorFor(model => model.approvalDocument, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.approvalDocument, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="approvalRef">
                     @Html.LabelFor(model => model.approvalReference, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.approvalReference, new { htmlAttributes = new { @id = "approvalRef", @class = "form-control" } })
+                        @Html.EditorFor(model => model.approvalReference, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.approvalReference, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.statusId, "Status:", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -129,6 +139,7 @@
                 @Html.HiddenFor(model => model.submitterId)
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
+                @Html.HiddenFor(model => model.statusId)
             }
             else
             {
@@ -185,6 +196,7 @@
                     <hr />
                     <br />
                     <h3>Dokumentgodkjenning</h3>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-1">
@@ -193,9 +205,12 @@
                         <div class="col-md-1">
                             @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) Nei
                         </div>
+                        <div class="col-md-1" id="retired">
+                            @Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "form-control" } }) Utgått
+                        </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="approvalDate">
                         @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
@@ -203,30 +218,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="approvalDoc">
                         @Html.LabelFor(model => model.approvalDocument, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.approvalDocument, new { htmlAttributes = new { @id = "approvalDoc", @class = "form-control" } })
+                            @Html.EditorFor(model => model.approvalDocument, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.approvalDocument, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="approvalRef">
                         @Html.LabelFor(model => model.approvalReference, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.approvalReference, new { htmlAttributes = new { @id = "approvalRef", @class = "form-control" } })
+                            @Html.EditorFor(model => model.approvalReference, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.approvalReference, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.statusId, "Status:", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
                 }
             }
         }

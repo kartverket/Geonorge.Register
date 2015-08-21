@@ -9,39 +9,40 @@
     }
     else
     {
+
         <table class="table table-responsive">
             <tr>
-                <th>
+                <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Tittel
                 </th>
-                <th>
+                <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Eier
                 </th>
-                <th>
+                <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Versjon
                 </th>
-                <th>
+                <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Status
                 </th>
             </tr>
 
             @foreach (Kartverket.Register.Models.Document item in Model.suggestions)
-            {
+                {
                 <tr>
-                    <td>
+                    <td class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
                     </td>
-                    <td title="Eier: @item.documentowner.name">
+                    <td title="Eier: @item.documentowner.name" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         @Html.DisplayFor(modelItem => item.documentowner.name)
                     </td>
-                    <td title="Versjonsnummer: @item.versionNumber">
+                    <td title="Versjonsnummer: @item.versionNumber" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         @Html.DisplayFor(modelItem => item.versionNumber)
                     </td>
-                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">
+                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>
                 </tr>
-            }
+                }
         </table>
     }
 </div>

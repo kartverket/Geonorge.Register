@@ -463,6 +463,7 @@ namespace Kartverket.Register.Controllers
                         Document nyGjeldendeVersjon = (Document)documentVersions.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
                         versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
                     }
+                    db.SaveChanges();
                 }
             }
 

@@ -109,10 +109,6 @@
         {
             <span class="small">Godkjent: @Html.DisplayFor(modelItem => Model.dateAccepted)</span><br />
         }
-        @if (Model.dateNotAccepted != null)
-        {
-            <span class="small">Ikke godkjent: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span><br />
-        }
         @if (Model.dateSuperseded != null)
         {
             <span class="small">Erstattet: @Html.DisplayFor(modelItem => Model.dateSuperseded)</span><br />
@@ -120,6 +116,10 @@
         @if (Model.DateRetired != null)
         {
             <span class="small">Utgått: @Html.DisplayFor(modelItem => Model.DateRetired)</span><br />
+        }
+        @if (Model.dateNotAccepted != null)
+        {
+            <span class="small">Ikke godkjent: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span><br />
         }
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">

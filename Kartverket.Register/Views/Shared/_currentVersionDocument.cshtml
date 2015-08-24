@@ -104,31 +104,30 @@
             {
                 <p>Endret: @Html.DisplayFor(modelItem => item.modified)</p>
             }
-
-                @if (item.dateAccepted != null)
-                {
-                    <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
-                }
-                @if (item.approvalDocument != null)
-                {
-                    <p>Godkjenningsdokument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
-                }
-                @if (item.approvalReference != null)
-                {
-                    <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalDocument)">Vis</a></p>
-                }
-                @if (item.dateNotAccepted != null)
-                {
-                    <p>Ikke godkjent: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
-                }                
-                @if (item.dateSuperseded != null)
-                {
-                    <p>Erstattet: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
-                }
-                @if (item.DateRetired != null)
-                {
-                    <p>Utgått: @Html.DisplayFor(modelItem => item.DateRetired)</p>
-                }
+            @if (item.approvalDocument != null)
+            {
+                <p>Godkjenningsdokument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
+            }
+            @if (item.approvalReference != null)
+            {
+                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalDocument)">Vis</a></p>
+            }
+            @if (item.dateAccepted != null)
+            {
+                <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+            }                    
+            @if (item.dateSuperseded != null)
+            {
+                <p>Erstattet: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
+            }
+            @if (item.DateRetired != null)
+            {
+                <p>Utgått: @Html.DisplayFor(modelItem => item.DateRetired)</p>
+            }            
+            @if (item.dateNotAccepted != null)
+            {
+                <p>Ikke godkjent: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
+            }        
             
         </div>
     </div>

@@ -308,11 +308,12 @@ namespace Kartverket.Register.Controllers
                         if (item.statusId == "Valid")
                         {
                             item.statusId = "Superseded";
+                            item.dateSuperseded = DateTime.Now;
                             item.modified = DateTime.Now;
-                            // TODO dato erstattet
                         }
                     }
                     db.SaveChanges();
+
                     //Sett dette dokumentet som ny gjeldende versjon
                     versjonsgruppe.currentVersion = originalDocument.systemId;
                     originalDocument.statusId = "Valid";
@@ -338,6 +339,7 @@ namespace Kartverket.Register.Controllers
                                 {
                                     versjonsgruppe.currentVersion = item.systemId;
                                     item.statusId = "Valid";
+                                    item.dateSuperseded = null;
                                     item.modified = DateTime.Now;
                                     break;
                                 }
@@ -350,15 +352,16 @@ namespace Kartverket.Register.Controllers
                             }
                         }
                     }
-                    if (originalDocument.statusId == "Submitted" || originalDocument.statusId == "Valid")
-                    {
-                        originalDocument.statusId = "NotAccepted";
-                    }
+
                     if (retired)
                     {
                         originalDocument.statusId = "Retired";
-                        // sett dato for retiredment. 
-                    }                                       
+                        originalDocument.DateRetired = DateTime.Now;
+                    }
+                    else {
+                        originalDocument.statusId = "NotAccepted";
+                        originalDocument.dateNotAccepted = DateTime.Now;
+                    }             
                 }
 
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)

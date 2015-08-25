@@ -60,7 +60,7 @@
             </div>
         }
         else
-        *@
+    *@
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         @if (Model.register.containedItemClass == "Document")
         {
@@ -74,7 +74,7 @@
         {
             <p>ID: <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
-                
+
         @if (Model.register.containedItemClass != "NameSpace")
         {
             <p>
@@ -94,7 +94,7 @@
         {
             <span>Eier: @documentOwner</span><br />
         }
-              
+
         <span>Versjons ID @Model.versionNumber</span><br>
         @if (Model.versionName != null)
         {
@@ -113,17 +113,17 @@
         {
             <span class="small">Godkjent: @Html.DisplayFor(modelItem => Model.dateAccepted)</span>
         }
-                @if (Model.dateSuperseded != null)
-                {
-                    <br /><span class="small">Erstattet: @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
+        @if (Model.dateSuperseded != null)
+        {
+            <br /><span class="small">Erstattet: @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
         }
-                @if (Model.DateRetired != null)
-                {
-                    <br /><span class="small">Utgått: @Html.DisplayFor(modelItem => Model.DateRetired)</span>
-        } 
-                @if (Model.dateNotAccepted != null)
-                {
-                    <br /><span class="small">Ikke godkjent: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
+        @if (Model.DateRetired != null)
+        {
+            <br /><span class="small">Utgått: @Html.DisplayFor(modelItem => Model.DateRetired)</span>
+        }
+        @if (Model.dateNotAccepted != null)
+        {
+            <br /><span class="small">Ikke godkjent: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
         }
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -134,7 +134,7 @@
     <br />
 
     @if (Model.register.containedItemClass == "Organization")
-    { 
+    {
         @Html.Partial("_detailsOrganization")
     }
     @if (Model.register.containedItemClass == "Document")
@@ -186,16 +186,16 @@
         {
 
             @*if (Model.register.containedItemClass == "Document")
-            {
-                if (Model.register.parentRegisterId != null)
                 {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
-                }
-                else
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
-                }
-            }*@
+                    if (Model.register.parentRegisterId != null)
+                    {
+                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
+                    }
+                }*@
 
             if (Model.register.containedItemClass == "CodelistValue")
             {
@@ -212,7 +212,7 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Rediger</a>
                 <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-            } 
+            }
             if (Model.register.containedItemClass == "EPSG")
             {
                 <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>

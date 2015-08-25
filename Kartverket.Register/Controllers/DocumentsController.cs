@@ -313,11 +313,18 @@ namespace Kartverket.Register.Controllers
                             {
                                 if (item.dateAccepted < document.dateAccepted)
                                 {
+                                    if (string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
+                                    {
+                                        originalDocument.dateAccepted = DateTime.Now;
+                                    }
+                                    else
+                                    {
+                                        originalDocument.dateAccepted = document.dateAccepted;
+                                    }
                                     item.statusId = "Superseded";
-                                    item.dateSuperseded = DateTime.Now;
+                                    item.dateSuperseded = originalDocument.dateAccepted;
                                     item.modified = DateTime.Now;
                                     originalDocument.statusId = "Valid";
-                                    originalDocument.dateAccepted = document.dateAccepted;
                                     versjonsgruppe.currentVersion = originalDocument.systemId;
                                 }
                                 if (originalDocument.statusId == "Submitted")

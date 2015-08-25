@@ -302,34 +302,51 @@ namespace Kartverket.Register.Controllers
                 originalDocument.Accepted = document.Accepted;
                 if (document.Accepted == true && originalDocument.statusId == "Submitted")
                 {
-                    //Endre status på nåværende gjeldende versjon
-                    foreach (Document item in allVersions)
+                    if (allVersions.Count > 1)
                     {
-                        if (item.statusId == "Valid")
+                        //Endre status på nåværende gjeldende eller erstattet versjon
+                        foreach (Document item in allVersions)
                         {
-                            item.statusId = "Superseded";
-                            item.dateSuperseded = DateTime.Now;
-                            item.modified = DateTime.Now;
+                            if (item.statusId == "Valid")
+                            {
+                                if (item.dateAccepted < document.dateAccepted)
+                                {
+                                    item.statusId = "Superseded";
+                                    item.dateSuperseded = DateTime.Now;
+                                    item.modified = DateTime.Now;
+                                    originalDocument.statusId = "Valid";
+                                    originalDocument.dateAccepted = document.dateAccepted;
+                                    versjonsgruppe.currentVersion = originalDocument.systemId;
+                                }
+                                if (originalDocument.statusId == "Submitted")
+                                {
+                                    originalDocument.statusId = "Superseded";
+                                    originalDocument.dateSuperseded = DateTime.Now;
+                                }
+                            }
                         }
+                    }
+                    else
+                    {
+                        originalDocument.statusId = "Valid";
+                        versjonsgruppe.currentVersion = originalDocument.systemId;
                     }
                     db.SaveChanges();
 
-                    //Sett dette dokumentet som ny gjeldende versjon
-                    versjonsgruppe.currentVersion = originalDocument.systemId;
-                    originalDocument.statusId = "Valid";
                     if (!string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
                     {
                         originalDocument.dateAccepted = document.dateAccepted;
                     }
-                    else {
+                    else
+                    {
                         originalDocument.dateAccepted = DateTime.Now;
-                    }                    
+                    }
                 }
 
                 if (retired || document.Accepted == false)
                 {
                     if (originalDocument.statusId == "Valid")
-                    {   
+                    {
                         if (allVersions.Count() > 1)
                         {
                             // Sett gjeldende versjon ut fra status...                            
@@ -358,10 +375,11 @@ namespace Kartverket.Register.Controllers
                         originalDocument.statusId = "Retired";
                         originalDocument.DateRetired = DateTime.Now;
                     }
-                    else {
+                    else
+                    {
                         originalDocument.statusId = "NotAccepted";
                         originalDocument.dateNotAccepted = DateTime.Now;
-                    }             
+                    }
                 }
 
                 if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
@@ -444,22 +462,19 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
             // Finn alle dokumenter i versjonsgruppen
-            if (versjonsgruppe != null)
+            if (document.statusId == "Valid")
             {
                 var documentVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
-
-                if (documentVersions.Count() != 0)
+                if (documentVersions.Count() > 0)
                 {
                     // Sett gjeldende versjon ut fra status...
-                    foreach (var item in documentVersions.OrderByDescending(o => o.modified))
+                    foreach (var item in documentVersions.Where(d => d.statusId == "Superseded").OrderByDescending(d => d.dateAccepted))
                     {
-                        if (item.statusId == "Superseded")
-                        {
-                            versjonsgruppe.currentVersion = item.systemId;
-                            item.statusId = "Valid";
-                            item.modified = DateTime.Now;
-                            break;
-                        }
+                        versjonsgruppe.currentVersion = item.systemId;
+                        item.statusId = "Valid";
+                        item.modified = DateTime.Now;
+                        item.dateSuperseded = null;
+                        break;                        
                     }
                     if (versjonsgruppe.currentVersion == document.systemId)
                     {
@@ -468,6 +483,7 @@ namespace Kartverket.Register.Controllers
                     }
                     db.SaveChanges();
                 }
+
             }
 
             db.RegisterItems.Remove(document);

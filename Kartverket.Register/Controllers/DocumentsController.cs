@@ -343,6 +343,28 @@ namespace Kartverket.Register.Controllers
                     }
                 }
 
+                if (document.dateAccepted != null && (originalDocument.dateAccepted != document.dateAccepted))
+                {
+                    originalDocument.dateAccepted = document.dateAccepted;
+
+                    //Endre status på nåværende gjeldende eller erstattet versjon
+                    foreach (Document item in allVersions)
+                    {
+                        if (item.statusId == "Superseded")
+                        {
+                            if (item.dateAccepted > document.dateAccepted)
+                            {
+                                item.statusId = "Valid";
+                                item.dateSuperseded = null;
+                                item.modified = DateTime.Now;
+                                originalDocument.statusId = "Superseded";
+                                originalDocument.dateSuperseded = DateTime.Now;
+                                versjonsgruppe.currentVersion =  item.systemId;
+                            }
+                        }
+                    }
+                }
+
                 if (retired || document.Accepted == false)
                 {
                     if (originalDocument.statusId == "Valid")

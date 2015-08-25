@@ -402,7 +402,25 @@ namespace Kartverket.Register.Controllers
                     else
                     {
                         originalDocument.statusId = "NotAccepted";
-                        originalDocument.dateNotAccepted = DateTime.Now;
+                        if (string.IsNullOrWhiteSpace(document.dateNotAccepted.ToString()))
+                        {
+                            originalDocument.dateNotAccepted = DateTime.Now;
+                        }
+                        else {
+                            originalDocument.dateNotAccepted = document.dateNotAccepted;
+                        }
+                        
+                    }
+                    if (originalDocument.Accepted == false)
+                    {
+                        if (string.IsNullOrWhiteSpace(document.dateNotAccepted.ToString()))
+                        {
+                            originalDocument.dateNotAccepted = DateTime.Now;
+                        }
+                        else
+                        {
+                            originalDocument.dateNotAccepted = document.dateNotAccepted;
+                        }
                     }
                 }
 

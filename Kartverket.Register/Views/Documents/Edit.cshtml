@@ -12,14 +12,16 @@
 
     window.onload = function () {
         if (document.getElementById('accepted').checked == true) {
+            document.getElementById('retired').hidden = false;
             enable();
         }
         if (document.getElementById('not-accepted').checked == true) {
+            document.getElementById('retired').hidden = false;
             disable();
         }
         if (document.getElementById('accepted').checked == false && document.getElementById('not-accepted').checked == false) {
-            disable();
             document.getElementById('retired').hidden = true;
+            disable();
         }
 
         if ((document.getElementById('accepted').checked == true || document.getElementById('not-accepted').checked == true) && @Model.statusId != "Superseded") {
@@ -36,12 +38,20 @@
         document.getElementById('approvalDate').hidden = true;
         document.getElementById('approvalDoc').hidden = true;
         document.getElementById('approvalRef').hidden = true;
+        if (document.getElementById('accepted').checked == false && document.getElementById('not-accepted').checked == false) {
+            document.getElementById('NotAcceptedate').hidden = true;
+        }
+        else{
+            document.getElementById('NotAcceptedate').hidden = false;
+        }       
     }
 
     function enable() {
         document.getElementById('approvalDate').hidden = false;
         document.getElementById('approvalDoc').hidden = false;
         document.getElementById('approvalRef').hidden = false;
+        document.getElementById('NotAcceptedate').hidden = true;
+        document.getElementById('retired').hidden = false;
     }
 
 
@@ -107,6 +117,14 @@
                     <div class="col-md-10">
                         @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group" id="NotAcceptedate">
+                    @Html.LabelFor(model => model.dateNotAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.dateNotAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.dateNotAccepted, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -216,6 +234,14 @@
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="NotAcceptedate">
+                        @Html.LabelFor(model => model.dateNotAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.dateNotAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.dateNotAccepted, "", new { @class = "text-danger" })
                         </div>
                     </div>
 

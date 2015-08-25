@@ -166,6 +166,7 @@ namespace Kartverket.Register.Controllers
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
             Document document = (Document)_registerItemService.getCurrentRegisterItem(parentRegister, registername, itemname);
+            document.versionName = null;
             if (document == null)
             {
                 return HttpNotFound();
@@ -295,6 +296,7 @@ namespace Kartverket.Register.Controllers
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
                 if (document.approvalReference != null) originalDocument.approvalReference = document.approvalReference;
+                if (document.versionName != null) originalDocument.versionName = document.versionName;
 
                 // Finn alle dokumenter i versjonegruppen
                 var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);

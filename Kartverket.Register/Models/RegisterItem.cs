@@ -78,8 +78,11 @@ namespace Kartverket.Register.Models
         public Guid? versioningId { get; set; }
         public virtual Version versioning { get; set; }
 
-        [Display(Name = "Versjonsnummer:")]
+        [Display(Name = "Versjons ID:")]
         public int versionNumber { get; set; }
+
+        [Display(Name = "Versjonsnavn:")]
+        public string versionName { get; set; }
 
         [Display(Name = "Dokument url:")]
         public string documentUrl { get; set; }

@@ -74,8 +74,7 @@
         {
             <p>ID: <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
-        <br/>
-        
+                
         @if (Model.register.containedItemClass != "NameSpace")
         {
             <p>
@@ -91,15 +90,20 @@
         {
             <span>Innsender: @Model.submitter.name</span><br>
         }
+        @if (documentOwner != null)
+        {
+            <span>Eier: @documentOwner</span><br />
+        }
               
-        <span>Versjon: @Model.versionNumber</span><br>
+        <span>Versjons ID @Model.versionNumber</span><br>
+        @if (Model.versionName != null)
+        {
+            <span>Utgave: @Model.versionName</span><br />
+        }
+
         @if (datasetOwner != null)
         {
             <span>Eier: @datasetOwner</span>
-        }
-        @if (documentOwner != null)
-        {
-            <span>Eier: @documentOwner</span>
         }
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">

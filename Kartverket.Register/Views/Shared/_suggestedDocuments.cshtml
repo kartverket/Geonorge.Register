@@ -19,7 +19,7 @@
                     Eier
                 </th>
                 <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                    Versjon
+                    Utgave
                 </th>
                 <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Status
@@ -35,8 +35,8 @@
                     <td title="Eier: @item.documentowner.name" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         @Html.DisplayFor(modelItem => item.documentowner.name)
                     </td>
-                    <td title="Versjonsnummer: @item.versionNumber" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        @Html.DisplayFor(modelItem => item.versionNumber)
+                    <td title="Utgave: @item.versionName" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        @Html.DisplayFor(modelItem => item.versionName)
                     </td>
                     <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())" class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>

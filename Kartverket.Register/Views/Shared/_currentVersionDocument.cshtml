@@ -95,7 +95,12 @@
             {
                 <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
             }
-            <p><span>Versjon: </span>@item.versionNumber</p>
+            
+            <p><span>Versjons ID: </span>@item.versionNumber</p>
+            @if (!string.IsNullOrWhiteSpace(item.versionName))
+            {
+                <p><span>Utgave: </span>@item.versionName</p>
+            }            
             @if (item.dateSubmitted != null)
             {
                 <p>Innsendt: @Html.DisplayFor(modelItem => item.dateSubmitted)</p>

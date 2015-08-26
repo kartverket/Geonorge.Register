@@ -87,7 +87,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Dokument url:")]
         public string documentUrl { get; set; }
 
-        [Display(Name = "Godkjennongsdokument:")]
+        [Display(Name = "Godkjenningstekst:")]
         public string approvalDocument { get; set; }
 
         [Display(Name = "Godkjenningsreferanse:")]

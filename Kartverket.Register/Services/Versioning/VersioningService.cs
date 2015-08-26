@@ -70,13 +70,14 @@ namespace Kartverket.Register.Services.Versioning
                 historicalItems.Add(item);
             }
 
-
             return new VersionsItem
             {
                 currentVersion = currentVersion,
                 historical = historicalItems,
                 suggestions = suggestionsItems
             };
+
+            
         }
     }
 }

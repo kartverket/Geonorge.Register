@@ -225,11 +225,14 @@ namespace Kartverket.Register.Controllers
         //TODO - API
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}")]
-        public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner)
+        public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner, string sorting)
         {
+            ViewBag.sortSubmittedDate = sorting == "Date" ? "date_desc" : "Date";
             _versioningService = new VersioningService(db);
             VersionsItem versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
-            RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
+            
+            RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem, sorting);
+
             ViewBag.registerItemOwner = registerItemOwner;
             return View(model);
         }

@@ -14,30 +14,8 @@ namespace Kartverket.Register.Models.ViewModels
         public RegisterItemVeiwModel(VersionsItem versionsItem)
         {
             currentVersion = versionsItem.currentVersion;
-            historical = versionsItem.historical;
-            suggestions = versionsItem.suggestions;            
+            historical = versionsItem.historical.OrderByDescending(s => s.dateSubmitted);
+            suggestions = versionsItem.suggestions.OrderByDescending(s => s.dateSubmitted);            
         }
-
-        public RegisterItemVeiwModel(VersionsItem versionsItem, string sorting)
-        {
-            currentVersion = versionsItem.currentVersion;
-            historical = versionsItem.historical;
-            suggestions = versionsItem.suggestions;
-
-
-           switch (sorting)
-           {
-              case "Date":
-                 historical = historical.OrderBy(s => s.dateSubmitted);
-                 break;
-              case "date_desc":
-                 historical = historical.OrderByDescending(s => s.dateSubmitted);
-                 break;
-              default:
-                 historical = historical.OrderBy(s => s.versionNumber);
-                 break;
-           }
-        }
-
     }
 }

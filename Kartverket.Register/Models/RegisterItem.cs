@@ -95,9 +95,6 @@ namespace Kartverket.Register.Models
         
         [Display(Name = "Godkjent")]
         public bool? Accepted { get; set; }
-
-
-
     //end RegisterItem
     }
 }//end namespace Datamodell

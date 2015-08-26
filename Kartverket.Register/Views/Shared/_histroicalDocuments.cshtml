@@ -20,13 +20,13 @@
                     Utgave
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Innsendt
-                </th>
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Status
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Godkjent
+                </th>
+                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" title="Dato godkjent/ikke godkjent">
+                    Dato
                 </th>
             </tr>
             @foreach (Kartverket.Register.Models.Document item in Model.historical)
@@ -41,26 +41,28 @@
                     <td title="Utgave: @item.versionName">
                         @Html.DisplayFor(modelItem => item.versionName)
                     </td>
-                    <td title="innsendt: @item.dateSubmitted">
-                        @Html.DisplayFor(modelItem => item.dateSubmitted)
-                    </td>
                     <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>
-
                     @if (item.Accepted == true)
                     {
-                        <td title="Godkjent)">
+                        <td title="Godkjent">
                             Godkjent
+                        </td>
+                        <td title="Dato godkjent @Html.DisplayFor(modelItem => item.dateAccepted)">
+                            @Html.DisplayFor(modelItem => item.dateAccepted)
                         </td>
                     }
                     else
                     {
-                        <td title="Ikke godkjent)">
+                        <td title="Ikke godkjent">
                             Ikke godkjent
                         </td>
+                        <td title="Dato ikke godkjent @Html.DisplayFor(modelItem => item.dateNotAccepted)">
+                            @Html.DisplayFor(modelItem => item.dateNotAccepted)
+                        </td>
                     }
-                    
+
                 </tr>
             }
         </table>

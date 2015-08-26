@@ -81,7 +81,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Versjons ID:")]
         public int versionNumber { get; set; }
 
-        [Display(Name = "Versjonsnavn:")]
+        [Display(Name = "Utgave:")]
         public string versionName { get; set; }
 
         [Display(Name = "Dokument url:")]

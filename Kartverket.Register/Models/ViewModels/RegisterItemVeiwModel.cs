@@ -14,7 +14,7 @@ namespace Kartverket.Register.Models.ViewModels
         public RegisterItemVeiwModel(VersionsItem versionsItem)
         {
             currentVersion = versionsItem.currentVersion;
-            historical = versionsItem.historical.OrderByDescending(s => s.dateSubmitted);
+            historical = versionsItem.historical.OrderByDescending(s => s.dateAccepted);
             suggestions = versionsItem.suggestions.OrderByDescending(s => s.dateSubmitted);            
         }
     }

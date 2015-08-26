@@ -26,7 +26,7 @@
                     Godkjent
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2" title="Dato godkjent/ikke godkjent">
-                    Dato
+                    Dato godkjent
                 </th>
             </tr>
             @foreach (Kartverket.Register.Models.Document item in Model.historical)
@@ -49,20 +49,16 @@
                         <td title="Godkjent">
                             Godkjent
                         </td>
-                        <td title="Dato godkjent @Html.DisplayFor(modelItem => item.dateAccepted)">
-                            @Html.DisplayFor(modelItem => item.dateAccepted)
-                        </td>
                     }
                     else
                     {
                         <td title="Ikke godkjent">
                             Ikke godkjent
                         </td>
-                        <td title="Dato ikke godkjent @Html.DisplayFor(modelItem => item.dateNotAccepted)">
-                            @Html.DisplayFor(modelItem => item.dateNotAccepted)
-                        </td>
                     }
-
+                    <td title="Dato Godkjent @Html.DisplayFor(modelItem => item.dateAccepted)">
+                        @Html.DisplayFor(modelItem => item.dateAccepted)
+                    </td>
                 </tr>
             }
         </table>

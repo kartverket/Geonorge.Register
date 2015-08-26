@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models;
+﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,14 @@ namespace Kartverket.Register.Services.Register
                 {
                     foreach (Document item in register.items)
                     {
-                        registerItems.Add(item);
+                        string role = HtmlHelperExtensions.GetSecurityClaim("role");
+                        string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+
+                        if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || user == item.documentowner.name || user == item.submitter.name || role == "nd.metadata_admin")
+                        {
+                            registerItems.Add(item);
+                        }
+
                     }
                 }
             }
@@ -75,7 +83,7 @@ namespace Kartverket.Register.Services.Register
                 }
 
             }
-            else 
+            else
             {
                 registerItems = register.items.ToList();
             }
@@ -113,9 +121,15 @@ namespace Kartverket.Register.Services.Register
         {
             foreach (Document item in register.items)
             {
-                if (item.documentowner.seoname == filter.filterOrganization)
+                string role = HtmlHelperExtensions.GetSecurityClaim("role");
+                string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+
+                if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || user == item.documentowner.name || user == item.submitter.name || role == "nd.metadata_admin")
                 {
-                    filterRegisterItems.Add(item);
+                    if (item.documentowner.seoname == filter.filterOrganization)
+                    {
+                        filterRegisterItems.Add(item);
+                    }
                 }
             }
         }

@@ -25,8 +25,8 @@
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
         <li class="active pull-right">@Model.currentVersion.name</li>
     }
-    
-    
+
+
 }
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -37,97 +37,97 @@
             <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">Forslag</a></li>
             <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">Historiske</a></li>
         </ul>
-            <br />
+        <br />
     </div>
 
-        @if (Model.currentVersion.register.containedItemClass == "Organization")
-        {
-            @Html.Partial("_detailsOrganization")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "Document")
-        {
-            <div class="tab-content">
-                <div class="tab-pane active" id="gjeldende">
-                    @Html.Partial("_currentVersionDocument", Model)
-                </div>
-                <div class="tab-pane" id="historiske">
-                    @Html.Partial("_histroicalDocuments", Model)
-                </div>
-                <div class="tab-pane" id="forslag">
-                    @Html.Partial("_suggestedDocuments", Model)
-                </div>
+    @if (Model.currentVersion.register.containedItemClass == "Organization")
+    {
+        @Html.Partial("_detailsOrganization")
+    }
+    @if (Model.currentVersion.register.containedItemClass == "Document")
+    {
+        <div class="tab-content">
+            <div class="tab-pane active" id="gjeldende">
+                @Html.Partial("_currentVersionDocument", Model)
             </div>
-        }
-        @if (Model.currentVersion.register.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_detailsDataset")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_detailsEpsg")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "Register")
-        {
-            @Html.Partial("_detailsSubregister")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
-        {
-            @Html.Partial("_detailsCodelistValue")
-        }
-        
-    </div>
+            <div class="tab-pane" id="historiske">
+                @Html.Partial("_histroicalDocuments", Model)
+            </div>
+            <div class="tab-pane" id="forslag">
+                @Html.Partial("_suggestedDocuments", Model)
+            </div>
+        </div>
+    }
+    @if (Model.currentVersion.register.containedItemClass == "Dataset")
+    {
+        @Html.Partial("_detailsDataset")
+    }
+    @if (Model.currentVersion.register.containedItemClass == "EPSG")
+    {
+        @Html.Partial("_detailsEpsg")
+    }
+    @if (Model.currentVersion.register.containedItemClass == "Register")
+    {
+        @Html.Partial("_detailsSubregister")
+    }
+    @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
+    {
+        @Html.Partial("_detailsCodelistValue")
+    }
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <hr />
-        @if (Request.IsAuthenticated)
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <hr />
+    @if (Request.IsAuthenticated)
+    {
+
+        if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
         {
-
-            if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
-            {      
-                if (Model.currentVersion.register.containedItemClass == "Organization")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
-                }
-                if (Model.currentVersion.register.containedItemClass == "Document")
-                {
-                    if (Model.currentVersion.register.parentRegisterId != null)
-                    {
-                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
-                    }
-                }                
-                if (Model.currentVersion.register.containedItemClass == "Dataset")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
-                }
-                if (Model.currentVersion.register.containedItemClass == "EPSG")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/rediger">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
-                }
-                if (Model.currentVersion.register.containedItemClass == "CodelistValue")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
-                }
-
-
+            if (Model.currentVersion.register.containedItemClass == "Organization")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
             }
+            if (Model.currentVersion.register.containedItemClass == "Document")
+            {
+                if (Model.currentVersion.register.parentRegisterId != null)
+                {
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                }
+                else
+                {
+                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.seoname/@documentOwner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
+                }
+            }
+            if (Model.currentVersion.register.containedItemClass == "Dataset")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger/">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+            }
+            if (Model.currentVersion.register.containedItemClass == "EPSG")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
+            }
+            if (Model.currentVersion.register.containedItemClass == "CodelistValue")
+            {
+                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
+            }
+
+
         }
-        
-        @if (@Model.currentVersion.register.parentRegister != null)
-        {
-            <a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
-        }
-        
+    }
+
+    @if (@Model.currentVersion.register.parentRegister != null)
+    {
+        <a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">Tilbake</a>
+    }
+    else
+    {
+        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
+    }
+
 
 </div>

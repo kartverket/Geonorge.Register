@@ -25,8 +25,8 @@ namespace Kartverket.Register.Services.Versioning
 
             Kartverket.Register.Models.Version versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
+            
             Guid currentVersionId = versjonsGruppe.currentVersion;
-
             List<Kartverket.Register.Models.RegisterItem> suggestionsItems = new List<Kartverket.Register.Models.RegisterItem>();
             List<Kartverket.Register.Models.RegisterItem> historicalItems = new List<Kartverket.Register.Models.RegisterItem>();
 

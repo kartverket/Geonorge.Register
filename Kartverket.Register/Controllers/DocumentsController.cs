@@ -335,7 +335,8 @@ namespace Kartverket.Register.Controllers
                             }
                         }
                     }
-                    else
+
+                    if (originalDocument.statusId == "Submitted")
                     {
                         originalDocument.statusId = "Valid";
                         versjonsgruppe.currentVersion = originalDocument.systemId;
@@ -356,7 +357,7 @@ namespace Kartverket.Register.Controllers
                 {
                     originalDocument.dateAccepted = document.dateAccepted;
 
-                    //Endre status på nåværende gjeldende eller erstattet versjon
+                    //Endre stuts på erstattede versjoner
                     foreach (Document item in allVersions)
                     {
                         if (item.statusId == "Superseded")
@@ -395,8 +396,14 @@ namespace Kartverket.Register.Controllers
                             db.SaveChanges();
                             if (versjonsgruppe.currentVersion == document.systemId)
                             {
-                                Document nyGjeldendeVersjon = (Document)allVersions.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
+                                Document nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired);
                                 versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+
+                                if (versjonsgruppe.currentVersion == document.systemId)
+                                {
+                                    nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "submitted").OrderByDescending(d => d.DateRetired);
+                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                                }                                
                             }
                         }
                     }
@@ -527,8 +534,14 @@ namespace Kartverket.Register.Controllers
                     }
                     if (versjonsgruppe.currentVersion == document.systemId)
                     {
-                        Document nyGjeldendeVersjon = (Document)documentVersions.OrderByDescending(o => o.dateSubmitted).FirstOrDefault();
+                        Document nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired);
                         versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+
+                        if (versjonsgruppe.currentVersion == document.systemId)
+                        {
+                            nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "submitted").OrderByDescending(d => d.DateRetired);
+                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        }
                     }
                     db.SaveChanges();
                 }

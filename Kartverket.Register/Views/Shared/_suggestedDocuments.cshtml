@@ -27,11 +27,9 @@
                     Status
                 </th>
             </tr>
-            
+
             @foreach (Kartverket.Register.Models.Document item in Model.suggestions)
             {
-                if (HtmlHelperExtensions.accessRegisterItem(item))
-                {
                 <tr>
                     <td>
                         <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
@@ -49,7 +47,6 @@
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>
                 </tr>
-                }
             }
         </table>
     }

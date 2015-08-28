@@ -39,7 +39,6 @@ namespace Kartverket.Register.Controllers
             {
                 list.Add(ConvertRegister(l, urlHelper));
             }
-
             return Ok(list);
         }
 
@@ -61,6 +60,7 @@ namespace Kartverket.Register.Controllers
         /// Gets subregister by name
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="parentregisterOwner">The search engine optimized name of the register owner</param>
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
@@ -87,15 +87,15 @@ namespace Kartverket.Register.Controllers
         }
 
         /// <summary>
-        /// Gets register item by register- organization- and registeritem-name 
+        /// Gets current and historical versions of register item by register- organization- and registeritem-name 
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
         /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]
         [Route("api/register/{register}/{itemowner}/{item}.{ext}")]
         [Route("api/register/{register}/{itemowner}/{item}")]
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}.{ext}")]
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]        
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         { 
@@ -105,7 +105,6 @@ namespace Kartverket.Register.Controllers
             var versjoner = GetVersions(rit, urlHelper);
             
             return Ok(versjoner);            
-            //return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
 
 
@@ -146,26 +145,6 @@ namespace Kartverket.Register.Controllers
             var rit = GetCurrentVersion(parentregister, register, item);
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
-
-        ///// <summary>
-        ///// Gets register item by parent-register, register- organization- registeritem-name  and version
-        ///// </summary>
-        ///// <param name="parentregister">The search engine optimized name of the parent register</param>
-        ///// <param name="registerowner">The search engine optimized name of the register owner</param>
-        ///// <param name="register">The search engine optimized name of the register</param>
-        ///// <param name="itemowner">The search engine optimized name of the register item owner</param>
-        ///// <param name="items">The search engine optimized name of the register item</param>
-        ///// <param name="items">The search engine optimized name of the register item</param>
-        //[Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}/{version}/no.{ext}")]
-        //[Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}/{version}/no")]
-        //[HttpGet]
-        //public IHttpActionResult GetSubregisterItemByNameAndVersion(string parentregister, string register, string itemowner, string item, int version)
-        //{
-        //    var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-        //    var it = GetRegister(parentregister, register);
-        //    var rit = GetVersion(parentregister, register, item, version);
-        //    return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
-        //}
 
         /// <summary>
         /// List items for specific organization 
@@ -435,7 +414,10 @@ namespace Kartverket.Register.Controllers
 
             foreach (var ri in queryresult.ToList())
             {
-                itemList.Add(ri);
+                if (ri.statusId != "Submitted" && ri.statusId != "NotAccepted") 
+                {
+                    itemList.Add(ri);
+                }                
             }
             if (itemList.Count() > 1)
             {

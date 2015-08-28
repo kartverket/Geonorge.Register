@@ -278,5 +278,15 @@ namespace Kartverket.Register.Services.Register
             Organization organization = queryResults.FirstOrDefault();
             return organization;
         }
+
+        public List<Models.Register> GetRegisters()
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.parentRegisterId == null
+                              select r;
+
+            return queryResult.ToList();
+                                
+        }
     }
 }

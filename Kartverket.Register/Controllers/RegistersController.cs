@@ -30,10 +30,10 @@ namespace Kartverket.Register.Controllers
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController()
+        public RegistersController(ISearchService searchService, IRegisterService registerService)
         {
-            _searchService = new SearchService(db);
-            _registerService = new RegisterService(db);
+            _searchService = searchService;
+            _registerService = registerService;
         }
 
         // GET: Registers

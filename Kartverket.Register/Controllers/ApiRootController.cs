@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.Search;
 using System;
 using System.Collections.Generic;
@@ -20,10 +21,12 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         private readonly ISearchService _searchService;
+        private readonly IRegisterService _registerService;
 
-        public ApiRootController(ISearchService searchService)
+        public ApiRootController(ISearchService searchService, IRegisterService registerService)
         {
             _searchService = searchService;
+            _registerService = registerService;
         }
 
         /// <summary>
@@ -33,13 +36,41 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisters()
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var list = new List<Models.Api.Register>();
-            foreach (var l in db.Registers.Include("owner").Include("manager").Where(w => w.parentRegisterId == null))
+
+            List<Models.Register> registers = _registerService.GetRegisters();
+            foreach (Models.Register register in registers)
             {
-                list.Add(ConvertRegister(l, urlHelper));
+                list.Add(ConvertRegister(register, Request.RequestUri));
             }
+
             return Ok(list);
+        }
+
+        private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
+        {
+            string registerId = uri.Scheme + "://" + uri.Authority;
+            if (item.parentRegisterId != null)
+            {
+                registerId = registerId + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
+            }
+            else
+            {
+                registerId = registerId + "/register/" + item.seoname;
+            }
+            var tmp = new Models.Api.Register
+            {
+                label = item.name,
+                id = registerId,
+                contentsummary = item.description,
+                lastUpdated = item.modified,
+                targetNamespace = item.targetNamespace
+            };
+            if (item.owner != null) tmp.owner = item.owner.seoname;
+            if (item.manager != null) tmp.manager = item.manager.seoname;
+
+            return tmp;
+
         }
 
         /// <summary>
@@ -158,11 +189,8 @@ namespace Kartverket.Register.Controllers
 
             SearchParameters parameters = new SearchParameters();
             parameters.Text = name;
-
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-
             SearchResult searchResult = _searchService.Search(parameters);
-
             foreach (var it in searchResult.Items)
             {
                 resultat.Add(Convert(it, urlHelper));

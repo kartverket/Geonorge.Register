@@ -81,7 +81,6 @@ namespace Kartverket.Register.Models
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
-
         int Save() {
             return base.SaveChanges();
         }

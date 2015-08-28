@@ -215,7 +215,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ApiController.cs">
+    <Compile Include="Controllers\ApiRootController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />

@@ -16,5 +16,6 @@ namespace Kartverket.Register.Services.Register
         Kartverket.Register.Models.Register GetRegisterByName(string name);
         Kartverket.Register.Models.Register GetSubRegisterByNameAndParent(string registerName, string parentRegisterName);
         Organization GetOrganization(string organization);
+        List<Models.Register> GetRegisters();
     }
 }

@@ -46,34 +46,31 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets register by name
         /// </summary>
-        /// <param name="seoname">The search engine optimized name of the register</param>
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}.{ext}")]
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
-        [Route("api/register/{seoname}.{ext}")]
-        [Route("api/register/{seoname}")]
+        /// <param name="register">The search engine optimized name of the register</param>
+        [Route("api/register/{register}.{ext}")]
+        [Route("api/register/{register}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterByName(string seoname)
+        public IHttpActionResult GetRegisterByName(string register)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-            var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();           
-                        
+            var it = GetRegister(null, register);                                  
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
-        ///// <summary>
-        ///// Gets subregister by name
-        ///// </summary>
-        ///// <param name="seoname">The search engine optimized name of the register</param>
-        //[Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}")]
-        //[HttpGet]
-        //public IHttpActionResult GetRegisterByName(string seoname, string parentregister)
-        //{
-        //    var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-
-        //    var it = db.Registers.Where(w => w.seoname == seoname && w.parentRegister.seoname == parentregister).FirstOrDefault();
-
-        //    return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
-        //}
+        /// <summary>
+        /// Gets subregister by name
+        /// </summary>
+        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="parentregister">The search engine optimized name of the parentregister</param>
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
+        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
+        [HttpGet]
+        public IHttpActionResult GetSubregisterByName(string parentregister, string register)
+        {
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+            var it = GetRegister(parentregister, register);
+            return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+        }
 
         /// <summary>
         /// Gets codelist by systemid
@@ -85,48 +82,88 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterBySystemId(string systemid)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-
             var it = db.Registers.Where(w => w.systemId == new Guid(systemid)).FirstOrDefault();
-
             return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
         }
 
         /// <summary>
         /// Gets register item by register- organization- and registeritem-name 
         /// </summary>
-        /// <param name="seoname">The search engine optimized name of the register</param>
-        /// <param name="orgseoname">The search engine optimized name of the organization</param>
-        /// <param name="itemseoname">The search engine optimized name of the register item</param>
-        [Route("api/register/versjoner/{seoname}/{orgseoname}/{itemseoname}/{version}/no.{ext}")]
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}.{ext}")]
-        [Route("api/register/{seoname}/{orgseoname}/{itemseoname}.{ext}")]        
-        [Route("api/register/versjoner/{seoname}/{orgseoname}/{itemseoname}/{version}/no")]
-        [Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
-        [Route("api/register/{seoname}/{orgseoname}/{itemseoname}")]
+        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
+        /// <param name="item">The search engine optimized name of the register item</param>
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}.{ext}")]
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]
+        [Route("api/register/{register}/{itemowner}/{item}.{ext}")]
+        [Route("api/register/{register}/{itemowner}/{item}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname)
+        public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
+        { 
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+            var it = GetRegister(null, register); 
+            RegisterItem rit = GetCurrentVersion(null, register, item);
+            var versjoner = GetVersions(rit, urlHelper);
+            
+            return Ok(versjoner);            
+            //return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
+        }
+
+
+        /// <summary>
+        /// Gets register item by register- organization- registeritem-name  and version-id
+        /// </summary>
+        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
+        /// <param name="item">The search engine optimized name of the register item</param>
+        /// <param name="version">The version id of the registeritem</param>
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no.{ext}")]
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no")]
+        [HttpGet]
+        public IHttpActionResult GetRegisterItemByNameAndVersion(string register, string itemowner, string item, int version)
         {
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-            var it = db.Registers.Where(w => w.seoname == seoname).FirstOrDefault();
-            var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname).FirstOrDefault();
-                        
+            var it = GetRegister(null, register);
+            var rit = GetVersion(null, register, item, version);
+            return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
+        }
+
+
+        /// <summary>
+        /// Gets register item by parent-register, register- organization- and registeritem-name 
+        /// </summary>
+        /// <param name="parentregister">The search engine optimized name of the parent register</param>
+        /// <param name="registerowner">The search engine optimized name of the register owner</param>
+        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
+        /// <param name="items">The search engine optimized name of the register item</param>
+        [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
+        [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
+        [HttpGet]
+        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string itemowner, string item)
+        {
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+            var it = GetRegister(parentregister, register);
+            var rit = GetCurrentVersion(parentregister, register, item);
             return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         }
 
         ///// <summary>
-        ///// Gets register item by register- organization- and registeritem-name 
+        ///// Gets register item by parent-register, register- organization- registeritem-name  and version
         ///// </summary>
-        ///// <param name="seoname">The search engine optimized name of the register</param>
-        ///// <param name="orgseoname">The search engine optimized name of the organization</param>
-        ///// <param name="itemseoname">The search engine optimized name of the register item</param>
-        //[Route("api/subregister/{parentregister}/{parentregisterOwner}/{seoname}/{orgseoname}/{itemseoname}")]
+        ///// <param name="parentregister">The search engine optimized name of the parent register</param>
+        ///// <param name="registerowner">The search engine optimized name of the register owner</param>
+        ///// <param name="register">The search engine optimized name of the register</param>
+        ///// <param name="itemowner">The search engine optimized name of the register item owner</param>
+        ///// <param name="items">The search engine optimized name of the register item</param>
+        ///// <param name="items">The search engine optimized name of the register item</param>
+        //[Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}/{version}/no.{ext}")]
+        //[Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}/{version}/no")]
         //[HttpGet]
-        //public IHttpActionResult GetRegisterItemByName(string seoname, string orgseoname, string itemseoname, string parentregister)
+        //public IHttpActionResult GetSubregisterItemByNameAndVersion(string parentregister, string register, string itemowner, string item, int version)
         //{
         //    var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-        //    var it = db.Registers.Where(w => w.seoname == seoname && w.parentRegister.seoname == parentregister).FirstOrDefault();
-        //    var rit = db.RegisterItems.Where(w => w.seoname == itemseoname && w.register.seoname == seoname && w.register.parentRegister.seoname == parentregister).FirstOrDefault();
-
+        //    var it = GetRegister(parentregister, register);
+        //    var rit = GetVersion(parentregister, register, item, version);
         //    return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
         //}
 
@@ -134,7 +171,7 @@ namespace Kartverket.Register.Controllers
         /// List items for specific organization 
         /// </summary>
         /// <param name="name">The name of the organization</param>
-        [Route("api/register/search/organisasjon/{name}")]
+        [Route("api/register/organisasjon/{name}")]
         [HttpGet]
         public IHttpActionResult SearchByOrganizationName(string name)
         {
@@ -151,10 +188,32 @@ namespace Kartverket.Register.Controllers
             {
                 resultat.Add(Convert(it, urlHelper));
             }
-
             return Ok(resultat);
-
         }
+
+        /// <summary>
+        /// List items for specific organization 
+        /// </summary>
+        /// <param name="register">The name of the register</param>
+        /// <param name="itemowner">The name of the organization</param>
+        [Route("api/register/{register}/{itemowner}.{ext}")]
+        [Route("api/register/{register}/{itemowner}")]
+        [HttpGet]
+        public IHttpActionResult GetRegisterItemsFromOrganization(string register, string itemowner)
+        {
+            List<Models.Api.Registeritem> itemsFromOwner = new List<Models.Api.Registeritem>();
+            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
+            Models.Register it = GetRegister(null, register);
+            foreach (var item in it.items)
+            {
+                if (item.submitter.seoname == itemowner)
+                {
+                    itemsFromOwner.Add(ConvertRegisterItemDetails(it, item, urlHelper));
+                }
+            }
+            return Ok(itemsFromOwner);
+        }
+
 
         private Models.Api.Register ConvertRegister(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
         {
@@ -220,6 +279,7 @@ namespace Kartverket.Register.Controllers
             {
                 tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
+            tmp.versionName = item.versionName;
 
             if (item is EPSG)
             {
@@ -361,6 +421,70 @@ namespace Kartverket.Register.Controllers
             };
 
             return tmp;
+        }
+
+        private RegisterItem GetCurrentVersion(string parent, string register, string item)
+        {
+            List<RegisterItem> itemList = new List<RegisterItem>();
+            var queryresult = from d in db.RegisterItems
+                              where d.register.seoname == register
+                              && (d.register.parentRegister == null || d.register.parentRegister.seoname == parent)
+                              && d.seoname == item
+                              select d;
+
+
+            foreach (var ri in queryresult.ToList())
+            {
+                itemList.Add(ri);
+            }
+            if (itemList.Count() > 1)
+            {
+                foreach (RegisterItem version in itemList)
+                {
+                    if (version.systemId == version.versioning.currentVersion)
+                    {
+                        return version;
+                    }
+                }
+            }
+            return queryresult.FirstOrDefault();
+        }
+
+        private Models.Register GetRegister(string parent, string register)
+        {
+            var queryresult = from d in db.Registers
+                              where d.seoname == register
+                              && (d.parentRegister == null || d.parentRegister.seoname == parent)
+                              select d;
+
+            return queryresult.FirstOrDefault();
+        }
+
+        private Models.RegisterItem GetVersion(string parent, string register, string item, int version)
+        {
+            var queryresult = from d in db.RegisterItems
+                              where d.seoname == item
+                              && d.register.seoname == register
+                              && (d.register.parentRegister == null || d.register.parentRegister.seoname == parent)
+                              && d.versionNumber == version
+                              select d;
+
+            return queryresult.FirstOrDefault();
+        }
+
+        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit, System.Web.Mvc.UrlHelper urlHelper)
+        {
+            List<Models.Api.Registeritem> versions = new List<Models.Api.Registeritem>();
+            var queryResult = from ri in db.RegisterItems
+                              where ri.versioningId == rit.versioningId
+                              select ri;
+
+            foreach (var item in queryResult.ToList())
+            {
+                versions.Add(ConvertRegisterItem(item.register, item, urlHelper));
+            }
+            versions.OrderBy(o => o.status);
+            return versions;
         }
     }
 }

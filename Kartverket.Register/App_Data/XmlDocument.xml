@@ -490,7 +490,14 @@
             <summary>
             Gets register by name
             </summary>
-            <param name="seoname">The search engine optimized name of the register</param>
+            <param name="register">The search engine optimized name of the register</param>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String)">
+            <summary>
+            Gets subregister by name
+            </summary>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="parentregister">The search engine optimized name of the parentregister</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterBySystemId(System.String)">
             <summary>
@@ -502,15 +509,41 @@
             <summary>
             Gets register item by register- organization- and registeritem-name 
             </summary>
-            <param name="seoname">The search engine optimized name of the register</param>
-            <param name="orgseoname">The search engine optimized name of the organization</param>
-            <param name="itemseoname">The search engine optimized name of the register item</param>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="itemowner">The search engine optimized name of the register item owner</param>
+            <param name="item">The search engine optimized name of the register item</param>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemByNameAndVersion(System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Gets register item by register- organization- registeritem-name  and version-id
+            </summary>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="itemowner">The search engine optimized name of the register item owner</param>
+            <param name="item">The search engine optimized name of the register item</param>
+            <param name="version">The version id of the registeritem</param>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterItemByName(System.String,System.String,System.String,System.String)">
+            <summary>
+            Gets register item by parent-register, register- organization- and registeritem-name 
+            </summary>
+            <param name="parentregister">The search engine optimized name of the parent register</param>
+            <param name="registerowner">The search engine optimized name of the register owner</param>
+            <param name="register">The search engine optimized name of the register</param>
+            <param name="itemowner">The search engine optimized name of the register item owner</param>
+            <param name="items">The search engine optimized name of the register item</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SearchByOrganizationName(System.String)">
             <summary>
             List items for specific organization 
             </summary>
             <param name="name">The name of the organization</param>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemsFromOrganization(System.String,System.String)">
+            <summary>
+            List items for specific organization 
+            </summary>
+            <param name="register">The name of the register</param>
+            <param name="itemowner">The name of the organization</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>

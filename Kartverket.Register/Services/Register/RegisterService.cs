@@ -210,7 +210,6 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-
         public string ContentNegotiation(ControllerContext context)
         {
             HttpResponseBase response = context.HttpContext.Response;

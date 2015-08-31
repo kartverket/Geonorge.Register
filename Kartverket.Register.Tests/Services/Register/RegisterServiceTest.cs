@@ -16,8 +16,7 @@ namespace Kartverket.Register.Tests.Services.Register
     {
         [Test]
         public void GetTopLevelRegisters()
-        {
-            
+        {            
             Models.Register r1 = new Models.Register();
             r1.name = "Register 1";
             Models.Register r2 = new Models.Register();

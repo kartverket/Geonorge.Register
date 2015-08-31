@@ -47,31 +47,6 @@ namespace Kartverket.Register.Controllers
             return Ok(list);
         }
 
-        private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
-        {
-            string registerId = uri.Scheme + "://" + uri.Authority;
-            if (item.parentRegisterId != null)
-            {
-                registerId = registerId + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
-            }
-            else
-            {
-                registerId = registerId + "/register/" + item.seoname;
-            }
-            var tmp = new Models.Api.Register
-            {
-                label = item.name,
-                id = registerId,
-                contentsummary = item.description,
-                lastUpdated = item.modified,
-                targetNamespace = item.targetNamespace
-            };
-            if (item.owner != null) tmp.owner = item.owner.seoname;
-            if (item.manager != null) tmp.manager = item.manager.seoname;
-
-            return tmp;
-
-        }
 
         /// <summary>
         /// Gets register by name
@@ -221,6 +196,32 @@ namespace Kartverket.Register.Controllers
             return Ok(itemsFromOwner);
         }
 
+
+        private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
+        {
+            string registerId = uri.Scheme + "://" + uri.Authority;
+            if (item.parentRegisterId != null)
+            {
+                registerId = registerId + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
+            }
+            else
+            {
+                registerId = registerId + "/register/" + item.seoname;
+            }
+            var tmp = new Models.Api.Register
+            {
+                label = item.name,
+                id = registerId,
+                contentsummary = item.description,
+                lastUpdated = item.modified,
+                targetNamespace = item.targetNamespace
+            };
+            if (item.owner != null) tmp.owner = item.owner.seoname;
+            if (item.manager != null) tmp.manager = item.manager.seoname;
+
+            return tmp;
+
+        }
 
         private Models.Api.Register ConvertRegister(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
         {

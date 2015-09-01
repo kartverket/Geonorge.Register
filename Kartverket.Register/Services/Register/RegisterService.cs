@@ -287,5 +287,25 @@ namespace Kartverket.Register.Services.Register
             return queryResult.ToList();
                                 
         }
+
+        public List<Models.Register> GetSubregisters()
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.parentRegisterId != null
+                              select r;
+
+            return queryResult.ToList();
+
+        }
+
+        public List<Models.Register> GetSubregistersOfRegister(Models.Register register)
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.parentRegisterId == register.systemId
+                              select r;
+
+            return queryResult.ToList();
+
+        }
     }
 }

@@ -140,7 +140,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\HttpRequest.cs" />
     <Compile Include="Controllers\OrganizationsApiControllerTest.cs" />
     <Compile Include="Controllers\ApiControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

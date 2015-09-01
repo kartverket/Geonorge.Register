@@ -15,20 +15,27 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http.Results;
+using Kartverket.Register.Helpers;
 
 
 namespace Kartverket.Register.Tests.Controllers
 {    
     public class ApiControllerTest
     {
+        string url = "http://register.geonorge.no/";
+
         [Test]
         public void GetRegisters()
         {
             Models.Register r1 = NewRegister("Navn1");
             Models.Register r2 = NewRegister("Navn2");
-            Models.Register r3 = NewRegister("Navn3");           
+            Models.Register r3 = NewRegister("Navn3");
             
-            var controller = createController(new List<Models.Register>{r1, r2, r3}, "http://register.geonorge.no/api/register");
+            List<Models.Register> registers = new List<Models.Register> { r1, r2, r3 };
+
+            var registerService = new Mock<IRegisterService>();           
+            registerService.Setup(r => r.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object);
 
             var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
 
@@ -36,62 +43,133 @@ namespace Kartverket.Register.Tests.Controllers
             actualListOfRegisters.Count.Should().Be(3); 
         }
 
-        //public void RegisterShouldContainParentRegisterSeonameWhenRegisterIsASubRegister()
-        //{
-        //    Models.Register r1 = NewRegister("Navn1");
-        //    r1.parentRegisterId = new Guid();
-
-        //    var controller = createController(r1, "http://register.geonorge.no/subregister/kodelister/kartverket/metadata-kodelister");
-        //    var result = controller.GetRegisterByName(r1.name) as OkNegotiatedContentResult<Models.Api.Register>;
-
-        //    Models.Api.Registeritem
-        //}
-
-        //public void RegisterShouldContainParentRegisterSeonameWhenRegisterIsASubRegister()
-        //{
-        //    Models.Register r1 = NewRegister("Navn1");
-        //    r1.parentRegisterId = new Guid();
-
-        //    var controller = createController(r1, "http://register.geonorge.no/subregister/kodelister/kartverket/metadata-kodelister");
-        //    var result = controller.GetRegisterByName();
-        //}
-
-        public void RegisterUrlShouldOnlyContainNameWhenItIsATopLevelRegister()
+        [Test]
+        public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
         {
+            Models.Register r1 = NewRegister("TestRegister");
+            Models.Register parentRegister = NewRegister("Parent");
+            r1.parentRegister = parentRegister;
+            r1.parentRegisterId = parentRegister.systemId;
+            r1.parentRegister.owner = NewOrganization("Kartverket");
 
+            List<Models.Register> registers = new List<Models.Register> { r1, parentRegister };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(2);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.id.Should().Be("http://register.geonorge.no/subregister/parent/kartverket/testregister");
+        }
+
+        [Test]
+        public void RegisterShouldNotContainParentRegisterWhenItIsATopLevelRegister()
+        {
+            Models.Register r1 = NewRegister("TestRegister");
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.id.Should().Be("http://register.geonorge.no/register/testregister");
+        }
+
+        [Test]
+        public void RegisterOwnerShouldNotBeNull()
+        {
+            Models.Register r1 = NewRegister("Navn");
+            r1.owner = NewOrganization("Kartverket");
+
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.owner.Should().Be("kartverket");
+        }
+
+        [Test]
+        public void RegisterManagerShouldNotBeNull()
+        {
+            Models.Register r1 = NewRegister("Navn");
+            r1.manager = NewOrganization("Kartverket");
+
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.manager.Should().Be("kartverket");
+        }
+
+        [Test]
+        public void GetRegistersByName()
+        {
+            //Testdata
+            Models.Register r1 = NewRegister("Navn");
+            Models.Register r2 = NewRegister("Navn2");
+            Models.Register r3 = NewRegister("Navn3");
+
+            List<Models.Register> registers = new List<Models.Register> { r1, r2, r3 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisterByName("navn")).Returns(r1);
+
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisterByName("navn") as OkNegotiatedContentResult<Models.Api.Register>;
+
+            Models.Api.Register registerApi = result.Content;
+            registerApi.label.Should().Be("Navn");
         }
 
 
-        
-        
-        private Models.Register NewRegister(string name) {
+        private Models.Register NewRegister(string name)
+        {
             Models.Register register = new Models.Register();
             register.systemId = new Guid();
             register.name = name;
+            register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
             return register;
         }
 
-        private ApiRootController createController(List<Models.Register> registers, string uri)
+        private Models.Organization NewOrganization(string name)
         {
-            var controller = new ApiRootController(null, createRegisterService(registers));
-            controller.Request = new HttpRequestMessage(HttpMethod.Get, uri);
-            return controller;
+            Models.Organization organization = new Models.Organization();
+            organization.systemId = new Guid();
+            organization.name = name;
+            organization.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+            organization.description = "beskrivelse av organisasjon";
+            return organization;
         }
 
-        private ApiRootController createController(Models.Register register, string uri)
+        private ApiRootController createController(string uri, IRegisterService registerService)
         {
-            var controller = new ApiRootController(null, createRegisterService(register));
+            var controller = new ApiRootController(null, registerService);
             controller.Request = new HttpRequestMessage(HttpMethod.Get, uri);
             return controller;
-        }
-
-        private IRegisterService createRegisterService(Models.Register register)
-        {
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(r => r.GetRegisterByName(register.name)).Returns(register);
-
-            return registerService.Object;
         }
 
         private IRegisterService createRegisterService(List<Models.Register> registers)

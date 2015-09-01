@@ -31,6 +31,25 @@ namespace Kartverket.Register.Tests.Services.Register
             List<Models.Register> actualListOfRegisters = registerService.GetRegisters();
 
             Assert.AreEqual(2, actualListOfRegisters.Count);
+        }
+
+        [Test]
+        public void GetTopLevelRegistersByName()
+        {
+            Models.Register r1 = new Models.Register();
+            r1.name = "Register 1";
+            Models.Register r2 = new Models.Register();
+            r2.name = "Register 2";
+            r2.parentRegisterId = new Guid();
+            Models.Register r3 = new Models.Register();
+            r3.name = "Register 3";
+            List<Models.Register> registerList = new List<Models.Register>() { r1, r2, r3 };
+
+            var registerService = new RegisterService(CreateTestDbContext(registerList));
+
+            Models.Register actualRegister = registerService.GetRegisterByName(r1.name);
+
+            actualRegister.Should().Be(r1);
 
         }
 

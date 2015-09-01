@@ -52,14 +52,16 @@ namespace Kartverket.Register.Controllers
         /// Gets register by name
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
-        [Route("api/register/{register}.{ext}")]
-        [Route("api/register/{register}")]
+        [Route("api/register/{registerName}.{ext}")]
+        [Route("api/register/{registerName}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterByName(string register)
+        public IHttpActionResult GetRegisterByName(string registerName)
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-            var it = GetRegister(null, register);                                  
-            return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+            var register = _registerService.GetRegisterByName(registerName);
+            return Ok(ConvertRegisterAndNextLevel(register, Request.RequestUri));
+
+            return null;
+
         }
 
         /// <summary>
@@ -73,9 +75,8 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register)
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = GetRegister(parentregister, register);
-            return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+            return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 
         /// <summary>
@@ -87,9 +88,8 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterBySystemId(string systemid)
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = db.Registers.Where(w => w.systemId == new Guid(systemid)).FirstOrDefault();
-            return Ok(ConvertRegisterAndNextLevel(it, urlHelper));
+            return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 
         /// <summary>
@@ -101,16 +101,15 @@ namespace Kartverket.Register.Controllers
         [Route("api/register/{register}/{itemowner}/{item}.{ext}")]
         [Route("api/register/{register}/{itemowner}/{item}")]
         [Route("api/register/versjoner/{register}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]        
+        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
-        { 
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
-            var it = GetRegister(null, register); 
+        {
+            var it = GetRegister(null, register);
             RegisterItem rit = GetCurrentVersion(null, register, item);
-            var versjoner = GetVersions(rit, urlHelper);
-            
-            return Ok(versjoner);            
+            var versjoner = GetVersions(rit, Request.RequestUri);
+
+            return Ok(versjoner);
         }
 
 
@@ -200,7 +199,7 @@ namespace Kartverket.Register.Controllers
         private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
         {
             string registerId = uri.Scheme + "://" + uri.Authority;
-            if (item.parentRegisterId != null)
+            if (item.parentRegister != null)
             {
                 registerId = registerId + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
             }
@@ -223,69 +222,51 @@ namespace Kartverket.Register.Controllers
 
         }
 
-        private Models.Api.Register ConvertRegister(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
+
+        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, Uri uri)
         {
-            string registerId = "";
-            if (item.parentRegisterId != null)
+            var tmp = ConvertRegister(item, uri);
+            if (item.items != null)
             {
-                registerId = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
+                tmp.containeditems = new List<Models.Api.Registeritem>();
+
+                foreach (var d in item.items)
+                {
+                    tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
+                }
             }
             else
             {
-                registerId = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + item.seoname;
-            }
-            var tmp = new Models.Api.Register
-            {
-                label = item.name,
-                id = registerId,
-                contentsummary = item.description,
-                lastUpdated = item.modified,
-                targetNamespace = item.targetNamespace
-            };
-            if (item.owner != null) tmp.owner = item.owner.seoname;
-            if (item.manager != null) tmp.manager = item.manager.seoname;
+                tmp.containedSubRegisters = new List<Models.Api.Register>();
+                List<Models.Register> subregisters = _registerService.GetSubregistersOfRegister(item);
 
-            return tmp;
-        }
+                foreach (var reg in subregisters)
+                {
+                    tmp.containedSubRegisters.Add(ConvertRegister(reg, uri));
+                }
 
-        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, System.Web.Mvc.UrlHelper urlHelper)
-        {
-            var tmp = ConvertRegister(item, urlHelper);
-            if (item.items != null) tmp.containeditems = new List<Models.Api.Registeritem>();
-            tmp.containedSubRegisters = new List<Models.Api.Register>();
-            var queryResultParentRegister = from r in db.Registers
-                                            where r.parentRegisterId == item.systemId
-                                            select r;
-
-            foreach (var reg in queryResultParentRegister)
-            {
-                tmp.containedSubRegisters.Add(ConvertRegister(reg, urlHelper));
-            }
-
-            foreach (var d in item.items)
-            {
-                tmp.containeditems.Add(ConvertRegisterItem(item, d, urlHelper));
             }
 
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item, System.Web.Mvc.UrlHelper urlHelper)
+        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item, Uri uri)
         {
+            string registerId = uri.Scheme + "://" + uri.Authority;
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
-            
+
             tmp.lastUpdated = item.modified;
             if (item.submitter != null) tmp.owner = item.submitter.name;
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
             if (reg.parentRegisterId != null)
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             tmp.versionName = item.versionName;
 
@@ -310,11 +291,11 @@ namespace Kartverket.Register.Controllers
                 {
                     if (c.register.parentRegisterId != null)
                     {
-                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                        tmp.broader = registerId + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                     else
                     {
-                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                        tmp.broader = registerId + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                 }
             }
@@ -443,10 +424,10 @@ namespace Kartverket.Register.Controllers
 
             foreach (var ri in queryresult.ToList())
             {
-                if (ri.statusId != "Submitted" && ri.statusId != "NotAccepted") 
+                if (ri.statusId != "Submitted" && ri.statusId != "NotAccepted")
                 {
                     itemList.Add(ri);
-                }                
+                }
             }
             if (itemList.Count() > 1)
             {
@@ -483,7 +464,7 @@ namespace Kartverket.Register.Controllers
             return queryresult.FirstOrDefault();
         }
 
-        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit, System.Web.Mvc.UrlHelper urlHelper)
+        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit, Uri uri)
         {
             List<Models.Api.Registeritem> versions = new List<Models.Api.Registeritem>();
             var queryResult = from ri in db.RegisterItems
@@ -492,7 +473,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (var item in queryResult.ToList())
             {
-                versions.Add(ConvertRegisterItem(item.register, item, urlHelper));
+                versions.Add(ConvertRegisterItem(item.register, item, uri));
             }
             versions.OrderBy(o => o.status);
             return versions;

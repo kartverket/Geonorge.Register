@@ -75,7 +75,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register)
         {
-            var it = GetRegister(parentregister, register);
+            var it = _registerService.GetSubregisterByName(parentregister, register);
             return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 
@@ -219,7 +219,6 @@ namespace Kartverket.Register.Controllers
             if (item.manager != null) tmp.manager = item.manager.seoname;
 
             return tmp;
-
         }
 
 

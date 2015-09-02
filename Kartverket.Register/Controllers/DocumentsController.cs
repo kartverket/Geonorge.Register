@@ -61,7 +61,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Document document = new Document();
-            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
             document.register = register;
 
             if (register.parentRegisterId != null) document.register.parentRegister = register.parentRegister;
@@ -87,7 +87,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
         {
             // Finn register         
-            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
 
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null) parentRegisterOwner = register.parentRegister.owner.seoname;
@@ -284,7 +284,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
-            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
 

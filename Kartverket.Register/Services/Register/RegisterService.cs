@@ -258,10 +258,10 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
-        public Kartverket.Register.Models.Register GetSubRegisterByNameAndParent(string registerName, string parentRegisterName)
+        public Kartverket.Register.Models.Register GetSubregisterByName(string parentName, string registerName)
         {
             var queryResultsSubregister = from r in _dbContext.Registers
-                                          where r.seoname == registerName && r.parentRegister.seoname == parentRegisterName
+                                          where r.seoname == registerName && r.parentRegister.seoname == parentName
                                           select r;
 
             Kartverket.Register.Models.Register register = queryResultsSubregister.FirstOrDefault();

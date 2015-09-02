@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
                 return Redirect(ApiRedirectUrl);
             }
 
-            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(subregister, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(subregister, parentRegister);
             if (register != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.text))
@@ -188,7 +188,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             Kartverket.Register.Models.Register nyttRegister = new Kartverket.Register.Models.Register();
-            Kartverket.Register.Models.Register register = _registerService.GetSubRegisterByNameAndParent(registername, parentregister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentregister);
             nyttRegister.parentRegister = register;
 
             string role = GetSecurityClaim("role");

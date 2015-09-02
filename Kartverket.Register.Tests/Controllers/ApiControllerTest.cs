@@ -144,6 +144,29 @@ namespace Kartverket.Register.Tests.Controllers
             registerApi.label.Should().Be("Navn");
         }
 
+        [Test]
+        public void GetSubregisterByName()
+        {
+            //Testdata
+            Models.Register r1 = NewRegister("RegisterName");
+            Models.Register r2 = NewRegister("ParentName");
+            Models.Organization organization = NewOrganization("Kartverket");
+            r2.owner = organization;
+            r1.parentRegisterId = r2.systemId;
+            r1.parentRegister = r2;
+
+            List<Models.Register> registers = new List<Models.Register> { r1, r2 };
+            Models.Register register = new Models.Register();
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetSubregisterByName("parentname", "registername")).Returns(r1);
+
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetSubregisterByName("parentname", "registername") as OkNegotiatedContentResult<Models.Api.Register>;
+
+            Models.Api.Register registerApi = result.Content;
+            registerApi.label.Should().Be("RegisterName");
+        }
 
         private Models.Register NewRegister(string name)
         {

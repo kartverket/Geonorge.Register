@@ -11,13 +11,14 @@ namespace Kartverket.Register.Services.Register
 {
     public interface IRegisterService
     {
-        Kartverket.Register.Models.Register Filter(Kartverket.Register.Models.Register register, FilterParameters filter);
+        Models.Register Filter(Kartverket.Register.Models.Register register, FilterParameters filter);
         string ContentNegotiation(ControllerContext context);
-        Kartverket.Register.Models.Register GetRegisterByName(string name);
-        Kartverket.Register.Models.Register GetSubregisterByName(string parentName, string registerName);
+        Models.Register GetRegisterByName(string name);
+        Models.Register GetSubregisterByName(string parentName, string registerName);
         Organization GetOrganization(string organization);
         List<Models.Register> GetRegisters();
         List<Models.Register> GetSubregisters();
         List<Models.Register> GetSubregistersOfRegister(Models.Register register);
+        Models.Register GetRegisterBySystemId(Guid systemId);
     }
 }

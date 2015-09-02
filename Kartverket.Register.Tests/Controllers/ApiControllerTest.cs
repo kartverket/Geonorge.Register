@@ -168,6 +168,33 @@ namespace Kartverket.Register.Tests.Controllers
             registerApi.label.Should().Be("RegisterName");
         }
 
+        [Test]
+        public void GetRegistersBySystemId()
+        {
+            //Testdata
+            Models.Register r1 = NewRegister("Navn");
+
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisterBySystemId(r1.systemId)).Returns(r1);
+
+            var controller = createController(url, registerService.Object);
+            var result = controller.GetRegisterBySystemId(r1.systemId.ToString()) as OkNegotiatedContentResult<Models.Api.Register>;
+
+            Models.Api.Register registerApi = result.Content;
+            registerApi.label.Should().Be("Navn");
+        }
+
+
+
+
+
+
+
+
+        // **** HJELPEMETODER ****
+
         private Models.Register NewRegister(string name)
         {
             Models.Register register = new Models.Register();

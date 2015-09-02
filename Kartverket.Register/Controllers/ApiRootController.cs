@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets register by name
         /// </summary>
-        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="registerName">The search engine optimized name of the register</param>
         [Route("api/register/{registerName}.{ext}")]
         [Route("api/register/{registerName}")]
         [HttpGet]
@@ -64,11 +64,11 @@ namespace Kartverket.Register.Controllers
 
         }
 
+
         /// <summary>
         /// Gets subregister by name
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
-        /// <param name="parentregisterOwner">The search engine optimized name of the register owner</param>
         /// <param name="parentregister">The search engine optimized name of the parentregister</param>
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}.{ext}")]
         [Route("api/subregister/{parentregister}/{parentregisterOwner}/{register}")]
@@ -79,6 +79,7 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 
+
         /// <summary>
         /// Gets codelist by systemid
         /// </summary>
@@ -88,7 +89,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterBySystemId(string systemid)
         {
-            var it = db.Registers.Where(w => w.systemId == new Guid(systemid)).FirstOrDefault();
+            var it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 

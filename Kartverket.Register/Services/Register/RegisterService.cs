@@ -307,5 +307,15 @@ namespace Kartverket.Register.Services.Register
             return queryResult.ToList();
 
         }
+
+
+        public Models.Register GetRegisterBySystemId(Guid systemId)
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.systemId == systemId
+                              select r;
+
+            return queryResult.FirstOrDefault();
+        }
     }
 }

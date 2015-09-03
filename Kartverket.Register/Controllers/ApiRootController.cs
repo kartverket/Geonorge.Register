@@ -62,9 +62,6 @@ namespace Kartverket.Register.Controllers
         {
             var register = _registerService.GetRegisterByName(registerName);
             return Ok(ConvertRegisterAndNextLevel(register, Request.RequestUri));
-
-            return null;
-
         }
 
 

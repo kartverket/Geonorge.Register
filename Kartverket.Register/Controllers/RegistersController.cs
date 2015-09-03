@@ -111,7 +111,7 @@ namespace Kartverket.Register.Controllers
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}.{format}")]
-        [Route("register/{name}/{filterOrganization}/")]
+        [Route("register/{name}/{filterOrganization}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
             if (!string.IsNullOrWhiteSpace(format))
@@ -165,7 +165,7 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no.{format}")]
-        [Route("register/{registername}/{itemOwner}/{itemname}.{format}/")]
+        [Route("register/{registername}/{itemOwner}/{itemname}.{format}")]
         [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
         [Route("register/{registername}/{itemOwner}/{itemname}")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)

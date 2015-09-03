@@ -308,7 +308,6 @@ namespace Kartverket.Register.Services.Register
 
         }
 
-
         public Models.Register GetRegisterBySystemId(Guid systemId)
         {
             var queryResult = from r in _dbContext.Registers

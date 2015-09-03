@@ -223,10 +223,24 @@ namespace Kartverket.Register.Controllers
         }
 
         //TODO - API
+        [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}.{format}")]        
+        [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}.{format}")]
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}")]
-        public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner)
+        public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner, string format)
         {
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                return Redirect("/api/" + Request.FilePath);
+            }
+            else
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+                if (!string.IsNullOrWhiteSpace(format))
+                {
+                    return Redirect("/api/" + Request.FilePath + "." + format);
+                }
+            }
             _versioningService = new VersioningService(db);
             VersionsItem versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);

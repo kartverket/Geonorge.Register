@@ -16,6 +16,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Http.Results;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Services.RegisterItem;
 
 
 namespace Kartverket.Register.Tests.Controllers
@@ -35,93 +36,12 @@ namespace Kartverket.Register.Tests.Controllers
 
             var registerService = new Mock<IRegisterService>();           
             registerService.Setup(r => r.GetRegisters()).Returns(registers);
-            var controller = createController(url, registerService.Object);
+            var controller = createController(url, registerService.Object, null);
 
             var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
 
             List<Models.Api.Register> actualListOfRegisters = result.Content;
             actualListOfRegisters.Count.Should().Be(3); 
-        }
-
-        [Test]
-        public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
-        {
-            Models.Register r1 = NewRegister("TestRegister");
-            Models.Register parentRegister = NewRegister("Parent");
-            r1.parentRegister = parentRegister;
-            r1.parentRegisterId = parentRegister.systemId;
-            r1.parentRegister.owner = NewOrganization("Kartverket");
-
-            List<Models.Register> registers = new List<Models.Register> { r1, parentRegister };
-
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetRegisters()).Returns(registers);
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
-            List<Models.Api.Register> actualListOfRegisters = result.Content;
-            actualListOfRegisters.Count.Should().Be(2);
-
-            Models.Api.Register apiRegister = actualListOfRegisters[0];
-
-            apiRegister.id.Should().Be("http://register.geonorge.no/subregister/parent/kartverket/testregister");
-        }
-
-        [Test]
-        public void RegisterShouldNotContainParentRegisterWhenItIsATopLevelRegister()
-        {
-            Models.Register r1 = NewRegister("TestRegister");
-            List<Models.Register> registers = new List<Models.Register> { r1 };
-
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetRegisters()).Returns(registers);
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
-            List<Models.Api.Register> actualListOfRegisters = result.Content;
-            actualListOfRegisters.Count.Should().Be(1);
-
-            Models.Api.Register apiRegister = actualListOfRegisters[0];
-
-            apiRegister.id.Should().Be("http://register.geonorge.no/register/testregister");
-        }
-
-        [Test]
-        public void RegisterOwnerShouldNotBeNull()
-        {
-            Models.Register r1 = NewRegister("Navn");
-            r1.owner = NewOrganization("Kartverket");
-
-            List<Models.Register> registers = new List<Models.Register> { r1 };
-
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetRegisters()).Returns(registers);
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
-            List<Models.Api.Register> actualListOfRegisters = result.Content;
-            actualListOfRegisters.Count.Should().Be(1);
-
-            Models.Api.Register apiRegister = actualListOfRegisters[0];
-
-            apiRegister.owner.Should().Be("kartverket");
-        }
-
-        [Test]
-        public void RegisterManagerShouldNotBeNull()
-        {
-            Models.Register r1 = NewRegister("Navn");
-            r1.manager = NewOrganization("Kartverket");
-
-            List<Models.Register> registers = new List<Models.Register> { r1 };
-
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetRegisters()).Returns(registers);
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
-            List<Models.Api.Register> actualListOfRegisters = result.Content;
-            actualListOfRegisters.Count.Should().Be(1);
-
-            Models.Api.Register apiRegister = actualListOfRegisters[0];
-
-            apiRegister.manager.Should().Be("kartverket");
         }
 
         [Test]
@@ -135,10 +55,10 @@ namespace Kartverket.Register.Tests.Controllers
             List<Models.Register> registers = new List<Models.Register> { r1, r2, r3 };
 
             var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetRegisterByName("navn")).Returns(r1);
+            registerService.Setup(s => s.GetRegisterByName(r1.seoname)).Returns(r1);
 
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetRegisterByName("navn") as OkNegotiatedContentResult<Models.Api.Register>;
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetRegisterByName(r1.seoname) as OkNegotiatedContentResult<Models.Api.Register>;
 
             Models.Api.Register registerApi = result.Content;
             registerApi.label.Should().Be("Navn");
@@ -159,10 +79,10 @@ namespace Kartverket.Register.Tests.Controllers
             Models.Register register = new Models.Register();
 
             var registerService = new Mock<IRegisterService>();
-            registerService.Setup(s => s.GetSubregisterByName("parentname", "registername")).Returns(r1);
+            registerService.Setup(s => s.GetSubregisterByName(r1.parentRegister.seoname, r1.seoname)).Returns(r1);
 
-            var controller = createController(url, registerService.Object);
-            var result = controller.GetSubregisterByName("parentname", "registername") as OkNegotiatedContentResult<Models.Api.Register>;
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetSubregisterByName(r1.parentRegister.seoname, r1.seoname) as OkNegotiatedContentResult<Models.Api.Register>;
 
             Models.Api.Register registerApi = result.Content;
             registerApi.label.Should().Be("RegisterName");
@@ -179,12 +99,109 @@ namespace Kartverket.Register.Tests.Controllers
             var registerService = new Mock<IRegisterService>();
             registerService.Setup(s => s.GetRegisterBySystemId(r1.systemId)).Returns(r1);
 
-            var controller = createController(url, registerService.Object);
+            var controller = createController(url, registerService.Object, null);
             var result = controller.GetRegisterBySystemId(r1.systemId.ToString()) as OkNegotiatedContentResult<Models.Api.Register>;
 
             Models.Api.Register registerApi = result.Content;
             registerApi.label.Should().Be("Navn");
         }
+
+        [Test]
+        public void GetRegisterItemByName() {
+            Models.Register register = NewRegister("Register name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[1].seoname)).Returns(versions);
+            var controller = createController(url, null, registerItemService.Object);
+
+            var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<List<Models.RegisterItem>>;
+
+            List<Models.RegisterItem> actualVersions = result.Content;
+            actualVersions.Count.Should().Be(5);
+        }
+
+        [Test]
+        public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
+        {
+            Models.Register r1 = NewRegister("TestRegister");
+            Models.Register parentRegister = NewRegister("Parent");
+            r1.parentRegister = parentRegister;
+            r1.parentRegisterId = parentRegister.systemId;
+            r1.parentRegister.owner = NewOrganization("Kartverket");
+
+            List<Models.Register> registers = new List<Models.Register> { r1, parentRegister };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(2);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.id.Should().Be("http://register.geonorge.no/subregister/parent/kartverket/testregister");
+        }
+
+        [Test]
+        public void RegisterShouldNotContainParentRegisterWhenItIsATopLevelRegister()
+        {
+            Models.Register r1 = NewRegister("TestRegister");
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.id.Should().Be("http://register.geonorge.no/register/testregister");
+        }
+
+        [Test]
+        public void RegisterOwnerShouldNotBeNull()
+        {
+            Models.Register r1 = NewRegister("Navn");
+            r1.owner = NewOrganization("Kartverket");
+
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.owner.Should().Be("kartverket");
+        }
+
+        [Test]
+        public void RegisterManagerShouldNotBeNull()
+        {
+            Models.Register r1 = NewRegister("Navn");
+            r1.manager = NewOrganization("Kartverket");
+
+            List<Models.Register> registers = new List<Models.Register> { r1 };
+
+            var registerService = new Mock<IRegisterService>();
+            registerService.Setup(s => s.GetRegisters()).Returns(registers);
+            var controller = createController(url, registerService.Object, null);
+            var result = controller.GetRegisters() as OkNegotiatedContentResult<List<Models.Api.Register>>;
+            List<Models.Api.Register> actualListOfRegisters = result.Content;
+            actualListOfRegisters.Count.Should().Be(1);
+
+            Models.Api.Register apiRegister = actualListOfRegisters[0];
+
+            apiRegister.manager.Should().Be("kartverket");
+        }
+
 
 
 
@@ -215,22 +232,44 @@ namespace Kartverket.Register.Tests.Controllers
             return organization;
         }
 
-        private ApiRootController createController(string uri, IRegisterService registerService)
+        private ApiRootController createController(string uri, IRegisterService registerService, IRegisterItemService registerItemService)
         {
-            var controller = new ApiRootController(null, registerService);
+            var controller = new ApiRootController(null, registerService, registerItemService);
             controller.Request = new HttpRequestMessage(HttpMethod.Get, uri);
             return controller;
         }
 
-        private IRegisterService createRegisterService(List<Models.Register> registers)
+        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register)
         {
-            var registerService = new Mock<IRegisterService>();
-            registerService.Setup(r => r.GetRegisters()).Returns(registers);
+            Models.Version versionGroup = new Models.Version();
+            versionGroup.systemId = new Guid();
+            versionGroup.lastVersionNumber = 0;
+            List<Models.RegisterItem> versions = new List<Models.RegisterItem>();
 
-            return registerService.Object;
+            for (int i = 0; i < 5; i++)
+            {
+                Models.Document document = new Document();
+                document.systemId = new Guid();
+                document.name = versionName;
+                document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
+                Organization organisasjon = new Organization();
+                document.documentowner = organisasjon;
+                document.submitter = organisasjon; 
+                document.versionNumber = versionGroup.lastVersionNumber;
+                document.versioning = versionGroup;
+                document.versioningId = versionGroup.systemId;
+                document.register = register;
+
+                versions.Add(document);
+                versionGroup.lastVersionNumber++;
+            }
+
+            foreach (Document doc in versions)
+            {
+                doc.versioning.currentVersion = versions[0].systemId;
+            }
+            return versions;
         }
-      
-
 
     }
 

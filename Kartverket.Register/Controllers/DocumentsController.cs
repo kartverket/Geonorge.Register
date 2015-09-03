@@ -61,7 +61,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Document document = new Document();
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
             document.register = register;
 
             if (register.parentRegisterId != null) document.register.parentRegister = register.parentRegister;
@@ -87,7 +87,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
         {
             // Finn register         
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
 
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null) parentRegisterOwner = register.parentRegister.owner.seoname;
@@ -165,7 +165,7 @@ namespace Kartverket.Register.Controllers
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-            Document document = (Document)_registerItemService.getCurrentRegisterItem(parentRegister, registername, itemname);
+            Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
             document.versionName = null;
             if (document == null)
             {
@@ -284,7 +284,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentRegister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
 
@@ -299,7 +299,7 @@ namespace Kartverket.Register.Controllers
                 if (document.versionName != null) originalDocument.versionName = document.versionName;
 
                 // Finn alle dokumenter i versjonegruppen
-                var allVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
+                var allVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
 
                 originalDocument.Accepted = document.Accepted;
                 if (document.Accepted == true && originalDocument.statusId == "Submitted")
@@ -520,7 +520,7 @@ namespace Kartverket.Register.Controllers
             // Finn alle dokumenter i versjonsgruppen
             if (document.statusId == "Valid")
             {
-                var documentVersions = _registerItemService.GetAllVersionsOfDocument(versjonsgruppe.systemId);
+                var documentVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
                 if (documentVersions.Count() > 0)
                 {
                     // Sett gjeldende versjon ut fra status...

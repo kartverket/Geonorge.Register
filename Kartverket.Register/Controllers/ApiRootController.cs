@@ -1,6 +1,7 @@
 ﻿using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Search;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,11 @@ namespace Kartverket.Register.Controllers
 
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
 
-        public ApiRootController(ISearchService searchService, IRegisterService registerService)
+        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService)
         {
+            _registerItemService = registerItemService;
             _searchService = searchService;
             _registerService = registerService;
         }
@@ -106,9 +109,12 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
-            var it = GetRegister(null, register);
-            RegisterItem rit = GetCurrentVersion(null, register, item);
-            var versjoner = GetVersions(rit, Request.RequestUri);
+            var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
+            List<Models.Api.Registeritem> convertedVersions = new List<Models.Api.Registeritem>();
+            foreach (var v in versjoner)
+            {
+                convertedVersions.Add(ConvertRegisterItem(v.register, v, Request.RequestUri));
+            }     
 
             return Ok(versjoner);
         }

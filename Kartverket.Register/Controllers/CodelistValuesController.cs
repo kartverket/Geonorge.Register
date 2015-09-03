@@ -177,7 +177,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentregister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             codeListValue.register = register;
 
             if (register.parentRegisterId != null)
@@ -204,7 +204,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny")]
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, List<Guid> narrower, Guid? broader)
         {
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentregister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             string parentRegisterOwner = null;
             if (register.parentRegisterId != null)
             {
@@ -321,7 +321,7 @@ namespace Kartverket.Register.Controllers
             Guid systId = queryResults.FirstOrDefault();
             CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
 
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(registername, parentregister);
+            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             ValidationName(codelistValue, register);
 
             if (ModelState.IsValid)

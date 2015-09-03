@@ -144,6 +144,7 @@
     <Compile Include="Controllers\ApiControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OrganizationServiceTest.cs" />
+    <Compile Include="Services\RegisterItem\RegisterItemServiceTest.cs" />
     <Compile Include="Services\Register\RegisterServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>

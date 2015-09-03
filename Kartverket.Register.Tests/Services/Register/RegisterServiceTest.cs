@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Tests.Services.Register
 {
@@ -34,23 +35,78 @@ namespace Kartverket.Register.Tests.Services.Register
         }
 
         [Test]
-        public void GetTopLevelRegistersByName()
+        public void GetTopLevelRegisterByName()
         {
-            Models.Register r1 = new Models.Register();
-            r1.name = "Register 1";
-            Models.Register r2 = new Models.Register();
-            r2.name = "Register 2";
-            r2.parentRegisterId = new Guid();
-            Models.Register r3 = new Models.Register();
-            r3.name = "Register 3";
+            Models.Register r1 = NewRegister("Register 1");
+            Models.Register r2 = NewRegister("Register 2");
+            Models.Register r3 = NewRegister("Register 3");
+
             List<Models.Register> registerList = new List<Models.Register>() { r1, r2, r3 };
 
             var registerService = new RegisterService(CreateTestDbContext(registerList));
 
-            Models.Register actualRegister = registerService.GetRegisterByName(r1.name);
+            Models.Register actualRegister = registerService.GetRegisterByName(r1.seoname);
 
             actualRegister.Should().Be(r1);
 
+        }
+
+        [Test]
+        public void GetSubregisterByName()
+        {
+            Models.Register r1 = NewRegister("Register 1");
+            Models.Register r2 = NewRegister("Register 2");
+            Models.Register r3 = NewRegister("Register 3");
+
+            r1.parentRegister = r2;
+
+            List<Models.Register> registerList = new List<Models.Register>() { r1, r2, r3 };
+
+            var registerService = new RegisterService(CreateTestDbContext(registerList));
+
+            Models.Register actualRegister = registerService.GetSubregisterByName(r2.seoname, r1.seoname);
+
+            actualRegister.Should().Be(r1);
+        }
+
+        [Test]
+        public void GetSubregisterBysystemId()
+        {
+            Models.Register r1 = NewRegister("Register 1");
+            Models.Register r2 = NewRegister("Register 2");
+            Models.Register r3 = NewRegister("Register 3");
+
+            List<Models.Register> registerList = new List<Models.Register>() { r1, r2, r3 };
+
+            var registerService = new RegisterService(CreateTestDbContext(registerList));
+
+            Models.Register actualRegister = registerService.GetRegisterBySystemId(r1.systemId);
+
+            actualRegister.Should().Be(r1);
+        }
+
+
+
+
+        // **** HJELPEMETODER ****
+        private Models.Register NewRegister(string name)
+        {
+            Models.Register register = new Models.Register();
+            register.systemId = new Guid();
+            register.name = name;
+            register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
+            register.description = "testbeskrivelse";
+            return register;
+        }
+
+        private Models.Organization NewOrganization(string name)
+        {
+            Models.Organization organization = new Models.Organization();
+            organization.systemId = new Guid();
+            organization.name = name;
+            organization.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+            organization.description = "beskrivelse av organisasjon";
+            return organization;
         }
 
         private RegisterDbContext CreateTestDbContext(IEnumerable<Models.Register> registerList)
@@ -68,5 +124,6 @@ namespace Kartverket.Register.Tests.Services.Register
 
             return mockContext.Object;
         }
+
     }
 }

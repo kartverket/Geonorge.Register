@@ -7,6 +7,11 @@ namespace Kartverket.Register.Models.Api
 {
     public class Registeritem
     {
+        public Registeritem()
+        {
+            this.versions = new HashSet<Registeritem>();
+        }
+
         public string id { get; set; }
         public string label { get; set; }
         public string itemclass { get; set; }
@@ -15,6 +20,7 @@ namespace Kartverket.Register.Models.Api
         public string seoname { get; set; }
         public string owner { get; set; }
         public string versionName { get; set; }
+        public int versionNumber { get; set; }
 
         public string logo { get; set; }
         public string documentreference { get; set; }
@@ -32,7 +38,8 @@ namespace Kartverket.Register.Models.Api
         public string serviceUrl { get; set; }
 
         public string broader { get; set; }
-        //public List<Registeritem> narrower { get; set; }
+
+        public ICollection<Registeritem> versions { get; set; } 
 
         public DateTime lastUpdated { get; set; }
 

@@ -105,15 +105,32 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
+            Models.Api.Registeritem currentVersion;
+            currentVersion = ConvertCurrentAndVersions(register, item);
+
+            return Ok(currentVersion);
+        }
+
+        private Models.Api.Registeritem ConvertCurrentAndVersions(string register, string item)
+        {
+            Models.Api.Registeritem currentVersion = null;
             var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
-            
-            List<Models.Api.Registeritem> convertedVersions = new List<Models.Api.Registeritem>();
             foreach (var v in versjoner)
             {
-                convertedVersions.Add(ConvertRegisterItem(v.register, v, Request.RequestUri));
-            }
+                if (v.versioning.currentVersion == v.systemId)
+                {
+                    currentVersion = ConvertRegisterItemDetails(v.register, v, Request.RequestUri);
 
-            return Ok(convertedVersions);
+                    foreach (var ve in versjoner)
+                    {
+                        if (v.systemId != ve.systemId)
+                        {
+                            currentVersion.versions.Add(ConvertRegisterItemDetails(ve.register, ve, Request.RequestUri));
+                        }
+                    }                
+                }
+            } 
+            return currentVersion;                   
         }
 
 
@@ -129,10 +146,9 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByNameAndVersion(string register, string itemowner, string item, int version)
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = GetRegister(null, register);
             var rit = GetVersion(null, register, item, version);
-            return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
+            return Ok(ConvertRegisterItemDetails(it, rit, Request.RequestUri));
         }
 
 
@@ -149,10 +165,9 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string itemowner, string item)
         {
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             var it = GetRegister(parentregister, register);
             var rit = GetCurrentVersion(parentregister, register, item);
-            return Ok(ConvertRegisterItemDetails(it, rit, urlHelper));
+            return Ok(ConvertRegisterItemDetails(it, rit, Request.RequestUri));
         }
 
         /// <summary>
@@ -187,13 +202,12 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemsFromOrganization(string register, string itemowner)
         {
             List<Models.Api.Registeritem> itemsFromOwner = new List<Models.Api.Registeritem>();
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             Models.Register it = GetRegister(null, register);
             foreach (var item in it.items)
             {
                 if (item.submitter.seoname == itemowner)
                 {
-                    itemsFromOwner.Add(ConvertRegisterItemDetails(it, item, urlHelper));
+                    itemsFromOwner.Add(ConvertRegisterItemDetails(it, item, Request.RequestUri));
                 }
             }
             return Ok(itemsFromOwner);
@@ -263,6 +277,11 @@ namespace Kartverket.Register.Controllers
             if (item.submitter != null) tmp.owner = item.submitter.name;
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
+            if (item.versionName != null) tmp.versionName = item.description;
+            if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
+            {
+
+            }
             if (reg.parentRegisterId != null)
             {
                 tmp.id = registerId + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
@@ -322,24 +341,26 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItemDetails(Models.Register reg, Models.RegisterItem item, System.Web.Mvc.UrlHelper urlHelper)
+        private Models.Api.Registeritem ConvertRegisterItemDetails(Models.Register reg, Models.RegisterItem item, Uri uri)
         {
+            string registerId = uri.Scheme + "://" + uri.Authority;
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
 
             if (reg.parentRegisterId != null)
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else
             {
-                tmp.id = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
-
 
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
             if (item.submitter != null) tmp.owner = item.submitter.name;
+            if (item.versionName != null) tmp.versionName = item.description;
+            if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
             tmp.lastUpdated = item.modified;
 
             if (item is Document)
@@ -384,11 +405,11 @@ namespace Kartverket.Register.Controllers
                 {
                     if (c.register.parentRegisterId != null)
                     {
-                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                        tmp.broader = registerId + "/subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                     else
                     {
-                        tmp.broader = urlHelper.RequestContext.HttpContext.Request.Url.Scheme + "://" + urlHelper.RequestContext.HttpContext.Request.Url.Authority + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
+                        tmp.broader = registerId + "/register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
                     }
                 }
             }

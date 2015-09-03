@@ -112,14 +112,29 @@ namespace Kartverket.Register.Tests.Controllers
             List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
 
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[1].seoname)).Returns(versions);
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
             var controller = createController(url, null, registerItemService.Object);
+            var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
-            var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<List<Models.RegisterItem>>;
-
-            List<Models.RegisterItem> actualVersions = result.Content;
-            actualVersions.Count.Should().Be(5);
+            Models.Api.Registeritem actualVersions = result.Content;
+            actualVersions.label.Should().Be("itemName");
         }
+
+        //[Test]
+        //public void GetCurrentAndOtherVersions()
+        //{
+        //    Models.Register register = NewRegister("Register name");
+        //    List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+
+        //    var registerItemService = new Mock<IRegisterItemService>();
+        //    registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
+        //    var controller = createController(url, null, registerItemService.Object);
+        //    var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname) as OkNegotiatedContentResult<Models.Api.Registeritem>;
+
+        //    Models.Api.Registeritem actualCurrentVersion = result.Content;
+        //    actualCurrentVersion.versions.Count.Should().Be(4);
+
+        //}
 
         [Test]
         public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
@@ -264,9 +279,10 @@ namespace Kartverket.Register.Tests.Controllers
                 versionGroup.lastVersionNumber++;
             }
 
-            foreach (Document doc in versions)
+            versionGroup.currentVersion = versions[0].systemId;
+            foreach (Models.RegisterItem doc in versions)
             {
-                doc.versioning.currentVersion = versions[0].systemId;
+                doc.versioning.currentVersion = versionGroup.currentVersion;
             }
             return versions;
         }

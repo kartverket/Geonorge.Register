@@ -36,17 +36,16 @@ namespace Kartverket.Register.Controllers
         /// List top level registers. Use id in response to navigate.
         /// </summary>
         [Route("api/register")]
+        [Route("api/register.{ext}")]
         [HttpGet]
         public IHttpActionResult GetRegisters()
         {
             var list = new List<Models.Api.Register>();
-
             List<Models.Register> registers = _registerService.GetRegisters();
             foreach (Models.Register register in registers)
             {
                 list.Add(ConvertRegister(register, Request.RequestUri));
             }
-
             return Ok(list);
         }
 
@@ -107,13 +106,14 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
             var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
+            
             List<Models.Api.Registeritem> convertedVersions = new List<Models.Api.Registeritem>();
             foreach (var v in versjoner)
             {
                 convertedVersions.Add(ConvertRegisterItem(v.register, v, Request.RequestUri));
-            }     
+            }
 
-            return Ok(versjoner);
+            return Ok(convertedVersions);
         }
 
 

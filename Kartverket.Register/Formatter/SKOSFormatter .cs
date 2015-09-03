@@ -26,7 +26,15 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedTypeSKOS = (type) =>
         {
-            if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
+            if (type == typeof(Item) ||
+                type == typeof(IEnumerable<Item>) ||
+                type == typeof(List<Item>) ||
+                type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
+                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>)) 
+                
                 return true;
             else
                 return false;
@@ -46,13 +54,20 @@ namespace Kartverket.Register.Formatter
         {
             return Task.Factory.StartNew(() =>
             {
-                if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
+                if (type == typeof(Item) ||
+                type == typeof(IEnumerable<Item>) ||
+                type == typeof(List<Item>) ||
+                type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
+                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
                     BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);                
             });
         }
 
         private void BuildSKOSFeed(object models, Stream stream, string contenttype)
-            {
+        {
             ConceptSheme conceptSheme = new ConceptSheme(models);
 
             XNamespace ns = "http://www.opengis.net/gml/3.2";

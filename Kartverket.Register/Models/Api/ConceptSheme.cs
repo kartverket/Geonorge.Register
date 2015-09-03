@@ -75,14 +75,12 @@ namespace Kartverket.Register.Models.Api
                     }
                 }
 
-
-
                 foreach (Registeritem item in register.containeditems)
                 {
                     Concept conceptItem = new Concept(item);
                     concepts.Add(conceptItem);
                 }
-            }
-        }
+            }          
+        }     
     }
 }

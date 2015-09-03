@@ -66,11 +66,15 @@ namespace Kartverket.Register.Models.Api
                 concepts = new List<Concept>();
                 broader = "";
 
-                foreach (Register reg in register.containedSubRegisters)
+                if (register.containedSubRegisters != null)
                 {
-                    Concept conceptItem = new Concept(reg);
-                    concepts.Add(conceptItem);
+                    foreach (Register reg in register.containedSubRegisters)
+                    {
+                        Concept conceptItem = new Concept(reg);
+                        concepts.Add(conceptItem);
+                    }
                 }
+
 
 
                 foreach (Registeritem item in register.containeditems)

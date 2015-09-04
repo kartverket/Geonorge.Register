@@ -165,7 +165,14 @@ namespace Kartverket.Register.Controllers
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-            Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
+            Document document = new Document();
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                document = (Document)_registerItemService.GetCurrentRegisterItem(registername, itemname);
+            }
+            else {
+                document = (Document)_registerItemService.GetCurrentSubregisterItem(parentRegister, registername, itemname);
+            }
             document.versionName = null;
             if (document == null)
             {
@@ -258,8 +265,15 @@ namespace Kartverket.Register.Controllers
         {
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, vnr);
+            Document document = new Document();
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, vnr);
+            }
+            else { 
+                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentRegister, registername, documentname, vnr);
+            }
+            
             if (document == null)
             {
                 return HttpNotFound();
@@ -283,7 +297,16 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
-            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
+            Document originalDocument = new Document();
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, document.versionNumber);
+            }
+            else
+            {
+                originalDocument = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
+            }
+            
             Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
@@ -490,7 +513,15 @@ namespace Kartverket.Register.Controllers
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, vnr);
+            Document document = new Document();
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, vnr);
+            }
+            else
+            {
+                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, vnr);
+            }
             if (document == null)
             {
                 return HttpNotFound();
@@ -509,7 +540,15 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
-            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, versionNumber);
+            Document document = new Document();
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, document.versionNumber);
+            }
+            else
+            {
+                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
+            }
             string parent = null;
             if (document.register.parentRegisterId != null)
             {

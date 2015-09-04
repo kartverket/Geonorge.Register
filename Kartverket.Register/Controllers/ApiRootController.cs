@@ -92,6 +92,7 @@ namespace Kartverket.Register.Controllers
             return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
         }
 
+
         /// <summary>
         /// Gets current and historical versions of register item by register- organization- and registeritem-name 
         /// </summary>
@@ -109,28 +110,6 @@ namespace Kartverket.Register.Controllers
             return Ok(currentVersion);
         }
 
-        private Models.Api.Registeritem ConvertCurrentAndVersions(string register, string item)
-        {
-            Models.Api.Registeritem currentVersion = null;
-            var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
-            foreach (var v in versjoner)
-            {
-                if (v.versioning.currentVersion == v.systemId)
-                {
-                    currentVersion = ConvertRegisterItemDetails(v.register, v, Request.RequestUri);
-
-                    foreach (var ve in versjoner)
-                    {
-                        if (v.versionNumber != ve.versionNumber)
-                        {
-                            currentVersion.versions.Add(ConvertRegisterItemDetails(ve.register, ve, Request.RequestUri));
-                        }
-                    }                
-                }
-            } 
-            return currentVersion;                   
-        }
-
 
         /// <summary>
         /// Gets register item by register- organization- registeritem-name  and version-id
@@ -142,11 +121,10 @@ namespace Kartverket.Register.Controllers
         [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no.{ext}")]
         [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no")]
         [HttpGet]
-        public IHttpActionResult GetRegisterItemByNameAndVersion(string register, string itemowner, string item, int version)
+        public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
-            var it = GetRegister(null, register);
-            var rit = GetVersion(null, register, item, version);
-            return Ok(ConvertRegisterItemDetails(it, rit, Request.RequestUri));
+            var registerItem = _registerItemService.GetRegisterItemByVersionNr(register, item, version);
+            return Ok(ConvertRegisterItemDetails(registerItem.register, registerItem, Request.RequestUri));
         }
 
 
@@ -211,6 +189,32 @@ namespace Kartverket.Register.Controllers
             return Ok(itemsFromOwner);
         }
 
+
+
+
+        // **** HJELPEMETODER ****
+
+        private Models.Api.Registeritem ConvertCurrentAndVersions(string register, string item)
+        {
+            Models.Api.Registeritem currentVersion = null;
+            var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
+            foreach (var v in versjoner)
+            {
+                if (v.versioning.currentVersion == v.systemId)
+                {
+                    currentVersion = ConvertRegisterItemDetails(v.register, v, Request.RequestUri);
+
+                    foreach (var ve in versjoner)
+                    {
+                        if (v.versionNumber != ve.versionNumber)
+                        {
+                            currentVersion.versions.Add(ConvertRegisterItemDetails(ve.register, ve, Request.RequestUri));
+                        }
+                    }
+                }
+            }
+            return currentVersion;
+        }
 
         private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
         {

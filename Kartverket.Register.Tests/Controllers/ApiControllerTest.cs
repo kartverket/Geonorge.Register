@@ -121,6 +121,22 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
         [Test]
+        public void GetRegisterItemByNameAndVersion()
+        {
+            Models.Register register = NewRegister("Register name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(s => s.GetRegisterItemByVersionNr("register_name", "itemname", 2)) .Returns(versions[2]);
+            var controller = createController(url, null, registerItemService.Object);
+            var result = controller.GetRegisterItemByVersionNr("register_name", "itemname", 2) as OkNegotiatedContentResult<Models.Api.Registeritem>;
+
+            Models.Api.Registeritem actualVersions = result.Content;
+            actualVersions.versionNumber.Should().Be(2);
+        }
+
+
+        [Test]
         public void GetCurrentAndOtherVersions()
         {
             Models.Register register = NewRegister("Register name");
@@ -215,10 +231,6 @@ namespace Kartverket.Register.Tests.Controllers
 
             apiRegister.manager.Should().Be("kartverket");
         }
-
-
-
-
 
 
 

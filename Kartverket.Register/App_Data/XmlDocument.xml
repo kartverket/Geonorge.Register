@@ -513,7 +513,7 @@
             <param name="itemowner">The search engine optimized name of the register item owner</param>
             <param name="item">The search engine optimized name of the register item</param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemByNameAndVersion(System.String,System.String,System.String,System.Int32)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemByVersionNr(System.String,System.String,System.Int32)">
             <summary>
             Gets register item by register- organization- registeritem-name  and version-id
             </summary>

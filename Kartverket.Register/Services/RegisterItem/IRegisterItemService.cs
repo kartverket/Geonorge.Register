@@ -15,9 +15,11 @@ namespace Kartverket.Register.Services.RegisterItem
         void SetBroaderItem(Guid broader, CodelistValue codelistValue);
         void SetBroaderItem(CodelistValue codelistValue);
         void RemoveBroaderAndNarrower(CodelistValue codelistValue);
-        Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name);
+        Models.RegisterItem GetCurrentRegisterItem(string register, string name);
+        Models.RegisterItem GetCurrentSubregisterItem(string parentregister, string register, string name);
         Models.Version GetVersionGroup(Guid? versioningId);
-        Models.RegisterItem GetRegisterItemByVersionNr(string parentRegister, string register, string item, int? vnr);
+        Models.RegisterItem GetRegisterItemByVersionNr(string register, string item, int? vnr);
+        Models.RegisterItem GetSubregisterItemByVersionNr(string parentRegister, string register, string item, int? vnr);
         List<Models.RegisterItem> GetAllVersionsOfItembyVersioningId(Guid? versjonsGruppeId);
         List<Models.RegisterItem> GetAllVersionsOfItem(string register, string item);
     }

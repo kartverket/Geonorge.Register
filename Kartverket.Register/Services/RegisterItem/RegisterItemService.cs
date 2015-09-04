@@ -116,12 +116,11 @@ namespace Kartverket.Register.Services.RegisterItem
             return item;
         }
 
-        public Kartverket.Register.Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name) {
+        public Kartverket.Register.Models.RegisterItem GetCurrentRegisterItem(string register, string name) {
 
             var queryResults = from o in _dbContext.RegisterItems
                                where (o.seoname == name || o.name == name) && 
-                               (o.register.seoname == register || o.register.name == register) &&
-                               (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
+                               (o.register.seoname == register || o.register.name == register)
                                && o.versioning.currentVersion == o.systemId
                                select o;
             
@@ -129,6 +128,21 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return registerItem;
         }
+
+        public Kartverket.Register.Models.RegisterItem GetCurrentSubregisterItem(string parentregister, string register, string name)
+        {
+            var queryResults = from o in _dbContext.RegisterItems
+                               where (o.seoname == name || o.name == name) &&
+                               (o.register.seoname == register || o.register.name == register) &&
+                               (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
+                               && o.versioning.currentVersion == o.systemId
+                               select o;
+
+            Kartverket.Register.Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+
+            return registerItem;
+        }
+
 
         public Models.Version GetVersionGroup(Guid? versioningId) {
             var queryResultVersions = from v in _dbContext.Versions
@@ -139,17 +153,33 @@ namespace Kartverket.Register.Services.RegisterItem
             return versjonsgruppe;
         }
 
-        public Models.RegisterItem GetRegisterItemByVersionNr(string parentRegister, string register, string item, int? vnr) {
+
+        public Models.RegisterItem GetRegisterItemByVersionNr(string register, string item, int? vnr) {
             var queryResults = from o in _dbContext.RegisterItems
                                where (o.seoname == item || o.name == item) && 
                                (o.register.seoname == register || o.register.name == register) && 
                                o.versionNumber == vnr && 
+                               o.register.parentRegisterId == null
+                               select o;
+
+            Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+            return registerItem;
+        }
+
+
+        public Models.RegisterItem GetSubregisterItemByVersionNr(string parentRegister, string register, string item, int? vnr)
+        {
+            var queryResults = from o in _dbContext.RegisterItems
+                               where (o.seoname == item || o.name == item) &&
+                               (o.register.seoname == register || o.register.name == register) &&
+                               o.versionNumber == vnr &&
                                (o.register.parentRegister.seoname == parentRegister || o.register.parentRegister.name == parentRegister)
                                select o;
 
             Models.RegisterItem registerItem = queryResults.FirstOrDefault();
             return registerItem;
         }
+
 
         public List<Models.RegisterItem> GetAllVersionsOfItembyVersioningId(Guid? versjonsGruppeId) {
             var queryResultsVersionsDocument = from o in _dbContext.RegisterItems
@@ -176,5 +206,6 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return queryResultVersions.ToList();
         }
+
     }
 }

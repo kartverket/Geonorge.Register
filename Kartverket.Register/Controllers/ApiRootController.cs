@@ -105,9 +105,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
-            Models.Api.Registeritem currentVersion;
-            currentVersion = ConvertCurrentAndVersions(register, item);
-
+            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(register, item);
             return Ok(currentVersion);
         }
 
@@ -123,7 +121,7 @@ namespace Kartverket.Register.Controllers
 
                     foreach (var ve in versjoner)
                     {
-                        if (v.systemId != ve.systemId)
+                        if (v.versionNumber != ve.versionNumber)
                         {
                             currentVersion.versions.Add(ConvertRegisterItemDetails(ve.register, ve, Request.RequestUri));
                         }

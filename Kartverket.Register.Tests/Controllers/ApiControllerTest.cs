@@ -120,21 +120,20 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.label.Should().Be("itemName");
         }
 
-        //[Test]
-        //public void GetCurrentAndOtherVersions()
-        //{
-        //    Models.Register register = NewRegister("Register name");
-        //    List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+        [Test]
+        public void GetCurrentAndOtherVersions()
+        {
+            Models.Register register = NewRegister("Register name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
 
-        //    var registerItemService = new Mock<IRegisterItemService>();
-        //    registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
-        //    var controller = createController(url, null, registerItemService.Object);
-        //    var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname) as OkNegotiatedContentResult<Models.Api.Registeritem>;
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
+            var controller = createController(url, null, registerItemService.Object);
+            var result = controller.GetRegisterItemByName(register.seoname, "kartverket", "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
-        //    Models.Api.Registeritem actualCurrentVersion = result.Content;
-        //    actualCurrentVersion.versions.Count.Should().Be(4);
-
-        //}
+            Models.Api.Registeritem actualCurrentVersion = result.Content;
+            actualCurrentVersion.versions.Count.Should().Be(4);
+        }
 
         [Test]
         public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
@@ -267,9 +266,9 @@ namespace Kartverket.Register.Tests.Controllers
                 document.systemId = new Guid();
                 document.name = versionName;
                 document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
-                Organization organisasjon = new Organization();
+                Organization organisasjon = NewOrganization("Kartverket");
                 document.documentowner = organisasjon;
-                document.submitter = organisasjon; 
+                document.submitter = organisasjon;
                 document.versionNumber = versionGroup.lastVersionNumber;
                 document.versioning = versionGroup;
                 document.versioningId = versionGroup.systemId;
@@ -286,8 +285,5 @@ namespace Kartverket.Register.Tests.Controllers
             }
             return versions;
         }
-
     }
-
-
 }

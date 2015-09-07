@@ -333,6 +333,26 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, org.number);
                 }
+                if (org.agreementDocumentUrl != null)
+                {
+                    originalOrganization.agreementDocumentUrl = org.agreementDocumentUrl;
+                }
+                if (org.agreementYear != null)
+                {
+                    originalOrganization.agreementYear = org.agreementYear;
+                }
+                if (org.epost != null)
+                {
+                    originalOrganization.epost = org.epost;
+                }
+                if (org.member != null)
+                {
+                    originalOrganization.member = org.member;
+                }
+                if (org.priceFormDocument != null)
+                {
+                    originalOrganization.priceFormDocument = org.priceFormDocument;
+                }
                 if (org.statusId != null)
                 {
                     if (org.statusId == "Valid" && originalOrganization.statusId != "Valid")

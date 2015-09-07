@@ -27,13 +27,30 @@ namespace Kartverket.Register.Models
         [Display(Name = "Organization_Logo", ResourceType = typeof(UI))]
         public string logoFilename { get; set; }
 
-        [Display(Name = "Stor logo:")]
+        [Display(Name = "Stor logo")]
         public string largeLogo { get; set; }
 
-        [Display(Name = "Kontaktperson:")]
+        [Display(Name = "Kontaktperson")]
         public string contact { get; set; }
 
-        [Display(Name = "Kortnavn:")]
+        [Display(Name = "E-postadresse")]
+        [DataType(DataType.EmailAddress)] 
+        public string epost { get; set; }
+
+        [Display(Name = "Norge digitaltmedlem")]
+        public bool? member { get; set; }
+
+        [Display(Name = "Avtale godkjent år")]
+        [Range(1000,9999, ErrorMessage = "Skriv inn et årstall yyyy")] 
+        public int? agreementYear { get; set; }
+
+        [Display(Name = "Avtaledokument")]
+        public string agreementDocumentUrl { get; set; }
+
+        [Display(Name = "Prisskjema/Kalkulator")]
+        public string priceFormDocument { get; set; }        
+
+        [Display(Name = "Kortnavn")]
         public string shortname { get; set; }
 
 	}//end Organization

@@ -541,6 +541,10 @@
     <Compile Include="Migrations\201508250841071_addVersionName.Designer.cs">
       <DependentUpon>201508250841071_addVersionName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509071143542_addReportingAttributes.cs" />
+    <Compile Include="Migrations\201509071143542_addReportingAttributes.Designer.cs">
+      <DependentUpon>201509071143542_addReportingAttributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1083,10 +1087,14 @@
     <EmbeddedResource Include="Migrations\201508250841071_addVersionName.resx">
       <DependentUpon>201508250841071_addVersionName.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509071143542_addReportingAttributes.resx">
+      <DependentUpon>201509071143542_addReportingAttributes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UI.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

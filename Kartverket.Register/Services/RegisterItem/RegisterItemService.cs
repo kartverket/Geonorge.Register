@@ -143,7 +143,6 @@ namespace Kartverket.Register.Services.RegisterItem
             return registerItem;
         }
 
-
         public Models.Version GetVersionGroup(Guid? versioningId) {
             var queryResultVersions = from v in _dbContext.Versions
                                       where v.systemId == versioningId
@@ -152,7 +151,6 @@ namespace Kartverket.Register.Services.RegisterItem
             Kartverket.Register.Models.Version versjonsgruppe = queryResultVersions.FirstOrDefault();
             return versjonsgruppe;
         }
-
 
         public Models.RegisterItem GetRegisterItemByVersionNr(string register, string item, int? vnr) {
             var queryResults = from o in _dbContext.RegisterItems
@@ -165,7 +163,6 @@ namespace Kartverket.Register.Services.RegisterItem
             Models.RegisterItem registerItem = queryResults.FirstOrDefault();
             return registerItem;
         }
-
 
         public Models.RegisterItem GetSubregisterItemByVersionNr(string parentRegister, string register, string item, int? vnr)
         {
@@ -180,7 +177,6 @@ namespace Kartverket.Register.Services.RegisterItem
             return registerItem;
         }
 
-
         public List<Models.RegisterItem> GetAllVersionsOfItembyVersioningId(Guid? versjonsGruppeId) {
             var queryResultsVersionsDocument = from o in _dbContext.RegisterItems
                                                where o.versioningId == versjonsGruppeId
@@ -190,22 +186,60 @@ namespace Kartverket.Register.Services.RegisterItem
             return versions;
         }
 
-
-        public List<Models.RegisterItem> GetAllVersionsOfItem(string register, string item)
+        public List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item)
         {
-            var queryResultsItem = from o in _dbContext.RegisterItems
-                                              where o.register.seoname == register 
-                                              && o.seoname == item
-                                              select o;
+            Models.RegisterItem version = null;
+            if (string.IsNullOrWhiteSpace(parent))
+            {
+                var queryResultsItem = from o in _dbContext.RegisterItems
+                                       where o.register.seoname == register
+                                       && o.register.parentRegister == null
+                                       && o.seoname == item
+                                       select o;
 
-            var version = queryResultsItem.FirstOrDefault();
+                version = queryResultsItem.FirstOrDefault();                
+            }
+            else { 
+                var queryResultsItem = from o in _dbContext.RegisterItems
+                                                  where o.register.seoname == register 
+                                                  && o.seoname == item
+                                                  && o.register.parentRegister.seoname == parent
+                                                  select o;
 
+                version = queryResultsItem.FirstOrDefault();                
+            }
             var queryResultVersions = from r in _dbContext.RegisterItems
-                                      where r.versioningId == version.versioningId
-                                      select r;
+                                          where r.versioningId == version.versioningId
+                                          select r;
 
             return queryResultVersions.ToList();
         }
 
+        public List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner)
+        {
+            List<Models.RegisterItem> itemsByOwner = new List<Models.RegisterItem>();
+            if (string.IsNullOrWhiteSpace(parentname))
+            {
+                var queryResult = from r in _dbContext.RegisterItems
+                                  where r.register.seoname == registername 
+                                  && r.register.parentRegister == null
+                                  && r.submitter.seoname == itemowner
+                                  && r.versioning.currentVersion == r.systemId
+                                  select r;
+
+                itemsByOwner = queryResult.ToList(); 
+            }
+            else {
+                var queryResult = from r in _dbContext.RegisterItems
+                                  where r.register.seoname == registername
+                                  && r.register.parentRegister.seoname == parentname
+                                  && r.submitter.seoname == itemowner
+                                  && r.versioning.currentVersion == r.systemId
+                                  select r;
+
+                itemsByOwner = queryResult.ToList(); 
+            }
+            return itemsByOwner;
+        }
     }
 }

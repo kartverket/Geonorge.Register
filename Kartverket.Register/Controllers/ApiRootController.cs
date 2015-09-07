@@ -106,7 +106,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
-            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(register, item);
+            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(null, register, item);
             return Ok(currentVersion);
         }
 
@@ -115,7 +115,6 @@ namespace Kartverket.Register.Controllers
         /// Gets register item by register- organization- registeritem-name  and version-id
         /// </summary>
         /// <param name="register">The search engine optimized name of the register</param>
-        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
         /// <param name="version">The version id of the registeritem</param>
         [Route("api/register/versjoner/{register}/{itemowner}/{item}/{version}/no.{ext}")]
@@ -132,18 +131,15 @@ namespace Kartverket.Register.Controllers
         /// Gets register item by parent-register, register- organization- and registeritem-name 
         /// </summary>
         /// <param name="parentregister">The search engine optimized name of the parent register</param>
-        /// <param name="registerowner">The search engine optimized name of the register owner</param>
         /// <param name="register">The search engine optimized name of the register</param>
-        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
-        /// <param name="items">The search engine optimized name of the register item</param>
+        /// <param name="item">The search engine optimized name of the register item</param>
         [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}")]
         [Route("api/subregister/{parentregister}/{registerowner}/{register}/{itemowner}/{item}.{ext}")]
         [HttpGet]
-        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string itemowner, string item)
+        public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item)
         {
-            var it = GetRegister(parentregister, register);
-            var rit = GetCurrentVersion(parentregister, register, item);
-            return Ok(ConvertRegisterItemDetails(it, rit, Request.RequestUri));
+            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
+            return Ok(currentVersion);
         }
 
         /// <summary>
@@ -154,15 +150,14 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult SearchByOrganizationName(string name)
         {
-            List<Kartverket.Register.Models.Api.Item> resultat = new List<Models.Api.Item>();
-
+            List<Models.Api.Item> resultat = new List<Models.Api.Item>();
             SearchParameters parameters = new SearchParameters();
             parameters.Text = name;
             var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             SearchResult searchResult = _searchService.Search(parameters);
             foreach (var it in searchResult.Items)
             {
-                resultat.Add(Convert(it, urlHelper));
+                resultat.Add(Convert(it));
             }
             return Ok(resultat);
         }
@@ -170,34 +165,36 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// List items for specific organization 
         /// </summary>
+        /// <param name="parent">The name of the parentregister</param>
         /// <param name="register">The name of the register</param>
         /// <param name="itemowner">The name of the organization</param>
+        [Route("api/register/{parent}/{registerOwner}/{register}/{itemowner}.{ext}")]
+        [Route("api/register/{parent}/{registerOwner}/{register}/{itemowner}")]
         [Route("api/register/{register}/{itemowner}.{ext}")]
         [Route("api/register/{register}/{itemowner}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterItemsFromOrganization(string register, string itemowner)
+        public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
-            List<Models.Api.Registeritem> itemsFromOwner = new List<Models.Api.Registeritem>();
-            Models.Register it = GetRegister(null, register);
-            foreach (var item in it.items)
-            {
-                if (item.submitter.seoname == itemowner)
-                {
-                    itemsFromOwner.Add(ConvertRegisterItemDetails(it, item, Request.RequestUri));
-                }
-            }
-            return Ok(itemsFromOwner);
-        }
+            List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
+            List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
+
+            foreach (Models.RegisterItem item in itemsByOwner)
+	        {
+                ConverteditemsByOwner.Add(ConvertRegisterItemDetails(item.register, item, Request.RequestUri));
+	        }
+
+            return Ok(ConverteditemsByOwner);
+        } 
 
 
 
 
         // **** HJELPEMETODER ****
 
-        private Models.Api.Registeritem ConvertCurrentAndVersions(string register, string item)
+        private Models.Api.Registeritem ConvertCurrentAndVersions(string parent, string register, string item)
         {
             Models.Api.Registeritem currentVersion = null;
-            var versjoner = _registerItemService.GetAllVersionsOfItem(register, item);
+            var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
             foreach (var v in versjoner)
             {
                 if (v.versioning.currentVersion == v.systemId)
@@ -421,7 +418,7 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private Models.Api.Item Convert(SearchResultItem searchitem, System.Web.Mvc.UrlHelper urlHelper)
+        private Models.Api.Item Convert(SearchResultItem searchitem)
         {
             var tmp = new Models.Api.Item
             {

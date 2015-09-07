@@ -21,7 +21,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         {            
             Models.Register register = NewRegister("Register name");
             //register.parentRegister = NewRegister("Parentregister name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
             Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentRegisterItem(register.seoname, versions[1].seoname);
@@ -34,7 +34,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         {
             Models.Register register = NewRegister("Register name");
             register.parentRegister = NewRegister("Parentregister name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
             Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentSubregisterItem(register.parentRegister.seoname, register.seoname, versions[1].seoname);
@@ -47,10 +47,10 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         {
             Models.Register register = NewRegister("Register name");
             register.parentRegister = NewRegister("Parentregister name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            List<Models.RegisterItem> actualListOfVersions = registerItemService.GetAllVersionsOfItem(register.seoname, versions[1].seoname);
+            List<Models.RegisterItem> actualListOfVersions = registerItemService.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, versions[1].seoname);
 
             actualListOfVersions.Count.Should().Be(5);
         }
@@ -59,7 +59,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         public void GetRegisterItemByVersionNr()
         {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
             Models.RegisterItem actualVersion = registerItemService.GetRegisterItemByVersionNr(register.seoname, "itemname", 2);
@@ -72,12 +72,49 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         {
             Models.Register register = NewRegister("Register name");
             register.parentRegister = NewRegister("Parent name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
             Models.RegisterItem actualVersion = registerItemService.GetSubregisterItemByVersionNr(register.parentRegister.seoname, register.seoname, "itemname", 2);
 
             actualVersion.Should().Be(versions[2]);
+        }
+
+        [Test]
+        public void GetRegisterItemByOrganization()
+        {
+            Models.Register register = NewRegister("Register name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            List<Models.RegisterItem> versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
+
+            foreach (Models.RegisterItem item in versionsFromOtherOrganization)
+            {
+                versions.Add(item);
+            }
+
+            var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
+            List<Models.RegisterItem> actualVersion = registerItemService.GetRegisterItemsFromOrganization(null, register.seoname, "kartverket");
+
+            actualVersion.Count.Should().Be(2);
+        }
+
+        [Test]
+        public void GetSubregisterItemByOrganization()
+        {
+            Models.Register register = NewRegister("Register name");
+            register.parentRegister = NewRegister("Parent name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            List<Models.RegisterItem> versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
+
+            foreach (Models.RegisterItem item in versionsFromOtherOrganization)
+            {
+                versions.Add(item);
+            }
+
+            var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
+            List<Models.RegisterItem> actualVersion = registerItemService.GetRegisterItemsFromOrganization(register.parentRegister.seoname, register.seoname, "kartverket");
+
+            actualVersion.Count.Should().Be(2);
         }
 
 
@@ -94,7 +131,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             return register;
         }
 
-        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register)
+        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register, string Owner)
         {
             Models.Version versionGroup = new Models.Version();
             versionGroup.systemId = new Guid();
@@ -104,10 +141,12 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             for (int i = 0; i < 5; i++)
             {
                 Models.Document document = new Document();
-                document.systemId = new Guid();
+                document.systemId = Guid.Parse("c6056ed8-e040-42ef-b3c8-02f66fbb0ce" + i);
                 document.name = versionName;
                 document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
-                document.documentowner = NewOrganization("Kartverket");
+                Organization organisasjon = NewOrganization(Owner);
+                document.documentowner = organisasjon;
+                document.submitter = organisasjon;
                 document.versionNumber = versionGroup.lastVersionNumber;
                 document.versioning = versionGroup;
                 document.versioningId = versionGroup.systemId;
@@ -117,10 +156,11 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
                 versionGroup.lastVersionNumber++;
             }
 
-            foreach (Document doc in versions)
+            versionGroup.currentVersion = versions[0].systemId;
+            foreach (Models.RegisterItem doc in versions)
             {
-                doc.versioning.currentVersion = versions[0].systemId;
-            }                    
+                doc.versioning.currentVersion = versionGroup.currentVersion;
+            }
             return versions;
         }
 

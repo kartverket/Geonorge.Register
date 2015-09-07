@@ -109,10 +109,10 @@ namespace Kartverket.Register.Tests.Controllers
         [Test]
         public void GetRegisterItemByName() {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(null, register.seoname, versions[0].seoname)).Returns(versions);
             var controller = createController(url, null, registerItemService.Object);
             var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
@@ -124,7 +124,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void GetRegisterItemByNameAndVersion()
         {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
             registerItemService.Setup(s => s.GetRegisterItemByVersionNr("register_name", "itemname", 2)) .Returns(versions[2]);
@@ -135,15 +135,47 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.versionNumber.Should().Be(2);
         }
 
+        [Test]
+        public void GetSubregisterItemByName()
+        {
+            Models.Register register = NewRegister("Register name");
+            register.parentRegister = NewRegister("parent name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, "itemname")).Returns(versions);
+            var controller = createController(url, null, registerItemService.Object);
+            var result = controller.GetSubregisterItemByName(register.parentRegister.seoname, register.seoname, "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
+
+            Models.Api.Registeritem actualVersions = result.Content;
+            actualVersions.label.Should().Be("itemName");
+        }
+
+        [Test]
+        public void GetRegisterItemsByOrganization()
+        {
+            Models.Register register = NewRegister("Register name");
+            register.parentRegister = NewRegister("parent name");
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            List<Models.RegisterItem> versionsWithOtherOwner = GetListOfVersions("itemName", register, "Norges geologiske undersøkelse");
+
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(s => s.GetRegisterItemsFromOrganization(register.parentRegister.seoname, register.seoname, "kartverket")).Returns(versions);
+            var controller = createController(url, null, registerItemService.Object);
+            var result = controller.GetRegisterItemsByOrganization(register.parentRegister.seoname, register.seoname, "kartverket") as OkNegotiatedContentResult<List<Models.Api.Registeritem>>;
+
+            List<Models.Api.Registeritem> actualVersions = result.Content;
+            actualVersions.Count.Should().Be(5);
+        }
 
         [Test]
         public void GetCurrentAndOtherVersions()
         {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register);
+            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetAllVersionsOfItem(register.seoname, versions[0].seoname)).Returns(versions);
+            registerItemService.Setup(s => s.GetAllVersionsOfItem(null, register.seoname, versions[0].seoname)).Returns(versions);
             var controller = createController(url, null, registerItemService.Object);
             var result = controller.GetRegisterItemByName(register.seoname, "kartverket", "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
@@ -234,8 +266,6 @@ namespace Kartverket.Register.Tests.Controllers
 
 
 
-
-
         // **** HJELPEMETODER ****
 
         private Models.Register NewRegister(string name)
@@ -265,7 +295,7 @@ namespace Kartverket.Register.Tests.Controllers
             return controller;
         }
 
-        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register)
+        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register, string Owner)
         {
             Models.Version versionGroup = new Models.Version();
             versionGroup.systemId = new Guid();
@@ -278,7 +308,7 @@ namespace Kartverket.Register.Tests.Controllers
                 document.systemId = new Guid();
                 document.name = versionName;
                 document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
-                Organization organisasjon = NewOrganization("Kartverket");
+                Organization organisasjon = NewOrganization(Owner);
                 document.documentowner = organisasjon;
                 document.submitter = organisasjon;
                 document.versionNumber = versionGroup.lastVersionNumber;

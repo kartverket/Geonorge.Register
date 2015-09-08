@@ -23,7 +23,7 @@
             <p>
                 @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))
                 {
-                    <a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span> Prisskjema/Kalkulator</a>
+                    <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link til prisskjema/kalkulator for @Model.name" style="font-size:15px"></span> Prisskjema/Kalkulator</a>
                 }
                 else
                 {
@@ -59,10 +59,8 @@
             <br />
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <br/>
             <img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" class="img-large pull-right" alt="Stor logo" title="Stor logo @Model.name" />
         </div>
     </div>
-
-
-
 </div>

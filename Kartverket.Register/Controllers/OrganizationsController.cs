@@ -145,7 +145,7 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("organisasjoner/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister)
+        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
         {
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
@@ -168,6 +168,7 @@ namespace Kartverket.Register.Controllers
                 organization.modified = DateTime.Now;
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
+                organization.register = register;
                 organization.statusId = "Submitted";
                 organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
 
@@ -178,6 +179,16 @@ namespace Kartverket.Register.Controllers
                 if (fileLarge != null && fileLarge.ContentLength > 0)
                 {
                     organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
+                }
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+                if (agreementDocument != null)
+                {
+                    organization.agreementDocumentUrl = url + SaveFileToDisk(agreementDocument, organization);
+                }
+
+                if (priceformDocument != null)
+                {
+                    organization.priceFormDocument = url + SaveFileToDisk(priceformDocument, organization);
                 }
 
                 db.RegisterItems.Add(organization);
@@ -274,7 +285,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("organisasjoner/{registerParent}/{registerowner}/{registername}/{itemowner}/{organisasjon}/rediger")]
         [Route("organisasjoner/{registername}/{innsender}/{organisasjon}/rediger")]
-        public ActionResult Edit(Organization org, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string organisasjon, string registerParent)
+        public ActionResult Edit(Organization org, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string organisasjon, string registerParent, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
         {
             var queryResultsRegister = from o in db.Registers
                                        where o.seoname == registername
@@ -333,10 +344,6 @@ namespace Kartverket.Register.Controllers
                 {
                     originalOrganization.largeLogo = SaveLogoToDisk(fileLarge, org.number);
                 }
-                if (org.agreementDocumentUrl != null)
-                {
-                    originalOrganization.agreementDocumentUrl = org.agreementDocumentUrl;
-                }
                 if (org.agreementYear != null)
                 {
                     originalOrganization.agreementYear = org.agreementYear;
@@ -366,11 +373,21 @@ namespace Kartverket.Register.Controllers
                     originalOrganization.statusId = org.statusId;
                 }
 
+                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+                if (agreementDocument != null)
+                {
+                    originalOrganization.agreementDocumentUrl = url + SaveFileToDisk(agreementDocument, originalOrganization);
+                }
+
+                if (priceformDocument != null)
+                {
+                    originalOrganization.priceFormDocument = url + SaveFileToDisk(priceformDocument, originalOrganization);
+                }
+
                 originalOrganization.modified = DateTime.Now;
                 db.Entry(originalOrganization).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewbagsOrganization(org, register);
-
 
                 if (register.parentRegister != null)
                 {
@@ -478,6 +495,33 @@ namespace Kartverket.Register.Controllers
             }
 
             return result;
+        }
+
+        private string SaveFileToDisk(HttpPostedFileBase file, Organization organization)
+        {
+            string filtype;
+            string seofilename;
+            MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
+
+            string filename = organization.register.seoname + "_" + organization.seoname + "_v1_" + seofilename + "." + filtype;
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        private static void MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
+        {
+            string[] documentfilename = file.FileName.Split('.');
+            filtype = documentfilename.Last();
+            seofilename = null;
+            foreach (string item in documentfilename)
+            {
+                if (item == filtype)
+                {
+                    break;
+                }
+                seofilename += Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item) + "_";
+            }
         }
 
         private string SaveLogoToDisk(HttpPostedFileBase file, string organizationNumber)

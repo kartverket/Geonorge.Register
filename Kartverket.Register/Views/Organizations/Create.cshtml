@@ -70,7 +70,8 @@
                 @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <hr/>
+        <h3>Kontaktperson</h3>
         <div class="form-group">
             @Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -86,7 +87,7 @@
                 @Html.ValidationMessageFor(model => model.epost, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.member, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -99,12 +100,14 @@
                 @Html.ValidationMessageFor(model => model.member, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <hr />
+        <h3>Dokumenter</h3>        
 
         <div class="form-group">
             @Html.LabelFor(model => model.agreementDocumentUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.agreementDocumentUrl, new { htmlAttributes = new { @title = "Lenke til avtaledokument", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.agreementDocumentUrl, "", new { @class = "text-danger" })
+                <input type="file" name="agreementDocument" />
             </div>
         </div>
 
@@ -119,11 +122,12 @@
         <div class="form-group">
             @Html.LabelFor(model => model.priceFormDocument, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.priceFormDocument, new { htmlAttributes = new { @title = "Lenke til prisskjema/kalkulator", @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.priceFormDocument, "", new { @class = "text-danger" })
+                <input type="file" name="priceformDocument" />
             </div>
         </div>
 
+        <hr />
+        <h3>Logo</h3>
         <div class="form-group">
             @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

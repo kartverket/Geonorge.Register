@@ -242,13 +242,17 @@ namespace Kartverket.Register.Controllers
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, Uri uri)
         {
             var tmp = ConvertRegister(item, uri);
-            if (item.items != null)
+            if (item.items.Count() > 0 && item.items != null)
             {
                 tmp.containeditems = new List<Models.Api.Registeritem>();
 
                 foreach (var d in item.items)
                 {
-                    tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
+                    if (d.status.group != "suggested" && d.versioning.currentVersion == d.systemId)
+                    {
+                        tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
+                    }
+                    
                 }
             }
             else
@@ -278,9 +282,6 @@ namespace Kartverket.Register.Controllers
             if (item.description != null) tmp.description = item.description;
             if (item.versionName != null) tmp.versionName = item.description;
             if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
-            {
-
-            }
             if (reg.parentRegisterId != null)
             {
                 tmp.id = registerId + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;

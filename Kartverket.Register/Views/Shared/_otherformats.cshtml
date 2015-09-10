@@ -5,7 +5,7 @@
         <a href="/Help" class="btn btn-sm btn-default" title="Hjelp til API og formater(Beta)"><span class="fa fa-question"></span> API</a>
         <a href="@HtmlHelperExtensions.urlFormat(Request, "atom")" class="btn btn-sm btn-default" title="Vis Atom feed(Beta)"><span class="fa fa-rss"></span> ATOM</a>
         <a href="@HtmlHelperExtensions.urlFormat(Request, "rss")" class="btn btn-sm btn-default" title="Vis rss feed(Beta)"><span class="fa fa-rss"></span> RSS</a>
-        <a href="@Request.Url&export=csv" class="btn btn-sm btn-default" title="Eksporter til CSV(Beta)"><span class="fa fa-file-excel-o"></span> CSV</a>
+        <a href="@HtmlHelperExtensions.urlFormat(Request, "csv")" class="btn btn-sm btn-default" title="Vis CSV(Beta)"><span class="fa fa-file-excel-o"></span> CSV</a>
         <a href="@HtmlHelperExtensions.urlFormat(Request, "gml")" class="btn btn-sm btn-default" title="Vis GML Dictionary(Beta)"><span class="fa fa-file-code-o"></span> GML</a>
         <a href="@HtmlHelperExtensions.urlFormat(Request, "rdf")" class="btn btn-sm btn-default" title="Vis SKOS/RDF(Beta)"><span class="fa fa-file-code-o"></span> RDF</a>
         <a href="@HtmlHelperExtensions.urlFormat(Request, "json")" class="btn btn-sm btn-default" title="Vis JSON(Beta)"><span class="fa fa-file-code-o"></span> JSON</a>

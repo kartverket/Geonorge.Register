@@ -25,6 +25,7 @@ namespace Kartverket.Register.Formatter
         Func<Type, bool> SupportedTypeCSV = (type) =>
         {
             if (type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
@@ -47,6 +48,7 @@ namespace Kartverket.Register.Formatter
         public override void WriteToStream(Type type, object value, Stream writeStream, HttpContent content)
         {
             if (type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
@@ -64,42 +66,48 @@ namespace Kartverket.Register.Formatter
             }
             if (models is Models.Api.Registeritem)
             {
-                streamWriter.Write(RegisterItemHeading());
+                streamWriter.WriteLine(RegisterItemHeading());
                 Models.Api.Registeritem registerItem = (Models.Api.Registeritem)models;
                 ConvertRegisterItemToCSV(streamWriter, registerItem);
+                foreach (Models.Api.Registeritem item in registerItem.versions.OrderBy(v => v.versionNumber))
+                {
+                    ConvertRegisterItemToCSV(streamWriter, registerItem);
+                }
+            }
+            if (models is List<Models.Api.Register>)
+            {
+                streamWriter.WriteLine(RegisterHeading());
+                List<Models.Api.Register> registers = (List<Models.Api.Register>)models;
+                foreach (Models.Api.Register reg in registers.OrderBy(r => r.label))
+                {
+                    ConvertRegisterToCSV(streamWriter, reg);
+                }
             }
             if (models is List<Models.Api.Registeritem>)
             {
-                streamWriter.Write(RegisterItemHeading());
+                streamWriter.WriteLine(RegisterItemHeading());
                 List<Models.Api.Registeritem> registerItems = (List<Models.Api.Registeritem>)models;
-                ConvertRegisterItems(streamWriter, registerItems);
+                foreach (Models.Api.Registeritem item in registerItems.OrderBy(r => r.label))
+                {
+                    ConvertRegisterItemToCSV(streamWriter, item);
+                }
             }
-        }
-
-        private StringBuilder ConvertRegisterItems(StreamWriter streamWriter, List<Models.Api.Registeritem> registerItemList)
-        {
-            StringBuilder text = new StringBuilder(RegisterItemHeading());                
-
-            foreach (Models.Api.Registeritem item in registerItemList)
-            {
-                ConvertRegisterItemToCSV(streamWriter, item);
-            }
-            return text;
+            streamWriter.Close();
         }
 
         private void ConvertRegisters(StreamWriter streamWriter, Models.Api.Register register)
         {
             if (register.containeditems != null)
             {
-                streamWriter.Write(RegisterItemHeading());
-                foreach (Models.Api.Registeritem item in register.containeditems.ToList())
+                streamWriter.WriteLine(RegisterItemHeading());
+                foreach (Models.Api.Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))
                 {
                     ConvertRegisterItemToCSV(streamWriter, item);
                 }
             }
             else if (register.containedSubRegisters != null)
             {
-                streamWriter.Write(RegisterHeading());
+                streamWriter.WriteLine(RegisterHeading());
                 foreach (Models.Api.Register item in register.containedSubRegisters.ToList())
                 {
                     ConvertRegisterToCSV(streamWriter, item);
@@ -110,30 +118,41 @@ namespace Kartverket.Register.Formatter
         private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Models.Api.Registeritem item)
         {
             item.description = RemoveBreaksFromDescription(item.description);
-            streamWriter.Write(item.id + ";" + item.label + ";" + item.itemclass + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + "\n");
+            string text = item.id + ";" + item.label + ";" + item.itemclass + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy");
+            byte[] data = Encoding.Unicode.GetBytes(text);
+            streamWriter.WriteLine(text);
         }
 
         private static void ConvertRegisterToCSV(StreamWriter streamWriter, Models.Api.Register register)
         {
             register.contentsummary = RemoveBreaksFromDescription(register.contentsummary);
-            streamWriter.Write(register.id + ";" + register.label + ";" + register.contentsummary + ";" + register.owner + ";" + register.lastUpdated.ToString("dd/MM/yyyy") + "\n");
+            string text = register.id + ";" + register.label + ";" + register.contentsummary + ";" + register.owner + ";" + register.lastUpdated.ToString("dd/MM/yyyy");
+            byte[] data = Encoding.Unicode.GetBytes(text);
+            streamWriter.WriteLine(text);
         }
 
         private static string RemoveBreaksFromDescription(string description)
         {
             string replaceWith = " ";
-            description = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                description = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+            }
+            else { 
+                description = "ikke angitt";
+            }
+            
             return description;
         }
 
         private string RegisterItemHeading()
         {
-            return "Id ;Navn; Type; Status; Beskrivelse; Eier; Oppdatert\n";
+            return "Id ;Navn; Type; Status; Beskrivelse; Eier; Oppdatert";
         }
 
         private string RegisterHeading()
         {
-            return "Id ;Navn; Beskrivelse; Eier; Oppdatert\n";
+            return "Id ;Navn; Beskrivelse; Eier; Oppdatert";
         }
     }
 }

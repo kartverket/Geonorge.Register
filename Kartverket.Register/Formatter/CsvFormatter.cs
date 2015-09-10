@@ -58,7 +58,7 @@ namespace Kartverket.Register.Formatter
 
         private void BuildCSV(object models, Stream stream, string contenttype)
         {
-            StreamWriter streamWriter = new StreamWriter(stream);
+            StreamWriter streamWriter = new StreamWriter(stream, Encoding.UTF8);
             if (models is Models.Api.Register)
             {
                 Models.Api.Register register = (Models.Api.Register)models;
@@ -119,7 +119,6 @@ namespace Kartverket.Register.Formatter
         {
             item.description = RemoveBreaksFromDescription(item.description);
             string text = item.id + ";" + item.label + ";" + item.versionNumber + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy");
-            byte[] data = Encoding.Unicode.GetBytes(text);
             streamWriter.WriteLine(text);
         }
 
@@ -127,7 +126,6 @@ namespace Kartverket.Register.Formatter
         {
             register.contentsummary = RemoveBreaksFromDescription(register.contentsummary);
             string text = register.id + ";" + register.label + ";" + register.contentsummary + ";" + register.owner + ";" + register.lastUpdated.ToString("dd/MM/yyyy");
-            byte[] data = Encoding.Unicode.GetBytes(text);
             streamWriter.WriteLine(text);
         }
 

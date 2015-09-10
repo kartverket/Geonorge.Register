@@ -22,7 +22,7 @@ namespace Kartverket.Register.Tests.Services.Register
             r1.name = "Register 1";
             Models.Register r2 = new Models.Register();
             r2.name = "Register 2";
-            r2.parentRegisterId = new Guid();
+            r2.parentRegisterId = Guid.NewGuid();
             Models.Register r3 = new Models.Register();
             r3.name = "Register 3";
             List<Models.Register> registerList = new List<Models.Register>() { r1, r2, r3};
@@ -92,7 +92,7 @@ namespace Kartverket.Register.Tests.Services.Register
         private Models.Register NewRegister(string name)
         {
             Models.Register register = new Models.Register();
-            register.systemId = new Guid();
+            register.systemId = Guid.NewGuid();
             register.name = name;
             register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
@@ -102,7 +102,7 @@ namespace Kartverket.Register.Tests.Services.Register
         private Models.Organization NewOrganization(string name)
         {
             Models.Organization organization = new Models.Organization();
-            organization.systemId = new Guid();
+            organization.systemId = Guid.NewGuid();
             organization.name = name;
             organization.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
             organization.description = "beskrivelse av organisasjon";

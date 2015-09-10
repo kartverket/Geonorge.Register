@@ -179,12 +179,12 @@ namespace Kartverket.Register.Controllers
             List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
 
             foreach (Models.RegisterItem item in itemsByOwner)
-	        {
+            {
                 ConverteditemsByOwner.Add(ConvertRegisterItemDetails(item.register, item, Request.RequestUri));
-	        }
+            }
 
             return Ok(ConverteditemsByOwner);
-        } 
+        }
 
 
 
@@ -252,19 +252,20 @@ namespace Kartverket.Register.Controllers
                     {
                         tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
                     }
-                    
+
                 }
             }
             else
             {
                 tmp.containedSubRegisters = new List<Models.Api.Register>();
                 List<Models.Register> subregisters = _registerService.GetSubregistersOfRegister(item);
-
-                foreach (var reg in subregisters)
+                if (subregisters != null)
                 {
-                    tmp.containedSubRegisters.Add(ConvertRegister(reg, uri));
+                    foreach (var reg in subregisters)
+                    {
+                        tmp.containedSubRegisters.Add(ConvertRegister(reg, uri));
+                    }
                 }
-
             }
 
             return tmp;

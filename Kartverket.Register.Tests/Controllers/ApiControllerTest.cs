@@ -271,7 +271,7 @@ namespace Kartverket.Register.Tests.Controllers
         private Models.Register NewRegister(string name)
         {
             Models.Register register = new Models.Register();
-            register.systemId = new Guid();
+            register.systemId = Guid.NewGuid();
             register.name = name;
             register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
@@ -281,7 +281,7 @@ namespace Kartverket.Register.Tests.Controllers
         private Models.Organization NewOrganization(string name)
         {
             Models.Organization organization = new Models.Organization();
-            organization.systemId = new Guid();
+            organization.systemId = Guid.NewGuid();
             organization.name = name;
             organization.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
             organization.description = "beskrivelse av organisasjon";
@@ -298,14 +298,14 @@ namespace Kartverket.Register.Tests.Controllers
         private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register, string Owner)
         {
             Models.Version versionGroup = new Models.Version();
-            versionGroup.systemId = new Guid();
+            versionGroup.systemId = Guid.NewGuid();
             versionGroup.lastVersionNumber = 0;
             List<Models.RegisterItem> versions = new List<Models.RegisterItem>();
 
             for (int i = 0; i < 5; i++)
             {
                 Models.Document document = new Document();
-                document.systemId = new Guid();
+                document.systemId = Guid.NewGuid();
                 document.name = versionName;
                 document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
                 Organization organisasjon = NewOrganization(Owner);

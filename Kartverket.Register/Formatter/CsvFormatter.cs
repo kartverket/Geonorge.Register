@@ -71,7 +71,7 @@ namespace Kartverket.Register.Formatter
                 ConvertRegisterItemToCSV(streamWriter, registerItem);
                 foreach (Models.Api.Registeritem item in registerItem.versions.OrderBy(v => v.versionNumber))
                 {
-                    ConvertRegisterItemToCSV(streamWriter, registerItem);
+                    ConvertRegisterItemToCSV(streamWriter, item);
                 }
             }
             if (models is List<Models.Api.Register>)
@@ -118,7 +118,7 @@ namespace Kartverket.Register.Formatter
         private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Models.Api.Registeritem item)
         {
             item.description = RemoveBreaksFromDescription(item.description);
-            string text = item.id + ";" + item.label + ";" + item.itemclass + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy");
+            string text = item.id + ";" + item.label + ";" + item.versionNumber + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy");
             byte[] data = Encoding.Unicode.GetBytes(text);
             streamWriter.WriteLine(text);
         }
@@ -147,7 +147,7 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterItemHeading()
         {
-            return "Id ;Navn; Type; Status; Beskrivelse; Eier; Oppdatert";
+            return "Id ;Navn; Versjons Id; Status; Beskrivelse; Eier; Oppdatert";
         }
 
         private string RegisterHeading()

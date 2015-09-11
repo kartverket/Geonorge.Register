@@ -60,13 +60,7 @@ namespace Kartverket.Register.Models
         public virtual DOKTheme theme { get; set; }
 
         [Display(Name = "Miniatyrbilde")]
-        public string datasetthumbnail { get; set; }
-
-        [ForeignKey("dokStatus")]
-        [Display(Name = "DOK-status:")]
-        public string dokStatusId { get; set; }
-        public virtual DokStatus dokStatus { get; set; }
-       
+        public string datasetthumbnail { get; set; }       
                    
 	}//end Dataset
 

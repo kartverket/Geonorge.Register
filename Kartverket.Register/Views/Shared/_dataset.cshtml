@@ -168,13 +168,20 @@
                                 &nbsp;
                             </li>
                         }
-                        @if (item.status == null)
+                        @if (HtmlHelperExtensions.accessRegisterItem(item))
                         {
-                            <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</li>
+                            if (item.status == null)
+                            {
+                                <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</li>
+                            }
+                            else
+                            {
+                                <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            }
                         }
-                        else
+                        @if (item.dokStatus != null)
                         {
-                            <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
+                            <li title="@item.dokStatus.description"><span>Status: </span>@Html.DisplayFor(model => item.dokStatus.description) <i class="statusIcon-@Html.DisplayFor(model => item.dokStatus)"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {

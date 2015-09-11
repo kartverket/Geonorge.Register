@@ -81,7 +81,19 @@
                 @Model.description
             </p>
         }
-        <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
+        @if (HtmlHelperExtensions.accessRegisterItem(Model))
+        {
+            <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
+        }
+        @if (Model is Kartverket.Register.Models.Dataset)
+        {
+            Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
+            if (dataset.dokStatus != null)
+            {
+                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">DOK-status: @dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></span><br>
+            }
+        }
+        
         @if (Model.register.containedItemClass == "NameSpace")
         {
             <span>Eier: @Model.submitter.name</span><br>

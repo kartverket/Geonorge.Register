@@ -472,6 +472,10 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, containedItemClass as containedItemClass FROM Registers WHERE versioningId IS NULL");
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems WHERE versioningId IS NULL");
 
+
+            ////Update Dok-status
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Submitted' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
+
             //UpdateRegisterItemsVersioningId
             var queryResultsVersions = from r in context.Versions
                                        select r;

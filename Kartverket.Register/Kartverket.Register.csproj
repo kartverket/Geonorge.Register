@@ -545,6 +545,14 @@
     <Compile Include="Migrations\201509071143542_addReportingAttributes.Designer.cs">
       <DependentUpon>201509071143542_addReportingAttributes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509110607524_AddDokStatusesTabel.cs" />
+    <Compile Include="Migrations\201509110607524_AddDokStatusesTabel.Designer.cs">
+      <DependentUpon>201509110607524_AddDokStatusesTabel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509110617045_addDokStatus.cs" />
+    <Compile Include="Migrations\201509110617045_addDokStatus.Designer.cs">
+      <DependentUpon>201509110617045_addDokStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -571,6 +579,7 @@
     <Compile Include="Models\RegisterIndexDoc.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\FilterItems.cs" />
+    <Compile Include="Models\DokStatus.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
@@ -1089,6 +1098,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509071143542_addReportingAttributes.resx">
       <DependentUpon>201509071143542_addReportingAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509110607524_AddDokStatusesTabel.resx">
+      <DependentUpon>201509110607524_AddDokStatusesTabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509110617045_addDokStatus.resx">
+      <DependentUpon>201509110617045_addDokStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

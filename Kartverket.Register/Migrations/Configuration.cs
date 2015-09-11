@@ -28,15 +28,16 @@ namespace Kartverket.Register.Migrations
             context.Statuses.AddOrUpdate(
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
-                //new Status { value = "Accepted", description = "Godkjent", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
-                //new Status { value = "Experimental", description = "Utkast", group = "suggested" },
-                //new Status { value = "Deprecated", description = "Utdatert", group = "historical" },
                 new Status { value = "Superseded", description = "Erstattet", group = "historical"},
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
-                //new Status { value = "Candidate", description = "Kandidat", group = "suggested" },
-                //new Status { value = "InProgress", description = "I prosess", group = "suggested" },
-                //new Status { value = "Proposal", description = "Forslag", group = "suggested"}
+            );
+
+            context.DokStatuses.AddOrUpdate(
+                new DokStatus { value = "Submitted", description = "Sendt inn"},
+                new DokStatus { value = "Accepted", description = "Godkjent"},
+                new DokStatus { value = "Candidate", description = "Kandidat"},
+                new DokStatus { value = "InProgress", description = "I prosess"}
             );
 
             context.AccessTypes.AddOrUpdate(
@@ -71,7 +72,6 @@ namespace Kartverket.Register.Migrations
             );
 
             context.Sorting.AddOrUpdate(
-                //new Sorting { value = "name", description = "Navn"},
                 new Sorting { value = "name_desc", description = "Navn å-a" },
                 new Sorting { value = "submitter", description = "Innsender a-å" },
                 new Sorting { value = "submitter_desc", description = "Innsender å-a" },

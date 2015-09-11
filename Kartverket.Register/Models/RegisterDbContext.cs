@@ -14,6 +14,7 @@ namespace Kartverket.Register.Models
         // marking DbSet with virtual makes it testable
         public virtual DbSet<Version> Versions { get; set; }
         public virtual DbSet<Status> Statuses { get; set; }
+        public virtual DbSet<DokStatus> DokStatuses { get; set; }
         public virtual DbSet<accessType> AccessTypes { get; set; }
         public virtual DbSet<DOKTheme> DOKThemes { get; set; }
         public virtual DbSet<Register> Registers { get; set; }
@@ -30,9 +31,6 @@ namespace Kartverket.Register.Models
         public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
         public virtual DbSet<Sorting> Sorting { get; set; }
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
-        //public virtual DbSet<InspireRequirement> inspireRequirements { get; set; }
-        //public virtual DbSet<NationalRequirement> NationalRequirements { get; set; }
-        //public virtual DbSet<NationalSeasRequirement> NationalSeasRequirements { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

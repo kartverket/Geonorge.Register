@@ -11,7 +11,6 @@ namespace Kartverket.Register.Migrations
             CreateIndex("dbo.RegisterItems", "dokStatusId");
             AddForeignKey("dbo.RegisterItems", "dokStatusId", "dbo.DokStatus", "value");
 
-            Sql("UPDATE RegisterItems SET dokStatusId = 'Submitted' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
         }
         
         public override void Down()

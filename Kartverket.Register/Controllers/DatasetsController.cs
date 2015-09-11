@@ -115,12 +115,12 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-
                 dataset.systemId = Guid.NewGuid();
                 dataset.modified = DateTime.Now;
                 dataset.dateSubmitted = DateTime.Now;
                 dataset.registerId = regId;
                 dataset.statusId = "Submitted";
+                dataset.dokStatusId = "Proposal";
 
                 if (dataset.name == null || dataset.name.Length == 0)
                 {
@@ -194,7 +194,6 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-
             var queryResults = from o in db.Datasets
                                where o.seoname == datasetname &&
                                o.register.seoname == registername &&
@@ -223,6 +222,7 @@ namespace Kartverket.Register.Controllers
         private void Viewbags(Dataset dataset)
         {
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
+            ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", dataset.statusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
             ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
@@ -279,7 +279,6 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-
                 if (dataset.name != null) originalDataset.name = dataset.name;
                 originalDataset.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDataset.name);
                 originalDataset.description = dataset.description;
@@ -297,6 +296,7 @@ namespace Kartverket.Register.Controllers
                     }
                     originalDataset.statusId = dataset.statusId;
                 }
+                if (dataset.dokStatusId != null) originalDataset.dokStatusId = dataset.dokStatusId;
 
                 originalDataset.DistributionUrl = dataset.DistributionUrl;
                 originalDataset.MetadataUrl = dataset.MetadataUrl;

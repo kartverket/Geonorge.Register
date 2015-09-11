@@ -465,6 +465,16 @@ namespace Kartverket.Register.Helpers
                 var datasetOwner = register.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
                 sortedList = datasetOwner.Cast<RegisterItem>().ToList();
             }
+            else if (sortingType == "dokStatus")
+            {
+                var dokStatus = register.items.OfType<Dataset>().OrderBy(o => o.dokStatus.description);
+                sortedList = dokStatus.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokStatus_desc")
+            {
+                var dokStatus = register.items.OfType<Dataset>().OrderByDescending(o => o.dokStatus.description);
+                sortedList = dokStatus.Cast<RegisterItem>().ToList();
+            }
             else if (sortingType == "distributionFormat")
             {
                 var distributionFormat = register.items.OfType<Dataset>().OrderBy(o => o.DistributionFormat);

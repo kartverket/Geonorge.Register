@@ -167,21 +167,10 @@
                             <li>
                                 &nbsp;
                             </li>
-                        }
-                        @if (HtmlHelperExtensions.accessRegisterItem(item))
-                        {
-                            if (item.status == null)
-                            {
-                                <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</li>
-                            }
-                            else
-                            {
-                                <li title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></li>
-                            }
-                        }
+                        }                       
                         @if (item.dokStatus != null)
                         {
-                            <li>DOK-status: @item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
+                            <li><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {

@@ -20,7 +20,6 @@ namespace Kartverket.Register.Migrations
         protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)
         {
             //  This method will be called after migrating to the latest version.
-
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
@@ -28,16 +27,18 @@ namespace Kartverket.Register.Migrations
             context.Statuses.AddOrUpdate(
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
-                //new Status { value = "Accepted", description = "Godkjent", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
-                //new Status { value = "Experimental", description = "Utkast", group = "suggested" },
-                //new Status { value = "Deprecated", description = "Utdatert", group = "historical" },
                 new Status { value = "Superseded", description = "Erstattet", group = "historical"},
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
-                //new Status { value = "Candidate", description = "Kandidat", group = "suggested" },
-                //new Status { value = "InProgress", description = "I prosess", group = "suggested" },
-                //new Status { value = "Proposal", description = "Forslag", group = "suggested"}
             );
+
+            context.DokStatuses.AddOrUpdate(
+                new DokStatus { value = "Accepted", description = "Godkjent" },
+                new DokStatus { value = "Candidate", description = "Kandidat" },
+                new DokStatus { value = "InProgress", description = "I prosess" },
+                new DokStatus { value = "Proposal", description = "Forslag" }
+            );
+
 
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Administrator" },

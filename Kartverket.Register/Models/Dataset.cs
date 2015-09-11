@@ -61,6 +61,11 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Miniatyrbilde")]
         public string datasetthumbnail { get; set; }
+
+        [ForeignKey("dokStatus")]
+        [Display(Name = "DOK-status:")]
+        public string dokStatusId { get; set; }
+        public virtual DokStatus dokStatus { get; set; }
        
                    
 	}//end Dataset

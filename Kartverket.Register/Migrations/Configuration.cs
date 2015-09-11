@@ -535,8 +535,10 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
 
             //UpdateAccessId
-            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");        
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
 
+            //UpdateDokStatusId
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Proposal' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
 
         }
     }

@@ -181,7 +181,7 @@
                         }
                         @if (item.dokStatus != null)
                         {
-                            <li title="@item.dokStatus.description"><span>Status: </span>@Html.DisplayFor(model => item.dokStatus.description) <i class="statusIcon-@Html.DisplayFor(model => item.dokStatus)"></i></li>
+                            <li>DOK-status: @item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
                         }
                         @if (item.ThemeGroupId != null)
                         {

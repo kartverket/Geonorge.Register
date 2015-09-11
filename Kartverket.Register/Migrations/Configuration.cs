@@ -33,13 +33,6 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
             );
 
-            context.DokStatuses.AddOrUpdate(
-                new DokStatus { value = "Submitted", description = "Sendt inn"},
-                new DokStatus { value = "Accepted", description = "Godkjent"},
-                new DokStatus { value = "Candidate", description = "Kandidat"},
-                new DokStatus { value = "InProgress", description = "I prosess"}
-            );
-
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Administrator" },
                 new accessType { accessLevel = 2, description = "Editor" },

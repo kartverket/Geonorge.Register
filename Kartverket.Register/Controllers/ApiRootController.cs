@@ -248,10 +248,10 @@ namespace Kartverket.Register.Controllers
 
                 foreach (var d in item.items)
                 {
-                    if (d.status.group != "suggested" && d.versioning.currentVersion == d.systemId)
-                    {
+                    //if (d.status.group != "suggested" && d.versioning.currentVersion == d.systemId)
+                    //{
                         tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
-                    }
+                    //}
 
                 }
             }

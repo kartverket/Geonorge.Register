@@ -81,7 +81,7 @@
                 @Model.description
             </p>
         }
-        @if (HtmlHelperExtensions.accessRegisterItem(Model))
+        @if (Model.register.containedItemClass != "Dataset")
         {
             <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
         }

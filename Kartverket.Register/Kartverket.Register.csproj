@@ -549,6 +549,10 @@
     <Compile Include="Migrations\201509110914219_AddForeignkeyDokStatusId.Designer.cs">
       <DependentUpon>201509110914219_AddForeignkeyDokStatusId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509140801248_addDokStatusDateAccepted.cs" />
+    <Compile Include="Migrations\201509140801248_addDokStatusDateAccepted.Designer.cs">
+      <DependentUpon>201509140801248_addDokStatusDateAccepted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1097,6 +1101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509110914219_AddForeignkeyDokStatusId.resx">
       <DependentUpon>201509110914219_AddForeignkeyDokStatusId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509140801248_addDokStatusDateAccepted.resx">
+      <DependentUpon>201509140801248_addDokStatusDateAccepted.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

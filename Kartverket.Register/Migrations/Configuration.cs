@@ -23,20 +23,20 @@ namespace Kartverket.Register.Migrations
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data. E.g.
             //
-            
+
             context.Statuses.AddOrUpdate(
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
-                new Status { value = "Superseded", description = "Erstattet", group = "historical"},
+                new Status { value = "Superseded", description = "Erstattet", group = "historical" },
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
             );
 
             context.DokStatuses.AddOrUpdate(
-                new DokStatus { value = "Accepted", description = "Godkjent" },
+                new DokStatus { value = "Proposal", description = "Forslag" },
                 new DokStatus { value = "Candidate", description = "Kandidat" },
                 new DokStatus { value = "InProgress", description = "I prosess" },
-                new DokStatus { value = "Proposal", description = "Forslag" }
+                new DokStatus { value = "Accepted", description = "Godkjent" }
             );
 
 
@@ -527,7 +527,7 @@ namespace Kartverket.Register.Migrations
                     }
                 }
             }
-            
+
             //UpdateAccessId
             context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 1  WHERE (name = 'Organisasjoner' OR name = 'EPSG koder')");
 

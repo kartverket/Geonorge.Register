@@ -170,7 +170,7 @@
                             }
                             @if (item.dokStatus != null)
                             {
-                                <li><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
+                                <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
                             }
                             @if (item.ThemeGroupId != null)
                             {

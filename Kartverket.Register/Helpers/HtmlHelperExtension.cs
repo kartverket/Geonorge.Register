@@ -899,5 +899,21 @@ namespace Kartverket.Register.Helpers
         {
             return "/register/" + registername;
         }
+
+        public static object DokStatusBeskrivelse()
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResults = from s in db.DokStatuses
+                               select s;
+
+            string text = null;
+            foreach (DokStatus s in queryResults)
+            {
+               text += s.description + "&#013";
+            }
+
+            return text;
+        }
     }
 }

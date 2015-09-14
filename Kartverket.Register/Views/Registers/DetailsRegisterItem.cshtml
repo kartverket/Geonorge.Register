@@ -90,10 +90,10 @@
             Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
             if (dataset.dokStatus != null)
             {
-                <span>DOK-status: @dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></span><br>
+                <span title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status: @dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></span><br>
             }
         }
-        
+
         @if (Model.register.containedItemClass == "NameSpace")
         {
             <span>Eier: @Model.submitter.name</span><br>

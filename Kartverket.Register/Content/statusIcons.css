@@ -47,4 +47,37 @@
   color: #ffcd33;
   margin-left: -1em;
 }
+
+.statusIcon-InProgress:after {
+  content: "\e601";
+  color: #97c93c;
+  margin-left: -1em;
+}
+
+.statusIcon-InProgress:after {
+  content: "\e601";
+  color: #97c93c;
+  margin-left: -1em;
+}
+
+.statusIcon-Candidate:after {
+  content: "\e602";
+  color: #97c93c;
+  margin-left: -1em;
+}
+
+.statusIcon-Accepted:after {
+  content: "\e600";
+  color: #97c93c;
+}
+
+.statusIcon-Accepted:before {
+  content: "";
+}
+
+.statusIcon-Proposal:before {
+  content: "\e600";
+  color: #656565;
+}
+
 /*# sourceMappingURL=statusIcons.css.map */

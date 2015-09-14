@@ -537,87 +537,87 @@ namespace Kartverket.Register.Migrations
             //UpdateAccessId
             context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
 
-            //UpdateDokStatusId
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Proposal' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
+            ////UpdateDokStatusId
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Proposal' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
 
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Candidate' WHERE (dokStatusId = 'Proposal' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Candidate' WHERE (dokStatusId = 'Proposal' AND Discriminator = 'Dataset')");
 
 
-            //Oppdater dok-status . Kan fjernes etter første kjøring i produksjon.
+            ////Oppdater dok-status . Kan fjernes etter første kjøring i produksjon.
 
-            //dok-status Godkjent
-            //UpdateDokStatusId
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N20 Kartdata' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Tekst5000' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Lufthavn' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bane' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Veg' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Naturinfo' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Arealbruk' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N5 Kartdata' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Ledning' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-LedningVa' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Vann' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bygning' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Høydekurve' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-AR5' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N20 Bygning' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Tekst1000' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bygningsmessige anlegg' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Dyrkbar jord' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-TraktorvegSti' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-PblTiltak' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Digitale ortofoto' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Norges maritime grenser' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N50 Kartdata' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Administrative enheter Norge' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Vårbeite' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Vinterbeite' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Trekklei' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Høstvinterbeite' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Høstbeite' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Reindriftsanlegg' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Sommerbeite' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Oppsamlingsområde' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Forurenset grunn' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Statlig sikra friluftslivsområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Kartlagte og verdsatte friluftslivsområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Verdifulle kulturlandskap' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Viktige naturtyper' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Villreinområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Naturvernområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Foreslåtte naturvernområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Arter av nasjonal forvaltningsinteresse' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Marin grense' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Radon - Aktsomhet' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Jordkvalitet' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Kulturminner - Sikringssoner' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'N5 raster' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Korallrev' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'N250 Kartdata' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Hovedled og Biled' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Hovedled og Biled, arealavgrensning' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Grunnvannsborehull' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Løsmasser N50/N250' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Samlet plan for vassdrag' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Verneplan for vassdrag' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Skredhendelser' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Flomsoner' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Snøskred - aktsomhetsområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Steinsprang - aktsomhetsområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Jord- og flomskred aktsomhetsområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kvikkleire' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Skredfaresoner' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'AR50 - Arealtyper' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Trafikkulykker' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Trafikkmengde' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Enkeltminner' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Lokaliteter' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner – Tette trehusmiljøer' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Brannsmitteområder' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner – Fredete bygninger' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'SEFRAK-bygninger' AND Discriminator = 'Dataset')");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Kulturmiljøer' AND Discriminator = 'Dataset')");
+            ////dok-status Godkjent
+            ////UpdateDokStatusId
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N20 Kartdata' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Tekst5000' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Lufthavn' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bane' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Veg' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Naturinfo' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Arealbruk' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N5 Kartdata' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Ledning' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-LedningVa' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Vann' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bygning' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Høydekurve' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-AR5' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N20 Bygning' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Tekst1000' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-Bygningsmessige anlegg' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Dyrkbar jord' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-TraktorvegSti' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'FKB-PblTiltak' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Digitale ortofoto' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Norges maritime grenser' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'N50 Kartdata' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Administrative enheter Norge' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Vårbeite' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Vinterbeite' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Trekklei' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Høstvinterbeite' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Høstbeite' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Reindriftsanlegg' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Årstidsbeite - Sommerbeite' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Reindrift - Oppsamlingsområde' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Forurenset grunn' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Statlig sikra friluftslivsområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Kartlagte og verdsatte friluftslivsområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Verdifulle kulturlandskap' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Viktige naturtyper' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Villreinområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Naturvernområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Foreslåtte naturvernområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Arter av nasjonal forvaltningsinteresse' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Marin grense' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Radon - Aktsomhet' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Jordkvalitet' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Accepted' WHERE (name = 'Kulturminner - Sikringssoner' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'N5 raster' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Korallrev' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'N250 Kartdata' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Hovedled og Biled' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Hovedled og Biled, arealavgrensning' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Grunnvannsborehull' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Løsmasser N50/N250' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Samlet plan for vassdrag' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Verneplan for vassdrag' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Skredhendelser' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Flomsoner' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Snøskred - aktsomhetsområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Steinsprang - aktsomhetsområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Jord- og flomskred aktsomhetsområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kvikkleire' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Skredfaresoner' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'AR50 - Arealtyper' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Trafikkulykker' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Trafikkmengde' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Enkeltminner' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Lokaliteter' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner – Tette trehusmiljøer' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Brannsmitteområder' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner – Fredete bygninger' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'SEFRAK-bygninger' AND Discriminator = 'Dataset')");
+            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'InProgress' WHERE (name = 'Kulturminner - Kulturmiljøer' AND Discriminator = 'Dataset')");
 
         }
     }

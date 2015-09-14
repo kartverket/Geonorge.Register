@@ -902,18 +902,8 @@ namespace Kartverket.Register.Helpers
 
         public static object DokStatusBeskrivelse()
         {
-            RegisterDbContext db = new RegisterDbContext();
+            return "Forslag&#013Kandidat&#013I Prosess&#013Godkjent&#013";
 
-            var queryResults = from s in db.DokStatuses
-                               select s;
-
-            string text = null;
-            foreach (DokStatus s in queryResults)
-            {
-               text += s.description + "&#013";
-            }
-
-            return text;
         }
     }
 }

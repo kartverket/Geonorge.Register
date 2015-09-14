@@ -540,6 +540,8 @@ namespace Kartverket.Register.Migrations
             //UpdateDokStatusId
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Proposal' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
 
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Candidate' WHERE (dokStatusId = 'Proposal' AND Discriminator = 'Dataset')");
+
 
             //Oppdater dok-status . Kan fjernes etter første kjøring i produksjon.
 

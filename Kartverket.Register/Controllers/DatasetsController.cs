@@ -166,7 +166,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = register;
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-        
+
             return View(dataset);
         }
 
@@ -222,7 +222,7 @@ namespace Kartverket.Register.Controllers
         private void Viewbags(Dataset dataset)
         {
             ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-            ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);          
+            ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
             ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
@@ -283,7 +283,18 @@ namespace Kartverket.Register.Controllers
                 originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
                 if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
-                if (dataset.dokStatusId != null) originalDataset.dokStatusId = dataset.dokStatusId;
+                if (dataset.dokStatusId != null)
+                {
+                    originalDataset.dokStatusId = dataset.dokStatusId;
+                    if (originalDataset.dokStatusId == "Accepted" && dataset.dokStatusDateAccepted == null)
+                    {
+                        originalDataset.dokStatusDateAccepted= DateTime.Now;
+                    }
+                }
+                if (dataset.dokStatusDateAccepted != null)
+                {
+                    originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
+                }
 
                 originalDataset.DistributionUrl = dataset.DistributionUrl;
                 originalDataset.MetadataUrl = dataset.MetadataUrl;

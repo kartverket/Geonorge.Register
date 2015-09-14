@@ -286,14 +286,20 @@ namespace Kartverket.Register.Controllers
                 if (dataset.dokStatusId != null)
                 {
                     originalDataset.dokStatusId = dataset.dokStatusId;
-                    if (originalDataset.dokStatusId == "Accepted" && dataset.dokStatusDateAccepted == null)
+                    if (originalDataset.dokStatusId == "Accepted")
                     {
-                        originalDataset.dokStatusDateAccepted= DateTime.Now;
+                        if (dataset.dokStatusDateAccepted == null)
+                        {
+                            originalDataset.dokStatusDateAccepted = DateTime.Now;
+                        }
+                        else
+                        {
+                            originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
+                        }
                     }
-                }
-                if (dataset.dokStatusDateAccepted != null)
-                {
-                    originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
+                    else {
+                        originalDataset.dokStatusDateAccepted = null;
+                    }
                 }
 
                 originalDataset.DistributionUrl = dataset.DistributionUrl;

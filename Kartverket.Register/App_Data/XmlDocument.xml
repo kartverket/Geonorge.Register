@@ -535,9 +535,16 @@
             </summary>
             <param name="name">The name of the organization</param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemsByOrganization(System.String,System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemsByOrganization(System.String,System.String)">
             <summary>
             List items for specific organization 
+            </summary>
+            <param name="register">The name of the register</param>
+            <param name="itemowner">The name of the organization</param>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterItemsByOrganization(System.String,System.String,System.String)">
+            <summary>
+            List items for specific organization in subregister
             </summary>
             <param name="parent">The name of the parentregister</param>
             <param name="register">The name of the register</param>

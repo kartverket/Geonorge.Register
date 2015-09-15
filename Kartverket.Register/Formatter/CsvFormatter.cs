@@ -66,8 +66,8 @@ namespace Kartverket.Register.Formatter
             }
             if (models is Models.Api.Registeritem)
             {
-                streamWriter.WriteLine(RegisterItemHeading());
                 Models.Api.Registeritem registerItem = (Models.Api.Registeritem)models;
+                streamWriter.WriteLine(RegisterItemHeading(registerItem.itemclass));
                 ConvertRegisterItemToCSV(streamWriter, registerItem);
                 foreach (Models.Api.Registeritem item in registerItem.versions.OrderBy(v => v.versionNumber))
                 {
@@ -85,11 +85,14 @@ namespace Kartverket.Register.Formatter
             }
             if (models is List<Models.Api.Registeritem>)
             {
-                streamWriter.WriteLine(RegisterItemHeading());
                 List<Models.Api.Registeritem> registerItems = (List<Models.Api.Registeritem>)models;
-                foreach (Models.Api.Registeritem item in registerItems.OrderBy(r => r.label))
+                if (registerItems.Count() > 0)
                 {
-                    ConvertRegisterItemToCSV(streamWriter, item);
+                    streamWriter.WriteLine(RegisterItemHeading(registerItems[0].itemclass));
+                    foreach (Models.Api.Registeritem item in registerItems.OrderBy(r => r.label))
+                    {
+                        ConvertRegisterItemToCSV(streamWriter, item);
+                    }
                 }
             }
             streamWriter.Close();
@@ -99,7 +102,7 @@ namespace Kartverket.Register.Formatter
         {
             if (register.containeditems != null)
             {
-                streamWriter.WriteLine(RegisterItemHeading());
+                streamWriter.WriteLine(RegisterItemHeading(register.containedItemClass));
                 foreach (Models.Api.Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))
                 {
                     ConvertRegisterItemToCSV(streamWriter, item);
@@ -118,7 +121,16 @@ namespace Kartverket.Register.Formatter
         private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Models.Api.Registeritem item)
         {
             item.description = RemoveBreaksFromDescription(item.description);
-            string text = item.id + ";" + item.label + ";" + item.versionNumber + ";" + item.status + ";" + item.description + ";" + item.owner + ";" + item.lastUpdated.ToString("dd/MM/yyyy");
+            string text = null;
+            if (item.itemclass == "Document")
+            {
+                text = item.label + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.documentreference + ";" + item.id;
+            }
+            else if (item.itemclass == "Dataset")
+            {
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+             }
+
             streamWriter.WriteLine(text);
         }
 
@@ -136,16 +148,25 @@ namespace Kartverket.Register.Formatter
             {
                 description = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
             }
-            else { 
+            else
+            {
                 description = "ikke angitt";
             }
-            
+
             return description;
         }
 
-        private string RegisterItemHeading()
+        private string RegisterItemHeading(string containedItemClass)
         {
-            return "Id ;Navn; Versjons Id; Status; Beskrivelse; Eier; Oppdatert";
+            if (containedItemClass == "Document")
+            {
+                return "Navn; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; Dokumentreferanse; ID";
+            }
+            else if (containedItemClass == "Dataset")
+            {
+                return "Temagruppe; Navn; Eier; DOK-status; Oppdatert; Versjons Id; Beskrivelse; ID";
+            }
+            return null;
         }
 
         private string RegisterHeading()

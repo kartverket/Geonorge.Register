@@ -39,6 +39,9 @@ namespace Kartverket.Register.Models.Api
 
         public string broader { get; set; }
 
+        public string theme { get; set; }
+        public string dokStatus { get; set; }
+
         public ICollection<Registeritem> versions { get; set; } 
 
         public DateTime lastUpdated { get; set; }

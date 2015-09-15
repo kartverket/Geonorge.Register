@@ -165,13 +165,32 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// List items for specific organization 
         /// </summary>
+        /// <param name="register">The name of the register</param>
+        /// <param name="itemowner">The name of the organization</param>
+        [Route("api/register/{register}/{itemowner}.{ext}")]
+        [Route("api/register/{register}/{itemowner}")]
+        [HttpGet]
+        public IHttpActionResult GetRegisterItemsByOrganization(string register, string itemowner)
+        {
+            List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(null, register, itemowner);
+            List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
+
+            foreach (Models.RegisterItem item in itemsByOwner)
+            {
+                ConverteditemsByOwner.Add(ConvertRegisterItemDetails(item.register, item, Request.RequestUri));
+            }
+
+            return Ok(ConverteditemsByOwner);
+        }
+
+        /// <summary>
+        /// List items for specific organization in subregister
+        /// </summary>
         /// <param name="parent">The name of the parentregister</param>
         /// <param name="register">The name of the register</param>
         /// <param name="itemowner">The name of the organization</param>
-        [Route("api/register/{parent}/{registerOwner}/{register}/{itemowner}.{ext}")]
-        [Route("api/register/{parent}/{registerOwner}/{register}/{itemowner}")]
-        [Route("api/register/{register}/{itemowner}.{ext}")]
-        [Route("api/register/{register}/{itemowner}")]
+        [Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}.{ext}")]
+        [Route("api/subregister/{parent}/{registerOwner}/{register}/{itemowner}")]
         [HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
@@ -185,6 +204,7 @@ namespace Kartverket.Register.Controllers
 
             return Ok(ConverteditemsByOwner);
         }
+
 
 
 
@@ -230,7 +250,8 @@ namespace Kartverket.Register.Controllers
                 id = registerId,
                 contentsummary = item.description,
                 lastUpdated = item.modified,
-                targetNamespace = item.targetNamespace
+                targetNamespace = item.targetNamespace,
+                containedItemClass = item.containedItemClass
             };
             if (item.owner != null) tmp.owner = item.owner.seoname;
             if (item.manager != null) tmp.manager = item.manager.seoname;
@@ -278,6 +299,7 @@ namespace Kartverket.Register.Controllers
             tmp.label = item.name;
 
             tmp.lastUpdated = item.modified;
+            tmp.itemclass = item.register.containedItemClass;
             if (item.submitter != null) tmp.owner = item.submitter.name;
             if (item.status != null) tmp.status = item.status.description;
             if (item.description != null) tmp.description = item.description;
@@ -327,12 +349,15 @@ namespace Kartverket.Register.Controllers
             {
                 var d = (Document)item;
                 tmp.owner = d.documentowner.name;
+                tmp.documentreference = d.documentUrl;
             }
 
             if (item is Dataset)
             {
                 var d = (Dataset)item;
                 tmp.owner = d.datasetowner.name;
+                tmp.theme = d.theme.description;
+                tmp.dokStatus = d.dokStatus.description;
             }
             if (item is NameSpace)
             {
@@ -400,6 +425,7 @@ namespace Kartverket.Register.Controllers
             }
             else if (item is CodelistValue)
             {
+                tmp.itemclass = "CodelistValue";
                 var c = (CodelistValue)item;
                 tmp.codevalue = c.value;
                 if (c.broaderItemId != null)

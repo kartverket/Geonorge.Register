@@ -16,6 +16,7 @@ using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Search;
 using System.Web.Routing;
 using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,12 +28,15 @@ namespace Kartverket.Register.Controllers
         private IVersioningService _versioningService;
         private IRegisterService _registerService;
         private ISearchService _searchService;
+        private IRegisterItemService _registerItemService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController(ISearchService searchService, IRegisterService registerService)
+        public RegistersController(ISearchService searchService, IRegisterService registerService, IVersioningService versioningService, IRegisterItemService registerItemService)
         {
+            _registerItemService = registerItemService;
             _searchService = searchService;
+            _versioningService = versioningService;
             _registerService = registerService;
         }
 
@@ -108,32 +112,28 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
+        private void RedirectToApi() { 
+        
+        }
+
+
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}.{format}")]
         [Route("register/{name}/{filterOrganization}")]
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
-            if (!string.IsNullOrWhiteSpace(format))
-            {
-                return Redirect("/api/" + Request.FilePath);
-            }
-            else
-            {
-                format = _registerService.ContentNegotiation(ControllerContext);
-                if (!string.IsNullOrWhiteSpace(format))
-                {
-                    return Redirect("/api/" + Request.FilePath + "." + format);
-                }
-            }
+            string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);                          
 
-            Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(name);
+            Kartverket.Register.Models.Register register = _registerService.GetRegister(null, name);
+            if (register == null) return HttpNotFound();
 
             if (!string.IsNullOrWhiteSpace(filter.text))
             {
                 register = _searchService.Search(register, filter.text);
             }
-            register = _registerService.Filter(register, filter);
+            register = _registerService.FilterRegisterItems(register, filter);
 
             ViewBag.search = filter.text;
             ViewBag.page = page;
@@ -145,22 +145,6 @@ namespace Kartverket.Register.Controllers
             ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
 
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-            }
-
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
-
-            //TODO skal inn i en egen formatter!!
-            if (!string.IsNullOrEmpty(format))
-            {
-                return exportCodelist(register, format);
-            }
-
             return View(register);
         }
 
@@ -170,53 +154,31 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registername}/{itemOwner}/{itemname}")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
         {
-            if (!string.IsNullOrWhiteSpace(format))
-            {
-                return Redirect("/api/" + Request.FilePath);
-            }
-            else
-            {
-                format = _registerService.ContentNegotiation(ControllerContext);
-                if (!string.IsNullOrWhiteSpace(format))
-                {
-                    return Redirect("/api/" + Request.FilePath + "." + format);
-                }
-            }
+            string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            Guid? systId = null;
-
+            Kartverket.Register.Models.RegisterItem registerItem; 
             if (version != null)
             {
-                var queryResultDocument = from d in db.Documents
-                                          where d.seoname == itemname && d.register.seoname == registername && d.versionNumber == version
-                                          select d.systemId;
-
-                systId = queryResultDocument.FirstOrDefault();
-                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
-
-                ViewBag.documentOwner = document.documentowner.name;
-                ViewBag.version = document.versionNumber;
+                registerItem = _registerItemService.GetRegisterItemByVersionNr(registername, itemname, version);
+                // TODO Flytte owner til RegisterItems
+                Document document = db.Documents.Find(registerItem.systemId);
+                ViewBag.documentOwner = document.documentowner.seoname;
             }
             else
             {
-                var queryResultsRegisterItem = from o in db.RegisterItems
-                                               where o.seoname == itemname && o.register.seoname == registername
-                                               select o.systemId;
-
-                systId = queryResultsRegisterItem.FirstOrDefault();
+                registerItem = _registerItemService.GetCurrentRegisterItem(registername, itemname);
             }
-
-            Kartverket.Register.Models.RegisterItem registerItem = db.RegisterItems.Find(systId);
 
             if (registerItem.register.containedItemClass == "Document")
             {
-                Kartverket.Register.Models.Document document = db.Documents.Find(systId);
+                Kartverket.Register.Models.Document document = db.Documents.Find(registerItem.systemId);
                 ViewBag.documentOwner = document.documentowner.name;
             }
 
             if (registerItem.register.containedItemClass == "Dataset")
             {
-                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(systId);
+                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(registerItem.systemId);
                 ViewBag.datasetOwner = dataset.datasetowner.name;
             }
             return View(registerItem);
@@ -582,9 +544,21 @@ namespace Kartverket.Register.Controllers
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 
-        protected override void OnException(ExceptionContext filterContext)
+        private string RedirectToApiIfFormatIsNotNull(string format)
         {
-            Log.Error("Error", filterContext.Exception);
+            if (!string.IsNullOrWhiteSpace(format))
+            {
+                return "/api/" + Request.FilePath;
+            }
+            else
+            {
+                format = _registerService.ContentNegotiation(ControllerContext);
+                if (!string.IsNullOrWhiteSpace(format))
+                {
+                    return "/api/" + Request.FilePath + "." + format;
+                }
+            }
+            return null;
         }
 
     }

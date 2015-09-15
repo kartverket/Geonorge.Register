@@ -18,15 +18,16 @@ namespace Kartverket.Register.Controllers
     [HandleError]
     public class CodelistValuesController : Controller
     {
-
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        public CodelistValuesController()
+
+        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService)
         {
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
+            _registerItemService = registerItemService;
+            _registerService = registerService;
         }
 
         // GET: CodelistValues
@@ -46,7 +47,7 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid sysId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+            Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(registername);
 
             ViewbagImport(register);
 

@@ -17,7 +17,7 @@ namespace Kartverket.Register.Services.Register
             _dbContext = dbContext;
         }
 
-        public Kartverket.Register.Models.Register Filter(Kartverket.Register.Models.Register register, FilterParameters filter)
+        public Kartverket.Register.Models.Register FilterRegisterItems(Kartverket.Register.Models.Register register, FilterParameters filter)
         {
             List<Kartverket.Register.Models.RegisterItem> registerItems = new List<Kartverket.Register.Models.RegisterItem>();
 
@@ -27,38 +27,11 @@ namespace Kartverket.Register.Services.Register
             }
             else if (register.containedItemClass == "Document")
             {
-                if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
-                {
-                    FilterOrganisasjonDocument(register, filter, registerItems);
-                }
-                else
-                {
-                    foreach (Document item in register.items)
-                    {
-                        string role = HtmlHelperExtensions.GetSecurityClaim("role");
-                        string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-                        if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || HtmlHelperExtensions.accessRegisterItem(item))
-                        {
-                            registerItems.Add(item);
-                        }
-
-                    }
-                }
+                FilterDocument(register, filter, registerItems);
             }
             else if (register.containedItemClass == "Dataset")
             {
-                if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
-                {
-                    FilterOrganisasjonDataset(register, filter, registerItems);
-                }
-                else
-                {
-                    foreach (Dataset item in register.items)
-                    {
-                        registerItems.Add(item);
-                    }
-                }
+                FilterDataset(register, filter, registerItems);
 
             }
             else if (register.containedItemClass == "CodelistValue")
@@ -81,40 +54,51 @@ namespace Kartverket.Register.Services.Register
                 {
                     registerItems.Add(item);
                 }
-
             }
             else
             {
                 registerItems = register.items.ToList();
             }
 
-            return new Kartverket.Register.Models.Register
+            register.items = registerItems;
+            return register;
+        }
+
+        private void FilterDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> registerItems)
+        {
+            if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
             {
-                systemId = register.systemId,
-                name = register.name,
-                containedItemClass = register.containedItemClass,
-                dateAccepted = register.dateAccepted,
-                dateSubmitted = register.dateSubmitted,
-                description = register.description,
-                items = registerItems,
-                manager = register.manager,
-                managerId = register.managerId,
-                modified = register.modified,
-                owner = register.owner,
-                ownerId = register.ownerId,
-                parentRegister = register.parentRegister,
-                parentRegisterId = register.parentRegisterId,
-                seoname = register.seoname,
-                status = register.status,
-                statusId = register.statusId,
-                subregisters = register.subregisters,
-                replaces = register.replaces,
-                targetNamespace = register.targetNamespace,
-                versioning = register.versioning,
-                versioningId = register.versioningId,
-                versionNumber = register.versionNumber,
-                accessId = register.accessId,
-            };
+                FilterOrganisasjonDataset(register, filter, registerItems);
+            }
+            else
+            {
+                foreach (Dataset item in register.items)
+                {
+                    registerItems.Add(item);
+                }
+            }
+        }
+
+        private void FilterDocument(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> registerItems)
+        {
+            if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
+            {
+                FilterOrganisasjonDocument(register, filter, registerItems);
+            }
+            else
+            {
+                foreach (Document item in register.items)
+                {
+                    string role = HtmlHelperExtensions.GetSecurityClaim("role");
+                    string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+
+                    if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || HtmlHelperExtensions.accessRegisterItem(item))
+                    {
+                        registerItems.Add(item);
+                    }
+
+                }
+            }
         }
 
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
@@ -315,6 +299,28 @@ namespace Kartverket.Register.Services.Register
                               select r;
 
             return queryResult.FirstOrDefault();
+        }
+
+        public Models.Register GetRegister(string parentRegisterName, string registerName)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegisterName))
+            {
+                var queryResults = from r in _dbContext.Registers
+                                   where r.seoname == registerName &&
+                                   r.parentRegister == null
+                                   select r;
+
+                return queryResults.FirstOrDefault();
+            }
+            else {
+                var queryResults = from r in _dbContext.Registers
+                                              where r.seoname == registerName && 
+                                              r.parentRegister.seoname == parentRegisterName
+                                              select r;
+
+                return queryResults.FirstOrDefault();
+            }
+            throw new NotImplementedException();
         }
     }
 }

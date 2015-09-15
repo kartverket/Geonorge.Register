@@ -58,7 +58,7 @@ namespace Kartverket.Register.Controllers
                 {
                     register = _searchService.Search(register, filter.text);
                 }
-                register = _registerService.Filter(register, filter);
+                register = _registerService.FilterRegisterItems(register, filter);
 
                 ViewBag.page = page;
                 ViewBag.SortOrder = sorting;

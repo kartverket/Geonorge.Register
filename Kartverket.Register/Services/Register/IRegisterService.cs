@@ -11,7 +11,7 @@ namespace Kartverket.Register.Services.Register
 {
     public interface IRegisterService
     {
-        Models.Register Filter(Kartverket.Register.Models.Register register, FilterParameters filter);
+        Models.Register FilterRegisterItems(Kartverket.Register.Models.Register register, FilterParameters filter);
         string ContentNegotiation(ControllerContext context);
         Models.Register GetRegisterByName(string name);
         Models.Register GetSubregisterByName(string parentName, string registerName);
@@ -20,5 +20,6 @@ namespace Kartverket.Register.Services.Register
         List<Models.Register> GetSubregisters();
         List<Models.Register> GetSubregistersOfRegister(Models.Register register);
         Models.Register GetRegisterBySystemId(Guid systemId);
+        Models.Register GetRegister(string parentRegister, string regiister);
     }
 }

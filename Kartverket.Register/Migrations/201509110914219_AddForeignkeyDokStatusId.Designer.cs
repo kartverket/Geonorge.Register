@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class addReportingAttributes : IMigrationMetadata
+    public sealed partial class AddForeignkeyDokStatusId : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addReportingAttributes));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddForeignkeyDokStatusId));
         
         string IMigrationMetadata.Id
         {
-            get { return "201509071143542_addReportingAttributes"; }
+            get { return "201509110914219_AddForeignkeyDokStatusId"; }
         }
         
         string IMigrationMetadata.Source

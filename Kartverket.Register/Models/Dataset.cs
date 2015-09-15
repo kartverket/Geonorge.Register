@@ -60,7 +60,18 @@ namespace Kartverket.Register.Models
         public virtual DOKTheme theme { get; set; }
 
         [Display(Name = "Miniatyrbilde")]
-        public string datasetthumbnail { get; set; }       
+        public string datasetthumbnail { get; set; }
+
+        [ForeignKey("dokStatus")]
+        [Display(Name = "DOK-status:")]
+        public string dokStatusId { get; set; }
+        public virtual DokStatus dokStatus { get; set; }
+
+        [Display(Name = "DOK-status godkjent:")]
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? dokStatusDateAccepted { get; set; }
+        
+       
                    
 	}//end Dataset
 

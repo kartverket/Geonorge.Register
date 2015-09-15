@@ -3,7 +3,7 @@ namespace Kartverket.Register.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class addReportingAttributes : DbMigration
+    public partial class AddReportingAttributes : DbMigration
     {
         public override void Up()
         {

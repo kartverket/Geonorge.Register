@@ -29,9 +29,17 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
-                new Status { value = "Superseded", description = "Erstattet", group = "historical"},
+                new Status { value = "Superseded", description = "Erstattet", group = "historical" },
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
             );
+
+            context.DokStatuses.AddOrUpdate(
+                new DokStatus { value = "Proposal", description = "Forslag" },
+                new DokStatus { value = "Candidate", description = "Kandidat" },
+                new DokStatus { value = "InProgress", description = "I prosess" },
+                new DokStatus { value = "Accepted", description = "Godkjent" }
+            );
+
 
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Administrator" },
@@ -65,6 +73,7 @@ namespace Kartverket.Register.Migrations
             );
 
             context.Sorting.AddOrUpdate(
+                //new Sorting { value = "name", description = "Navn"},
                 new Sorting { value = "name_desc", description = "Navn å-a" },
                 new Sorting { value = "submitter", description = "Innsender a-å" },
                 new Sorting { value = "submitter_desc", description = "Innsender å-a" },
@@ -465,10 +474,6 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, containedItemClass as containedItemClass FROM Registers WHERE versioningId IS NULL");
             context.Database.ExecuteSqlCommand("INSERT INTO Versions (systemId, currentVersion, lastVersionNumber, containedItemClass) SELECT NEWID() as systemId, systemId as currentVersion, versionNumber as lastVersionNumber, Discriminator as containedItemClass FROM RegisterItems WHERE versioningId IS NULL");
 
-
-            ////Update Dok-status
-            //context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokStatusId = 'Submitted' WHERE (dokStatusId is NULL AND Discriminator = 'Dataset')");
-
             //UpdateRegisterItemsVersioningId
             var queryResultsVersions = from r in context.Versions
                                        select r;
@@ -531,9 +536,7 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE Versions SET lastVersionNumber = 1  WHERE (lastVersionNumber = 0)");
 
             //UpdateAccessId
-            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");        
-
-
+            context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
         }
     }
 }

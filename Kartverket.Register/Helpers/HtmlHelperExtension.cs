@@ -465,6 +465,16 @@ namespace Kartverket.Register.Helpers
                 var datasetOwner = register.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
                 sortedList = datasetOwner.Cast<RegisterItem>().ToList();
             }
+            else if (sortingType == "dokStatus")
+            {
+                var dokStatus = register.items.OfType<Dataset>().OrderBy(o => o.dokStatus.description);
+                sortedList = dokStatus.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokStatus_desc")
+            {
+                var dokStatus = register.items.OfType<Dataset>().OrderByDescending(o => o.dokStatus.description);
+                sortedList = dokStatus.Cast<RegisterItem>().ToList();
+            }
             else if (sortingType == "distributionFormat")
             {
                 var distributionFormat = register.items.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
@@ -888,6 +898,12 @@ namespace Kartverket.Register.Helpers
         internal static string RegisterUrl(string registername)
         {
             return "/register/" + registername;
+        }
+
+        public static object DokStatusBeskrivelse()
+        {
+            return "Forslag&#013Kandidat&#013I Prosess&#013Godkjent&#013";
+
         }
     }
 }

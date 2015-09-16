@@ -557,6 +557,10 @@
     <Compile Include="Migrations\201509150722562_AddReportingAttributes.Designer.cs">
       <DependentUpon>201509150722562_AddReportingAttributes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509160619176_AddOwnerToRegisteritems.cs" />
+    <Compile Include="Migrations\201509160619176_AddOwnerToRegisteritems.Designer.cs">
+      <DependentUpon>201509160619176_AddOwnerToRegisteritems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1112,6 +1116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509150722562_AddReportingAttributes.resx">
       <DependentUpon>201509150722562_AddReportingAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509160619176_AddOwnerToRegisteritems.resx">
+      <DependentUpon>201509160619176_AddOwnerToRegisteritems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -537,6 +537,10 @@ namespace Kartverket.Register.Migrations
 
             //UpdateAccessId
             context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
+
+            //UpdateOwner in registeritem
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET ownerId = documentOwnerId  WHERE (Discriminator = 'Document')");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET ownerId = datasetOwnerId  WHERE (Discriminator = 'Dataset')");            
         }
     }
 }

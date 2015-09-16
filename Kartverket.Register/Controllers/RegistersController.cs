@@ -17,6 +17,7 @@ using Kartverket.Register.Services.Search;
 using System.Web.Routing;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -29,6 +30,8 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private ISearchService _searchService;
         private IRegisterItemService _registerItemService;
+        private string role = HtmlHelperExtensions.GetSecurityClaim("role");
+        private string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -92,7 +95,6 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
 
-        //TODO - API
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}.{format}")]        
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}.{format}")]
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
@@ -113,12 +115,9 @@ namespace Kartverket.Register.Controllers
         [Route("ny")]
         public ActionResult Create()
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-            ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
-
             if (role == "nd.metadata_admin")
             {
+                ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
                 return View();
             }
             return HttpNotFound();
@@ -132,8 +131,6 @@ namespace Kartverket.Register.Controllers
         [Route("ny")]
         public ActionResult Create(Kartverket.Register.Models.Register register)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
             if (role == "nd.metadata_admin")
             {
                 ValidationName(register);
@@ -141,35 +138,22 @@ namespace Kartverket.Register.Controllers
                 if (ModelState.IsValid)
                 {
                     register.systemId = Guid.NewGuid();
-                    if (register.name == null)
-                    {
-                        register.name = "ikke angitt";
-                    }
-
+                    if (register.name == null) register.name = "ikke angitt";
                     register.systemId = Guid.NewGuid();
                     register.modified = DateTime.Now;
                     register.dateSubmitted = DateTime.Now;
                     register.statusId = "Submitted";
-                    register.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
+                    register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
                     register.containedItemClass = register.containedItemClass;
 
                     db.Registers.Add(register);
                     db.SaveChanges();
 
-                    string organizationLogin = GetSecurityClaim("organization");
-
-                    var queryResults = from o in db.Organizations
-                                       where o.name == organizationLogin
-                                       select o.systemId;
-
-                    Guid orgId = queryResults.FirstOrDefault();
-                    Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
+                    Organization submitterOrganisasjon = _registerService.GetOrganization(user);
                     register.ownerId = submitterOrganisasjon.systemId;
                     register.managerId = submitterOrganisasjon.systemId;
 
                     db.Entry(register).State = EntityState.Modified;
-
                     db.SaveChanges();
                     return Redirect("/");
                 }
@@ -184,9 +168,6 @@ namespace Kartverket.Register.Controllers
         [Route("endre/{registername}")]
         public ActionResult Edit(string registername)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
 
             if (register == null)
@@ -212,9 +193,6 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             if (role == "nd.metadata_admin")
             {                
                 ValidationName(register);
@@ -267,9 +245,6 @@ namespace Kartverket.Register.Controllers
         [Route("slett/{registername}")]
         public ActionResult Delete(string registername)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             if (role == "nd.metadata_admin")
             {
                 var queryResults = from o in db.Registers
@@ -294,9 +269,6 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(string registername)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
             if (role == "nd.metadata_admin")
             {
                 var queryResults = from o in db.Registers
@@ -341,7 +313,7 @@ namespace Kartverket.Register.Controllers
 
         private string HasAccessToRegister()
         {
-            string role = GetSecurityClaim("role");
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
 
             bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
             bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata"); //nd.metadata_editor
@@ -360,30 +332,11 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
+        
 
         private void setAccessRole()
         {
-            string organization = GetSecurityClaim("organization");
+            string organization = HtmlHelperExtensions.GetSecurityClaim("organization");
 
             string role = HasAccessToRegister();
             if (role == "admin")

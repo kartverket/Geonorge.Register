@@ -323,7 +323,6 @@ namespace Kartverket.Register.Services.Register
             throw new NotImplementedException();
         }
 
-
         public Models.Register SetStatus(Models.Register register, Models.Register originalRegister)
         {
             originalRegister.statusId = register.statusId;
@@ -336,6 +335,20 @@ namespace Kartverket.Register.Services.Register
                 originalRegister.dateAccepted = null;
             }
             return originalRegister;
+        }
+
+        public bool RegisterHasChildren(string parentname, string registername)
+        {
+            var queryResultsRegisterItem = ((from o in _dbContext.RegisterItems
+                                                 where o.register.seoname == registername
+                                                 || o.register.parentRegister.seoname == registername
+                                                 select o.systemId).Union(
+                                               from r in _dbContext.Registers
+                                               where r.parentRegister.seoname == registername
+                                               select r.systemId));
+
+            if (queryResultsRegisterItem.Count() > 0) return true;
+            else return false;
         }
     }
 }

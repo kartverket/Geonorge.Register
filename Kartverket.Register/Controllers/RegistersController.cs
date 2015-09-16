@@ -232,17 +232,8 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                var queryResults = from o in db.Registers
-                                   where o.seoname == registername
-                                   select o.systemId;
-
-                Guid systId = queryResults.FirstOrDefault();
-                Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-
-                if (register == null)
-                {
-                    return HttpNotFound();
-                }
+                Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
+                if (register == null) return HttpNotFound();
                 return View(register);
             }
             return HttpNotFound();
@@ -256,22 +247,9 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                var queryResults = from o in db.Registers
-                                   where o.seoname == registername
-                                   select o.systemId;
+                Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
 
-                Guid systId = queryResults.FirstOrDefault();
-                Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-
-                var queryResultsRegisterItem = ((from o in db.RegisterItems
-                                                 where o.register.seoname == registername
-                                                 || o.register.parentRegister.seoname == registername
-                                                 select o.systemId).Union(
-                                               from r in db.Registers
-                                               where r.parentRegister.seoname == registername
-                                               select r.systemId));
-
-                if (queryResultsRegisterItem.Count() > 0)
+                if (_registerService.RegisterHasChildren(null, registername))
                 {
                     ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
                     return View(register);
@@ -317,8 +295,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-
-
         private void setAccessRole()
         {
             string organization = HtmlHelperExtensions.GetSecurityClaim("organization");
@@ -341,10 +317,8 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-
         private void removeSessionSearchParams()
         {
-
             Session["sortingType"] = null;
             Session["text"] = null;
             Session["filterVertikalt"] = null;

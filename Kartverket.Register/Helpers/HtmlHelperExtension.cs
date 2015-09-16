@@ -340,7 +340,6 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sortingType))
                         sortingType = HttpContext.Current.Session["sortingType"].ToString();
 
-
                     if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
                         text = HttpContext.Current.Session["text"].ToString();
 
@@ -359,16 +358,26 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
 
-                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
+                    string redirect = HttpContext.Current.Request.Path;
+                    bool shallRedirect = false;
 
+                    if (!string.IsNullOrWhiteSpace(sortingType))
+                    {
+                        redirect = redirect + "?sorting=" + sortingType;
+                        shallRedirect = true;
+                    }
                     if (text != "")
+                    {
                         redirect = redirect + "&text=" + text;
+                        shallRedirect = true;
+                    }
 
                     if (filterVertikalt != "")
                     {
                         if (filterVertikalt.Contains(","))
                             filterVertikalt = filterVertikalt.Replace(",false", "");
                         redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                        shallRedirect = true;
                     }
 
                     if (filterHorisontalt != "")
@@ -376,18 +385,32 @@ namespace Kartverket.Register.Helpers
                         if (filterHorisontalt.Contains(","))
                             filterHorisontalt = filterHorisontalt.Replace(",false", "");
                         redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                        shallRedirect = true;
                     }
 
                     if (InspireRequirementParam != "")
+                    {
                         redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
+                        shallRedirect = true;
+                    }
 
                     if (nationalRequirementParam != "")
+                    {
                         redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
+                        shallRedirect = true;
+                    }
 
                     if (nationalSeaRequirementParam != "")
+                    {
                         redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+                        shallRedirect = true;
+                    }
 
-                    HttpContext.Current.Response.Redirect(redirect);
+                    if (shallRedirect)
+                    {
+                        HttpContext.Current.Response.Redirect(redirect);
+                    }
+                    
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
@@ -654,16 +677,20 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
 
-                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
+                    string redirect = HttpContext.Current.Request.Path;
+                    bool shallRedirect = false;
 
-                    if (text != "")
+                    if (text != "") {
                         redirect = redirect + "&text=" + text;
+                        shallRedirect = true;
+                    }                        
 
                     if (filterVertikalt != "")
                     {
                         if (filterVertikalt.Contains(","))
                             filterVertikalt = filterVertikalt.Replace(",false", "");
                         redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                        shallRedirect = true;
                     }
 
                     if (filterHorisontalt != "")
@@ -671,18 +698,29 @@ namespace Kartverket.Register.Helpers
                         if (filterHorisontalt.Contains(","))
                             filterHorisontalt = filterHorisontalt.Replace(",false", "");
                         redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                        shallRedirect = true;
                     }
 
-                    if (InspireRequirementParam != "")
+                    if (InspireRequirementParam != "") { 
                         redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
+                        shallRedirect = true;
+                    }
 
-                    if (nationalRequirementParam != "")
+                    if (nationalRequirementParam != "") { 
                         redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
+                        shallRedirect = true;
+                    }
 
-                    if (nationalSeaRequirementParam != "")
+                    if (nationalSeaRequirementParam != "") { 
                         redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+                        shallRedirect = true;
+                    }
 
-                    HttpContext.Current.Response.Redirect(redirect);
+                    if (shallRedirect)
+                    {
+                        HttpContext.Current.Response.Redirect(redirect);
+                    }
+                    
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
@@ -887,7 +925,7 @@ namespace Kartverket.Register.Helpers
 
         public static string VersionsUrl(string register, string ItemOwner, string item)
         {
-           return "/register/versjoner/" + register + "/" + ItemOwner + "/" + item;
+            return "/register/versjoner/" + register + "/" + ItemOwner + "/" + item;
         }
 
         public static string SubRegisterUrl(string parentregister, string parentregisterowner, string registername)

@@ -241,5 +241,20 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             return itemsByOwner;
         }
+
+
+        public Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem)
+        {
+            originalItem.statusId = item.statusId;
+            if (originalItem.statusId != "Valid" && item.statusId == "Valid")
+            {
+                originalItem.dateAccepted = DateTime.Now;
+            }
+            if (originalItem.statusId == "Valid" && item.statusId != "Valid")
+            {
+                originalItem.dateAccepted = null;
+            }
+            return originalItem;
+        }
     }
 }

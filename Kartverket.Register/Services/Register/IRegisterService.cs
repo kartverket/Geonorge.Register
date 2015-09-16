@@ -20,6 +20,7 @@ namespace Kartverket.Register.Services.Register
         List<Models.Register> GetSubregisters();
         List<Models.Register> GetSubregistersOfRegister(Models.Register register);
         Models.Register GetRegisterBySystemId(Guid systemId);
-        Models.Register GetRegister(string parentRegister, string regiister);
+        Models.Register GetRegister(string parentRegister, string register);
+        Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
     }
 }

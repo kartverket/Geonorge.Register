@@ -322,5 +322,20 @@ namespace Kartverket.Register.Services.Register
             }
             throw new NotImplementedException();
         }
+
+
+        public Models.Register SetStatus(Models.Register register, Models.Register originalRegister)
+        {
+            originalRegister.statusId = register.statusId;
+            if (originalRegister.statusId != "Valid" && register.statusId == "Valid")
+            {
+                originalRegister.dateAccepted = DateTime.Now;
+            }
+            if (originalRegister.statusId == "Valid" && register.statusId != "Valid")
+            {
+                originalRegister.dateAccepted = null;
+            }
+            return originalRegister;
+        }
     }
 }

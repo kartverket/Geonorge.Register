@@ -59,11 +59,11 @@ namespace Kartverket.Register.Controllers
         public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
-            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);                          
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, name);
             if (register == null) return HttpNotFound();
-            
+
             if (!string.IsNullOrWhiteSpace(filter.text)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
 
@@ -95,7 +95,7 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
 
-        [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}.{format}")]        
+        [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}.{format}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}.{format}")]
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}")]
@@ -170,10 +170,7 @@ namespace Kartverket.Register.Controllers
         {
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
 
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
+            if (register == null) return HttpNotFound();
 
             if (role == "nd.metadata_admin")
             {
@@ -194,45 +191,33 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
         {
             if (role == "nd.metadata_admin")
-            {                
+            {
                 ValidationName(register);
-                Kartverket.Register.Models.Register originalRegister = new Models.Register();
-                originalRegister = _registerService.GetRegister(null, registername);
-               
+                Kartverket.Register.Models.Register originalRegister = _registerService.GetRegister(null, registername);
+
                 if (ModelState.IsValid)
                 {
-                    if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
+                    if (register.name != null) originalRegister.name = register.name;
+
                     if (register.description != null) originalRegister.description = register.description;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                     if (register.managerId != null) originalRegister.managerId = register.managerId;
                     if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
-
-
+                    originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
                     originalRegister.modified = DateTime.Now;
-                    if (register.statusId != null)
-                    {
-                        originalRegister.statusId = register.statusId;
-                        if (originalRegister.statusId != "Valid" && register.statusId == "Valid")
-                        {
-                            originalRegister.dateAccepted = DateTime.Now;
-                        }
-                        if (originalRegister.statusId == "Valid" && register.statusId != "Valid")
-                        {
-                            originalRegister.dateAccepted = null;
-                        }
-                    }
+                    if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);               
 
                     db.Entry(originalRegister).State = EntityState.Modified;
                     db.SaveChanges();
                     Viewbags(register);
 
-                    if (register.parentRegisterId != null)
+                    if (originalRegister.parentRegisterId != null)
                     {
-                        return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
+                        return Redirect(HtmlHelperExtensions.SubRegisterUrl(originalRegister.parentRegister.seoname, originalRegister.parentRegister.owner.seoname, originalRegister.seoname));
                     }
-                    return Redirect("/register/" + originalRegister.seoname);
+                    return Redirect(HtmlHelperExtensions.RegisterUrl(originalRegister.seoname));
                 }
                 Viewbags(register);
                 return View(originalRegister);
@@ -332,7 +317,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        
+
 
         private void setAccessRole()
         {
@@ -354,8 +339,6 @@ namespace Kartverket.Register.Controllers
                 Session["role"] = "guest";
                 Session["user"] = "guest";
             }
-
-
         }
 
 
@@ -386,7 +369,6 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(Kartverket.Register.Models.Register register)
         {
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
             ViewBag.parentRegisterId = new SelectList(db.Registers.Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
@@ -405,7 +387,8 @@ namespace Kartverket.Register.Controllers
                 Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(registerItem.systemId);
                 return dataset.datasetowner.name;
             }
-            else {
+            else
+            {
                 return registerItem.submitter.seoname;
             }
         }

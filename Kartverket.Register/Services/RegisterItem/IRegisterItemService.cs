@@ -23,5 +23,6 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetAllVersionsOfItembyVersioningId(Guid? versjonsGruppeId);
         List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item);
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
+        Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
     }
 }

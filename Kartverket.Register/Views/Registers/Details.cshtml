@@ -4,10 +4,18 @@
 
 @{
     ViewBag.Title = @Model.name;
+    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
+    Kartverket.Register.Models.Register parent = Model.parentRegister;
 }
 
 @section breadcrumb {
-    <li class="active">@Html.DisplayFor(model => model.name)</li>
+    <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
+    <li class="active pull-right">@Model.name</li>
+    @while (parent != null && parent != mainRegister)
+    {
+        <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+        parent = parent.parentRegister;
+    }
 }
 
 <script>

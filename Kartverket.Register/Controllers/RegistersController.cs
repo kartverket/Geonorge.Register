@@ -53,15 +53,17 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        [Route("register/{name}")]
-        [Route("register/{name}.{format}")]
-        [Route("register/{name}/{filterOrganization}")]
-        public ActionResult Details(string name, string sorting, int? page, string format, FilterParameters filter)
+        [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
+        [Route("subregister/{parentRegister}/{owner}/{registername}")]
+        [Route("register/{registername}")]
+        [Route("register/{registernamename}.{format}")]
+        [Route("register/{registername}/{filterOrganization}")]
+        public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            Kartverket.Register.Models.Register register = _registerService.GetRegister(null, name);
+            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
             if (!string.IsNullOrWhiteSpace(filter.text)) register = _searchService.Search(register, filter.text);
@@ -76,6 +78,12 @@ namespace Kartverket.Register.Controllers
             ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+            ViewBag.ownerSEO = owner;
+            ViewBag.search = filter.text;
 
             return View(register);
         }

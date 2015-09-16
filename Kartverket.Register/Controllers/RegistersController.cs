@@ -32,12 +32,12 @@ namespace Kartverket.Register.Controllers
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController(ISearchService searchService, IRegisterService registerService, IVersioningService versioningService, IRegisterItemService registerItemService)
+        public RegistersController()
         {
-            _registerItemService = registerItemService;
-            _searchService = searchService;
-            _versioningService = versioningService;
-            _registerService = registerService;
+            _registerItemService = new RegisterItemService(db);
+            _searchService = new SearchService(db);
+            _versioningService = new VersioningService(db);
+            _registerService = new RegisterService(db);
         }
 
         // GET: Registers
@@ -250,21 +250,19 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin")
             {                
                 ValidationName(register);
-                Kartverket.Register.Models.Register originalRegister = _registerService.GetRegisterByName(registername);
-
-                var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y => y.Count > 0)
-                           .ToList();
-                
+                Kartverket.Register.Models.Register originalRegister = new Models.Register();
+                originalRegister = _registerService.GetRegister(null, registername);
+               
                 if (ModelState.IsValid)
                 {
                     if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
                     if (register.description != null) originalRegister.description = register.description;
-                    if (register.owner != null) originalRegister.ownerId = register.ownerId;
-                    if (register.managerId != null) originalRegister.managerId = register.managerId;
                     if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
+                    if (register.managerId != null) originalRegister.managerId = register.managerId;
+                    if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
+
 
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null)
@@ -288,7 +286,7 @@ namespace Kartverket.Register.Controllers
                     {
                         return Redirect("/subregister/" + originalRegister.parentRegister.seoname + "/" + originalRegister.parentRegister.owner.seoname + "/" + originalRegister.seoname);
                     }
-                    return Redirect("/register/" + originalRegister.name);
+                    return Redirect("/register/" + originalRegister.seoname);
                 }
                 Viewbags(register);
                 return View(originalRegister);

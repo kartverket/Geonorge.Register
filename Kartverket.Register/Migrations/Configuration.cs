@@ -537,7 +537,6 @@ namespace Kartverket.Register.Migrations
 
             //UpdateAccessId
             context.Database.ExecuteSqlCommand("UPDATE Registers SET accessId = 2  WHERE (AccessId IS NULL)");
-
         }
     }
 }

@@ -49,74 +49,6 @@ namespace Kartverket.Register.Controllers
             return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 
-        private ActionResult exportCodelist(Kartverket.Register.Models.Register register, string export)
-        {
-            if (export == "csv")
-            {
-                string text = "Kode; Initialverdi; Beskrivelse\n";
-
-                foreach (CodelistValue item in register.items)
-                {
-                    string description = item.description;
-                    string replaceWith = " ";
-                    string removedBreaksDescription = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
-
-                    text += item.name + ";" + item.value + ";" + removedBreaksDescription + "\n";
-                }
-                byte[] data = Encoding.UTF8.GetBytes(text);
-                return File(data, "text/csv", register.name + "_kodeliste.csv");
-            }
-
-            else if (export == "gml")
-            {
-                //var queryResult = from x in db.CodelistValues
-                //                  select x.value;
-
-                string targetNamespace = "";
-                string nameSpace = "";
-                if (register.targetNamespace != null)
-                {
-                    nameSpace = register.targetNamespace;
-                    if (register.targetNamespace.EndsWith("/"))
-                    {
-                        targetNamespace = register.targetNamespace + register.seoname;
-                    }
-                    else
-                    {
-                        targetNamespace = register.targetNamespace + "/" + register.seoname;
-                    }
-                }
-
-                XNamespace ns = "http://www.opengis.net/gml/3.2";
-                XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
-                XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
-                XElement xdoc =
-                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                        new XAttribute(gmlNs + "id", register.seoname),
-                        new XElement(gmlNs + "description"),
-                        new XElement(gmlNs + "identifier",
-                            new XAttribute("codeSpace", nameSpace), register.name),
-
-                        from k in db.CodelistValues.ToList()
-                        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
-                          new XElement(gmlNs + "description", k.description),
-                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
-                          new XElement(gmlNs + "name", k.name)
-                          )));
-
-                return new XmlResult(xdoc);
-            }
-            return View(register);
-        }
-
-        private void RedirectToApi() { 
-        
-        }
-
-
         // GET: Registers/Details/5
         [Route("register/{name}")]
         [Route("register/{name}.{format}")]
@@ -128,11 +60,8 @@ namespace Kartverket.Register.Controllers
 
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, name);
             if (register == null) return HttpNotFound();
-
-            if (!string.IsNullOrWhiteSpace(filter.text))
-            {
-                register = _searchService.Search(register, filter.text);
-            }
+            
+            if (!string.IsNullOrWhiteSpace(filter.text)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
 
             ViewBag.search = filter.text;

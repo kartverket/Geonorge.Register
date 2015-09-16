@@ -80,81 +80,11 @@ namespace Kartverket.Register.Controllers
                     return HttpNotFound();
                 }
 
-                //TODO, egen formatter
-                if (!string.IsNullOrEmpty(export))
-                {
-                    return exportCodelist(register, export);
-                }
-
                 return View(register);
             }
             return HttpNotFound();
         }
 
-        private ActionResult exportCodelist(Kartverket.Register.Models.Register register, string export)
-        {
-            if (export == "csv")
-            {
-
-                string text = "Navn; Kodeverdi; Beskrivelse\n";
-
-                foreach (CodelistValue item in register.items)
-                {
-                    string description = item.description;
-                    string replaceWith = " ";
-                    string removedBreaksDescription = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
-
-                    text += item.name + ";" + item.value + ";" + removedBreaksDescription + "\n";
-                }
-
-                byte[] data = Encoding.UTF8.GetBytes(text);
-
-                return File(data, "text/csv", register.name + "_kodeliste.csv");
-            }
-
-            else if (export == "gml")
-            {
-                string targetNamespace = "";
-                string nameSpace = "";
-                if (register.targetNamespace != null)
-                {
-                    nameSpace = register.targetNamespace;
-                    if (register.targetNamespace.EndsWith("/"))
-                    {
-                        targetNamespace = register.targetNamespace + register.seoname;
-                    }
-                    else
-                    {
-                        targetNamespace = register.targetNamespace + "/" + register.seoname;
-                    }
-                }
-
-                XNamespace ns = "http://www.opengis.net/gml/3.2";
-                XNamespace xsiNs = "http://www.w3.org/2001/XMLSchema-instance";
-                XNamespace gmlNs = "http://www.opengis.net/gml/3.2";
-
-                XElement xdoc =
-                    new XElement(gmlNs + "Dictionary", new XAttribute(XNamespace.Xmlns + "xsi", xsiNs),
-                        new XAttribute(XNamespace.Xmlns + "gml", gmlNs),
-                        new XAttribute(xsiNs + "schemaLocation", "http://www.opengis.net/gml/3.2 http://schemas.opengis.net/gml/3.2.1/gml.xsd"),
-                        new XAttribute(gmlNs + "id", register.seoname),
-                        new XElement(gmlNs + "description"),
-                        new XElement(gmlNs + "identifier",
-                            new XAttribute("codeSpace", nameSpace), register.name),
-
-                        from k in db.CodelistValues.ToList()
-                        where k.register.name == register.name && k.register.parentRegisterId == register.parentRegisterId
-                        select new XElement(gmlNs + "dictionaryEntry", new XElement(gmlNs + "Definition", new XAttribute(gmlNs + "id", "_" + k.value),
-                          new XElement(gmlNs + "description", k.description),
-                          new XElement(gmlNs + "identifier", new XAttribute("codeSpace", targetNamespace), k.value),
-                          new XElement(gmlNs + "name", k.name)
-                          )));
-
-                return new XmlResult(xdoc);
-            }
-            return View(register);
-
-        }
 
         [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
         [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]

@@ -242,7 +242,6 @@ namespace Kartverket.Register.Services.RegisterItem
             return itemsByOwner;
         }
 
-
         public Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem)
         {
             originalItem.statusId = item.statusId;

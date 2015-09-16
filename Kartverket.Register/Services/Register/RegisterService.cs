@@ -350,5 +350,22 @@ namespace Kartverket.Register.Services.Register
             if (queryResultsRegisterItem.Count() > 0) return true;
             else return false;
         }
+
+        public bool validationName(object model)
+        {
+            if (model is Models.Register)
+            {
+                Models.Register register = (Models.Register)model;
+                var queryResults = from o in _dbContext.Registers
+                                      where o.name == register.name && o.systemId != register.systemId
+                                      select o.systemId;
+
+                if (queryResults.Count() > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

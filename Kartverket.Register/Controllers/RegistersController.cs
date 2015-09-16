@@ -133,7 +133,7 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                ValidationName(register);
+                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
 
                 if (ModelState.IsValid)
                 {
@@ -192,7 +192,7 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                ValidationName(register);
+                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
                 Kartverket.Register.Models.Register originalRegister = _registerService.GetRegister(null, registername);
 
                 if (ModelState.IsValid)
@@ -326,19 +326,6 @@ namespace Kartverket.Register.Controllers
             Session["InspireRequirement"] = null;
             Session["nationalRequirement"] = null;
             Session["nationalSeaRequirement"] = null;
-
-        }
-
-        private void ValidationName(Kartverket.Register.Models.Register register)
-        {
-            var queryResultsDataset = from o in db.Registers
-                                      where o.name == register.name && o.systemId != register.systemId
-                                      select o.systemId;
-
-            if (queryResultsDataset.Count() > 0)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
-            }
         }
 
         private void Viewbags(Kartverket.Register.Models.Register register)

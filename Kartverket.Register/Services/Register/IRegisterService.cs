@@ -23,5 +23,6 @@ namespace Kartverket.Register.Services.Register
         Models.Register GetRegister(string parentRegister, string register);
         Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
         bool RegisterHasChildren(string parentname, string registername);
+        bool validationName(Object model);
     }
 }

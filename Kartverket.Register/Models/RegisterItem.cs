@@ -39,11 +39,6 @@ namespace Kartverket.Register.Models
         public Guid? submitterId { get; set; }
         public virtual Organization submitter { get; set; }
 
-        [Display(Name = "Eier:")]
-        [ForeignKey("owner")]
-        public Guid? ownerId { get; set; }
-        public virtual Organization owner { get; set; }
-
         [Display(Name = "Dato innsendt:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }

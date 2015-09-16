@@ -561,6 +561,10 @@
     <Compile Include="Migrations\201509160619176_AddOwnerToRegisteritems.Designer.cs">
       <DependentUpon>201509160619176_AddOwnerToRegisteritems.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509160724388_DeleteOwnerFromRegisterItems.cs" />
+    <Compile Include="Migrations\201509160724388_DeleteOwnerFromRegisterItems.Designer.cs">
+      <DependentUpon>201509160724388_DeleteOwnerFromRegisterItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1119,6 +1123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509160619176_AddOwnerToRegisteritems.resx">
       <DependentUpon>201509160619176_AddOwnerToRegisteritems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509160724388_DeleteOwnerFromRegisterItems.resx">
+      <DependentUpon>201509160724388_DeleteOwnerFromRegisterItems.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

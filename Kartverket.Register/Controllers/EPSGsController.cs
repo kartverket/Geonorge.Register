@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Controllers
 {
@@ -18,6 +20,14 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private IRegisterService _registerService;
+        private IRegisterItemService _registerItemService;
+        public EPSGsController()
+        {
+            _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
+        }
 
         // GET: EPSGs
         public ActionResult Index()
@@ -120,6 +130,8 @@ namespace Kartverket.Register.Controllers
                 epsgKode.nationalRequirementId = "Notset";
                 epsgKode.nationalSeasRequirementId = "Notset";
                 epsgKode.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(epsgKode.name);
+                epsgKode.versionNumber = 1;
+                epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode, register);
 
                 db.RegisterItems.Add(epsgKode);
                 db.SaveChanges();

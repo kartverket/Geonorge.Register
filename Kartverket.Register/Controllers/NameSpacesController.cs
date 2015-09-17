@@ -8,12 +8,22 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Controllers
 {
     public class NameSpacesController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+
+        private IRegisterService _registerService;
+        private IRegisterItemService _registerItemService;
+        public NameSpacesController()
+        {
+            _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
+        }
 
         // GET: NameSpaces
         public ActionResult Index()
@@ -92,6 +102,8 @@ namespace Kartverket.Register.Controllers
                 nameSpace.statusId = "Submitted";
                 nameSpace.submitter = null;
                 nameSpace.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(nameSpace.name);
+                nameSpace.versionNumber = 1;
+                nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace, register);
 
                 db.RegisterItems.Add(nameSpace);
                 db.SaveChanges();

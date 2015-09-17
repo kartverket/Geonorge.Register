@@ -88,7 +88,7 @@ namespace Kartverket.Register.Controllers
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
                 organization.statusId = "Submitted";
-                organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+                organization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(organization.name);
 
                 organization.logoFilename = org[3];
                 organization.largeLogo = org[3];
@@ -180,7 +180,7 @@ namespace Kartverket.Register.Controllers
                 organization.registerId = regId;
                 organization.register = register;
                 organization.statusId = "Submitted";
-                organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+                organization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(organization.name);
                 organization.versionNumber = 1;
                 organization.versioningId = _registerItemService.NewVersioningGroup(organization, register);
 
@@ -326,7 +326,7 @@ namespace Kartverket.Register.Controllers
                 if (org.name != null)
                 {
                     originalOrganization.name = org.name;
-                    originalOrganization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(org.name);
+                    originalOrganization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(org.name);
                 }
                 if (org.submitterId != null)
                 {
@@ -532,7 +532,7 @@ namespace Kartverket.Register.Controllers
                 {
                     break;
                 }
-                seofilename += Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item) + "_";
+                seofilename += Helpers.RegisterUrls.MakeSeoFriendlyString(item) + "_";
             }
         }
 

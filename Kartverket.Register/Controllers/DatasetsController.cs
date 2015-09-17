@@ -143,7 +143,7 @@ namespace Kartverket.Register.Controllers
                 {
                     dataset.description = "ikke angitt";
                 }
-                dataset.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(dataset.name);
+                dataset.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(dataset.name);
 
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -291,7 +291,7 @@ namespace Kartverket.Register.Controllers
             if (ModelState.IsValid)
             {
                 if (dataset.name != null) originalDataset.name = dataset.name;
-                originalDataset.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDataset.name);
+                originalDataset.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalDataset.name);
                 originalDataset.description = dataset.description;
                 if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
                 if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;

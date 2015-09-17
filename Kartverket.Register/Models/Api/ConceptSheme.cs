@@ -35,7 +35,7 @@ namespace Kartverket.Register.Models.Api
                 {
                     description = "";
                 }
-                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item.label);
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(item.label);
                 codelistValue = item.codevalue;
                 concepts = new List<Concept>();
                 if (item.broader != null)
@@ -62,7 +62,7 @@ namespace Kartverket.Register.Models.Api
                     description = "";
                 }
                 codelistValue = "";
-                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.label);
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(register.label);
                 concepts = new List<Concept>();
                 broader = "";
 

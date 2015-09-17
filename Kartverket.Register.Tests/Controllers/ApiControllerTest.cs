@@ -273,7 +273,7 @@ namespace Kartverket.Register.Tests.Controllers
             Models.Register register = new Models.Register();
             register.systemId = Guid.NewGuid();
             register.name = name;
-            register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
+            register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
             return register;
         }
@@ -283,7 +283,7 @@ namespace Kartverket.Register.Tests.Controllers
             Models.Organization organization = new Models.Organization();
             organization.systemId = Guid.NewGuid();
             organization.name = name;
-            organization.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+            organization.seoname = RegisterUrls.MakeSeoFriendlyString(organization.name);
             organization.description = "beskrivelse av organisasjon";
             return organization;
         }
@@ -307,7 +307,7 @@ namespace Kartverket.Register.Tests.Controllers
                 Models.Document document = new Document();
                 document.systemId = Guid.NewGuid();
                 document.name = versionName;
-                document.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
+                document.seoname = RegisterUrls.MakeSeoFriendlyString(document.name);
                 Organization organisasjon = NewOrganization(Owner);
                 document.documentowner = organisasjon;
                 document.submitter = organisasjon;

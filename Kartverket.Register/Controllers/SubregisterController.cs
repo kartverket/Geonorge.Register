@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
                 subRegister.modified = DateTime.Now;
                 subRegister.dateSubmitted = DateTime.Now;
                 subRegister.statusId = "Submitted";
-                subRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(subRegister.name);
+                subRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name);
                 subRegister.parentRegisterId = regId;
 
                 db.Registers.Add(subRegister);
@@ -260,7 +260,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
+                if (register.name != null) originalRegister.name = register.name; originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
                 if (register.description != null) originalRegister.description = register.description;
                 if (register.ownerId != null) originalRegister.ownerId = register.ownerId;
                 if (register.managerId != null) originalRegister.managerId = register.managerId;

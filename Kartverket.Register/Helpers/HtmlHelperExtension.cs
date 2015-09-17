@@ -254,71 +254,71 @@ namespace Kartverket.Register.Helpers
             return isInRole;
         }
 
-        public static string GeonorgeUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["GeonorgeUrl"];
-        }
-        public static string GeonorgeArtiklerUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["GeonorgeArtiklerUrl"];
-        }
-        public static string NorgeskartUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["NorgeskartUrl"];
-        }
-        public static string RegistryUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["RegistryUrl"];
-        }
-        public static string ObjektkatalogUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["ObjektkatalogUrl"];
-        }
-        public static string KartkatalogenUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["KartkatalogenUrl"];
-        }
+        //public static string GeonorgeUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["GeonorgeUrl"];
+        //}
+        //public static string GeonorgeArtiklerUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["GeonorgeArtiklerUrl"];
+        //}
+        //public static string NorgeskartUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["NorgeskartUrl"];
+        //}
+        //public static string RegistryUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["RegistryUrl"];
+        //}
+        //public static string ObjektkatalogUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["ObjektkatalogUrl"];
+        //}
+        //public static string KartkatalogenUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["KartkatalogenUrl"];
+        //}
 
-        public static string DokRegisterUrl(this HtmlHelper helper)
-        {
-            return WebConfigurationManager.AppSettings["DokRegisterUrl"];
-        }
+        //public static string DokRegisterUrl(this HtmlHelper helper)
+        //{
+        //    return WebConfigurationManager.AppSettings["DokRegisterUrl"];
+        //}
 
-        public static string ToUrl(this HtmlHelper helper, string name)
-        {
-            return MakeSeoFriendlyString(name);
-        }
+        //public static string ToUrl(this HtmlHelper helper, string name)
+        //{
+        //    return MakeSeoFriendlyString(name);
+        //}
 
-        public static string urlFormat(HttpRequestBase request, string format)
-        {
-            string url = request.FilePath + "." + format;
-            return url;
-        }
+        //public static string urlFormat(HttpRequestBase request, string format)
+        //{
+        //    string url = request.FilePath + "." + format;
+        //    return url;
+        //}
 
-        public static string MakeSeoFriendlyString(string input)
-        {
-            string encodedUrl = (input ?? "").ToLower();
+        //public static string MakeSeoFriendlyString(string input)
+        //{
+        //    string encodedUrl = (input ?? "").ToLower();
 
-            // replace & with and
-            encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
+        //    // replace & with and
+        //    encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
 
-            // remove characters
-            encodedUrl = encodedUrl.Replace("'", "");
+        //    // remove characters
+        //    encodedUrl = encodedUrl.Replace("'", "");
 
-            // replace norwegian characters
-            encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
+        //    // replace norwegian characters
+        //    encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
 
-            // remove invalid characters
-            encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
+        //    // remove invalid characters
+        //    encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
 
-            // remove duplicates
-            encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
+        //    // remove duplicates
+        //    encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
 
-            // trim leading & trailing characters
-            encodedUrl = encodedUrl.Trim('-');
+        //    // trim leading & trailing characters
+        //    encodedUrl = encodedUrl.Trim('-');
 
-            return encodedUrl;
-        }
+        //    return encodedUrl;
+        //}
 
 
 
@@ -916,26 +916,6 @@ namespace Kartverket.Register.Helpers
 
             string beskrivelse = "Mulige statuser:&#013&#013" + forslag + "&#013" + gyldig + "&#013" + historiske;
             return beskrivelse;
-        }
-
-        public static string VersionsInSubregisterURL(string parentRegister, string parentRegisterOwner, string register, string itemOwner, string item)
-        {
-            return "/subregister/versjoner/" + parentRegister + "/" + parentRegisterOwner + "/" + register + "/" + itemOwner + "/" + item;
-        }
-
-        public static string VersionsUrl(string register, string ItemOwner, string item)
-        {
-            return "/register/versjoner/" + register + "/" + ItemOwner + "/" + item;
-        }
-
-        public static string SubRegisterUrl(string parentregister, string parentregisterowner, string registername)
-        {
-            return "/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername;
-        }
-
-        internal static string RegisterUrl(string registername)
-        {
-            return "/register/" + registername;
         }
 
         public static object DokStatusBeskrivelse()

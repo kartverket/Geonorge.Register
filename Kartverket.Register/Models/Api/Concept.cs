@@ -26,7 +26,7 @@ namespace Kartverket.Register.Models.Api
                 Register register = (Register)models;
                 id = register.id;
                 name = register.label;
-                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(register.label);
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(register.label);
                 owner = register.owner;
 
                 if (!string.IsNullOrWhiteSpace(register.contentsummary))
@@ -46,7 +46,7 @@ namespace Kartverket.Register.Models.Api
                 Registeritem item = (Registeritem)models;
                 id = item.id;
                 name = item.label;
-                seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item.label);
+                seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(item.label);
                 owner = item.owner;
                 if (!string.IsNullOrWhiteSpace(item.description))
                 {

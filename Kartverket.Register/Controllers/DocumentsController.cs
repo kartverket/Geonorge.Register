@@ -103,7 +103,7 @@ namespace Kartverket.Register.Controllers
                 document.statusId = "Submitted";
                 document.versionNumber = 1;
 
-                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
+                if (string.IsNullOrWhiteSpace(document.name)) document.name = "ikke angitt"; document.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(document.name);
                 if (string.IsNullOrWhiteSpace(document.description)) document.description = "ikke angitt";
 
                 //Dokument og thumbnail
@@ -136,11 +136,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
-                    return Redirect(HtmlHelperExtensions.VersionsInSubregisterURL(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
-                }
-                else
-                {
-                    return Redirect(HtmlHelperExtensions.VersionsUrl(registername, document.documentowner.seoname, document.seoname));
+                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
                 }
             }
             document.register = register;
@@ -210,7 +206,7 @@ namespace Kartverket.Register.Controllers
                 document.versionNumber++;
 
                 if (string.IsNullOrWhiteSpace(document.description)) document.description = "ikke angitt";
-                document.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(document.name);
+                document.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(document.name);
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
 
                 if (documentfile != null)
@@ -247,14 +243,7 @@ namespace Kartverket.Register.Controllers
                 versjonsgruppe.lastVersionNumber = document.versionNumber;
                 db.SaveChanges();
 
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect(HtmlHelperExtensions.VersionsInSubregisterURL(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
-                }
-                else
-                {
-                    return Redirect(HtmlHelperExtensions.VersionsUrl(registername, document.documentowner.seoname, document.seoname));
-                }
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
             }
             return View(document);
         }
@@ -297,8 +286,8 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentRegister, string registername, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
+        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
+        public ActionResult Edit(Document document, string parentRegister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = new Document();
             if (string.IsNullOrWhiteSpace(parentRegister))
@@ -317,7 +306,7 @@ namespace Kartverket.Register.Controllers
             if (ModelState.IsValid)
             {
                 if (document.name != null) originalDocument.name = document.name;
-                originalDocument.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalDocument.name);
+                originalDocument.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalDocument.name);
                 if (document.description != null) originalDocument.description = document.description;
                 if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
                 if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
@@ -492,16 +481,7 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(document);
 
-                //Retur? Gjeldende versjon!!
-
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect(HtmlHelperExtensions.VersionsInSubregisterURL(parentRegister, register.parentRegister.owner.seoname, registername, originalDocument.documentowner.seoname, originalDocument.seoname));
-                }
-                else
-                {
-                    return Redirect(HtmlHelperExtensions.VersionsUrl(registername, originalDocument.documentowner.seoname, originalDocument.seoname));
-                }
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, itemowner, documentname));
             }
             Viewbags(document);
             return View(originalDocument);
@@ -593,12 +573,7 @@ namespace Kartverket.Register.Controllers
             db.RegisterItems.Remove(document);
             db.SaveChanges();
 
-            if (parent != null)
-            {
-                return Redirect(HtmlHelperExtensions.SubRegisterUrl(parentregister, parentregisterowner, registername));
-            }
-
-            return Redirect(HtmlHelperExtensions.RegisterUrl(registername));
+            return Redirect(RegisterUrls.registerUrl(parentregister, parentregisterowner, registername));           
         }
 
         protected override void Dispose(bool disposing)
@@ -646,7 +621,7 @@ namespace Kartverket.Register.Controllers
                 {
                     break;
                 }
-                seofilename += Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(item) + "_";
+                seofilename += Helpers.RegisterUrls.MakeSeoFriendlyString(item) + "_";
             }
         }
 

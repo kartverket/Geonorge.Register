@@ -131,7 +131,7 @@ namespace Kartverket.Register.Controllers
                             codelistValue.dateSubmitted = DateTime.Now;
                             codelistValue.registerId = register.systemId;
                             codelistValue.statusId = "Submitted";
-                            codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
+                            codelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
 
                             db.RegisterItems.Add(codelistValue);
                             db.SaveChanges();
@@ -243,7 +243,7 @@ namespace Kartverket.Register.Controllers
                     _registerItemService.SetBroaderItem(broader.Value, codelistValue);
                 }
 
-                codelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(codelistValue.name);
+                codelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
                 string organizationLogin = GetSecurityClaim("organization");
 
@@ -329,7 +329,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (codelistValue.name != null) originalCodelistValue.name = codelistValue.name; originalCodelistValue.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalCodelistValue.name);
+                if (codelistValue.name != null) originalCodelistValue.name = codelistValue.name; originalCodelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalCodelistValue.name);
                 if (codelistValue.description != null) originalCodelistValue.description = codelistValue.description;
                 if (codelistValue.statusId != null) originalCodelistValue.statusId = codelistValue.statusId;
                 if (codelistValue.submitterId != null) originalCodelistValue.submitterId = codelistValue.submitterId;

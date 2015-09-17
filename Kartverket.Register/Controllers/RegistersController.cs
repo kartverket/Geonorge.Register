@@ -151,7 +151,7 @@ namespace Kartverket.Register.Controllers
                     register.modified = DateTime.Now;
                     register.dateSubmitted = DateTime.Now;
                     register.statusId = "Submitted";
-                    register.seoname = HtmlHelperExtensions.MakeSeoFriendlyString(register.name);
+                    register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
                     register.containedItemClass = register.containedItemClass;
 
                     db.Registers.Add(register);
@@ -213,7 +213,7 @@ namespace Kartverket.Register.Controllers
                     if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
-                    originalRegister.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);               
 
@@ -221,11 +221,7 @@ namespace Kartverket.Register.Controllers
                     db.SaveChanges();
                     Viewbags(register);
 
-                    if (originalRegister.parentRegisterId != null)
-                    {
-                        return Redirect(HtmlHelperExtensions.SubRegisterUrl(originalRegister.parentRegister.seoname, originalRegister.parentRegister.owner.seoname, originalRegister.seoname));
-                    }
-                    return Redirect(HtmlHelperExtensions.RegisterUrl(originalRegister.seoname));
+                    return Redirect(RegisterUrls.registerUrl(null, null, registername));
                 }
                 Viewbags(register);
                 return View(originalRegister);

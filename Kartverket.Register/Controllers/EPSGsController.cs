@@ -129,7 +129,7 @@ namespace Kartverket.Register.Controllers
                 epsgKode.inspireRequirementId = "Notset";
                 epsgKode.nationalRequirementId = "Notset";
                 epsgKode.nationalSeasRequirementId = "Notset";
-                epsgKode.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(epsgKode.name);
+                epsgKode.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(epsgKode.name);
                 epsgKode.versionNumber = 1;
                 epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode, register);
 
@@ -232,7 +232,7 @@ namespace Kartverket.Register.Controllers
             {
                 EPSG originalEPSG = db.EPSGs.Find(systId);
 
-                if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalEPSG.name);
+                if (ePSG.name != null) originalEPSG.name = ePSG.name; originalEPSG.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalEPSG.name);
                 if (ePSG.description != null) originalEPSG.description = ePSG.description;
                 if (ePSG.submitterId != null) originalEPSG.submitterId = ePSG.submitterId;
                 if (ePSG.statusId != null) originalEPSG.statusId = ePSG.statusId;

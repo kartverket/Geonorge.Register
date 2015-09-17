@@ -101,7 +101,7 @@ namespace Kartverket.Register.Controllers
                 nameSpace.registerId = register.systemId;
                 nameSpace.statusId = "Submitted";
                 nameSpace.submitter = null;
-                nameSpace.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(nameSpace.name);
+                nameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(nameSpace.name);
                 nameSpace.versionNumber = 1;
                 nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace, register);
 
@@ -160,7 +160,7 @@ namespace Kartverket.Register.Controllers
 
             if (ModelState.IsValid)
             {
-                if (nameSpace.name != null) originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(originalNameSpace.name);
+                if (nameSpace.name != null) originalNameSpace.name = nameSpace.name; originalNameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalNameSpace.name);
                 if (nameSpace.description != null) originalNameSpace.description = nameSpace.description;
                 if (nameSpace.submitterId != null) originalNameSpace.submitterId = nameSpace.submitterId;
                 if (nameSpace.statusId != null) originalNameSpace.statusId = nameSpace.statusId;

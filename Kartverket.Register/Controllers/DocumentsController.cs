@@ -119,16 +119,7 @@ namespace Kartverket.Register.Controllers
                 if (thumbnail != null) document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
                 if (document.documentUrl == null) document.documentUrl = "ikke angitt";
 
-                // Opprette versjonering av et element
-                Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
-                versjoneringsGruppe.systemId = Guid.NewGuid();
-                versjoneringsGruppe.currentVersion = document.systemId;
-                versjoneringsGruppe.containedItemClass = "Documents";
-                versjoneringsGruppe.lastVersionNumber = document.versionNumber;
-                document.versioningId = versjoneringsGruppe.systemId;
-
-                db.Entry(versjoneringsGruppe).State = EntityState.Modified;
-                db.Versions.Add(versjoneringsGruppe);
+                document.versioningId = NewVersioningGroup(document);
 
                 // Hente innsender og eier ut fra innlogget bruker                
                 string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
@@ -154,6 +145,18 @@ namespace Kartverket.Register.Controllers
             }
             document.register = register;
             return View(document);
+        }
+
+        private Guid NewVersioningGroup(RegisterItem registerItem){
+            Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
+            versjoneringsGruppe.systemId = Guid.NewGuid();
+            versjoneringsGruppe.currentVersion = registerItem.systemId;
+            versjoneringsGruppe.containedItemClass = "Documents";
+            versjoneringsGruppe.lastVersionNumber = registerItem.versionNumber;
+
+            db.Entry(versjoneringsGruppe).State = EntityState.Modified;
+            db.Versions.Add(versjoneringsGruppe);
+            return versjoneringsGruppe.systemId;
         }
 
         // GET: Documents/CreateNewVersion
@@ -543,11 +546,11 @@ namespace Kartverket.Register.Controllers
             Document document = new Document();
             if (string.IsNullOrWhiteSpace(parentregister))
             {
-                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, document.versionNumber);
+                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, versionNumber);
             }
             else
             {
-                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
+                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, versionNumber);
             }
             string parent = null;
             if (document.register.parentRegisterId != null)

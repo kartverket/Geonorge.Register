@@ -178,7 +178,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
+            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentregister, registername);
             codeListValue.register = register;
 
             if (register.parentRegisterId != null)
@@ -220,6 +220,8 @@ namespace Kartverket.Register.Controllers
                 codelistValue.dateSubmitted = DateTime.Now;
                 codelistValue.registerId = register.systemId;
                 codelistValue.statusId = "Submitted";
+                codelistValue.versionNumber = 1;
+                codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue, register);
 
                 if (string.IsNullOrWhiteSpace(codelistValue.name))
                 {

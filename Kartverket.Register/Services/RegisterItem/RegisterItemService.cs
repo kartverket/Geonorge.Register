@@ -255,5 +255,18 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             return originalItem;
         }
+
+        public Guid NewVersioningGroup(Models.RegisterItem registerItem, Models.Register register) {
+            Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
+            versjoneringsGruppe.systemId = Guid.NewGuid();
+            versjoneringsGruppe.currentVersion = registerItem.systemId;
+            versjoneringsGruppe.containedItemClass = register.containedItemClass;
+            versjoneringsGruppe.lastVersionNumber = registerItem.versionNumber;
+
+            _dbContext.Entry(versjoneringsGruppe).State = EntityState.Modified;
+            _dbContext.Versions.Add(versjoneringsGruppe);
+            return versjoneringsGruppe.systemId;
+        }
+    
     }
 }

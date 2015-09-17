@@ -119,7 +119,7 @@ namespace Kartverket.Register.Controllers
                 if (thumbnail != null) document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, register.seoname, document.versionNumber);
                 if (document.documentUrl == null) document.documentUrl = "ikke angitt";
 
-                document.versioningId = NewVersioningGroup(document);
+                document.versioningId = _registerItemService.NewVersioningGroup(document, register);
 
                 // Hente innsender og eier ut fra innlogget bruker                
                 string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");

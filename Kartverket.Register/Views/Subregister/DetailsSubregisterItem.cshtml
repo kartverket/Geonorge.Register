@@ -6,6 +6,9 @@
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
     Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     var documentOwner = ViewBag.documentOwner;
+    string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
+    string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
+    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
 }
 
 
@@ -53,15 +56,6 @@
         {
             <span>Eier: @documentOwner </span><br />
         }
-        @*@if (Model.currentVersion == null)
-            {
-                <span>Versjon: Ikke angitt</span><br />
-            }
-            else
-            {
-                <span>Versjon: @Html.DisplayFor(model => model.currentVersion.versionInfo)</span><br />
-            }*@
-
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
@@ -73,7 +67,6 @@
         <div class="page-header">
             <hr>
         </div>
-
 
         @if (Model.register.containedItemClass == "Organization")
         {
@@ -107,33 +100,8 @@
 
             if (HtmlHelperExtensions.accessRegisterItem(Model))
             {
-                if (Model.register.containedItemClass == "Organization")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-                }
-                if (Model.register.containedItemClass == "Document")
-                {
-                    @*<span> | </span><a href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/ny">Foreslå ny versjon av @Model.name</a>*@
-                }
-                if (Model.register.containedItemClass == "Dataset")
-                {
-                    <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                    <a href="/dataset/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
-                }
-                if (Model.register.containedItemClass == "EPSG")
-                {
-                    <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                    <a href="/epsg/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
-                }
-                if (Model.register.containedItemClass == "CodelistValue")
-                {
-                    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/" class="btn btn-default btn-space pull-right">Rediger</a>
-                    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett/" class="btn btn-default btn-space pull-right">Slett</a>
-
-                    @*<span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Endre</a>
-                        <span> | </span><a href="/kodeliste/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>*@
-                }
+                <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
             }
         }
     </div>

@@ -7,6 +7,9 @@
     string datasetOwner = ViewBag.datasetOwner;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
     Kartverket.Register.Models.Register parent = Model.register.parentRegister;
+    string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
+    string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
+    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass); 
 }
 
 @section breadcrumb {
@@ -15,25 +18,22 @@
     {
         if (parent != null)
         {
-            <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
+            <li><a href="@RegisterUrls.registerUrl(null, null, mainRegister.seoname)">@mainRegister.name</a></li>
             <li class="active pull-right">@Model.name</li>
-            <li class=""><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
-            <li class="pull-right"><a href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            <li class=""><a href="@RegisterUrls.registerUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname)">@Model.register.name</a></li>
+            <li class="pull-right"><a href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname)">Alle versjoner av @Model.name</a></li>
             while (parent != null && parent != mainRegister)
             {
-                <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+                <li class="pull-right"><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
                 parent = parent.parentRegister;
             }
-
         }
         else
         {
-            <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
+            <li><a href="@RegisterUrls.registerUrl(null, null, Model.register.seoname)">@Model.register.name</a></li>
             <li class="active pull-right">@Model.name</li>
-            <li class="pull-right"><a href="/register/versjoner/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Alle versjoner av @Model.name</a></li>
+            <li class="pull-right"><a href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname)">Alle versjoner av @Model.name</a></li>
         }
-
-
     }
     else
     {
@@ -46,44 +46,22 @@
     <hr>
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    @*@if (Model.register.containedItemClass == "Document")
-        {
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <br />
-
-                <ul class="nav nav-tabs nav-tabs-topp" style="clear:both">
-                    <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab"><span class="glyphicon glyphicon-list-alt"></span> Gjeldende</a></li>
-                    <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab"><span class="glyphicon glyphicon-home"></span>Forslag</a></li>
-                    <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab"><span class="glyphicon glyphicon-user"></span>Historiske</a></li>
-                </ul>
-            </div>
-        }
-        else
-    *@
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         @if (Model.register.containedItemClass == "Document")
         {
-            <p>ID: <a href="/register/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(documentOwner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
         else if (Model.register.containedItemClass == "Dataset")
         {
-            <p>ID: <a href="/register/@Model.register.seoname/@Html.ToUrl(datasetOwner)/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(datasetOwner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
         else
         {
             <p>ID: <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
 
-        @if (Model.register.containedItemClass != "NameSpace")
-        {
-            <p>
-                @Model.description
-            </p>
-        }
-        @if (Model.register.containedItemClass != "Dataset")
-        {
-            <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>
-        }
+        @if (Model.register.containedItemClass != "NameSpace"){ <p> @Model.description</p>}
+        @if (Model.register.containedItemClass != "Dataset"){ <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
         @if (Model is Kartverket.Register.Models.Dataset)
         {
             Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
@@ -93,29 +71,15 @@
             }
         }
 
-        @if (Model.register.containedItemClass == "NameSpace")
-        {
-            <span>Eier: @Model.submitter.name</span><br>
-        }
-        else
-        {
-            <span>Innsender: @Model.submitter.name</span><br>
-        }
-        @if (documentOwner != null)
-        {
-            <span>Eier: @documentOwner</span><br />
-        }
+        @if (Model.register.containedItemClass == "NameSpace"){ <span>Eier: @Model.submitter.name</span><br>}
+        else {<span>Innsender: @Model.submitter.name</span><br>}
+
+        @if (documentOwner != null){ <span>Eier: @documentOwner</span><br />}
 
         <span>Versjons ID @Model.versionNumber</span><br>
-        @if (Model.versionName != null)
-        {
-            <span>Utgave: @Model.versionName</span><br />
-        }
-
-        @if (datasetOwner != null)
-        {
-            <span>Eier: @datasetOwner</span>
-        }
+        @if (Model.versionName != null) {<span>Utgave: @Model.versionName</span><br />}
+        @if (datasetOwner != null){ <span>Eier: @datasetOwner</span>}
+    
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
         <span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>
@@ -203,62 +167,17 @@
 
         if (HtmlHelperExtensions.accessRegisterItem(Model))
         {
-
-            @*if (Model.register.containedItemClass == "Document")
-                {
-                    if (Model.register.parentRegisterId != null)
-                    {
-                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
-                    }
-                    else
-                    {
-                        <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname/ny">Foreslå ny versjon</a>
-                    }
-                }*@
-
-            if (Model.register.containedItemClass == "CodelistValue")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-            }
-
-            if (Model.register.containedItemClass == "Organization")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-            }
-            if (Model.register.containedItemClass == "Dataset")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/rediger/">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/slett">Slett</a>
-            }
-            if (Model.register.containedItemClass == "EPSG")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-            }
-            if (Model.register.containedItemClass == "NameSpace")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.register.seoname/@Model.register.owner.seoname/@Model.seoname/slett">Slett</a>
-            }
+            <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+            <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
         }
     }
 
     @if (Model.register.containedItemClass == "Document")
     {
-        if (Model.register.parentRegister != null)
-        {
-            <a class="hidden-print" href="/subregister/versjoner/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a class="hidden-print" href="/register/versjoner/@Model.register.seoname/@Html.ToUrl(documentOwner)/@Model.seoname">Tilbake</a>
-        }
-
+        <a class="hidden-print" href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(documentOwner), Model.seoname)">Tilbake</a>
     }
     else
     {
-        <a class="hidden-print" href="/register/@Model.register.seoname">Tilbake</a>
+        <a class="hidden-print" href="@RegisterUrls.registerUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname)">Tilbake</a>
     }
 </div>

@@ -6,6 +6,7 @@
     var owner = ViewBag.registerItemOwner;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.currentVersion.register);
     Kartverket.Register.Models.Register parent = Model.currentVersion.register.parentRegister;
+    string parentRegister = HtmlHelperExtensions.HasParent(Model.currentVersion.register);
 }
 
 @section breadcrumb {
@@ -82,53 +83,13 @@
     <hr />
     @if (Request.IsAuthenticated)
     {
-
         if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
         {
-            if (Model.currentVersion.register.containedItemClass == "Organization")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.currentVersion.register.seoname/@Model.currentVersion.submitter.seoname/@Model.currentVersion.seoname/slett">Slett</a>
-            }
             if (Model.currentVersion.register.containedItemClass == "Document")
             {
-                if (Model.currentVersion.register.parentRegisterId != null)
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@owner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
-                }
-                else
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/versjon/@Model.currentVersion.register.seoname/@owner/@Model.currentVersion.seoname/ny">Foreslå ny versjon av @Model.currentVersion.name</a>
-                }
+                <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">Foreslå ny versjon av @Model.currentVersion.name</a>
             }
-            if (Model.currentVersion.register.containedItemClass == "Dataset")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@owner/@Model.currentVersion.seoname/rediger/">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.currentVersion.register.seoname/@owner/@Model.currentVersion.seoname/slett">Slett</a>
-            }
-            if (Model.currentVersion.register.containedItemClass == "EPSG")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/epsg-koder/@Model.currentVersion.seoname/slett">Slett</a>
-            }
-            if (Model.currentVersion.register.containedItemClass == "CodelistValue")
-            {
-                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/rediger">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.currentVersion.register.seoname/@Model.currentVersion.register.owner.seoname/@Model.currentVersion.seoname/slett">Slett</a>
-            }
-
-
         }
     }
-
-    @if (@Model.currentVersion.register.parentRegister != null)
-    {
-        <a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">Tilbake</a>
-    }
-    else
-    {
-        <a href="/register/@Model.currentVersion.register.seoname">Tilbake</a>
-    }
-
-
+    <a href="@RegisterUrls.registerUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname)">Tilbake</a>
 </div>

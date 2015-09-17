@@ -923,5 +923,11 @@ namespace Kartverket.Register.Helpers
             return "Forslag&#013Kandidat&#013I Prosess&#013Godkjent&#013";
 
         }
+
+        public static string HasParent(Models.Register Model)
+        {
+            if (Model.parentRegister != null) return Model.parentRegister.seoname;
+            else return null;
+        }
     }
 }

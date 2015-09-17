@@ -184,7 +184,7 @@ namespace Kartverket.Register.Helpers
             return "#";
         }
 
-        public static string CreateNewRegisterItemUrl(string parentRegister, string registerOwner, string register, string itemOwner, string item, string itemClass)
+        public static string CreateNewRegisterItemUrl(string parentRegister, string registerOwner, string register, string itemClass)
         {
             if (string.IsNullOrWhiteSpace(parentRegister))
             {
@@ -212,5 +212,33 @@ namespace Kartverket.Register.Helpers
             return "#";
         }
 
+        public static string CreateNewRegisterItemVersionUrl(string parentRegister, string registerOwner, string register, string itemOwner, string item, string itemClass)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                string url = "versjon/" + register + "/" + itemOwner + "/" + item + "/ny";
+
+                if (itemClass == "Document") return "/dokument/" + url;
+                else if (itemClass == "CodelistValue") return "/kodeliste/" + url;
+                else if (itemClass == "Register") return "/subregister/" + url;
+                else if (itemClass == "Organization") return "/organisasjoner/" + url;
+                else if (itemClass == "Dataset") return "/dataset/" + url;
+                else if (itemClass == "EPSG") return "/epsg/" + url;
+                else if (itemClass == "NameSpace") return "/navnerom/" + url;
+            }
+            else
+            {
+                string url = "versjon/" + parentRegister + "/" + registerOwner + "/" + register + "/" + itemOwner + "/" + item + "/ny";
+
+                if (itemClass == "Document") return "/dokument/" + url;
+                else if (itemClass == "CodelistValue") return "/kodeliste/" + url;
+                else if (itemClass == "Register") return "/subregister/" + url;
+                else if (itemClass == "Organization") return "/organisasjoner/" + url;
+                else if (itemClass == "Dataset") return "/dataset/" + url;
+                else if (itemClass == "EPSG") return "/epsg/" + url;
+                else if (itemClass == "NameSpace") return "/navnerom/" + url;
+            }
+            return "#";
+        }
     }
 }

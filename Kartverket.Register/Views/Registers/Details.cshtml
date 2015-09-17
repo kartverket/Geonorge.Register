@@ -6,14 +6,17 @@
     ViewBag.Title = @Model.name;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
     Kartverket.Register.Models.Register parent = Model.parentRegister;
+    string parentRegister = HtmlHelperExtensions.HasParent(Model);
+    string UrlCreateNew = RegisterUrls.CreateNewRegisterItemUrl(parentRegister, Model.owner.seoname, Model.seoname, Model.containedItemClass);
 }
 
 @section breadcrumb {
-    <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-    <li class="active pull-right">@Model.name</li>
+    <li><a href="@RegisterUrls.registerUrl(null, null, mainRegister.seoname)">@mainRegister.name</a></li>
+    @if (mainRegister != Model)
+    { <li class="active pull-right">@Model.name</li>}
     @while (parent != null && parent != mainRegister)
     {
-        <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+        <li class="pull-right"><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
         parent = parent.parentRegister;
     }
 }
@@ -31,20 +34,20 @@
 </div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        ID: <a href="/register/@Model.seoname">http://@Request.Url.Host@Request.Url.LocalPath </a>
+        ID: <a href="@RegisterUrls.registerUrl(parentRegister, Model.owner.seoname, Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a>
         <br />
-            Navn: @Html.DisplayFor(model => model.name)
+        Navn: @Html.DisplayFor(model => model.name)
         <br />
-            Beskrivelse: @Html.DisplayFor(model => model.description)
-       
+        Beskrivelse: @Html.DisplayFor(model => model.description)
+
 
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
         <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
-        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br/>
+        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
     </div>
 
-    
+
 
     @{
         var page = ViewBag.page;
@@ -54,7 +57,7 @@
         int pageSize = 50;
         int pageNumber = (page ?? 1);
         var search = ViewBag.search;
-       
+
         if (Model.containedItemClass != "Register")
         {
             sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
@@ -66,73 +69,45 @@
     }
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        
-            @Html.Partial("_otherformats")
 
-            @if (Model.containedItemClass == "Organization")
-            {
-                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "CodelistValue")
-            {
-                @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "Document")
-            {
-                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "Dataset")
-            {
-                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "EPSG")
-            {
-                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "NameSpace")
-            {
-                @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
-            }
-            @if (Model.containedItemClass == "Register")
-            {
-                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-            }
-        </div>
+        @Html.Partial("_otherformats")
+
+        @if (Model.containedItemClass == "Organization")
+        {
+            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "CodelistValue")
+        {
+            @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Document")
+        {
+            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "NameSpace")
+        {
+            @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
+        }
+        @if (Model.containedItemClass == "Register")
+        {
+            @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+        }
+    </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         @if (Request.IsAuthenticated)
         {
             if (HtmlHelperExtensions.accessRegister(Model))
             {
-                if (Model.containedItemClass == "Document")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dokument/@Model.seoname/ny">Foreslå nytt dokument i @Model.name </a>
-                }
-                if (Model.containedItemClass == "CodelistValue")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/kodeliste/@Model.seoname/ny">Foreslå ny kode i @Model.name </a>
-                }
-                if (Model.containedItemClass == "Register")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/subregister/@Model.seoname/ny">Foreslå nytt register i @Model.name </a>
-                }
-
-                if (Model.containedItemClass == "Organization")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/organisasjoner/@Model.seoname/ny">Foreslå ny organisasjon </a>
-                }
-                if (Model.containedItemClass == "Dataset")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/dataset/@Model.seoname/ny">Foreslå nytt datasett i @Model.name </a>
-                }
-                if (Model.containedItemClass == "EPSG")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/epsg/@Model.seoname/ny">Foreslå ny epsg kode </a>
-                }
-                if (Model.containedItemClass == "NameSpace")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="/navnerom/@Model.seoname/ny">Foreslå nytt navnerom</a>
-                }
+                <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {

@@ -8,6 +8,8 @@ using Kartverket.Register.Models;
 using System;
 using Kartverket.Register.Helpers;
 using System.Text.RegularExpressions;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Controllers
 {
@@ -17,6 +19,14 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private IRegisterService _registerService;
+        private IRegisterItemService _registerItemService;
+        public OrganizationsController()
+        {
+            _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
+        }
 
         // GET: Organizations
         public ActionResult Index(string searchString)
@@ -171,6 +181,8 @@ namespace Kartverket.Register.Controllers
                 organization.register = register;
                 organization.statusId = "Submitted";
                 organization.seoname = Helpers.HtmlHelperExtensions.MakeSeoFriendlyString(organization.name);
+                organization.versionNumber = 1;
+                organization.versioningId = _registerItemService.NewVersioningGroup(organization, register);
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {

@@ -56,7 +56,7 @@ namespace Kartverket.Register.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
-        [Display(Name = "Dato ikke godkjent:")]
+        [Display(Name = "Dato Utkast:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateNotAccepted { get; set; }
 

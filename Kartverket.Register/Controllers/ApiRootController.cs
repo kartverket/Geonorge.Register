@@ -271,7 +271,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (d.register.containedItemClass == "Document")
                     {
-                        if (d.status.group != "suggested" && d.versioning.currentVersion == d.systemId)
+                        if (d.statusId != "Submitted" && d.versioning.currentVersion == d.systemId)
                         {
                             tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
                         }

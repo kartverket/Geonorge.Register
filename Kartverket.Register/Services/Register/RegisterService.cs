@@ -92,7 +92,7 @@ namespace Kartverket.Register.Services.Register
                     string role = HtmlHelperExtensions.GetSecurityClaim("role");
                     string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-                    if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || HtmlHelperExtensions.accessRegisterItem(item))
+                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
                     {
                         registerItems.Add(item);
                     }
@@ -108,7 +108,7 @@ namespace Kartverket.Register.Services.Register
                 string role = HtmlHelperExtensions.GetSecurityClaim("role");
                 string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-                if ((item.statusId != "Submitted" && item.statusId != "NotAccepted") || HtmlHelperExtensions.accessRegisterItem(item))
+                if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
                 {
                     if (item.documentowner.seoname == filter.filterOrganization)
                     {

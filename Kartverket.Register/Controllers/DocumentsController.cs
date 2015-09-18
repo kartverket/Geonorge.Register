@@ -133,11 +133,7 @@ namespace Kartverket.Register.Controllers
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
-
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
-                }
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));                
             }
             document.register = register;
             return View(document);
@@ -430,7 +426,7 @@ namespace Kartverket.Register.Controllers
                     }
                     else
                     {
-                        originalDocument.statusId = "NotAccepted";
+                        originalDocument.statusId = "Draft";
                         if (string.IsNullOrWhiteSpace(document.dateNotAccepted.ToString()))
                         {
                             originalDocument.dateNotAccepted = DateTime.Now;

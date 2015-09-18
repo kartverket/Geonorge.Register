@@ -44,7 +44,7 @@ namespace Kartverket.Register.Services.Versioning
                            && (ri.status.value == "Submitted"
                            //|| ri.status.value == "Proposal"
                            //|| ri.status.value == "InProgress"
-                           || ri.status.value == "NotAccepted")
+                           || ri.status.value == "Draft")
                            //|| ri.status.value == "Accepted"
                            //|| ri.status.value == "Experimental"
                            //|| ri.status.value == "Candidate"                           

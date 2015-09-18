@@ -480,7 +480,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (var ri in queryresult.ToList())
             {
-                if (ri.statusId != "Submitted" && ri.statusId != "NotAccepted")
+                if (ri.statusId != "Submitted")
                 {
                     itemList.Add(ri);
                 }

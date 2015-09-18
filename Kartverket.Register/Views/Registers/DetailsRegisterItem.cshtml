@@ -167,8 +167,12 @@
 
         if (HtmlHelperExtensions.accessRegisterItem(Model))
         {
-            <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
-            <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+            if (Model.register.containedItemClass != "Document")
+            {
+                <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+            }
+
         }
     }
 

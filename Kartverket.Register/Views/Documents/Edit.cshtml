@@ -97,7 +97,7 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) && (Model.status.group == "current" || Model.status.group == "historical"))
+            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims) && (Model.statusId != "Submitted"))
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })

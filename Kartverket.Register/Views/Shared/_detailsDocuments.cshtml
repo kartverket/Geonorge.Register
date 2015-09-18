@@ -41,7 +41,7 @@
                     {
                         if (Model.register.parentRegisterId != null)
                         {
-                            if (Model.statusId != "Retired" && Model.statusId != "Superseded" && Model.statusId != "NotAccepted")
+                            if (Model.statusId != "Retired" && Model.statusId != "Superseded")
                             {
                                 <a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
                             }
@@ -49,7 +49,7 @@
                         }
                         else
                         {
-                            if (Model.statusId != "Retired" && Model.statusId != "Superseded" && Model.statusId != "NotAccepted")
+                            if (Model.statusId != "Retired" && Model.statusId != "Superseded")
                             {
                                 <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
                             }

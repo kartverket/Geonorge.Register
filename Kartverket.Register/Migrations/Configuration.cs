@@ -27,7 +27,7 @@ namespace Kartverket.Register.Migrations
             
             context.Statuses.AddOrUpdate(
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
-                new Status { value = "NotAccepted", description = "Ikke godkjent", group = "suggested" },
+                new Status { value = "Draft", description = "Utkast", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
                 new Status { value = "Superseded", description = "Erstattet", group = "historical" },
                 new Status { value = "Retired", description = "Utgått", group = "historical" }

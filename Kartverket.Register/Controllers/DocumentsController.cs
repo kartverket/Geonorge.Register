@@ -313,7 +313,7 @@ namespace Kartverket.Register.Controllers
                 var allVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
 
                 originalDocument.Accepted = document.Accepted;
-                if (document.Accepted == true && originalDocument.statusId == "Submitted")
+                if (document.Accepted == true && originalDocument.statusId == "Submitted" || originalDocument.statusId == "Draft")
                 {
                     if (allVersions.Count > 1)
                     {
@@ -347,7 +347,7 @@ namespace Kartverket.Register.Controllers
                         }
                     }
 
-                    if (originalDocument.statusId == "Submitted")
+                    if (originalDocument.statusId == "Submitted" || originalDocument.statusId == "Draft")
                     {
                         originalDocument.statusId = "Valid";
                         versjonsgruppe.currentVersion = originalDocument.systemId;

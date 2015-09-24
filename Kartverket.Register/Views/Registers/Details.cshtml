@@ -8,6 +8,8 @@
     Kartverket.Register.Models.Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
     string UrlCreateNew = RegisterUrls.CreateNewRegisterItemUrl(parentRegister, Model.owner.seoname, Model.seoname, Model.containedItemClass);
+    string UrlEdit = RegisterUrls.EditRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
+    string UrlDelete = RegisterUrls.DeleteRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
 }
 
 @section breadcrumb {
@@ -111,8 +113,8 @@
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
-                <a class="btn btn-default btn-space pull-right" href="/endre/@Model.seoname">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="/slett/@Model.seoname">Slett</a>
+                <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
             }
         }
         <a class="hidden-print" href="/">Tilbake</a>

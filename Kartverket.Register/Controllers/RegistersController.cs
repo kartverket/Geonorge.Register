@@ -53,8 +53,8 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}")]
         [Route("register/{registername}")]
         [Route("register/{registernamename}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]

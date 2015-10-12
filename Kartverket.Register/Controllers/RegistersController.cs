@@ -173,7 +173,7 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
-        [Route("endre/{registername}")]
+        [Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
@@ -194,7 +194,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("endre/{registername}")]
+        [Route("rediger/{registername}")]
         [Authorize]
         public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
         {

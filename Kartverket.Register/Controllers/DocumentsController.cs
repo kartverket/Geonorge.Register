@@ -281,23 +281,35 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize]
-        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
+        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentRegister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
+        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = new Document();
-            if (string.IsNullOrWhiteSpace(parentRegister))
+            if (string.IsNullOrWhiteSpace(parentregister))
             {
                 originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, document.versionNumber);
             }
             else
             {
-                originalDocument = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentRegister, registername, documentname, document.versionNumber);
+                originalDocument = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
             }
-            
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
+
+
+            Kartverket.Register.Models.Register register = new Models.Register();
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                register = _registerService.GetRegisterByName(registername);
+            }
+            else {
+                register = _registerService.GetSubregisterByName(parentregister, registername);
+            }
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
+
+            var errors = ModelState.Select(x => x.Value.Errors)
+                           .Where(y => y.Count > 0)
+                           .ToList();
 
             if (ModelState.IsValid)
             {
@@ -477,7 +489,7 @@ namespace Kartverket.Register.Controllers
                 db.SaveChanges();
                 Viewbags(document);
 
-                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, itemowner, documentname));
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, itemowner, documentname));
             }
             Viewbags(document);
             return View(originalDocument);

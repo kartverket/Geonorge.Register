@@ -306,8 +306,8 @@ namespace Kartverket.Register.Services.Register
             if (string.IsNullOrWhiteSpace(parentRegisterName))
             {
                 var queryResults = from r in _dbContext.Registers
-                                   where r.seoname == registerName &&
-                                   r.parentRegister == null
+                                   where r.seoname == registerName
+                                   //r.parentRegister == null
                                    select r;
 
                 return queryResults.FirstOrDefault();

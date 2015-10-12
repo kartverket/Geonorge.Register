@@ -160,6 +160,16 @@ namespace Kartverket.Register.Services.RegisterItem
                                select o;
 
             Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+
+            if (registerItem == null)
+            {
+                queryResults = from o in _dbContext.RegisterItems
+                               where (o.seoname == item || o.name == item) && 
+                               (o.register.seoname == register || o.register.name == register) && 
+                               o.versionNumber == 1
+                               select o;
+                registerItem = queryResults.FirstOrDefault();
+            }
             return registerItem;
         }
 

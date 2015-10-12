@@ -156,8 +156,7 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryResults = from o in _dbContext.RegisterItems
                                where (o.seoname == item || o.name == item) && 
                                (o.register.seoname == register || o.register.name == register) && 
-                               o.versionNumber == vnr && 
-                               o.register.parentRegisterId == null
+                               o.versionNumber == vnr
                                select o;
 
             Models.RegisterItem registerItem = queryResults.FirstOrDefault();

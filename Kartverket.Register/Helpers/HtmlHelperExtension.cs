@@ -358,14 +358,14 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
 
-                    string redirect = HttpContext.Current.Request.Path;
+                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
                     bool shallRedirect = false;
 
-                    if (!string.IsNullOrWhiteSpace(sortingType))
-                    {
-                        redirect = redirect + "?sorting=" + sortingType;
-                        shallRedirect = true;
-                    }
+                    //if (!string.IsNullOrWhiteSpace(sortingType))
+                    //{
+                    //    redirect = redirect + "?sorting=" + sortingType;
+                    //    shallRedirect = true;
+                    //}
                     if (text != "")
                     {
                         redirect = redirect + "&text=" + text;
@@ -677,7 +677,7 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
 
-                    string redirect = HttpContext.Current.Request.Path;
+                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
                     bool shallRedirect = false;
 
                     if (text != "") {

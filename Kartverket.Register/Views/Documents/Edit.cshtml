@@ -94,6 +94,7 @@
         @Html.HiddenFor(model => model.versionNumber)
         @Html.HiddenFor(model => model.versioningId)
         @Html.HiddenFor(model => model.statusId)
+        @Html.HiddenFor(model => model.register)
 
         @if (Request.IsAuthenticated)
         {
@@ -151,6 +152,7 @@
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
                 @Html.HiddenFor(model => model.statusId)
+                @Html.HiddenFor(model => model.register)
             }
             else
             {

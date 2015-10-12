@@ -53,8 +53,8 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{registername}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
+        //[Route("subregister/{parentRegister}/{owner}/{registername}")]
         [Route("register/{registername}")]
         [Route("register/{registernamename}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]
@@ -97,7 +97,7 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            Kartverket.Register.Models.RegisterItem registerItem = GetRegisterItem(registername, itemname, version);
+            Kartverket.Register.Models.RegisterItem registerItem = _registerItemService.GetRegisterItemByVersionNr(registername, itemname, version);
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);
@@ -173,7 +173,7 @@ namespace Kartverket.Register.Controllers
 
 
         [Authorize]
-        [Route("endre/{registername}")]
+        [Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
             Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
@@ -194,7 +194,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("endre/{registername}")]
+        [Route("rediger/{registername}")]
         [Authorize]
         public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
         {

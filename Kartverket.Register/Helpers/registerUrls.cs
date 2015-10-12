@@ -142,7 +142,7 @@ namespace Kartverket.Register.Helpers
             }
             else
             {
-                string url = parentRegister + "/" + registerOwner + "/" + register + "/ny";
+                string url = parentRegister + "/" + registerOwner + "/" + register + "/" + itemOwner + "/" + item + "/rediger";
 
                 if (itemClass == "Document") return "/dokument/" + url;
                 else if (itemClass == "CodelistValue") return "/kodeliste/" + url;
@@ -153,6 +153,31 @@ namespace Kartverket.Register.Helpers
                 else if (itemClass == "NameSpace") return "/navnerom/" + url;
             }
             return "#";
+        }
+
+
+        public static string DeleteRegisterUrl(string parentRegister, string registerOwner, string register)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                return "/slett/" + register;
+            }
+            else
+            {
+                return "/subregister/" + parentRegister + "/" + registerOwner + "/" + register + "/slett";
+            }
+        }
+
+        public static string EditRegisterUrl(string parentRegister, string registerOwner, string register)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegister))
+            {
+                return "/rediger/" + register;
+            }
+            else
+            {
+                return "/subregister/" + parentRegister + "/" + registerOwner + "/" + register + "/rediger";
+            }
         }
 
         public static string DeleteRegisterItemUrl(string parentRegister, string registerOwner, string register, string itemOwner, string item, string itemClass)
@@ -171,7 +196,7 @@ namespace Kartverket.Register.Helpers
             }
             else
             {
-                string url = parentRegister + "/" + registerOwner + "/" + register + "/ny";
+                string url = parentRegister + "/" + registerOwner + "/" + register + "/" + itemOwner + "/" + item + "/slett";
 
                 if (itemClass == "Document") return "/dokument/" + url;
                 else if (itemClass == "CodelistValue") return "/kodeliste/" + url;

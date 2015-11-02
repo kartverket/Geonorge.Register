@@ -45,6 +45,8 @@ namespace Kartverket.Register.Models.Api
         public ICollection<Registeritem> versions { get; set; } 
 
         public DateTime lastUpdated { get; set; }
+        public DateTime dateSubmitted { get; set; }
+        public DateTime dateAccepted { get; set; }
 
     }
 }

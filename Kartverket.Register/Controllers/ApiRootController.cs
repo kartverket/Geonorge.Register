@@ -393,6 +393,8 @@ namespace Kartverket.Register.Controllers
             if (item.versionName != null) tmp.versionName = item.description;
             if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
             tmp.lastUpdated = item.modified;
+            tmp.dateSubmitted = item.dateSubmitted;
+            tmp.dateAccepted = item.dateAccepted.GetValueOrDefault();
 
             if (item is Document)
             {

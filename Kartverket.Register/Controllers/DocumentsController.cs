@@ -247,21 +247,14 @@ namespace Kartverket.Register.Controllers
 
         // GET: Documents/Edit/5
         [Authorize]
-        [Route("dokument/{parentRegister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{organization}/{documentname}/rediger")]
-        public ActionResult Edit(string registername, string documentname, int? vnr, string parentRegister)
+        [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
+        public ActionResult Edit(string parentregister, string registername, string documentname, int? vnr)
         {
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-            Document document = new Document();
-            if (string.IsNullOrWhiteSpace(parentRegister))
-            {
-                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, vnr);
-            }
-            else { 
-                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentRegister, registername, documentname, vnr);
-            }
-            
+            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, vnr.Value);
+
             if (document == null)
             {
                 return HttpNotFound();
@@ -285,26 +278,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
-            Document originalDocument = new Document();
-            if (string.IsNullOrWhiteSpace(parentregister))
-            {
-                originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, document.versionNumber);
-            }
-            else
-            {
-                originalDocument = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
-            }
+            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber); 
+            Models.Register register = _registerService.GetRegister(parentregister, registername);            
+            Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
 
-
-            Kartverket.Register.Models.Register register = new Models.Register();
-            if (string.IsNullOrWhiteSpace(parentregister))
-            {
-                register = _registerService.GetRegisterByName(registername);
-            }
-            else {
-                register = _registerService.GetSubregisterByName(parentregister, registername);
-            }
-            Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             ValidationName(document, register);
 
             var errors = ModelState.Select(x => x.Value.Errors)

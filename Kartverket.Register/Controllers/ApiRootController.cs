@@ -276,7 +276,8 @@ namespace Kartverket.Register.Controllers
                             tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
                         }
                     }
-                    else { 
+                    else
+                    {
                         tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
                     }
                 }
@@ -374,17 +375,17 @@ namespace Kartverket.Register.Controllers
 
         private Models.Api.Registeritem ConvertRegisterItemDetails(Models.Register reg, Models.RegisterItem item, Uri uri)
         {
-            string registerId = uri.Scheme + "://" + uri.Authority;
+            string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"]; // uri.Scheme + "://" + uri.Authority;
             var tmp = new Models.Api.Registeritem();
             tmp.label = item.name;
 
             if (reg.parentRegisterId != null)
             {
-                tmp.id = registerId + "/subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
             else
             {
-                tmp.id = registerId + "/register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
+                tmp.id = registerId + "register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
             }
 
             if (item.status != null) tmp.status = item.status.description;

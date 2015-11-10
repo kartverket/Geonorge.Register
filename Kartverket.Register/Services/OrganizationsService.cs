@@ -21,5 +21,15 @@ namespace Kartverket.Register.Services
         {
             return _dbContext.Organizations.SingleOrDefault(o => o.number == number);
         }
+
+        public Organization GetOrganization(string organizationName)
+        {
+            var queryResults = from o in _dbContext.Organizations
+                               where o.name == organizationName
+                               select o;
+
+            Organization organization = queryResults.FirstOrDefault();
+            return organization;
+        }
     }
 }

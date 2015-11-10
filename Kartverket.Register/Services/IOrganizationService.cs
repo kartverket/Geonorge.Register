@@ -6,5 +6,6 @@ namespace Kartverket.Register.Services
     {
         Organization GetOrganizationByName(string name);
         Organization GetOrganizationByNumber(string number);
+        Organization GetOrganization(string organization);
     }
 }

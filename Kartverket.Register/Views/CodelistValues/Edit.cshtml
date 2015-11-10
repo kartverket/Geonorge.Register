@@ -33,8 +33,7 @@
 <h4>@Model.name</h4>
 <hr />
 
-@using (Html.BeginForm("Edit", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<form action="@Request.Url.LocalPath" method="post">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.systemId)
     @Html.HiddenFor(model => model.registerId)
@@ -87,78 +86,78 @@
         </div>
 
 
-       @if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
-       {
-        <hr />
-        <h4>Hierarkiske kodelister</h4>
-        <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
-        <br /><br />
-        <div class="form-group">
-            @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="dropdown">
-                    <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">                        
-                        <option selected="selected"></option>
-                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                        {
-                            <optgroup label="@register.name">
-                                @foreach (var code in register.items.OrderBy(c => c.name))
-                                {
-                                    if (Model.broaderItemId != null)
-                                    {                                                                           
-                                        if (Model.broaderItem.systemId == code.systemId)
+        @if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+        {
+            <hr />
+            <h4>Hierarkiske kodelister</h4>
+            <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+            <br /><br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="dropdown">
+                        <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
+                            <option selected="selected"></option>
+                            @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                            {
+                                <optgroup label="@register.name">
+                                    @foreach (var code in register.items.OrderBy(c => c.name))
+                                    {
+                                        if (Model.broaderItemId != null)
                                         {
-                                            <option selected="selected" value="@code.systemId">@code.name</option>
+                                            if (Model.broaderItem.systemId == code.systemId)
+                                            {
+                                                <option selected="selected" value="@code.systemId">@code.name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@code.systemId">@code.name</option>
+                                            }
                                         }
                                         else
                                         {
                                             <option value="@code.systemId">@code.name</option>
                                         }
+
                                     }
-                                    else
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                        {
+                            <optgroup label="@register.name">
+                                @foreach (var code in register.items.OrderBy(c => c.name))
+                                {
+                                    Guid? narrower = null;
+                                    foreach (var narrowerItem in Model.narrowerItems)
+                                    {
+                                        if (code.systemId == narrowerItem.systemId)
+                                        {
+                                            <option selected="selected" value="@code.systemId">@code.name</option>
+                                            narrower = narrowerItem.systemId;
+                                            break;
+                                        }
+                                    }
+                                    if (narrower == null)
                                     {
                                         <option value="@code.systemId">@code.name</option>
                                     }
-
                                 }
                             </optgroup>
                         }
                     </select>
+                    <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
                 </div>
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
-                    @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                    {
-                        <optgroup label="@register.name">
-                            @foreach (var code in register.items.OrderBy(c => c.name))
-                            {
-                                Guid? narrower = null;
-                                foreach (var narrowerItem in Model.narrowerItems)
-                                {
-                                    if (code.systemId == narrowerItem.systemId)
-                                    {
-                                        <option selected="selected" value="@code.systemId">@code.name</option>
-                                        narrower = narrowerItem.systemId;
-                                        break;
-                                    }
-                                }
-                                if (narrower == null)
-                                {
-                                    <option value="@code.systemId">@code.name</option>
-                                }
-                            }
-                        </optgroup>
-                    }
-                </select>
-                <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
-            </div>
-        </div>
-       }
+        }
 
     </div>
     <div class="form-group">
@@ -173,7 +172,7 @@
             <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
         }
     </div>
-}
+</form>
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

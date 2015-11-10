@@ -84,14 +84,15 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
-        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister)
+        public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
         {
             // Finn register         
             Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
 
-            string parentRegisterOwner = null;
-            if (register.parentRegisterId != null) parentRegisterOwner = register.parentRegister.owner.seoname;
-            ValidationName(document, register);
+            if (!_registerItemService.validateName(document))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+            }
 
             if (ModelState.IsValid)
             {
@@ -133,7 +134,7 @@ namespace Kartverket.Register.Controllers
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
-                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));                
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, document.documentowner.seoname, document.seoname));                
             }
             document.register = register;
             return View(document);
@@ -282,13 +283,11 @@ namespace Kartverket.Register.Controllers
             Models.Register register = _registerService.GetRegister(parentregister, registername);            
             Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
 
-            ValidationName(document, register);
-
-            var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y => y.Count > 0)
-                           .ToList();
-
-            if (ModelState.IsValid)
+            if (!_registerItemService.validateName(document))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+            }
+            else if (ModelState.IsValid)
             {
                 if (document.name != null) originalDocument.name = document.name;
                 originalDocument.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalDocument.name);

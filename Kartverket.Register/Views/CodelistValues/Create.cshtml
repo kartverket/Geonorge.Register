@@ -37,14 +37,7 @@ else
     }
 }
 
-
-@using (Html.BeginForm("Create", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    if (Model.register.parentRegisterId != null)
-    {
-        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
-    }
-
+<form action="@Request.Url.LocalPath" method="post">
     <div class="form-horizontal">
         <h4>Foreslå ny kodeverdi i @Model.register.name</h4>
 
@@ -87,7 +80,7 @@ else
                         <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
                             <option selected="selected"></option>
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                            {                                
+                            {
                                 <optgroup label="@register.name">
                                     @foreach (Kartverket.Register.Models.CodelistValue code in register.items.OrderBy(c => c.name))
                                     {
@@ -99,7 +92,7 @@ else
                     </div>
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -131,7 +124,7 @@ else
             <a href="/register/@Model.register.seoname/">Tilbake</a>
         }
     </div>
-}
+</form>
 
 @section scripts {
     <script src="~/Scripts/chosen.jquery.js"></script>

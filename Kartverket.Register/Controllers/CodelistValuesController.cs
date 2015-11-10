@@ -13,6 +13,7 @@ using System.Text;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,13 +23,15 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+        private IOrganizationService _organizationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService)
+        public CodelistValuesController()
         {
-            _registerItemService = registerItemService;
-            _registerService = registerService;
+            _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
+            _organizationService = new OrganizationsService(db);
         }
 
         // GET: CodelistValues
@@ -204,17 +207,14 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         [Route("kodeliste/{registername}/ny")]
-        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, List<Guid> narrower, Guid? broader)
+        public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string registerowner, List<Guid> narrower, Guid? broader)
         {
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
-            string parentRegisterOwner = null;
-            if (register.parentRegisterId != null)
+            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentregister, registername);
+            if (!_registerItemService.validateName(codelistValue))
             {
-                parentRegisterOwner = register.parentRegister.owner.seoname;
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
             }
-            ValidationName(codelistValue, register);
-
-            if (ModelState.IsValid)
+            else if (ModelState.IsValid)
             {
                 codelistValue.systemId = Guid.NewGuid();
                 codelistValue.modified = DateTime.Now;
@@ -246,24 +246,19 @@ namespace Kartverket.Register.Controllers
 
                 codelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
                 string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                string organizationLogin = GetSecurityClaim("organization");
+                string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-                var queryResults = from o in db.Organizations
-                                   where o.name == organizationLogin
-                                   select o.systemId;
-
-                Guid orgId = queryResults.FirstOrDefault();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-                codelistValue.submitterId = orgId;
+                Organization submitterOrganisasjon = _organizationService.GetOrganization(organizationLogin);
+                codelistValue.submitterId = submitterOrganisasjon.systemId;
                 codelistValue.submitter = submitterOrganisasjon;
 
                 db.Entry(codelistValue).State = EntityState.Modified;
 
                 db.RegisterItems.Add(codelistValue);
                 db.SaveChanges();
-                if (!String.IsNullOrWhiteSpace(parentregister))
+                if (register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + parentregister + "/" + parentRegisterOwner + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
+                    return Redirect("/subregister/" + parentregister + "/" + register.owner.seoname + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
                 else
                 {
@@ -308,17 +303,13 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader)
         {
-            var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
-                               select o.systemId;
+            CodelistValue originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname);
 
-            Guid systId = queryResults.FirstOrDefault();
-            CodelistValue originalCodelistValue = db.CodelistValues.Find(systId);
-
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
-            ValidationName(codelistValue, register);
-
-            if (ModelState.IsValid)
+            if (!_registerItemService.validateName(codelistValue))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+            }
+            else if (ModelState.IsValid)
             {
                 if (codelistValue.name != null) originalCodelistValue.name = codelistValue.name; originalCodelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalCodelistValue.name);
                 if (codelistValue.description != null) originalCodelistValue.description = codelistValue.description;

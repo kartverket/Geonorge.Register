@@ -929,5 +929,10 @@ namespace Kartverket.Register.Helpers
             if (Model.parentRegister != null) return Model.parentRegister.seoname;
             else return null;
         }
+
+        public static string ErrorMessageValidationName()
+        {
+           return "Navnet finnes fra før!";
+        }
     }
 }

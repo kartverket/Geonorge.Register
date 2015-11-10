@@ -31,15 +31,14 @@
 <h4>Foreslå nytt dokument i @Model.register.name</h4>
 <hr />
 
-@using (Html.BeginForm("Create", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
+<form action="@Request.Url.LocalPath" method="post">
     if (Model.register.parentRegister != null)
     {
-        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
+    <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
     }
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -92,8 +91,8 @@
             <a href="/register/@Model.register.seoname/">Tilbake</a>
         }
     </div>
-}
+</form>    
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

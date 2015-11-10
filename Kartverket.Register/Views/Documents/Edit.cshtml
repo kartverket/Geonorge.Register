@@ -85,9 +85,6 @@
 <h4>@Model.name</h4>
 <hr />
 
-@*@using (Html.BeginForm("Edit", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    HVORFOR FUNGERER IKKE DETTE?!? Virker for kodelister*@
 <form action="@Request.Url.LocalPath" method="post">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.systemId)

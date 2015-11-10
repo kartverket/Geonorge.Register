@@ -357,5 +357,27 @@ namespace Kartverket.Register.Services.RegisterItem
                 return registerItem;
             }
         }
+
+        public bool validateName(object model)
+        {
+            if (model is Models.RegisterItem)
+            {
+                Models.RegisterItem registeritem = (Models.RegisterItem)model;
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where o.name == registeritem.name && 
+                                         o.systemId != registeritem.systemId 
+                                         && o.registerId == registeritem.registerId
+                                   select o.systemId;
+
+                if (queryResults.Count() > 0)
+                {
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

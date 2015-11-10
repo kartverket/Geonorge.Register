@@ -89,7 +89,7 @@ namespace Kartverket.Register.Controllers
             // Finn register         
             Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, registername);
 
-            if (!_registerItemService.validateName(document))
+            if (!NameIsValid(document))
             {
                 ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
             }
@@ -279,11 +279,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]    
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
-            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber); 
-            Models.Register register = _registerService.GetRegister(parentregister, registername);            
+            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
             Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
 
-            if (!_registerItemService.validateName(document))
+            if (!NameIsValid(document))
             {
                 ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
             }
@@ -368,7 +367,7 @@ namespace Kartverket.Register.Controllers
                                 item.modified = DateTime.Now;
                                 originalDocument.statusId = "Superseded";
                                 originalDocument.dateSuperseded = DateTime.Now;
-                                versjonsgruppe.currentVersion =  item.systemId;
+                                versjonsgruppe.currentVersion = item.systemId;
                             }
                         }
                     }
@@ -402,7 +401,7 @@ namespace Kartverket.Register.Controllers
                                 {
                                     nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "submitted").OrderByDescending(d => d.DateRetired);
                                     versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                                }                                
+                                }
                             }
                         }
                     }
@@ -419,10 +418,11 @@ namespace Kartverket.Register.Controllers
                         {
                             originalDocument.dateNotAccepted = DateTime.Now;
                         }
-                        else {
+                        else
+                        {
                             originalDocument.dateNotAccepted = document.dateNotAccepted;
                         }
-                        
+
                     }
                     if (originalDocument.Accepted == false)
                     {
@@ -469,6 +469,11 @@ namespace Kartverket.Register.Controllers
             }
             Viewbags(document);
             return View(originalDocument);
+        }
+
+        private bool NameIsValid(Document document)
+        {
+            return _registerItemService.validateName(document);
         }
 
         // GET: Documents/Delete/5

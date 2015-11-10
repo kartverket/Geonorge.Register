@@ -153,10 +153,12 @@
                         @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
                     </div>
                 </div>
+        <hr />
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
-                <hr />
+                @Html.HiddenFor(model => model.documentownerId)
+                
                 <br />
                     <h3>Dokumentgodkjenning</h3>
 
@@ -204,6 +206,8 @@
                             @Html.ValidationMessageFor(model => model.approvalReference, "", new { @class = "text-danger" })
                         </div>
                     </div>
+
+
             }
         }
 

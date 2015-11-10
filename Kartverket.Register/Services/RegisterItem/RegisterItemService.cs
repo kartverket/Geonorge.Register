@@ -320,5 +320,42 @@ namespace Kartverket.Register.Services.RegisterItem
                 return registerItem;
             }
         }
+
+        public Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)
+        {
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register) &&
+                                   o.versionNumber == vnr
+                                   select o;
+
+                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+
+                if (registerItem == null)
+                {
+                    queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register) &&
+                                   o.versionNumber == 1
+                                   select o;
+                    registerItem = queryResults.FirstOrDefault();
+                }
+                return registerItem;
+            }
+            else
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register) &&
+                                   o.versionNumber == vnr &&
+                                   (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
+                                   select o;
+
+                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+                return registerItem;
+            }
+        }
     }
 }

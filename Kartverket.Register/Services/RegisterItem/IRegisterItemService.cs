@@ -26,5 +26,6 @@ namespace Kartverket.Register.Services.RegisterItem
         Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
         Guid NewVersioningGroup(Models.RegisterItem registerItem, Models.Register register);
         Models.RegisterItem GetRegisterItemByVersionNr(string parentregister, string registername, string documentname, int versionNumber);
+        Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1);
     }
 }

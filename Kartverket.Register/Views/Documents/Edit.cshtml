@@ -85,10 +85,17 @@
 <h4>@Model.name</h4>
 <hr />
 
-@using (Html.BeginForm("Edit", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@*@using (Html.BeginForm("Edit", "Documents", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    HVORFOR FUNGERER IKKE DETTE?!? Virker for kodelister*@
+<form action="@Request.Url.LocalPath" method="post">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.systemId)
+    @Html.HiddenFor(model => model.registerId)
+    @Html.HiddenFor(model => model.versionNumber)
+    @Html.HiddenFor(model => model.versioningId)
+
     <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         @if (Request.IsAuthenticated)
         {
@@ -153,7 +160,7 @@
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
                 <hr />
-                    <br />
+                <br />
                     <h3>Dokumentgodkjenning</h3>
 
                     <div class="form-group">
@@ -201,16 +208,9 @@
                         </div>
                     </div>
             }
-            @Html.HiddenFor(model => model.systemId)
-            @Html.HiddenFor(model => model.registerId)
-            @Html.HiddenFor(model => model.versionNumber)
-            @Html.HiddenFor(model => model.versioningId)
-            @Html.HiddenFor(model => model.statusId)
-            @Html.HiddenFor(model => model.register)
         }
 
     </div>
-
     <div class="form-group">
         <hr />
         <input type="submit" value="Lagre" class="btn btn-default pull-right" />
@@ -223,7 +223,7 @@
             <a href="/register/versjoner/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
         }
     </div>
-}
+</form>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

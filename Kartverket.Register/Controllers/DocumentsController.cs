@@ -275,7 +275,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
+        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]    
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber); 

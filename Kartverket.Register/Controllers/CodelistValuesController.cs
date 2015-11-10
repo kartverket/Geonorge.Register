@@ -12,6 +12,7 @@ using System.IO;
 using System.Text;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -276,31 +277,21 @@ namespace Kartverket.Register.Controllers
 
         // GET: CodelistValues/Edit/5
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger", Name = "editCodelist")]
         [Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentregister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            var queryResults = from o in db.CodelistValues
-                               where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-
-            if (systId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CodelistValue codelistValue = db.CodelistValues.Find(systId);
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
+            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname);
 
             if (codelistValue == null)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()))
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && 
+                codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()))
             {
                 Viewbags(codelistValue);
                 return View(codelistValue);
@@ -314,8 +305,8 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
-        [Route("kodeliste/{registername}/{submitterCodelist}/{itemname}/rediger")]
-        public ActionResult Edit(CodelistValue codelistValue, string submitterCodelist, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader)
+        [Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
+        public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader)
         {
             var queryResults = from o in db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister

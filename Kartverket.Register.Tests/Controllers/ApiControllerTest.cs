@@ -23,7 +23,7 @@ namespace Kartverket.Register.Tests.Controllers
 {    
     public class ApiControllerTest
     {
-        string url = "http://register.geonorge.no/";
+        string url = "https://register.geonorge.no/";
 
         [Test]
         public void GetRegisters()
@@ -203,7 +203,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.id.Should().Be("http://register.geonorge.no/subregister/parent/kartverket/testregister");
+            apiRegister.id.Should().Be("https://register.geonorge.no/subregister/parent/kartverket/testregister");
         }
 
         [Test]

@@ -532,7 +532,7 @@ namespace Kartverket.Register.Controllers
             if (document.statusId == "Valid")
             {
                 var documentVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
-                if (documentVersions.Count() > 0)
+                if (documentVersions.Count() > 1)
                 {
                     // Sett gjeldende versjon ut fra status...
                     foreach (var item in documentVersions.Where(d => d.statusId == "Superseded").OrderByDescending(d => d.dateAccepted))
@@ -545,13 +545,26 @@ namespace Kartverket.Register.Controllers
                     }
                     if (versjonsgruppe.currentVersion == document.systemId)
                     {
-                        Document nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired);
-                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        Document nyGjeldendeVersjon =  (Document)documentVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired).FirstOrDefault();
+                        if (nyGjeldendeVersjon != null)
+                        {
+                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        }
+                        else  {
+                            nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "submitted").OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                            if (nyGjeldendeVersjon != null)
+                            {
+                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            }
+                            else {
+                                nyGjeldendeVersjon = (Document)documentVersions.FirstOrDefault();
+                            }
+                        }
+                        
 
                         if (versjonsgruppe.currentVersion == document.systemId)
                         {
-                            nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "submitted").OrderByDescending(d => d.DateRetired);
-                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            
                         }
                     }
                     db.SaveChanges();

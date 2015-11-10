@@ -394,13 +394,28 @@ namespace Kartverket.Register.Controllers
                             db.SaveChanges();
                             if (versjonsgruppe.currentVersion == document.systemId)
                             {
-                                Document nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired);
-                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                                Document nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired).FirstOrDefault();
+                                if (nyGjeldendeVersjon != null)
+                                {
+                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                                }
+                                else
+                                {
+                                    nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "submitted").OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                                    if (nyGjeldendeVersjon != null)
+                                    {
+                                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                                    }
+                                    else
+                                    {
+                                        nyGjeldendeVersjon = (Document)allVersions.FirstOrDefault();
+                                    }
+                                }
+
 
                                 if (versjonsgruppe.currentVersion == document.systemId)
                                 {
-                                    nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "submitted").OrderByDescending(d => d.DateRetired);
-                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+
                                 }
                             }
                         }

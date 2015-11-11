@@ -367,6 +367,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    where o.name == registeritem.name && 
                                          o.systemId != registeritem.systemId 
                                          && o.registerId == registeritem.registerId
+                                         && o.versioningId != registeritem.versioningId
                                    select o.systemId;
 
                 if (queryResults.Count() > 0)

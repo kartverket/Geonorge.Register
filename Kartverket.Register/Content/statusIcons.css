@@ -37,11 +37,7 @@
 .statusIcon-avvist:before {
   content: "";
 }
-/*.statusIcon-Valid:after {
-  content: "\e601";
-  color: #97c93c;
-  margin-left: -1em;
-}*/
+
 .statusIcon-underarbeid:after {
   content: "\e602";
   color: #ffcd33;
@@ -54,6 +50,14 @@
   margin-left: -1em;
 }
 
+.document .statusIcon-Accepted:after{
+  content:"\e601";
+  color: #97c93c;
+  margin-left: -1em;
+}
+
+
+
 
 .statusIcon-Candidate:after, .statusIcon-Draft:after {
   content: "\e602";
@@ -61,12 +65,12 @@
   margin-left: -1em;
 }
 
-.statusIcon-Accepted:after {
+.dataset .statusIcon-Accepted:after {
   content: "\e600";
   color: #97c93c;
 }
 
-.statusIcon-Accepted:before {
+.dataset .statusIcon-Accepted:before {
   content: "";
 }
 

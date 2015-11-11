@@ -23,11 +23,11 @@
   content: "\e600";
   color: #656565;
 }
-.statusIcon-vedtatt:after {
+.statusIcon-vedtatt:after, .statusIcon-Valid:after {
   content: "\e600";
-  color: #41a547;
+  color: #97c93c;
 }
-.statusIcon-vedtatt:before {
+.statusIcon-vedtatt:before, .statusIcon-Valid:before {
   content: "";
 }
 .statusIcon-avvist:after {
@@ -37,30 +37,25 @@
 .statusIcon-avvist:before {
   content: "";
 }
-.statusIcon-Valid:after {
+/*.statusIcon-Valid:after {
   content: "\e601";
   color: #97c93c;
   margin-left: -1em;
-}
+}*/
 .statusIcon-underarbeid:after {
   content: "\e602";
   color: #ffcd33;
   margin-left: -1em;
 }
 
-.statusIcon-InProgress:after {
-  content: "\e601";
+.statusIcon-InProgress:after, .statusIcon-Superseded:after{
+  content:"\e601";
   color: #97c93c;
   margin-left: -1em;
 }
 
-.statusIcon-InProgress:after {
-  content: "\e601";
-  color: #97c93c;
-  margin-left: -1em;
-}
 
-.statusIcon-Candidate:after {
+.statusIcon-Candidate:after, .statusIcon-Draft:after {
   content: "\e602";
   color: #97c93c;
   margin-left: -1em;

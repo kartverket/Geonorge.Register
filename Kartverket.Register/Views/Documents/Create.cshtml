@@ -7,7 +7,7 @@
 
 @section breadcrumb {
 
-    @if (Model.register.parentRegister != null)
+    @if (Model.register.parentRegisterId != null)
     {
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
         Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
@@ -32,7 +32,7 @@
 <hr />
 
 <form action="@Request.Url.LocalPath" method="post">
-    if (Model.register.parentRegister != null)
+    @if (Model.register.parentRegister != null)
     {
     <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
     }

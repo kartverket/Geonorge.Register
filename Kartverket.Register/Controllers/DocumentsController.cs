@@ -134,13 +134,14 @@ namespace Kartverket.Register.Controllers
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
                 db.SaveChanges();
-                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, document.documentowner.seoname, document.seoname));                
+                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, document.documentowner.seoname, document.seoname));
             }
             document.register = register;
             return View(document);
         }
 
-        private Guid NewVersioningGroup(RegisterItem registerItem){
+        private Guid NewVersioningGroup(RegisterItem registerItem)
+        {
             Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
             versjoneringsGruppe.systemId = Guid.NewGuid();
             versjoneringsGruppe.currentVersion = registerItem.systemId;
@@ -166,7 +167,8 @@ namespace Kartverket.Register.Controllers
             {
                 document = (Document)_registerItemService.GetCurrentRegisterItem(registername, itemname);
             }
-            else {
+            else
+            {
                 document = (Document)_registerItemService.GetCurrentSubregisterItem(parentRegister, registername, itemname);
             }
             document.versionName = null;
@@ -276,7 +278,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Authorize]
         [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
-        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]    
+        [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
@@ -377,48 +379,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (originalDocument.statusId == "Valid")
                     {
-                        if (allVersions.Count() > 1)
-                        {
-                            // Sett gjeldende versjon ut fra status...                            
-                            foreach (var item in allVersions.Where(o => o.statusId == "Superseded").OrderByDescending(o => o.dateAccepted))
-                            {
-                                if (item.systemId != document.systemId)
-                                {
-                                    versjonsgruppe.currentVersion = item.systemId;
-                                    item.statusId = "Valid";
-                                    item.dateSuperseded = null;
-                                    item.modified = DateTime.Now;
-                                    break;
-                                }
-                            }
-                            db.SaveChanges();
-                            if (versjonsgruppe.currentVersion == document.systemId)
-                            {
-                                Document nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired).FirstOrDefault();
-                                if (nyGjeldendeVersjon != null)
-                                {
-                                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                                }
-                                else
-                                {
-                                    nyGjeldendeVersjon = (Document)allVersions.Where(o => o.statusId == "submitted").OrderBy(d => d.dateSubmitted).FirstOrDefault();
-                                    if (nyGjeldendeVersjon != null)
-                                    {
-                                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                                    }
-                                    else
-                                    {
-                                        nyGjeldendeVersjon = (Document)allVersions.FirstOrDefault();
-                                    }
-                                }
-
-
-                                if (versjonsgruppe.currentVersion == document.systemId)
-                                {
-
-                                }
-                            }
-                        }
+                        GetNewCurrentVersion(document, versjonsgruppe);
                     }
 
                     if (retired)
@@ -544,53 +505,63 @@ namespace Kartverket.Register.Controllers
             Kartverket.Register.Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
             //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
             // Finn alle dokumenter i versjonsgruppen
-            if (document.statusId == "Valid")
+            if (document.systemId == versjonsgruppe.currentVersion)
             {
-                var documentVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
-                if (documentVersions.Count() > 1)
-                {
-                    // Sett gjeldende versjon ut fra status...
-                    foreach (var item in documentVersions.Where(d => d.statusId == "Superseded").OrderByDescending(d => d.dateAccepted))
-                    {
-                        versjonsgruppe.currentVersion = item.systemId;
-                        item.statusId = "Valid";
-                        item.modified = DateTime.Now;
-                        item.dateSuperseded = null;
-                        break;                        
-                    }
-                    if (versjonsgruppe.currentVersion == document.systemId)
-                    {
-                        Document nyGjeldendeVersjon =  (Document)documentVersions.Where(o => o.statusId == "retired").OrderByDescending(d => d.DateRetired).FirstOrDefault();
-                        if (nyGjeldendeVersjon != null)
-                        {
-                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                        }
-                        else  {
-                            nyGjeldendeVersjon = (Document)documentVersions.Where(o => o.statusId == "submitted").OrderBy(d => d.dateSubmitted).FirstOrDefault();
-                            if (nyGjeldendeVersjon != null)
-                            {
-                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
-                            }
-                            else {
-                                nyGjeldendeVersjon = (Document)documentVersions.FirstOrDefault();
-                            }
-                        }
-                        
-
-                        if (versjonsgruppe.currentVersion == document.systemId)
-                        {
-                            
-                        }
-                    }
-                    db.SaveChanges();
-                }
+                GetNewCurrentVersion(document, versjonsgruppe);
 
             }
 
             db.RegisterItems.Remove(document);
             db.SaveChanges();
 
-            return Redirect(RegisterUrls.registerUrl(parentregister, parentregisterowner, registername));           
+            return Redirect(RegisterUrls.registerUrl(parentregister, parentregisterowner, registername));
+        }
+
+        private void GetNewCurrentVersion(Document document, Models.Version versjonsgruppe)
+        {
+            var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
+            if (versionsOfDocument.Count() > 1)
+            {
+                // Sett gjeldende versjon ut fra status...
+                foreach (var item in versionsOfDocument.Where(d => d.statusId == "Superseded").OrderByDescending(d => d.dateAccepted))
+                {
+                    versjonsgruppe.currentVersion = item.systemId;
+                    item.statusId = "Valid";
+                    item.modified = DateTime.Now;
+                    item.dateSuperseded = null;
+                    break;
+                }
+                if (versjonsgruppe.currentVersion == document.systemId)
+                {
+                    Document nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Retired").Where(o => o.systemId != document.systemId).OrderByDescending(d => d.DateRetired).FirstOrDefault();
+                    if (nyGjeldendeVersjon != null)
+                    {
+                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                    }
+                    else
+                    {
+                        nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Draft").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                        if (nyGjeldendeVersjon != null)
+                        {
+                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        }
+                        else
+                        {
+                            nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Submitted").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                            if (nyGjeldendeVersjon != null)
+                            {
+                                versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            }
+                            else
+                            {
+                                nyGjeldendeVersjon = (Document)versionsOfDocument.FirstOrDefault();
+                            }
+                        }
+                    }
+                }
+                db.Entry(versjonsgruppe).State = EntityState.Modified;
+                db.SaveChanges();
+            }
         }
 
         protected override void Dispose(bool disposing)

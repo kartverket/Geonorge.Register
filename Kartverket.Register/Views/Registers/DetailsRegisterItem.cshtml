@@ -3,13 +3,14 @@
 
 @{
     ViewBag.Title = @Model.name;
-    string documentOwner = ViewBag.documentOwner;
-    string datasetOwner = ViewBag.datasetOwner;
+    string owner = ViewBag.Owner;
+    //string documentOwner = ViewBag.documentOwner;
+    //string datasetOwner = ViewBag.datasetOwner;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
     Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
     string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
-    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass); 
+    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
 }
 
 @section breadcrumb {
@@ -49,11 +50,11 @@
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
         @if (Model.register.containedItemClass == "Document")
         {
-            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(documentOwner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
         else if (Model.register.containedItemClass == "Dataset")
         {
-            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(datasetOwner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
+            <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
         }
         else
         {
@@ -74,11 +75,10 @@
         @if (Model.register.containedItemClass == "NameSpace"){ <span>Eier: @Model.submitter.name</span><br>}
         else {<span>Innsender: @Model.submitter.name</span><br>}
 
-        @if (documentOwner != null){ <span>Eier: @documentOwner</span><br />}
+        @if (owner != null){ <span>Eier: @owner</span><br />}
 
         <span>Versjons ID @Model.versionNumber</span><br>
         @if (Model.versionName != null) {<span>Utgave: @Model.versionName</span><br />}
-        @if (datasetOwner != null){ <span>Eier: @datasetOwner</span>}
     
     </div>
     <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
@@ -178,7 +178,7 @@
 
     @if (Model.register.containedItemClass == "Document")
     {
-        <a class="hidden-print" href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(documentOwner), Model.seoname)">Tilbake</a>
+        <a class="hidden-print" href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">Tilbake</a>
     }
     else
     {

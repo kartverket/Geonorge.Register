@@ -300,7 +300,7 @@ namespace Kartverket.Register.Controllers
                     originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
                     if (originalDocument.documentUrl.Contains(".pdf"))
                     {
-                        GenerateThumbnail(document, documentfile, url, registername);
+                        GenerateThumbnail(originalDocument, documentfile, url);
                         originalDocument.thumbnail = document.thumbnail;
                     }
                 }
@@ -385,6 +385,7 @@ namespace Kartverket.Register.Controllers
                 if (versionsOfDocument.Count() > 1)
                 {
                     GetNewCurrentVersion(document, versjonsgruppe, versionsOfDocument);
+                    db.RegisterItems.Remove(document);
                 }
                 else
                 {
@@ -468,7 +469,7 @@ namespace Kartverket.Register.Controllers
             return role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && registerItem.register.accessId == 2);
         }
 
-        private string GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url, string register)
+        private string GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
         {
             if (document.documentUrl.Contains(".pdf"))
             {
@@ -476,10 +477,10 @@ namespace Kartverket.Register.Controllers
                 string seofilename;
                 MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
-                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), register + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
+                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
                 GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
-                return url + register + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
+                return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
             }
             else
             {
@@ -541,7 +542,7 @@ namespace Kartverket.Register.Controllers
             document.description = document.description;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
             document.documentUrl = documentUrl(url, documentfile, document);
-            document.thumbnail = GenerateThumbnail(document, documentfile, url, registername);
+            document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.versioningId = GetVersioningId(document);
 
             SetDocumentOwnerAndSubmitter(document);
@@ -549,6 +550,20 @@ namespace Kartverket.Register.Controllers
             db.Entry(document).State = EntityState.Modified;
             db.RegisterItems.Add(document);
             db.SaveChanges();
+        }
+
+        private string GetThumbnail(Document document, HttpPostedFileBase documentfile, string url, HttpPostedFileBase thumbnail)
+        {
+            if (documentfile != null)
+            {
+                document.thumbnail = GenerateThumbnail(document, documentfile, url);
+            }
+
+            if (thumbnail != null && document.thumbnail.Contains(thumbnail.FileName))
+            {
+                document.thumbnail = url + SaveFileToDisk(thumbnail, document.name, document.register.seoname, document.versionNumber);
+            }
+            return document.thumbnail;
         }
 
         private Guid? GetVersioningId(Document document)

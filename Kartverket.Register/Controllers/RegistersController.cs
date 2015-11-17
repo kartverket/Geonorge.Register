@@ -88,10 +88,10 @@ namespace Kartverket.Register.Controllers
             return View(register);
         }
 
-        [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no.{format}")]
-        [Route("register/{registername}/{itemOwner}/{itemname}.{format}")]
-        [Route("register/versjoner/{registername}/{submitter}/{itemname}/{version}/no")]
-        [Route("register/{registername}/{itemOwner}/{itemname}")]
+        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
+        [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
+        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
+        [Route("register/{registername}/{itemowner}/{itemname}")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);

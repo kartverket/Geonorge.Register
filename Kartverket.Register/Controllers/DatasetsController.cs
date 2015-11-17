@@ -119,9 +119,9 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            dataset.register = db.Registers.Find(regId);
 
-            ValidationName(dataset, register);
+            ValidationName(dataset, dataset.register);
 
             if (ModelState.IsValid)
             {
@@ -132,7 +132,7 @@ namespace Kartverket.Register.Controllers
                 dataset.statusId = "Valid";
                 dataset.dokStatusId = "Proposal";
                 dataset.versionNumber = 1;
-                dataset.versioningId = _registerItemService.NewVersioningGroup(dataset, register);
+                dataset.versioningId = _registerItemService.NewVersioningGroup(dataset);
 
                 if (dataset.name == null || dataset.name.Length == 0)
                 {
@@ -175,7 +175,6 @@ namespace Kartverket.Register.Controllers
                 }
 
             }
-            dataset.register = register;
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
 

@@ -163,13 +163,13 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            organization.register = db.Registers.Find(regId);
             string parentRegisterOwner = null;
-            if (register.parentRegisterId != null)
+            if (organization.register.parentRegisterId != null)
             {
-                parentRegisterOwner = register.parentRegister.owner.seoname;
+                parentRegisterOwner = organization.register.parentRegister.owner.seoname;
             }
-            ValidationName(organization, register);
+            ValidationName(organization, organization.register);
             
             if (ModelState.IsValid)
             {
@@ -178,11 +178,11 @@ namespace Kartverket.Register.Controllers
                 organization.modified = DateTime.Now;
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
-                organization.register = register;
+                organization.register = organization.register;
                 organization.statusId = "Submitted";
                 organization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(organization.name);
                 organization.versionNumber = 1;
-                organization.versioningId = _registerItemService.NewVersioningGroup(organization, register);
+                organization.versioningId = _registerItemService.NewVersioningGroup(organization);
 
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
@@ -219,16 +219,15 @@ namespace Kartverket.Register.Controllers
                 db.Entry(organization).State = EntityState.Modified;
                 db.SaveChanges();
 
-                if (register.parentRegister != null)
+                if (organization.register.parentRegister != null)
                 {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
+                    return Redirect("/subregister/" + organization.register.parentRegister.seoname + "/" + organization.register.parentRegister.owner.seoname + "/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
                 }
                 else
                 {
                     return Redirect("/register/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
                 }
             }
-            organization.register = register;
             return View(organization);
         }
 

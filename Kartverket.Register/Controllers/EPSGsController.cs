@@ -98,14 +98,14 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            epsgKode.register = db.Registers.Find(regId);
             string parentRegisterOwner = null;
-            if (register.parentRegisterId != null)
+            if (epsgKode.register.parentRegisterId != null)
             {
-                parentRegisterOwner = register.parentRegister.owner.seoname;
+                parentRegisterOwner = epsgKode.register.parentRegister.owner.seoname;
             }
 
-            ValidationName(epsgKode, register);
+            ValidationName(epsgKode, epsgKode.register);
 
             //Hjelp til å finne ut hvorfor evt ModelState ikke er valid.
             var errors = ModelState.Select(x => x.Value.Errors)
@@ -131,7 +131,7 @@ namespace Kartverket.Register.Controllers
                 epsgKode.nationalSeasRequirementId = "Notset";
                 epsgKode.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(epsgKode.name);
                 epsgKode.versionNumber = 1;
-                epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode, register);
+                epsgKode.versioningId = _registerItemService.NewVersioningGroup(epsgKode);
 
                 db.RegisterItems.Add(epsgKode);
                 db.SaveChanges();
@@ -160,7 +160,6 @@ namespace Kartverket.Register.Controllers
                     return Redirect("/register/" + registername + "/" + epsgKode.submitter.seoname + "/" + epsgKode.seoname);
                 }
             }
-            epsgKode.register = register;
             ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
             return View(epsgKode);
         }

@@ -116,18 +116,30 @@ namespace Kartverket.Register.Services.RegisterItem
             return item;
         }
 
-        public Kartverket.Register.Models.RegisterItem GetCurrentRegisterItem(string register, string name)
+        public Kartverket.Register.Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name)
         {
 
-            var queryResults = from o in _dbContext.RegisterItems
-                               where (o.seoname == name || o.name == name) &&
-                               (o.register.seoname == register || o.register.name == register)
-                               && o.versioning.currentVersion == o.systemId
-                               select o;
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == name || o.name == name) &&
+                                   (o.register.seoname == register || o.register.name == register)
+                                   && o.versioning.currentVersion == o.systemId
+                                   select o;
 
-            Kartverket.Register.Models.RegisterItem registerItem = queryResults.FirstOrDefault();
+                return queryResults.FirstOrDefault();
+            }
+            else
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == name || o.name == name) &&
+                                   (o.register.seoname == register || o.register.name == register) &&
+                                   (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
+                                   && o.versioning.currentVersion == o.systemId
+                                   select o;
 
-            return registerItem;
+                return queryResults.FirstOrDefault();
+            }
         }
 
         public Kartverket.Register.Models.RegisterItem GetCurrentSubregisterItem(string parentregister, string register, string name)
@@ -271,12 +283,12 @@ namespace Kartverket.Register.Services.RegisterItem
             return originalItem;
         }
 
-        public Guid NewVersioningGroup(Models.RegisterItem registerItem, Models.Register register)
+        public Guid NewVersioningGroup(Models.RegisterItem registerItem)
         {
             Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
             versjoneringsGruppe.systemId = Guid.NewGuid();
             versjoneringsGruppe.currentVersion = registerItem.systemId;
-            versjoneringsGruppe.containedItemClass = register.containedItemClass;
+            versjoneringsGruppe.containedItemClass = registerItem.register.containedItemClass;
             versjoneringsGruppe.lastVersionNumber = registerItem.versionNumber;
 
             _dbContext.Entry(versjoneringsGruppe).State = EntityState.Modified;

@@ -209,7 +209,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny")]
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string registerowner, List<Guid> narrower, Guid? broader)
         {
-            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentregister, registername);
+            codelistValue.register = _registerService.GetRegister(parentregister, registername);
             if (!_registerItemService.validateName(codelistValue))
             {
                 ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
@@ -219,10 +219,10 @@ namespace Kartverket.Register.Controllers
                 codelistValue.systemId = Guid.NewGuid();
                 codelistValue.modified = DateTime.Now;
                 codelistValue.dateSubmitted = DateTime.Now;
-                codelistValue.registerId = register.systemId;
+                codelistValue.registerId = codelistValue.register.systemId;
                 codelistValue.statusId = "Submitted";
                 codelistValue.versionNumber = 1;
-                codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue, register);
+                codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
 
                 if (string.IsNullOrWhiteSpace(codelistValue.name))
                 {
@@ -256,9 +256,9 @@ namespace Kartverket.Register.Controllers
 
                 db.RegisterItems.Add(codelistValue);
                 db.SaveChanges();
-                if (register.parentRegisterId != null)
+                if (codelistValue.register.parentRegisterId != null)
                 {
-                    return Redirect("/subregister/" + parentregister + "/" + register.owner.seoname + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
+                    return Redirect("/subregister/" + parentregister + "/" + codelistValue.register.owner.seoname + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
                 }
                 else
                 {
@@ -266,7 +266,6 @@ namespace Kartverket.Register.Controllers
                 }
             }
             ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItem.systemId), "systemId", "name", codelistValue.broaderItem);
-            codelistValue.register = register;
             return View(codelistValue);
         }
 

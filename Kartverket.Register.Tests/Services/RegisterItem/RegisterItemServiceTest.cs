@@ -20,11 +20,10 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         public void getCurrentRegisterItem()
         {            
             Models.Register register = NewRegister("Register name");
-            //register.parentRegister = NewRegister("Parentregister name");
             List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentRegisterItem(register.seoname, versions[1].seoname);
+            Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentRegisterItem(null, register.seoname, versions[1].seoname);
 
             actualCurrentVersion.Should().Be(versions[0]);
         }

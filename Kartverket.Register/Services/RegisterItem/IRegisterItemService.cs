@@ -15,7 +15,7 @@ namespace Kartverket.Register.Services.RegisterItem
         void SetBroaderItem(Guid broader, CodelistValue codelistValue);
         void SetBroaderItem(CodelistValue codelistValue);
         void RemoveBroaderAndNarrower(CodelistValue codelistValue);
-        Models.RegisterItem GetCurrentRegisterItem(string register, string name);
+        Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name);
         Models.RegisterItem GetCurrentSubregisterItem(string parentregister, string register, string name);
         Models.Version GetVersionGroup(Guid? versioningId);
         Models.RegisterItem GetRegisterItemByVersionNr(string register, string item, int? vnr);
@@ -24,7 +24,7 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item);
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
-        Guid NewVersioningGroup(Models.RegisterItem registerItem, Models.Register register);
+        Guid NewVersioningGroup(Models.RegisterItem registerItem);
         Models.RegisterItem GetRegisterItemByVersionNr(string parentregister, string registername, string documentname, int versionNumber);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1);
         bool validateName(Object model);

@@ -80,16 +80,15 @@ namespace Kartverket.Register.Controllers
         [Route("navnerom/{registername}/ny")]
         public ActionResult Create(NameSpace nameSpace, string registername, string parentRegister)
         {
-            Kartverket.Register.Models.Register register = GetRegister(registername, parentRegister);
+            nameSpace.register = GetRegister(registername, parentRegister);
 
             string parentRegisterOwner = null;
-            nameSpace.register = register;
-            if (register.parentRegisterId != null)
+            if (nameSpace.register.parentRegisterId != null)
             {
-                parentRegisterOwner = register.parentRegister.owner.seoname;
+                parentRegisterOwner = nameSpace.register.parentRegister.owner.seoname;
             }
             
-            ValidationName(nameSpace, register);
+            ValidationName(nameSpace, nameSpace.register);
 
             if (ModelState.IsValid)
             {
@@ -98,12 +97,12 @@ namespace Kartverket.Register.Controllers
                 nameSpace.systemId = Guid.NewGuid();
                 nameSpace.modified = DateTime.Now;
                 nameSpace.dateSubmitted = DateTime.Now;
-                nameSpace.registerId = register.systemId;
+                nameSpace.registerId = nameSpace.register.systemId;
                 nameSpace.statusId = "Submitted";
                 nameSpace.submitter = null;
                 nameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(nameSpace.name);
                 nameSpace.versionNumber = 1;
-                nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace, register);
+                nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace);
 
                 db.RegisterItems.Add(nameSpace);
                 db.SaveChanges();

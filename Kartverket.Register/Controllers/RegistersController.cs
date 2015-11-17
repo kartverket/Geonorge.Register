@@ -358,22 +358,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private RegisterItem GetRegisterItem(string registername, string itemname, int? version)
-        {
-            Kartverket.Register.Models.RegisterItem registerItem;
-            if (version != null)
-            {
-                registerItem = _registerItemService.GetRegisterItemByVersionNr(registername, itemname, version);
-                Document document = db.Documents.Find(registerItem.systemId);
-                ViewBag.documentOwner = document.documentowner.seoname;
-            }
-            else
-            {
-                registerItem = _registerItemService.GetCurrentRegisterItem(registername, itemname);
-            }
-            return registerItem;
-        }
-
         private string RedirectToApiIfFormatIsNotNull(string format)
         {
             if (!string.IsNullOrWhiteSpace(format))

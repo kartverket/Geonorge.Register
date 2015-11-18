@@ -17,6 +17,10 @@ namespace Kartverket.Register.Formatter
     public class SKOSFormatter : MediaTypeFormatter
     {
         private readonly string rdf = "application/rdf+xml";
+        private readonly XNamespace ns = "http://www.opengis.net/gml/3.2";
+        private readonly XNamespace skosNs = "http://www.w3.org/2004/02/skos/core#";
+        private readonly XNamespace rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+        private readonly XNamespace dctermsNs = "http://purl.org/dc/terms/";
 
         public SKOSFormatter()
         {
@@ -34,8 +38,8 @@ namespace Kartverket.Register.Formatter
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>)) 
-                
+                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
+
                 return true;
             else
                 return false;
@@ -64,18 +68,13 @@ namespace Kartverket.Register.Formatter
                 type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
-                    BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);                
+                    BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);
             });
         }
 
         private void BuildSKOSFeed(object models, Stream stream, string contenttype)
         {
             ConceptSheme conceptSheme = new ConceptSheme(models);
-
-            XNamespace ns = "http://www.opengis.net/gml/3.2";
-            XNamespace skosNs = "http://www.w3.org/2004/02/skos/core#";
-            XNamespace rdfNs = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-            XNamespace dctermsNs = "http://purl.org/dc/terms/";
 
             //TODO! Relative lenker....
             XNamespace baseXML = conceptSheme.id.Replace(conceptSheme.seoname, null);
@@ -86,29 +85,51 @@ namespace Kartverket.Register.Formatter
                     new XAttribute(XNamespace.Xmlns + "dcterms", dctermsNs),
                     new XAttribute(XNamespace.Xml + "base", baseXML),
                     new XElement(skosNs + "ConceptScheme", new XAttribute(rdfNs + "about", conceptSheme.id),
-                        new XElement(skosNs + "prefLabel", conceptSheme.name, new XAttribute(XNamespace.Xml + "lang", "no")),
-                        new XElement(dctermsNs + "description", conceptSheme.description, new XAttribute(XNamespace.Xml + "lang", "no")),
-                        new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", conceptSheme.id)),
-                        new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", conceptSheme.broader))
-                        //new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", conceptSheme.broader)) 
+                        GetElementsForConceptScheme(conceptSheme)
                         ),
 
                     from c in conceptSheme.concepts
                     select new XElement(skosNs + "Concept", new XAttribute(rdfNs + "about", c.id),
-                        new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
-                        new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
-                        new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
-                        new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),                
-                        new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id)),
-                        new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader))
-                        //new XElement(skosNs + "broaderTransitive", new XAttribute(rdfNs + "resource", c.broader)) 
+                        GetElementsForConcept(conceptSheme, c)
                       ));
 
             using (XmlWriter writer = XmlWriter.Create(stream))
             {
                 xdoc.WriteTo(writer);
-                
+
             }
+        }
+
+        private List<object> GetElementsForConceptScheme(ConceptSheme conceptSheme)
+        {
+            List<object> elements = new List<object> {
+            new XElement(skosNs + "prefLabel", conceptSheme.name, new XAttribute(XNamespace.Xml + "lang", "no")),
+            new XElement(dctermsNs + "description", conceptSheme.description, new XAttribute(XNamespace.Xml + "lang", "no")),
+            new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", conceptSheme.id)),
+            };
+
+            if (!string.IsNullOrWhiteSpace(conceptSheme.broader))
+            {
+                elements.Add(new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", conceptSheme.broader)));
+            }
+            return elements;
+        }
+
+        private List<object> GetElementsForConcept(ConceptSheme conceptSheme, Concept c)
+        {
+            List<object> elements = new List<object> {
+                new XElement(skosNs + "inScheme", new XAttribute(rdfNs + "resource", conceptSheme.id)),
+                new XElement(skosNs + "topConceptOf", new XAttribute(rdfNs + "resource", conceptSheme.id)),
+                new XElement(skosNs + "prefLabel", c.name, new XAttribute(XNamespace.Xml + "lang", "no")),
+                new XElement(dctermsNs + "description", c.codevalue, new XAttribute(XNamespace.Xml + "lang", "no")),
+                new XElement(dctermsNs + "source", new XAttribute(rdfNs + "resource", c.id)),
+            };
+
+            if (!string.IsNullOrWhiteSpace(c.broader))
+            {
+                elements.Add(new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", c.broader)));
+            }
+            return elements;
         }
     }
 }

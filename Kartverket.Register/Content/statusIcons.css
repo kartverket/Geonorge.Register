@@ -44,11 +44,19 @@
   margin-left: -1em;
 }
 
-.statusIcon-InProgress:after, .statusIcon-Superseded:after{
+.statusIcon-InProgress:after{
   content:"\e601";
   color: #97c93c;
   margin-left: -1em;
 }
+
+.statusIcon-Superseded:after{
+  content: "\e600";
+  color: #EAC030;
+  margin-left: -1em;
+}
+
+
 
 .document .statusIcon-Accepted:after{
   content:"\e601";

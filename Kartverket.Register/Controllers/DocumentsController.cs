@@ -185,7 +185,11 @@ namespace Kartverket.Register.Controllers
                         {
                             if (item.statusId == "Valid")
                             {
-                                if (item.dateAccepted < document.dateAccepted)
+                                if (document.dateAccepted == null)
+                                {
+                                    document.dateAccepted = DateTime.Now;
+                                }
+                                if (item.dateAccepted == null || item.dateAccepted < document.dateAccepted)
                                 {
                                     if (string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
                                     {

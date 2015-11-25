@@ -44,7 +44,7 @@ namespace Kartverket.Register.Controllers
             List<Models.Register> registers = _registerService.GetRegisters();
             foreach (Models.Register register in registers)
             {
-                list.Add(ConvertRegister(register, Request.RequestUri));
+                list.Add(ConvertRegister(register));
             }
             return Ok(list);
         }
@@ -60,7 +60,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterByName(string registerName)
         {
             var register = _registerService.GetRegisterByName(registerName);
-            return Ok(ConvertRegisterAndNextLevel(register, Request.RequestUri));
+            return Ok(ConvertRegisterAndNextLevel(register));
         }
 
 
@@ -75,7 +75,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetSubregisterByName(string parentregister, string register)
         {
             var it = _registerService.GetSubregisterByName(parentregister, register);
-            return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
+            return Ok(ConvertRegisterAndNextLevel(it));
         }
 
 
@@ -89,7 +89,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterBySystemId(string systemid)
         {
             var it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
-            return Ok(ConvertRegisterAndNextLevel(it, Request.RequestUri));
+            return Ok(ConvertRegisterAndNextLevel(it));
         }
 
 
@@ -123,7 +123,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
             var registerItem = _registerItemService.GetRegisterItemByVersionNr(register, item, version);
-            return Ok(ConvertRegisterItemDetails(registerItem.register, registerItem, Request.RequestUri));
+            return Ok(ConvertRegisterItem(registerItem.register, registerItem));
         }
 
 
@@ -153,7 +153,6 @@ namespace Kartverket.Register.Controllers
             List<Models.Api.Item> resultat = new List<Models.Api.Item>();
             SearchParameters parameters = new SearchParameters();
             parameters.Text = name;
-            var urlHelper = new System.Web.Mvc.UrlHelper(HttpContext.Current.Request.RequestContext);
             SearchResult searchResult = _searchService.Search(parameters);
             foreach (var it in searchResult.Items)
             {
@@ -177,7 +176,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
-                ConverteditemsByOwner.Add(ConvertRegisterItemDetails(item.register, item, Request.RequestUri));
+                ConverteditemsByOwner.Add(ConvertRegisterItem(item.register, item));
             }
 
             return Ok(ConverteditemsByOwner);
@@ -199,13 +198,11 @@ namespace Kartverket.Register.Controllers
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
-                ConverteditemsByOwner.Add(ConvertRegisterItemDetails(item.register, item, Request.RequestUri));
+                ConverteditemsByOwner.Add(ConvertRegisterItem(item.register, item));
             }
 
             return Ok(ConverteditemsByOwner);
         }
-
-
 
 
 
@@ -219,13 +216,13 @@ namespace Kartverket.Register.Controllers
             {
                 if (v.versioning.currentVersion == v.systemId)
                 {
-                    currentVersion = ConvertRegisterItemDetails(v.register, v, Request.RequestUri);
+                    currentVersion = ConvertRegisterItem(v.register, v);
 
                     foreach (var ve in versjoner)
                     {
                         if (v.versionNumber != ve.versionNumber)
                         {
-                            currentVersion.versions.Add(ConvertRegisterItemDetails(ve.register, ve, Request.RequestUri));
+                            currentVersion.versions.Add(ConvertRegisterItem(ve.register, ve));
                         }
                     }
                 }
@@ -233,36 +230,18 @@ namespace Kartverket.Register.Controllers
             return currentVersion;
         }
 
-        private Models.Api.Register ConvertRegister(Models.Register item, Uri uri)
+        private Models.Api.Register ConvertRegister(Models.Register item)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"]; //uri.Scheme + "://" + uri.Authority;
-            if (item.parentRegister != null)
-            {
-                registerId = registerId + "subregister/" + item.parentRegister.seoname + "/" + item.parentRegister.owner.seoname + "/" + item.seoname;
-            }
-            else
-            {
-                registerId = registerId + "register/" + item.seoname;
-            }
-            var tmp = new Models.Api.Register
-            {
-                label = item.name,
-                id = registerId,
-                contentsummary = item.description,
-                lastUpdated = item.modified,
-                targetNamespace = item.targetNamespace,
-                containedItemClass = item.containedItemClass
-            };
-            if (item.owner != null) tmp.owner = item.owner.seoname;
-            if (item.manager != null) tmp.manager = item.manager.seoname;
-
+            if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
+            var tmp = new Models.Api.Register(item, registerId);
             return tmp;
         }
 
 
-        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, Uri uri)
+        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item)
         {
-            var tmp = ConvertRegister(item, uri);
+            var tmp = ConvertRegister(item);
             if (item.items.Count() > 0 && item.items != null)
             {
                 tmp.containeditems = new List<Models.Api.Registeritem>();
@@ -273,12 +252,12 @@ namespace Kartverket.Register.Controllers
                     {
                         if (d.statusId != "Submitted" && d.versioning.currentVersion == d.systemId)
                         {
-                            tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
+                            tmp.containeditems.Add(ConvertRegisterItem(item, d));
                         }
                     }
                     else
                     {
-                        tmp.containeditems.Add(ConvertRegisterItem(item, d, uri));
+                        tmp.containeditems.Add(ConvertRegisterItem(item, d));
                     }
                 }
             }
@@ -290,7 +269,7 @@ namespace Kartverket.Register.Controllers
                 {
                     foreach (var reg in subregisters)
                     {
-                        tmp.containedSubRegisters.Add(ConvertRegister(reg, uri));
+                        tmp.containedSubRegisters.Add(ConvertRegister(reg));
                     }
                 }
             }
@@ -298,161 +277,14 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item, Uri uri)
+        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
-            var tmp = new Models.Api.Registeritem();
-            tmp.label = item.name;
-
-            tmp.lastUpdated = item.modified;
-            tmp.itemclass = item.register.containedItemClass;
-            if (item.submitter != null) tmp.owner = item.submitter.name;
-            if (item.status != null) tmp.status = item.status.description;
-            if (item.description != null) tmp.description = item.description;
-            if (item.versionName != null) tmp.versionName = item.description;
-            if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
-            if (reg.parentRegisterId != null)
-            {
-                tmp.id = registerId + "subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
-            }
-            else
-            {
-                tmp.id = registerId + "register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
-            }
-            tmp.versionName = item.versionName;
-
-            if (item is EPSG)
-            {
-                var d = (EPSG)item;
-                tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
-                tmp.inspireRequirement = d.inspireRequirement.description;
-                tmp.nationalRequirement = d.nationalRequirement.description;
-                tmp.nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
-                tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
-                tmp.verticalReferenceSystem = d.verticalReferenceSystem;
-                tmp.dimension = d.dimension != null ? d.dimension.description : "";
-            }
-
-            if (item is CodelistValue)
-            {
-                var c = (CodelistValue)item;
-                tmp.codevalue = c.value;
-
-                if (c.broaderItemId != null)
-                {
-                    if (c.register.parentRegisterId != null)
-                    {
-                        tmp.broader = registerId + "subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
-                    }
-                    else
-                    {
-                        tmp.broader = registerId + "register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
-                    }
-                }
-            }
-
-            if (item is Document)
-            {
-                var d = (Document)item;
-                tmp.owner = d.documentowner.name;
-                tmp.documentreference = d.documentUrl;
-            }
-
-            if (item is Dataset)
-            {
-                var d = (Dataset)item;
-                tmp.owner = d.datasetowner.name;
-                tmp.theme = d.theme.description;
-                tmp.dokStatus = d.dokStatus.description;
-            }
-            if (item is NameSpace)
-            {
-                var n = (NameSpace)item;
-                tmp.serviceUrl = n.serviceUrl;
-            }
+            if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
+            var tmp = new Models.Api.Registeritem(item,registerId);
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItemDetails(Models.Register reg, Models.RegisterItem item, Uri uri)
-        {
-            string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"]; // uri.Scheme + "://" + uri.Authority;
-            var tmp = new Models.Api.Registeritem();
-            tmp.label = item.name;
-
-            if (reg.parentRegisterId != null)
-            {
-                tmp.id = registerId + "subregister/" + reg.parentRegister.seoname + "/" + reg.parentRegister.owner.seoname + "/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
-            }
-            else
-            {
-                tmp.id = registerId + "register/" + reg.seoname + "/" + item.submitter.seoname + "/" + item.seoname;
-            }
-
-            if (item.status != null) tmp.status = item.status.description;
-            if (item.description != null) tmp.description = item.description;
-            if (item.submitter != null) tmp.owner = item.submitter.name;
-            if (item.versionName != null) tmp.versionName = item.description;
-            if (item.versionNumber != null) tmp.versionNumber = item.versionNumber;
-            tmp.lastUpdated = item.modified;
-            tmp.dateSubmitted = item.dateSubmitted;
-            tmp.dateAccepted = item.dateAccepted.GetValueOrDefault();
-
-            if (item is Document)
-            {
-                tmp.itemclass = "Document";
-                var d = (Document)item;
-                tmp.documentreference = d.documentUrl;
-            }
-            else if (item is Dataset)
-            {
-                tmp.itemclass = "Dataset";
-            }
-            else if (item is Organization)
-            {
-                tmp.itemclass = "Organization";
-                var d = (Organization)item;
-                tmp.logo = d.logoFilename;
-            }
-            else if (item is NameSpace)
-            {
-                tmp.itemclass = "NameSpace";
-                var d = (NameSpace)item;
-                tmp.serviceUrl = d.serviceUrl;
-            }
-            else if (item is EPSG)
-            {
-                tmp.itemclass = "EPSG";
-                var d = (EPSG)item;
-                tmp.documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
-                tmp.inspireRequirement = d.inspireRequirement.description;
-                tmp.nationalRequirement = d.nationalRequirement.description;
-                tmp.nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
-                tmp.horizontalReferenceSystem = d.horizontalReferenceSystem;
-                tmp.verticalReferenceSystem = d.verticalReferenceSystem;
-                tmp.dimension = d.dimension != null ? d.dimension.description : "";
-            }
-            else if (item is CodelistValue)
-            {
-                tmp.itemclass = "CodelistValue";
-                var c = (CodelistValue)item;
-                tmp.codevalue = c.value;
-                if (c.broaderItemId != null)
-                {
-                    if (c.register.parentRegisterId != null)
-                    {
-                        tmp.broader = registerId + "subregister/" + c.broaderItem.register.parentRegister.seoname + "/" + c.broaderItem.register.parentRegister.owner.seoname + "/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
-                    }
-                    else
-                    {
-                        tmp.broader = registerId + "register/" + c.broaderItem.register.seoname + "/" + c.broaderItem.submitter.seoname + "/" + c.broaderItem.seoname;
-                    }
-                }
-            }
-            else tmp.itemclass = "RegisterItem";
-
-
-            return tmp;
-        }
 
         private Models.Api.Item Convert(SearchResultItem searchitem)
         {
@@ -523,7 +355,7 @@ namespace Kartverket.Register.Controllers
             return queryresult.FirstOrDefault();
         }
 
-        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit, Uri uri)
+        private List<Models.Api.Registeritem> GetVersions(RegisterItem rit)
         {
             List<Models.Api.Registeritem> versions = new List<Models.Api.Registeritem>();
             var queryResult = from ri in db.RegisterItems
@@ -532,7 +364,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (var item in queryResult.ToList())
             {
-                versions.Add(ConvertRegisterItem(item.register, item, uri));
+                versions.Add(ConvertRegisterItem(item.register, item));
             }
             versions.OrderBy(o => o.status);
             return versions;

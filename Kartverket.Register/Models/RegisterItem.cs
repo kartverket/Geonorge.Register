@@ -96,5 +96,14 @@ namespace Kartverket.Register.Models
         [Display(Name = "Godkjent")]
         public bool? Accepted { get; set; }
     //end RegisterItem
+
+        /// <summary>
+        /// Gets Url to current object
+        /// </summary>
+        /// <returns>Url</returns>
+        public virtual string GetObjectUrl()
+        {
+            return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+        }
     }
 }//end namespace Datamodell

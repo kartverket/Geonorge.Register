@@ -17,10 +17,13 @@ namespace Kartverket.Register.Models.Api
         public string codelistValue { get; set; }
         public string owner { get; set; }
         public virtual string broader { get; set; }
-        public List<Registeritem> narrower { get; set; }
+        public List<string> narrower { get; set; }
 
         public ConceptSheme(object models)
         {
+            concepts = new List<Concept>();
+            narrower = new List<string>();
+
             if (models is Registeritem)
             {
                 Registeritem item = (Registeritem)models;
@@ -46,6 +49,11 @@ namespace Kartverket.Register.Models.Api
                 {
                     broader = "";
                 }
+                
+                foreach (var nitem in item.narrower)    
+	            {
+                    narrower.Add(nitem);
+	            }          
             }
             if (models is Register)
             {

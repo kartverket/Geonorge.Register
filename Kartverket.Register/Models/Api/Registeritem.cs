@@ -7,11 +7,7 @@ namespace Kartverket.Register.Models.Api
 {
     public class Registeritem
     {
-        public Registeritem()
-        {
-            this.versions = new HashSet<Registeritem>();
-        }
-
+        
         public string id { get; set; }
         public string label { get; set; }
         public string itemclass { get; set; }
@@ -39,6 +35,8 @@ namespace Kartverket.Register.Models.Api
 
         public string broader { get; set; }
 
+        public ICollection<string> narrower { get; set; }
+
         public string theme { get; set; }
         public string dokStatus { get; set; }
 
@@ -48,5 +46,72 @@ namespace Kartverket.Register.Models.Api
         public DateTime dateSubmitted { get; set; }
         public DateTime dateAccepted { get; set; }
 
+        public Registeritem(Models.RegisterItem item, string baseUrl)
+        {
+            this.versions = new HashSet<Registeritem>();
+            this.narrower = new HashSet<string>();
+
+            id = baseUrl + item.GetObjectUrl();
+            label = item.name;
+            lastUpdated = item.modified;
+            itemclass = item.register.containedItemClass;
+            if (item.submitter != null)owner = item.submitter.name;
+            if (item.status != null) status = item.status.description;
+            if (item.description != null) description = item.description;
+            if (item.versionName != null) versionName = item.description;
+            versionNumber = item.versionNumber;
+            versionName = item.versionName;
+            dateSubmitted = item.dateSubmitted;
+            dateAccepted = item.dateAccepted.GetValueOrDefault();
+            itemclass = "RegisterItem";
+
+            if (item is EPSG)
+            {
+                itemclass = "EPSG";
+                var d = (EPSG)item;
+                documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
+                inspireRequirement = d.inspireRequirement.description;
+                nationalRequirement = d.nationalRequirement.description;
+                nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
+                horizontalReferenceSystem = d.horizontalReferenceSystem;
+                verticalReferenceSystem = d.verticalReferenceSystem;
+                dimension = d.dimension != null ? d.dimension.description : "";
+            }
+            if (item is CodelistValue)
+            {
+                itemclass = "CodelistValue";
+                var c = (CodelistValue)item;
+                codevalue = c.value;
+                if (c.broaderItemId != null)
+                    broader = baseUrl + c.broaderItem.GetObjectUrl(); 
+                foreach (var codelistvalue in c.narrowerItems)
+                {
+                    narrower.Add(codelistvalue.GetObjectUrl());
+                }
+            }
+            if (item is Document)
+            {
+                itemclass = "Document";
+                var d = (Document)item;
+                if (d.documentowner != null) owner = d.documentowner.name;
+                documentreference = d.documentUrl;
+            }
+
+            if (item is Dataset)
+            {
+                itemclass = "Dataset";
+                var d = (Dataset)item;
+                if (d.datasetowner != null) owner = d.datasetowner.name;
+                if (d.theme != null) theme = d.theme.description;
+                if (d.dokStatus != null) dokStatus = d.dokStatus.description;
+            }
+            if (item is NameSpace)
+            {
+                itemclass = "NameSpace";
+                var n = (NameSpace)item;
+                serviceUrl = n.serviceUrl;
+            }
+
+        }
     }
 }

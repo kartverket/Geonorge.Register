@@ -19,5 +19,19 @@ namespace Kartverket.Register.Models.Api
         public List<Register> containedSubRegisters { get; set; }
         public DateTime lastUpdated { get; set; }
         public string targetNamespace { get; set; }
+
+        public Register(Models.Register item, string baseUrl) 
+        {
+            id = baseUrl + item.GetObjectUrl();
+            label = item.name;
+            contentsummary = item.description;
+            lastUpdated = item.modified;
+            targetNamespace = item.targetNamespace;
+            containedItemClass = item.containedItemClass;
+            if (item.owner != null) owner = item.owner.seoname;
+            if (item.manager != null) manager = item.manager.seoname;
+            containeditems = new List<Registeritem>();
+            containedSubRegisters = new List<Register>();
+        }
     }
 }

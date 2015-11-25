@@ -64,8 +64,7 @@ namespace Kartverket.Register.Formatter
                 type == typeof(List<Item>) ||
                 type == typeof(Kartverket.Register.Models.Api.Register) ||
                 type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+              
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
                     BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);
@@ -111,6 +110,10 @@ namespace Kartverket.Register.Formatter
             if (!string.IsNullOrWhiteSpace(conceptSheme.broader))
             {
                 elements.Add(new XElement(skosNs + "broader", new XAttribute(rdfNs + "resource", conceptSheme.broader)));
+            }
+            foreach (var item in conceptSheme.narrower)
+            {
+                elements.Add(new XElement(skosNs + "narrower", new XAttribute(rdfNs + "resource", item)));
             }
             return elements;
         }

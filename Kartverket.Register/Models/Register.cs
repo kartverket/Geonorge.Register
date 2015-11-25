@@ -69,7 +69,21 @@ namespace Kartverket.Register.Models
         public int? accessId { get; set; }
         public virtual accessType access { get; set; }
 
-
+        /// <summary>
+        /// Gets Url to current object
+        /// </summary>
+        /// <returns>Url</returns>
+        public virtual string GetObjectUrl()
+        {
+            if (parentRegisterId == null)
+            {
+                return "/register/" + seoname;
+            }
+            else
+            {
+                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname;
+            }
+        }
 
     }//end Register
 

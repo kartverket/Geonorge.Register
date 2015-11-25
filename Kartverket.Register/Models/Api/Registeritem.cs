@@ -86,7 +86,7 @@ namespace Kartverket.Register.Models.Api
                     broader = baseUrl + c.broaderItem.GetObjectUrl(); 
                 foreach (var codelistvalue in c.narrowerItems)
                 {
-                    narrower.Add(codelistvalue.GetObjectUrl());
+                    narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
                 }
             }
             if (item is Document)

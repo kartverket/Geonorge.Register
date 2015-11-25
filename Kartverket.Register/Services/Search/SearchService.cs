@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Threading.Tasks;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
-using System.Data.Entity.Infrastructure;
 using Kartverket.Register.Models;
 using System.Web.Configuration;
 using Kartverket.Register.Helpers;
@@ -203,10 +200,13 @@ namespace Kartverket.Register.Services.Search
 
         }
 
-        public Kartverket.Register.Models.Register Search(Kartverket.Register.Models.Register register, string text)
+        public Models.Register Search(Models.Register register, string text)
         {
-            List<Kartverket.Register.Models.RegisterItem> registerItems = new List<Kartverket.Register.Models.RegisterItem>();
-            List<Kartverket.Register.Models.Register> subregisters = new List<Kartverket.Register.Models.Register>();
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
+            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+
+            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            List<Models.Register> subregisters = new List<Models.Register>();
 
             if (register.containedItemClass == "Organization")
             {
@@ -225,7 +225,7 @@ namespace Kartverket.Register.Services.Search
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -256,7 +256,8 @@ namespace Kartverket.Register.Services.Search
             else if (register.containedItemClass == "Document")
             {
                 var queryResults = (from d in _dbContext.Documents
-                                    where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
+                                    where (d.register.name.Contains(register.name)
+                                    || d.register.seoname.Contains(register.seoname))
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
                                     || d.documentowner.name.Contains(text))
@@ -264,14 +265,18 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
+
                     foreach (var item in queryResults.ToList())
                     {
-                        Document document = item;
-                        registerItems.Add(document);
+                        if ((item.statusId != "Submitted") || item.documentowner.seoname == user || role == "nd.metadata_admin")
+                        {
+                            Document document = item;
+                            registerItems.Add(document);
+                        }
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -316,7 +321,7 @@ namespace Kartverket.Register.Services.Search
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -362,7 +367,7 @@ namespace Kartverket.Register.Services.Search
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -407,7 +412,7 @@ namespace Kartverket.Register.Services.Search
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -452,7 +457,7 @@ namespace Kartverket.Register.Services.Search
                     }
                 }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -502,8 +507,15 @@ namespace Kartverket.Register.Services.Search
                         {
                             if (item.name.Contains(text) || (!string.IsNullOrWhiteSpace(item.description) && item.description.Contains(text)))
                             {
-                                sub.items.Add(item);
-                                itemSearchResult = true;
+                                if (item.register.containedItemClass == "Document" && (item.statusId != "Submitted") || item.submitter.seoname == user || role == "nd.metadata_admin")
+                                {
+                                    sub.items.Add(item);
+                                    itemSearchResult = true;
+                                }
+                                else if(item.register.containedItemClass != "Document") {
+                                    sub.items.Add(item);
+                                    itemSearchResult = true;
+                                }
                             }
                         }
                         if (itemSearchResult)
@@ -540,7 +552,7 @@ namespace Kartverket.Register.Services.Search
                     if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text)))
                     {
                         if (subregisters.Count() != 0)
-                        {                            
+                        {
                             foreach (Models.Register r in subregisters)
                             {
                                 if (r == reg)
@@ -554,7 +566,8 @@ namespace Kartverket.Register.Services.Search
                                 finnesFraFor = false;
                             }
                         }
-                        else {
+                        else
+                        {
                             moreSubregisters.Add(reg);
                         }
                     }
@@ -562,9 +575,9 @@ namespace Kartverket.Register.Services.Search
                 foreach (Models.Register reg in moreSubregisters)
                 {
                     subregisters.Add(reg);
-                }                
+                }
 
-                return new Kartverket.Register.Models.Register
+                return new Models.Register
                 {
                     systemId = register.systemId,
                     name = register.name,
@@ -594,7 +607,7 @@ namespace Kartverket.Register.Services.Search
             else { return register; }
         }
 
-        private List<Models.Register> GetSubregisters(Kartverket.Register.Models.Register register)
+        private List<Models.Register> GetSubregisters(Models.Register register)
         {
             List<Models.Register> subRegisterList = new List<Models.Register>();
             //Finn alle subregisterne
@@ -619,28 +632,10 @@ namespace Kartverket.Register.Services.Search
             return subRegisterList;
         }
 
-        //private List<Models.Register> GetNextLevelOfSubregisters(Kartverket.Register.Models.Register register)
-        //{
-
-        //    List<Models.Register> subRegisterList = new List<Models.Register>();
-        //    //Finn alle subregisterne
-        //    var queryResult = from r in _dbContext.Registers
-        //                      where r.parentRegister.name == register.name
-        //                      select r;
-
-        //    foreach (Models.Register sub in queryResult)
-        //    {
-        //        subRegisterList.Add(sub);
-        //        if (sub.containedItemClass == "Register")
-        //        {
-
-        //        }
-        //    }
-        //    return queryResult.ToList();
-        //}
-
         public SearchResult Search(SearchParameters parameters)
         {
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
+            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
             string itemClass = "";
 
             if (parameters.Register != "Alle registre")
@@ -721,7 +716,8 @@ namespace Kartverket.Register.Services.Search
             else if (itemClass == "Document")
             {
                 var queryResults = (from d in _dbContext.Documents
-                                    where (d.register.name.Contains(parameters.Register) || d.register.seoname.Contains(parameters.Register))
+                                    where (d.register.name.Contains(parameters.Register)
+                                    || d.register.seoname.Contains(parameters.Register))
                                     && (d.name.Contains(parameters.Text)
                                     || d.description.Contains(parameters.Text)
                                     || d.documentowner.name.Contains(parameters.Text))
@@ -751,27 +747,31 @@ namespace Kartverket.Register.Services.Search
 
                 foreach (SearchResultItem register in queryResults)
                 {
-                    var item = new SearchResultItem
+                    if ((register.RegisterItemStatus != "Submitted") || register.DocumentOwner == user || role == "nd.metadata_admin")
                     {
-                        RegisterName = register.RegisterName,
-                        RegisterDescription = register.RegisterDescription,
-                        RegisterItemName = register.RegisterItemName,
-                        RegisterItemDescription = register.RegisterItemDescription,
-                        RegisterID = register.RegisterID,
-                        SystemID = register.SystemID,
-                        Discriminator = register.Discriminator,
-                        RegisterSeoname = register.RegisterSeoname,
-                        RegisterItemSeoname = register.RegisterItemSeoname,
-                        DocumentOwner = register.DocumentOwner,
-                        RegisterItemUpdated = register.RegisterItemUpdated,
-                        RegisterItemStatus = register.RegisterItemStatus,
-                        RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
-                        Submitter = register.Submitter,
-                        Shortname = register.Shortname,
-                        currentVersion = register.currentVersion,
-                    };
 
-                    items.Add(item);
+                        var item = new SearchResultItem
+                        {
+                            RegisterName = register.RegisterName,
+                            RegisterDescription = register.RegisterDescription,
+                            RegisterItemName = register.RegisterItemName,
+                            RegisterItemDescription = register.RegisterItemDescription,
+                            RegisterID = register.RegisterID,
+                            SystemID = register.SystemID,
+                            Discriminator = register.Discriminator,
+                            RegisterSeoname = register.RegisterSeoname,
+                            RegisterItemSeoname = register.RegisterItemSeoname,
+                            DocumentOwner = register.DocumentOwner,
+                            RegisterItemUpdated = register.RegisterItemUpdated,
+                            RegisterItemStatus = register.RegisterItemStatus,
+                            RegisteItemUrlDocument = WebConfigurationManager.AppSettings["RegistryUrl"] + "register/versjoner/" + register.RegisterSeoname + "/" + RegisterUrls.MakeSeoFriendlyString(register.DocumentOwner) + "/" + register.RegisterItemSeoname,
+                            Submitter = register.Submitter,
+                            Shortname = register.Shortname,
+                            currentVersion = register.currentVersion,
+                        };
+
+                        items.Add(item);
+                    }
                 }
 
                 return new SearchResult
@@ -848,6 +848,7 @@ namespace Kartverket.Register.Services.Search
                     Offset = parameters.Offset,
                     NumFound = NumFound
                 };
+
             }
 
 
@@ -979,6 +980,7 @@ namespace Kartverket.Register.Services.Search
 
             else if (itemClass == "Register")
             {
+                List<SearchResultItem> searchResultItem = new List<SearchResultItem>();
                 var queryResults =
                                     (from d in _dbContext.Registers
                                      where d.parentRegister.name == parameters.Register
@@ -1075,37 +1077,6 @@ namespace Kartverket.Register.Services.Search
                                           CodelistValue = null,
                                           currentVersion = o.versioning.currentVersion
                                       }).Union(
-                                   (from d in _dbContext.Documents
-                                    where d.register.parentRegister.name.Contains(parameters.Register) && (
-                                        d.register.name.Contains(parameters.Text)
-                                    || d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text)
-                                    || d.documentowner.name.Contains(parameters.Text))
-                                    select new SearchResultItem
-                                    {
-                                        ParentRegisterId = d.register.parentRegisterId,
-                                        ParentRegisterName = d.register.parentRegister.name,
-                                        ParentRegisterDescription = d.register.parentRegister.description,
-                                        ParentRegisterSeoname = d.register.parentRegister.seoname,
-                                        ParentregisterOwner = d.register.parentRegister.owner.seoname,
-                                        RegisterName = d.register.name,
-                                        RegisterDescription = d.register.description,
-                                        RegisterItemName = d.name,
-                                        RegisterItemDescription = d.description,
-                                        RegisterID = d.registerId,
-                                        SystemID = d.systemId,
-                                        Discriminator = d.register.containedItemClass,
-                                        RegisterSeoname = d.register.seoname,
-                                        RegisterItemSeoname = d.seoname,
-                                        DocumentOwner = d.documentowner.name,
-                                        DatasetOwner = null,
-                                        RegisterItemUpdated = d.modified,
-                                        RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.seoname,
-                                        Shortname = null,
-                                        CodelistValue = null,
-                                        currentVersion = d.versioning.currentVersion
-                                    }).Union(
                                     (from d in _dbContext.Datasets
                                      where d.register.parentRegister.name.Contains(parameters.Register) && (
                                         d.register.name.Contains(parameters.Text)
@@ -1199,15 +1170,57 @@ namespace Kartverket.Register.Services.Search
                                          CodelistValue = null,
                                          currentVersion = e.versioning.currentVersion,
                                      })
-                                  ))))));
+                                  )))));
 
-                int NumFound = queryResults.Count();
+                searchResultItem = queryResults.ToList();
+
+                var documents = from d in _dbContext.Documents
+                                where d.register.parentRegister.name.Contains(parameters.Register) && (
+                                    d.register.name.Contains(parameters.Text)
+                                || d.name.Contains(parameters.Text)
+                                || d.description.Contains(parameters.Text)
+                                || d.documentowner.name.Contains(parameters.Text))
+                                select new SearchResultItem
+                                {
+                                    ParentRegisterId = d.register.parentRegisterId,
+                                    ParentRegisterName = d.register.parentRegister.name,
+                                    ParentRegisterDescription = d.register.parentRegister.description,
+                                    ParentRegisterSeoname = d.register.parentRegister.seoname,
+                                    ParentregisterOwner = d.register.parentRegister.owner.seoname,
+                                    RegisterName = d.register.name,
+                                    RegisterDescription = d.register.description,
+                                    RegisterItemName = d.name,
+                                    RegisterItemDescription = d.description,
+                                    RegisterID = d.registerId,
+                                    SystemID = d.systemId,
+                                    Discriminator = d.register.containedItemClass,
+                                    RegisterSeoname = d.register.seoname,
+                                    RegisterItemSeoname = d.seoname,
+                                    DocumentOwner = d.documentowner.name,
+                                    DatasetOwner = null,
+                                    RegisterItemUpdated = d.modified,
+                                    RegisterItemStatus = d.statusId,
+                                    Submitter = d.submitter.seoname,
+                                    Shortname = null,
+                                    CodelistValue = null,
+                                    currentVersion = d.versioning.currentVersion
+                                };
+
+                foreach (var doc in documents)
+                {
+                    if ((doc.RegisterItemStatus != "Submitted") || doc.DocumentOwner == user || role == "nd.metadata_admin")
+                    {
+                        searchResultItem.Add(doc);
+                    }
+                }
+
+                int NumFound = searchResultItem.Count();
                 List<SearchResultItem> items = new List<SearchResultItem>();
                 int skip = parameters.Offset;
                 skip = skip - 1;
-                queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit);
+                //queryResults = queryResults.OrderBy(ri => ri.RegisterItemName).Skip(skip).Take(parameters.Limit);
 
-                foreach (SearchResultItem register in queryResults)
+                foreach (SearchResultItem register in searchResultItem)
                 {
                     var item = new SearchResultItem
                     {
@@ -1247,7 +1260,7 @@ namespace Kartverket.Register.Services.Search
 
                 return new SearchResult
                 {
-                    Items = items,
+                    Items = searchResultItem,
                     Limit = parameters.Limit,
                     Offset = parameters.Offset,
                     NumFound = NumFound
@@ -1256,6 +1269,7 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
+                List<SearchResultItem> searchResultItem = new List<SearchResultItem>();
                 Guid systemIDSearch = new Guid();
                 Guid.TryParse(parameters.Text, out systemIDSearch);
 
@@ -1393,39 +1407,6 @@ namespace Kartverket.Register.Services.Search
                                           Type = null,
                                           currentVersion = o.versioning.currentVersion
                                       }).Union(
-                                   (from d in _dbContext.Documents
-                                    where d.register.name.Contains(parameters.Text)
-                                    || d.name.Contains(parameters.Text)
-                                    || d.description.Contains(parameters.Text)
-                                    || d.documentowner.name.Contains(parameters.Text)
-                                    || d.systemId.Equals(systemIDSearch)
-                                    select new SearchResultItem
-                                    {
-                                        ParentRegisterId = d.register.parentRegisterId,
-                                        ParentRegisterName = d.register.parentRegister.name,
-                                        ParentRegisterDescription = d.register.parentRegister.description,
-                                        ParentRegisterSeoname = d.register.parentRegister.seoname,
-                                        ParentregisterOwner = d.register.parentRegister.owner.seoname,
-                                        RegisterName = d.register.name,
-                                        RegisterDescription = d.register.description,
-                                        RegisterItemName = d.name,
-                                        RegisterItemDescription = d.description,
-                                        RegisterID = d.registerId,
-                                        SystemID = d.systemId,
-                                        Discriminator = d.register.containedItemClass,
-                                        RegisterSeoname = d.register.seoname,
-                                        RegisterItemSeoname = d.seoname,
-                                        DocumentOwner = d.documentowner.seoname,
-                                        DatasetOwner = null,
-                                        RegisterItemUpdated = d.modified,
-                                        RegisterItemStatus = d.statusId,
-                                        Submitter = d.submitter.seoname,
-                                        Shortname = null,
-                                        CodelistValue = null,
-                                        ObjektkatalogUrl = null,
-                                        Type = null,
-                                        currentVersion = d.versioning.currentVersion
-                                    }).Union(
                                     (from d in _dbContext.Datasets
                                      where d.register.name.Contains(parameters.Text)
                                      || d.name.Contains(parameters.Text)
@@ -1493,10 +1474,50 @@ namespace Kartverket.Register.Services.Search
                                          Type = null,
                                          currentVersion = e.versioning.currentVersion
                                      })
-                                  ))))));
+                                  )))));
 
+                searchResultItem = queryResult.ToList();
 
-                var queryResultsList = queryResult.ToList();
+                var documents = from d in _dbContext.Documents
+                                where d.register.name.Contains(parameters.Text)
+                                || d.name.Contains(parameters.Text)
+                                || d.description.Contains(parameters.Text)
+                                || d.documentowner.name.Contains(parameters.Text)
+                                || d.systemId.Equals(systemIDSearch)
+                                select new SearchResultItem
+                                {
+                                    ParentRegisterId = d.register.parentRegisterId,
+                                    ParentRegisterName = d.register.parentRegister.name,
+                                    ParentRegisterDescription = d.register.parentRegister.description,
+                                    ParentRegisterSeoname = d.register.parentRegister.seoname,
+                                    ParentregisterOwner = d.register.parentRegister.owner.seoname,
+                                    RegisterName = d.register.name,
+                                    RegisterDescription = d.register.description,
+                                    RegisterItemName = d.name,
+                                    RegisterItemDescription = d.description,
+                                    RegisterID = d.registerId,
+                                    SystemID = d.systemId,
+                                    Discriminator = d.register.containedItemClass,
+                                    RegisterSeoname = d.register.seoname,
+                                    RegisterItemSeoname = d.seoname,
+                                    DocumentOwner = d.documentowner.seoname,
+                                    DatasetOwner = null,
+                                    RegisterItemUpdated = d.modified,
+                                    RegisterItemStatus = d.statusId,
+                                    Submitter = d.submitter.seoname,
+                                    Shortname = null,
+                                    CodelistValue = null,
+                                    ObjektkatalogUrl = null,
+                                    Type = null,
+                                    currentVersion = d.versioning.currentVersion
+                                };
+                foreach (var doc in documents)
+                {
+                    if ((doc.RegisterItemStatus != "Submitted") || doc.DocumentOwner == user || role == "nd.metadata_admin")
+                    {
+                        searchResultItem.Add(doc);
+                    }
+                }
 
                 IQueryable<SearchResultItem> queryResultsListObjektKat = null;
 
@@ -1561,7 +1582,7 @@ namespace Kartverket.Register.Services.Search
 
                 }
 
-                var queryResultsListAll = queryResultsListObjektKat != null ? queryResultsList.Concat(queryResultsListObjektKat.ToList()).ToList() : queryResultsList.ToList();
+                var queryResultsListAll = queryResultsListObjektKat != null ? searchResultItem.Concat(queryResultsListObjektKat.ToList()).ToList() : searchResultItem.ToList();
                 var queryResults = queryResultsListAll;
 
                 int NumFound = queryResultsListAll.Count();

@@ -275,6 +275,7 @@ namespace Kartverket.Register.Tests.Controllers
             register.name = name;
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
+            register.owner = NewOrganization("Testorg");
             return register;
         }
 

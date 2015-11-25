@@ -203,7 +203,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             Models.Api.Register apiRegister = actualListOfRegisters[0];
 
-            apiRegister.id.Should().Be("https://register.geonorge.no/subregister/parent/kartverket/testregister");
+            apiRegister.id.Should().Be("https://register.geonorge.no/subregister/parent/testorg/testregister");
         }
 
         [Test]

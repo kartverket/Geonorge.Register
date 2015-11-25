@@ -126,6 +126,10 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.label + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.documentreference + ";" + item.id;
             }
+            else if (item.itemclass == "CodelistValue")
+            {
+                text = item.label + ";" + item.codevalue +";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+            }
             else if (item.itemclass == "Dataset")
             {
                 text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
@@ -161,6 +165,10 @@ namespace Kartverket.Register.Formatter
             if (containedItemClass == "Document")
             {
                 return "Navn; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; Dokumentreferanse; ID";
+            }
+            else if (containedItemClass == "CodelistValue")
+            {
+                return "Navn; Kode; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; ID";
             }
             else if (containedItemClass == "Dataset")
             {

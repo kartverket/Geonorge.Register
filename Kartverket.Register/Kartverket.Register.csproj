@@ -563,6 +563,10 @@
     <Compile Include="Migrations\201511260821334_AddCoverageDataset.Designer.cs">
       <DependentUpon>201511260821334_AddCoverageDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511260832332_UpdateDatasetType.cs" />
+    <Compile Include="Migrations\201511260832332_UpdateDatasetType.Designer.cs">
+      <DependentUpon>201511260832332_UpdateDatasetType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1123,6 +1127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511260821334_AddCoverageDataset.resx">
       <DependentUpon>201511260821334_AddCoverageDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511260832332_UpdateDatasetType.resx">
+      <DependentUpon>201511260832332_UpdateDatasetType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

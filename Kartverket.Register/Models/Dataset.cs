@@ -7,12 +7,9 @@
 ///////////////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Models
 {
@@ -70,6 +67,10 @@ namespace Kartverket.Register.Models
         [Display(Name = "DOK-status godkjent:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dokStatusDateAccepted { get; set; }
+
+        public string DatasetType { get; set; }
+
+        public virtual List<CoverageDataset> Coverage{get; set;}
         
        
                    

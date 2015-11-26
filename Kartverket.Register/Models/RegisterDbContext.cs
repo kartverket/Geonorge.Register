@@ -6,7 +6,8 @@ namespace Kartverket.Register.Models
 {
     public class RegisterDbContext : DbContext
     {
-        public RegisterDbContext() : base("RegisterDbContext") {
+        public RegisterDbContext() : base("RegisterDbContext")
+        {
 
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Kartverket.Register.Migrations.Configuration>("RegisterDbContext"));
         }
@@ -31,13 +32,14 @@ namespace Kartverket.Register.Models
         public DbSet<Kartverket.DOK.Models.ThemeGroup> ThemeGroup { get; set; }
         public virtual DbSet<Sorting> Sorting { get; set; }
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
+        public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Kartverket.DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
+            modelBuilder.Entity<DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
+            modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
         }
 
         public override int SaveChanges()
@@ -50,11 +52,12 @@ namespace Kartverket.Register.Models
                 var reg = entity.Entity as Register;
                 var regItem = entity.Entity as RegisterItem;
 
-                if (reg != null) {
+                if (reg != null)
+                {
                     result = Save();
                     Index(reg.systemId);
                 }
-                else if (regItem != null) 
+                else if (regItem != null)
                 {
                     result = Save();
                     Index(regItem.systemId);
@@ -71,15 +74,17 @@ namespace Kartverket.Register.Models
             string id = systemID.ToString();
             string url = "http://" + System.Web.HttpContext.Current.Request.Url.Host + ":" + System.Web.HttpContext.Current.Request.Url.Port + "/IndexSingle/" + id;
             System.Net.WebClient c = new System.Net.WebClient();
-            try 
-            { 
+            try
+            {
                 var data = c.DownloadString(url);
             }
-            catch (System.Exception ex) {
+            catch (System.Exception ex)
+            {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
         }
-        int Save() {
+        int Save()
+        {
             return base.SaveChanges();
         }
     }

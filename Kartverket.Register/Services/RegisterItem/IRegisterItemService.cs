@@ -28,5 +28,6 @@ namespace Kartverket.Register.Services.RegisterItem
         Models.RegisterItem GetRegisterItemByVersionNr(string parentregister, string registername, string documentname, int versionNumber);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1);
         bool validateName(Object model);
+        void SaveRegisterItem(Dataset dataset);
     }
 }

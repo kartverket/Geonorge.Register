@@ -11,8 +11,6 @@ namespace Kartverket.Register.Services
         private ClaimsPrincipal _claimsPrincipal;
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterItemService _registerItemService;
-        private string role = GetSecurityClaim("role");
-        private string user = GetSecurityClaim("organization");
 
         public AccessControlService(ClaimsPrincipal claimsPrincipal)
         {
@@ -45,6 +43,9 @@ namespace Kartverket.Register.Services
 
         private bool accessRegisterItem(object model)
         {
+            string role = GetSecurityClaim("role");
+            string user = GetSecurityClaim("organization");
+
             RegisterDbContext db = new RegisterDbContext();
             Models.RegisterItem registerItem = (Models.RegisterItem)model;
 
@@ -70,11 +71,13 @@ namespace Kartverket.Register.Services
 
         private bool IsAdmin()
         {
+            string role = GetSecurityClaim("role");
             return role == "nd.metadata_admin";
         }
 
         private bool accessRegister(object model)
         {
+            string role = GetSecurityClaim("role");
             Models.Register register = (Models.Register)model;
             return register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor");
         }
@@ -94,7 +97,28 @@ namespace Kartverket.Register.Services
             return owner.ToLower() == user.ToLower();
         }
 
-        private static string GetSecurityClaim(string type)
+        //public static string GetSecurityClaim(string type)
+        //{
+        //    string result = null;
+        //    foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+        //    {
+        //        if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+        //        {
+        //            result = claim.Value;
+        //            break;
+        //        }
+        //    }
+
+        //    // bad hack, must fix BAAT
+        //    if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+        //    {
+        //        result = "Kartverket";
+        //    }
+
+        //    return result;
+        //}
+
+        public string GetSecurityClaim(string type)
         {
             string result = null;
             foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)

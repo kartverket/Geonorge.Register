@@ -391,5 +391,11 @@ namespace Kartverket.Register.Services.RegisterItem
             return false;
         }
 
+        public void SaveRegisterItem(Dataset dataset)
+        {
+            _dbContext.Entry(dataset).State = EntityState.Modified;
+            _dbContext.RegisterItems.Add(dataset);
+            _dbContext.SaveChanges();
+        }
     }    
 }

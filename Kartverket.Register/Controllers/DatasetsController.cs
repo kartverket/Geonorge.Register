@@ -11,6 +11,7 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using System.Web;
 using System.Net.Http;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -75,87 +76,28 @@ namespace Kartverket.Register.Controllers
         {
             if (uuid != null)
             {
-                var model = new Dataset();
-                try
-                {
-                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-                }
-                catch (Exception e)
-                {
-                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
-                }
-
-                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
-                ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+                Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
                 return View(model);
             }
 
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            dataset.register = db.Registers.Find(regId);
-
-            ValidationName(dataset, dataset.register);
-
-            if (ModelState.IsValid)
+            dataset.register = _registerService.GetRegister(parentRegister, registername);
+            if (_accessControlService.Access(dataset))
             {
-                dataset.systemId = Guid.NewGuid();
-                dataset.modified = DateTime.Now;
-                dataset.dateSubmitted = DateTime.Now;
-                dataset.registerId = regId;
-                dataset.statusId = "Valid";
-                dataset.dokStatusId = "Proposal";
-                dataset.versionNumber = 1;
-                dataset.versioningId = _registerItemService.NewVersioningGroup(dataset);
-
-                if (dataset.name == null || dataset.name.Length == 0)
+                if (!NameIsValid(dataset))
                 {
-                    dataset.name = "ikke angitt";
-                    dataset.seoname = dataset.systemId.ToString();
+                    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                 }
-                if (dataset.description == null || dataset.description.Length == 0)
+                else if (ModelState.IsValid)
                 {
-                    dataset.description = "ikke angitt";
+                    initialisationDataset(dataset);
+                    return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                 }
-                dataset.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(dataset.name);
-
-                string organizationLogin = GetSecurityClaim("organization");
-
-                var queryResults = from o in db.Organizations
-                                   where o.name == organizationLogin
-                                   select o.systemId;
-
-                Guid orgId = queryResults.FirstOrDefault();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                dataset.submitterId = orgId;
-                dataset.submitter = submitterOrganisasjon;
-                dataset.datasetowner = submitterOrganisasjon;
-                dataset.datasetownerId = orgId;
-
-                db.Entry(dataset).State = EntityState.Modified;
-                //db.SaveChanges();
-
-                db.RegisterItems.Add(dataset);
-                db.SaveChanges();
-                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect("/subregister/" + dataset.register.parentRegister.seoname + "/" + dataset.register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + dataset.datasetowner.seoname + "/" + dataset.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + registername + "/" + dataset.datasetowner.seoname + "/" + dataset.seoname);
-                }
-
             }
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
-
             return View(dataset);
         }
+        
 
         private void ValidationName(Dataset dataset, Kartverket.Register.Models.Register register)
         {
@@ -284,7 +226,8 @@ namespace Kartverket.Register.Controllers
                             originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
                         }
                     }
-                    else {
+                    else
+                    {
                         originalDataset.dokStatusDateAccepted = null;
                     }
                 }
@@ -425,6 +368,99 @@ namespace Kartverket.Register.Controllers
         public static implicit operator DatasetsController(HttpRequestMessage v)
         {
             throw new NotImplementedException();
+        }
+
+        private void initialisationDataset(Dataset dataset)
+        {
+            dataset.systemId = Guid.NewGuid();
+            dataset.modified = DateTime.Now;
+            dataset.dateSubmitted = DateTime.Now;
+            dataset.registerId = dataset.register.systemId;
+            dataset.statusId = "Valid";
+            dataset.dokStatusId = "Proposal";
+            dataset.versionNumber = GetVersionNr(dataset.versionNumber);
+            dataset.name = DatasetName(dataset.name);
+            dataset.seoname = DatasetSeoName(dataset.name);
+            dataset.versioningId = GetVersioningId(dataset);
+
+            SetDatasetOwnerAndSubmitter(dataset);
+
+            _registerItemService.SaveRegisterItem(dataset);
+        }
+
+        private void SetDatasetOwnerAndSubmitter(Dataset dataset)
+        {
+            string organizationLogin = _accessControlService.GetSecurityClaim("organization");
+            Organization submitterOrganisasjon = _registerService.GetOrganization(organizationLogin);
+            dataset.submitterId = submitterOrganisasjon.systemId;
+            dataset.submitter = submitterOrganisasjon;
+            dataset.datasetowner = submitterOrganisasjon;
+            dataset.datasetownerId = submitterOrganisasjon.systemId;
+        }
+
+        private Guid? GetVersioningId(Dataset dataset)
+        {
+            if (dataset.versioningId == null)
+            {
+                return _registerItemService.NewVersioningGroup(dataset);
+            }
+            else
+            {
+                return dataset.versioningId;
+            }
+        }
+
+        private string DatasetSeoName(string name)
+        {
+            return Helpers.RegisterUrls.MakeSeoFriendlyString(name);
+        }
+
+        private string DatasetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "ikke angitt";
+            }
+            else
+            {
+                return name;
+            }
+        }
+
+        private int GetVersionNr(int versionNumber)
+        {
+            if (versionNumber == 0)
+            {
+                versionNumber = 1;
+            }
+            else
+            {
+                versionNumber++;
+            }
+            return versionNumber;
+        }
+
+
+        private bool NameIsValid(Dataset dataset)
+        {
+            return _registerItemService.validateName(dataset);
+        }
+
+        private Dataset GetMetadataFromKartkatalogen(Dataset dataset, string uuid)
+        {
+            var model = new Dataset();
+            try
+            {
+                new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+            }
+            catch (Exception e)
+            {
+                TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+            }
+
+            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
+            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            return model;
         }
     }
 }

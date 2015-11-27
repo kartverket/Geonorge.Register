@@ -19,7 +19,7 @@ namespace Kartverket.Register.Tests.Controllers
     {
 
         [Test]
-        public void CreateShouldReturnViewWhenUserHaveAccess() {   
+        public void GetCreateShouldReturnViewWhenUserHaveAccess() {   
             Dataset dataset = new Dataset();
             dataset.register = NewRegister("Det offentlige kartgrunnlaget");
 
@@ -37,10 +37,9 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
         [Test]
-        public void CreateShouldReturnHttpNotFoundWhenRegisterIdNull()
+        public void GetCreateShouldReturnHttpNotFoundWhenRegisterIdNull()
         {
             Dataset dataset = new Dataset();
-            //dataset.register = NewRegister("Det offentlige kartgrunnlaget");
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
@@ -53,10 +52,56 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().BeNull();
         }
 
+        [Test]
+        public void PostCreateShouldReturnViewWhenUuidIsNotNull()
+        {
+            Dataset dataset = new Dataset();
+            var controller = createController(null, null, null);
+            var result = controller.Create(dataset, null, "123", null, null) as ViewResult;
+
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void PostCreateShouldReturnRegisterItemDetails()
+        {
+            Dataset dataset = NewDataset("Navn på datasett");
+            dataset.name = "navn på datasett";
+            dataset.register = NewRegister("Det offentlige kartgrunnlaget");
+
+            var registerService = new Mock<IRegisterService>();
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
+            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
+            registerService.Setup(o => o.GetOrganization(dataset.submitter.seoname)).Returns(dataset.submitter);
+
+            var controller = createController(registerService.Object, registerItemService.Object, accessControlService.Object);
+            var result = controller.Create(dataset, dataset.register.seoname, null, null, null) as ActionResult;
+           
+            result.Should().NotBeNull();
+        }
+
         private DatasetsController createController(IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
         {
             var controller = new DatasetsController(registerItemService, registerService, accessControlService);
             return controller;
+        }
+
+        private Dataset NewDataset(string name)
+        {
+            Dataset dataset = new Dataset();
+            dataset.systemId = Guid.NewGuid();
+            dataset.name = name;
+            dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);
+            dataset.description = "testbeskrivelse";
+            dataset.datasetowner = NewOrganization("Testorg");
+            dataset.datasetownerId = dataset.datasetowner.systemId;
+            dataset.submitter = dataset.datasetowner;
+            dataset.submitterId = dataset.submitterId;
+            return dataset;
         }
 
         private Models.Register NewRegister(string name, int accessId = 2)
@@ -66,13 +111,13 @@ namespace Kartverket.Register.Tests.Controllers
             register.name = name;
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
-            register.owner = NewOrganization("Testorg");
+            register.owner = NewOrganization("Kartverket");
             register.accessId = accessId;
             return register;
         }
-        private Models.Organization NewOrganization(string name)
+        private Organization NewOrganization(string name)
         {
-            Models.Organization organization = new Models.Organization();
+            Organization organization = new Organization();
             organization.systemId = Guid.NewGuid();
             organization.name = name;
             organization.seoname = RegisterUrls.MakeSeoFriendlyString(organization.name);

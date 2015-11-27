@@ -547,7 +547,6 @@ namespace Kartverket.Register.Controllers
             document.versionNumber = getVersionNr(document.versionNumber);
             document.name = DocumentName(document.name);
             document.seoname = DocumentSeoName(document.name);
-            document.description = document.description;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
             document.documentUrl = documentUrl(url, documentfile, document);
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);

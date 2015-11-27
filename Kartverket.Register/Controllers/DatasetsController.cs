@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
-using System.IO;
-using Kartverket.Register.Helpers;
-using System.Text.RegularExpressions;
-using System.Drawing;
-using System.ComponentModel.DataAnnotations;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Services;
+using System.Web;
+using System.Net.Http;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,32 +23,20 @@ namespace Kartverket.Register.Controllers
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+        private IAccessControlService _accessControlService;
+
+        public DatasetsController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService)
+        {
+            _registerItemService = registerItemService;
+            _registerService = registerService;
+            _accessControlService = accessControllService;
+        }
+
         public DatasetsController()
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
-        }
-
-        // GET: Datasets
-        public ActionResult Index()
-        {
-            var datasets = db.Datasets.Include(d => d.register).Include(d => d.status).Include(d => d.submitter);
-            return View(datasets.ToList());
-        }
-
-        // GET: Datasets/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Dataset dataset = db.Datasets.Find(id);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(dataset);
+            _accessControlService = new AccessControlService();
         }
 
         // GET: Datasets/Create
@@ -62,29 +46,21 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Dataset dataset = new Dataset();
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("dataset");
-
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername && o.parentRegister.seoname == parentRegister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
-            dataset.register = register;
-
-            if (register.parentRegisterId != null)
+            dataset.register = _registerService.GetRegister(parentRegister, registername);
+            if (dataset.register != null)
             {
-                dataset.register.parentRegister = register.parentRegister;
-            }
+                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
 
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
-
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
-            {
-                return View(dataset);
+                if (_accessControlService.Access(dataset))
+                {
+                    return View(dataset);
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound("Finner ikke registeret");
         }
 
 
@@ -444,6 +420,11 @@ namespace Kartverket.Register.Controllers
         protected override void OnException(ExceptionContext filterContext)
         {
             Log.Error("Error", filterContext.Exception);
+        }
+
+        public static implicit operator DatasetsController(HttpRequestMessage v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

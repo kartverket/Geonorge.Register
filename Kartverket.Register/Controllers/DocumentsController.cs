@@ -470,6 +470,10 @@ namespace Kartverket.Register.Controllers
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
+            if (true)
+            {
+
+            }
             return role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && registerItem.register.accessId == 2);
         }
 

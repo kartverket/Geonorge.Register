@@ -29,19 +29,6 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         }
 
         [Test]
-        public void getCurrentSubregisterItem()
-        {
-            Models.Register register = NewRegister("Register name");
-            register.parentRegister = NewRegister("Parentregister name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
-
-            var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentSubregisterItem(register.parentRegister.seoname, register.seoname, versions[1].seoname);
-
-            actualCurrentVersion.Should().Be(versions[0]);
-        }
-
-        [Test]
         public void getVersionsOfItem()
         {
             Models.Register register = NewRegister("Register name");
@@ -61,20 +48,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualVersion = registerItemService.GetRegisterItemByVersionNr(register.seoname, "itemname", 2);
-
-            actualVersion.Should().Be(versions[2]);
-        }
-
-        [Test]
-        public void GetSubregisterItemByVersionNr()
-        {
-            Models.Register register = NewRegister("Register name");
-            register.parentRegister = NewRegister("Parent name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
-
-            var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualVersion = registerItemService.GetSubregisterItemByVersionNr(register.parentRegister.seoname, register.seoname, "itemname", 2);
+            Models.RegisterItem actualVersion = registerItemService.GetRegisterItem(null,  register.seoname, "itemname", 2);
 
             actualVersion.Should().Be(versions[2]);
         }

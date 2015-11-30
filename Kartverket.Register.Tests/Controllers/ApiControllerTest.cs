@@ -124,10 +124,10 @@ namespace Kartverket.Register.Tests.Controllers
         public void GetRegisterItemByNameAndVersion()
         {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            List<RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetRegisterItemByVersionNr("register_name", "itemname", 2)) .Returns(versions[2]);
+            registerItemService.Setup(s => s.GetRegisterItem(null, "register_name", "itemname", 2)).Returns(versions[2]);
             var controller = createController(url, null, registerItemService.Object);
             var result = controller.GetRegisterItemByVersionNr("register_name", "itemname", 2) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
@@ -296,7 +296,7 @@ namespace Kartverket.Register.Tests.Controllers
             return controller;
         }
 
-        private List<Models.RegisterItem> GetListOfVersions(string versionName, Models.Register register, string Owner)
+        private List<RegisterItem> GetListOfVersions(string versionName, Models.Register register, string Owner)
         {
             Models.Version versionGroup = new Models.Version();
             versionGroup.systemId = Guid.NewGuid();
@@ -305,7 +305,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             for (int i = 0; i < 5; i++)
             {
-                Models.Document document = new Document();
+                Document document = new Document();
                 document.systemId = Guid.NewGuid();
                 document.name = versionName;
                 document.seoname = RegisterUrls.MakeSeoFriendlyString(document.name);

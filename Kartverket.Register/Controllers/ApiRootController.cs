@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
-            var registerItem = _registerItemService.GetRegisterItemByVersionNr(register, item, version);
+            var registerItem = _registerItemService.GetRegisterItem(null, register, item, version);
             return Ok(ConvertRegisterItem(registerItem.register, registerItem));
         }
 

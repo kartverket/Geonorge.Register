@@ -340,14 +340,8 @@ namespace Kartverket.Register.Controllers
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
             Document document = new Document();
-            if (string.IsNullOrWhiteSpace(parentregister))
-            {
-                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, vnr);
-            }
-            else
-            {
-                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, vnr);
-            }
+            document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
+
             if (document == null)
             {
                 return HttpNotFound();
@@ -367,14 +361,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
             Document document = new Document();
-            if (string.IsNullOrWhiteSpace(parentregister))
-            {
-                document = (Document)_registerItemService.GetRegisterItemByVersionNr(registername, documentname, versionNumber);
-            }
-            else
-            {
-                document = (Document)_registerItemService.GetSubregisterItemByVersionNr(parentregister, registername, documentname, versionNumber);
-            }
+            document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
             string parent = null;
             if (document.register.parentRegisterId != null)
             {

@@ -4,15 +4,12 @@ using NUnit.Framework;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.Register;
 using Moq;
-using System.Web.Http.Results;
 using Kartverket.Register.Controllers;
 using Kartverket.Register.Services.RegisterItem;
-using System.Net.Http;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using FluentAssertions;
 using Kartverket.Register.Services;
-using System.Web;
 
 namespace Kartverket.Register.Tests.Controllers
 {
@@ -22,19 +19,22 @@ namespace Kartverket.Register.Tests.Controllers
         // *** CREATE DATASET
 
         [Test]
-        public void GetCreateShouldReturnViewWhenUserHaveAccess() {   
+        public void GetCreateShouldReturnViewWhenUserHaveAccess()
+        {
             Dataset dataset = new Dataset();
             dataset.register = NewRegister("Det offentlige kartgrunnlaget");
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
             registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
             accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            registerItemService.Setup(s => s.GetThemeGroupSelectList("ThemeGroup")).Returns(NewList());
 
-            var controller = CreateController(registerService.Object, null, accessControlService.Object);
+            var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
             var result = controller.Create(dataset.register.seoname, null) as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
-            
+
             result.Should().NotBeNull();
             resultDataset.register.name.Should().Be(dataset.register.name);
         }
@@ -196,6 +196,11 @@ namespace Kartverket.Register.Tests.Controllers
             organization.seoname = RegisterUrls.MakeSeoFriendlyString(organization.name);
             organization.description = "beskrivelse av organisasjon";
             return organization;
+        }
+
+        private SelectList NewList() {
+            List<string> list = new List<string>();
+            return new SelectList(list);
         }
     }
 }

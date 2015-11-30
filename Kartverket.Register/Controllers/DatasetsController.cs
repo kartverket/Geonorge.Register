@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Net;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using Kartverket.DOK.Service;
@@ -50,8 +46,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
-                ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
-
+                _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
                 if (_accessControlService.Access(dataset))
                 {
                     return View(dataset);
@@ -97,8 +92,7 @@ namespace Kartverket.Register.Controllers
             {
                 throw new HttpException(401, "Access Denied");
             }
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
+            Viewbags(dataset);
             return View(dataset);
         }
 
@@ -172,64 +166,32 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
         public ActionResult Delete(string registername, string datasetname, string parentregister, string parentregisterowner)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-
-            var queryResults = from o in db.Datasets
-                               where o.seoname == datasetname && o.register.seoname == registername
-                               && o.register.parentRegister.seoname == parentregister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-
-            if (systId == null)
+            Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentregister, registername, datasetname, 1);
+            if (dataset != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (_accessControlService.Access(dataset))
+                {
+                    Viewbags(dataset);
+                    return View(dataset);
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            Dataset dataset = db.Datasets.Find(systId);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && dataset.register.accessId == 2 && dataset.datasetowner.name.ToLower() == user.ToLower()))
-            {
-                Viewbags(dataset);
-                return View(dataset);
-            }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
-        [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
+        [Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{datasetname}/slett")]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string registername, string datasetname, string parentregister, string parentregisterowner)
+        public ActionResult DeleteConfirmed(string registername, string datasetname, string parentregister, string registerowner)
         {
-            var queryResults = from o in db.Datasets
-                               where o.seoname == datasetname && o.register.seoname == registername
-                               && o.register.parentRegister.seoname == parentregister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Dataset dataset = db.Datasets.Find(systId);
-
-            string parent = null;
-            if (dataset.register.parentRegisterId != null)
-            {
-                parent = dataset.register.parentRegister.seoname;
-            }
-
-            db.RegisterItems.Remove(dataset);
-            db.SaveChanges();
-
-            if (parent != null)
-            {
-                return Redirect("/subregister/" + parentregister + "/" + parentregisterowner + "/" + registername);
-            }
-
-            return Redirect("/register/" + registername);
+            Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentregister, registername, datasetname, 1);
+            _registerItemService.SaveDeleteRegisterItem(dataset);
+            return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
         }
 
         protected override void Dispose(bool disposing)
@@ -239,27 +201,6 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private string GetSecurityClaim(string type)
-        {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
         }
 
         protected override void OnException(ExceptionContext filterContext)
@@ -427,21 +368,6 @@ namespace Kartverket.Register.Controllers
             return model;
         }
 
-        private void ValidationName(Dataset dataset, Kartverket.Register.Models.Register register)
-        {
-            var queryResultsDataset = from o in db.Datasets
-                                      where o.name == dataset.name &&
-                                      o.systemId != dataset.systemId &&
-                                      o.register.name == register.name &&
-                                      o.register.parentRegisterId == register.parentRegisterId
-                                      select o.systemId;
-
-            if (queryResultsDataset.Count() > 0)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
-            }
-        }
-
         private void Viewbags(Dataset dataset)
         {
             ViewBag.registerId = _registerItemService.GetRegisterSelectList(dataset.registerId);
@@ -449,11 +375,6 @@ namespace Kartverket.Register.Controllers
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
             ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-            //ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);
-            //ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
-            //ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
-            //ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
         }
     }
 }

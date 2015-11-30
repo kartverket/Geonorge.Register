@@ -29,6 +29,7 @@ namespace Kartverket.Register.Services.RegisterItem
         bool validateName(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);
         void SaveEditedRegisterItem(Models.RegisterItem registerItem);
+        void SaveDeleteRegisterItem(Models.RegisterItem registerItem);
         SelectList GetRegisterSelectList(Guid registerId);
         SelectList GetDokStatusSelectList(string dokStatusId);
         SelectList GetSubmitterSelectList(Guid submitterId);

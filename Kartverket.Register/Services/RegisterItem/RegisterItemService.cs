@@ -380,5 +380,11 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             return new SelectList(_dbContext.DOKThemes, "value", "description", themeGroupId);
         }
+
+        public void SaveDeleteRegisterItem(Models.RegisterItem item)
+        {
+            _dbContext.RegisterItems.Remove(item);
+            _dbContext.SaveChanges();
+        }
     }    
 }

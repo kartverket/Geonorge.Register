@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
-using System.Text.RegularExpressions;
-using PagedList;
-using System.Text;
-using System.Xml.Linq;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Search;
@@ -63,29 +56,39 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentRegister, registername);
-            if (register == null) return HttpNotFound();
+            Models.Register register = _registerService.GetRegister(parentRegister, registername);
+            if (register != null)
+            {
+                if (Search(filter)) register = _searchService.Search(register, filter.text);
+                register = _registerService.FilterRegisterItems(register, filter);
 
-            if (!string.IsNullOrWhiteSpace(filter.text)) register = _searchService.Search(register, filter.text);
-            register = _registerService.FilterRegisterItems(register, filter);
+                ViewBag.search = filter.text;
+                ViewBag.page = page;
+                ViewBag.SortOrder = sorting;
+                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+                ViewBag.register = register.name;
+                ViewBag.registerSEO = register.seoname;
+                ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
+                ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
+                ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
+                ViewBag.page = page;
+                ViewBag.SortOrder = sorting;
+                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+                ViewBag.register = register.name;
+                ViewBag.ownerSEO = owner;
+                ViewBag.search = filter.text;
 
-            ViewBag.search = filter.text;
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
-            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
-            ViewBag.ownerSEO = owner;
-            ViewBag.search = filter.text;
+                return View(register);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
 
-            return View(register);
+        private static bool Search(FilterParameters filter)
+        {
+            return !string.IsNullOrWhiteSpace(filter.text);
         }
 
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
@@ -137,7 +140,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [HttpPost]
         [Route("ny")]
-        public ActionResult Create(Kartverket.Register.Models.Register register)
+        public ActionResult Create(Models.Register register)
         {
             if (role == "nd.metadata_admin")
             {
@@ -176,7 +179,7 @@ namespace Kartverket.Register.Controllers
         [Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
-            Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
+            Models.Register register = _registerService.GetRegister(null, registername);
 
             if (register == null) return HttpNotFound();
 
@@ -196,12 +199,12 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("rediger/{registername}")]
         [Authorize]
-        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string accessRegister)
+        public ActionResult Edit(Models.Register register, string registername, string accessRegister)
         {
             if (role == "nd.metadata_admin")
             {
                 if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
-                Kartverket.Register.Models.Register originalRegister = _registerService.GetRegister(null, registername);
+                Models.Register originalRegister = _registerService.GetRegister(null, registername);
 
                 if (ModelState.IsValid)
                 {
@@ -213,9 +216,9 @@ namespace Kartverket.Register.Controllers
                     if (register.targetNamespace != null) originalRegister.targetNamespace = register.targetNamespace;
                     originalRegister.accessId = register.accessId;
                     originalRegister.parentRegisterId = register.parentRegisterId;
-                    originalRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
+                    originalRegister.seoname = RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
                     originalRegister.modified = DateTime.Now;
-                    if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);               
+                    if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
 
                     db.Entry(originalRegister).State = EntityState.Modified;
                     db.SaveChanges();
@@ -236,7 +239,7 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
+                Models.Register register = _registerService.GetRegister(null, registername);
                 if (register == null) return HttpNotFound();
                 return View(register);
             }
@@ -251,7 +254,7 @@ namespace Kartverket.Register.Controllers
         {
             if (role == "nd.metadata_admin")
             {
-                Kartverket.Register.Models.Register register = _registerService.GetRegister(null, registername);
+                Models.Register register = _registerService.GetRegister(null, registername);
 
                 if (_registerService.RegisterHasChildren(null, registername))
                 {
@@ -332,7 +335,7 @@ namespace Kartverket.Register.Controllers
             Session["nationalSeaRequirement"] = null;
         }
 
-        private void Viewbags(Kartverket.Register.Models.Register register)
+        private void Viewbags(Models.Register register)
         {
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
@@ -340,16 +343,16 @@ namespace Kartverket.Register.Controllers
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 
-        private string GetOwner(Kartverket.Register.Models.RegisterItem registerItem)
+        private string GetOwner(RegisterItem registerItem)
         {
             if (registerItem.register.containedItemClass == "Document")
             {
-                Kartverket.Register.Models.Document document = db.Documents.Find(registerItem.systemId);
+                Document document = db.Documents.Find(registerItem.systemId);
                 return document.documentowner.name;
             }
             else if (registerItem.register.containedItemClass == "Dataset")
             {
-                Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(registerItem.systemId);
+                Dataset dataset = db.Datasets.Find(registerItem.systemId);
                 return dataset.datasetowner.name;
             }
             else

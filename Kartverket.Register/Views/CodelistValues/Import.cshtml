@@ -25,9 +25,8 @@
 
 <h2>Import fra CSV fil</h2>
 <p>Velg csv fil i UTF-8 med kodeliste...</p>
-@using (Html.BeginForm("Import", "CodelistValues", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    if (parentregister != null)
+<form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
+    @if (parentregister != null)
     {
         <input type="hidden" value="@parentRegisterSeoName" id="parentregister" name="parentregister" />
     }
@@ -41,6 +40,7 @@
             </div>
         </div>
     </div>
+
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
         @if (parentregister != null)
@@ -52,5 +52,5 @@
             <a href="/kodeliste/@registerSeoName/ny/">Tilbake</a>
         }
     </div>
-}
 
+</form>

@@ -7,9 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
-using System.Text.RegularExpressions;
 using System.IO;
-using System.Text;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -24,6 +22,7 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IOrganizationService _organizationService;
+        private IAccessControlService _accessControlService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -32,13 +31,7 @@ namespace Kartverket.Register.Controllers
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _organizationService = new OrganizationsService(db);
-        }
-
-        // GET: CodelistValues
-        public ActionResult Index()
-        {
-            var registerItems = db.RegisterItems.Include(c => c.register).Include(c => c.status).Include(c => c.submitter);
-            return View(registerItems.ToList());
+            _accessControlService = new AccessControlService();
         }
 
         [Authorize]
@@ -46,114 +39,43 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny/import")]
         public ActionResult Import(string registername, string parentregister)
         {
-            var queryResults = from o in db.Registers
-                               where o.seoname == registername && o.parentRegister.seoname == parentregister
-                               select o.systemId;
-
-            Guid sysId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = _registerService.GetRegisterByName(registername);
-
-            ViewbagImport(register);
-
-            string role = GetSecurityClaim("role");
-
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
+            Models.Register register = _registerService.GetRegister(parentregister, registername);
+            if (register != null)
             {
-                return View();
+                ViewbagImport(register);
+                if (_accessControlService.Access(register))
+                {
+                    return View();
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound("Fant ikke register");
         }
-
-        private void ViewbagImport(Kartverket.Register.Models.Register register)
-        {
-            ViewBag.registerName = register.name;
-            ViewBag.registerSeoName = register.seoname;
-
-            if (register.parentRegisterId != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-                ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
-                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
-            }
-        }
-
 
         [HttpPost]
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string parentregister)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
         {
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentregister
-                                       select o.systemId;
-            Guid sysId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(sysId);
+            Models.Register register = _registerService.GetRegister(parentregister, registername);
 
             if (csvfile != null)
             {
-                StreamReader csvreader = new StreamReader(csvfile.InputStream);
-
-                // Første rad er overskrift
-                if (!csvreader.EndOfStream)
+                if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
                 {
-                    csvreader.ReadLine();
+                    ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
+                    ViewbagImport(register);
+                    return View();
                 }
-
-                while (!csvreader.EndOfStream)
+                else
                 {
-                    var line = csvreader.ReadLine();
-                    var code = line.Split(';');
-
-                    if (code.Count() == 3)
-                    {
-
-                        //kodenavn, kodeverdi, beskrivelse
-                        CodelistValue codelistValue = new CodelistValue();
-                        codelistValue.systemId = Guid.NewGuid();
-                        codelistValue.name = code[0];
-                        codelistValue.value = code[1];
-                        codelistValue.description = code[2];
-
-                        //test på om navnet finnes fra før og at kodeverdi ikke er null                 
-                        if (ValidationNameImport(codelistValue, register) && codelistValue.value != null)
-                        {
-                            //int versjonsnr = 2;
-                            //FinnesNavnFraFor(registername, codelistValue, versjonsnr);
-
-                            string organizationLogin = GetSecurityClaim("organization");
-                            var queryResultsOrganization = from o in db.Organizations
-                                                           where o.name == organizationLogin
-                                                           select o.systemId;
-                            Guid orgId = queryResultsOrganization.FirstOrDefault();
-                            Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                            codelistValue.submitterId = orgId;
-                            codelistValue.submitter = submitterOrganisasjon;
-                            codelistValue.registerId = sysId;
-                            codelistValue.modified = DateTime.Now;
-                            codelistValue.dateSubmitted = DateTime.Now;
-                            codelistValue.registerId = register.systemId;
-                            codelistValue.statusId = "Submitted";
-                            codelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
-
-                            db.RegisterItems.Add(codelistValue);
-                            db.SaveChanges();
-                        }
-                    }
-                    if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
-                    {
-                        ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
-                        ViewbagImport(register);
-                        return View();
-                    }
+                    NewCodelistValue(csvfile, register);
                 }
-
-                if (register.parentRegisterId != null)
-                {
-                    return Redirect("/subregister/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + registername);
-                }
-                return Redirect("/register/" + registername);
+                return Redirect(RegisterUrls.registerUrl(parentregister, register.owner.seoname, registername));
             }
             ViewbagImport(register);
             return View();
@@ -284,7 +206,7 @@ namespace Kartverket.Register.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && 
+            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") &&
                 codelistValue.register.accessId == 2 && codelistValue.submitter.name.ToLower() == user.ToLower()))
             {
                 Viewbags(codelistValue);
@@ -500,9 +422,77 @@ namespace Kartverket.Register.Controllers
             ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name), "systemId", "name", codelistValue.broaderItemId);
         }
 
+        private void ViewbagImport(Models.Register register)
+        {
+            ViewBag.registerName = register.name;
+            ViewBag.registerSeoName = register.seoname;
+
+            if (register.parentRegisterId != null)
+            {
+                ViewBag.parentRegister = register.parentRegister.name;
+                ViewBag.parentRegisterSeoName = register.parentRegister.seoname;
+                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+            }
+        }
+
         protected override void OnException(ExceptionContext filterContext)
         {
             Log.Error("Error", filterContext.Exception);
+        }
+
+        private void NewCodelistValue(HttpPostedFileBase csvfile, Models.Register register)
+        {
+            StreamReader csvreader = new StreamReader(csvfile.InputStream);
+
+            // Første rad er overskrift
+            if (!csvreader.EndOfStream)
+            {
+                csvreader.ReadLine();
+            }
+            while (!csvreader.EndOfStream)
+            {
+                var line = csvreader.ReadLine();
+                var code = line.Split(';');
+
+                if (code.Count() == 3)
+                {
+                    initialisationCodelistValueImport(register, code);
+                }
+            }
+        }
+
+        private void initialisationCodelistValueImport(Models.Register register, string[] code)
+        {
+            //kodenavn, kodeverdi, beskrivelse
+            CodelistValue codelistValue = new CodelistValue();
+            codelistValue.systemId = Guid.NewGuid();
+            codelistValue.name = code[0];
+            codelistValue.value = code[1];
+            codelistValue.description = code[2];
+            codelistValue.registerId = register.systemId;
+            codelistValue.register = register;
+
+            if (!string.IsNullOrWhiteSpace(codelistValue.value))
+            {
+                if (_registerItemService.validateName(codelistValue))
+                {
+                    SetCodelistValueSubmitter(codelistValue);
+                    codelistValue.modified = DateTime.Now;
+                    codelistValue.dateSubmitted = DateTime.Now;
+                    codelistValue.statusId = "Submitted";
+                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
+
+                    _registerItemService.SaveNewRegisterItem(codelistValue);
+                }
+            }
+        }
+
+        private void SetCodelistValueSubmitter(CodelistValue codelistValue)
+        {
+            string organizationLogin = _accessControlService.GetSecurityClaim("organization");
+            Organization submitterOrganisasjon = _registerService.GetOrganization(organizationLogin);
+            codelistValue.submitterId = submitterOrganisasjon.systemId;
+            codelistValue.submitter = submitterOrganisasjon;
         }
     }
 }

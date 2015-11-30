@@ -12,11 +12,14 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using FluentAssertions;
 using Kartverket.Register.Services;
+using System.Web;
 
 namespace Kartverket.Register.Tests.Controllers
 {
     class DatasetsControllerTest
     {
+
+        // *** CREATE DATASET
 
         [Test]
         public void GetCreateShouldReturnViewWhenUserHaveAccess() {   
@@ -26,9 +29,9 @@ namespace Kartverket.Register.Tests.Controllers
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
             registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
-            accessControlService.Setup(a => a.Access(Moq.It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
 
-            var controller = createController(registerService.Object, null, accessControlService.Object);
+            var controller = CreateController(registerService.Object, null, accessControlService.Object);
             var result = controller.Create(dataset.register.seoname, null) as ViewResult;
             Dataset resultDataset = (Dataset)result.Model;
             
@@ -42,11 +45,9 @@ namespace Kartverket.Register.Tests.Controllers
             Dataset dataset = new Dataset();
 
             var registerService = new Mock<IRegisterService>();
-            var accessControlService = new Mock<IAccessControlService>();
             registerService.Setup(r => r.GetRegister(null, null)).Returns(dataset.register);
-            accessControlService.Setup(a => a.Access(Moq.It.IsAny<Dataset>())).Returns(false);
 
-            var controller = createController(registerService.Object, null, accessControlService.Object);
+            var controller = CreateController(registerService.Object, null, null);
             var result = controller.Create(null, null) as ViewResult;
 
             result.Should().BeNull();
@@ -56,18 +57,16 @@ namespace Kartverket.Register.Tests.Controllers
         public void PostCreateShouldReturnViewWhenUuidIsNotNull()
         {
             Dataset dataset = new Dataset();
-            var controller = createController(null, null, null);
+            var controller = CreateController(null, null, null);
             var result = controller.Create(dataset, null, "123", null, null) as ViewResult;
 
             result.Should().NotBeNull();
         }
 
         [Test]
-        public void PostCreateShouldReturnRegisterItemDetails()
+        public void PostCreateShouldReturnRegisterItemDetailsPage()
         {
             Dataset dataset = NewDataset("Navn på datasett");
-            dataset.name = "navn på datasett";
-            dataset.register = NewRegister("Det offentlige kartgrunnlaget");
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
@@ -78,13 +77,85 @@ namespace Kartverket.Register.Tests.Controllers
             accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
             registerService.Setup(o => o.GetOrganization(dataset.submitter.seoname)).Returns(dataset.submitter);
 
-            var controller = createController(registerService.Object, registerItemService.Object, accessControlService.Object);
+            var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
             var result = controller.Create(dataset, dataset.register.seoname, null, null, null) as ActionResult;
-           
+            
             result.Should().NotBeNull();
         }
 
-        private DatasetsController createController(IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
+
+        // *** EDIT DATASET
+
+        [Test]
+        public void GetEditShouldReturnViewWhenUserHaveAccess()
+        {
+            Dataset dataset = NewDataset("Test Datasett");
+
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+
+            registerItemService.Setup(r => r.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber)).Returns(dataset);
+            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+
+            var controller = CreateController(null, registerItemService.Object, accessControlService.Object);
+            var result = controller.Edit(dataset.register.seoname, dataset.seoname, null) as ViewResult;
+            Dataset resultDataset = (Dataset)result.Model;
+
+            result.Should().NotBeNull();
+            resultDataset.register.name.Should().Be(dataset.register.name);
+        }
+
+        [Test]
+        public void GetEditShouldReturnHttpNotFoundWhenRegisterIdNull()
+        {
+            Dataset dataset = null;
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1)).Returns(dataset);
+
+            var controller = CreateController(null, registerItemService.Object, null);
+            var result = controller.Edit(null, null, null) as ViewResult;
+
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public void PostEditShouldReturnViewWhenUuidIsNotNull()
+        {
+            Dataset dataset = NewDataset("Test Datasett");
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1)).Returns(dataset);
+
+            var controller = CreateController(null, registerItemService.Object, null);
+            var result = controller.Edit(dataset, null, null, "123", false, null, null) as ViewResult;
+
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void PostEditShouldReturnRegisterItemDetailsPageWhenOriginalDatasetIsNotNull()
+        {
+            Dataset dataset = NewDataset("Navn på datasett");
+
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+            var registerService = new Mock<IRegisterService>();
+            registerItemService.Setup(v => v.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber)).Returns(dataset);
+            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+            registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
+            registerService.Setup(o => o.GetOrganization(dataset.submitter.seoname)).Returns(dataset.submitter);
+
+            var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
+            var result = controller.Edit(dataset, dataset.register.seoname, dataset.seoname, null, false, null, null) as ActionResult;
+
+            result.Should().NotBeNull();
+        }
+
+
+
+
+        // *** HJELPEMETODER
+        private DatasetsController CreateController(IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
         {
             var controller = new DatasetsController(registerItemService, registerService, accessControlService);
             return controller;
@@ -101,6 +172,8 @@ namespace Kartverket.Register.Tests.Controllers
             dataset.datasetownerId = dataset.datasetowner.systemId;
             dataset.submitter = dataset.datasetowner;
             dataset.submitterId = dataset.submitterId;
+            dataset.versionNumber = 1;
+            dataset.register = NewRegister("Det offentlige kartgrunnlaget");
             return dataset;
         }
 

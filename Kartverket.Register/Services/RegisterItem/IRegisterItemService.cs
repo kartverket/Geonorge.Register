@@ -25,9 +25,14 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
-        Models.RegisterItem GetRegisterItemByVersionNr(string parentregister, string registername, string documentname, int versionNumber);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1);
         bool validateName(Object model);
-        void SaveRegisterItem(Dataset dataset);
+        void SaveNewRegisterItem(Models.RegisterItem registerItem);
+        void SaveEditedRegisterItem(Models.RegisterItem registerItem);
+        SelectList GetRegisterSelectList(Guid registerId);
+        SelectList GetDokStatusSelectList(string dokStatusId);
+        SelectList GetSubmitterSelectList(Guid submitterId);
+        SelectList GetOwnerSelectList(Guid ownerId);
+        SelectList GetThemeGroupSelectList(string themeGroupId);
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Mvc;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -294,7 +295,7 @@ namespace Kartverket.Register.Services.RegisterItem
             return versjoneringsGruppe.systemId;
         }
 
-        public Models.RegisterItem GetRegisterItemByVersionNr(string parentregister, string register, string item, int vnr)
+        public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)
         {
             if (string.IsNullOrWhiteSpace(parentregister))
             {
@@ -304,18 +305,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    o.versionNumber == vnr
                                    select o;
 
-                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
-
-                if (registerItem == null)
-                {
-                    queryResults = from o in _dbContext.RegisterItems
-                                   where (o.seoname == item || o.name == item) &&
-                                   (o.register.seoname == register || o.register.name == register) &&
-                                   o.versionNumber == 1
-                                   select o;
-                    registerItem = queryResults.FirstOrDefault();
-                }
-                return registerItem;
+                return queryResults.FirstOrDefault();
             }
             else
             {
@@ -326,45 +316,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
                                    select o;
 
-                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
-                return registerItem;
-            }
-        }
-
-        public Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)
-        {
-            if (string.IsNullOrWhiteSpace(parentregister))
-            {
-                var queryResults = from o in _dbContext.RegisterItems
-                                   where (o.seoname == item || o.name == item) &&
-                                   (o.register.seoname == register || o.register.name == register) &&
-                                   o.versionNumber == vnr
-                                   select o;
-
-                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
-
-                if (registerItem == null)
-                {
-                    queryResults = from o in _dbContext.RegisterItems
-                                   where (o.seoname == item || o.name == item) &&
-                                   (o.register.seoname == register || o.register.name == register) &&
-                                   o.versionNumber == 1
-                                   select o;
-                    registerItem = queryResults.FirstOrDefault();
-                }
-                return registerItem;
-            }
-            else
-            {
-                var queryResults = from o in _dbContext.RegisterItems
-                                   where (o.seoname == item || o.name == item) &&
-                                   (o.register.seoname == register || o.register.name == register) &&
-                                   o.versionNumber == vnr &&
-                                   (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
-                                   select o;
-
-                Models.RegisterItem registerItem = queryResults.FirstOrDefault();
-                return registerItem;
+                return queryResults.FirstOrDefault();
             }
         }
 
@@ -391,11 +343,42 @@ namespace Kartverket.Register.Services.RegisterItem
             return false;
         }
 
-        public void SaveRegisterItem(Dataset dataset)
+        public void SaveNewRegisterItem(Models.RegisterItem item)
         {
-            _dbContext.Entry(dataset).State = EntityState.Modified;
-            _dbContext.RegisterItems.Add(dataset);
+            _dbContext.Entry(item).State = EntityState.Modified;
+            _dbContext.RegisterItems.Add(item);
             _dbContext.SaveChanges();
+        }
+
+        public void SaveEditedRegisterItem(Models.RegisterItem item)
+        {
+            _dbContext.Entry(item).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
+        public SelectList GetRegisterSelectList(Guid registerId)
+        {
+            return new SelectList(_dbContext.Registers, "systemId", "name", registerId);
+        }
+
+        public SelectList GetDokStatusSelectList(string dokStatusId)
+        {
+            return new SelectList(_dbContext.DokStatuses.OrderBy(s => s.description), "value", "description", dokStatusId);
+        }
+
+        public SelectList GetSubmitterSelectList(Guid submitterId)
+        {
+            return new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "systemId", "name", submitterId);
+        }
+
+        public SelectList GetOwnerSelectList(Guid ownerId)
+        {
+            return new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "systemId", "name", ownerId);
+        }
+
+        public SelectList GetThemeGroupSelectList(string themeGroupId)
+        {
+            return new SelectList(_dbContext.DOKThemes, "value", "description", themeGroupId);
         }
     }    
 }

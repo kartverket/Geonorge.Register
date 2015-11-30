@@ -130,7 +130,7 @@ namespace Kartverket.Register.Controllers
         {
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-            Document document = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, vnr.Value);
+            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
 
             if (document == null)
             {
@@ -155,7 +155,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
-            Document originalDocument = (Document)_registerItemService.GetRegisterItemByVersionNr(parentregister, registername, documentname, document.versionNumber);
+            Document originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
 
             if (!NameIsValid(document))

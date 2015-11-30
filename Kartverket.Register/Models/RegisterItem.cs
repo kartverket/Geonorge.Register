@@ -36,7 +36,7 @@ namespace Kartverket.Register.Models
         
         [ForeignKey("submitter")]
         [Display(Name = "Innsender:")]
-        public Guid? submitterId { get; set; }
+        public Guid submitterId { get; set; }
         public virtual Organization submitter { get; set; }
 
         [Display(Name = "Dato innsendt:")]

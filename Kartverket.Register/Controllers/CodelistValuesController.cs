@@ -277,7 +277,7 @@ namespace Kartverket.Register.Controllers
         {
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname);
+            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1);
 
             if (codelistValue == null)
             {
@@ -302,7 +302,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader)
         {
-            CodelistValue originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname);
+            CodelistValue originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1);
 
             if (!_registerItemService.validateName(codelistValue))
             {

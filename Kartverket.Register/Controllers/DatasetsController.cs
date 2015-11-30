@@ -93,25 +93,13 @@ namespace Kartverket.Register.Controllers
                     return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                 }
             }
+            else
+            {
+                throw new HttpException(401, "Access Denied");
+            }
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
             return View(dataset);
-        }
-        
-
-        private void ValidationName(Dataset dataset, Kartverket.Register.Models.Register register)
-        {
-            var queryResultsDataset = from o in db.Datasets
-                                      where o.name == dataset.name &&
-                                      o.systemId != dataset.systemId &&
-                                      o.register.name == register.name &&
-                                      o.register.parentRegisterId == register.parentRegisterId
-                                      select o.systemId;
-
-            if (queryResultsDataset.Count() > 0)
-            {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
-            }
         }
 
         // GET: Datasets/Edit/5
@@ -120,41 +108,20 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
         public ActionResult Edit(string registername, string datasetname, string parentRegister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            var queryResults = from o in db.Datasets
-                               where o.seoname == datasetname &&
-                               o.register.seoname == registername &&
-                               o.register.parentRegister.seoname == parentRegister
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-
-            if (systId == null)
+            Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
+            if (dataset != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (_accessControlService.Access(dataset))
+                {
+                    Viewbags(dataset);
+                    return View(dataset);
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            Dataset dataset = db.Datasets.Find(systId);
-            if (dataset == null)
-            {
-                return HttpNotFound();
-            }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && dataset.register.accessId == 2 && dataset.datasetowner.name.ToLower() == user.ToLower()))
-            {
-                Viewbags(dataset);
-                return View(dataset);
-            }
-            return HttpNotFound("Ingen tilgang");
-        }
-
-        private void Viewbags(Dataset dataset)
-        {
-            ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
-            ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
-            ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
+            return HttpNotFound("Finner ikke datasettet");
         }
 
 
@@ -165,104 +132,39 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
         [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister)
+        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister, string registerowner)
         {
-            var queryResults = from o in db.Datasets
-                               where o.seoname == datasetname && o.register.seoname == registername
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Dataset originalDataset = db.Datasets.Find(systId);
-
-            //Finn registerobjektet
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername && o.parentRegister.seoname == parentRegister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
-
-            ValidationName(dataset, register);
-
-            if (dataset.name == null)
+            Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
+            if (originalDataset != null)
             {
-                var model = db.Datasets.Find(originalDataset.systemId);
-
-                string originalDescription = model.description;
-
-                try
+                if (uuid != null)
                 {
-                    new MetadataService().UpdateDatasetWithMetadata(model, uuid);
-                }
-                catch (Exception e)
-                {
-                    TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
+                    Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
+                    if (dontUpdateDescription) model.description = originalDataset.description;
+                    Viewbags(model);
+                    return View(model);
                 }
 
-                if (dontUpdateDescription) model.description = originalDescription;
-
-                Viewbags(model);
-                return View(model);
-            }
-
-            if (ModelState.IsValid)
-            {
-                if (dataset.name != null) originalDataset.name = dataset.name;
-                originalDataset.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalDataset.name);
-                originalDataset.description = dataset.description;
-                if (dataset.datasetownerId != null) originalDataset.datasetownerId = dataset.datasetownerId;
-                if (dataset.submitterId != null) originalDataset.submitterId = dataset.submitterId;
-                if (dataset.dokStatusId != null)
+                if (_accessControlService.Access(originalDataset))
                 {
-                    originalDataset.dokStatusId = dataset.dokStatusId;
-                    if (originalDataset.dokStatusId == "Accepted")
+                    if (!NameIsValid(dataset))
                     {
-                        if (dataset.dokStatusDateAccepted == null)
-                        {
-                            originalDataset.dokStatusDateAccepted = DateTime.Now;
-                        }
-                        else
-                        {
-                            originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
-                        }
+                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                     }
-                    else
+                    else if (ModelState.IsValid)
                     {
-                        originalDataset.dokStatusDateAccepted = null;
+                        initialisationDataset(dataset, originalDataset);
+                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
                     }
-                }
-
-                originalDataset.DistributionUrl = dataset.DistributionUrl;
-                originalDataset.MetadataUrl = dataset.MetadataUrl;
-                originalDataset.PresentationRulesUrl = dataset.PresentationRulesUrl;
-                originalDataset.ProductSheetUrl = dataset.ProductSheetUrl;
-                originalDataset.ProductSpecificationUrl = dataset.ProductSpecificationUrl;
-                originalDataset.WmsUrl = dataset.WmsUrl;
-                originalDataset.DistributionFormat = dataset.DistributionFormat;
-                originalDataset.DistributionArea = dataset.DistributionArea;
-                originalDataset.Notes = dataset.Notes;
-                originalDataset.ThemeGroupId = dataset.ThemeGroupId;
-                originalDataset.datasetthumbnail = dataset.datasetthumbnail;
-
-
-                originalDataset.modified = DateTime.Now;
-                db.Entry(originalDataset).State = EntityState.Modified;
-                db.SaveChanges();
-                Viewbags(originalDataset);
-
-                if (!String.IsNullOrWhiteSpace(parentRegister))
-                {
-                    return Redirect("/subregister/" + parentRegister + "/" + register.parentRegister.owner.seoname + "/" + registername + "/" + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
                 }
                 else
                 {
-                    return Redirect("/register/" + registername + "/" + originalDataset.datasetowner.seoname + "/" + originalDataset.seoname);
+                    throw new HttpException(401, "Access Denied");
                 }
             }
             Viewbags(originalDataset);
             return View(originalDataset);
         }
-
 
         // GET: Documents/Delete/5
         [Authorize]
@@ -385,7 +287,69 @@ namespace Kartverket.Register.Controllers
 
             SetDatasetOwnerAndSubmitter(dataset);
 
-            _registerItemService.SaveRegisterItem(dataset);
+            _registerItemService.SaveNewRegisterItem(dataset);
+        }
+
+
+        private void initialisationDataset(Dataset dataset, Dataset originalDataset)
+        {
+            originalDataset.name = DatasetName(dataset.name);
+            originalDataset.seoname = DatasetSeoName(dataset.name);
+            originalDataset.description = dataset.description;
+            originalDataset.datasetownerId = DatasetOwnerId(dataset, originalDataset);
+            originalDataset.submitterId = DatasetSubmitterId(dataset, originalDataset);
+
+            SetDokStatusId(dataset, originalDataset);
+
+            originalDataset.DistributionUrl = dataset.DistributionUrl;
+            originalDataset.MetadataUrl = dataset.MetadataUrl;
+            originalDataset.PresentationRulesUrl = dataset.PresentationRulesUrl;
+            originalDataset.ProductSheetUrl = dataset.ProductSheetUrl;
+            originalDataset.ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+            originalDataset.WmsUrl = dataset.WmsUrl;
+            originalDataset.DistributionFormat = dataset.DistributionFormat;
+            originalDataset.DistributionArea = dataset.DistributionArea;
+            originalDataset.Notes = dataset.Notes;
+            originalDataset.ThemeGroupId = dataset.ThemeGroupId;
+            originalDataset.datasetthumbnail = dataset.datasetthumbnail;
+
+            originalDataset.modified = DateTime.Now;
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+        }
+
+        private void SetDokStatusId(Dataset dataset, Dataset originalDataset)
+        {
+            if (dataset.dokStatusId != null)
+            {
+                originalDataset.statusId = dataset.statusId;
+                if (originalDataset.statusId == "Accepted")
+                {
+                    if (dataset.dokStatusDateAccepted == null)
+                    {
+                        originalDataset.dokStatusDateAccepted = DateTime.Now;
+                    }
+                    else
+                    {
+                        originalDataset.dokStatusDateAccepted = dataset.dokStatusDateAccepted;
+                    }
+                }
+                else
+                {
+                    originalDataset.dokStatusDateAccepted = null;
+                }
+            }
+        }
+
+        private Guid DatasetSubmitterId(Dataset dataset, Dataset originalDataset)
+        {
+            if (dataset.submitterId != null) return dataset.submitterId;
+            else return originalDataset.submitterId;
+        }
+
+        private Guid DatasetOwnerId(Dataset dataset, Dataset originalDataset)
+        {
+            if (dataset.datasetownerId != null) return dataset.datasetownerId;
+            else return originalDataset.datasetownerId;
         }
 
         private void SetDatasetOwnerAndSubmitter(Dataset dataset)
@@ -461,6 +425,35 @@ namespace Kartverket.Register.Controllers
             ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
             ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
             return model;
+        }
+
+        private void ValidationName(Dataset dataset, Kartverket.Register.Models.Register register)
+        {
+            var queryResultsDataset = from o in db.Datasets
+                                      where o.name == dataset.name &&
+                                      o.systemId != dataset.systemId &&
+                                      o.register.name == register.name &&
+                                      o.register.parentRegisterId == register.parentRegisterId
+                                      select o.systemId;
+
+            if (queryResultsDataset.Count() > 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+            }
+        }
+
+        private void Viewbags(Dataset dataset)
+        {
+            ViewBag.registerId = _registerItemService.GetRegisterSelectList(dataset.registerId);
+            ViewBag.dokStatusId = _registerItemService.GetDokStatusSelectList(dataset.dokStatusId);
+            ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
+            ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
+            ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
+            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", dataset.registerId);
+            //ViewBag.dokStatusId = new SelectList(db.DokStatuses.OrderBy(s => s.description), "value", "description", dataset.dokStatusId);
+            //ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.submitterId);
+            //ViewBag.datasetownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", dataset.datasetownerId);
+            //ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
         }
     }
 }

@@ -336,7 +336,7 @@ namespace Kartverket.Register.Controllers
                 parent = codelistValue.register.parentRegister.seoname;
             }
 
-            //_registerItemService.RemoveBroaderAndNarrower(codelistValue);
+            _registerItemService.RemoveBroaderAndNarrower(codelistValue);
             codelistValue.broaderItemId = null;
             codelistValue.narrowerItems.Clear();
 

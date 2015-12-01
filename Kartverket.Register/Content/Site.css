@@ -6,7 +6,7 @@ ul.search-results {
     list-style-type: none;
 }
 
-.page-footer {
+/*.page-footer {
   margin-top: 7em;
   background-image: linear-gradient(#ededed, #dedcdc);
 }
@@ -47,7 +47,7 @@ ul.search-results {
 }
 .page-footer .no-margin-bottom {
   margin-bottom: 0;
-}
+}*/
 
 .img-thumbnail {
     height: 188px;

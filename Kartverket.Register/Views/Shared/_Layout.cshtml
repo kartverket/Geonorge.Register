@@ -20,15 +20,36 @@
         }
         @Resources.UI.AppPageTitle
     </title>
+    <!-- Fonts: -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
+
+    <!-- Shared menu: -->
+    <link href="@Html.KartkatalogenUrl()bundles/shared-menu-styles" rel="stylesheet" type="text/css">
+
+    <!-- Main css: -->
+    <link href="@Html.KartkatalogenUrl()Content/css" rel="stylesheet" type="text/css">
+
+    <!-- Download: -->
+    <link href="@Html.KartkatalogenUrl()Content/download" rel="stylesheet" type="text/css">
+
+
+    <!-- Scripts -->
+    <script src="@Html.KartkatalogenUrl()Scripts/easyXDM.js" type="text/javascript"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/jquery"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/modernizr"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/shared-menu-scripts"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/bootstrap"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/js"></script>
     @RenderSection("head", false)
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")*@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
 
     @Html.Partial("_Analytics")
 
     
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/js")
     <script>
@@ -52,13 +73,9 @@
 
 </head>
 
-<body class="geonorge-container prototype  geonorge">
+<body class="geonorge-container prototype  geonorge ng-scope" ng-app="geonorge">
 
-    <div id="logo-on-sm">
-        <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
-    </div>
-
-    @Html.Partial("_NavbarPartial")
+    @Html.Partial("_SharedMenu")
 
     <div class="body-content">
 
@@ -102,7 +119,7 @@
                     @TempData["failure"]
                 </div>
             }
-           
+
 
             @Html.Partial("_SearchBarPartial")
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -115,42 +132,47 @@
 
 
     </div>
-    <footer class="page-footer" role="contentinfo">
-        <div class="top-shadow">&nbsp;</div>
+    <footer class="page-footer">
+        <div class="container container-footer">
+            <div>
+                <div class="block editorialblock col-md-12 col-lg-4  ">
 
-        <div class="container padding-bottom">
-            <div class="row">
-
-                <div class="col-sm-3 col-xs-12">
-                    <div>
-                        <h1 class="heading">Kontakt oss</h1>
-                        <p>Tlf. 08700</p>
-                        <p>post@norgedigitalt.no</p>
-                    </div>
-                </div>
-                <div class="col-xs-12 visible-xs">&nbsp;</div>
-                <div class="col-sm-2 col-sm-offset-7 col-xs-12">
-                    <div class="">
-                        <p>© 2014 - Kartverket</p>
-                        <p>Versjon @Html.ApplicationVersionNumber()</p>
-                        <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
-                        <!--
-                        @if (User.Identity.IsAuthenticated)
+                    <p><img alt="" src="@Html.KartkatalogenUrl()Content/img/geonorge.png" height="87" width="381" /></p>
+                    <small>Versjon @Html.ApplicationVersionNumber()</small>
+                    <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
+                    <!--
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
                         {
-                            foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-                            {
-                                <p>@c.Type = @c.Value</p>
-                            }
+                            <p>@c.Type = @c.Value</p>
                         }
-                        -->
+                    }
+                    -->
+                    <ul class="editorialblock-list-item"></ul>
+                </div><div class="block editorialblock col-md-12 col-lg-4  ">
 
+                    <h2>Om nettstedet:</h2>
 
-                    </div>
+                    <ul class="editorialblock-list-item">
+                        <li>
+                            <a href="@Html.GeonorgeUrl()informasjon/om-geonorge/">Om Geonorge</a>
+                        </li>
+                        <li>
+                            <a href="@Html.GeonorgeUrl()informasjon/aktuelt/annet/personvern-og-bruk-av-cookies/">Personvern og bruk av cookies</a>
+                        </li>
+                    </ul>
+                </div><div class="block editorialblock col-md-12 col-lg-4  ">
+
+                    <h2>Kontakt</h2>
+                    <p><span style="font-family: 'Open Sans', sans-serif; font-size: 22px;">Telefon: 08700<br /></span>Fra utlandet: +47 32 11 81 21<br /><a title="post@geonorge.no" href="mailto:post@geonorge.no">post@geonorge.no</a><br />Org. nr.: 971 040 238</p>
+                    <hr />
+                    <p>En løsning fra</p>
+                    <p><img alt="" src="@Html.KartkatalogenUrl()Content/img/kartverket.png" height="75" width="195" /></p>
+                    <ul class="editorialblock-list-item"></ul>
                 </div>
             </div>
-
         </div>
-
     </footer>
 
 

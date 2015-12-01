@@ -96,6 +96,7 @@ namespace Kartverket.Register.Controllers
             return View(dataset);
         }
 
+
         // GET: Datasets/Edit/5
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
@@ -160,6 +161,7 @@ namespace Kartverket.Register.Controllers
             return View(originalDataset);
         }
 
+
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
@@ -182,6 +184,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Finner ikke datasettet");
         }
 
+
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
         [Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{datasetname}/slett")]
@@ -193,6 +196,9 @@ namespace Kartverket.Register.Controllers
             _registerItemService.SaveDeleteRegisterItem(dataset);
             return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
         }
+
+
+        // *** HJELPEMETODER
 
         protected override void Dispose(bool disposing)
         {
@@ -230,7 +236,6 @@ namespace Kartverket.Register.Controllers
 
             _registerItemService.SaveNewRegisterItem(dataset);
         }
-
 
         private void initialisationDataset(Dataset dataset, Dataset originalDataset)
         {

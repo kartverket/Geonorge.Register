@@ -40,7 +40,7 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
         [Test]
-        public void GetCreateShouldReturnHttpNotFoundWhenRegisterIdNull()
+        public void GetCreateShouldReturnHttpNotFoundWhenRegisterIsNull()
         {
             Dataset dataset = new Dataset();
 
@@ -151,7 +151,39 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().NotBeNull();
         }
 
+        // *** DELETE DATASET
 
+        [Test]
+        public void GetDeleteShouldReturnViewWhenUserHaveAccess()
+        {
+            Dataset dataset = NewDataset("Test Datasett");
+
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+
+            registerItemService.Setup(r => r.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber)).Returns(dataset);
+            accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
+
+            var controller = CreateController(null, registerItemService.Object, accessControlService.Object);
+            var result = controller.Delete(dataset.register.seoname, dataset.seoname, null, null) as ViewResult;
+            Dataset resultDataset = (Dataset)result.Model;
+
+            result.Should().NotBeNull();
+            resultDataset.register.name.Should().Be(dataset.register.name);
+        }
+
+        [Test]
+        public void GetDeleteShouldReturnHttpNotFoundWhenRegisterIdNull()
+        {
+            Dataset dataset = null;
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1)).Returns(dataset);
+
+            var controller = CreateController(null, registerItemService.Object, null);
+            var result = controller.Delete(null, null, null, null) as ViewResult;
+
+            result.Should().BeNull();
+        }
 
 
         // *** HJELPEMETODER

@@ -220,6 +220,7 @@ namespace Kartverket.Register.Tests.Controllers
             register.accessId = accessId;
             return register;
         }
+
         private Organization NewOrganization(string name)
         {
             Organization organization = new Organization();

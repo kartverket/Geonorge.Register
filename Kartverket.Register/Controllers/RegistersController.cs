@@ -91,16 +91,27 @@ namespace Kartverket.Register.Controllers
             return !string.IsNullOrWhiteSpace(filter.text);
         }
 
-        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
-        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int? version, string format)
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItem registerItem = _registerItemService.GetRegisterItem(null, registername, itemname, version.Value);
+            RegisterItem registerItem = _registerItemService.GetRegisterItem(null, registername, itemname, 1);
+            ViewBag.owner = GetOwner(registerItem);
+
+            return View(registerItem);
+        }
+
+        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
+        [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int version, string format)
+        {
+            string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            RegisterItem registerItem = _registerItemService.GetRegisterItem(null, registername, itemname, version);
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);

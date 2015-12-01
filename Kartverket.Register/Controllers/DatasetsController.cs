@@ -46,7 +46,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
-                _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
+                ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
                 if (_accessControlService.Access(dataset))
                 {
                     return View(dataset);
@@ -69,28 +69,33 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/ny")]
         public ActionResult Create(Dataset dataset, string registername, string uuid, string parentRegister, string registerowner)
         {
-            if (uuid != null)
-            {
-                Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
-                return View(model);
-            }
-
             dataset.register = _registerService.GetRegister(parentRegister, registername);
-            if (_accessControlService.Access(dataset))
+            if (dataset.register != null)
             {
-                if (!NameIsValid(dataset))
+                if (uuid != null)
                 {
-                    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                    Viewbags(dataset);
+                    Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
+                    model.register = dataset.register;
+                    return View(model);
                 }
-                else if (ModelState.IsValid)
+
+                if (_accessControlService.Access(dataset))
                 {
-                    initialisationDataset(dataset);
-                    return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
+                    if (!NameIsValid(dataset))
+                    {
+                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                    }
+                    else if (ModelState.IsValid)
+                    {
+                        initialisationDataset(dataset);
+                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
+                    }
                 }
-            }
-            else
-            {
-                throw new HttpException(401, "Access Denied");
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
             Viewbags(dataset);
             return View(dataset);
@@ -134,7 +139,11 @@ namespace Kartverket.Register.Controllers
             {
                 if (uuid != null)
                 {
-                    Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
+                    Dataset model = model = GetMetadataFromKartkatalogen(dataset, uuid);
+                    model.register = originalDataset.register;
+                    model.datasetowner = originalDataset.datasetowner;
+                    model.submitter = originalDataset.submitter;
+
                     if (dontUpdateDescription) model.description = originalDataset.description;
                     Viewbags(model);
                     return View(model);

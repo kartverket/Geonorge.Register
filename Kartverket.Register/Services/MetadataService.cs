@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Linq;
+﻿using System.Linq;
 using GeoNorgeAPI;
 using Kartverket.Register.Models;
 using www.opengis.net;
 using System.Web.Configuration;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.DOK.Service
 {
@@ -17,6 +16,7 @@ namespace Kartverket.DOK.Service
             {
                 dataset.Uuid = uuid;
                 dataset.name = metadata.Title;
+                dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);
                 dataset.description = metadata.Abstract;
                 dataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + uuid;
                 dataset.PresentationRulesUrl = metadata.LegendDescriptionUrl;
@@ -46,7 +46,6 @@ namespace Kartverket.DOK.Service
                     dataset.DistributionFormat = metadata.DistributionFormat.Name;
 
                 }
-
             }
         }
 

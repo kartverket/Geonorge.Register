@@ -82,45 +82,23 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // GET: CodelistValues/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CodelistValue codelistValue = db.CodelistValues.Find(id);
-            if (codelistValue == null)
-            {
-                return HttpNotFound();
-            }
-            return View(codelistValue);
-        }
-
         // GET: CodelistValues/Create
         [Authorize]
-        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         [Route("kodeliste/{registername}/ny")]
+        [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
-            Kartverket.Register.Models.Register register = _registerService.GetRegister(parentregister, registername);
-            codeListValue.register = register;
+            codeListValue.register = _registerService.GetRegister(parentregister, registername);
 
-            if (register.parentRegisterId != null)
+            if (_accessControlService.Access(codeListValue))
             {
-                codeListValue.register.parentRegister = register.parentRegister;
-            }
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
-            {
-                ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name");
+                ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
                 return View(codeListValue);
             }
             return HttpNotFound("Ingen tilgang");
         }
+
 
         // POST: CodelistValues/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -132,62 +110,24 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(CodelistValue codelistValue, string registername, string parentregister, string registerowner, List<Guid> narrower, Guid? broader)
         {
             codelistValue.register = _registerService.GetRegister(parentregister, registername);
-            if (!_registerItemService.validateName(codelistValue))
+            if (codelistValue.register != null)
             {
-                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-            }
-            else if (ModelState.IsValid)
-            {
-                codelistValue.systemId = Guid.NewGuid();
-                codelistValue.modified = DateTime.Now;
-                codelistValue.dateSubmitted = DateTime.Now;
-                codelistValue.registerId = codelistValue.register.systemId;
-                codelistValue.statusId = "Submitted";
-                codelistValue.versionNumber = 1;
-                codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
-
-                if (string.IsNullOrWhiteSpace(codelistValue.name))
+                if (_accessControlService.Access(codelistValue))
                 {
-                    codelistValue.name = "ikke angitt";
-                    codelistValue.seoname = codelistValue.systemId.ToString();
-                }
-
-                if (codelistValue.description == null || codelistValue.description.Length == 0)
-                {
-                    codelistValue.description = "ikke angitt";
-                }
-
-                if (narrower != null)
-                {
-                    _registerItemService.SetNarrowerItems(narrower, codelistValue);
-                }
-                if (broader != null)
-                {
-                    _registerItemService.SetBroaderItem(broader.Value, codelistValue);
-                }
-
-                codelistValue.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
-                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-                Organization submitterOrganisasjon = _organizationService.GetOrganization(organizationLogin);
-                codelistValue.submitterId = submitterOrganisasjon.systemId;
-                codelistValue.submitter = submitterOrganisasjon;
-
-                db.Entry(codelistValue).State = EntityState.Modified;
-
-                db.RegisterItems.Add(codelistValue);
-                db.SaveChanges();
-                if (codelistValue.register.parentRegisterId != null)
-                {
-                    return Redirect("/subregister/" + parentregister + "/" + codelistValue.register.owner.seoname + "/" + registername + "/" + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + registername + "/" + codelistValue.submitter.seoname + "/" + codelistValue.seoname);
+                    if (ModelState.IsValid)
+                    {
+                        initialisationCodelistValue(codelistValue, narrower, broader);
+                        if (!_registerItemService.validateName(codelistValue))
+                        {
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                            ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
+                            return View(codelistValue);
+                        }
+                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentregister, registerowner, registername, codelistValue.submitter.seoname, codelistValue.seoname));
+                    }
                 }
             }
-            ViewBag.broaderItemsList = new SelectList(db.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItem.systemId), "systemId", "name", codelistValue.broaderItem);
+            ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
             return View(codelistValue);
         }
 
@@ -485,6 +425,30 @@ namespace Kartverket.Register.Controllers
                     _registerItemService.SaveNewRegisterItem(codelistValue);
                 }
             }
+        }
+
+        private void initialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader)
+        {
+            codelistValue.systemId = Guid.NewGuid();
+            codelistValue.modified = DateTime.Now;
+            codelistValue.dateSubmitted = DateTime.Now;
+            codelistValue.registerId = codelistValue.register.systemId;
+            codelistValue.statusId = "Submitted";
+            codelistValue.versionNumber = 1;
+            codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
+            codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
+            if (narrower != null)
+            {
+                _registerItemService.SetNarrowerItems(narrower, codelistValue);
+            }
+            if (broader != null)
+            {
+                _registerItemService.SetBroaderItem(broader.Value, codelistValue);
+            }
+
+            SetCodelistValueSubmitter(codelistValue);
+
+            _registerItemService.SaveNewRegisterItem(codelistValue);
         }
 
         private void SetCodelistValueSubmitter(CodelistValue codelistValue)

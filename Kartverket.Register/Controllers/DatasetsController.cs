@@ -82,13 +82,15 @@ namespace Kartverket.Register.Controllers
 
                 if (_accessControlService.Access(dataset))
                 {
-                    if (!NameIsValid(dataset))
-                    {
-                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                    }
-                    else if (ModelState.IsValid)
+                    if (ModelState.IsValid)
                     {
                         initialisationDataset(dataset);
+                        if (!NameIsValid(dataset))
+                        {
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                            Viewbags(dataset);
+                            return View(dataset);
+                        }
                         return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                     }
                 }
@@ -150,14 +152,15 @@ namespace Kartverket.Register.Controllers
                 }
 
                 if (_accessControlService.Access(originalDataset))
-                {
-                    if (!NameIsValid(dataset))
-                    {
-                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                    }
-                    else if (ModelState.IsValid)
+                {   if (ModelState.IsValid)
                     {
                         initialisationDataset(dataset, originalDataset);
+                        if (!NameIsValid(dataset))
+                        {
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                            Viewbags(originalDataset);
+                            return View(originalDataset);
+                        }
                         return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
                     }
                 }

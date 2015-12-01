@@ -32,5 +32,6 @@ namespace Kartverket.Register.Services.RegisterItem
         SelectList GetSubmitterSelectList(Guid submitterId);
         SelectList GetOwnerSelectList(Guid ownerId);
         SelectList GetThemeGroupSelectList(string themeGroupId);
+        SelectList GetBroaderItems();
     }
 }

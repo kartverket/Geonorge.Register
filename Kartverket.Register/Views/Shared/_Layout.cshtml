@@ -20,15 +20,36 @@
         }
         @Resources.UI.AppPageTitle
     </title>
+    <!-- Fonts: -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
+
+    <!-- Shared menu: -->
+    <link href="@Html.KartkatalogenUrl()bundles/shared-menu-styles" rel="stylesheet" type="text/css">
+
+    <!-- Main css: -->
+    <link href="@Html.KartkatalogenUrl()Content/css" rel="stylesheet" type="text/css">
+
+    <!-- Download: -->
+    <link href="@Html.KartkatalogenUrl()Content/download" rel="stylesheet" type="text/css">
+
+
+    <!-- Scripts -->
+    <script src="@Html.KartkatalogenUrl()Scripts/easyXDM.js" type="text/javascript"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/jquery"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/modernizr"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/shared-menu-scripts"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/bootstrap"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/js"></script>
     @RenderSection("head", false)
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")*@
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
 
     @Html.Partial("_Analytics")
 
     
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/js")
     <script>
@@ -52,13 +73,9 @@
 
 </head>
 
-<body class="geonorge-container prototype  geonorge">
+<body class="geonorge-container prototype  geonorge ng-scope" ng-app="geonorge">
 
-    <div id="logo-on-sm">
-        <img src="/Content/img/kvlogo_col.png" alt="Kartverkets logo" />
-    </div>
-
-    @Html.Partial("_NavbarPartial")
+    @Html.Partial("_SharedMenu")
 
     <div class="body-content">
 
@@ -102,7 +119,7 @@
                     @TempData["failure"]
                 </div>
             }
-           
+
 
             @Html.Partial("_SearchBarPartial")
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

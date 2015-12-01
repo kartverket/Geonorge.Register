@@ -871,6 +871,7 @@
     <Content Include="Views\Shared\_detailsNameSpace.cshtml" />
     <Content Include="Views\Shared\_otherformats.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Views\Shared\_SharedMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

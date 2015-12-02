@@ -11,6 +11,24 @@
                     </div>
                 </div>
             </div>
+            <div class="pull-right navbar-form">
+            @if (Request.IsAuthenticated)
+            {
+                string username = "";
+                foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+                {
+                    if (c.Type == "urn:oid:0.9.2342.19200300.100.1.1" || c.Type == "username")
+                    {
+                        username = @c.Value;
+                    }
+                }
+                <a href="@Url.Action("SignOut", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg ut @username</a>
+            }
+            else
+            {
+                <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
+            }
+            </div>
             <div class="col-xs-5">
                 <div class="navbar-header">
                     <div class="menu-title">

@@ -35,7 +35,7 @@
 
 
 
-<form action="@kontroller" class="col-md-offset-2 col-md-8 searchbar-register hidden-print">
+<form action="@kontroller" class="col-md-offset-2 col-md-8 searchbar-register hidden-print" style="z-index: 0;">
 
     <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)" />
 
@@ -58,7 +58,7 @@
                 }
             </ul>
         </div><!-- /input-group-btn -->
-        <input name="text" type="text" placeholder="Søk etter registerdata" title="Søk" class="form-control ng-pristine ng-valid ng-touched" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
+        <input name="text" type="text" placeholder="Søk etter registerdata" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
             <button class="btn" type="submit">Søk</button>
         </span>

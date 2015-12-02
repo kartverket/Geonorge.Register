@@ -337,6 +337,16 @@ namespace Kartverket.Register.Services.RegisterItem
             return new SelectList(_dbContext.CodelistValues.OrderBy(s => s.name).Where(s => s.systemId != s.broaderItemId), "systemId", "name");
         }
 
+        public SelectList GetBroaderItems(Guid? broaderItemId)
+        {
+            return new SelectList(_dbContext.CodelistValues.OrderBy(s => s.name), "systemId", "name", broaderItemId);
+        }
+
+        public SelectList GetStatusSelectList(Models.RegisterItem registerItem)
+        {
+            return new SelectList(_dbContext.Statuses.OrderBy(s => s.description), "value", "description", registerItem.statusId);
+        }
+
         public void SaveDeleteRegisterItem(Models.RegisterItem item)
         {
             _dbContext.RegisterItems.Remove(item);

@@ -91,6 +91,7 @@ namespace Kartverket.Register.Controllers
                             Viewbags(dataset);
                             return View(dataset);
                         }
+                        _registerItemService.SaveNewRegisterItem(dataset);
                         return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                     }
                 }
@@ -152,7 +153,8 @@ namespace Kartverket.Register.Controllers
                 }
 
                 if (_accessControlService.Access(originalDataset))
-                {   if (ModelState.IsValid)
+                {
+                    if (ModelState.IsValid)
                     {
                         initialisationDataset(dataset, originalDataset);
                         if (!NameIsValid(dataset))
@@ -161,6 +163,7 @@ namespace Kartverket.Register.Controllers
                             Viewbags(originalDataset);
                             return View(originalDataset);
                         }
+                        _registerItemService.SaveEditedRegisterItem(originalDataset);
                         return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
                     }
                 }
@@ -245,8 +248,6 @@ namespace Kartverket.Register.Controllers
             dataset.versioningId = GetVersioningId(dataset);
 
             SetDatasetOwnerAndSubmitter(dataset);
-
-            _registerItemService.SaveNewRegisterItem(dataset);
         }
 
         private void initialisationDataset(Dataset dataset, Dataset originalDataset)
@@ -272,7 +273,6 @@ namespace Kartverket.Register.Controllers
             originalDataset.datasetthumbnail = dataset.datasetthumbnail;
 
             originalDataset.modified = DateTime.Now;
-            _registerItemService.SaveEditedRegisterItem(originalDataset);
         }
 
         private void SetDokStatusId(Dataset dataset, Dataset originalDataset)

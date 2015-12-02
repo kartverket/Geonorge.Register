@@ -33,5 +33,7 @@ namespace Kartverket.Register.Services.RegisterItem
         SelectList GetOwnerSelectList(Guid ownerId);
         SelectList GetThemeGroupSelectList(string themeGroupId);
         SelectList GetBroaderItems();
+        SelectList GetStatusSelectList(Models.RegisterItem registerItem);
+        SelectList GetBroaderItems(Guid? broaderItemId);
     }
 }

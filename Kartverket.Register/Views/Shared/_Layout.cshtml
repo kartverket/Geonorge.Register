@@ -102,10 +102,12 @@
             </div>
         }
 
-        @Html.Partial("_SearchBarPartial")
+        
 
         <div class="body-content">
             <div class="container">
+                @Html.Partial("_SearchBarPartial")
+
                 @RenderBody()
             </div>
 

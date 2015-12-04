@@ -23,22 +23,9 @@
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-title col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    @if (item.register.parentRegister != null)
-                    {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </h3>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </h3>
-                        </a>
-                    }
+                    <a href="@item.GetObjectUrl()">
+                            @item.name
+                    </a>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-information">
                         @Html.DisplayFor(modelItem => item.submitter.name)

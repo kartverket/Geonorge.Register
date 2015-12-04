@@ -33,9 +33,9 @@
             }
         </div>
         <div class="col-no-padding-xs col-title col-sm-4 col-md-4 col-lg-4">
-            <h3 class="role-button" style="font-size: 18px;">
+            <p >
                 @item.name
-            </h3>
+            </p>
 
             <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname">
                 <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />

@@ -18,18 +18,9 @@
                     <p><strong>Mer generelt begrep</strong></p>
                     @if (Model.broaderItemId != null)
                     {
-                        if (Model.register.parentRegister != null)
-                        {
-                            <a class="" href="/subregister/@Model.broaderItem.register.parentRegister.seoname/@Model.broaderItem.register.parentRegister.owner.seoname/@Model.broaderItem.register.seoname/@Model.broaderItem.submitter.seoname/@Model.broaderItem.seoname">
-                                @Model.broaderItem.name
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="" href="/register/@Model.broaderItem.register.seoname/@Model.broaderItem.submitter.seoname/@Model.broaderItem.seoname">
-                                @Model.broaderItem.name
-                            </a>
-                        }
+                        <a href="@Model.broaderItem.GetObjectUrl()">
+                            @Model.broaderItem.name
+                        </a>
                     }
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -37,18 +28,9 @@
 
                     @foreach (Kartverket.Register.Models.CodelistValue narrower in Model.narrowerItems)
                     {
-                        if (narrower.register.parentRegister != null)
-                        {
-                            <p><a class="" href="/subregister/@narrower.register.parentRegister.seoname/@narrower.register.parentRegister.owner.seoname/@narrower.register.seoname/@narrower.submitter.seoname/@narrower.seoname">
-                                @narrower.name
-                            </a></p>
-                        }
-                        else
-                        {
-                            <p><a class="" href="/register/@narrower.register.seoname/@narrower.submitter.seoname/@narrower.seoname">
-                                @narrower.name
-                            </a></p>
-                        }
+                        <p><a href="@narrower.GetObjectUrl()">
+                            @narrower.name
+                        </a></p>
                     }
                 </div>
 

@@ -12,19 +12,19 @@
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
         Kartverket.Register.Models.Register parent = Model.parentRegister;
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li class="active pull-right">Rediger</li>
-        <li class="pull-right"><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
+        <li>Rediger</li>
+        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
         while (parent != null && parent != mainRegister)
         {
-            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+            <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
             parent = parent.parentRegister;
         }
     }
     else
     {
         <li><a href="/register/@Model.parentRegister.seoname">@Model.parentRegister.name</a></li>
-        <li class=""><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
-        <li class="active">Rediger</li>
+        <li><a href="/subregister/@Model.parentRegister.seoname/@Model.parentRegister.owner.seoname/@Model.seoname">@Model.name</a></li>
+        <li>Rediger</li>
     }
 }
 

@@ -50,23 +50,19 @@
                         @if (item.register.parentRegister != null)
                         {
                             <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                <h3 class="role-button" style="font-size: 15px;">
                                     @item.name
-                                </h3>
                             </a>
                         }
                         else
                         {
                             <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                <h3 class="role-button" style="font-size: 15px;">
                                     @item.name
-                                </h3>
                             </a>
                         }
                         <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
                             <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
-                        <div class="orglogo">
+                        <div>
                             <a href="/register/@item.register.seoname/@item.documentowner.seoname">
                                 @Html.DisplayFor(modelItem => item.documentowner.name)
                             </a>

@@ -59,31 +59,48 @@ namespace Kartverket.Register.Controllers
             Models.Register register = _registerService.GetRegister(parentRegister, registername);
             if (register != null)
             {
-                if (Search(filter)) register = _searchService.Search(register, filter.text);
-                register = _registerService.FilterRegisterItems(register, filter);
-
-                ViewBag.search = filter.text;
-                ViewBag.page = page;
-                ViewBag.SortOrder = sorting;
-                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                ViewBag.register = register.name;
-                ViewBag.registerSEO = register.seoname;
-                ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
-                ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
-                ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
-                ViewBag.page = page;
-                ViewBag.SortOrder = sorting;
-                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                ViewBag.register = register.name;
-                ViewBag.ownerSEO = owner;
-                ViewBag.search = filter.text;
-
+                RegisterItems(register, filter, page);
+                ViewbagsRegisterDetails(owner, sorting, page, filter, register);
                 return View(register);
             }
             else
             {
                 return HttpNotFound();
             }
+        }
+
+        private void RegisterItems(Models.Register register, FilterParameters filter, int? page)
+        {
+            //if (RegisterItemsIsOfTypeDataset(register))
+            //{
+            //    GetItemsForDatasetRegisters(register);
+            //}
+            if (Search(filter)) register = _searchService.Search(register, filter.text);
+            register = _registerService.FilterRegisterItems(register, filter);
+        }
+
+        private static bool RegisterItemsIsOfTypeDataset(Models.Register register)
+        {
+            return register.containedItemClass == "Dataset";
+        }
+
+        private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)
+        {
+            ViewBag.search = filter.text;
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
+            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.register = register.name;
+            ViewBag.ownerSEO = owner;
+            ViewBag.search = filter.text;
         }
 
         private static bool Search(FilterParameters filter)

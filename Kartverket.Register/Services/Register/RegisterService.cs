@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,17 @@ namespace Kartverket.Register.Services.Register
     public class RegisterService : IRegisterService
     {
         private readonly RegisterDbContext _dbContext;
+        private IRegisterItemService _registerItemService;
 
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
+            _registerItemService = new RegisterItemService(dbContext);
         }
 
-        public Kartverket.Register.Models.Register FilterRegisterItems(Kartverket.Register.Models.Register register, FilterParameters filter)
+        public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
         {
-            List<Kartverket.Register.Models.RegisterItem> registerItems = new List<Kartverket.Register.Models.RegisterItem>();
+            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
 
             if (register.containedItemClass == "EPSG")
             {
@@ -64,8 +67,17 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
-        private void FilterDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> registerItems)
+        private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
+            if (register.name == "Kommuneoversikt")
+            {
+                Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
+                foreach (Models.RegisterItem item in DOK.items)
+                {
+                    registerItems.Add(item);
+                }
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
             {
                 FilterOrganisasjonDataset(register, filter, registerItems);
@@ -79,7 +91,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterDocument(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> registerItems)
+        private void FilterDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
             if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
             {
@@ -101,7 +113,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
+        private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             foreach (Document item in register.items)
             {
@@ -118,7 +130,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterOrganisasjonDataset(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
+        private void FilterOrganisasjonDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             foreach (Dataset item in register.items)
             {
@@ -129,7 +141,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private void FilterEPSGkode(Kartverket.Register.Models.Register register, FilterParameters filter, List<Kartverket.Register.Models.RegisterItem> filterRegisterItems)
+        private void FilterEPSGkode(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             bool filterHorisontalt = filter.filterHorisontalt;
             bool filterVertikalt = filter.filterVertikalt;
@@ -232,23 +244,23 @@ namespace Kartverket.Register.Services.Register
             return null;
         }
 
-        public Kartverket.Register.Models.Register GetRegisterByName(string registerName)
+        public Models.Register GetRegisterByName(string registerName)
         {
             var queryResults = from r in _dbContext.Registers
                                where r.name == registerName || r.seoname == registerName
                                select r;
 
-            Kartverket.Register.Models.Register register = queryResults.FirstOrDefault();
+            Models.Register register = queryResults.FirstOrDefault();
             return register;
         }
 
-        public Kartverket.Register.Models.Register GetSubregisterByName(string parentName, string registerName)
+        public Models.Register GetSubregisterByName(string parentName, string registerName)
         {
             var queryResultsSubregister = from r in _dbContext.Registers
                                           where r.seoname == registerName && r.parentRegister.seoname == parentName
                                           select r;
 
-            Kartverket.Register.Models.Register register = queryResultsSubregister.FirstOrDefault();
+            Models.Register register = queryResultsSubregister.FirstOrDefault();
             return register;
         }
 

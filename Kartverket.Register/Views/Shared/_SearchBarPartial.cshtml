@@ -35,11 +35,11 @@
 
 
 
-<form action="@kontroller" class="col-md-offset-2 col-md-8 searchbar hidden-print">
+<form action="@kontroller" class="col-md-offset-2 col-md-8 hidden-print">
 
     <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)" />
 
-    <h1 class="h-md" id="register-heading">Søk i register</h1>
+    <h3 class="h-md" id="register-heading">Søk i register</h3>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
@@ -58,9 +58,9 @@
                 }
             </ul>
         </div><!-- /input-group-btn -->
-        <input name="text" type="text" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
+        <input name="text" style="z-index: 0;" type="text" placeholder="Søk etter registerdata" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
-            <button class="btn" type="submit">Søk</button>
+            <button class="btn" type="submit" style="z-index: 0;">Søk</button>
         </span>
     </div>
 </form>

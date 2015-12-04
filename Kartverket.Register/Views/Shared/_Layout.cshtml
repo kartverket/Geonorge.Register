@@ -30,6 +30,9 @@
     <!-- Main css: -->
     <link href="@Html.KartkatalogenUrl()Content/css" rel="stylesheet" type="text/css">
 
+    <!-- Themes css: -->
+    <link href="@Html.KartkatalogenUrl()Content/themes/base/css" rel="stylesheet" type="text/css">
+
     <!-- Download: -->
     <link href="@Html.KartkatalogenUrl()Content/download" rel="stylesheet" type="text/css">
 
@@ -43,7 +46,7 @@
     <script src="@Html.KartkatalogenUrl()bundles/js"></script>
     @RenderSection("head", false)
     @*@Scripts.Render("~/bundles/jquery")*@
-    @Styles.Render("~/Content/css")
+    @*@Styles.Render("~/Content/css")*@
     @Styles.Render("~/Content/jqueryui")
 
     @Html.Partial("_Analytics")
@@ -85,27 +88,6 @@
                 <li><a href="/">Registrene</a></li>
                 @RenderSection("breadcrumb", false)
             </ol>
-            <div class="menu clearfix hidden-print" style="padding-top: 40px">
-                <div class=" pull-right">
-                    @if (Request.IsAuthenticated)
-                    {
-                        string username = "";
-                        foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-                        {
-                            if (c.Type == "urn:oid:0.9.2342.19200300.100.1.1" || c.Type == "username")
-                            {
-                                username = @c.Value;
-                            }
-                        }
-                        <a href="@Url.Action("SignOut", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg ut @username</a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
-                    }
-                </div>
-
-            </div>
 
             @if (TempData["success"] != null)
             {

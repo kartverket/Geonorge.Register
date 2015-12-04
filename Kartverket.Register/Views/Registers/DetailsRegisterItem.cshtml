@@ -138,18 +138,6 @@
         @if (Model.register.containedItemClass == "Document")
         {
             @Html.Partial("_detailsDocuments")
-
-            @*<div class="tab-content">
-                    <div class="tab-pane active" id="gjeldende">
-                        @Html.Partial("_currentVersionDocument", Model)
-                    </div>
-                    <div class="tab-pane" id="historiske">
-                        @Html.Partial("_histroicalDocuments", Model)
-                    </div>
-                    <div class="tab-pane" id="forslag">
-                        @Html.Partial("_suggestedDocuments", Model)
-                    </div>
-                </div>*@
         }
         @if (Model.register.containedItemClass == "Dataset")
         {

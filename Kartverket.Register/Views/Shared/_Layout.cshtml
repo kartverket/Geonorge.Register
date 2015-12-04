@@ -45,16 +45,13 @@
     <script src="@Html.KartkatalogenUrl()bundles/bootstrap"></script>
     <script src="@Html.KartkatalogenUrl()bundles/js"></script>
     @RenderSection("head", false)
-    @*@Scripts.Render("~/bundles/jquery")*@
-    @*@Styles.Render("~/Content/css")*@
-    @Styles.Render("~/Content/jqueryui")
+
 
     @Html.Partial("_Analytics")
 
-    
-    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/js")
+
     <script>
         $(function(){
             $(".jqueryui-marker-datepicker").datepicker({
@@ -70,9 +67,6 @@
         });
     </script>
     @RenderSection("scripts", false)
-
-   
-    
 
 </head>
 
@@ -101,8 +95,6 @@
                 @TempData["failure"]
             </div>
         }
-
-        
 
         <div class="body-content">
             <div class="container">

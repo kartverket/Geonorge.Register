@@ -29,94 +29,104 @@
     }
 )
 </script>
-
-<div class="page-header">
-    <h2 class="h-md" id="registerName">@Html.DisplayFor(model => model.name)</h2>
-    <hr>
-</div>
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        ID: <a href="@RegisterUrls.registerUrl(parentRegister, Model.owner.seoname, Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a>
-        <br />
-        Navn: @Html.DisplayFor(model => model.name)
-        <br />
-        Beskrivelse: @Html.DisplayFor(model => model.description)
-
-
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                @Html.DisplayFor(model => model.name)
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
     </div>
-    <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
-        <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
-        <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
-    </div>
+</section>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
+            ID: <a href="@Model.GetObjectUrl()">http://@Request.Url.Host@Model.GetObjectUrl()</a>
+            <br />
+            Navn: @Html.DisplayFor(model => model.name)
+            <br />
+            Beskrivelse: @Html.DisplayFor(model => model.description)
+
+
+        </div>
+        <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
+            <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
+            <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
+        </div>
 
 
 
-    @{
-        var page = ViewBag.page;
-        var currentFilter = ViewBag.currentFilter;
-        var sortering = Model.items.OrderBy(o => o.name).ToList();
-        var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
-        int pageSize = 50;
-        int pageNumber = (page ?? 1);
-        var search = ViewBag.search;
+        @{
+            var page = ViewBag.page;
+            var currentFilter = ViewBag.currentFilter;
+            var sortering = Model.items.OrderBy(o => o.name).ToList();
+            var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
+            int pageSize = 50;
+            int pageNumber = (page ?? 1);
+            var search = ViewBag.search;
 
-        if (Model.containedItemClass != "Register")
-        {
-            sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
-        }
-        else
-        {
-            sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
-        }
-    }
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-        @Html.Partial("_otherformats")
-
-        @if (Model.containedItemClass == "Organization")
-        {
-            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "CodelistValue")
-        {
-            @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Document")
-        {
-            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "NameSpace")
-        {
-            @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
-        }
-        @if (Model.containedItemClass == "Register")
-        {
-            @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
-        }
-    </div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
-        @if (Request.IsAuthenticated)
-        {
-            if (HtmlHelperExtensions.accessRegister(Model))
+            if (Model.containedItemClass != "Register")
             {
-                <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
+                sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
             }
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            else
             {
-                <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+                sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
             }
         }
-        <a class="hidden-print" href="/">Tilbake</a>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            @Html.Partial("_otherformats")
+
+            @if (Model.containedItemClass == "Organization")
+            {
+                @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "CodelistValue")
+            {
+                @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Document")
+            {
+                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Dataset")
+            {
+                @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "EPSG")
+            {
+                @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "NameSpace")
+            {
+                @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            @if (Model.containedItemClass == "Register")
+            {
+                @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+            @if (Request.IsAuthenticated)
+            {
+                if (HtmlHelperExtensions.accessRegister(Model))
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
+                }
+                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+                }
+            }
+            <a class="hidden-print" href="/">Tilbake</a>
+        </div>
     </div>
 </div>

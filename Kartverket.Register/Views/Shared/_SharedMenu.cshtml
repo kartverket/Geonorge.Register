@@ -37,11 +37,11 @@
                         username = @c.Value;
                     }
                 }
-                <a href="@Url.Action("SignOut", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg ut @username</a>
+                <a href="@Url.Action("SignOut", "AuthServices")" class="btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-user"></span> Logg ut @username</a>
                 }
                 else
                 {
-                    <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
+                    <a href="@Url.Action("SignIn", "AuthServices")" class="btn btn-default btn-sm pull-right"><span class="glyphicon glyphicon-user"></span> Logg inn</a>
                 }
             </div>
         </div>

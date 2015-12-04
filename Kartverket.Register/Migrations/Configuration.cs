@@ -464,6 +464,25 @@ namespace Kartverket.Register.Migrations
                 }
             );
 
+            //Add dok-register - kommunalt
+            context.Registers.AddOrUpdate(
+                new Register
+                {
+                    systemId = Guid.Parse("E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"),
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    dateAccepted = DateTime.Now,
+                    name = "Det offentlige kartgrunnlaget - Kommunalt",
+                    description = "Tabellen viser kommunen sitt bekreftede DOK",
+                    containedItemClass = "Dataset",
+                    statusId = "Valid",
+                    seoname = "det-offentlige-kartgrunnlaget-kommunalt",
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    accessId = 1
+                }
+            );
+
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET statusId = 'Submitted' WHERE  (statusId IS NULL)");
 
             //UpdateVersionNumber

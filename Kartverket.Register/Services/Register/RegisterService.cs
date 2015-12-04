@@ -69,7 +69,7 @@ namespace Kartverket.Register.Services.Register
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
-            if (register.name == "Kommuneoversikt")
+            if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
                 Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
                 foreach (Models.RegisterItem item in DOK.items)

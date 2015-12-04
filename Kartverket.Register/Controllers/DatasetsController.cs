@@ -246,8 +246,25 @@ namespace Kartverket.Register.Controllers
             dataset.name = DatasetName(dataset.name);
             dataset.seoname = DatasetSeoName(dataset.name);
             dataset.versioningId = GetVersioningId(dataset);
-
             SetDatasetOwnerAndSubmitter(dataset);
+            dataset.DatasetType = GetDatasetType(dataset);
+        }
+
+        private string GetDatasetType(Dataset dataset)
+        {
+            if (DokMunicipalDataset(dataset))
+            {
+                _registerItemService.NewCoverage(dataset);
+                return "Kommunalt";
+            }
+            else {
+                return "Nasjonalt";
+            }
+        }
+
+        private static bool DokMunicipalDataset(Dataset dataset)
+        {
+            return dataset.register.name == "Det offentlige kartgrunnlaget - Kommunalt";
         }
 
         private void initialisationDataset(Dataset dataset, Dataset originalDataset)

@@ -246,6 +246,25 @@ namespace Kartverket.Register.Services.RegisterItem
             return versjoneringsGruppe.systemId;
         }
 
+        public Guid NewCoverage(Models.RegisterItem registerItem)
+        {
+            CoverageDataset coverage = new CoverageDataset();
+            coverage.CoverageId = Guid.NewGuid();
+            coverage.CoverageDOKStatusId = "Proposal";
+            coverage.ConfirmedDok = true;
+            coverage.DatasetId = registerItem.systemId;
+            coverage.MunicipalityId = registerItem.submitterId;
+            if (registerItem is Dataset)
+            {
+                Dataset dataset = (Dataset)registerItem;
+                coverage.Note = dataset.Notes;
+            }
+
+            _dbContext.Entry(coverage).State = EntityState.Modified;
+            _dbContext.CoverageDatasets.Add(coverage);
+            return coverage.CoverageId;
+        }
+
         public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)
         {
             if (string.IsNullOrWhiteSpace(parentregister))

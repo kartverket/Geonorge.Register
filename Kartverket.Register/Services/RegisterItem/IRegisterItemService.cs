@@ -35,5 +35,6 @@ namespace Kartverket.Register.Services.RegisterItem
         SelectList GetBroaderItems();
         SelectList GetStatusSelectList(Models.RegisterItem registerItem);
         SelectList GetBroaderItems(Guid? broaderItemId);
+        Guid NewCoverage(Models.RegisterItem registerItem);
     }
 }

@@ -98,8 +98,7 @@
 
         <div class="body-content">
             <div class="container">
-                @Html.Partial("_SearchBarPartial")
-
+                
                 @RenderBody()
             </div>
 
@@ -113,16 +112,7 @@
 
                     <p><img alt="" src="@Html.KartkatalogenUrl()Content/img/geonorge.png" height="87" width="381" /></p>
                     <small>Versjon @Html.ApplicationVersionNumber()</small>
-                    <!--<p><a href="/Om-Kartverket/Personvern-og-cookies/"> Personvern og cookies </a></p>-->
-                    <!--
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims)
-                        {
-                            <p>@c.Type = @c.Value</p>
-                        }
-                    }
-                    -->
+                    
                     <ul class="editorialblock-list-item"></ul>
                 </div><div class="block editorialblock col-md-12 col-lg-4  ">
 

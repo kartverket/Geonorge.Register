@@ -14,81 +14,93 @@
     {
         <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
         <li><a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">@Model.currentVersion.register.name</a></li>
-        <li class="active pull-right">@Model.currentVersion.name</li>
+        <li>@Model.currentVersion.name</li>
         while (parent != null && parent != mainRegister)
         {
-            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
+            <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
             parent = parent.parentRegister;
         }
     }
     else
     {
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li class="active pull-right">@Model.currentVersion.name</li>
+        <li>@Model.currentVersion.name</li>
     }
 }
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>
+                @Html.DisplayFor(model => model.currentVersion.name)
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+<div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-            <li> <h2 class="h-md">@Html.DisplayFor(model => model.currentVersion.name)</h2> </li>
-            <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">Gjeldende</a></li>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
+                <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">Gjeldende</a></li>
 
-            <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">Forslag</a></li>
+                <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">Forslag</a></li>
 
-            <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">Historiske</a></li>
-        </ul>
-        <br />
+                <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">Historiske</a></li>
+            </ul>
+            <br />
+        </div>
+
+        @if (Model.currentVersion.register.containedItemClass == "Organization")
+        {
+            @Html.Partial("_detailsOrganization")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Document")
+        {
+            <div class="tab-content">
+                <div class="tab-pane active" id="gjeldende">
+                    @Html.Partial("_currentVersionDocument", Model)
+                </div>
+                <div class="tab-pane" id="historiske">
+                    @Html.Partial("_histroicalDocuments", Model)
+                </div>
+                <div class="tab-pane" id="forslag">
+                    @Html.Partial("_suggestedDocuments", Model)
+                </div>
+            </div>
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Dataset")
+        {
+            @Html.Partial("_detailsDataset")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "EPSG")
+        {
+            @Html.Partial("_detailsEpsg")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "Register")
+        {
+            @Html.Partial("_detailsSubregister")
+        }
+        @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
+        {
+            @Html.Partial("_detailsCodelistValue")
+        }
+
     </div>
 
-    @if (Model.currentVersion.register.containedItemClass == "Organization")
-    {
-        @Html.Partial("_detailsOrganization")
-    }
-    @if (Model.currentVersion.register.containedItemClass == "Document")
-    {
-        <div class="tab-content">
-            <div class="tab-pane active" id="gjeldende">
-                @Html.Partial("_currentVersionDocument", Model)
-            </div>
-            <div class="tab-pane" id="historiske">
-                @Html.Partial("_histroicalDocuments", Model)
-            </div>
-            <div class="tab-pane" id="forslag">
-                @Html.Partial("_suggestedDocuments", Model)
-            </div>
-        </div>
-    }
-    @if (Model.currentVersion.register.containedItemClass == "Dataset")
-    {
-        @Html.Partial("_detailsDataset")
-    }
-    @if (Model.currentVersion.register.containedItemClass == "EPSG")
-    {
-        @Html.Partial("_detailsEpsg")
-    }
-    @if (Model.currentVersion.register.containedItemClass == "Register")
-    {
-        @Html.Partial("_detailsSubregister")
-    }
-    @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
-    {
-        @Html.Partial("_detailsCodelistValue")
-    }
-
-</div>
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <hr />
-    @if (Request.IsAuthenticated)
-    {
-        if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <hr />
+        @if (Request.IsAuthenticated)
         {
-            if (Model.currentVersion.register.containedItemClass == "Document")
+            if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
             {
-                <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">Foreslå ny versjon av @Model.currentVersion.name</a>
+                if (Model.currentVersion.register.containedItemClass == "Document")
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">Foreslå ny versjon av @Model.currentVersion.name</a>
+                }
             }
         }
-    }
-    <a href="@RegisterUrls.registerUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname)">Tilbake</a>
+        <a href="@RegisterUrls.registerUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname)">Tilbake</a>
+    </div>
 </div>

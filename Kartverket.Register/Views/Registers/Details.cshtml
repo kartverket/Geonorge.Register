@@ -15,10 +15,10 @@
 @section breadcrumb {
     <li><a href="@RegisterUrls.registerUrl(null, null, mainRegister.seoname)">@mainRegister.name</a></li>
     @if (mainRegister != Model)
-    { <li class="active pull-right">@Model.name</li>}
+    { <li>@Model.name</li>}
     @while (parent != null && parent != mainRegister)
     {
-        <li class="pull-right"><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
+        <li><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
         parent = parent.parentRegister;
     }
 }

@@ -81,38 +81,36 @@
     @Html.Partial("_SharedMenu")
 
     <div class="body-content">
-
-        <div class="container">
-            <ol class="breadcrumb pull-left">
+        <div class="container container-breadcrumbs" id="navTabCont">
+            <ul class="breadcrumbs col-md-12">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
                 <li><a href="/">Registrene</a></li>
                 @RenderSection("breadcrumb", false)
-            </ol>
-
-            @if (TempData["success"] != null)
-            {
-                <div class="alert alert-success">
-                    @TempData["success"]
-                </div>
-            }
-            @if (TempData["failure"] != null)
-            {
-                <div class="alert alert-danger">
-                    @TempData["failure"]
-                </div>
-            }
-
-
-            @Html.Partial("_SearchBarPartial")
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <!--<div id="loading">
-                    <img id="loading-image" src="/Content/img/loader.gif" alt="Laster..." />
-                </div>-->
-                @RenderBody()
-            </div>
+            </ul>
         </div>
 
+        @if (TempData["success"] != null)
+            {
+            <div class="alert alert-success">
+                @TempData["success"]
+            </div>
+        }
+        @if (TempData["failure"] != null)
+            {
+            <div class="alert alert-danger">
+                @TempData["failure"]
+            </div>
+        }
 
+        @Html.Partial("_SearchBarPartial")
+
+        <div class="body-content">
+            <div class="container">
+                @RenderBody()
+            </div>
+
+        </div>
+        
     </div>
     <footer class="page-footer">
         <div class="container container-footer">

@@ -215,18 +215,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiRootController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
-    <Compile Include="Controllers\DisplayDatasetController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
@@ -574,6 +571,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
+    <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\AccessType.cs" />
     <Compile Include="Models\Api\Concept.cs" />
     <Compile Include="Models\Api\ConceptSheme.cs" />
@@ -604,7 +602,6 @@
     <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
-    <Compile Include="ModelsDok\ThemeGroup.cs" />
     <Compile Include="Models\Api\Item.cs" />
     <Compile Include="Models\Api\Organization.cs" />
     <Compile Include="Models\CodelistValue.cs" />
@@ -743,7 +740,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Content\fonts\MetaComp-Book.ttf" />
     <Content Include="Content\fonts\MetaWeb-Book.eot" />
     <Content Include="Content\fonts\MetaWeb-Book.woff" />
@@ -812,7 +808,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Organizations\Create.cshtml" />
     <Content Include="Views\Organizations\Delete.cshtml" />
     <Content Include="Views\Organizations\Edit.cshtml" />
@@ -840,7 +835,6 @@
     <Content Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Registers\DetailsRegisterItem.cshtml" />
     <Content Include="Views\Shared\_detailsOrganization.cshtml" />
     <Content Include="Views\Shared\_detailsDocuments.cshtml" />
@@ -865,7 +859,6 @@
     <Content Include="Views\Subregister\Delete.cshtml" />
     <Content Include="Views\Subregister\Details.cshtml" />
     <Content Include="Views\Subregister\Edit.cshtml" />
-    <Content Include="Views\Subregister\Index.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
     <Content Include="Views\Documents\CreateNewVersion.cshtml" />
@@ -888,9 +881,7 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_SharedMenu.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

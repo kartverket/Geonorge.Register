@@ -15,6 +15,11 @@ namespace Kartverket.Register.Models
 {
 	public class Dataset : RegisterItem {
 
+        public Dataset()
+        {
+            Coverage = new List<CoverageDataset>();
+        }
+
         //public int Id { get; set; }
 
         [Display(Name = "Uuid")]

@@ -246,7 +246,7 @@ namespace Kartverket.Register.Services.RegisterItem
             return versjoneringsGruppe.systemId;
         }
 
-        public Guid NewCoverage(Models.RegisterItem registerItem)
+        public CoverageDataset NewCoverage(Models.RegisterItem registerItem)
         {
             CoverageDataset coverage = new CoverageDataset();
             coverage.CoverageId = Guid.NewGuid();
@@ -262,7 +262,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
             _dbContext.Entry(coverage).State = EntityState.Modified;
             _dbContext.CoverageDatasets.Add(coverage);
-            return coverage.CoverageId;
+            return coverage;
         }
 
         public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)

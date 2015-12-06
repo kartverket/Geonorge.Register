@@ -254,7 +254,7 @@ namespace Kartverket.Register.Controllers
         {
             if (DokMunicipalDataset(dataset))
             {
-                _registerItemService.NewCoverage(dataset);
+                dataset.Coverage.Add(_registerItemService.NewCoverage(dataset));
                 return "Kommunalt";
             }
             else {

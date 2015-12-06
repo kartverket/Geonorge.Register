@@ -71,10 +71,6 @@ namespace Kartverket.Register.Controllers
 
         private void RegisterItems(Models.Register register, FilterParameters filter, int? page)
         {
-            //if (RegisterItemsIsOfTypeDataset(register))
-            //{
-            //    GetItemsForDatasetRegisters(register);
-            //}
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
         }
@@ -89,7 +85,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.search = filter.text;
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
-            ViewBag.selectedMunicipality = filter.municipalityList;
+            ViewBag.selectedMunicipality = filter.municipality;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.municipality = new SelectList(db.RegisterItems.Where(ri => ri.register.name == "Kommunenummer").OrderBy(o => o.name).ToList(), "value", "name");
             ViewBag.register = register.name;

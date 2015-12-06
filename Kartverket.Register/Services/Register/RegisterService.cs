@@ -71,11 +71,41 @@ namespace Kartverket.Register.Services.Register
         {
             if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
-                foreach (Models.RegisterItem item in DOK.items)
+                if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
-                    registerItems.Add(item);
+                    //Alle nasjonale datasett skal være med...
+                    Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
+                    foreach (Models.RegisterItem item in DOK.items)
+                    {
+                        registerItems.Add(item);
+                    }
+
+                    //Finn valgt kommune
+                    var queryresultMunicipality = from c in _dbContext.CodelistValues
+                                                  where c.register.name == "Kommunenummer" &&
+                                                  c.value == filter.municipality
+                                                  select c;
+
+                    Models.RegisterItem municipal = queryresultMunicipality.FirstOrDefault();
+
+                    if (municipal != null)
+                    {
+                        //Gå gjennom alle datasett
+                        foreach (Dataset item in register.items)
+                        {
+                            //Gå gjennom dekningslisten for datasettet
+                            foreach (CoverageDataset coverage in item.Coverage)
+                            {
+                                //Er det registrert dekning av datasett for valgt kommune...
+                                if (coverage.Municipality.systemId == municipal.systemId)
+                                {
+                                    registerItems.Add(item);
+                                }
+                            }
+                        }
+                    }
                 }
+                register.items.Clear();
             }
 
             if (!string.IsNullOrWhiteSpace(filter.filterOrganization))
@@ -281,7 +311,7 @@ namespace Kartverket.Register.Services.Register
                               select r;
 
             return queryResult.ToList();
-                                
+
         }
 
         public List<Models.Register> GetSubregisters()
@@ -324,11 +354,12 @@ namespace Kartverket.Register.Services.Register
 
                 return queryResults.FirstOrDefault();
             }
-            else {
+            else
+            {
                 var queryResults = from r in _dbContext.Registers
-                                              where r.seoname == registerName && 
-                                              r.parentRegister.seoname == parentRegisterName
-                                              select r;
+                                   where r.seoname == registerName &&
+                                   r.parentRegister.seoname == parentRegisterName
+                                   select r;
 
                 return queryResults.FirstOrDefault();
             }
@@ -352,9 +383,9 @@ namespace Kartverket.Register.Services.Register
         public bool RegisterHasChildren(string parentname, string registername)
         {
             var queryResultsRegisterItem = ((from o in _dbContext.RegisterItems
-                                                 where o.register.seoname == registername
-                                                 || o.register.parentRegister.seoname == registername
-                                                 select o.systemId).Union(
+                                             where o.register.seoname == registername
+                                             || o.register.parentRegister.seoname == registername
+                                             select o.systemId).Union(
                                                from r in _dbContext.Registers
                                                where r.parentRegister.seoname == registername
                                                select r.systemId));
@@ -369,8 +400,8 @@ namespace Kartverket.Register.Services.Register
             {
                 Models.Register register = (Models.Register)model;
                 var queryResults = from o in _dbContext.Registers
-                                      where o.name == register.name && o.systemId != register.systemId
-                                      select o.systemId;
+                                   where o.name == register.name && o.systemId != register.systemId
+                                   select o.systemId;
 
                 if (queryResults.Count() > 0)
                 {

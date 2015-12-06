@@ -187,6 +187,7 @@ function Filter() {
     var inspireRequirement = document.getElementById("inspireRequirement");
     var nationalRequirement = document.getElementById("nationalRequirement");
     var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+    var municipality = document.getElementById("municipalityFilter");
 
     if (qP('filterVertikalt') != "") {
         filterVertikalt.checked;
@@ -201,6 +202,13 @@ function Filter() {
     document.filtering.submit();
 
 
+}
+
+function FilterMunicipality() {
+    var kommune = document.getElementById("municipality");
+    kommune.options[municipality.selectedIndex].text;
+
+    document.FilterMunicipalityForm.submit();
 }
 
 function filterDefault() {

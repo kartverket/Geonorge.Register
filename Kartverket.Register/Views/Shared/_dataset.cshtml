@@ -1,8 +1,11 @@
-﻿@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
+﻿@model PagedList.IPagedList<RegisterItem>
 ﻿@using Kartverket.Register.Helpers
-@using PagedList;
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
+
+@{ 
+    var registerName = ViewBag.register;
+}
 
 <div class="search-filter-wrapper">
     <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
@@ -15,6 +18,7 @@
     </ul>
     @Html.Partial("_visningstyper")
 </div>
+
 
 <div class="register dataset search-results">
     @foreach (Dataset item in Model)

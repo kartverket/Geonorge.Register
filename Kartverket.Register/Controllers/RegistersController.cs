@@ -89,18 +89,16 @@ namespace Kartverket.Register.Controllers
             ViewBag.search = filter.text;
             ViewBag.page = page;
             ViewBag.SortOrder = sorting;
+            ViewBag.selectedMunicipality = filter.municipalityList;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.municipality = new SelectList(db.RegisterItems.Where(ri => ri.register.name == "Kommunenummer").OrderBy(o => o.name).ToList(), "value", "name");
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
             ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.register = register.name;
             ViewBag.ownerSEO = owner;
-            ViewBag.search = filter.text;
+
         }
 
         private static bool Search(FilterParameters filter)

@@ -18,6 +18,7 @@ namespace Kartverket.Register.Models
         public string nationalRequirement { get; set; }
         public string nationalSeaRequirement { get; set; }
         public string filterOrganization { get; set; }
+        public string municipalityList { get; set; }
         
 
 

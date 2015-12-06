@@ -77,8 +77,8 @@
             <div class="sorter pagination pagination-sm pull-right">
                 <form action="@Request.Url.LocalPath" name="FilterMunicipalityForm" method="get">
                     <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="FilterMunicipality()">
-                        <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "")
-                    </div>    
+                        <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "Velg kommune")
+                    </div>
                 </form>
             </div>
         </div>

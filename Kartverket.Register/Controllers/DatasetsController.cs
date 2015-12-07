@@ -47,18 +47,14 @@ namespace Kartverket.Register.Controllers
             if (dataset.register != null)
             {
                 ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
-                if (dataset.register.name == "Det offentlige kartgrunnlaget")
-                {
-                    if (_accessControlService.IsAdmin())
-                    {
-                        return View(dataset);
-                    }
-                }
-                else if (_accessControlService.Access(dataset))
+                if (_accessControlService.Access(dataset))
                 {
                     return View(dataset);
                 }
-                throw new HttpException(401, "Access Denied");
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
             return HttpNotFound("Finner ikke registeret");
         }
@@ -83,37 +79,27 @@ namespace Kartverket.Register.Controllers
                     model.register = dataset.register;
                     return View(model);
                 }
-                if (dataset.register.name == "Det offentlige kartgrunnlaget")
-                {
-                    if (_accessControlService.IsAdmin())
-                    {
-                        return NewDataset(dataset, registername, parentRegister, registerowner);
-                    }
-                }
                 else if (_accessControlService.Access(dataset))
                 {
                     if (ModelState.IsValid)
                     {
-                        return NewDataset(dataset, registername, parentRegister, registerowner);
+                        initialisationDataset(dataset);
+                        if (!NameIsValid(dataset))
+                        {
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                            Viewbags(dataset);
+                            return View(dataset);
+                        }
+                        _registerItemService.SaveNewRegisterItem(dataset);
+                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                     }
                 }
-                throw new HttpException(401, "Access Denied");
+                else {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
             Viewbags(dataset);
             return View(dataset);
-        }
-
-        private ActionResult NewDataset(Dataset dataset, string registername, string parentRegister, string registerowner)
-        {
-            initialisationDataset(dataset);
-            if (!NameIsValid(dataset))
-            {
-                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                Viewbags(dataset);
-                return View(dataset);
-            }
-            _registerItemService.SaveNewRegisterItem(dataset);
-            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
         }
 
 

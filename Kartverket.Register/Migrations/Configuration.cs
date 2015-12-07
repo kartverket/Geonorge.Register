@@ -461,7 +461,7 @@ namespace Kartverket.Register.Migrations
                     seoname = "det-offentlige-kartgrunnlaget",
                     managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                    accessId = 3
+                    accessId = 1
                 }
             );
 

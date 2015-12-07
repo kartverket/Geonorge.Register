@@ -262,73 +262,6 @@ namespace Kartverket.Register.Helpers
             return isInRole;
         }
 
-        //public static string GeonorgeUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["GeonorgeUrl"];
-        //}
-        //public static string GeonorgeArtiklerUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["GeonorgeArtiklerUrl"];
-        //}
-        //public static string NorgeskartUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["NorgeskartUrl"];
-        //}
-        //public static string RegistryUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["RegistryUrl"];
-        //}
-        //public static string ObjektkatalogUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["ObjektkatalogUrl"];
-        //}
-        //public static string KartkatalogenUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["KartkatalogenUrl"];
-        //}
-
-        //public static string DokRegisterUrl(this HtmlHelper helper)
-        //{
-        //    return WebConfigurationManager.AppSettings["DokRegisterUrl"];
-        //}
-
-        //public static string ToUrl(this HtmlHelper helper, string name)
-        //{
-        //    return MakeSeoFriendlyString(name);
-        //}
-
-        //public static string urlFormat(HttpRequestBase request, string format)
-        //{
-        //    string url = request.FilePath + "." + format;
-        //    return url;
-        //}
-
-        //public static string MakeSeoFriendlyString(string input)
-        //{
-        //    string encodedUrl = (input ?? "").ToLower();
-
-        //    // replace & with and
-        //    encodedUrl = Regex.Replace(encodedUrl, @"\&+", "and");
-
-        //    // remove characters
-        //    encodedUrl = encodedUrl.Replace("'", "");
-
-        //    // replace norwegian characters
-        //    encodedUrl = encodedUrl.Replace("å", "a").Replace("æ", "ae").Replace("ø", "o");
-
-        //    // remove invalid characters
-        //    encodedUrl = Regex.Replace(encodedUrl, @"[^a-z0-9]", "-");
-
-        //    // remove duplicates
-        //    encodedUrl = Regex.Replace(encodedUrl, @"-+", "-");
-
-        //    // trim leading & trailing characters
-        //    encodedUrl = encodedUrl.Trim('-');
-
-        //    return encodedUrl;
-        //}
-
-
 
         // SORTERING av registeritems
         public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
@@ -369,11 +302,6 @@ namespace Kartverket.Register.Helpers
                     string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
                     bool shallRedirect = false;
 
-                    //if (!string.IsNullOrWhiteSpace(sortingType))
-                    //{
-                    //    redirect = redirect + "?sorting=" + sortingType;
-                    //    shallRedirect = true;
-                    //}
                     if (text != "")
                     {
                         redirect = redirect + "&text=" + text;
@@ -841,26 +769,6 @@ namespace Kartverket.Register.Helpers
 
         }
 
-
-        //public static List<Kartverket.Register.Models.Register> parentRegisterList(Kartverket.Register.Models.Register model)
-        //{
-        //    List<Models.Register> parentsList = new List<Models.Register>();
-        //    Models.Register register = model;
-        //    Models.Register mainRegister;
-
-        //    if (register.parentRegister != null)
-        //    {
-        //        parentsList.Add(model.parentRegister);
-        //        register = model.parentRegister;
-
-        //        register = hasParentRegister(model, parentsList, register);
-        //    }
-        //    else {
-        //        mainRegister = register;
-        //    }
-
-        //}
-
         private static Models.Register hasParentRegister(Kartverket.Register.Models.Register model, List<Models.Register> parentsList, Models.Register register)
         {
             if (register.parentRegister != null)
@@ -941,6 +849,41 @@ namespace Kartverket.Register.Helpers
         public static string ErrorMessageValidationName()
         {
            return "Navnet finnes fra før!";
+        }
+
+        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipal) {
+            foreach (CoverageDataset coverage in item.Coverage)
+            {
+                if (coverage.Municipality.name == selectedMunicipal)
+                {
+                    return coverage.CoverageDOKStatus.description;
+                }
+            }
+            return "Forslag";
+        }
+
+        public static bool GetConfirmedFromCoverage(Dataset item, string selectedMunicipal)
+        {
+            foreach (CoverageDataset coverage in item.Coverage)
+            {
+                if (coverage.Municipality.name == selectedMunicipal)
+                {
+                    return coverage.ConfirmedDok;
+                }
+            }
+            return false;
+        }
+
+        public static string GetNoteFromCoverage(Dataset item, string selectedMunicipal)
+        {
+            foreach (CoverageDataset coverage in item.Coverage)
+            {
+                if (coverage.Municipality.name == selectedMunicipal)
+                {
+                    return coverage.Note;
+                }
+            }
+            return null;
         }
     }
 }

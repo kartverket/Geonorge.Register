@@ -878,6 +878,8 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_SharedMenu.cshtml" />
     <Content Include="Views\DokDekning\Index.cshtml" />
+    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="Views\Shared\_municipalDataset.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -56,6 +56,18 @@
     </div>
 
 
+    @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
+    {
+        <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
+            <div class="sorter pagination pagination-sm pull-right">
+                <form action="@Request.Url.LocalPath" name="FilterMunicipalityForm" method="get">
+                    <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="FilterMunicipality()">
+                        <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "Velg kommune")
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
     <div class="col-sm-3 col-md-3 col-lg-3">
         <div id="sortBox" class="sorter pagination pagination-sm pull-right">
             <form action="@kontroller" name="sortering" method="get">
@@ -71,19 +83,6 @@
             </form>
         </div>
     </div>
-    @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
-    {
-        <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-            <div class="sorter pagination pagination-sm pull-right">
-                <form action="@Request.Url.LocalPath" name="FilterMunicipalityForm" method="get">
-                    <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="FilterMunicipality()">
-                        <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "Velg kommune")
-                    </div>
-                </form>
-            </div>
-        </div>
-    }
-
 </div>
 
 <div class="result-header">

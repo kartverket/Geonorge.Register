@@ -42,10 +42,10 @@ namespace Kartverket.Register.Migrations
 
 
             context.AccessTypes.AddOrUpdate(
-                new accessType { accessLevel = 1, description = "Administrator" },
-                new accessType { accessLevel = 2, description = "Editor" },
-                new accessType { accessLevel = 3, description = "Alle" },
-                new accessType { accessLevel = 4, description = "Municipalities" }
+                new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },
+                new accessType { accessLevel = 2, description = "Editor can create, edit or delete their owne items" }, 
+                new accessType { accessLevel = 3, description = "Municipalities can edit items" }, //Only in use for national datasets
+                new accessType { accessLevel = 4, description = "Municipalities can create, update and delete their own items" }
             );
 
             context.SaveChanges();
@@ -461,7 +461,7 @@ namespace Kartverket.Register.Migrations
                     seoname = "det-offentlige-kartgrunnlaget",
                     managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                    accessId = 1
+                    accessId = 3
                 }
             );
 

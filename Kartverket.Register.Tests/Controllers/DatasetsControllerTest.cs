@@ -19,10 +19,31 @@ namespace Kartverket.Register.Tests.Controllers
         // *** CREATE DATASET
 
         [Test]
-        public void GetCreateShouldReturnViewWhenUserHaveAccess()
+        public void GetCreateShouldReturnViewWhenRegisterIsDOK()
         {
             Dataset dataset = new Dataset();
             dataset.register = NewRegister("Det offentlige kartgrunnlaget");
+
+            var registerService = new Mock<IRegisterService>();
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
+            accessControlService.Setup(a => a.IsAdmin()).Returns(true);
+            registerItemService.Setup(s => s.GetThemeGroupSelectList("ThemeGroup")).Returns(NewList());
+
+            var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
+            var result = controller.Create(dataset.register.seoname, null) as ViewResult;
+            Dataset resultDataset = (Dataset)result.Model;
+
+            result.Should().NotBeNull();
+            resultDataset.register.name.Should().Be(dataset.register.name);
+        }
+
+        [Test]
+        public void GetCreateShouldReturnViewWhenRegisterIsDOKKommunalt()
+        {
+            Dataset dataset = new Dataset();
+            dataset.register = NewRegister("Det offentlige kartgrunnlaget - Kommunalt");
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
@@ -72,9 +93,30 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
         [Test]
-        public void PostCreateShouldReturnRegisterItemDetailsPage()
+        public void PostCreateShouldReturnRegisterItemDetailsPageWhenReigisterNameIsDOK()
         {
             Dataset dataset = NewDataset("Navn på datasett");
+
+            var registerService = new Mock<IRegisterService>();
+            var accessControlService = new Mock<IAccessControlService>();
+            var registerItemService = new Mock<IRegisterItemService>();
+            registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
+            accessControlService.Setup(a => a.IsAdmin()).Returns(true);
+            registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
+            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
+            registerService.Setup(o => o.GetOrganization(dataset.submitter.seoname)).Returns(dataset.submitter);
+
+            var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
+            var result = controller.Create(dataset, dataset.register.seoname, null, null, null) as ActionResult;
+            
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void PostCreateShouldReturnRegisterItemDetailsPageWhenRegisterNameIsDokKommunalt()
+        {
+            Dataset dataset = NewDataset("Navn på datasett");
+            dataset.register = NewRegister("Det offentlige kartgrunnlaget - kommunalt", 3);
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
@@ -87,7 +129,7 @@ namespace Kartverket.Register.Tests.Controllers
 
             var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
             var result = controller.Create(dataset, dataset.register.seoname, null, null, null) as ActionResult;
-            
+
             result.Should().NotBeNull();
         }
 

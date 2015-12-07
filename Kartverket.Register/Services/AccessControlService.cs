@@ -85,7 +85,6 @@ namespace Kartverket.Register.Services
             }
             else if (register.accessId == 4)
             {
-                //Innlogget bruker må være en kommune
                 return MunicipalUser();
             }
             return false;

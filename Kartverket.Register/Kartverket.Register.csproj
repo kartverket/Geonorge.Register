@@ -222,6 +222,7 @@
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
+    <Compile Include="Controllers\DokDekningController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -876,6 +877,7 @@
     <Content Include="Views\Shared\_otherformats.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_SharedMenu.cshtml" />
+    <Content Include="Views\DokDekning\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

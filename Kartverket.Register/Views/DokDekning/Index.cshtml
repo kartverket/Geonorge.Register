@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Dekningskart for DOK-datasett</h2>
+
+<form action="@Request.Url.LocalPath" name="FilterMunicipalityForm" method="GET">
+    <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch">
+        <label for="State">Velg fylke:</label> @Html.DropDownList("States", "Velg fylke")
+    </div>
+</form>
+
+

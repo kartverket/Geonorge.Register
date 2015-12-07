@@ -13,7 +13,7 @@ namespace Kartverket.Register
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
-            routes.MapMvcAttributeRoutes();
+            
 
             routes.MapRoute("DisplayDataset", "datasett/{id}/{name}",
                 new { controller = "DisplayDataset", action = "Display", name = UrlParameter.Optional },
@@ -21,6 +21,10 @@ namespace Kartverket.Register
             );
 
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
+
+            routes.MapRoute("DokDekning", "register/det-offentlige-kartgrunnlaget/dekning", new { controller = "DokDekning", action = "Index" });
+
+            routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
                 name: "Default",

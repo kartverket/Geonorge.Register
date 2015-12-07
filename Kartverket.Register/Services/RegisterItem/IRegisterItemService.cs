@@ -36,5 +36,7 @@ namespace Kartverket.Register.Services.RegisterItem
         SelectList GetStatusSelectList(Models.RegisterItem registerItem);
         SelectList GetBroaderItems(Guid? broaderItemId);
         CoverageDataset NewCoverage(Models.RegisterItem registerItem);
+        Models.RegisterItem GetMunicipalByNr(string municipalityNr);
+        List<CodelistValue> GetMunicipalityList();
     }
 }

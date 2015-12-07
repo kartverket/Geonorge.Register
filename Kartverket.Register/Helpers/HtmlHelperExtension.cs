@@ -1,4 +1,6 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Services;
+using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,12 @@ namespace Kartverket.Register.Helpers
         {
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];
             return versionNumber;
+        }
+
+
+        public static bool Access(object model) {
+            AccessControlService accessControl = new AccessControlService();
+            return accessControl.Access(model);
         }
 
         public static string GetSecurityClaim(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims, string type)

@@ -371,5 +371,24 @@ namespace Kartverket.Register.Services.RegisterItem
             _dbContext.RegisterItems.Remove(item);
             _dbContext.SaveChanges();
         }
+
+        public Models.RegisterItem GetMunicipalByNr(string municipalityNr)
+        {
+            var queryresultMunicipality = from c in _dbContext.CodelistValues
+                                          where c.register.name == "Kommunenummer" &&
+                                          c.value == municipalityNr
+                                          select c;
+
+            return queryresultMunicipality.FirstOrDefault();
+        }
+
+        public List<CodelistValue> GetMunicipalityList()
+        {
+            var queryresultMunicipality = from c in _dbContext.CodelistValues
+                                          where c.register.name == "Kommunenummer"
+                                          select c;
+
+            return queryresultMunicipality.ToList();
+        }
     }    
 }

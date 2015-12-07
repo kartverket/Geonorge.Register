@@ -3,6 +3,7 @@ using System;
 using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Services
 {
@@ -15,7 +16,6 @@ namespace Kartverket.Register.Services
         public AccessControlService(ClaimsPrincipal claimsPrincipal)
         {
             _claimsPrincipal = claimsPrincipal;
-
         }
 
         public AccessControlService()
@@ -59,7 +59,7 @@ namespace Kartverket.Register.Services
                 else if (IsDataset(registerItem))
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    return IsOwner(dataset.datasetowner.name, user);
+                    return IsOwnerOrMunicipal(dataset.datasetowner.name, user);
                 }
                 else
                 {
@@ -79,7 +79,16 @@ namespace Kartverket.Register.Services
         {
             string role = GetSecurityClaim("role");
             Models.Register register = (Models.Register)model;
-            return register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor");
+            if (register.accessId == 2)
+            {
+                return role == "nd.metadata" || role == "nd.metadata_editor";
+            }
+            else if (register.accessId == 4)
+            {
+                //Innlogget bruker må være en kommune
+                return MunicipalUser();
+            }
+            return false;
         }
 
         private bool IsDataset(Models.RegisterItem item)
@@ -95,6 +104,30 @@ namespace Kartverket.Register.Services
         private bool IsOwner(string owner, string user)
         {
             return owner.ToLower() == user.ToLower();
+        }
+
+        private bool IsOwnerOrMunicipal(string owner, string user)
+        {
+            if (MunicipalUser())
+            {
+                return true;
+            }
+            return owner.ToLower() == user.ToLower();
+        }
+
+
+        private bool MunicipalUser()
+        {
+            string user = GetSecurityClaim("organization");
+            List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+            foreach (CodelistValue item in municipalities)
+            {
+                if (user == item.name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public string GetSecurityClaim(string type)

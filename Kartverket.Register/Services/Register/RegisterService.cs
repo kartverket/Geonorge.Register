@@ -81,12 +81,7 @@ namespace Kartverket.Register.Services.Register
                     }
 
                     //Finn valgt kommune
-                    var queryresultMunicipality = from c in _dbContext.CodelistValues
-                                                  where c.register.name == "Kommunenummer" &&
-                                                  c.value == filter.municipality
-                                                  select c;
-
-                    Models.RegisterItem municipal = queryresultMunicipality.FirstOrDefault();
+                    Models.RegisterItem municipal = _registerItemService.GetMunicipalByNr(filter.municipality);
 
                     if (municipal != null)
                     {

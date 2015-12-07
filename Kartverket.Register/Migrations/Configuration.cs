@@ -44,7 +44,8 @@ namespace Kartverket.Register.Migrations
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Administrator" },
                 new accessType { accessLevel = 2, description = "Editor" },
-                new accessType { accessLevel = 3, description = "Alle" }
+                new accessType { accessLevel = 3, description = "Alle" },
+                new accessType { accessLevel = 4, description = "Municipalities" }
             );
 
             context.SaveChanges();
@@ -479,7 +480,7 @@ namespace Kartverket.Register.Migrations
                     seoname = "det-offentlige-kartgrunnlaget-kommunalt",
                     managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                     ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                    accessId = 1
+                    accessId = 4
                 }
             );
 

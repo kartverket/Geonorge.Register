@@ -6,5 +6,6 @@ namespace Kartverket.Register.Services
     {
         bool Access(object model);
         string GetSecurityClaim(string type);
+        bool IsAdmin();
     }
 }

@@ -69,7 +69,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool IsAdmin()
+        public bool IsAdmin()
         {
             string role = GetSecurityClaim("role");
             return role == "nd.metadata_admin";

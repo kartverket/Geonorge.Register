@@ -73,31 +73,22 @@ namespace Kartverket.Register.Services.Register
             {
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
-                    //Alle nasjonale datasett skal være med...
-                    Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
-                    foreach (Models.RegisterItem item in DOK.items)
-                    {
-                        registerItems.Add(item);
-                    }
+                    AddNationalDatasets(registerItems);
 
                     //Finn valgt kommune
                     Models.RegisterItem municipal = _registerItemService.GetMunicipalByNr(filter.municipality);
 
                     if (municipal != null)
                     {
-                        //Gå gjennom alle datasett
-                        foreach (Dataset item in register.items)
-                        {
-                            //Gå gjennom dekningslisten for datasettet
-                            foreach (CoverageDataset coverage in item.Coverage)
-                            {
-                                //Er det registrert dekning av datasett for valgt kommune...
-                                if (coverage.Municipality.systemId == municipal.systemId)
-                                {
-                                    registerItems.Add(item);
-                                }
-                            }
-                        }
+                        GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipal);
+                    }
+                }
+                else
+                {
+                    AccessControlService access = new AccessControlService();
+                    if (access.IsAdmin())
+                    {
+                        GetMunicipalDatasetAddedByAdmin(register, registerItems, access);
                     }
                 }
                 register.items.Clear();
@@ -113,6 +104,43 @@ namespace Kartverket.Register.Services.Register
                 {
                     registerItems.Add(item);
                 }
+            }
+        }
+
+        private static void GetMunicipalDatasetAddedByAdmin(Models.Register register, List<Models.RegisterItem> registerItems, AccessControlService access)
+        {
+            foreach (Dataset item in register.items)
+            {
+                if (access.GetSecurityClaim("organization") == item.datasetowner.name)
+                {
+                    registerItems.Add(item);
+                }
+            }
+        }
+
+        private static void GetMunicipalDatasetBySelectedMunicipality(Models.Register register, List<Models.RegisterItem> registerItems, Models.RegisterItem municipal)
+        {
+            //Gå gjennom alle datasett i registeret
+            foreach (Dataset item in register.items)
+            {
+                //Gå gjennom dekningslisten for datasettet
+                foreach (CoverageDataset coverage in item.Coverage)
+                {
+                    //Er det registrert dekning av datasett for valgt kommune...
+                    if (coverage.Municipality.systemId == municipal.systemId)
+                    {
+                        registerItems.Add(item);
+                    }
+                }
+            }
+        }
+
+        private void AddNationalDatasets(List<Models.RegisterItem> registerItems)
+        {
+            Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
+            foreach (Models.RegisterItem item in DOK.items)
+            {
+                registerItems.Add(item);
             }
         }
 

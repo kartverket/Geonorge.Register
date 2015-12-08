@@ -5,30 +5,34 @@
 <h2>Dekningskart for DOK-datasett</h2>
 
 <form action="@Request.Url.LocalPath" method="get">
-
-    <div class="form-horizontal">
-        <div class="form-group">
-            <div class="col-md-3">
-                <div class="chosen-container chosen-container-single">
-                    <label for="State" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList) ViewBag.States, "Velg fylke")
-                </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="chosen-container chosen-container-single">
+                <label for="State" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Velg fylke")
             </div>
-            <div class="col-md-7">
-                <div class="chosen-container chosen-container-single">
-                    <label for="Dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett")
-                </div>
+        </div>
+        <div class="col-md-5">
+            <div class="chosen-container chosen-container-single">
+                <label for="Dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett")
             </div>
-            <div class="col-md-2">
-                <input type="submit" value="Vis dekningskart for valgt fylke" class="btn btn-default"/>
-            </div>
+        </div>
+        <div class="col-md-3">
+            <input type="submit" value="Vis dekningskart for valgt fylke" class="btn btn-default" />
         </div>
     </div>
 </form>
 
 
-<div class="col-sm-12 col-md-12" style="height: 600px;">
-
-    <iframe src="http://norgeskart.no/geoportal/dynamisk.html#5/355422/6668909/l/wms/[http://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?]/+datasett_dekning"
-            width="100%" height="100%" style="border: none;position:absolute;"></iframe>
+<div id="map" class="col-sm-12 col-md-12" style="height: 600px;">
 
 </div>
+
+<script type="text/javascript">
+    (function () {
+        var map = L.map('map').setView([64.5, 10], 5);
+
+        L.tileLayer.kartverket('europa').addTo(map);
+        L.tileLayer.kartverket('topo2').addTo(map);
+
+    }());
+</script>

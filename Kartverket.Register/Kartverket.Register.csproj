@@ -670,8 +670,14 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
+    <Content Include="Content\img\leaflet\layers-2x.png" />
+    <Content Include="Content\img\leaflet\layers.png" />
+    <Content Include="Content\img\leaflet\marker-icon-2x.png" />
+    <Content Include="Content\img\leaflet\marker-icon.png" />
+    <Content Include="Content\img\leaflet\marker-shadow.png" />
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\leaflet.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\mobil.css" />
     <Content Include="Content\print.css" />
@@ -787,6 +793,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\L.TileLayer.Kartverket.min.js" />
+    <Content Include="Scripts\leaflet.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />

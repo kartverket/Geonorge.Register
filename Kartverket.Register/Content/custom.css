@@ -11,32 +11,6 @@
     margin-bottom: 15px;
 }
 
-.search-filter-wrapper>.nav-tabs > li.active{
-	border-bottom: 2px solid #8C4799;
-}
-
-.search-filter-wrapper .pagination > li > a{
-    padding: 0px 8px;
-}
-
-.search-filter-wrapper .pagination > .active > a{
-    background-color: #428BCA;
-    border-color: #428BCA;
-}
-
-.view-navigation{
-	padding-left: 0!important;
-	padding-right: 0!important;
-	margin-bottom: 20px;
-}
-
-.search-filter-wrapper ul {
-	padding-right: 0!important;
-}
-
-.view-navigation .pagination{
-	margin: 5px 0;
-}
 
 .view-navigation .nav-pills>li:hover, .view-navigation .pagination > li:hover{
 	cursor: pointer;

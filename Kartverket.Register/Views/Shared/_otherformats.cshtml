@@ -1,14 +1,34 @@
 ﻿﻿@using Kartverket.Register.Helpers
 
 <div class="row">
-    <div class="col-md-12 text-right pull-right otherformat-buttons">
-        <a href="/Help" class="btn btn-sm btn-default" title="Hjelp til API og formater(Beta)"><span class="fa fa-question"></span> API</a>
-        <a href="@RegisterUrls.urlFormat(Request, "atom")" class="btn btn-sm btn-default" title="Vis Atom feed(Beta)"><span class="fa fa-rss"></span> ATOM</a>
-        <a href="@RegisterUrls.urlFormat(Request, "rss")" class="btn btn-sm btn-default" title="Vis rss feed(Beta)"><span class="fa fa-rss"></span> RSS</a>
-        <a href="@RegisterUrls.urlFormat(Request, "csv")" class="btn btn-sm btn-default" title="Vis CSV(Beta)"><span class="fa fa-file-excel-o"></span> CSV</a>
-        <a href="@RegisterUrls.urlFormat(Request, "gml")" class="btn btn-sm btn-default" title="Vis GML Dictionary(Beta)"><span class="fa fa-file-code-o"></span> GML</a>
-        <a href="@RegisterUrls.urlFormat(Request, "rdf")" class="btn btn-sm btn-default" title="Vis SKOS/RDF(Beta)"><span class="fa fa-file-code-o"></span> RDF</a>
-        <a href="@RegisterUrls.urlFormat(Request, "json")" class="btn btn-sm btn-default" title="Vis JSON(Beta)"><span class="fa fa-file-code-o"></span> JSON</a>
+    <div class="col-sm-5">
+        <div class="row save-as-menu">
+            <div class="col-xs-4 text-right no-padding save-as-label">
+                <p>Lagre som:</p>
+            </div>
+            <div class="col-xs-5 no-padding-bottom save-as-dropdown">
+                <div class="custom-select">
+                    <select onchange="additionalView(this.value)" class="form-control">
+                        <option value="helpUrl">API</option>
+                        <option value="atomUrl">ATOM</option>
+                        <option value="rssUrl">RSS</option>
+                        <option value="csvUrl" selected="selected">CSV</option>
+                        <option value="gmlUrl">GML</option>
+                        <option value="rdfUrl">RDF</option>
+                        <option value="jsonUrl">JSON</option>
+                    </select>
+                </div>
+            </div>
+            <div id="saveButtons" class="col-xs-3 no-padding-bottom save-as-buttons">
+                <a id="helpUrl" href="/Help" class="hidden" title="Hjelp til API og formater(Beta)">Lagre</a>
+                <a id="atomUrl" href="@RegisterUrls.urlFormat(Request, "atom")" class="hidden" title="Vis Atom feed(Beta)">Lagre</a>
+                <a id="rssUrl" href="@RegisterUrls.urlFormat(Request, "rss")" class="hidden" title="Vis rss feed(Beta)">Lagre</a>
+                <a id="csvUrl" href="@RegisterUrls.urlFormat(Request, "csv")" class="btn" title="Vis CSV(Beta)">Lagre</a>
+                <a id="gmlUrl" href="@RegisterUrls.urlFormat(Request, "gml")" class="hidden" title="Vis GML Dictionary(Beta)">Lagre</a>
+                <a id="rdfUrl" href="@RegisterUrls.urlFormat(Request, "rdf")" class="hidden" title="Vis SKOS/RDF(Beta)">Lagre</a>
+                <a id="jsonUrl" href="@RegisterUrls.urlFormat(Request, "json")" class="hidden" title="Vis JSON(Beta)">Lagre</a>
+            </div>
+        </div>
     </div>
-   
-</div><div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>

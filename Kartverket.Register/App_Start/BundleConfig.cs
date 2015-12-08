@@ -14,7 +14,9 @@ namespace Kartverket.Register
                 "~/Scripts/visninger.js",
                 "~/Scripts/tabs.js",
                 "~/Scripts/leaflet.js",
-                "~/Scripts/L.TileLayer.Kartverket.min.js"));
+                "~/Scripts/L.TileLayer.Kartverket.min.js",
+                "~/Scripts/proj4-compressed.js",
+                "~/Scripts/proj4leaflet.js"));
         }
     }
 }

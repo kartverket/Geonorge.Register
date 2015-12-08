@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@model Kartverket.Register.Models.ViewModels.ShowDatasetCoverageViewModel
+@{
+    ViewBag.Title = "Dekningsoversikt";
 }
 
 <h2>Dekningskart for DOK-datasett</h2>
@@ -29,10 +30,49 @@
 
 <script type="text/javascript">
     (function () {
-        var map = L.map('map').setView([64.5, 10], 5);
 
-        L.tileLayer.kartverket('europa').addTo(map);
-        L.tileLayer.kartverket('topo2').addTo(map);
+        var crs = L.CRS.proj4js('EPSG:32633', '+proj=utm +zone=33+ellps=WGS84 +datum=WGS84 +units=m +no_defs', new L.Transformation(1, 2500000, -1, 9045984));
+        crs.scale = function (zoom) {
+            return 1 / (21674.7100160867 / Math.pow(2, zoom));
+        };
+
+        var map = L.map('map', { crs: crs, continuousWorld: true }).setView([64.5, 10], 5);
+
+        var southWest = L.latLng(@Model.StateBoundingBox.South, @Model.StateBoundingBox.West),
+        northEast = L.latLng(@Model.StateBoundingBox.North, @Model.StateBoundingBox.East),
+        bounds = L.latLngBounds(southWest, northEast);
+        map.fitBounds(bounds);
+            
+        /*
+            var baseLayer1 = new L.TileLayer.WMS("http://openwms.statkart.no/skwms1/wms.europa", {
+                layers: 'Europa_WMS',
+                format: 'image/png',
+                attribution: "Kartverket",
+                crs: crs
+            }).addTo(map);
+        */
+        var baseLayer2 = new L.TileLayer.WMS("http://wms.geonorge.no/skwms1/wms.topo2", {
+            layers: 'topo2_WMS',
+            format: 'image/png',
+            attribution: "Kartverket",
+            transparent: true,
+            version: '1.3.0'
+        }).addTo(map);
+
+        var coverageLayer = new L.TileLayer.WMS("http://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?datasett=korallrev", {
+            layers: 'datasett_dekning',
+            format: 'image/png',
+            attribution: "Kartverket",
+            transparent: true,
+        }).addTo(map);
+        
+        var countyNames = new L.TileLayer.WMS("http://wms.geonorge.no/skwms1/wms.abas?", {
+            layers: 'Kommunenavn',
+            format: 'image/png',
+            transparent: true,
+            attribution: "Kartverket",
+        }).addTo(map);
+    
 
     }());
 </script>

@@ -1,4 +1,4 @@
-﻿﻿@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Helpers
 <!DOCTYPE html>
 <html class=" js flexbox no-flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg no-smil svgclippaths">
 <head>
@@ -24,37 +24,20 @@
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
 
-    <!-- Shared menu: -->
+    <!-- central styles and scripts -->
     <link href="@Html.KartkatalogenUrl()bundles/shared-menu-styles" rel="stylesheet" type="text/css">
-
-    <!-- Main css: -->
     <link href="@Html.KartkatalogenUrl()Content/css" rel="stylesheet" type="text/css">
-
-    <!-- Themes css: -->
-    <link href="@Html.KartkatalogenUrl()Content/themes/base/css" rel="stylesheet" type="text/css">
-
-    <!-- Download: -->
-    <link href="@Html.KartkatalogenUrl()Content/download" rel="stylesheet" type="text/css">
-
-    <!-- Shopping cart: -->
     <link href="@Html.KartkatalogenUrl()Content/shopping-cart" rel="stylesheet" type="text/css">
-
-    <!-- Scripts -->
-    <script src="@Html.KartkatalogenUrl()Scripts/easyXDM.js" type="text/javascript"></script>
-    <script src="@Html.KartkatalogenUrl()bundles/jquery"></script>
-    <script src="@Html.KartkatalogenUrl()bundles/modernizr"></script>
-    <script src="@Html.KartkatalogenUrl()bundles/shared-menu-scripts"></script>
-    <script src="@Html.KartkatalogenUrl()bundles/bootstrap"></script>
     <script src="@Html.KartkatalogenUrl()bundles/js"></script>
+    <script src="@Html.KartkatalogenUrl()bundles/shared-menu-scripts"></script>
     <script src="@Html.KartkatalogenUrl()bundles/shopping-cart"></script>
-    @RenderSection("head", false)
+
     @Styles.Render("~/Content/css")
-
-    @Html.Partial("_Analytics")
-
-    @Scripts.Render("~/bundles/jqueryui")
     @Scripts.Render("~/bundles/js")
-
+        
+    @RenderSection("head", false)
+    @Html.Partial("_Analytics")
+    
     <script>
         $(function(){
             $(".jqueryui-marker-datepicker").datepicker({
@@ -101,7 +84,6 @@
 
         <div class="body-content">
             <div class="container">
-                
                 @RenderBody()
             </div>
 

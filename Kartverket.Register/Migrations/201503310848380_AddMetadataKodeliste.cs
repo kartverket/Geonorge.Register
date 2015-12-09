@@ -1,6 +1,6 @@
 namespace Kartverket.Register.Migrations
 {
-    using Kartverket.Register.Models;
+    using Models;
     using System;
     using System.Data.Entity.Migrations;
 

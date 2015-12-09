@@ -4,8 +4,6 @@
 @{
     ViewBag.Title = @Model.name;
     string owner = ViewBag.Owner;
-    //string documentOwner = ViewBag.documentOwner;
-    //string datasetOwner = ViewBag.datasetOwner;
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
     Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
@@ -167,8 +165,7 @@
 
         @if (Request.IsAuthenticated)
         {
-
-            if (HtmlHelperExtensions.accessRegisterItem(Model))
+            if (HtmlHelperExtensions.Access(Model))
             {
                 if (Model.register.containedItemClass != "Document")
                 {
@@ -185,7 +182,7 @@
         }
         else
         {
-            <a class="hidden-print" href="@RegisterUrls.registerUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname)">Tilbake</a>
+            <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
         }
     </div>
 </div>

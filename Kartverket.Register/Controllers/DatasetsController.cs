@@ -94,7 +94,8 @@ namespace Kartverket.Register.Controllers
                         return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, dataset.datasetowner.seoname, dataset.seoname));
                     }
                 }
-                else {
+                else
+                {
                     throw new HttpException(401, "Access Denied");
                 }
             }
@@ -112,7 +113,7 @@ namespace Kartverket.Register.Controllers
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
             if (dataset != null)
             {
-                if (_accessControlService.Access(dataset))
+                if (AccessEditingDataset(dataset))
                 {
                     Viewbags(dataset);
                     return View(dataset);
@@ -125,6 +126,11 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Finner ikke datasettet");
         }
 
+        private bool AccessEditingDataset(Dataset dataset)
+        {
+            return (dataset.DatasetType == "Nasjonalt" && _accessControlService.IsMunicipalUser()) || _accessControlService.Access(dataset);
+        }
+
 
         // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -133,7 +139,7 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
         [Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister, string registerowner)
+        public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string datasetname, string uuid, string parentRegister, string registerowner, bool dontUpdateDescription = false)
         {
             Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
             if (originalDataset != null)
@@ -149,20 +155,23 @@ namespace Kartverket.Register.Controllers
                     Viewbags(model);
                     return View(model);
                 }
-
+                //Nasjonale datasett skal kunne endres av admin. Dekning av et nasjonalt datasett skal kunne endres av en kommune. 
+                if (originalDataset.DatasetType == "Nasjonalt")
+                {
+                    if (_accessControlService.IsAdmin())
+                    {
+                        return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
+                    }
+                    if (_accessControlService.IsMunicipalUser())
+                    {
+                        return EditCoverageDataset(coverage, registername, parentRegister, registerowner, originalDataset);
+                    }
+                }
                 if (_accessControlService.Access(originalDataset))
                 {
                     if (ModelState.IsValid)
                     {
-                        initialisationDataset(dataset, originalDataset);
-                        if (!NameIsValid(dataset))
-                        {
-                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                            Viewbags(originalDataset);
-                            return View(originalDataset);
-                        }
-                        _registerItemService.SaveEditedRegisterItem(originalDataset);
-                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
+                        return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
                     }
                 }
                 else
@@ -172,6 +181,123 @@ namespace Kartverket.Register.Controllers
             }
             Viewbags(originalDataset);
             return View(originalDataset);
+        }
+
+
+
+
+
+        //// POST: Documents/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
+        //[Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister, string registerowner)
+        //{
+        //    Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
+        //    if (originalDataset != null)
+        //    {
+        //        if (uuid != null)
+        //        {
+        //            Dataset model = model = GetMetadataFromKartkatalogen(dataset, uuid);
+        //            model.register = originalDataset.register;
+        //            model.datasetowner = originalDataset.datasetowner;
+        //            model.submitter = originalDataset.submitter;
+
+        //            if (dontUpdateDescription) model.description = originalDataset.description;
+        //            Viewbags(model);
+        //            return View(model);
+        //        }
+        //        if (_accessControlService.EditDOK(originalDataset))
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //                return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
+        //            }
+        //        }
+        //        if (_accessControlService.Access(originalDataset))
+        //        {
+        //            if (ModelState.IsValid)
+        //            {
+        //                return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            throw new HttpException(401, "Access Denied");
+        //        }
+        //    }
+        //    Viewbags(originalDataset);
+        //    return View(originalDataset);
+        //}
+
+        private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        {
+            initialisationDataset(dataset, originalDataset);
+            if (!NameIsValid(dataset))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                Viewbags(originalDataset);
+                return View(originalDataset);
+            }
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
+        }
+
+        private ActionResult EditCoverageDataset(CoverageDataset coverage, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        {
+            initialisationCoverageDataset(coverage, originalDataset);
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
+        }
+
+        private void initialisationCoverageDataset(CoverageDataset coverage, Dataset originalDataset)
+        {
+            CoverageDataset originalCoverage = _registerItemService.GetMunicipalityCoverage(originalDataset);
+            if (originalCoverage == null)
+            {
+                CoverageDataset newCoverage = new CoverageDataset() {
+                    CoverageId = Guid.NewGuid(),
+                    CoverageDOKStatus = coverage.CoverageDOKStatus,
+                    CoverageDOKStatusId = coverage.CoverageDOKStatusId,
+                    ConfirmedDok = coverage.ConfirmedDok,
+                    DatasetId = originalDataset.systemId,
+                    MunicipalityId = SetMunicipality(),
+                    Note = coverage.Note
+                };
+
+                _registerItemService.SaveNewCoverage(newCoverage);
+                originalDataset.Coverage.Add(newCoverage);
+
+            }
+            else
+            {
+                originalCoverage.ConfirmedDok = coverage.ConfirmedDok;
+                originalCoverage.CoverageDOKStatusId = coverage.CoverageDOKStatusId;
+                originalCoverage.Note = coverage.Note;
+            }
+
+        }
+
+        private Guid SetMunicipality()
+        {
+            Organization municipality = _accessControlService.MunicipalUserOrganization();
+            return municipality.systemId;
+        }
+
+        private ActionResult EditDOKDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        {
+            initialisationDataset(dataset, originalDataset);
+            if (!NameIsValid(dataset))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                Viewbags(originalDataset);
+                return View(originalDataset);
+            }
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
         }
 
 
@@ -405,6 +531,7 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerId = _registerItemService.GetRegisterSelectList(dataset.registerId);
             ViewBag.dokStatusId = _registerItemService.GetDokStatusSelectList(dataset.dokStatusId);
+            ViewBag.CoverageDOKStatusId = _registerItemService.GetDokStatusSelectList(null);
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
             ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);

@@ -235,7 +235,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public Guid NewVersioningGroup(Models.RegisterItem registerItem)
         {
-            Kartverket.Register.Models.Version versjoneringsGruppe = new Kartverket.Register.Models.Version();
+            Models.Version versjoneringsGruppe = new Models.Version();
             versjoneringsGruppe.systemId = Guid.NewGuid();
             versjoneringsGruppe.currentVersion = registerItem.systemId;
             versjoneringsGruppe.containedItemClass = registerItem.register.containedItemClass;
@@ -389,6 +389,27 @@ namespace Kartverket.Register.Services.RegisterItem
                                           select c;
 
             return queryresultMunicipality.ToList();
+        }
+
+        public CoverageDataset GetMunicipalityCoverage(Dataset dataset)
+        {
+            AccessControlService access = new AccessControlService();
+            CodelistValue municipality = access.MunicipalUser();
+            var queryResult = from c in _dbContext.CoverageDatasets
+                              where c.Municipality.name.Contains(municipality.name)
+                              && c.dataset.systemId == dataset.systemId
+                              select c;
+
+            CoverageDataset municipalCoverage = queryResult.FirstOrDefault();
+
+            return municipalCoverage;
+        }
+
+        public void SaveNewCoverage(CoverageDataset cover)
+        {
+            _dbContext.Entry(cover).State = EntityState.Modified;
+            _dbContext.CoverageDatasets.Add(cover);
+            _dbContext.SaveChanges();
         }
     }    
 }

@@ -129,7 +129,7 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
             organisasjon.register = register;
 
             if (register.parentRegisterId != null)
@@ -254,7 +254,7 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
 
             if (systId == null)
             {
@@ -275,7 +275,7 @@ namespace Kartverket.Register.Controllers
 
         
 
-        private void ViewbagsOrganization(Kartverket.Register.Models.Organization organization, Kartverket.Register.Models.Register register)
+        private void ViewbagsOrganization(Kartverket.Register.Models.Organization organization, Models.Register register)
         {
             if (register.parentRegisterId != null)
             {
@@ -304,7 +304,7 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
           
             var queryResultsOrganisasjon = from o in db.Organizations
                                            where o.seoname == organisasjon && o.register.seoname == registername
@@ -543,7 +543,7 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
-        private void ValidationName(Organization organization, Kartverket.Register.Models.Register register)
+        private void ValidationName(Organization organization, Models.Register register)
         {
             var queryResultsDataset = from o in db.Organizations
                                       where o.name == organization.name 

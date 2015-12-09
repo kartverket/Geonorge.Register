@@ -24,10 +24,10 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedTypeCSV = (type) =>
         {
-            if (type == typeof(Kartverket.Register.Models.Api.Register) ||
+            if (type == typeof(Models.Api.Register) ||
                 type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(IEnumerable<Models.Api.Register>) ||
+                type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
 
@@ -47,10 +47,10 @@ namespace Kartverket.Register.Formatter
 
         public override void WriteToStream(Type type, object value, Stream writeStream, HttpContent content)
         {
-            if (type == typeof(Kartverket.Register.Models.Api.Register) ||
+            if (type == typeof(Models.Api.Register) ||
                 type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(IEnumerable<Models.Api.Register>) ||
+                type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);

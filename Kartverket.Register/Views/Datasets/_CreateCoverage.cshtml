@@ -1,0 +1,37 @@
+﻿@model Kartverket.Register.Models.CoverageDataset
+
+@using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.LabelFor(model => model.ConfirmedDok, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-1 pull-left">
+                @Html.EditorFor(model => model.ConfirmedDok, new { htmlAttributes = new { @class = "form-control", @style = "float:left" } })
+                @Html.ValidationMessage("ErrorMessage")
+            </div>
+        </div>
+
+        <div class="form-group" id="dokStatus">
+            @Html.LabelFor(model => model.CoverageDOKStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CoverageDOKStatusId", null, htmlAttributes: new { @onchange = "dokStatus()", @class = "form-control", @id = "dokStatusId" })
+                @Html.ValidationMessageFor(model => model.CoverageDOKStatusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Note, 5, 50, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <hr />
+            <input type="submit" value="Lagre" class="btn btn-default pull-right" />           
+        </div>
+    </div>
+}
+
+

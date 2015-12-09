@@ -121,7 +121,7 @@
                 {
                     <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
                 }
-                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                if (HtmlHelperExtensions.IsAdmin())
                 {
                     <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
                     <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>

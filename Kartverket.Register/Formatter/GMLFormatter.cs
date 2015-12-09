@@ -26,7 +26,7 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedType = (type) =>
         {
-            if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
+            if (type == typeof(Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
                 return true;
             else
                 return false;
@@ -46,16 +46,16 @@ namespace Kartverket.Register.Formatter
         {
             return Task.Factory.StartNew(() =>
             {
-                if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
+                if (type == typeof(Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
                     BuildSKOSFeed(value, writeStream, content.Headers.ContentType.MediaType);                
             });
         }
 
         private void BuildSKOSFeed(object models, Stream stream, string contenttype)
             {
-                if (models is Kartverket.Register.Models.Api.Register)
+                if (models is Models.Api.Register)
                 {
-                    Kartverket.Register.Models.Api.Register register = (Kartverket.Register.Models.Api.Register)models;
+                Models.Api.Register register = (Models.Api.Register)models;
 
                     string targetNamespace = "";
                     string nameSpace = "";

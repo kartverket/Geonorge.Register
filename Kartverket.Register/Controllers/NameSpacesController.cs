@@ -54,7 +54,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             NameSpace nameSpace = new NameSpace();
-            Kartverket.Register.Models.Register register = GetRegister(registername, parentRegister);
+            Models.Register register = GetRegister(registername, parentRegister);
 
             nameSpace.register = register;
             if (register.parentRegisterId != null)
@@ -154,7 +154,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(NameSpace nameSpace, string registername, string itemname, string parentRegister)
         {
             NameSpace originalNameSpace = GetRegisterItem(registername, itemname, parentRegister);
-            Kartverket.Register.Models.Register register = GetRegister(registername, parentRegister);
+            Models.Register register = GetRegister(registername, parentRegister);
             ValidationName(nameSpace, register);
 
             if (ModelState.IsValid)
@@ -278,7 +278,7 @@ namespace Kartverket.Register.Controllers
                                        where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o;
 
-            Kartverket.Register.Models.Register register = queryResultsRegister.FirstOrDefault();
+            Models.Register register = queryResultsRegister.FirstOrDefault();
             return register;
         }
 
@@ -328,7 +328,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
         }
 
-        private void ValidationName(NameSpace nameSpace, Kartverket.Register.Models.Register register)
+        private void ValidationName(NameSpace nameSpace, Models.Register register)
         {
             var queryResultsDataset = from o in db.NameSpases
                                       where o.name == nameSpace.name &&

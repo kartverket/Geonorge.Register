@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,27 @@ namespace Kartverket.Register.Helpers
             return versionNumber;
         }
 
-
         public static bool Access(object model) {
             AccessControlService accessControl = new AccessControlService();
             return accessControl.Access(model);
+        }
+
+        public static bool IsAdmin() {
+            AccessControlService accessControl = new AccessControlService();
+            return accessControl.IsAdmin();
+        }
+
+        public static bool IsMunicipalUser()
+        {
+            AccessControlService accessControl = new AccessControlService();
+            return accessControl.IsMunicipalUser();
+        }
+
+        public static CoverageDataset GetMunicipalCoverage(Dataset model) {
+            RegisterDbContext db = new RegisterDbContext();
+            RegisterItemService registerItemService = new RegisterItemService(db);
+
+            return registerItemService.GetMunicipalityCoverage(model);
         }
 
         public static string GetSecurityClaim(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims, string type)
@@ -47,7 +65,7 @@ namespace Kartverket.Register.Helpers
         }
 
 
-        public static bool accessRegister(Kartverket.Register.Models.Register register)
+        public static bool accessRegister(Models.Register register)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
@@ -63,7 +81,7 @@ namespace Kartverket.Register.Helpers
             return false;
         }
 
-        public static bool accessRegisterOwner(Kartverket.Register.Models.Register register)
+        public static bool accessRegisterOwner(Models.Register register)
         {
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
@@ -208,7 +226,7 @@ namespace Kartverket.Register.Helpers
             return "";
         }
 
-        public static List<Kartverket.Register.Models.Register> Registers()
+        public static List<Models.Register> Registers()
         {
             RegisterDbContext db = new RegisterDbContext();
 
@@ -216,7 +234,7 @@ namespace Kartverket.Register.Helpers
                                where o.parentRegisterId == null
                                select o;
 
-            List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
+            List<Models.Register> RegistersList = new List<Models.Register>();
             foreach (var item in queryResults)
             {
                 RegistersList.Add(item);
@@ -226,7 +244,7 @@ namespace Kartverket.Register.Helpers
             return RegistersList;
         }
 
-        public static List<Kartverket.Register.Models.Register> CodelistRegister()
+        public static List<Models.Register> CodelistRegister()
         {
             RegisterDbContext db = new RegisterDbContext();
 
@@ -234,7 +252,7 @@ namespace Kartverket.Register.Helpers
                                where o.containedItemClass == "CodelistValue"
                                select o;
 
-            List<Kartverket.Register.Models.Register> RegistersList = new List<Kartverket.Register.Models.Register>();
+            List<Models.Register> RegistersList = new List<Models.Register>();
             foreach (var item in queryResults)
             {
                 RegistersList.Add(item);
@@ -264,7 +282,7 @@ namespace Kartverket.Register.Helpers
 
 
         // SORTERING av registeritems
-        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Kartverket.Register.Models.Register register, String sortingType)
+        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Models.Register register, String sortingType)
         {
 
             string text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
@@ -578,7 +596,7 @@ namespace Kartverket.Register.Helpers
         }
 
         // SORTERING av Register
-        public static List<Kartverket.Register.Models.Register> SortingRegisters(Kartverket.Register.Models.Register Model, String sortingType)
+        public static List<Models.Register> SortingRegisters(Models.Register Model, String sortingType)
         {
             string text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
             string filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
@@ -736,9 +754,9 @@ namespace Kartverket.Register.Helpers
             return sortedList;
         }
 
-        public static Kartverket.Register.Models.Register mainRegister(Kartverket.Register.Models.Register register)
+        public static Models.Register mainRegister(Models.Register register)
         {
-            Kartverket.Register.Models.Register parentRegister;
+            Models.Register parentRegister;
             if (register.parentRegister != null)
             {
                 parentRegister = register.parentRegister;
@@ -753,9 +771,9 @@ namespace Kartverket.Register.Helpers
 
         }
 
-        private static Kartverket.Register.Models.Register getParentRegister(Kartverket.Register.Models.Register register)
+        private static Models.Register getParentRegister(Models.Register register)
         {
-            Kartverket.Register.Models.Register parentRegister;
+            Models.Register parentRegister;
             if (register.parentRegisterId != null)
             {
                 parentRegister = register.parentRegister;
@@ -769,7 +787,7 @@ namespace Kartverket.Register.Helpers
 
         }
 
-        private static Models.Register hasParentRegister(Kartverket.Register.Models.Register model, List<Models.Register> parentsList, Models.Register register)
+        private static Models.Register hasParentRegister(Models.Register model, List<Models.Register> parentsList, Models.Register register)
         {
             if (register.parentRegister != null)
             {
@@ -885,5 +903,13 @@ namespace Kartverket.Register.Helpers
             }
             return null;
         }
+
+        public static CoverageDataset NewCoverage(Dataset dataset) {
+            return new CoverageDataset() {
+                dataset = dataset,
+                DatasetId = dataset.systemId,       
+            };
+        }
+            
     }
 }

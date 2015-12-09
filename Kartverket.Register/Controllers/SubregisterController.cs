@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
                 return Redirect(ApiRedirectUrl);
             }
 
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentRegister, subregister);
+            Models.Register register = _registerService.GetSubregisterByName(parentRegister, subregister);
             if (register != null)
             {
                 if (!string.IsNullOrWhiteSpace(filter.text))
@@ -117,8 +117,8 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
-            Kartverket.Register.Models.Register nyttRegister = new Kartverket.Register.Models.Register();
-            Kartverket.Register.Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
+            Models.Register nyttRegister = new Models.Register();
+            Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             nyttRegister.parentRegister = register;
 
             string role = GetSecurityClaim("role");
@@ -151,7 +151,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("subregister/{registerparant}/{parentRegisterOwner}/{registerName}/ny")]
         [Route("subregister/{registerName}/ny")]
-        public ActionResult Create(Kartverket.Register.Models.Register subRegister, string registerName, string registerparant)
+        public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
             var errors = ModelState.Select(x => x.Value.Errors)
                           .Where(y => y.Count > 0)
@@ -163,7 +163,7 @@ namespace Kartverket.Register.Controllers
                                        where o.seoname == registerName && o.parentRegister.seoname == registerparant
                                        select o.systemId;
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
 
             if (ModelState.IsValid)
             {
@@ -221,7 +221,7 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            Models.Register register = db.Registers.Find(systId);
 
             Viewbags(register);
             if (register == null)
@@ -246,14 +246,14 @@ namespace Kartverket.Register.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Route("subregister/{registername}/{ownerSubregister}/{subregister}/rediger")]
-        public ActionResult Edit(Kartverket.Register.Models.Register register, string registername, string subregister)
+        public ActionResult Edit(Models.Register register, string registername, string subregister)
         {
             var queryResults = from o in db.Registers
                                where o.seoname == subregister && o.parentRegister.seoname == registername
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register originalRegister = db.Registers.Find(systId);
+            Models.Register originalRegister = db.Registers.Find(systId);
 
             ValidationName(register, registername);
 
@@ -314,7 +314,7 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            Models.Register register = db.Registers.Find(systId);
 
             if (register == null)
             {
@@ -343,7 +343,7 @@ namespace Kartverket.Register.Controllers
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(systId);
+            Models.Register register = db.Registers.Find(systId);
 
             var queryResultsRegisterItem = ((from o in db.RegisterItems
                                              where (o.register.seoname == subregister && o.register.parentRegister.seoname == registername)
@@ -394,7 +394,7 @@ namespace Kartverket.Register.Controllers
 
         // *********************** Hjelpemetoder
 
-        private void ViewBagSubregister(Kartverket.Register.Models.Register register, string parentRegister)
+        private void ViewBagSubregister(Models.Register register, string parentRegister)
         {
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
             if (parentRegister != null)
@@ -407,7 +407,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerSEO = register.seoname;
         }
         
-        private void ValidationName(Kartverket.Register.Models.Register subRegister, string register)
+        private void ValidationName(Models.Register subRegister, string register)
         {
             var queryResultsDataset = from o in db.Registers
                                       where o.name == subRegister.name && o.systemId != subRegister.systemId && o.parentRegister.seoname == register
@@ -440,7 +440,7 @@ namespace Kartverket.Register.Controllers
             return result;
         }
 
-        private void Viewbags(Kartverket.Register.Models.Register register)
+        private void Viewbags(Models.Register register)
         {
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
             ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);

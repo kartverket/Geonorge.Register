@@ -63,7 +63,7 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
             ePSg.register = register;
 
             if (register.parentRegisterId != null)
@@ -223,7 +223,7 @@ namespace Kartverket.Register.Controllers
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Kartverket.Register.Models.Register register = db.Registers.Find(regId);
+            Models.Register register = db.Registers.Find(regId);
 
             ValidationName(ePSG, register);
 
@@ -386,7 +386,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.dimensionId = new SelectList(db.Dimensions, "value", "description", ePSG.dimensionId);
         }
 
-        private void ValidationName(EPSG epsg, Kartverket.Register.Models.Register register)
+        private void ValidationName(EPSG epsg, Models.Register register)
         {
             var queryResultsDataset = from o in db.EPSGs
                                       where o.name == epsg.name && 

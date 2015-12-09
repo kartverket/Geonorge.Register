@@ -11,7 +11,7 @@ namespace Kartverket.Register.Services.Search
     public interface ISearchService
     {
         SearchResult Search(SearchParameters parameters);
-        Kartverket.Register.Models.Register Search(Kartverket.Register.Models.Register register, string text);
+        Models.Register Search(Models.Register register, string text);
         FilterResult Filter(SearchParameters parameters);
     }
 }

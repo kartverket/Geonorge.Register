@@ -33,10 +33,10 @@ namespace Kartverket.Register.Formatter
             if (type == typeof(Item) ||
                 type == typeof(IEnumerable<Item>) ||
                 type == typeof(List<Item>) ||
-                type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(Models.Api.Register) ||
                 type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Register>) ||
+                type == typeof(IEnumerable<Models.Api.Register>) ||
+                type == typeof(List<Models.Api.Register>) ||
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
                 type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
 
@@ -62,7 +62,7 @@ namespace Kartverket.Register.Formatter
                 if (type == typeof(Item) ||
                 type == typeof(IEnumerable<Item>) ||
                 type == typeof(List<Item>) ||
-                type == typeof(Kartverket.Register.Models.Api.Register) ||
+                type == typeof(Models.Api.Register) ||
                 type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
               
                 type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||

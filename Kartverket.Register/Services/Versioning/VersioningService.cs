@@ -23,19 +23,19 @@ namespace Kartverket.Register.Services.Versioning
                                            && ri.seoname == itemname
                                            select ri.versioning;
 
-            Kartverket.Register.Models.Version versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
+            Models.Version versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
             
             Guid currentVersionId = versjonsGruppe.currentVersion;
-            List<Kartverket.Register.Models.RegisterItem> suggestionsItems = new List<Kartverket.Register.Models.RegisterItem>();
-            List<Kartverket.Register.Models.RegisterItem> historicalItems = new List<Kartverket.Register.Models.RegisterItem>();
+            List<Models.RegisterItem> suggestionsItems = new List<Models.RegisterItem>();
+            List<Models.RegisterItem> historicalItems = new List<Models.RegisterItem>();
 
             // finne Gjeldende versjon i versjonsgruppen
             var queryResults = from ri in _dbContext.RegisterItems
                                where ri.systemId == currentVersionId
                                select ri;
 
-            Kartverket.Register.Models.RegisterItem currentVersion = queryResults.FirstOrDefault();
+            Models.RegisterItem currentVersion = queryResults.FirstOrDefault();
 
             // Finne alle versjoner som står som forslag
             queryResults = from ri in _dbContext.RegisterItems
@@ -50,7 +50,7 @@ namespace Kartverket.Register.Services.Versioning
                            //|| ri.status.value == "Candidate"                           
                            select ri;
 
-            foreach (Kartverket.Register.Models.RegisterItem item in queryResults)
+            foreach (Models.RegisterItem item in queryResults)
             {
                 suggestionsItems.Add(item);
             }
@@ -65,7 +65,7 @@ namespace Kartverket.Register.Services.Versioning
                                           //ri.status.value == "Deprecated"                                          
                                          select ri;
 
-            foreach (Kartverket.Register.Models.RegisterItem item in queryResultsHistorical)
+            foreach (Models.RegisterItem item in queryResultsHistorical)
             {
                 historicalItems.Add(item);
             }

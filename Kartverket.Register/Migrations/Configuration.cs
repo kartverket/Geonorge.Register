@@ -1,6 +1,6 @@
 namespace Kartverket.Register.Migrations
 {
-    using Kartverket.Register.Models;
+    using Models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -44,7 +44,6 @@ namespace Kartverket.Register.Migrations
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },
                 new accessType { accessLevel = 2, description = "Editor can create, edit or delete their owne items" }, 
-                new accessType { accessLevel = 3, description = "Municipalities can edit items" }, //Only in use for national datasets
                 new accessType { accessLevel = 4, description = "Municipalities can create, update and delete their own items" }
             );
 
@@ -99,9 +98,9 @@ namespace Kartverket.Register.Migrations
             );
 
             context.Dimensions.AddOrUpdate(
-                new Kartverket.Register.Models.Dimension { value = "horizontal", description = "Horisontalt" },
-                new Kartverket.Register.Models.Dimension { value = "vertical", description = "Vertikalt" },
-                new Kartverket.Register.Models.Dimension { value = "compound", description = "Sammensatt" }
+                new Models.Dimension { value = "horizontal", description = "Horisontalt" },
+                new Models.Dimension { value = "vertical", description = "Vertikalt" },
+                new Models.Dimension { value = "compound", description = "Sammensatt" }
             );
 
 
@@ -498,14 +497,14 @@ namespace Kartverket.Register.Migrations
             var queryResultsVersions = from r in context.Versions
                                        select r;
 
-            List<Kartverket.Register.Models.Version> versions = queryResultsVersions.ToList();
+            List<Models.Version> versions = queryResultsVersions.ToList();
 
             var queryResultsRegisterItems = from r in context.RegisterItems
                                             select r;
             List<RegisterItem> registerItems = queryResultsRegisterItems.ToList();
 
 
-            foreach (Kartverket.Register.Models.Version v in versions)
+            foreach (Models.Version v in versions)
             {
                 foreach (RegisterItem ri in registerItems)
                 {
@@ -527,14 +526,14 @@ namespace Kartverket.Register.Migrations
             var queryResultsVersions2 = from r in context.Versions
                                         select r;
 
-            List<Kartverket.Register.Models.Version> versions2 = queryResultsVersions2.ToList();
+            List<Models.Version> versions2 = queryResultsVersions2.ToList();
 
             var queryResultsRegisterItems2 = from r in context.Registers
                                              select r;
             List<Kartverket.Register.Models.Register> registers = queryResultsRegisterItems2.ToList();
 
 
-            foreach (Kartverket.Register.Models.Version v in versions)
+            foreach (Models.Version v in versions)
             {
                 foreach (Kartverket.Register.Models.Register r in registers)
                 {

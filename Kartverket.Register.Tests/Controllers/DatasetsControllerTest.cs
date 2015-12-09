@@ -134,7 +134,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1)).Returns(dataset);
 
             var controller = CreateController(null, registerItemService.Object, null);
-            var result = controller.Edit(dataset, null, null, "123", false, null, null) as ViewResult;
+            var result = controller.Edit(dataset, null, null, null, "123", null, null) as ViewResult;
 
             result.Should().NotBeNull();
         }
@@ -154,7 +154,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(o => o.GetOrganization(dataset.submitter.seoname)).Returns(dataset.submitter);
 
             var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
-            var result = controller.Edit(dataset, dataset.register.seoname, dataset.seoname, null, false, null, null) as ActionResult;
+            var result = controller.Edit(dataset, null, dataset.register.seoname, dataset.seoname, null, null, null) as ActionResult;
 
             result.Should().NotBeNull();
         }

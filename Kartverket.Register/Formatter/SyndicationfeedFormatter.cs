@@ -28,7 +28,7 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedType = (type) =>
         {
-            if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>) || type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) || type == typeof(List<Kartverket.Register.Models.Api.Register>))
+            if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>) || type == typeof(Models.Api.Register) || type == typeof(IEnumerable<Models.Api.Register>) || type == typeof(List<Models.Api.Register>))
                 return true;
             else
                 return false;
@@ -50,7 +50,7 @@ namespace Kartverket.Register.Formatter
             {
                 if (type == typeof(Item) || type == typeof(IEnumerable<Item>) || type == typeof(List<Item>))
                     BuildSyndicationFeed(value, writeStream, content.Headers.ContentType.MediaType);
-                else if (type == typeof(Kartverket.Register.Models.Api.Register) || type == typeof(IEnumerable<Kartverket.Register.Models.Api.Register>) || type == typeof(List<Kartverket.Register.Models.Api.Register>))
+                else if (type == typeof(Models.Api.Register) || type == typeof(IEnumerable<Models.Api.Register>) || type == typeof(List<Models.Api.Register>))
                     BuildSyndicationFeedRegister(value, writeStream, content.Headers.ContentType.MediaType);
             });
         }
@@ -112,12 +112,12 @@ namespace Kartverket.Register.Formatter
             var feed = new SyndicationFeed();
            
 
-            if (models is IEnumerable<Kartverket.Register.Models.Api.Register>)
+            if (models is IEnumerable<Models.Api.Register>)
             {
 
                 feed.Title = new TextSyndicationContent("Register Feed");
            
-                var enumerator = ((IEnumerable<Kartverket.Register.Models.Api.Register>)models).GetEnumerator();
+                var enumerator = ((IEnumerable<Models.Api.Register>)models).GetEnumerator();
                 while (enumerator.MoveNext())
                 {
                     items.Add(BuildSyndicationRegister(enumerator.Current));
@@ -125,11 +125,11 @@ namespace Kartverket.Register.Formatter
             }
             else
             {
-                feed.Title = new TextSyndicationContent(((Kartverket.Register.Models.Api.Register)models).label);
-                feed.LastUpdatedTime = ((Kartverket.Register.Models.Api.Register)models).lastUpdated;
-                feed.Id = ((Kartverket.Register.Models.Api.Register)models).id;
-                feed.Links.Add(new SyndicationLink() { Title = ((Kartverket.Register.Models.Api.Register)models).label, Uri = new Uri((((Kartverket.Register.Models.Api.Register)models).id)) });
-                foreach (var item in ((Kartverket.Register.Models.Api.Register)models).containeditems)
+                feed.Title = new TextSyndicationContent(((Models.Api.Register)models).label);
+                feed.LastUpdatedTime = ((Models.Api.Register)models).lastUpdated;
+                feed.Id = ((Models.Api.Register)models).id;
+                feed.Links.Add(new SyndicationLink() { Title = ((Models.Api.Register)models).label, Uri = new Uri((((Models.Api.Register)models).id)) });
+                foreach (var item in ((Models.Api.Register)models).containeditems)
                 {
                     items.Add(BuildSyndicationRegisterItem(item));
                 }
@@ -168,7 +168,7 @@ namespace Kartverket.Register.Formatter
             return item;
         }
 
-        private SyndicationItem BuildSyndicationRegister(Kartverket.Register.Models.Api.Register u)
+        private SyndicationItem BuildSyndicationRegister(Models.Api.Register u)
         {
             var item = new SyndicationItem()
             {

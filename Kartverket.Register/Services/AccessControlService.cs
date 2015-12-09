@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
+using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Services
 {
@@ -12,6 +13,7 @@ namespace Kartverket.Register.Services
         private ClaimsPrincipal _claimsPrincipal;
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterItemService _registerItemService;
+        private IRegisterService _registerService;
 
         public AccessControlService(ClaimsPrincipal claimsPrincipal)
         {
@@ -21,6 +23,7 @@ namespace Kartverket.Register.Services
         public AccessControlService()
         {
             _registerItemService = new RegisterItemService(db);
+            _registerService = new RegisterService(db);
         }
 
         public bool Access(object model)
@@ -42,8 +45,7 @@ namespace Kartverket.Register.Services
         }
 
         private bool accessRegisterItem(object model)
-        {
-            string role = GetSecurityClaim("role");
+        { 
             string user = GetSecurityClaim("organization");
 
             RegisterDbContext db = new RegisterDbContext();
@@ -59,7 +61,7 @@ namespace Kartverket.Register.Services
                 else if (IsDataset(registerItem))
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    return IsOwnerOrMunicipal(dataset.datasetowner.name, user);
+                    return IsOwnerOrMunicipal(user);
                 }
                 else
                 {
@@ -85,7 +87,7 @@ namespace Kartverket.Register.Services
             }
             else if (register.accessId == 4)
             {
-                return MunicipalUser();
+                return IsMunicipalUser();
             }
             return false;
         }
@@ -105,28 +107,71 @@ namespace Kartverket.Register.Services
             return owner.ToLower() == user.ToLower();
         }
 
-        private bool IsOwnerOrMunicipal(string owner, string user)
+        private bool IsOwnerOrMunicipal(string user)
         {
-            if (MunicipalUser())
+            if (IsMunicipalUser())
             {
                 return true;
             }
-            return owner.ToLower() == user.ToLower();
+            else if (IsAdmin())
+            {
+                return true;
+            }
+            return false;
         }
 
 
-        private bool MunicipalUser()
+        //public bool IsMunicipalUser()
+        //{
+        //    string username = GetUserName();
+        //    string user = GetSecurityClaim("organization");
+        //    List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+        //    foreach (CodelistValue item in municipalities)
+        //    {
+        //        if ((user.Contains(item.name)))
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
+        public bool IsMunicipalUser()
         {
-            string user = GetSecurityClaim("organization");
+            string username = GetUserName();
             List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
             foreach (CodelistValue item in municipalities)
             {
-                if (user == item.name)
+                if ((username.Contains(item.value)))
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public Organization MunicipalUserOrganization()
+        {
+            CodelistValue municipslity = MunicipalUser();
+            Organization municipalOrganication = null;
+            if (municipslity != null)
+            {
+                return _registerService.GetOrganization(municipslity.name);
+            }            
+            return municipalOrganication;
+        }
+
+        public CodelistValue MunicipalUser() {
+            string username = GetUserName();
+            List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+            foreach (CodelistValue item in municipalities)
+            {
+                if (username.Contains(item.value))
+                {
+                    return item;
+                }
+            }
+            return null;
         }
 
         public string GetSecurityClaim(string type)
@@ -148,6 +193,33 @@ namespace Kartverket.Register.Services
             }
 
             return result;
+        }
+
+        public string GetUserName()
+        {
+            foreach (var claim in ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == "urn:oid:0.9.2342.19200300.100.1.1" || claim.Type == "username")
+                {
+                    return claim.Value;
+                }
+            }
+            return null;
+        }
+
+        public bool EditDOK(Dataset dataset)
+        {
+            if (dataset.register.name == "Det offentlige kartgrunnlaget")
+            {
+                if (IsAdmin())
+                {
+                    return true;
+                }
+                else {
+                    return IsMunicipalUser();
+                }
+            }            
+            return false;
         }
     }
 }

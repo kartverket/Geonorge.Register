@@ -122,22 +122,6 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-
-        //public bool IsMunicipalUser()
-        //{
-        //    string username = GetUserName();
-        //    string user = GetSecurityClaim("organization");
-        //    List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
-        //    foreach (CodelistValue item in municipalities)
-        //    {
-        //        if ((user.Contains(item.name)))
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    return false;
-        //}
-
         public bool IsMunicipalUser()
         {
             string username = GetUserName();

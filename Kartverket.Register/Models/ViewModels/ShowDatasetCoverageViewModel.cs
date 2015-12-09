@@ -15,5 +15,6 @@ namespace Kartverket.Register.Models.ViewModels
         public string DatasetName { get; set; }
         public string DatasetUuid { get; set; }
         public List<CoverageConfirmedMunicipalityViewModel> DatasetCoverageConfirmedCounties { get; set; }
+        public string DatasetWmsLayerName { get; set; }
     }
 }

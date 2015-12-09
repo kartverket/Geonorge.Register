@@ -19,10 +19,15 @@
             </div>
         </div>
         <div class="col-md-3">
-            <input type="submit" value="Vis dekningskart for valgt fylke" class="btn btn-default" />
+            <input type="submit" value="Vis dekningskart for valgte datasett" class="btn btn-default" />
         </div>
     </div>
 </form>
+
+
+<p style="color: red;">
+    @ViewBag.Warning
+</p>
 
 
 <div id="map" class="col-sm-12 col-md-12" style="height: 600px;">
@@ -62,7 +67,8 @@
             transparent: true
         }).addTo(map);
 
-        var coverageLayer = new L.TileLayer.WMS("https://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?datasett=korallrev", {
+        var datasetLayerName = "@Model.DatasetWmsLayerName";
+        var coverageLayer = new L.TileLayer.WMS("https://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?datasett=" + datasetLayerName, {
             layers: 'datasett_dekning',
             format: 'image/png',
             attribution: "Kartverket",
@@ -76,9 +82,9 @@
                 <text>@string.Format("new L.Point({0},{1})",municipality.CenterCoordinateX,@municipality.CenterCoordinateY)</text>
             }
         }
-
-        var point = new L.Point(-29956, 6730321);
-        L.marker(crs.projection.unproject(point), {bounceOnAdd: true}).addTo(map);
+        
+        //var point = new L.Point(-29956, 6730321);
+        //L.marker(crs.projection.unproject(point), {bounceOnAdd: true}).addTo(map);
 
     }());
 </script>

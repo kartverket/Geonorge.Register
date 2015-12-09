@@ -16,7 +16,7 @@ namespace Kartverket.Register.Services
 
         public MunicipalityCenterPoint GetMunicipalityCenterPoint(string municipalityCode)
         {
-            return new MunicipalityCenterPoint("-29956", "6730321");
+            return MunicipalityData.MunicipalityCenterPoints[municipalityCode];
         }
     }
 }

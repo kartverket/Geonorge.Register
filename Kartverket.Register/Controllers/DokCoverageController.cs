@@ -11,6 +11,8 @@ namespace Kartverket.Register.Controllers
 {
     public class DokCoverageController : Controller
     {
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private static readonly Guid SystemIdDokRegister = Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD");
 
         private static Dictionary<string, BoundingBoxViewModel> StateBoundingBoxes = new Dictionary<string, BoundingBoxViewModel>
@@ -49,8 +51,6 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult Index(string fylke, string dataset)
         {
-            dataset = "3cba8c29-f822-47dc-bb73-e9ff63f353ab"; // korallrev
-
             Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
             IEnumerable<RegisterItem> states = register.items.OrderBy(i => i.name);
 
@@ -64,17 +64,27 @@ namespace Kartverket.Register.Controllers
 
 
             ShowDatasetCoverageViewModel model = new ShowDatasetCoverageViewModel();
+            
+            if (!string.IsNullOrWhiteSpace(dataset))
+            {
+                Dataset datasetItem = GetDatasetByUuid(dataset);
+
+                model.DatasetUuid = dataset;
+                model.DatasetCoverageConfirmedCounties = GetListOfConfirmedMunicipalitiesForDataset(datasetItem);
+                if (DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping.ContainsKey(dataset))
+                {
+                    model.DatasetWmsLayerName = DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping[dataset];
+                }
+                else
+                {
+                    ViewBag.Warning = "Dekningskart mangler for valgte datasett.";
+                }
+            }
+
             if (!string.IsNullOrWhiteSpace(fylke))
             {
                 model.StateName = fylke;
                 model.StateBoundingBox = StateBoundingBoxes[fylke];
-                if (!string.IsNullOrWhiteSpace(dataset))
-                {
-                    Dataset datasetItem = GetDatasetByUuid(dataset);
-
-                    model.DatasetUuid = dataset;
-                    model.DatasetCoverageConfirmedCounties = GetListOfConfirmedMunicipalitiesForDataset(datasetItem);
-                }
             }
 
             return View(model);
@@ -109,15 +119,21 @@ namespace Kartverket.Register.Controllers
 
             foreach (RegisterItem item in items)
             {
-                var viewModel = new DatasetCoverageViewModel();
-
                 Dataset dataset = (Dataset) item;
-                viewModel.ThemeGroupName = dataset.theme.description;
-                viewModel.DatasetName = dataset.name;
-                viewModel.DatasetUrl = dataset.GetObjectUrl();
-                viewModel.DatasetUuid = dataset.Uuid;
 
-                viewModels.Add(viewModel);
+                if (string.IsNullOrWhiteSpace(dataset.Uuid))
+                {
+                    Log.Warn("Create list of DOK-coverage datasets, skipping dataset without uuid: " + dataset.name);
+                }
+                else
+                {
+                    var viewModel = new DatasetCoverageViewModel();
+                    viewModel.ThemeGroupName = dataset.theme.description;
+                    viewModel.DatasetName = dataset.name;
+                    viewModel.DatasetUrl = dataset.GetObjectUrl();
+                    viewModel.DatasetUuid = dataset.Uuid;
+                    viewModels.Add(viewModel);
+                }
             }
             return viewModels;
         }

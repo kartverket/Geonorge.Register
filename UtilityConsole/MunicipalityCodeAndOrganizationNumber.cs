@@ -9,8 +9,7 @@ namespace UtilityConsole
 {
     public class MunicipalityCodeAndOrganizationNumber
     {
-
-        private readonly Dictionary<string, Municipality> _municipalities = new Dictionary<string, Municipality>();
+        private readonly List<Municipality> _allMunicipalities = new List<Municipality>(); 
 
         public void FetchData(string url)
         {
@@ -21,13 +20,12 @@ namespace UtilityConsole
             var municipalities = from m in jsonData["data"]
                                     select new Municipality((string)m["navn"], (string)m["forretningsadresse"]["kommunenummer"], (string)m["organisasjonsnummer"]);
 
+            _allMunicipalities.AddRange(municipalities);
+
             foreach (Municipality municipality in municipalities)
             {
-                _municipalities.Add(municipality.Code, municipality);
-
                 Console.WriteLine(municipality.Name + " [" + municipality.Code + "] - " + municipality.OrganizationNumber);
             }
-
 
             var links = from link in jsonData["links"] select new {rel = (string) link["rel"], href = (string) link["href"]};
 
@@ -44,9 +42,9 @@ namespace UtilityConsole
             
         }
 
-        public Dictionary<string, Municipality> GetMunicipalities()
+        public List<Municipality> GetMunicipalities()
         {
-            return _municipalities;
+            return _allMunicipalities;
         }
 
 

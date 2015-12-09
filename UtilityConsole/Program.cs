@@ -15,18 +15,41 @@ namespace UtilityConsole
             var service = new MunicipalityCodeAndOrganizationNumber();
             service.FetchData(url);
 
-            Dictionary<string, Municipality> municipalitiesByCode = service.GetMunicipalities();
-            Console.WriteLine(municipalitiesByCode.Keys.Count + " municipalities");
+            List<Municipality> municipalities = service.GetMunicipalities();
+            Console.WriteLine(municipalities.Count + " municipalities");
 
+            CreateFileWithDictionaryOfMunicipalitiesCodeToOrganizationNumber(municipalities);
+            CreateFileWithDictionaryOfMunicipalitiesOrganizationNumberToCode(municipalities);
+        }
+
+        private static void CreateFileWithDictionaryOfMunicipalitiesOrganizationNumberToCode(List<Municipality> municipalities)
+        {
+            string fileName = "c:\\dev\\MunicipalityOrganizationNumberToCode.cs";
+            var fs = new FileStream(fileName, FileMode.Create);
+            using (StreamWriter file = new StreamWriter(fs))
+            {
+                file.WriteLine("Dictionary<string, string> municipalityFromOrganizationNumberToCode = new Dictionary<string, string>() {");
+
+                foreach (Municipality municipality in municipalities)
+                {
+                    file.WriteLine("{\"" + municipality.OrganizationNumber + "\",\"" + municipality.Code + "\"},");
+                }
+
+                file.WriteLine("};");
+            }
+        }
+        
+        private static void CreateFileWithDictionaryOfMunicipalitiesCodeToOrganizationNumber(List<Municipality> municipalities)
+        {
             string fileName = "c:\\dev\\MunicipalityCodeToOrganizationNumber.cs";
-            var fs = new FileStream(fileName, FileMode.CreateNew);
+            var fs = new FileStream(fileName, FileMode.Create);
             using (StreamWriter file = new StreamWriter(fs))
             {
                 file.WriteLine("Dictionary<string, string> municipalityFromCodeToOrganizationNumber = new Dictionary<string, string>() {");
 
-                foreach (string key in municipalitiesByCode.Keys)
+                foreach (Municipality municipality in municipalities)
                 {
-                    file.WriteLine("{\"" + key + "\",\"" + municipalitiesByCode[key].OrganizationNumber + "\"},");
+                    file.WriteLine("{\"" + municipality.Code + "\",\"" + municipality.OrganizationNumber + "\"},");
                 }
 
                 file.WriteLine("};");

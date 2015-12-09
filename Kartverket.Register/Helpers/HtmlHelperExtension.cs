@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace Kartverket.Register.Helpers
         private static readonly RegisterDbContext db = new RegisterDbContext();
         private static IRegisterItemService _registeritemService = new RegisterItemService(db);
         private static IAccessControlService _accessControl = new AccessControlService();
-
+        private static IMunicipalityService _municipalityService = new MunicipalityService();
+        private static IRegisterService _registerService = new RegisterService(db);
 
         public static string ApplicationVersionNumber(this HtmlHelper helper)
         {
@@ -895,39 +897,47 @@ namespace Kartverket.Register.Helpers
            return "Navnet finnes fra før!";
         }
 
-        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipal) {
-            foreach (CoverageDataset coverage in item.Coverage)
+        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipality) {
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
             {
-                if (coverage.Municipality.name == selectedMunicipal)
-                {
-                    return coverage.CoverageDOKStatus.description;
-                }
+                return coverage.CoverageDOKStatus.description;
             }
-            return "Forslag";
+            else return "Forslag";
         }
 
-        public static bool GetConfirmedFromCoverage(Dataset item, string selectedMunicipal)
-        {
-            foreach (CoverageDataset coverage in item.Coverage)
-            {
-                if (coverage.Municipality.name == selectedMunicipal)
-                {
-                    return coverage.ConfirmedDok;
-                }
-            }
-            return false;
-        }
+        private static CoverageDataset Coverage(Dataset item, string selectedMunicipality) {
+            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality);
+            Organization munizipality = _registerService.GetOrganizationByOrganizationNr(organizationNr);
 
-        public static string GetNoteFromCoverage(Dataset item, string selectedMunicipal)
-        {
             foreach (CoverageDataset coverage in item.Coverage)
             {
-                if (coverage.Municipality.name == selectedMunicipal)
+                if (munizipality.systemId == coverage.MunicipalityId)
                 {
-                    return coverage.Note;
+                    return coverage;
                 }
             }
             return null;
+        }
+
+        public static bool GetConfirmedFromCoverage(Dataset item, string selectedMunicipality)
+        {
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
+            {
+                return coverage.ConfirmedDok;
+            }
+            else return false;
+        }
+
+        public static string GetNoteFromCoverage(Dataset item, string selectedMunicipality)
+        {
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
+            {
+                return coverage.Note;
+            }
+            else return null;
         }
 
         public static CoverageDataset NewCoverage(Dataset dataset) {

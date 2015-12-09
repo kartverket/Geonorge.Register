@@ -25,6 +25,7 @@ namespace Kartverket.Register.Services.Register
         bool RegisterHasChildren(string parentname, string registername);
         bool validationName(Object model);
         Organization GetOrganizationByUserName();
+        Organization GetOrganizationByOrganizationNr(string number);
 
     }
 }

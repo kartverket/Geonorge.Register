@@ -444,8 +444,12 @@ namespace Kartverket.Register.Services.Register
             CodelistValue user = access.Municipality();
             string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
 
+            return GetOrganizationByOrganizationNr(organizationNr);
+        }
+
+        public Organization GetOrganizationByOrganizationNr(string number) {
             var queryResults = from o in _dbContext.Organizations
-                               where o.number == organizationNr
+                               where o.number == number
                                select o;
 
             return queryResults.FirstOrDefault();

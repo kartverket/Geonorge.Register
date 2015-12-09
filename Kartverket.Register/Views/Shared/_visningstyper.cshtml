@@ -54,22 +54,19 @@
         }
     </div>
 
-
-    @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
-    {
-        <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
-            <div class="sorter pagination pagination-sm pull-right">
-                <form action="@Request.Url.LocalPath" name="FilterMunicipalityForm" method="get">
+    <form action="@Request.Url.LocalPath" name="FilterForm" method="get">
+        @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
+        {
+            <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
+                <div class="sorter pagination pagination-sm pull-right">
                     <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="FilterMunicipality()">
                         <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "Velg kommune")
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
-    }
-    <div class="col-sm-3 col-md-3 col-lg-3">
-        <div id="sortBox" class="sorter pagination pagination-sm pull-right">
-            <form action="@kontroller" name="sortering" method="get">
+        }
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <div id="sortBox" class="sorter pagination pagination-sm pull-right">
                 <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="SortBy()">
                     <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
                 </div>
@@ -79,10 +76,9 @@
                 @Html.Hidden("inspireRequirement")
                 @Html.Hidden("nationalRequirement")
                 @Html.Hidden("nationalSeaRequirementId")
-                @Html.Hidden("municipality")
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div class="result-header">

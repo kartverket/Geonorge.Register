@@ -128,7 +128,7 @@ function SortBy(sort) {
     var sort = document.getElementById("sorting");
     var selected = sort.options[sort.selectedIndex].text;
     localStorage.setItem("sortering", selected);
-    document.sortering.submit();
+    document.FilterForm.submit();
 }
 
 function Filter() {
@@ -158,8 +158,10 @@ function FilterMunicipality() {
     var kommune = document.getElementById("municipality");
     kommune.options[municipality.selectedIndex].text;
 
-    document.FilterMunicipalityForm.submit();
+    document.FilterForm.submit();
 }
+
+
 
 function filterDefault() {
 

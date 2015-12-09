@@ -63,7 +63,7 @@ namespace Kartverket.Register.Services
                 else if (IsDataset(registerItem))
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    return IsOwnerOrMunicipal(user);
+                    return IsOwnerOrMunicipal(user, dataset);
                 }
                 else
                 {
@@ -109,7 +109,7 @@ namespace Kartverket.Register.Services
             return owner.ToLower() == user.ToLower();
         }
 
-        private bool IsOwnerOrMunicipal(string user)
+        private bool IsOwnerOrMunicipal(string user, Dataset dataset)
         {
             if (IsMunicipalUser())
             {
@@ -191,7 +191,7 @@ namespace Kartverket.Register.Services
 
         public bool EditDOK(Dataset dataset)
         {
-            if (dataset.register.name == "Det offentlige kartgrunnlaget")
+            if (dataset.DatasetType == "Nasjonalt")
             {
                 if (IsAdmin())
                 {
@@ -202,7 +202,9 @@ namespace Kartverket.Register.Services
                     return IsMunicipalUser();
                 }
             }
-            return false;
+            else {
+                return Access(dataset);                
+            }
         }
     }
 }

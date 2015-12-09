@@ -165,14 +165,10 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (HtmlHelperExtensions.Access(Model))
+            if (HtmlHelperExtensions.AccessEdit(Model))
             {
-                if (Model.register.containedItemClass != "Document")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
-                }
-
+                <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
             }
         }
 

@@ -14,7 +14,7 @@ namespace Kartverket.Register.Helpers
     {
         private static readonly RegisterDbContext db = new RegisterDbContext();
         private static IRegisterItemService _registeritemService = new RegisterItemService(db);
-        private static IAccessControlService accessControl = new AccessControlService();
+        private static IAccessControlService _accessControl = new AccessControlService();
 
 
         public static string ApplicationVersionNumber(this HtmlHelper helper)
@@ -24,24 +24,34 @@ namespace Kartverket.Register.Helpers
         }
 
         public static bool Access(object model) {
-            AccessControlService accessControl = new AccessControlService();
-            return accessControl.Access(model);
+            return _accessControl.Access(model);
         }
 
         public static bool IsAdmin() {
-            AccessControlService accessControl = new AccessControlService();
-            return accessControl.IsAdmin();
+            return _accessControl.IsAdmin();
         }
 
+        public static bool AccessEdit(RegisterItem item)
+        {
+            if (item.register.containedItemClass != "Document")
+            {
+                if (item is Dataset)
+                {
+                    return _accessControl.EditDOK((Dataset)item);
+                }
+                else {
+                    return Access(item);
+                }
+            }
+            return false;
+        }
         public static bool IsMunicipalUser()
         {
-            return accessControl.IsMunicipalUser();
+            return _accessControl.IsMunicipalUser();
         }
 
         public static CoverageDataset GetMunicipalCoverage(Dataset model) {
-            RegisterItemService registerItemService = new RegisterItemService(db);
-
-            return registerItemService.GetMunicipalityCoverage(model);
+            return _registeritemService.GetMunicipalityCoverage(model);
         }
 
         public static string GetSecurityClaim(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims, string type)

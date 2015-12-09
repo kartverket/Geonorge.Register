@@ -15,9 +15,9 @@
             East = east;
         }
 
-        public string South { get; }
-        public string West { get; }
-        public string North { get; }
-        public string East { get; }
+        public string South { get; set; }
+        public string West { get; set; }
+        public string North { get; set; }
+        public string East { get; set; }
     }
 }

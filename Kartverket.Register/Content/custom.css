@@ -37,15 +37,6 @@
     padding: 5px 6px;
 }
 
-.col-actions .btn {
-    color: #337AB7;
-}
-
-
-    .col-actions .btn[disabled] {
-        color: #ccc;
-    }
-
 
 
 /* ---- Gallery view ---- */
@@ -598,7 +589,6 @@
 
 .search-results.dataset.table-view .col-information a {
     width: 100%;
-    font-size: 14px !important;
     float: left;
 }
 
@@ -892,4 +882,9 @@
     text-transform: uppercase;
     color: #414042;
     line-height: 14pt;
+}
+
+.search-results.table-view .btn{
+    color: #3867c8;
+    background-color: #FFF;
 }

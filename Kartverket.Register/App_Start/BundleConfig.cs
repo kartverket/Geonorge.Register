@@ -11,6 +11,7 @@ namespace Kartverket.Register
                 "~/Content/custom.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
+                "~/Scripts/jquery.validate.date.js",
                 "~/Scripts/visninger.js",
                 "~/Scripts/tabs.js",
                 "~/Scripts/leaflet.js",

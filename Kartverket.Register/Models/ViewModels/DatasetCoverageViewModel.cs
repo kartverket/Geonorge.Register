@@ -14,6 +14,8 @@ namespace Kartverket.Register.Models.ViewModels
         public string FullName
         {
             get { return ThemeGroupName + ": " + DatasetName; }
-        } 
+        }
+
+        public string DatasetUuid { get; set; }
     }
 }

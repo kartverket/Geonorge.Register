@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
 {
@@ -36,14 +37,20 @@ namespace Kartverket.Register.Controllers
         };
 
         private readonly IRegisterService _registerService;
+        private readonly IDatasetService _datasetService;
+        private readonly IMunicipalityService _municipalityService;
 
-        public DokCoverageController(IRegisterService registerService)
+        public DokCoverageController(IRegisterService registerService, IDatasetService datasetService, IMunicipalityService municipalityService)
         {
             _registerService = registerService;
+            _datasetService = datasetService;
+            _municipalityService = municipalityService;
         }
 
-        public ActionResult Index(string fylke)
+        public ActionResult Index(string fylke, string dataset)
         {
+            dataset = "3cba8c29-f822-47dc-bb73-e9ff63f353ab"; // korallrev
+
             Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
             IEnumerable<RegisterItem> states = register.items.OrderBy(i => i.name);
 
@@ -53,22 +60,47 @@ namespace Kartverket.Register.Controllers
 
             List<DatasetCoverageViewModel> datasetCoverages = CreateViewModels(dokDatasets.items);
 
-            IOrderedEnumerable<DatasetCoverageViewModel> sortedDatasetCoverages = datasetCoverages.OrderBy(d => d.FullName);
+            ViewBag.Datasets = new SelectList(datasetCoverages.OrderBy(d => d.FullName), "DatasetUuid", "FullName", dataset);
 
-            ViewBag.Datasets = new SelectList(sortedDatasetCoverages, "DatasetUrl", "FullName");
 
             ShowDatasetCoverageViewModel model = new ShowDatasetCoverageViewModel();
-
             if (!string.IsNullOrWhiteSpace(fylke))
             {
-                model = new ShowDatasetCoverageViewModel()
+                model.StateName = fylke;
+                model.StateBoundingBox = StateBoundingBoxes[fylke];
+                if (!string.IsNullOrWhiteSpace(dataset))
                 {
-                    StateName = fylke,
-                    StateBoundingBox = StateBoundingBoxes[fylke]
-                };
+                    Dataset datasetItem = GetDatasetByUuid(dataset);
+
+                    model.DatasetUuid = dataset;
+                    model.DatasetCoverageConfirmedCounties = GetListOfConfirmedMunicipalitiesForDataset(datasetItem);
+                }
             }
 
             return View(model);
+        }
+
+        private List<CoverageConfirmedMunicipalityViewModel> GetListOfConfirmedMunicipalitiesForDataset(Dataset dataset)
+        {
+            var confirmed = new List<CoverageConfirmedMunicipalityViewModel>();
+
+            foreach (CoverageDataset coverage in dataset.Coverage)
+            {
+                var confirmedMunicipality = new CoverageConfirmedMunicipalityViewModel();
+                confirmedMunicipality.Name = coverage.Municipality.name;
+                confirmedMunicipality.Number = _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(coverage.Municipality.number);
+
+                MunicipalityCenterPoint centerPoint = _municipalityService.GetMunicipalityCenterPoint(confirmedMunicipality.Number);
+                confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
+                confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
+            }
+
+            return confirmed;
+        }
+
+        private Dataset GetDatasetByUuid(string uuid)
+        {
+            return _datasetService.GetDatasetByUuid(uuid);
         }
 
         private List<DatasetCoverageViewModel> CreateViewModels(ICollection<RegisterItem> items)
@@ -83,6 +115,7 @@ namespace Kartverket.Register.Controllers
                 viewModel.ThemeGroupName = dataset.theme.description;
                 viewModel.DatasetName = dataset.name;
                 viewModel.DatasetUrl = dataset.GetObjectUrl();
+                viewModel.DatasetUuid = dataset.Uuid;
 
                 viewModels.Add(viewModel);
             }

@@ -30,10 +30,11 @@ namespace Kartverket.Register
             builder.RegisterType<OrganizationsService>().As<IOrganizationService>();
             builder.RegisterType<SearchService>().As<ISearchService>();
             builder.RegisterType<SearchIndexService>().As<ISearchIndexService>();
-
             builder.RegisterType<RegisterService>().As<IRegisterService>();
             builder.RegisterType<RegisterItemService>().As<IRegisterItemService>();
             builder.RegisterType<VersioningService>().As<IVersioningService>();
+            builder.RegisterType<MunicipalityService>().As<IMunicipalityService>();
+            builder.RegisterType<DatasetService>().As<IDatasetService>();
 
             var container = builder.Build();
 

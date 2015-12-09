@@ -394,7 +394,7 @@ namespace Kartverket.Register.Services.RegisterItem
         public CoverageDataset GetMunicipalityCoverage(Dataset dataset)
         {
             AccessControlService access = new AccessControlService();
-            CodelistValue municipality = access.MunicipalUser();
+            CodelistValue municipality = access.Municipality();
             var queryResult = from c in _dbContext.CoverageDatasets
                               where c.Municipality.name.Contains(municipality.name)
                               && c.dataset.systemId == dataset.systemId

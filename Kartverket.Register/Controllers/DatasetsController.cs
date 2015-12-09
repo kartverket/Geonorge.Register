@@ -155,7 +155,6 @@ namespace Kartverket.Register.Controllers
                     Viewbags(model);
                     return View(model);
                 }
-                //Nasjonale datasett skal kunne endres av admin. Dekning av et nasjonalt datasett skal kunne endres av en kommune. 
                 if (originalDataset.DatasetType == "Nasjonalt")
                 {
                     if (_accessControlService.IsAdmin())

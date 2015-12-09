@@ -14,6 +14,7 @@ namespace Kartverket.Register.Services
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterItemService _registerItemService;
         private IRegisterService _registerService;
+        private IMunicipalityService _municipalityService;
 
         public AccessControlService(ClaimsPrincipal claimsPrincipal)
         {
@@ -24,6 +25,7 @@ namespace Kartverket.Register.Services
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
+            _municipalityService = new MunicipalityService();
         }
 
         public bool Access(object model)
@@ -140,6 +142,7 @@ namespace Kartverket.Register.Services
         {
             string username = GetUserName();
             List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+
             foreach (CodelistValue item in municipalities)
             {
                 if ((username.Contains(item.value)))
@@ -155,7 +158,7 @@ namespace Kartverket.Register.Services
             return _registerService.GetOrganizationByUserName();
         }
 
-        public CodelistValue MunicipalUser()
+        public CodelistValue Municipality()
         {
             string username = GetUserName();
             List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();

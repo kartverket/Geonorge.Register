@@ -6,5 +6,6 @@ namespace Kartverket.Register.Services
     {
         string LookupMunicipalityCodeFromOrganizationNumber(string organizationNumber);
         MunicipalityCenterPoint GetMunicipalityCenterPoint(string municipalityCode);
+        string LookupOrganizationNumberFromMunicipalityCode(string municipalityCode);
     }
 }

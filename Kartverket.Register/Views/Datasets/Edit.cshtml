@@ -60,7 +60,7 @@
     }
     else if (HtmlHelperExtensions.IsMunicipalUser())
     {
-        if (Model.Coverage.Count() > 0)
+        if (HtmlHelperExtensions.GetMunicipalCoverage(Model) != null)
         {
             @Html.Partial("_EditCoverageDataset", HtmlHelperExtensions.GetMunicipalCoverage(Model));
         }

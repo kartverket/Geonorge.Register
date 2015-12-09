@@ -13,11 +13,13 @@ namespace Kartverket.Register.Services.Register
     {
         private readonly RegisterDbContext _dbContext;
         private IRegisterItemService _registerItemService;
+        private IMunicipalityService _municipalityService;
 
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerItemService = new RegisterItemService(dbContext);
+            _municipalityService = new MunicipalityService();
         }
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
@@ -439,13 +441,14 @@ namespace Kartverket.Register.Services.Register
         public Organization GetOrganizationByUserName()
         {
             AccessControlService access = new AccessControlService();
-            CodelistValue user = access.MunicipalUser();
+            CodelistValue user = access.Municipality();
+            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
+
             var queryResults = from o in _dbContext.Organizations
-                               where user.name.Contains(o.name)
+                               where o.number == organizationNr
                                select o;
 
-            Organization organization = queryResults.FirstOrDefault();
-            return organization;
+            return queryResults.FirstOrDefault();
         }
     }
 }

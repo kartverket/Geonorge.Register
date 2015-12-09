@@ -1,4 +1,5 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Services.Register;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -393,10 +394,10 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public CoverageDataset GetMunicipalityCoverage(Dataset dataset)
         {
-            AccessControlService access = new AccessControlService();
-            CodelistValue municipality = access.Municipality();
+            AccessControlService _accessControlService = new AccessControlService();
+            Organization municipality = _accessControlService.MunicipalUserOrganization();
             var queryResult = from c in _dbContext.CoverageDatasets
-                              where c.Municipality.name.Contains(municipality.name)
+                              where c.Municipality.systemId == municipality.systemId
                               && c.dataset.systemId == dataset.systemId
                               select c;
 

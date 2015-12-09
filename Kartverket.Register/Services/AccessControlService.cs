@@ -131,6 +131,7 @@ namespace Kartverket.Register.Services
             {
                 if ((username.Contains(item.value)))
                 {
+
                     return true;
                 }
             }

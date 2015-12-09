@@ -18,7 +18,7 @@ namespace Kartverket.Register.Services.Register
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
-            _registerItemService = new RegisterItemService(dbContext);
+            _registerItemService = new RegisterItemService(_dbContext);
             _municipalityService = new MunicipalityService();
         }
 

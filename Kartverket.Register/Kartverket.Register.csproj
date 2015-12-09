@@ -652,6 +652,7 @@
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
+    <Compile Include="Services\MunicipalityData.cs" />
     <Compile Include="Services\MunicipalityService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />

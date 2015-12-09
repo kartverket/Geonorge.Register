@@ -7,6 +7,7 @@ namespace Kartverket.Register.Models.ViewModels
         public ShowDatasetCoverageViewModel()
         {
             StateBoundingBox = new BoundingBoxViewModel();
+            DatasetCoverageConfirmedCounties = new List<CoverageConfirmedMunicipalityViewModel>();
         }
 
         public string StateName { get; set; }

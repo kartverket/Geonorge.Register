@@ -6,12 +6,12 @@ namespace Kartverket.Register.Services
     {
         public string LookupMunicipalityCodeFromOrganizationNumber(string organizationNumber)
         {
-            return "1201"; // bergen
+            return MunicipalityData.MunicipalityFromOrganizationNumberToCode[organizationNumber];
         }
 
         public string LookupOrganizationNumberFromMunicipalityCode(string municipalityCode)
         {
-            return "962276172"; // bø kommune
+            return MunicipalityData.MunicipalityFromCodeToOrganizationNumber[municipalityCode];
         }
 
         public MunicipalityCenterPoint GetMunicipalityCenterPoint(string municipalityCode)

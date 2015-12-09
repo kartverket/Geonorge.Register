@@ -645,6 +645,7 @@
     </Compile>
     <Compile Include="Services\AccessControlService.cs" />
     <Compile Include="Services\DatasetService.cs" />
+    <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IMunicipalityService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />

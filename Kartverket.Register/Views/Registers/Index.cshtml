@@ -1,4 +1,4 @@
-﻿﻿@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Helpers
 @model IEnumerable<Kartverket.Register.Models.Register>
 
 @{
@@ -45,7 +45,15 @@
                 <td></td>
 
             </tr>
-
+            <tr>
+                <td>
+                    <strong><a href="/register/det-offentlige-kartgrunnlaget/dekning">Det offentlige kartgrunnlaget - dekningskart</a></strong>
+                </td>
+                <td>
+                    Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.
+                </td>
+                <td>Kartverket</td>
+            </tr>
             @foreach (var item in Model)
             {
                 if (item.parentRegisterId == null)

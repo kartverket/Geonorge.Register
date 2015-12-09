@@ -14,7 +14,6 @@ function listView() {
     $('.search-results').addClass('list-view');
 
     localStorage.setItem("visningstype", "liste");
-
 }
 
 function galleryView() {
@@ -120,55 +119,6 @@ function tableView() {
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
-    function fixedtableheader(cssClass, full, large, medium, small) {
-        $(window).scroll(function () {
-            if ($(window).width() >= 1183) {
-                if ($(window).scrollTop() > full) {
-                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - full + "px" });
-                    $("." + cssClass + " .table-heading").css("background-color", "white");
-                    $("." + cssClass + " .table-heading").css("z-index", "400");
-                } else {
-                    $("." + cssClass + " .table-heading").css("top", "0");
-                }
-            }
-            else if ($(window).width() < 1183 && $(window).width() > 992) {
-                if ($(window).scrollTop() > large) {
-                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - large + "px" });
-                    $("." + cssClass + " .table-heading").css("background-color", "white");
-                    $("." + cssClass + " .table-heading").css("z-index", "400");
-                } else {
-                    $("." + cssClass + " .table-heading").css("top", "0");
-                }
-            } else if ($(window).width() < 992 && $(window).width() >= 750) {
-                if ($(window).scrollTop() > medium) {
-                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - medium + "px" });
-                    $("." + cssClass + " .table-heading").css("background-color", "white");
-                    $("." + cssClass + " .table-heading").css("z-index", "400")
-                } else {
-                    $("." + cssClass + " .table-heading").css("top", "0");
-                }
-            } else if ($(window).width() < 750) {
-                if ($(window).scrollTop() > small) {
-                    $("." + cssClass + " .table-heading").css({ "top": ($(window).scrollTop()) - small + "px" });
-                    $("." + cssClass + " .table-heading").css("background-color", "white");
-                    $("." + cssClass + " .table-heading").css("z-index", "400")
-                } else {
-                    $("." + cssClass + " .table-heading").css("top", "0");
-                }
-            } else {
-                $("." + cssClass + " .table-heading").css("top", "0");
-            }
-        });
-    }
-
-    fixedtableheader("dataset", 658, 678, 785, 697); // Det offentlige kartgrunnlaget
-    fixedtableheader("epsg", 649, 726, 785, 775); // EPSG koder
-    fixedtableheader("applikasjonsskjema", 618, 638, 705, 640); // GML applikasjonskjema
-    fixedtableheader("registersub", 618, 638, 705, 640); // Kodelister og tegneregler
-    fixedtableheader("organization", 618, 638, 705, 640); // Organisasjoner
-    fixedtableheader("Produktark", 618, 638, 705, 640); // Produktark
-    fixedtableheader("Produktspesifikasjoner", 618, 638, 725, 640); // Produktspesifikasjoner
-    fixedtableheader("Tegneregler", 618, 638, 705, 640); // Tegneregler
 
     localStorage.setItem("visningstype", "tabell");
 

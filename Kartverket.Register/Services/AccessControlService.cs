@@ -45,7 +45,7 @@ namespace Kartverket.Register.Services
         }
 
         private bool accessRegisterItem(object model)
-        { 
+        {
             string user = GetSecurityClaim("organization");
 
             RegisterDbContext db = new RegisterDbContext();
@@ -152,16 +152,11 @@ namespace Kartverket.Register.Services
 
         public Organization MunicipalUserOrganization()
         {
-            CodelistValue municipslity = MunicipalUser();
-            Organization municipalOrganication = null;
-            if (municipslity != null)
-            {
-                return _registerService.GetOrganization(municipslity.name);
-            }            
-            return municipalOrganication;
+            return _registerService.GetOrganizationByUserName();
         }
 
-        public CodelistValue MunicipalUser() {
+        public CodelistValue MunicipalUser()
+        {
             string username = GetUserName();
             List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
             foreach (CodelistValue item in municipalities)
@@ -215,10 +210,11 @@ namespace Kartverket.Register.Services
                 {
                     return true;
                 }
-                else {
+                else
+                {
                     return IsMunicipalUser();
                 }
-            }            
+            }
             return false;
         }
     }

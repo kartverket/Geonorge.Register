@@ -317,10 +317,12 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
-        public Organization GetOrganization(string organizationName)
+        public Organization GetOrganization()
         {
+            AccessControlService access = new AccessControlService();
+            string organizationLogin = access.GetSecurityClaim("organization");
             var queryResults = from o in _dbContext.Organizations
-                               where organizationName.Contains(o.name)
+                               where organizationLogin.Contains(o.name)
                                select o;
 
             Organization organization = queryResults.FirstOrDefault();
@@ -434,5 +436,16 @@ namespace Kartverket.Register.Services.Register
             return false;
         }
 
+        public Organization GetOrganizationByUserName()
+        {
+            AccessControlService access = new AccessControlService();
+            CodelistValue user = access.MunicipalUser();
+            var queryResults = from o in _dbContext.Organizations
+                               where user.name.Contains(o.name)
+                               select o;
+
+            Organization organization = queryResults.FirstOrDefault();
+            return organization;
+        }
     }
 }

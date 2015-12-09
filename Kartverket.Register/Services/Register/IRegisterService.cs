@@ -15,7 +15,7 @@ namespace Kartverket.Register.Services.Register
         string ContentNegotiation(ControllerContext context);
         Models.Register GetRegisterByName(string name);
         Models.Register GetSubregisterByName(string parentName, string registerName);
-        Organization GetOrganization(string organization);
+        Organization GetOrganization();
         List<Models.Register> GetRegisters();
         List<Models.Register> GetSubregisters();
         List<Models.Register> GetSubregistersOfRegister(Models.Register register);
@@ -24,5 +24,7 @@ namespace Kartverket.Register.Services.Register
         Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
         bool RegisterHasChildren(string parentname, string registername);
         bool validationName(Object model);
+        Organization GetOrganizationByUserName();
+
     }
 }

@@ -11,6 +11,7 @@ using System.Web.Routing;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
 {
@@ -23,8 +24,8 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private ISearchService _searchService;
         private IRegisterItemService _registerItemService;
-        private string role = HtmlHelperExtensions.GetSecurityClaim("role");
-        private string user = HtmlHelperExtensions.GetSecurityClaim("organization");
+        private IAccessControlService _accessControlService;
+        //private string role = HtmlHelperExtensions.GetSecurityClaim("role");
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -34,12 +35,12 @@ namespace Kartverket.Register.Controllers
             _searchService = new SearchService(db);
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
+            _accessControlService = new AccessControlService();
         }
 
         // GET: Registers
         public ActionResult Index()
         {
-            setAccessRole();
             removeSessionSearchParams();
 
             return View(db.Registers.OrderBy(r => r.name).ToList());
@@ -69,38 +70,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private void RegisterItems(Models.Register register, FilterParameters filter, int? page)
-        {
-            if (Search(filter)) register = _searchService.Search(register, filter.text);
-            register = _registerService.FilterRegisterItems(register, filter);
-        }
-
-        private static bool RegisterItemsIsOfTypeDataset(Models.Register register)
-        {
-            return register.containedItemClass == "Dataset";
-        }
-
-        private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)
-        {
-            ViewBag.search = filter.text;
-            ViewBag.page = page;
-            ViewBag.SortOrder = sorting;
-            ViewBag.selectedMunicipality = filter.municipality;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.municipality = new SelectList(db.RegisterItems.Where(ri => ri.register.name == "Kommunenummer").OrderBy(o => o.name).ToList(), "value", "name");
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
-            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.ownerSEO = owner;
-
-        }
-
-        private static bool Search(FilterParameters filter)
-        {
-            return !string.IsNullOrWhiteSpace(filter.text);
-        }
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
@@ -115,6 +84,7 @@ namespace Kartverket.Register.Controllers
             return View(registerItem);
         }
 
+
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
         public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int version, string format)
@@ -127,6 +97,7 @@ namespace Kartverket.Register.Controllers
 
             return View(registerItem);
         }
+
 
         [Route("subregister/versjoner/{parentRegister}/{owner}/{registername}/{registerItemOwner}/{itemname}.{format}")]
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}.{format}")]
@@ -143,18 +114,20 @@ namespace Kartverket.Register.Controllers
             return View(model);
         }
 
+
         // GET: Register/Create
         [Authorize]
         [Route("ny")]
         public ActionResult Create()
         {
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
                 return View();
             }
             return HttpNotFound();
         }
+
 
         // POST: Register/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -164,7 +137,7 @@ namespace Kartverket.Register.Controllers
         [Route("ny")]
         public ActionResult Create(Models.Register register)
         {
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
 
@@ -182,7 +155,7 @@ namespace Kartverket.Register.Controllers
                     db.Registers.Add(register);
                     db.SaveChanges();
 
-                    Organization submitterOrganisasjon = _registerService.GetOrganization(user);
+                    Organization submitterOrganisasjon = _registerService.GetOrganization();
                     register.ownerId = submitterOrganisasjon.systemId;
                     register.managerId = submitterOrganisasjon.systemId;
 
@@ -205,7 +178,7 @@ namespace Kartverket.Register.Controllers
 
             if (register == null) return HttpNotFound();
 
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 Viewbags(register);
                 return View(register);
@@ -223,7 +196,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult Edit(Models.Register register, string registername, string accessRegister)
         {
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
                 Models.Register originalRegister = _registerService.GetRegister(null, registername);
@@ -254,12 +227,13 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+
         // GET: Registers/Delete/5
         [Authorize]
         [Route("slett/{registername}")]
         public ActionResult Delete(string registername)
         {
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 Models.Register register = _registerService.GetRegister(null, registername);
                 if (register == null) return HttpNotFound();
@@ -274,7 +248,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(string registername)
         {
-            if (role == "nd.metadata_admin")
+            if (IsAdmin())
             {
                 Models.Register register = _registerService.GetRegister(null, registername);
 
@@ -301,49 +275,6 @@ namespace Kartverket.Register.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private string HasAccessToRegister()
-        {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-
-            bool isAdmin = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata_admin");
-            bool isEditor = !string.IsNullOrWhiteSpace(role) && role.Equals("nd.metadata"); //nd.metadata_editor
-
-            if (isAdmin)
-            {
-                return "admin";
-            }
-            else if (isEditor)
-            {
-                return "editor";
-            }
-            else
-            {
-                return "guest";
-            }
-        }
-
-        private void setAccessRole()
-        {
-            string organization = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-            string role = HasAccessToRegister();
-            if (role == "admin")
-            {
-                Session["role"] = "admin";
-                Session["user"] = organization;
-            }
-            else if (role == "editor")
-            {
-                Session["role"] = "editor";
-                Session["user"] = organization;
-            }
-            else
-            {
-                Session["role"] = "guest";
-                Session["user"] = "guest";
-            }
         }
 
         private void removeSessionSearchParams()
@@ -398,6 +329,38 @@ namespace Kartverket.Register.Controllers
                 }
             }
             return null;
+        }
+
+        private void RegisterItems(Models.Register register, FilterParameters filter, int? page)
+        {
+            if (Search(filter)) register = _searchService.Search(register, filter.text);
+            register = _registerService.FilterRegisterItems(register, filter);
+        }
+
+        private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)
+        {
+            ViewBag.search = filter.text;
+            ViewBag.page = page;
+            ViewBag.SortOrder = sorting;
+            ViewBag.selectedMunicipality = filter.municipality;
+            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
+            ViewBag.municipality = new SelectList(db.RegisterItems.Where(ri => ri.register.name == "Kommunenummer").OrderBy(o => o.name).ToList(), "value", "name");
+            ViewBag.register = register.name;
+            ViewBag.registerSEO = register.seoname;
+            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
+            ViewBag.ownerSEO = owner;
+        }
+
+        private static bool Search(FilterParameters filter)
+        {
+            return !string.IsNullOrWhiteSpace(filter.text);
+        }
+
+        private bool IsAdmin()
+        {
+            return _accessControlService.IsAdmin();
         }
 
     }

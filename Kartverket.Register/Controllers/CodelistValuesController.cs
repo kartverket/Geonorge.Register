@@ -392,8 +392,7 @@ namespace Kartverket.Register.Controllers
 
         private void SetCodelistValueSubmitter(CodelistValue codelistValue)
         {
-            string organizationLogin = _accessControlService.GetSecurityClaim("organization");
-            Organization submitterOrganisasjon = _registerService.GetOrganization(organizationLogin);
+            Organization submitterOrganisasjon = _registerService.GetOrganization();
             codelistValue.submitterId = submitterOrganisasjon.systemId;
             codelistValue.submitter = submitterOrganisasjon;
         }

@@ -587,8 +587,7 @@ namespace Kartverket.Register.Controllers
 
         private void SetDocumentOwnerAndSubmitter(Document document)
         {
-            string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
-            Organization submitterOrganisasjon = _registerService.GetOrganization(organizationLogin);
+            Organization submitterOrganisasjon = _registerService.GetOrganization();
             document.submitterId = submitterOrganisasjon.systemId;
             document.submitter = submitterOrganisasjon;
             document.documentowner = submitterOrganisasjon;

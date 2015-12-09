@@ -12,32 +12,6 @@
     }
 
 
-.view-navigation .nav-pills > li:hover, .view-navigation .pagination > li:hover {
-    cursor: pointer;
-}
-
-.view-navigation .nav-pills > li > a {
-    padding: 5px 7px;
-    margin-top: 4px;
-    font-size: 11px;
-    line-height: 1em;
-}
-
-    .view-navigation .nav-pills > li > a.active {
-        background-color: #337AB7;
-        color: #FFF;
-    }
-
-.view-navigation .pagination > li > a, .view-navigation .pagination > li > span {
-    line-height: 1em;
-}
-
-.view-navigation .pagination-sm > li > a, .view-navigation .pagination-sm > li > span {
-    font-size: 11px;
-    padding: 5px 6px;
-}
-
-
 
 /* ---- Gallery view ---- */
 .search-results.gallery-view .result-row {
@@ -871,20 +845,48 @@
 
 
 /* Nytt geonorge design */
-.table-heading{
+.table-heading {
     border-bottom: 2px solid #FE5000;
     height: 27px;
-    margin-bottom: 8px!important;
+    margin-bottom: 8px !important;
 }
 
-.table-heading h4 {
-    font-size: 12pt;
-    text-transform: uppercase;
-    color: #414042;
-    line-height: 14pt;
-}
+    .table-heading h4 {
+        font-size: 12pt;
+        text-transform: uppercase;
+        color: #414042;
+        line-height: 14pt;
+    }
 
-.search-results.table-view .btn{
+.search-results.table-view .btn {
     color: #3867c8;
     background-color: #FFF;
 }
+
+.nav-pills > li:hover, .view-navigation .pagination > li:hover {
+    cursor: pointer;
+}
+
+.nav-pills > li > a {
+    background-color: #FFF;
+    transition: all .35s linear 0s;
+    color: #7da1c4;
+    border: none;
+    font-style: normal;
+    font-family: "Open Sans",sans-serif;
+    font-weight: normal;
+    font-size: 12pt;
+    border-radius: 0;
+    line-height: 12pt;
+    display: inline-block;
+}
+
+    .nav-pills > li > a.active {
+        background-color: #7da1c4;
+        color: #fff;
+    }
+
+    .nav-pills > li > a:hover {
+        background-color: #fe5000;
+        color: #FFF;
+    }

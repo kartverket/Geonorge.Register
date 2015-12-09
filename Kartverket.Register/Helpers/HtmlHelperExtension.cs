@@ -1,11 +1,9 @@
 ﻿using Kartverket.Register.Models;
 using Kartverket.Register.Services;
-using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -14,6 +12,11 @@ namespace Kartverket.Register.Helpers
 {
     public static class HtmlHelperExtensions
     {
+        private static readonly RegisterDbContext db = new RegisterDbContext();
+        private static IRegisterItemService _registeritemService = new RegisterItemService(db);
+        private static IAccessControlService accessControl = new AccessControlService();
+
+
         public static string ApplicationVersionNumber(this HtmlHelper helper)
         {
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];
@@ -32,12 +35,10 @@ namespace Kartverket.Register.Helpers
 
         public static bool IsMunicipalUser()
         {
-            AccessControlService accessControl = new AccessControlService();
             return accessControl.IsMunicipalUser();
         }
 
         public static CoverageDataset GetMunicipalCoverage(Dataset model) {
-            RegisterDbContext db = new RegisterDbContext();
             RegisterItemService registerItemService = new RegisterItemService(db);
 
             return registerItemService.GetMunicipalityCoverage(model);
@@ -99,8 +100,6 @@ namespace Kartverket.Register.Helpers
 
         public static bool accessRegisterItem(RegisterItem item)
         {
-            RegisterDbContext db = new RegisterDbContext();
-
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
@@ -139,8 +138,6 @@ namespace Kartverket.Register.Helpers
             }
             return false;
         }
-
-
 
         public static bool IsGeonorgeAdmin(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
         {
@@ -228,8 +225,6 @@ namespace Kartverket.Register.Helpers
 
         public static List<Models.Register> Registers()
         {
-            RegisterDbContext db = new RegisterDbContext();
-
             var queryResults = from o in db.Registers
                                where o.parentRegisterId == null
                                select o;
@@ -280,13 +275,12 @@ namespace Kartverket.Register.Helpers
             return isInRole;
         }
 
-
         // SORTERING av registeritems
-        public static List<Kartverket.Register.Models.RegisterItem> SortingRegisterItems(Models.Register register, String sortingType)
+        public static List<RegisterItem> SortingRegisterItems(Models.Register register, string sortingType)
         {
-
             string text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
             string filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
+            string municipality = HttpContext.Current.Request.QueryString["municipality"] != null ? HttpContext.Current.Request.QueryString["municipality"].ToString() : "";
             string filterHorisontalt = HttpContext.Current.Request.QueryString["filterHorisontalt"] != null ? HttpContext.Current.Request.QueryString["filterHorisontalt"].ToString() : "";
             string InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
             string nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
@@ -316,6 +310,9 @@ namespace Kartverket.Register.Helpers
 
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
+                        municipality = HttpContext.Current.Session["municipality"].ToString();
 
                     string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
                     bool shallRedirect = false;
@@ -360,6 +357,12 @@ namespace Kartverket.Register.Helpers
                         shallRedirect = true;
                     }
 
+                    if (nationalSeaRequirementParam != "")
+                    {
+                        redirect = redirect + "&municipality=" + municipality;
+                        shallRedirect = true;
+                    }
+
                     if (shallRedirect)
                     {
                         HttpContext.Current.Response.Redirect(redirect);
@@ -368,7 +371,7 @@ namespace Kartverket.Register.Helpers
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
-
+            HttpContext.Current.Session["municipality"] = municipality;
             HttpContext.Current.Session["text"] = text;
             HttpContext.Current.Session["filterVertikalt"] = filterVertikalt;
             HttpContext.Current.Session["filterHorisontalt"] = filterHorisontalt;
@@ -600,6 +603,7 @@ namespace Kartverket.Register.Helpers
         {
             string text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
             string filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
+            string municipality = HttpContext.Current.Request.QueryString["municipality"] != null ? HttpContext.Current.Request.QueryString["municipality"].ToString() : "";
             string filterHorisontalt = HttpContext.Current.Request.QueryString["filterHorisontalt"] != null ? HttpContext.Current.Request.QueryString["filterHorisontalt"].ToString() : "";
             string InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
             string nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
@@ -611,7 +615,6 @@ namespace Kartverket.Register.Helpers
                 {
                     if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sortingType))
                         sortingType = HttpContext.Current.Session["sortingType"].ToString();
-
 
                     if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
                         text = HttpContext.Current.Session["text"].ToString();
@@ -631,13 +634,17 @@ namespace Kartverket.Register.Helpers
                     if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
                         nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
 
+                    if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
+                        municipality = HttpContext.Current.Session["municipality"].ToString();
+
                     string redirect = HttpContext.Current.Request.Path + "?sorting=" + sortingType;
                     bool shallRedirect = false;
 
-                    if (text != "") {
+                    if (text != "")
+                    {
                         redirect = redirect + "&text=" + text;
                         shallRedirect = true;
-                    }                        
+                    }
 
                     if (filterVertikalt != "")
                     {
@@ -655,18 +662,27 @@ namespace Kartverket.Register.Helpers
                         shallRedirect = true;
                     }
 
-                    if (InspireRequirementParam != "") { 
+                    if (InspireRequirementParam != "")
+                    {
                         redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
                         shallRedirect = true;
                     }
 
-                    if (nationalRequirementParam != "") { 
+                    if (nationalRequirementParam != "")
+                    {
                         redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
                         shallRedirect = true;
                     }
 
-                    if (nationalSeaRequirementParam != "") { 
+                    if (nationalSeaRequirementParam != "")
+                    {
                         redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+                        shallRedirect = true;
+                    }
+
+                    if (nationalSeaRequirementParam != "")
+                    {
+                        redirect = redirect + "&municipality=" + municipality;
                         shallRedirect = true;
                     }
 
@@ -674,11 +690,11 @@ namespace Kartverket.Register.Helpers
                     {
                         HttpContext.Current.Response.Redirect(redirect);
                     }
-                    
+
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
-
+            HttpContext.Current.Session["municipality"] = municipality;
             HttpContext.Current.Session["text"] = text;
             HttpContext.Current.Session["filterVertikalt"] = filterVertikalt;
             HttpContext.Current.Session["filterHorisontalt"] = filterHorisontalt;

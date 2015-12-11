@@ -78,7 +78,7 @@
         <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
         <li><a href="/register/versjoner/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
         <li>Rediger</li>
-    }
+    }       
 }
 
 <h2>Rediger</h2>
@@ -91,6 +91,7 @@
     @Html.HiddenFor(model => model.registerId)
     @Html.HiddenFor(model => model.versionNumber)
     @Html.HiddenFor(model => model.versioningId)
+    @Html.HiddenFor(model => model.submitterId)
 
     <div class="form-horizontal">
 

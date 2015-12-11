@@ -963,7 +963,6 @@ namespace Kartverket.Register.Services
             {"1223", new MunicipalityCenterPoint("-25866", "6689728")},
             {"1238", new MunicipalityCenterPoint("12068", "6725728")},
             {"0714", new MunicipalityCenterPoint("220532", "6612176")},
-            {"0215", new MunicipalityCenterPoint("256894", "6622049")},
             {"0220", new MunicipalityCenterPoint("244991", "6641704")},
             {"0935", new MunicipalityCenterPoint("88474", "6498985")},
             {"0938", new MunicipalityCenterPoint("77314", "6550458")},

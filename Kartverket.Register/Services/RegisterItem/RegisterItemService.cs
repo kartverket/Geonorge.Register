@@ -412,5 +412,12 @@ namespace Kartverket.Register.Services.RegisterItem
             _dbContext.CoverageDatasets.Add(cover);
             _dbContext.SaveChanges();
         }
+
+        public void DeleteCoverage(CoverageDataset coverage)
+        {
+            _dbContext.CoverageDatasets.Remove(coverage);
+            _dbContext.SaveChanges();
+        }
     }    
+
 }

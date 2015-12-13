@@ -8,6 +8,7 @@ using Kartverket.Register.Services;
 using System.Web;
 using System.Net.Http;
 using Kartverket.Register.Helpers;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -183,55 +184,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-
-
-
-        //// POST: Documents/Edit/5
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{datasetname}/rediger")]
-        //[Route("dataset/{registername}/{organization}/{datasetname}/rediger")]
-        ////[ValidateAntiForgeryToken]
-        //public ActionResult Edit(Dataset dataset, string registername, string datasetname, string uuid, bool dontUpdateDescription, string parentRegister, string registerowner)
-        //{
-        //    Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, datasetname, 1);
-        //    if (originalDataset != null)
-        //    {
-        //        if (uuid != null)
-        //        {
-        //            Dataset model = model = GetMetadataFromKartkatalogen(dataset, uuid);
-        //            model.register = originalDataset.register;
-        //            model.datasetowner = originalDataset.datasetowner;
-        //            model.submitter = originalDataset.submitter;
-
-        //            if (dontUpdateDescription) model.description = originalDataset.description;
-        //            Viewbags(model);
-        //            return View(model);
-        //        }
-        //        if (_accessControlService.EditDOK(originalDataset))
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
-        //            }
-        //        }
-        //        if (_accessControlService.Access(originalDataset))
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                return EditDataset(dataset, registername, parentRegister, registerowner, originalDataset);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            throw new HttpException(401, "Access Denied");
-        //        }
-        //    }
-        //    Viewbags(originalDataset);
-        //    return View(originalDataset);
-        //}
-
         private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
         {
             initialisationDataset(dataset, originalDataset);
@@ -323,7 +275,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // POST: Documents/Delete/5
+        // POST: Dataset/Delete/5
         [HttpPost, ActionName("Delete")]
         [Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{datasetname}/slett")]
         [Route("dataset/{registername}/{organization}/{datasetname}/slett")]
@@ -331,8 +283,23 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string datasetname, string parentregister, string registerowner)
         {
             Dataset dataset = (Dataset)_registerItemService.GetRegisterItem(parentregister, registername, datasetname, 1);
+            DeleteCoverageDataset(dataset);
             _registerItemService.SaveDeleteRegisterItem(dataset);
             return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
+        }
+
+        private void DeleteCoverageDataset(Dataset dataset)
+        {
+            if (dataset.Coverage != null)
+            {
+                for (int i = 0; i < dataset.Coverage.Count; i++)
+                {
+                    dataset.Coverage[i].DatasetId = Guid.Empty;
+                    dataset.Coverage[i].dataset = null;
+                    _registerItemService.DeleteCoverage(dataset.Coverage[i]);
+                }
+                dataset.Coverage.Clear();
+            }
         }
 
 

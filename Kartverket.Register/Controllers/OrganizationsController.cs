@@ -6,10 +6,10 @@ using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using System;
-using Kartverket.Register.Helpers;
-using System.Text.RegularExpressions;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Services;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,16 +22,13 @@ namespace Kartverket.Register.Controllers
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+        private IAccessControlService _accessControlService;
+
         public OrganizationsController()
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
-        }
-
-        // GET: Organizations
-        public ActionResult Index(string searchString)
-        {
-            return View(db.Organizations.OrderBy(o => o.name).ToList());
+            _accessControlService = new AccessControlService();
         }
 
         [Authorize]
@@ -99,22 +96,7 @@ namespace Kartverket.Register.Controllers
            
             return Redirect("/register/organisasjoner");
         }
-        // GET: Organizations/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Organization organization = db.Organizations.Find(id);
-            db.SaveChanges();
-            if (organization == null)
-            {
-                return HttpNotFound();
-            }
-            return View(organization);
-        }
-
+        
 
         //// GET: Organizations/Create
         [Authorize]
@@ -123,26 +105,14 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Organization organisasjon = new Organization();
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername || o.name == registername
-                                       && o.parentRegister.seoname == parentRegister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Models.Register register = db.Registers.Find(regId);
-            organisasjon.register = register;
-
-            if (register.parentRegisterId != null)
+            organisasjon.register = _registerService.GetRegister(parentRegister, registername);
+            if (organisasjon.register != null)
             {
-                organisasjon.register.parentRegister = register.parentRegister;
-            }
-            
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2))
-            {
-                return View(organisasjon);
+                if (_accessControlService.Access(organisasjon))
+                {
+                    ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+                    return View(organisasjon);
+                }
             }
             return HttpNotFound("Ingen tilgang");
         }
@@ -155,82 +125,38 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("organisasjoner/{registername}/ny")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
+        public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument, string registerOwner)
         {
-            var queryResultsRegister = from o in db.Registers
-                                       where o.seoname == registername
-                                       && o.parentRegister.seoname == parentRegister
-                                       select o.systemId;
-
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            organization.register = db.Registers.Find(regId);
-            string parentRegisterOwner = null;
-            if (organization.register.parentRegisterId != null)
+            organization.register = _registerService.GetRegister(parentRegister, registername);
+            if (organization.register != null)
             {
-                parentRegisterOwner = organization.register.parentRegister.owner.seoname;
-            }
-            ValidationName(organization, organization.register);
-            
-            if (ModelState.IsValid)
-            {
-                organization.systemId = Guid.NewGuid();
-                if (organization.name == null) { organization.name = "ikke angitt"; }
-                organization.modified = DateTime.Now;
-                organization.dateSubmitted = DateTime.Now;
-                organization.registerId = regId;
-                organization.register = organization.register;
-                organization.statusId = "Submitted";
-                organization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(organization.name);
-                organization.versionNumber = 1;
-                organization.versioningId = _registerItemService.NewVersioningGroup(organization);
-
-                if (fileSmal != null && fileSmal.ContentLength > 0)
+                if (_accessControlService.Access(organization))
                 {
-                    organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
-                }
-                if (fileLarge != null && fileLarge.ContentLength > 0)
-                {
-                    organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
-                }
-                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-                if (agreementDocument != null)
-                {
-                    organization.agreementDocumentUrl = url + SaveFileToDisk(agreementDocument, organization);
-                }
+                    if (ModelState.IsValid)
+                    {
+                        initialisationOrganization(organization, fileSmal, fileLarge, agreementDocument, priceformDocument);
+                        if (!NameIsValid(organization))
+                        {
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                            return View(organization);
+                        }
+                        _registerItemService.SaveNewRegisterItem(organization);
+                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerOwner, registername, organization.submitter.seoname, organization.seoname));
 
-                if (priceformDocument != null)
-                {
-                    organization.priceFormDocument = url + SaveFileToDisk(priceformDocument, organization);
-                }
-
-                db.RegisterItems.Add(organization);
-                db.SaveChanges();
-
-                string organizationLogin = GetSecurityClaim("organization");
-                var queryResultsOrganization = from o in db.Organizations
-                                               where o.name == organizationLogin
-                                               select o.systemId;
-                Guid orgId = queryResultsOrganization.FirstOrDefault();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
-
-                organization.submitterId = orgId;
-                organization.submitter = submitterOrganisasjon;
-
-                db.Entry(organization).State = EntityState.Modified;
-                db.SaveChanges();
-
-                if (organization.register.parentRegister != null)
-                {
-                    return Redirect("/subregister/" + organization.register.parentRegister.seoname + "/" + organization.register.parentRegister.owner.seoname + "/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
-                }
-                else
-                {
-                    return Redirect("/register/" + registername + "/" + organization.submitter.seoname + "/" + organization.seoname);
+                    }
+                    else
+                    {
+                        throw new HttpException(401, "Access Denied");
+                    }
                 }
             }
             return View(organization);
         }
 
+        private bool NameIsValid(Organization organization)
+        {
+            return _registerItemService.validateName(organization);
+        }
 
         //// GET: Organizations/Edit/5
         [Authorize]
@@ -557,6 +483,101 @@ namespace Kartverket.Register.Controllers
                 ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
             }
         }
+
+        private void initialisationOrganization(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
+        {
+
+            organization.systemId = Guid.NewGuid();
+            organization.name = OrganizationName(organization.name);
+            organization.seoname = OrganizationSeoName(organization.name);
+            organization.modified = DateTime.Now;
+            organization.dateSubmitted = DateTime.Now;
+            organization.registerId = organization.register.systemId;
+            organization.statusId = "Submitted";
+            organization.versionNumber = GetVersionNr(organization.versionNumber);
+            organization.versioningId = _registerItemService.NewVersioningGroup(organization);
+
+            SetOrganizationOwnerAndSubmitter(organization);
+
+            FileSmal(organization, fileSmal);
+            FileLarge(organization, fileLarge);
+            organization.agreementDocumentUrl = GetAgreementDocumentUrl(agreementDocument, organization);
+            organization.priceFormDocument = GetPriceFormDocument(priceformDocument, organization);
+        }
+
+        private string GetPriceFormDocument(HttpPostedFileBase priceformDocument, Organization organization)
+        {
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+            if (priceformDocument != null)
+            {
+                organization.priceFormDocument = url + SaveFileToDisk(priceformDocument, organization);
+            }
+            return null;
+        }
+
+        private string GetAgreementDocumentUrl(HttpPostedFileBase agreementDocument, Organization organization)
+        {
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+            if (agreementDocument != null)
+            {
+                return url + SaveFileToDisk(agreementDocument, organization);
+            }
+            return null;
+        }
+
+        private void FileLarge(Organization organization, HttpPostedFileBase fileLarge)
+        {
+            if (fileLarge != null && fileLarge.ContentLength > 0)
+            {
+                organization.largeLogo = SaveLogoToDisk(fileLarge, organization.number);
+            }
+        }
+
+        private void FileSmal(Organization organization, HttpPostedFileBase fileSmal)
+        {
+            if (fileSmal != null && fileSmal.ContentLength > 0)
+            {
+                organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
+            }
+        }
+
+        private void SetOrganizationOwnerAndSubmitter(Organization organization)
+        {
+            Organization submitterOrganisasjon = _registerService.GetOrganization();
+            organization.submitterId = submitterOrganisasjon.systemId;
+            organization.submitter = submitterOrganisasjon;
+        }
+
+        private int GetVersionNr(int versionNumber)
+        {
+            if (versionNumber == 0)
+            {
+                versionNumber = 1;
+            }
+            else
+            {
+                versionNumber++;
+            }
+            return versionNumber;
+        }
+
+        private string OrganizationSeoName(string name)
+        {
+            return RegisterUrls.MakeSeoFriendlyString(name);
+        }
+
+        private string OrganizationName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "ikke angitt";
+            }
+            else
+            {
+                return name;
+            }
+        }
+
 
         protected override void OnException(ExceptionContext filterContext)
         {

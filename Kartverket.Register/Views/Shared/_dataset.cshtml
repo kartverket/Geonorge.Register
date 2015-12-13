@@ -12,7 +12,7 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString(), municipality = Session["municipality"] }))
         </li>
     </ul>
     @Html.Partial("_visningstyper")
@@ -35,7 +35,7 @@
             <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
         </li>
         <li class="pull-right">
-            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
+            @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString(), municipality = Session["municipality"] }))
         </li>
     </ul>
 </div>

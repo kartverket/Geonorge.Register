@@ -11,10 +11,14 @@ namespace Kartverket.Register.Services.RegisterItem
     public class RegisterItemService : IRegisterItemService
     {
         private readonly RegisterDbContext _dbContext;
+        private IMunicipalityService _municipalityService;
+        //private IRegisterService _registerService;
 
         public RegisterItemService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
+            _municipalityService = new MunicipalityService();
+            //_registerService = new RegisterService(_dbContext);
         }
 
         public void SetNarrowerItems(List<Guid> narrowerList, CodelistValue codelistValue)
@@ -375,12 +379,17 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public Models.RegisterItem GetMunicipalByNr(string municipalityNr)
         {
-            var queryresultMunicipality = from c in _dbContext.CodelistValues
-                                          where c.register.name == "Kommunenummer" &&
-                                          c.value == municipalityNr
-                                          select c;
+            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(municipalityNr);
+            return GetOrganizationByOrganizationNr(organizationNr);
+        }
 
-            return queryresultMunicipality.FirstOrDefault();
+        private Organization GetOrganizationByOrganizationNr(string number)
+        {
+            var queryResults = from o in _dbContext.Organizations
+                               where o.number == number
+                               select o;
+
+            return queryResults.FirstOrDefault();
         }
 
         public List<CodelistValue> GetMunicipalityList()

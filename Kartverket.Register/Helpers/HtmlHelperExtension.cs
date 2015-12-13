@@ -25,11 +25,13 @@ namespace Kartverket.Register.Helpers
             return versionNumber;
         }
 
-        public static bool Access(object model) {
+        public static bool Access(object model)
+        {
             return _accessControl.Access(model);
         }
 
-        public static bool IsAdmin() {
+        public static bool IsAdmin()
+        {
             return _accessControl.IsAdmin();
         }
 
@@ -41,7 +43,8 @@ namespace Kartverket.Register.Helpers
                 {
                     return _accessControl.EditDOK((Dataset)item);
                 }
-                else {
+                else
+                {
                     return Access(item);
                 }
             }
@@ -52,7 +55,8 @@ namespace Kartverket.Register.Helpers
             return _accessControl.IsMunicipalUser();
         }
 
-        public static CoverageDataset GetMunicipalCoverage(Dataset model) {
+        public static CoverageDataset GetMunicipalCoverage(Dataset model)
+        {
             return _registeritemService.GetMunicipalityCoverage(model);
         }
 
@@ -379,7 +383,7 @@ namespace Kartverket.Register.Helpers
                     {
                         HttpContext.Current.Response.Redirect(redirect);
                     }
-                    
+
                 }
             }
             HttpContext.Current.Session["sortingType"] = sortingType;
@@ -894,19 +898,28 @@ namespace Kartverket.Register.Helpers
 
         public static string ErrorMessageValidationName()
         {
-           return "Navnet finnes fra før!";
+            return "Navnet finnes fra før!";
         }
 
-        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipality) {
-            CoverageDataset coverage = Coverage(item, selectedMunicipality);
-            if (coverage != null)
+        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipality)
+        {
+            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return coverage.CoverageDOKStatus.description;
+                return "Godkjent";
             }
-            else return "Forslag";
+            else
+            {
+                CoverageDataset coverage = Coverage(item, selectedMunicipality);
+                if (coverage != null)
+                {
+                    return coverage.CoverageDOKStatus.description;
+                }
+                else return "Forslag";
+            }
         }
 
-        private static CoverageDataset Coverage(Dataset item, string selectedMunicipality) {
+        private static CoverageDataset Coverage(Dataset item, string selectedMunicipality)
+        {
             string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality);
             Organization munizipality = _registerService.GetOrganizationByOrganizationNr(organizationNr);
 
@@ -922,30 +935,46 @@ namespace Kartverket.Register.Helpers
 
         public static bool GetConfirmedFromCoverage(Dataset item, string selectedMunicipality)
         {
-            CoverageDataset coverage = Coverage(item, selectedMunicipality);
-            if (coverage != null)
+            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return coverage.ConfirmedDok;
+                return true;
             }
-            else return false;
+            else
+            {
+                CoverageDataset coverage = Coverage(item, selectedMunicipality);
+                if (coverage != null)
+                {
+                    return coverage.ConfirmedDok;
+                }
+                else return false;
+            }
         }
 
         public static string GetNoteFromCoverage(Dataset item, string selectedMunicipality)
         {
-            CoverageDataset coverage = Coverage(item, selectedMunicipality);
-            if (coverage != null)
+            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return coverage.Note;
+                return item.Notes;
             }
-            else return null;
+            else
+            {
+                CoverageDataset coverage = Coverage(item, selectedMunicipality);
+                if (coverage != null)
+                {
+                    return coverage.Note;
+                }
+                else return null;
+            }
         }
 
-        public static CoverageDataset NewCoverage(Dataset dataset) {
-            return new CoverageDataset() {
+        public static CoverageDataset NewCoverage(Dataset dataset)
+        {
+            return new CoverageDataset()
+            {
                 dataset = dataset,
-                DatasetId = dataset.systemId,       
+                DatasetId = dataset.systemId,
             };
         }
-            
+
     }
 }

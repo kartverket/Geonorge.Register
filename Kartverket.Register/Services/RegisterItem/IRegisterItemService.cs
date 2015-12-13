@@ -41,5 +41,6 @@ namespace Kartverket.Register.Services.RegisterItem
         CoverageDataset GetMunicipalityCoverage(Dataset dataset);
         void SaveNewCoverage(CoverageDataset coverage);
         void DeleteCoverage(CoverageDataset coverage);
+        void Save();
     }
 }

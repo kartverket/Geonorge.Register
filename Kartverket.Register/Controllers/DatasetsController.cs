@@ -238,20 +238,6 @@ namespace Kartverket.Register.Controllers
             return municipality.systemId;
         }
 
-        private ActionResult EditDOKDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
-        {
-            initialisationDataset(dataset, originalDataset);
-            if (!NameIsValid(dataset))
-            {
-                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                Viewbags(originalDataset);
-                return View(originalDataset);
-            }
-            _registerItemService.SaveEditedRegisterItem(originalDataset);
-            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
-        }
-
-
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
@@ -360,6 +346,15 @@ namespace Kartverket.Register.Controllers
 
         private void initialisationDataset(Dataset dataset, Dataset originalDataset)
         {
+            if (originalDataset.register.name ==  "Det offentlige kartgrunnlaget - Kommunalt")
+            {
+                foreach (CoverageDataset coverage in originalDataset.Coverage)
+                {
+                    coverage.MunicipalityId = dataset.datasetownerId;
+                    _registerItemService.Save();
+                }
+            }
+
             originalDataset.name = DatasetName(dataset.name);
             originalDataset.seoname = DatasetSeoName(dataset.name);
             originalDataset.description = dataset.description;

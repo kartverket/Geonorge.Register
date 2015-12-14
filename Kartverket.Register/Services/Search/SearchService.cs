@@ -265,7 +265,6 @@ namespace Kartverket.Register.Services.Search
 
                 if (queryResults.Count() > 0)
                 {
-
                     foreach (var item in queryResults.ToList())
                     {
                         if ((item.statusId != "Submitted") || item.documentowner.seoname == user || role == "nd.metadata_admin")
@@ -274,6 +273,7 @@ namespace Kartverket.Register.Services.Search
                             registerItems.Add(document);
                         }
                     }
+                    register.items = registerItems;
                 }
 
                 return new Models.Register

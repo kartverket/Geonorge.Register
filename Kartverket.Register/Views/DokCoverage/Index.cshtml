@@ -9,13 +9,13 @@
 <form action="@Request.Url.LocalPath" method="get">
     <div class="row">
         <div class="col-md-3">
-            <div>
-                <label for="fylke" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class="chosen-select" })
+            <div class="form-group custom-select">
+                <label for="fylke" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class = "chosen-select form-control" })
             </div>
         </div>
         <div class="col-md-5">
-            <div>
-                <label for="dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select" })
+            <div class="form-group custom-select">
+                <label for="dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select form-control" })
             </div>
         </div>
         <div class="col-md-3">
@@ -57,7 +57,7 @@
             attribution: "Kartverket",
             crs: crs
         }).addTo(map);
-        
+
         new L.TileLayer.WMS("https://wms.geonorge.no/skwms1/wms.topo2", {
             layers: 'topo2_WMS',
             format: 'image/png',

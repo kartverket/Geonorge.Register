@@ -12,6 +12,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -60,7 +61,7 @@ namespace Kartverket.Register.Controllers
             Models.Register register = _registerService.GetRegister(parentRegister, registername);
             if (register != null)
             {
-                RegisterItems(register, filter, page);
+                register = RegisterItems(register, filter, page);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, register);
                 return View(register);
             }
@@ -331,10 +332,11 @@ namespace Kartverket.Register.Controllers
             return null;
         }
 
-        private void RegisterItems(Models.Register register, FilterParameters filter, int? page)
+        private Models.Register RegisterItems(Models.Register register, FilterParameters filter, int? page)
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
+            return register;
         }
 
         private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)

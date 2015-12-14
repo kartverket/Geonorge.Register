@@ -104,7 +104,29 @@ namespace Kartverket.Register.Controllers
                 confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
                 confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
             }
-
+#if DEBUG
+            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
+            {
+                Name = "Dummy kommune 1",
+                Number = "1834",
+                CenterCoordinateX = "395596",
+                CenterCoordinateY = "7368040"
+            });
+            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
+            {
+                Name = "Dummy kommune 2",
+                Number = "0417",
+                CenterCoordinateX = "299541",
+                CenterCoordinateY = "6728723"
+            });
+            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
+            {
+                Name = "Dummy kommune 3",
+                Number = "0822",
+                CenterCoordinateX = "176730",
+                CenterCoordinateY = "6602694"
+            });
+#endif
             return confirmed;
         }
 

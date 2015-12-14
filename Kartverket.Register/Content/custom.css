@@ -123,10 +123,6 @@
 
 
 
-.search-results.table-view h4 {
-    padding: 4px 0;
-}
-
 
 .search-results.table-view .btn {
     background: none !important;
@@ -214,9 +210,6 @@
     width: 82%;
 }
 
-.search-results.document.table-view .table-heading .col-title h4 {
-    width: 33%;
-}
 
 .search-results.document.table-view .col-title img {
     display: none;
@@ -857,6 +850,11 @@
         color: #414042;
         line-height: 14pt;
     }
+
+.search-result-navigation.register-navigation .save-as-menu .save-as-dropdown {
+    padding-right: 0px;
+    padding-left: 15px;
+}
 
 .search-results.table-view .btn {
     color: #3867c8;

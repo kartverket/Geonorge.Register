@@ -9,18 +9,24 @@
     var nationalRequirement = ViewBag.nationalRequirement;
     var seaRequirement = ViewBag.nationalSeaRequirement;
 }
-<div class="search-filter-wrapper">
-    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        <li class="active">
-            <span>Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff</span>
-        </li>
-        <li class="pull-right">
+<div class="search-result-navigation register-navigation">
+    <div class="row">
+        <div class="col-md-5">
+            Viser @Model.FirstItemOnPage - @Model.LastItemOnPage av @Model.TotalItemCount treff
             @Html.PagedListPager(Model, page => Url.Action("Details", new { page, sorting = ViewBag.SortOrder, text = Session["text"].ToString(), filterVertikalt = Session["filterVertikalt"].ToString(), filterHorisontalt = Session["filterHorisontalt"].ToString(), InspireRequirement = Session["InspireRequirement"].ToString(), nationalRequirement = Session["nationalRequirement"].ToString(), nationalSeaRequirement = Session["nationalSeaRequirement"].ToString() }))
-        </li>
-    </ul>
-    @Html.Partial("_visningstyper")
-
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_otherformats")
+        </div>
+        <div class="col-md-3">
+            @Html.Partial("_LayoutSelect")
+        </div>
+    </div>
+    <div class="row">
+        @Html.Partial("_visningstyper")
+    </div>
 </div>
+
 <div class="register epsg search-results">
     @if (Model.Count() != 0)
     {

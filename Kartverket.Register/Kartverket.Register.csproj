@@ -909,6 +909,7 @@
     <Content Include="Views\Datasets\_EditCoverageDataset.cshtml" />
     <Content Include="Views\Datasets\_EditMunicipalDataset.cshtml" />
     <Content Include="Views\Datasets\_CreateCoverage.cshtml" />
+    <Content Include="Views\Shared\_LayoutSelect.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

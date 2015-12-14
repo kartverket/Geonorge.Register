@@ -1,13 +1,19 @@
+function getSelectedLayout(layout) {
+    var options = $("#layoutSelectList option");
+    $.each(options, function () {
+        if ($(this).attr("id") == "layout-" + layout) {
+            $(this).attr("selected", true);
+        } else {
+            $(this).attr("selected", false);
+        }
+    });
+}
+
 function listView() {
 
     $("#sortBox").show();
 
     $(".table-heading").remove();
-
-    // Buttons   
-    $('#button-listView').addClass('active');
-    $('#button-galleryView').removeClass('active');
-    $('#button-tableView').removeClass('active');
 
     $('.search-results').removeClass('table-view');
     $('.search-results').removeClass('gallery-view');
@@ -19,10 +25,6 @@ function listView() {
 function galleryView() {
     $(".table-heading").remove();
 
-    // Buttons
-    $('#button-listView').removeClass('active');
-    $('#button-galleryView').addClass('active');
-    $('#button-tableView').removeClass('active');
 
     $('.search-results').removeClass('table-view');
     $('.search-results').removeClass('list-view');
@@ -110,10 +112,6 @@ function tableView() {
     $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-actions'><h4>" + sLink("Kodeverdi", "codevalue") + "</h4></div><div class='col-information'><h4>" + sLink("Status", "status") + "</h4></div></div>");
     $('.search-results.namespace').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navnerom", "name") + "</h4></div><div class='col-information'><h4>" + sLink("Etat", "submitter") + "</h4></div><div class='col-descripton'><h4>Innhold</h4></div><div class='col-actions'><h4>Tjeneste</h4></div></div>");
 
-    // Buttons
-    $('#button-listView').removeClass('active');
-    $('#button-galleryView').removeClass('active');
-    $('#button-tableView').addClass('active');
 
     $('.search-results').removeClass('gallery-view');
     $('.search-results').removeClass('list-view');
@@ -193,6 +191,8 @@ $(document).ready(function () {
             tableView()
         }
     }
+
+    getSelectedLayout(visningstype);
 });
 
 // Loading animation

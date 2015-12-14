@@ -1,21 +1,21 @@
 ﻿@using Kartverket.Register.Models.ViewModels
-@model Kartverket.Register.Models.ViewModels.ShowDatasetCoverageViewModel
+@model ShowDatasetCoverageViewModel
 @{
-    ViewBag.Title = "Dekningsoversikt";
+    ViewBag.Title = "Dekningskart for DOK-datasett";
 }
 
 <h2>Dekningskart for DOK-datasett</h2>
 
 <form action="@Request.Url.LocalPath" method="get">
     <div class="row">
-        <div class="col-md-2">
-            <div class="chosen-container chosen-container-single">
-                <label for="State" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Velg fylke")
+        <div class="col-md-3">
+            <div>
+                <label for="fylke" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class="chosen-select" })
             </div>
         </div>
         <div class="col-md-5">
-            <div class="chosen-container chosen-container-single">
-                <label for="Dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett")
+            <div>
+                <label for="dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select" })
             </div>
         </div>
         <div class="col-md-3">
@@ -51,14 +51,13 @@
             bounds = L.latLngBounds(southWest, northEast);
         map.fitBounds(bounds);
 
-
         new L.TileLayer.WMS("https://wms.geonorge.no/skwms1/wms.europa", {
             layers: 'Europa_WMS',
             format: 'image/png',
             attribution: "Kartverket",
             crs: crs
         }).addTo(map);
-
+        
         new L.TileLayer.WMS("https://wms.geonorge.no/skwms1/wms.topo2", {
             layers: 'topo2_WMS',
             format: 'image/png',
@@ -79,7 +78,7 @@
         var confirmedMunicipalities = [
             @foreach (CoverageConfirmedMunicipalityViewModel municipality in Model.DatasetCoverageConfirmedCounties)
             {
-                <text>{centerX: @municipality.CenterCoordinateX, centerY: @municipality.CenterCoordinateY, title: "@municipality.Name"},</text>
+                <text>{centerX: @municipality.CenterCoordinateX, centerY: @municipality.CenterCoordinateY, title: "@Html.Raw(municipality.Name)"},</text>
             }
         ];
 

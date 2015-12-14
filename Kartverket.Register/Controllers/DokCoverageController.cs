@@ -15,7 +15,7 @@ namespace Kartverket.Register.Controllers
 
         private static readonly Guid SystemIdDokRegister = Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD");
 
-        private static Dictionary<string, BoundingBoxViewModel> StateBoundingBoxes = new Dictionary<string, BoundingBoxViewModel>
+        private static readonly Dictionary<string, BoundingBoxViewModel> StateBoundingBoxes = new Dictionary<string, BoundingBoxViewModel>
         {
             {"02", new BoundingBoxViewModel("59.471882","10.328467","60.605148","11.926978")},
             {"09", new BoundingBoxViewModel("57.917234","6.824533","59.672687","9.668877" )},
@@ -51,10 +51,7 @@ namespace Kartverket.Register.Controllers
 
         public ActionResult Index(string fylke, string dataset)
         {
-            Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
-            IEnumerable<RegisterItem> states = register.items.OrderBy(i => i.name);
-
-            ViewBag.States = new SelectList(states, "value", "name", fylke);
+            ViewBag.States = new SelectList(GetListOfStates(), "value", "name", fylke);
 
             Models.Register dokDatasets = _registerService.GetRegisterBySystemId(SystemIdDokRegister);
 
@@ -90,6 +87,16 @@ namespace Kartverket.Register.Controllers
             return View(model);
         }
 
+        private IEnumerable<CodelistValue> GetListOfStates()
+        {
+            Models.Register register = _registerService.GetRegisterByName("Fylkesnummer");
+
+            IEnumerable<CodelistValue> states = register.items.Cast<CodelistValue>();
+            states = states.Where(i => i.value != "23"); // remove "Kontinentalsokkelen" not relevant in this context
+            states = states.OrderBy(i => i.name);
+            return states;
+        }
+
         private List<CoverageConfirmedMunicipalityViewModel> GetListOfConfirmedMunicipalitiesForDataset(Dataset dataset)
         {
             var confirmed = new List<CoverageConfirmedMunicipalityViewModel>();
@@ -103,30 +110,9 @@ namespace Kartverket.Register.Controllers
                 MunicipalityCenterPoint centerPoint = _municipalityService.GetMunicipalityCenterPoint(confirmedMunicipality.Number);
                 confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
                 confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
+
+                confirmed.Add(confirmedMunicipality);
             }
-#if DEBUG
-            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
-            {
-                Name = "Dummy kommune 1",
-                Number = "1834",
-                CenterCoordinateX = "395596",
-                CenterCoordinateY = "7368040"
-            });
-            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
-            {
-                Name = "Dummy kommune 2",
-                Number = "0417",
-                CenterCoordinateX = "299541",
-                CenterCoordinateY = "6728723"
-            });
-            confirmed.Add(new CoverageConfirmedMunicipalityViewModel()
-            {
-                Name = "Dummy kommune 3",
-                Number = "0822",
-                CenterCoordinateX = "176730",
-                CenterCoordinateY = "6602694"
-            });
-#endif
             return confirmed;
         }
 

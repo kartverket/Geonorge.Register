@@ -125,14 +125,17 @@ namespace Kartverket.Register.Services
         public bool IsMunicipalUser()
         {
             string username = GetUserName();
-            List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
-
-            foreach (CodelistValue item in municipalities)
+            if (!string.IsNullOrWhiteSpace(username))
             {
-                if ((username.Contains(item.value)))
-                {
+                List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
 
-                    return true;
+                foreach (CodelistValue item in municipalities)
+                {
+                    if ((username.Contains(item.value)))
+                    {
+
+                        return true;
+                    }
                 }
             }
             return false;
@@ -146,12 +149,15 @@ namespace Kartverket.Register.Services
         public CodelistValue Municipality()
         {
             string username = GetUserName();
-            List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
-            foreach (CodelistValue item in municipalities)
+            if (username != null)
             {
-                if (username.Contains(item.value))
+                List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+                foreach (CodelistValue item in municipalities)
                 {
-                    return item;
+                    if (username.Contains(item.value))
+                    {
+                        return item;
+                    }
                 }
             }
             return null;
@@ -203,8 +209,9 @@ namespace Kartverket.Register.Services
                     return IsMunicipalUser();
                 }
             }
-            else {
-                return Access(dataset);                
+            else
+            {
+                return Access(dataset);
             }
         }
     }

@@ -2,46 +2,48 @@
 ﻿@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 
-@{ 
-    var selectedMunicipal = ViewBag.selectedMunicipality;
+@{
+    CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
 }
-
-<div class="search-results col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <table class="table-responsive table-hover table" style="width:100%">
-        <tbody>
+<h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
+@if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
+{
+<table class="table-responsive table-hover table" style="width:100%">
+    <tbody>
+        <tr>
+            <th style="width:10%">Temagruppe</th>
+            <th style="width:20%">Tittel</th>
+            <th style="width:20%">Eier</th>
+            <th style="width:10%">DOK-status</th>
+            <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
+            <th style="width:10%">Bekreftet</th>
+            <th style="width:20%">Merknad</th>
+        </tr>
+        @foreach (Dataset item in Model)
+        {
             <tr>
-                <th style="width:10%">Temagruppe</th>
-                <th style="width:20%">Tittel</th>
-                <th style="width:20%">Eier</th>
-                <th style="width:10%">DOK-status</th>
-                <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
-                <th style="width:10%">Bekreftet</th>
-                <th style="width:20%">Merknad</th>
-            </tr>
-            @foreach(Dataset item in Model)
-            {
-                <tr>
-                    <td>@item.theme.description</td>
-                    <td>
-                        <a href="@item.GetObjectUrl()">
-                            @item.name
-                        </a>
-                    </td>
-                    <td>@item.datasetowner.name</td>
-                    <td>@HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)</td>
-                    <td>@item.DatasetType</td>
-                    <td>
+                <td>@item.theme.description</td>
+                <td>
+                    <a href="@item.GetObjectUrl()">
+                        @item.name
+                    </a>
+                </td>
+                <td>@item.datasetowner.name</td>
+                <td>@HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)</td>
+                <td>@item.DatasetType</td>
+                <td>
                     @if (@HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal))
                     {
                         <span>Ja</span>
                     }
-                    else {
+                    else
+                    {
                         <span>Nei</span>
                     }
-                    </td>
-                    <td>@HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+                </td>
+                <td>@HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+}

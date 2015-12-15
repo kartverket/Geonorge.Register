@@ -71,26 +71,30 @@ namespace Kartverket.Register.Services.Register
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
+            AccessControlService access = new AccessControlService();
             if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                if (!string.IsNullOrWhiteSpace(filter.municipality))
+                if (access.IsAdmin())
                 {
-                    AddNationalDatasets(registerItems);
-
-                    //Finn valgt kommune
-                    Models.RegisterItem municipal = _registerItemService.GetMunicipalByNr(filter.municipality);
-
-                    if (municipal != null)
-                    {
-                        GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipal);
-                    }
+                    GetMunicipalDatasetAddedByAdmin(register, registerItems, access);
                 }
                 else
                 {
-                    AccessControlService access = new AccessControlService();
-                    if (access.IsAdmin())
+                    if (!string.IsNullOrWhiteSpace(filter.municipality))
                     {
-                        GetMunicipalDatasetAddedByAdmin(register, registerItems, access);
+                        AddNationalDatasets(registerItems);
+                        //Finn valgt kommune
+                        Models.RegisterItem municipal = _registerItemService.GetMunicipalOrganizationByNr(filter.municipality);
+
+                        if (municipal != null)
+                        {
+                            GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipal);
+                        }
+                    }
+                    else if (access.IsMunicipalUser())
+                    {
+                        AddNationalDatasets(registerItems);
+                        GetMunicipalDatasetsByUser(register, registerItems);
                     }
                 }
                 register.items.Clear();
@@ -107,6 +111,13 @@ namespace Kartverket.Register.Services.Register
                     registerItems.Add(item);
                 }
             }
+        }
+
+        private void GetMunicipalDatasetsByUser(Models.Register register, List<Models.RegisterItem> registerItems)
+        {
+            AccessControlService access = new AccessControlService();
+            Organization municipalityOrganization = GetOrganizationByUserName();
+            GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipalityOrganization);
         }
 
         private static void GetMunicipalDatasetAddedByAdmin(Models.Register register, List<Models.RegisterItem> registerItems, AccessControlService access)
@@ -447,12 +458,14 @@ namespace Kartverket.Register.Services.Register
                 string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
                 return GetOrganizationByOrganizationNr(organizationNr);
             }
-            else {
+            else
+            {
                 return GetOrganization();
             }
         }
 
-        public Organization GetOrganizationByOrganizationNr(string number) {
+        public Organization GetOrganizationByOrganizationNr(string number)
+        {
             var queryResults = from o in _dbContext.Organizations
                                where o.number == number
                                select o;

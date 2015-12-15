@@ -1,5 +1,4 @@
 ﻿using Kartverket.Register.Models;
-using Kartverket.Register.Services.Register;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -377,10 +376,18 @@ namespace Kartverket.Register.Services.RegisterItem
             _dbContext.SaveChanges();
         }
 
-        public Models.RegisterItem GetMunicipalByNr(string municipalityNr)
+        public Organization GetMunicipalOrganizationByNr(string municipalityNr)
         {
             string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(municipalityNr);
             return GetOrganizationByOrganizationNr(organizationNr);
+        }
+
+        public CodelistValue GetMunicipalByNr(string municipalNr)
+        {
+            var queryResult = from c in _dbContext.CodelistValues
+                              where c.value == municipalNr
+                              select c;
+            return queryResult.FirstOrDefault();
         }
 
         private Organization GetOrganizationByOrganizationNr(string number)

@@ -901,7 +901,33 @@ namespace Kartverket.Register.Helpers
             return "Navnet finnes fra før!";
         }
 
-        public static string GetDokStatusFromCoverage(Dataset item, string selectedMunicipality)
+
+        public static CodelistValue GetSelectedMunicipality(string selectedMunicipality)
+        {
+            if (selectedMunicipality == null)
+            {
+                string username = _accessControl.GetUserName();
+                return _accessControl.Municipality();
+            }
+            else
+            {
+                return _registeritemService.GetMunicipalByNr(selectedMunicipality.ToString());
+            }
+        }
+
+        public static string selectedMunicipalName(CodelistValue selectedMunicipal)
+        {
+            if (selectedMunicipal != null)
+            {
+                return selectedMunicipal.name;
+            }
+            else
+            {
+                return "Velg kommune";
+            }
+        }
+
+        public static string GetDokStatusFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
@@ -918,9 +944,9 @@ namespace Kartverket.Register.Helpers
             }
         }
 
-        private static CoverageDataset Coverage(Dataset item, string selectedMunicipality)
+        private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality);
+            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality.value);
             Organization munizipality = _registerService.GetOrganizationByOrganizationNr(organizationNr);
 
             foreach (CoverageDataset coverage in item.Coverage)
@@ -933,7 +959,7 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        public static bool GetConfirmedFromCoverage(Dataset item, string selectedMunicipality)
+        public static bool GetConfirmedFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
@@ -950,7 +976,7 @@ namespace Kartverket.Register.Helpers
             }
         }
 
-        public static string GetNoteFromCoverage(Dataset item, string selectedMunicipality)
+        public static string GetNoteFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {

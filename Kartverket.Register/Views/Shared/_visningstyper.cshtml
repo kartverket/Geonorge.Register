@@ -1,4 +1,7 @@
-﻿@{
+﻿﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
+
+@{
     var register = ViewBag.register;
     var registerSEO = ViewBag.registerSEO;
     var owner = ViewBag.owner;
@@ -6,6 +9,13 @@
     var subregister = ViewBag.subregister;
     var selectedVertical = ViewBag.selectedVertical;
     var selectedHorizontal = ViewBag.selectedHorizontal;
+    CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
+    var selectedMunicipalName = "Velg kommune";
+    if (selectedMunicipal != null)
+    {
+        selectedMunicipalName = selectedMunicipal.name;
+    }
+
 
     var kontroller = "/register/" + registerSEO;
     if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
@@ -51,18 +61,21 @@
     <form action="@Request.Url.LocalPath" name="FilterForm" method="get">
         @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
         {
-            <div class="col-sm-3 col-md-3 col-lg-3 pull-right">
+            <div class="col-sm-3 col-md-3 col-lg-3 no-padding-bottom save-as-dropdown pull-right">
                 <div class="sorter pagination pagination-sm pull-right">
-                    <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="FilterMunicipality()">
-                        <label for="municipality">Velg kommune:</label> @Html.DropDownList("municipality", "Velg kommune")
+                    <div class="custom-select" onchange="FilterMunicipality()">
+                        <label for="municipality">Velg kommune:</label> 
+                        @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
+                        @*@Html.DropDownList("municipality", "Velg kommune")*@
                     </div>
                 </div>
             </div>
         }
         <div class="col-sm-3 col-md-3 col-lg-3">
             <div id="sortBox" class="sorter pagination pagination-sm pull-right">
-                <div class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" onchange="SortBy()">
-                    <label for="sorting">Sorter:</label> @Html.DropDownList("sorting", "Navn a-å")
+                <div class="custom-select" onchange="SortBy()">
+                    <label for="sorting">Sorter:</label> 
+                    @Html.DropDownList("sorting", "Navn a-å")
                 </div>
                 <input type="hidden" name="text" value="@ViewBag.search" />
                 @Html.Hidden("filterVertikalt")

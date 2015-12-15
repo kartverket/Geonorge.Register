@@ -11,5 +11,6 @@ namespace Kartverket.Register.Services
         bool IsMunicipalUser();
         Organization MunicipalUserOrganization();
         string GetUserName();
+        CodelistValue Municipality();
     }
 }

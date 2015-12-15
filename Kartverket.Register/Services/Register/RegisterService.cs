@@ -441,10 +441,15 @@ namespace Kartverket.Register.Services.Register
         public Organization GetOrganizationByUserName()
         {
             AccessControlService access = new AccessControlService();
-            CodelistValue user = access.Municipality();
-            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
-
-            return GetOrganizationByOrganizationNr(organizationNr);
+            if (access.IsMunicipalUser())
+            {
+                CodelistValue user = access.Municipality();
+                string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
+                return GetOrganizationByOrganizationNr(organizationNr);
+            }
+            else {
+                return GetOrganization();
+            }
         }
 
         public Organization GetOrganizationByOrganizationNr(string number) {

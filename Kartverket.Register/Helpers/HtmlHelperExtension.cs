@@ -905,7 +905,7 @@ namespace Kartverket.Register.Helpers
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return "Godkjent";
+                return item.dokStatus.description;
             }
             else
             {

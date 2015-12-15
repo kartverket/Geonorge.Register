@@ -415,7 +415,7 @@ namespace Kartverket.Register.Controllers
 
         private void SetDatasetOwnerAndSubmitter(Dataset dataset)
         {
-            Organization submitterOrganisasjon = _registerService.GetOrganization();
+            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
             dataset.submitterId = submitterOrganisasjon.systemId;
             dataset.submitter = submitterOrganisasjon;
             dataset.datasetowner = submitterOrganisasjon;

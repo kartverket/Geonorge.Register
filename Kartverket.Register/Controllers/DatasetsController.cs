@@ -127,11 +127,6 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Finner ikke datasettet");
         }
 
-        private bool AccessEditingDataset(Dataset dataset)
-        {
-            return (dataset.DatasetType == "Nasjonalt" && _accessControlService.IsMunicipalUser()) || _accessControlService.Access(dataset);
-        }
-
 
         // POST: Dataset/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -184,60 +179,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
-        {
-            initialisationDataset(dataset, originalDataset);
-            if (!NameIsValid(dataset))
-            {
-                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                Viewbags(originalDataset);
-                return View(originalDataset);
-            }
-            _registerItemService.SaveEditedRegisterItem(originalDataset);
-            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
-        }
-
-        private ActionResult EditCoverageDataset(CoverageDataset coverage, string registername, string parentRegister, string registerowner, Dataset originalDataset)
-        {
-            initialisationCoverageDataset(coverage, originalDataset);
-            _registerItemService.SaveEditedRegisterItem(originalDataset);
-            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
-        }
-
-        private void initialisationCoverageDataset(CoverageDataset coverage, Dataset originalDataset)
-        {
-            CoverageDataset originalCoverage = _registerItemService.GetMunicipalityCoverage(originalDataset);
-            if (originalCoverage == null)
-            {
-                CoverageDataset newCoverage = new CoverageDataset() {
-                    CoverageId = Guid.NewGuid(),
-                    CoverageDOKStatus = coverage.CoverageDOKStatus,
-                    CoverageDOKStatusId = coverage.CoverageDOKStatusId,
-                    ConfirmedDok = coverage.ConfirmedDok,
-                    DatasetId = originalDataset.systemId,
-                    MunicipalityId = SetMunicipality(),
-                    Note = coverage.Note
-                };
-
-                _registerItemService.SaveNewCoverage(newCoverage);
-                originalDataset.Coverage.Add(newCoverage);
-
-            }
-            else
-            {
-                originalCoverage.ConfirmedDok = coverage.ConfirmedDok;
-                originalCoverage.CoverageDOKStatusId = coverage.CoverageDOKStatusId;
-                originalCoverage.Note = coverage.Note;
-            }
-
-        }
-
-        private Guid SetMunicipality()
-        {
-            Organization municipality = _accessControlService.MunicipalUserOrganization();
-            return municipality.systemId;
-        }
-
         // GET: Documents/Delete/5
         [Authorize]
         [Route("dataset/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{datasetname}/slett")]
@@ -272,20 +213,6 @@ namespace Kartverket.Register.Controllers
             DeleteCoverageDataset(dataset);
             _registerItemService.SaveDeleteRegisterItem(dataset);
             return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
-        }
-
-        private void DeleteCoverageDataset(Dataset dataset)
-        {
-            if (dataset.Coverage != null)
-            {
-                for (int i = 0; i < dataset.Coverage.Count; i++)
-                {
-                    dataset.Coverage[i].DatasetId = Guid.Empty;
-                    dataset.Coverage[i].dataset = null;
-                    _registerItemService.DeleteCoverage(dataset.Coverage[i]);
-                }
-                dataset.Coverage.Clear();
-            }
         }
 
 
@@ -351,6 +278,7 @@ namespace Kartverket.Register.Controllers
                 foreach (CoverageDataset coverage in originalDataset.Coverage)
                 {
                     coverage.MunicipalityId = dataset.datasetownerId;
+                    coverage.CoverageDOKStatusId = dataset.dokStatusId;
                     _registerItemService.Save();
                 }
             }
@@ -382,8 +310,8 @@ namespace Kartverket.Register.Controllers
         {
             if (dataset.dokStatusId != null)
             {
-                originalDataset.statusId = dataset.statusId;
-                if (originalDataset.statusId == "Accepted")
+                originalDataset.dokStatusId = dataset.dokStatusId;
+                if (originalDataset.dokStatusId == "Accepted")
                 {
                     if (dataset.dokStatusDateAccepted == null)
                     {
@@ -496,5 +424,80 @@ namespace Kartverket.Register.Controllers
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
             ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
         }
+
+        private bool AccessEditingDataset(Dataset dataset)
+        {
+            return (dataset.DatasetType == "Nasjonalt" && _accessControlService.IsMunicipalUser()) || _accessControlService.Access(dataset);
+        }
+
+        private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        {
+            initialisationDataset(dataset, originalDataset);
+            if (!NameIsValid(dataset))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                Viewbags(originalDataset);
+                return View(originalDataset);
+            }
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
+        }
+
+        private ActionResult EditCoverageDataset(CoverageDataset coverage, string registername, string parentRegister, string registerowner, Dataset originalDataset)
+        {
+            initialisationCoverageDataset(coverage, originalDataset);
+            _registerItemService.SaveEditedRegisterItem(originalDataset);
+            return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentRegister, registerowner, registername, originalDataset.datasetowner.seoname, originalDataset.seoname));
+        }
+
+        private void initialisationCoverageDataset(CoverageDataset coverage, Dataset originalDataset)
+        {
+            CoverageDataset originalCoverage = _registerItemService.GetMunicipalityCoverage(originalDataset);
+            if (originalCoverage == null)
+            {
+                CoverageDataset newCoverage = new CoverageDataset()
+                {
+                    CoverageId = Guid.NewGuid(),
+                    CoverageDOKStatus = coverage.CoverageDOKStatus,
+                    CoverageDOKStatusId = coverage.CoverageDOKStatusId,
+                    ConfirmedDok = coverage.ConfirmedDok,
+                    DatasetId = originalDataset.systemId,
+                    MunicipalityId = SetMunicipality(),
+                    Note = coverage.Note
+                };
+
+                _registerItemService.SaveNewCoverage(newCoverage);
+                originalDataset.Coverage.Add(newCoverage);
+
+            }
+            else
+            {
+                originalCoverage.ConfirmedDok = coverage.ConfirmedDok;
+                originalCoverage.CoverageDOKStatusId = coverage.CoverageDOKStatusId;
+                originalCoverage.Note = coverage.Note;
+            }
+
+        }
+
+        private Guid SetMunicipality()
+        {
+            Organization municipality = _accessControlService.MunicipalUserOrganization();
+            return municipality.systemId;
+        }
+
+        private void DeleteCoverageDataset(Dataset dataset)
+        {
+            if (dataset.Coverage != null)
+            {
+                for (int i = 0; i < dataset.Coverage.Count; i++)
+                {
+                    dataset.Coverage[i].DatasetId = Guid.Empty;
+                    dataset.Coverage[i].dataset = null;
+                    _registerItemService.DeleteCoverage(dataset.Coverage[i]);
+                }
+                dataset.Coverage.Clear();
+            }
+        }
+
     }
 }

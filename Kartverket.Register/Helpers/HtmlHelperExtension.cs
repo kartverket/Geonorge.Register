@@ -938,7 +938,11 @@ namespace Kartverket.Register.Helpers
                 CoverageDataset coverage = Coverage(item, selectedMunicipality);
                 if (coverage != null)
                 {
-                    return coverage.CoverageDOKStatus.description;
+                    if (coverage.CoverageDOKStatusId != null)
+                    {
+                        return coverage.CoverageDOKStatus.description;
+                    }
+                    else return "Forslag";                    
                 }
                 else return "Forslag";
             }

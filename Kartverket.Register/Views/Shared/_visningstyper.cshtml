@@ -23,71 +23,80 @@
 
 }
 
-<div class="row hidden-print">
-    
-    <div class="col-sm-7 col-md-7 col-lg-7">
-        @if (register == "EPSG koder")
-        {
-            <form action="/register/epsg-koder" method="get" name="filtering">
-                <input type="hidden" name="text" value="@ViewBag.search" />
-                <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
-                <div class="col-xs-12 col-sm-5 col-md-5 col-lg-6">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <b>Filter:</b>
-                        </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12">
-                            <label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt"> @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" }) Vertikalt</label>
-                            <label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt"> @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" }) Horisontalt</label>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-xs-12 col-sm-5 col-md-6 col-lg-6">
-                    <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="inspireRequirementId">
-                        <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav: @Html.DropDownList("inspireRequirement", null, "")</label>
+<br />
+<div class="col-md-9">
+    @if (register == "EPSG koder")
+    {
+        <form action="/register/epsg-koder" method="get" name="filtering">
+            <input type="hidden" name="text" value="@ViewBag.search" />
+            <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
+            <div class="col-md-3">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        Filter:
                     </div>
-                    <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalRequirementId">
-                        <label style="font-weight:normal;" for="nationalRequirement" title="Nasjonalt krav">Nasjonalt krav: @Html.DropDownList("nationalRequirement", null, "")</label>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label style="font-weight:normal;" for="filterVertikalt" title="Referansesystemtype: Vertikalt"> @Html.CheckBox("filterVertikalt", new { onchange = "Filter()" }) Vertikalt</label>
                     </div>
-                    <div onchange="Filter()" class="pull-right chosen-container chosen-container-single chosen-container-single-nosearch" id="nationalSeaRequirementId">
-                        <label style="font-weight:normal;" for="nationalSeaRequirement" title="Nasjonalt krav for havområder">Havområder: @Html.DropDownList("nationalSeaRequirement", null, "")</label>
-                    </div>
-                </div>
-            </form>
-        }
-    </div>
-
-    <form action="@Request.Url.LocalPath" name="FilterForm" method="get">
-        @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
-        {
-            <div class="col-sm-3 col-md-3 col-lg-3 no-padding-bottom save-as-dropdown pull-right">
-                <div class="sorter pagination pagination-sm pull-right">
-                    <div class="custom-select" onchange="FilterMunicipality()">
-                        <label for="municipality">Velg kommune:</label> 
-                        @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
-                        @*@Html.DropDownList("municipality", "Velg kommune")*@
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label style="font-weight:normal;" for="filterHorisontalt" title="Referansesystemtype: Horisontalt"> @Html.CheckBox("filterHorisontalt", new { onchange = "Filter()" }) Horisontalt</label>
                     </div>
                 </div>
             </div>
-        }
-        <div class="col-sm-3 col-md-3 col-lg-3">
-            <div id="sortBox" class="sorter pagination pagination-sm pull-right">
-                <div class="custom-select" onchange="SortBy()">
-                    <label for="sorting">Sorter:</label> 
-                    @Html.DropDownList("sorting", "Navn a-å")
+
+            <div class="col-xs-12 col-sm-9">
+                <div class="col-md-4">
+                    Inspire krav:
+                    <!-- <label style="font-weight:normal;" for="inspireRequirement" title="Inspire krav">Inspire krav:</label>-->
+                    <div onchange="Filter()" id="inspireRequirementId" class="custom-select">
+                        @Html.DropDownList("inspireRequirement", null, "", new { @class = "form-control" })
+                    </div>
                 </div>
-                <input type="hidden" name="text" value="@ViewBag.search" />
-                @Html.Hidden("filterVertikalt")
-                @Html.Hidden("filterHorisontalt")
-                @Html.Hidden("inspireRequirement")
-                @Html.Hidden("nationalRequirement")
-                @Html.Hidden("nationalSeaRequirementId")
+                <div class="col-md-4">
+                    Nasjonalt krav:
+                    <div onchange="Filter()" id="nationalRequirementId" class="custom-select">
+                        @Html.DropDownList("nationalRequirement", null, "", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    Havområder:
+                    <div onchange="Filter()" id="nationalSeaRequirementId" class="custom-select">
+                        @Html.DropDownList("nationalSeaRequirement", null, "", new { @class = "form-control" })
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    }
+</div>
+
+<form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-3">
+    @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
+    {
+        <div class="save-as-dropdown">
+            <div class="sorter pagination">
+                Velg kommune:
+                <div class="custom-select" onchange="FilterMunicipality()">
+                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
+                    @*@Html.DropDownList("municipality", "Velg kommune")*@
+                </div>
             </div>
         </div>
-    </form>
-</div>
-
-<div class="result-header">
-    <hr>
-</div>
+    }
+    <div class="">
+        <div id="sortBox" class="sorter">
+            Sorter:
+            <div class="custom-select" onchange="SortBy()">
+                @Html.DropDownList("sorting", null, "Navn a-å", new { @class = "form-control" })
+            </div>
+            <input type="hidden" name="text" value="@ViewBag.search" />
+            @Html.Hidden("filterVertikalt")
+            @Html.Hidden("filterHorisontalt")
+            @Html.Hidden("inspireRequirement")
+            @Html.Hidden("nationalRequirement")
+            @Html.Hidden("nationalSeaRequirementId")
+        </div>
+    </div>
+</form>
+<div class="result-header"></div>

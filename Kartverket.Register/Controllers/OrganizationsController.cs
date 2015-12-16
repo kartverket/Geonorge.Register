@@ -108,7 +108,7 @@ namespace Kartverket.Register.Controllers
             organisasjon.register = _registerService.GetRegister(parentRegister, registername);
             if (organisasjon.register != null)
             {
-                if (_accessControlService.Access(organisasjon))
+                if (_accessControlService.Access(organisasjon.register))
                 {
                     ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(organisasjon);
@@ -130,7 +130,7 @@ namespace Kartverket.Register.Controllers
             organization.register = _registerService.GetRegister(parentRegister, registername);
             if (organization.register != null)
             {
-                if (_accessControlService.Access(organization))
+                if (_accessControlService.Access(organization.register))
                 {
                     if (ModelState.IsValid)
                     {

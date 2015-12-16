@@ -93,7 +93,7 @@ namespace Kartverket.Register.Controllers
             CodelistValue codeListValue = new CodelistValue();
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
 
-            if (_accessControlService.Access(codeListValue))
+            if (_accessControlService.Access(codeListValue.register))
             {
                 ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
                 return View(codeListValue);

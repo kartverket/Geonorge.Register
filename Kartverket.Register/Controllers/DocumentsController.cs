@@ -11,6 +11,7 @@ using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using System.Collections.Generic;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
 {
@@ -23,10 +24,12 @@ namespace Kartverket.Register.Controllers
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+        private IAccessControlService _accessControlService;
         public DocumentsController()
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
+            _accessControlService = new AccessControlService();
         }
 
         // GET: Documents
@@ -45,7 +48,7 @@ namespace Kartverket.Register.Controllers
             Document document = new Document();
             document.register = _registerService.GetRegister(parentRegister, registername);
 
-            if (HasAccess(document))
+            if (_accessControlService.Access(document.register))
             {
                 return View(document);
             }
@@ -63,7 +66,7 @@ namespace Kartverket.Register.Controllers
         {
             // Finn register         
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
-            if (HasAccess(document))
+            if (_accessControlService.Access(document.register))
             {
                 if (!NameIsValid(document))
                 {

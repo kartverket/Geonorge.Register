@@ -42,7 +42,7 @@ namespace Kartverket.Register.Controllers
             ePSg.register = _registerService.GetRegister(parentRegister, registername);
             if (ePSg.register != null)
             {
-                if (_accessControlService.Access(ePSg))
+                if (_accessControlService.Access(ePSg.register))
                 {
                     ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(ePSg);
@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
             epsgKode.register = _registerService.GetRegister(parentRegister, registername);
             if (epsgKode.register != null)
             {
-                if (_accessControlService.Access(epsgKode))
+                if (_accessControlService.Access(epsgKode.register))
                 {
                     if (ModelState.IsValid)
                     {

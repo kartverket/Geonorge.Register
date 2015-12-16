@@ -9,6 +9,16 @@ function getSelectedLayout(layout) {
     });
 }
 
+function changeLayout(selectElement) {
+    var selectId = $(selectElement).attr("id");
+    var selected = $("#" + selectId).find(":selected").attr("id");
+    if (selected == "layout-liste") {
+        listView();
+    } else if (selected == "layout-tabell") {
+        tableView();
+    }
+}
+
 function listView() {
 
     $("#sortBox").show();

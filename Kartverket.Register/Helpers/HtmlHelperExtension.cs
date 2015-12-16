@@ -1010,7 +1010,8 @@ namespace Kartverket.Register.Helpers
             {
                 dataset = dataset,
                 DatasetId = dataset.systemId,
-            };
+                Municipality = _accessControl.MunicipalUserOrganization()
+        };
         }
 
     }

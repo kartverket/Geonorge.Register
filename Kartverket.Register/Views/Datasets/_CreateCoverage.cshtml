@@ -1,5 +1,8 @@
 ﻿@model Kartverket.Register.Models.CoverageDataset
 
+<h2>Dekning av @Model.dataset.name</h2>
+<p>@Model.Municipality.name</p>
+<hr />
 @using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal">

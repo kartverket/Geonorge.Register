@@ -942,7 +942,7 @@ namespace Kartverket.Register.Helpers
                     {
                         return coverage.CoverageDOKStatus.description;
                     }
-                    else return "Forslag";                    
+                    else return "Forslag";
                 }
                 else return "Forslag";
             }
@@ -974,7 +974,7 @@ namespace Kartverket.Register.Helpers
                 CoverageDataset coverage = Coverage(item, selectedMunicipality);
                 if (coverage != null)
                 {
-                    if(coverage.ConfirmedDok)
+                    if (coverage.ConfirmedDok)
                     {
                         return "Ja";
                     }
@@ -1011,7 +1011,19 @@ namespace Kartverket.Register.Helpers
                 dataset = dataset,
                 DatasetId = dataset.systemId,
                 Municipality = _accessControl.MunicipalUserOrganization()
-        };
+            };
+        }
+
+        public static string IsWMSURL(string WmsUrl)
+        {
+            if (string.IsNullOrWhiteSpace(WmsUrl))
+            {
+                return "Nei";
+            }
+            else
+            {
+                return "Ja";
+            }
         }
 
     }

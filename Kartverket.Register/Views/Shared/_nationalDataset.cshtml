@@ -104,14 +104,8 @@
 
                     </ul>
                 </div>
-                <div class="col-information col-xs-6 col-sm-3 col-md-3 col-lg-3 col-actions">
+                <div class="col-information col-xs-6 col-sm-3 col-md-3 col-lg-3">
                     <ul style="list-style-type:none">
-                        @if (!string.IsNullOrWhiteSpace(item.DatasetType))
-                {
-                            <li title="Datasett type">
-                                <span>Type: </span>@item.DatasetType
-                            </li>
-                        }
 
                         @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
                 {
@@ -126,13 +120,9 @@
                             </li>
                         }
 
-                        @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
-                        {
-                            <li>
-                                <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
-                            </li>
-
-                        }
+                        <li>
+                            <a href="@item.WmsUrl" title="WMS lag for @item.name"><span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)</a>
+                        </li>
                         @if (item.dokStatus != null)
                 {
                             <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>

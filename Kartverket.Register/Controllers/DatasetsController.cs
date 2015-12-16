@@ -146,7 +146,7 @@ namespace Kartverket.Register.Controllers
                     model.register = originalDataset.register;
                     model.datasetowner = originalDataset.datasetowner;
                     model.submitter = originalDataset.submitter;
-
+                    model.DatasetType = originalDataset.DatasetType;
                     if (dontUpdateDescription) model.description = originalDataset.description;
                     Viewbags(model);
                     return View(model);

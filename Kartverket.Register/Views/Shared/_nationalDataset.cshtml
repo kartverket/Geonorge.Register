@@ -127,17 +127,11 @@
                         }
 
                         @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
-                {
+                        {
                             <li>
                                 <a href="@item.WmsUrl" title="WMS lag for @item.name">WMS</a>
                             </li>
 
-                        }
-                        else
-                        {
-                            <li>
-                                &nbsp;
-                            </li>
                         }
                         @if (item.dokStatus != null)
                 {

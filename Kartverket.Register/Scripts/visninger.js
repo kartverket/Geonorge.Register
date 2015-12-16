@@ -68,9 +68,9 @@ function sLink(tittel, defaultSort) {
     var text = qP('text');
     var filterVertikalt = qP('filterVertikalt');
     var filterHorisontalt = qP('filterHorisontalt');
-    var InspireRequirement = qP('inspireRequirement');
-    var nationalRequirement = qP('nationalRequirement');
-    var nationalSeaRequirement = qP('nationalSeaRequirement');
+    //var InspireRequirement = qP('inspireRequirement');
+    //var nationalRequirement = qP('nationalRequirement');
+    //var nationalSeaRequirement = qP('nationalSeaRequirement');
 
     var linkSort = "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
 
@@ -83,14 +83,14 @@ function sLink(tittel, defaultSort) {
     if (filterHorisontalt != '')
         linkSort = linkSort + '&filterHorisontalt=' + filterHorisontalt;
 
-    if (InspireRequirement != '')
-        linkSort = linkSort + '&inspireRequirement=' + InspireRequirement;
+    //if (InspireRequirement != '')
+    //    linkSort = linkSort + '&inspireRequirement=' + InspireRequirement;
 
-    if (nationalRequirement != '')
-        linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;
+    //if (nationalRequirement != '')
+    //    linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;
 
-    if (nationalSeaRequirement != '')
-        linkSort = linkSort + '&nationalSeaRequirement=' + nationalSeaRequirement;
+    //if (nationalSeaRequirement != '')
+    //    linkSort = linkSort + '&nationalSeaRequirement=' + nationalSeaRequirement;
 
     linkSort = linkSort + "'>" + tittel + "</a>";
 
@@ -106,7 +106,7 @@ function tableView() {
     $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
     $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "documentOwner") + "</h4></div><div class='space'>&nbsp;</div><div class='col-actions'><h4>" + sLink("Status", "status") + "</h4></div></div>");
     $('.search-results.organization').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Organisasjonsnavn", "name") + "</h4><h4>" + sLink("Organisasjonsnummer", "number") + "</h4></div></div>");
-    $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4></div><div class='col-actions'><h4>" + sLink("EPSG", "epsg") + "</h4><h4>" + sLink("SOSI", "sosiReferencesystem") + "</h4><h4>" + sLink("Vertikalt", "verticalReferenceSystem") + "</h4><h4>" + sLink("Horisontalt", "horizontalReferenceSystem") + "</h4><h4>" + sLink("Dimensjon", "dimension") + "</h4></div><div class='col-information'><h4>" + sLink("Inspire", "inspireRequirement") + "</h4><h4>" + sLink("Nasjonalt", "nationalRequirement") + "</h4><h4>" + sLink("Havområder", "nationalSeasRequirement") + "</h4><h4>Referanser</h4></div></div></div>");
+    $('.search-results.epsg').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4></div><div class='col-actions'><h4>" + sLink("EPSG", "epsg") + "</h4><h4>" + sLink("SOSI", "sosiReferencesystem") + "</h4><h4>" + sLink("Vertikalt", "verticalReferenceSystem") + "</h4><h4>" + sLink("Horisontalt", "horizontalReferenceSystem") + "</h4><h4>" + sLink("Dimensjon", "dimension") + "</h4></div><div class='col-information'><h4>Referanser</h4></div></div></div>");
     $('.search-results.registersub').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-information'><h4>" + sLink("Lovlig innhold", "containedItemClass") + "</h4><h4>" + sLink("Eier", "owner") + "</h4></div></div>");
     $('.search-results.dataset').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "datasetOwner") + "</h4></div><div class='col-actions'>Informasjon</div><div class='col-information'><h4>SOSI</h4><h4>" + sLink("WMS", "wmsUrl") + "</h4><h4>" + sLink("DOK-status", "dokStatus") + "</h4><h4>" + sLink("Temagruppe", "theme") + "</h4></div></div></div>");
     $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-actions'><h4>" + sLink("Kodeverdi", "codevalue") + "</h4></div><div class='col-information'><h4>" + sLink("Status", "status") + "</h4></div></div>");
@@ -132,9 +132,9 @@ function SortBy(sort) {
 function Filter() {
     var filterVertikalt = document.getElementById("filterVertikalt");
     var filterHorisontalt = document.getElementById("filterHorisontalt");
-    var inspireRequirement = document.getElementById("inspireRequirement");
-    var nationalRequirement = document.getElementById("nationalRequirement");
-    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+    //var inspireRequirement = document.getElementById("inspireRequirement");
+    //var nationalRequirement = document.getElementById("nationalRequirement");
+    //var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
     var municipality = document.getElementById("municipalityFilter");
 
     if (qP('filterVertikalt') != "") {
@@ -143,9 +143,9 @@ function Filter() {
     if (qP('filterHorisontalt') != "") {
         filterHorisontalt.checked;
     }
-    inspireRequirement.options[inspireRequirement.selectedIndex].text;
-    nationalRequirement.options[nationalRequirement.selectedIndex].text;
-    nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
+    //inspireRequirement.options[inspireRequirement.selectedIndex].text;
+    //nationalRequirement.options[nationalRequirement.selectedIndex].text;
+    //nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
 
     document.filtering.submit();
 
@@ -167,9 +167,9 @@ function filterDefault() {
 
     var filterVertikalt = document.getElementById("filterVertikalt");
     var filterHorisontalt = document.getElementById("filterHorisontalt");
-    var inspireRequirement = document.getElementById("inspireRequirement");
-    var nationalRequirement = document.getElementById("nationalRequirement");
-    var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
+    //var inspireRequirement = document.getElementById("inspireRequirement");
+    //var nationalRequirement = document.getElementById("nationalRequirement");
+    //var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
 
     if (qP("filterVertikalt") != "") {
         filterVertikalt.checked;

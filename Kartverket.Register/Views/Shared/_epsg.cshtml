@@ -91,33 +91,7 @@
 
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
-                        @if (item.inspireRequirement == null)
-                        {
-                            <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
-                        }
-                        else
-                        {
-                            <p title="Inspire krav: @item.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => item.inspireRequirement.description)</p>
-                        }
-
-                        @if (item.nationalRequirement == null)
-                        {
-                            <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
-                        }
-                        else
-                        {
-                            <p title="Nasjonalt krav: @item.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => item.nationalRequirement.description)</p>
-                        }
-
-                        @if (item.nationalSeasRequirement == null)
-                        {
-                            <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
-                        }
-                        else
-                        {
-                            <p title="Nasjonalt krav for havområde: @item.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => item.nationalSeasRequirement.description)</p>
-                        }
-
+                        
                         @if (item.externalReference == null)
                         {
                             <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>

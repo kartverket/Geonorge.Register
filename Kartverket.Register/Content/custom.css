@@ -626,11 +626,11 @@
 
 
 .search-results.epsg.table-view .col-actions {
-    width: 41%;
+    width: 65%;
 }
 
 .search-results.epsg.table-view .col-information {
-    width: 35%;
+    width: 10%;
 }
 
 

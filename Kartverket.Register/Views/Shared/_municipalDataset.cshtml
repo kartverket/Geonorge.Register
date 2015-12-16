@@ -8,42 +8,41 @@
 <h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
 @if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
 {
-<table class="table-responsive table-hover table" style="width:100%">
-    <tbody>
-        <tr>
-            <th style="width:10%">Temagruppe</th>
-            <th style="width:20%">Tittel</th>
-            <th style="width:20%">Eier</th>
-            <th style="width:10%">DOK-status</th>
-            <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
-            <th style="width:10%">Bekreftet</th>
-            <th style="width:20%">Merknad</th>
-        </tr>
-        @foreach (Dataset item in Model)
-        {
+    <table class="table-responsive table-hover table" style="width:100%">
+        <tbody>
             <tr>
-                <td>@item.theme.description</td>
-                <td>
-                    <a href="@item.GetObjectUrl()">
-                        @item.name
-                    </a>
-                </td>
-                <td>@item.datasetowner.name</td>
-                <td>@HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)</td>
-                <td>@item.DatasetType</td>
-                <td>
-                    @if (@HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal))
-                    {
-                        <span>Ja</span>
-                    }
-                    else
-                    {
-                        <span>Nei</span>
-                    }
-                </td>
-                <td>@HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)</td>
+                <th style="width:10%">Temagruppe</th>
+                <th style="width:20%">Tittel</th>
+                <th style="width:20%">Eier</th>
+                <th style="width:10%">DOK-status</th>
+                <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
+                <th style="width:10%">Bekreftet</th>
+                <th style="width:20%">Merknad</th>
             </tr>
-        }
-    </tbody>
-</table>
+            @foreach (Dataset item in Model)
+            {
+                <tr>
+                    <td title="Temagruppe for @item.name: @item.theme.description">@item.theme.description</td>
+                    <td title="Datasett: @item.name">
+                        <a href="@item.GetObjectUrl()">
+                            @item.name
+                        </a>
+                    </td>
+                    <td title="Datasett eier: @item.datasetowner.seoname">
+                        @item.datasetowner.name
+                    </td>
+                    <td title="Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)
+                    </td>
+                    <td title="Datasett type: @item.DatasetType">@item.DatasetType</td>
+                    <td style="text-align: center" title="Bekrefter: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal))">
+                        @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
+                    </td>
+                    <td title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

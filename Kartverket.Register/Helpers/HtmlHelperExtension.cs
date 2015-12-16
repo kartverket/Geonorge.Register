@@ -963,20 +963,27 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        public static bool GetConfirmedFromCoverage(Dataset item, CodelistValue selectedMunicipality)
+        public static string GetConfirmedFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return true;
+                return "Ja";
             }
             else
             {
                 CoverageDataset coverage = Coverage(item, selectedMunicipality);
                 if (coverage != null)
                 {
-                    return coverage.ConfirmedDok;
+                    if(coverage.ConfirmedDok)
+                    {
+                        return "Ja";
+                    }
+                    else
+                    {
+                        return "Nei";
+                    }
                 }
-                else return false;
+                else return "Nei";
             }
         }
 

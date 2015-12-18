@@ -4,8 +4,27 @@
 
 @{
     CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
+    var selectedMunicipalName = "Velg kommune";
+    if (selectedMunicipal != null)
+    {
+        selectedMunicipalName = selectedMunicipal.name;
+    }
 }
-<h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
+<div class="nav nav-tabs col-sm-12 col-md-6 col-lg-6">
+    <h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
+</div>
+<div class="col-sm-12 col-md-6 col-lg-6 no-padding">
+    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 38px; float: right;">
+        <div class="save-as-dropdown">
+            <div class="sorter pagination">
+                Velg kommune:
+                <div class="custom-select" onchange="FilterMunicipality()">
+                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 @if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
 {
     <table class="table-responsive table-hover table" style="width:100%">
@@ -20,7 +39,7 @@
                 <th style="width:20%">Merknad</th>
             </tr>
             @foreach (Dataset item in Model)
-            {
+                {
                 <tr>
                     <td title="Temagruppe for @item.name: @item.theme.description">@item.theme.description</td>
                     <td title="Datasett: @item.name">

@@ -70,32 +70,5 @@
     }
 </div>
 
-<form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-3">
-    @if (register == "Det offentlige kartgrunnlaget - Kommunalt")
-    {
-        <div class="save-as-dropdown">
-            <div class="sorter pagination">
-                Velg kommune:
-                <div class="custom-select" onchange="FilterMunicipality()">
-                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
-                    @*@Html.DropDownList("municipality", "Velg kommune")*@
-                </div>
-            </div>
-        </div>
-    }
-    <div class="">
-        <div id="sortBox" class="sorter">
-            Sorter:
-            <div class="custom-select" onchange="SortBy()">
-                @Html.DropDownList("sorting", null, "Navn a-å", new { @class = "form-control" })
-            </div>
-            <input type="hidden" name="text" value="@ViewBag.search" />
-            @Html.Hidden("filterVertikalt")
-            @Html.Hidden("filterHorisontalt")
-            @Html.Hidden("inspireRequirement")
-            @Html.Hidden("nationalRequirement")
-            @Html.Hidden("nationalSeaRequirementId")
-        </div>
-    </div>
-</form>
+
 <div class="result-header"></div>

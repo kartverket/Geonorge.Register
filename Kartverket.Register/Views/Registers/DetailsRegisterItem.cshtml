@@ -79,6 +79,10 @@
                 {
                     <span title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status: @dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></span><br>
                 }
+                if (dataset.DatasetType != null)
+                {
+                    <span>Type datasett: @dataset.DatasetType</span><br/>
+                }
             }
 
             @if (Model.register.containedItemClass == "NameSpace")

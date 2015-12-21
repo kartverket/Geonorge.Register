@@ -18,8 +18,8 @@
         <div class="save-as-dropdown">
             <div class="sorter pagination">
                 Velg kommune:
-                <div class="custom-select" onchange="FilterMunicipality()">
-                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control" })
+                <div class="custom-select">
+                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>
             </div>
         </div>

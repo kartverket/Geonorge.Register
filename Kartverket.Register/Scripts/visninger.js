@@ -162,15 +162,6 @@ function Filter() {
 
 }
 
-function FilterMunicipality() {
-    var kommune = document.getElementById("municipality");
-    kommune.options[municipality.selectedIndex].text;
-
-    document.FilterForm.submit();
-}
-
-
-
 function filterDefault() {
 
     alert('HeiUtNy');

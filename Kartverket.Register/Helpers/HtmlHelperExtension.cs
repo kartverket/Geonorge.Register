@@ -19,6 +19,11 @@ namespace Kartverket.Register.Helpers
         private static IMunicipalityService _municipalityService = new MunicipalityService();
         private static IRegisterService _registerService = new RegisterService(db);
 
+        public static string EnvironmentName(this HtmlHelper helper)
+        {
+            return WebConfigurationManager.AppSettings["EnvironmentName"];
+        }
+
         public static string ApplicationVersionNumber(this HtmlHelper helper)
         {
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];

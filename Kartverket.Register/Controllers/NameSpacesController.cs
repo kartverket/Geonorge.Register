@@ -93,21 +93,21 @@ namespace Kartverket.Register.Controllers
             if (ModelState.IsValid)
             {
                 nameSpace.systemId = Guid.NewGuid();
-                if (nameSpace.name == null) nameSpace.name = "ikke angitt";
+                if (nameSpace.name == null)
+                    nameSpace.name = "ikke angitt";
                 nameSpace.systemId = Guid.NewGuid();
                 nameSpace.modified = DateTime.Now;
                 nameSpace.dateSubmitted = DateTime.Now;
                 nameSpace.registerId = nameSpace.register.systemId;
                 nameSpace.statusId = "Submitted";
-                nameSpace.submitter = null;
                 nameSpace.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(nameSpace.name);
                 nameSpace.versionNumber = 1;
                 nameSpace.versioningId = _registerItemService.NewVersioningGroup(nameSpace);
 
+                Organization organization = GetSubmitter(nameSpace);
+                nameSpace.submitterId = organization.systemId;
+
                 db.RegisterItems.Add(nameSpace);
-                db.SaveChanges();
-                GetSubmitter(nameSpace);
-                db.Entry(nameSpace).State = EntityState.Modified;
                 db.SaveChanges();
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
@@ -282,17 +282,14 @@ namespace Kartverket.Register.Controllers
             return register;
         }
 
-        private void GetSubmitter(NameSpace nameSpace)
+        private Organization GetSubmitter(NameSpace nameSpace)
         {
             string organizationLogin = GetSecurityClaim("organization");
             var queryResults = from o in db.Organizations
                                where o.name == organizationLogin
                                select o;
 
-            Organization submitterOrganisasjon = queryResults.FirstOrDefault();
-
-            nameSpace.submitterId = submitterOrganisasjon.systemId;
-            nameSpace.submitter = submitterOrganisasjon;
+            return queryResults.FirstOrDefault();
         }
 
         private NameSpace GetRegisterItem(string registername, string itemname, string parentRegister)

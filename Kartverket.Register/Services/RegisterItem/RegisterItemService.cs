@@ -269,10 +269,11 @@ namespace Kartverket.Register.Services.RegisterItem
             return coverage;
         }
 
-        public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1)
+        public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr)
         {
             if (string.IsNullOrWhiteSpace(parentregister))
             {
+                vnr = getVnr(parentregister, register, item, vnr);
                 var queryResults = from o in _dbContext.RegisterItems
                                    where (o.seoname == item || o.name == item) &&
                                    (o.register.seoname == register || o.register.name == register) &&
@@ -283,6 +284,7 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             else
             {
+                vnr = getVnr(parentregister, register, item, vnr);
                 var queryResults = from o in _dbContext.RegisterItems
                                    where (o.seoname == item || o.name == item) &&
                                    (o.register.seoname == register || o.register.name == register) &&
@@ -292,6 +294,39 @@ namespace Kartverket.Register.Services.RegisterItem
 
                 return queryResults.FirstOrDefault();
             }
+        }
+
+        private int? getVnr(string parentregister, string register, string item, int? vnr)
+        {
+            if (vnr == null)
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register)
+                                   select o;
+
+                List<Models.RegisterItem> items = queryResults.ToList();
+                if (items.Count > 1)
+                {
+                    foreach (Models.RegisterItem version in items)
+                    {
+                        if (version.versioningId != null)
+                        {
+                            if (version.versioning.currentVersion == version.systemId)
+                            {
+                                return version.versionNumber;
+                            }
+                        }
+                    }
+                }
+                else {
+                    return queryResults.First().versionNumber;
+                }
+            }
+            else {
+                return vnr;
+            }
+            return 1;
         }
 
         public bool validateName(object model)

@@ -22,7 +22,7 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
-        Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int vnr = 1);
+        Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr);
         bool validateName(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);
         void SaveEditedRegisterItem(Models.RegisterItem registerItem);

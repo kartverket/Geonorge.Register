@@ -2,7 +2,6 @@
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
@@ -32,12 +31,6 @@ namespace Kartverket.Register.Controllers
             _accessControlService = new AccessControlService();
         }
 
-        // GET: Documents
-        public ActionResult Index()
-        {
-            var registerItems = db.Documents.Include(d => d.register).Include(d => d.status).Include(d => d.submitter).Include(d => d.documentowner);
-            return View(registerItems.ToList());
-        }
 
         // GET: Documents/Create
         [Authorize]
@@ -63,8 +56,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
-        {
-            // Finn register         
+        {  
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
             if (_accessControlService.Access(document.register))
             {
@@ -90,7 +82,7 @@ namespace Kartverket.Register.Controllers
         {
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
 
-            if (HasAccess(document))
+            if (_accessControlService.Access(document.register))
             {
                 Viewbags(document);
                 return View(document);
@@ -109,7 +101,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult CreateNewVersion(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string parentRegisterOwner, string parentRegister, string registername, string itemname)
         {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
-            if (HasAccess(document))
+            if (_accessControlService.Access(document.register))
             {
                 if (!NameIsValid(document))
                 {
@@ -131,22 +123,17 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(string parentregister, string registername, string documentname, int? vnr)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
-
-            if (document == null)
+            if (document != null)
             {
-                return HttpNotFound();
+                if (_accessControlService.Access(document))
+                {
+                    Viewbags(document);
+                    return View(document);
+                }
+                return HttpNotFound("Ingen tilgang");
             }
-
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor")
-                && document.register.accessId == 2 && document.documentowner.name.ToLower() == user.ToLower()))
-            {
-                Viewbags(document);
-                return View(document);
-            }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound();
         }
 
         // POST: Documents/Edit/5
@@ -455,17 +442,6 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-        private static bool HasAccess(Models.RegisterItem registerItem)
-        {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-            if (true)
-            {
-
-            }
-            return role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && registerItem.register.accessId == 2);
-        }
 
         private string GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
         {
@@ -516,10 +492,9 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(Document document)
         {
-            //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", document.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.submitterId);
-            ViewBag.documentownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", document.documentownerId);
+            ViewBag.statusId = _registerItemService.GetStatusSelectList(document);
+            ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(document.submitterId);
+            ViewBag.documentownerId = _registerItemService.GetOwnerSelectList(document.documentownerId);
         }
 
         protected override void OnException(ExceptionContext filterContext)

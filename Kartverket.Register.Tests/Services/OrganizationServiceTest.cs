@@ -16,6 +16,7 @@ namespace Kartverket.Register.Tests.Services
         private const string OrganizationNumber = "1234567890";
         private const string OrganizationLogo = "logo.png";
         private const string OrganizationLogoLarge = "logoLarge.png";
+        private const string OrganizationShortName = "IFSL";
 
         [Test]
         public void ShouldReturnNullWhenOrganizationIsNotFoundByName()
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Tests.Services
             organization.number.Should().Be(OrganizationNumber);
             organization.logoFilename.Should().Be(OrganizationLogo);
             organization.largeLogo.Should().Be(OrganizationLogoLarge);
+            organization.shortname.Should().Be(OrganizationShortName);
         }
 
         [Test]
@@ -82,7 +84,8 @@ namespace Kartverket.Register.Tests.Services
                     name = OrganizationName,
                     number = OrganizationNumber,
                     logoFilename = OrganizationLogo,
-                    largeLogo = OrganizationLogoLarge
+                    largeLogo = OrganizationLogoLarge,
+                    shortname = OrganizationShortName
                 }
             };
             return listOfOrganizations;

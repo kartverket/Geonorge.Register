@@ -16,9 +16,10 @@ namespace Kartverket.Register.Tests.Controllers
         private const string OrganizationNumber = "123456";
         private const string OrganizationLogoFilename = "test.png";
         private const string OrganizationLogoLargeFilename = "testLarge.png";
+        private const string OrganizationShortName = "IFSL";
         //private string LocationUrl = System.Configuration.ConfigurationSettings.AppSettings["RegistryUrl"] + "data/";
 
-        private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename };
+        private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename, shortname = OrganizationShortName };
 
         [Test]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByName()
@@ -78,6 +79,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Content.Should().NotBeNull();
             result.Content.Name.Should().Be(OrganizationName);
             result.Content.Number.Should().Be(OrganizationNumber);
+            result.Content.ShortName.Should().Be(OrganizationShortName);
             //result.Content.LogoUrl.Should().Be(LocationUrl + Organization.DataDirectory + OrganizationLogoFilename);
             //result.Content.LogoLargeUrl.Should().Be(LocationUrl + Organization.DataDirectory + OrganizationLogoLargeFilename);
         }

@@ -47,7 +47,8 @@ namespace Kartverket.Register.Controllers
                 Name = organization.name,
                 Number = organization.number,
                 LogoUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.logoFilename,
-                LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.largeLogo
+                LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.largeLogo,
+                ShortName = organization.shortname
             };
         }
     }

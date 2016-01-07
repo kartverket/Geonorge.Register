@@ -9,5 +9,7 @@
         public string LogoUrl { get; set; }
 
         public string LogoLargeUrl { get; set; }
+
+        public string ShortName { get; set; }
     }
 }

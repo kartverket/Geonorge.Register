@@ -43,5 +43,6 @@ namespace Kartverket.Register.Services.RegisterItem
         void DeleteCoverage(CoverageDataset coverage);
         void Save();
         CodelistValue GetMunicipalByNr(string municipalNr);
+        Models.RegisterItem GetRegisterItemBySystemId(Guid systemId);
     }
 }

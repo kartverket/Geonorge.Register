@@ -9,7 +9,6 @@ using System.IO;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
-using System.Collections.Generic;
 using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
@@ -24,6 +23,7 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+
         public DocumentsController()
         {
             _registerItemService = new RegisterItemService(db);
@@ -48,6 +48,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
+
         // POST: Documents/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,7 +57,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dokument/{registername}/ny")]
         public ActionResult Create(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername, string parentRegister, string registerowner)
-        {  
+        {
             document.register = _registerService.GetSubregisterByName(parentRegister, registername);
             if (_accessControlService.Access(document.register))
             {
@@ -66,7 +67,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    initialisationDocument(document, documentfile, thumbnail, registername);
+                    document = initialisationDocument(document, documentfile, thumbnail);
                     return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, document.documentowner.seoname, document.seoname));
                 }
             }
@@ -109,13 +110,13 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    initialisationDocument(document, documentfile, thumbnail, registername);
-                    UpdateVersioningGroup(document);
+                    document = initialisationDocument(document, documentfile, thumbnail);
                     return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
                 }
             }
             return View(document);
         }
+
 
         // GET: Documents/Edit/5
         [Authorize]
@@ -136,6 +137,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+
         // POST: Documents/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -146,179 +148,22 @@ namespace Kartverket.Register.Controllers
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
-            Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
-
-            if (!NameIsValid(document))
+            if (originalDocument != null)
             {
-                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-            }
-            else if (ModelState.IsValid)
-            {
-                if (document.name != null) originalDocument.name = document.name;
-                originalDocument.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(originalDocument.name);
-                if (document.description != null) originalDocument.description = document.description;
-                if (document.documentownerId != null) originalDocument.documentownerId = document.documentownerId;
-                if (document.approvalDocument != null) originalDocument.approvalDocument = document.approvalDocument;
-                if (document.approvalReference != null) originalDocument.approvalReference = document.approvalReference;
-                if (document.versionName != null) originalDocument.versionName = document.versionName;
-
-                // Finn alle dokumenter i versjonegruppen
-                var allVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
-
-                originalDocument.Accepted = document.Accepted;
-                if (document.Accepted == true && originalDocument.statusId == "Submitted" || originalDocument.statusId == "Draft")
+                if (!NameIsValid(document))
                 {
-                    if (allVersions.Count > 1)
-                    {
-                        //Endre status på nåværende gjeldende eller erstattet versjon
-                        foreach (Document item in allVersions)
-                        {
-                            if (item.statusId == "Valid")
-                            {
-                                if (document.dateAccepted == null)
-                                {
-                                    document.dateAccepted = DateTime.Now;
-                                }
-                                if (item.dateAccepted == null || item.dateAccepted < document.dateAccepted)
-                                {
-                                    if (string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
-                                    {
-                                        originalDocument.dateAccepted = DateTime.Now;
-                                    }
-                                    else
-                                    {
-                                        originalDocument.dateAccepted = document.dateAccepted;
-                                    }
-                                    item.statusId = "Superseded";
-                                    item.dateSuperseded = originalDocument.dateAccepted;
-                                    item.modified = DateTime.Now;
-                                    originalDocument.statusId = "Valid";
-                                    versjonsgruppe.currentVersion = originalDocument.systemId;
-                                }
-                                if (originalDocument.statusId == "Submitted")
-                                {
-                                    originalDocument.statusId = "Superseded";
-                                    originalDocument.dateSuperseded = DateTime.Now;
-                                }
-                            }
-                        }
-                    }
-
-                    if (originalDocument.statusId == "Submitted" || originalDocument.statusId == "Draft")
-                    {
-                        originalDocument.statusId = "Valid";
-                        versjonsgruppe.currentVersion = originalDocument.systemId;
-                    }
-                    db.SaveChanges();
-
-                    if (!string.IsNullOrWhiteSpace(document.dateAccepted.ToString()))
-                    {
-                        originalDocument.dateAccepted = document.dateAccepted;
-                    }
-                    else
-                    {
-                        originalDocument.dateAccepted = DateTime.Now;
-                    }
+                    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                 }
-
-                if (document.dateAccepted != null && (originalDocument.dateAccepted != document.dateAccepted))
+                else if (ModelState.IsValid)
                 {
-                    originalDocument.dateAccepted = document.dateAccepted;
-
-                    //Endre stuts på erstattede versjoner
-                    foreach (Document item in allVersions)
-                    {
-                        if (item.statusId == "Superseded")
-                        {
-                            if (item.dateAccepted > document.dateAccepted)
-                            {
-                                item.statusId = "Valid";
-                                item.dateSuperseded = null;
-                                item.modified = DateTime.Now;
-                                originalDocument.statusId = "Superseded";
-                                originalDocument.dateSuperseded = DateTime.Now;
-                                versjonsgruppe.currentVersion = item.systemId;
-                            }
-                        }
-                    }
+                    document = initialisationDocument(document, documentfile, thumbnail, retired, originalDocument);
+                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, itemowner, documentname));
                 }
-
-                if (retired || document.Accepted == false)
-                {
-                    if (originalDocument.statusId == "Valid")
-                    {
-                        GetNewCurrentVersion(document, versjonsgruppe, allVersions);
-                    }
-
-                    if (retired)
-                    {
-                        originalDocument.statusId = "Retired";
-                        originalDocument.DateRetired = DateTime.Now;
-                    }
-                    else
-                    {
-                        originalDocument.statusId = "Draft";
-                        if (string.IsNullOrWhiteSpace(document.dateNotAccepted.ToString()))
-                        {
-                            originalDocument.dateNotAccepted = DateTime.Now;
-                        }
-                        else
-                        {
-                            originalDocument.dateNotAccepted = document.dateNotAccepted;
-                        }
-
-                    }
-                    if (originalDocument.Accepted == false)
-                    {
-                        if (string.IsNullOrWhiteSpace(document.dateNotAccepted.ToString()))
-                        {
-                            originalDocument.dateNotAccepted = DateTime.Now;
-                        }
-                        else
-                        {
-                            originalDocument.dateNotAccepted = document.dateNotAccepted;
-                        }
-                    }
-                }
-
-                if (document.documentUrl != null && document.documentUrl != originalDocument.documentUrl)
-                {
-                    originalDocument.documentUrl = document.documentUrl;
-                }
-                if (document.submitterId != null) originalDocument.submitterId = document.submitterId;
-
-                string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-
-                if (documentfile != null)
-                {
-                    originalDocument.documentUrl = url + SaveFileToDisk(documentfile, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
-                    if (originalDocument.documentUrl.Contains(".pdf"))
-                    {
-                        document.thumbnail = GenerateThumbnail(originalDocument, documentfile, url);
-                        originalDocument.thumbnail = document.thumbnail;
-                    }
-                }
-
-                if (thumbnail != null && document.thumbnail != originalDocument.thumbnail)
-                {
-                    originalDocument.thumbnail = url + SaveFileToDisk(thumbnail, originalDocument.name, originalDocument.register.seoname, originalDocument.versionNumber);
-                }
-
-                originalDocument.modified = DateTime.Now;
-                db.Entry(originalDocument).State = EntityState.Modified;
-                db.SaveChanges();
-                Viewbags(document);
-
-                return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, itemowner, documentname));
             }
             Viewbags(document);
             return View(originalDocument);
         }
 
-        private bool NameIsValid(Document document)
-        {
-            return _registerItemService.validateName(document);
-        }
 
         // GET: Documents/Delete/5
         [Authorize]
@@ -344,6 +189,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Ingen tilgang");
         }
 
+
         // POST: Documents/Delete/5
         [HttpPost, ActionName("Delete")]
         [Route("dokument/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{documentname}/slett")]
@@ -357,15 +203,15 @@ namespace Kartverket.Register.Controllers
             {
                 parent = document.register.parentRegister.seoname;
             }
-            Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
+            Models.Version versjonsgruppe = document.versioning;
             //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
             // Finn alle dokumenter i versjonsgruppen
-            if (document.systemId == versjonsgruppe.currentVersion)
+            if (document.systemId == document.versioning.currentVersion)
             {
                 var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
                 if (versionsOfDocument.Count() > 1)
                 {
-                    GetNewCurrentVersion(document, versjonsgruppe, versionsOfDocument);
+                    GetNewCurrentVersion(document);
                     db.RegisterItems.Remove(document);
                 }
                 else
@@ -384,43 +230,67 @@ namespace Kartverket.Register.Controllers
             return Redirect(RegisterUrls.registerUrl(parentregister, parentregisterowner, registername));
         }
 
-        private void UpdateVersioningGroup(Document document)
+
+
+        //******* HJELPEMETODER ********
+
+        /// <summary>
+        /// Validate item name. Item name must be unique in a register. 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private bool NameIsValid(Document document)
         {
-            Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(document.versioningId);
-            versjonsgruppe.lastVersionNumber = document.versionNumber;
+            return _registerItemService.validateName(document);
+        }
+
+        /// <summary>
+        /// Update latest version number in versioning group.
+        /// </summary>
+        /// <param name="versioningId"></param>
+        /// <param name="versionNumber"></param>
+        private void UpdateLatestVersionNumberInVersioningGroup(Guid? versioningId, int versionNumber)
+        {
+            Models.Version versjonsgruppe = _registerItemService.GetVersionGroup(versioningId);
+            versjonsgruppe.lastVersionNumber = versionNumber;
             db.SaveChanges();
         }
 
-        private void GetNewCurrentVersion(Document document, Models.Version versjonsgruppe, List<Models.RegisterItem> versionsOfDocument)
+        /// <summary>
+        /// If you delete or change status on current version, it needs to be replaced by another version
+        /// </summary>
+        /// <param name="document"></param>
+        private void GetNewCurrentVersion(Document document)
         {
+            var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(document.versioning.systemId);
             foreach (var item in versionsOfDocument.Where(d => d.statusId == "Superseded").OrderByDescending(d => d.dateAccepted))
             {
-                versjonsgruppe.currentVersion = item.systemId;
+                document.versioning.currentVersion = item.systemId;
                 item.statusId = "Valid";
                 item.modified = DateTime.Now;
                 item.dateSuperseded = null;
                 break;
             }
-            if (versjonsgruppe.currentVersion == document.systemId)
+            if (document.versioning.currentVersion == document.systemId)
             {
                 Document nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Retired").Where(o => o.systemId != document.systemId).OrderByDescending(d => d.DateRetired).FirstOrDefault();
                 if (nyGjeldendeVersjon != null)
                 {
-                    versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                    document.versioning.currentVersion = nyGjeldendeVersjon.systemId;
                 }
                 else
                 {
                     nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Draft").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
                     if (nyGjeldendeVersjon != null)
                     {
-                        versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                        document.versioning.currentVersion = nyGjeldendeVersjon.systemId;
                     }
                     else
                     {
                         nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Submitted").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
                         if (nyGjeldendeVersjon != null)
                         {
-                            versjonsgruppe.currentVersion = nyGjeldendeVersjon.systemId;
+                            document.versioning.currentVersion = nyGjeldendeVersjon.systemId;
                         }
                         else
                         {
@@ -429,7 +299,7 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
-            db.Entry(versjonsgruppe).State = EntityState.Modified;
+            db.Entry(document.versioning).State = EntityState.Modified;
             db.SaveChanges();
         }
 
@@ -442,7 +312,13 @@ namespace Kartverket.Register.Controllers
             base.Dispose(disposing);
         }
 
-
+        /// <summary>
+        /// Generate a thumbnail from frontpage of a PDF document.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="documentfile"></param>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private string GenerateThumbnail(Document document, HttpPostedFileBase documentfile, string url)
         {
             if (document.documentUrl.Contains(".pdf"))
@@ -462,7 +338,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
         {
             string filtype;
@@ -475,6 +350,12 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
+        /// <summary>
+        /// Makes an SEO friendly document name
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="filtype"></param>
+        /// <param name="seofilename"></param>
         private static void MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
         {
             string[] documentfilename = file.FileName.Split('.');
@@ -502,26 +383,339 @@ namespace Kartverket.Register.Controllers
             Log.Error("Error", filterContext.Exception);
         }
 
-        private void initialisationDocument(Document document, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, string registername)
+        /// <summary>
+        /// Initialize a document object
+        /// </summary>
+        /// <param name="inputDocument"></param>
+        /// <param name="documentfile"></param>
+        /// <param name="thumbnail"></param>
+        /// <param name="retired"></param>
+        /// <param name="originalDocument"></param>
+        /// <returns></returns>
+        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, Document originalDocument = null)
         {
-            document.systemId = Guid.NewGuid();
+            Document document = GetDocument(originalDocument);
+            document.systemId = GetSystemId(document.systemId);
+            document.name = DocumentName(inputDocument.name);
+            document.seoname = DocumentSeoName(inputDocument.name);
             document.modified = DateTime.Now;
-            document.dateSubmitted = DateTime.Now;
-            document.registerId = document.register.systemId;
-            document.statusId = "Submitted";
-            document.versionNumber = getVersionNr(document.versionNumber);
-            document.name = DocumentName(document.name);
-            document.seoname = DocumentSeoName(document.name);
+            document.description = inputDocument.description;
+            document.approvalDocument = inputDocument.approvalDocument;
+            document.approvalReference = inputDocument.approvalReference;
+            document.versionName = inputDocument.versionName;
+            document.registerId = GetRegisterId(inputDocument, document);
+            document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            document.documentUrl = documentUrl(url, documentfile, document);
-            document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
-            document.versioningId = GetVersioningId(document);
+            document.documentUrl = documentUrl(url, documentfile, inputDocument);
+            document.thumbnail = GetThumbnail(inputDocument, documentfile, url, thumbnail);
+            document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
+            document.submitterId = GetSubmitterId(inputDocument.submitterId);
 
-            SetDocumentOwnerAndSubmitter(document);
-
-            db.Entry(document).State = EntityState.Modified;
-            db.RegisterItems.Add(document);
+            if (originalDocument == null)
+            {
+                document.dateSubmitted = DateTime.Now;
+                document.statusId = "Submitted";
+                document.versionNumber = GetVersionNr(inputDocument.versionNumber);
+                document.versioningId = GetVersioningId(document, inputDocument.versioningId);
+                db.Entry(document).State = EntityState.Modified;
+                db.RegisterItems.Add(document);
+            }
+            else {
+                ApprovalProcess(document, retired, inputDocument);
+                document.versionNumber = inputDocument.versionNumber;
+                db.Entry(document).State = EntityState.Modified;
+            }
             db.SaveChanges();
+            return document;
+        }
+
+        /// <summary>
+        /// Returns systemId
+        /// </summary>
+        /// <param name="systemId"></param>
+        /// <returns></returns>
+        private Guid GetSystemId(Guid systemId)
+        {
+            if (systemId == Guid.Empty)
+            {
+                return Guid.NewGuid();
+            }
+            else {
+                return systemId;
+            }
+        }
+
+        /// <summary>
+        /// Returns registerId
+        /// </summary>
+        /// <param name="inputDocument"></param>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private Guid GetRegisterId(Document inputDocument, Document document)
+        {
+            if (inputDocument.register == null)
+            {
+                return document.register.systemId;
+            }
+            else {
+                document.register = inputDocument.register;
+                return inputDocument.register.systemId;
+            }
+        }
+
+        private Document GetDocument(Document originalDocument)
+        {
+            if (originalDocument != null)
+            {
+                return originalDocument;
+            }
+            else {
+                return new Document();
+            }
+        }
+
+        /// <summary>
+        /// Check if document is accepted or not and set status.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="retired"></param>
+        /// <param name="inputDocument"></param>
+        private void ApprovalProcess(Document document, bool retired, Document inputDocument)
+        {
+            if (document.Accepted == true)
+            {
+                document = SetStatusIdWhenDocumentIsAccepted(document, inputDocument, retired);
+            }
+            else if (document.Accepted == false)
+            {
+                document.statusId = GetStatusIdWhenDocumentIsNotAccepted(document, retired, inputDocument);
+            }
+        }
+
+        /// <summary>
+        /// If document is not accepted, document status can be either  "Retired or draft"
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="retired"></param>
+        /// <param name="inputDocument"></param>
+        /// <returns></returns>
+        private string GetStatusIdWhenDocumentIsNotAccepted(Document document, bool retired, Document inputDocument)
+        {
+            if (document.statusId == "Valid")
+            {
+                GetNewCurrentVersion(document);
+            }
+
+            if (retired)
+            {
+                document.statusId = "Retired";
+                document.DateRetired = DateTime.Now;
+            }
+            else
+            {
+                document.statusId = "Draft";
+                document.dateNotAccepted = GetDateNotAccepted(document, inputDocument);
+            }
+            return document.statusId;
+        }
+
+        /// <summary>
+        /// If date not accepted is not selected, set date time now.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="inputDocument"></param>
+        /// <returns></returns>
+        private DateTime? GetDateNotAccepted(Document document, Document inputDocument)
+        {
+            if (string.IsNullOrWhiteSpace(inputDocument.dateNotAccepted.ToString()))
+            {
+                return DateTime.Now;
+            }
+            else
+            {
+                return document.dateNotAccepted;
+            }
+        }
+
+        /// <summary>
+        /// If document is accepted, document status can be either  "Retired", "Valid" or "Superseded"
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="inputDocument"></param>
+        /// <param name="retired"></param>
+        /// <returns></returns>
+        private Document SetStatusIdWhenDocumentIsAccepted(Document document, Document inputDocument, bool retired)
+        {
+            Document currentVersion = (Document)_registerItemService.GetRegisterItemBySystemId(document.versioning.currentVersion);
+            if (retired == true)
+            {
+                document.statusId = "Retired";
+                document.DateRetired = GetDateRetired(inputDocument.DateRetired);
+                document.dateAccepted = DateAccepted(document.dateAccepted, inputDocument.dateAccepted);
+            }
+            else {
+                if (document.statusId == "Submitted" || document.statusId == "Draft")
+                {
+                    document.dateAccepted = DateAccepted(document.dateAccepted, inputDocument.dateAccepted);
+                    if (OtherVersions(document))
+                    {
+                        document.statusId = CheckIfCurrentVersionIsValid(document, currentVersion);
+                    }
+                    else
+                    {
+                        document.statusId = SetDocumentStatusToValid(document);
+                    }
+                }
+                db.SaveChanges();
+
+                if (DateAcceptedIsChanged(document, inputDocument))
+                {
+                    document.statusId = CheckIfItIsANewerDateAcceptedAmongSupersededVersions(document, inputDocument, currentVersion);
+                }
+            }
+            return document;
+        }
+
+        /// <summary>
+        /// If date retired is not selected, set date time now.
+        /// </summary>
+        /// <param name="dateRetired"></param>
+        /// <returns></returns>
+        private DateTime? GetDateRetired(DateTime? dateRetired)
+        {
+            if (dateRetired == null)
+            {
+                return DateTime.Now;
+            }
+            else {
+                return dateRetired;
+            }
+        }
+
+        /// <summary>
+        /// If current version is valid, date accepted decides if status should be set as "Valid" or "Superseded". 
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="originalDocument"></param>
+        /// <param name="currentVersion"></param>
+        /// <returns></returns>
+        private string CheckIfCurrentVersionIsValid(Document document, Document currentVersion)
+        {
+            if (currentVersion.statusId == "Valid")
+            {
+                if (DocumentDateAcceptedAreLatest(document.dateAccepted, currentVersion.dateAccepted))
+                {
+                    return SetDocumentStatusToValid(document, currentVersion);
+                }
+                else
+                {
+                    return SetDocumentStatusToSuperseded(document);
+                }
+            }
+            else {
+                return SetDocumentStatusToValid(document);
+            }
+        }
+
+        /// <summary>
+        /// If it is a newer Date accepted among superseded versions, statusId should be set as "Superseded". Else StatusId should be "Valid"
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="inputDocoment"></param>
+        /// <param name="currentVersion"></param>
+        /// <returns></returns>
+        private string CheckIfItIsANewerDateAcceptedAmongSupersededVersions(Document document, Document inputDocoment, Document currentVersion)
+        {
+            //document.dateAccepted = inputDocoment.dateAccepted;
+            var allVersions = _registerItemService.GetAllVersionsOfItembyVersioningId(document.versioning.systemId);
+
+            foreach (Document item in allVersions)
+            {
+                if (item.statusId == "Superseded")
+                {
+                    if (item.dateAccepted > inputDocoment.dateAccepted)
+                    {
+                        item.statusId = "Valid";
+                        item.dateSuperseded = null;
+                        item.modified = DateTime.Now;
+                        document.versioning.currentVersion = item.systemId;
+                        document.statusId = SetDocumentStatusToSuperseded(document);
+                    }
+                }
+            }
+            return document.statusId;
+        }
+
+        private static bool DateAcceptedIsChanged(Document document, Document inputDocument)
+        {
+            return document.dateAccepted != null && (inputDocument.dateAccepted != document.dateAccepted);
+        }
+
+        /// <summary>
+        /// Set document status to "Superseded"
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private string SetDocumentStatusToSuperseded(Document document)
+        {
+            document.dateSuperseded = DateTime.Now;
+            return "Superseded";
+        }
+
+        /// <summary>
+        /// Set document status to "Valid". If there is an other valid version, change status of version to "Superseded"
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private string SetDocumentStatusToValid(Document document, Document version = null)
+        {
+            if (version != null)
+            {
+                version.statusId = SetDocumentStatusToSuperseded(version);
+                version.modified = DateTime.Now;
+            }
+            document.versioning.currentVersion = document.systemId;
+            return "Valid";
+        }
+
+        /// <summary>
+        /// Check if date accepted on selected version is later then the current version of the document. 
+        /// </summary>
+        /// <param name="dateAccepted"></param>
+        /// <param name="currentVersionDateAccepted"></param>
+        /// <returns></returns>
+        private static bool DocumentDateAcceptedAreLatest(DateTime? dateAccepted, DateTime? currentVersionDateAccepted)
+        {
+            return currentVersionDateAccepted == null || currentVersionDateAccepted < dateAccepted;
+        }
+
+        /// <summary>
+        /// If date accepted is not selected, set date time now.
+        /// </summary>
+        /// <param name="dateAccepted"></param>
+        /// <param name="inputDateAccepted"></param>
+        /// <returns></returns>
+        private DateTime? DateAccepted(DateTime? dateAccepted, DateTime? inputDateAccepted)
+        {
+            if (dateAccepted == null && inputDateAccepted == null)
+            {
+                return DateTime.Now;
+            }
+            else {
+                return inputDateAccepted;
+            }
+        }
+
+        /// <summary>
+        /// Checks whether there are other versions of the document.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        private bool OtherVersions(Document document)
+        {
+            var versions = _registerItemService.GetAllVersionsOfItembyVersioningId(document.versioningId);
+            return versions.Count > 1;
         }
 
         private string GetThumbnail(Document document, HttpPostedFileBase documentfile, string url, HttpPostedFileBase thumbnail)
@@ -538,19 +732,35 @@ namespace Kartverket.Register.Controllers
             return document.thumbnail;
         }
 
-        private Guid? GetVersioningId(Document document)
+        /// <summary>
+        /// Gets new or return allreadu existing versioningId
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="inputVersioningId"></param>
+        /// <returns></returns>
+        private Guid? GetVersioningId(Document document, Guid? inputVersioningId)
         {
-            if (document.versioningId == null)
+            if (document.versioningId == null && inputVersioningId == null)
             {
                 return _registerItemService.NewVersioningGroup(document);
+            }
+            else if (inputVersioningId != Guid.Empty && inputVersioningId != null)
+            {
+                UpdateLatestVersionNumberInVersioningGroup(inputVersioningId, document.versionNumber);
+                return inputVersioningId;
             }
             else
             {
                 return document.versioningId;
             }
         }
-
-        private int getVersionNr(int versionNumber)
+        
+        /// <summary>
+        /// Returns new version number. 
+        /// </summary>
+        /// <param name="versionNumber"></param>
+        /// <returns></returns>
+        private int GetVersionNr(int versionNumber)
         {
             if (versionNumber == 0)
             {
@@ -563,18 +773,38 @@ namespace Kartverket.Register.Controllers
             return versionNumber;
         }
 
-        private void SetDocumentOwnerAndSubmitter(Document document)
+        private Guid GetSubmitterId(Guid submitterId)
         {
-            Organization submitterOrganisasjon = _registerService.GetOrganization();
-            document.submitterId = submitterOrganisasjon.systemId;
-            document.submitter = submitterOrganisasjon;
-            document.documentowner = submitterOrganisasjon;
-            document.documentownerId = submitterOrganisasjon.systemId;
+            if (submitterId == Guid.Empty)
+            {
+                Organization submitterOrganisasjon = _registerService.GetOrganization();
+                return submitterOrganisasjon.systemId;
+            }
+            else {
+                return submitterId;
+            }
         }
 
+        private Guid GetDocumentOwnerId(Guid documentOwnerId)
+        {
+            if (documentOwnerId == Guid.Empty)
+            {
+                Organization submitterOrganisasjon = _registerService.GetOrganization();
+                return submitterOrganisasjon.systemId;
+            }
+            else {
+                return documentOwnerId;
+            }
+        }
+
+        /// <summary>
+        /// Make SEO friendly name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private string DocumentSeoName(string name)
         {
-            return Helpers.RegisterUrls.MakeSeoFriendlyString(name);
+            return RegisterUrls.MakeSeoFriendlyString(name);
         }
 
         private string DocumentName(string name)

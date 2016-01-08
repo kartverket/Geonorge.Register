@@ -78,7 +78,7 @@
         <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
         <li><a href="/register/versjoner/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
         <li>Rediger</li>
-    }       
+    }
 }
 
 <h2>Rediger</h2>
@@ -92,6 +92,7 @@
     @Html.HiddenFor(model => model.versionNumber)
     @Html.HiddenFor(model => model.versioningId)
     @Html.HiddenFor(model => model.submitterId)
+    @Html.HiddenFor(model => model.statusId)
 
     <div class="form-horizontal">
 
@@ -154,14 +155,22 @@
                         @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
                     </div>
                 </div>
-        <hr />
+                <hr />
+            }
+            else {
+                @Html.HiddenFor(model => model.name)
+                @Html.HiddenFor(model => model.description)
+                @Html.HiddenFor(model => model.versionName)
+                @Html.HiddenFor(model => model.documentownerId)
+                @Html.HiddenFor(model => model.thumbnail)
+                @Html.HiddenFor(model => model.documentUrl)
             }
             if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
             {
                 @Html.HiddenFor(model => model.documentownerId)
-                
+
                 <br />
-                    <h3>Dokumentgodkjenning</h3>
+                <h3>Dokumentgodkjenning</h3>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })

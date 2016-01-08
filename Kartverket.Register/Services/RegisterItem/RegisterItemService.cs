@@ -247,6 +247,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
             _dbContext.Entry(versjoneringsGruppe).State = EntityState.Modified;
             _dbContext.Versions.Add(versjoneringsGruppe);
+            _dbContext.SaveChanges();
             return versjoneringsGruppe.systemId;
         }
 
@@ -473,6 +474,15 @@ namespace Kartverket.Register.Services.RegisterItem
         public void Save()
         {
             _dbContext.SaveChanges();
+        }
+
+        public Models.RegisterItem GetRegisterItemBySystemId(Guid systemId)
+        {
+            var queryResult = from c in _dbContext.RegisterItems
+                              where c.systemId == systemId
+                              select c;
+
+            return queryResult.FirstOrDefault();
         }
     }    
 

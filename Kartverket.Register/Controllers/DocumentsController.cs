@@ -171,22 +171,19 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult Delete(string registername, string documentname, int? vnr, string parentregister, string parentregisterowner)
         {
-            string role = HtmlHelperExtensions.GetSecurityClaim("role");
-            string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
-            Document document = new Document();
-            document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
-
-            if (document == null)
+            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
+            if (document != null)
             {
-                return HttpNotFound();
+                if (_accessControlService.Access(document))
+                {
+                    Viewbags(document);
+                    return View(document);
+                }
+                else {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && document.register.accessId == 2 && document.documentowner.name.ToLower() == user.ToLower()))
-            {
-                Viewbags(document);
-                return View(document);
-            }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound();
         }
 
 
@@ -196,18 +193,10 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
-            Document document = new Document();
-            document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
-            string parent = null;
-            if (document.register.parentRegisterId != null)
+            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);            
+            if (DocumentIsCurrentVersion(document))
             {
-                parent = document.register.parentRegister.seoname;
-            }
-            Models.Version versjonsgruppe = document.versioning;
-            //Dersom dokumentet som skal slettes er "gjeldende versjon" så må et annet dokument settes som gjeldende versjon
-            // Finn alle dokumenter i versjonsgruppen
-            if (document.systemId == document.versioning.currentVersion)
-            {
+                Models.Version versjonsgruppe = document.versioning;
                 var versionsOfDocument = _registerItemService.GetAllVersionsOfItembyVersioningId(versjonsgruppe.systemId);
                 if (versionsOfDocument.Count() > 1)
                 {
@@ -233,6 +222,10 @@ namespace Kartverket.Register.Controllers
 
 
         //******* HJELPEMETODER ********
+        private static bool DocumentIsCurrentVersion(Document document)
+        {
+            return document.systemId == document.versioning.currentVersion;
+        }
 
         /// <summary>
         /// Validate item name. Item name must be unique in a register. 
@@ -754,7 +747,7 @@ namespace Kartverket.Register.Controllers
                 return document.versioningId;
             }
         }
-        
+
         /// <summary>
         /// Returns new version number. 
         /// </summary>

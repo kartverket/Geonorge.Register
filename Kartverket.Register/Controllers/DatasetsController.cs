@@ -75,9 +75,8 @@ namespace Kartverket.Register.Controllers
             {
                 if (uuid != null)
                 {
-                    Viewbags(dataset);
                     Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
-                    model.register = dataset.register;
+                    Viewbags(dataset);
                     return View(model);
                 }
                 else if (_accessControlService.Access(dataset))
@@ -142,12 +141,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (uuid != null)
                 {
-                    Dataset model = model = GetMetadataFromKartkatalogen(dataset, uuid);
-                    model.register = originalDataset.register;
-                    model.datasetowner = originalDataset.datasetowner;
-                    model.submitter = originalDataset.submitter;
-                    model.DatasetType = originalDataset.DatasetType;
-                    if (dontUpdateDescription) model.description = originalDataset.description;
+                    Dataset model = GetMetadataFromKartkatalogen(originalDataset, uuid, dontUpdateDescription);
                     Viewbags(model);
                     return View(model);
                 }
@@ -398,20 +392,17 @@ namespace Kartverket.Register.Controllers
             return _registerItemService.validateName(dataset);
         }
 
-        private Dataset GetMetadataFromKartkatalogen(Dataset dataset, string uuid)
+        private Dataset GetMetadataFromKartkatalogen(Dataset dataset, string uuid, bool dontUpdateDescription = false)
         {
             var model = new Dataset();
             try
             {
-                new MetadataService().UpdateDatasetWithMetadata(model, uuid);
+                new MetadataService().UpdateDatasetWithMetadata(model, uuid, dataset, dontUpdateDescription);
             }
             catch (Exception e)
             {
                 TempData["error"] = "Det oppstod en feil ved henting av metadata: " + e.Message;
             }
-
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", dataset.ThemeGroupId);
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description");
             return model;
         }
 

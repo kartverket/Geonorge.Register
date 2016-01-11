@@ -255,8 +255,8 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             CoverageDataset coverage = new CoverageDataset();
             coverage.CoverageId = Guid.NewGuid();
-            coverage.CoverageDOKStatusId = "Proposal";
-            coverage.ConfirmedDok = true;
+            coverage.CoverageDOKStatusId = "Accepted";
+            coverage.ConfirmedDok = false;
             coverage.DatasetId = registerItem.systemId;
             coverage.MunicipalityId = registerItem.submitterId;
             if (registerItem is Dataset)

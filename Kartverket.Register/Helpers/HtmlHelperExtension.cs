@@ -953,6 +953,15 @@ namespace Kartverket.Register.Helpers
             }
         }
 
+        public static string GetNationalDokStatus(Dataset item) {
+            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            {
+                return " ";
+            }
+            else 
+                return item.dokStatus.description;
+        }
+
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
             string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality.value);

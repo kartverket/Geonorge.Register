@@ -32,8 +32,8 @@
             <tr>
                 <th style="width:10%">Temagruppe</th>
                 <th style="width:20%">Tittel</th>
-                <th style="width:20%">Eier</th>
-                <th style="width:10%">National DOK-status</th>
+                <th style="width:10%">Eier</th>
+                <th style="width:10%">Nasjonal DOK-status</th>
                 <th style="width:10%">Kommunal DOK-status</th>
                 <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
                 <th style="width:10%">Bekreftet</th>
@@ -51,10 +51,10 @@
                     <td title="Datasett eier: @item.datasetowner.seoname">
                         @item.datasetowner.name
                     </td>
-                    <td title="Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
-                        @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)
+                    <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">                        
+                        @HtmlHelperExtensions.GetNationalDokStatus(item)
                     </td>
-                    <td title="Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
+                    <td title="Kommunal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)
                     </td>
                     <td title="Datasett type: @item.DatasetType">@item.DatasetType</td>

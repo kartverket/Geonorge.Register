@@ -1,4 +1,5 @@
 ﻿@model Kartverket.Register.Models.CoverageDataset
+﻿@using Kartverket.Register.Helpers
 
 <h2>Dekning av @Model.dataset.name</h2>
 <p>@Model.Municipality.name</p>
@@ -10,42 +11,44 @@
     @Html.HiddenFor(model => model.Municipality)
 
     <div class="form-horizontal">
-        <div class="form-group">
-            @Html.LabelFor(model => model.ConfirmedDok, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ConfirmedDok, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
+        @if (HtmlHelperExtensions.IsAdmin()) { 
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfirmedDok, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ConfirmedDok, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("ErrorMessage")
+                </div>
             </div>
-        </div>
+            }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CoverageDOKStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @if (Model.CoverageDOKStatus == null)
+            <div class="form-group">
+                @Html.LabelFor(model => model.CoverageDOKStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @if (Model.CoverageDOKStatus == null)
                 {
-                    @Html.DropDownList("CoverageDOKStatusId", null, " ", htmlAttributes: new { @class = "form-control" })
-                }
-                else
-                {
-                    @Html.DropDownList("CoverageDOKStatusId", null, Model.CoverageDOKStatus.description, htmlAttributes: new { @class = "form-control" })
-                }
-                @Html.ValidationMessageFor(model => model.CoverageDOKStatusId, "", new { @class = "text-danger" })
+                        @Html.DropDownList("CoverageDOKStatusId", null, " ", htmlAttributes: new { @class = "form-control" })
+                    }
+                    else
+                    {
+                        @Html.DropDownList("CoverageDOKStatusId", null, Model.CoverageDOKStatus.description, htmlAttributes: new { @class = "form-control" })
+                    }
+                    @Html.ValidationMessageFor(model => model.CoverageDOKStatusId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Note, 5, 50, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <hr />
+                <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+                <a href="@Model.dataset.GetObjectUrl()">Tilbake</a>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Note, 5, 50, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <hr />
-            <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-            <a href="@Model.dataset.GetObjectUrl()">Tilbake</a>
-        </div>
-    </div>
 }
 

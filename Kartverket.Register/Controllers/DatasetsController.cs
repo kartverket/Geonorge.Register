@@ -238,13 +238,24 @@ namespace Kartverket.Register.Controllers
             dataset.dateSubmitted = DateTime.Now;
             dataset.registerId = dataset.register.systemId;
             dataset.statusId = "Valid";
-            dataset.dokStatusId = "Proposal";
+            dataset.dokStatusId = GetDokStatusId(dataset.register);
             dataset.versionNumber = GetVersionNr(dataset.versionNumber);
             dataset.name = DatasetName(dataset.name);
             dataset.seoname = DatasetSeoName(dataset.name);
             dataset.versioningId = GetVersioningId(dataset);
             SetDatasetOwnerAndSubmitter(dataset);
             dataset.DatasetType = GetDatasetType(dataset);
+        }
+
+        private string GetDokStatusId(Models.Register register)
+        {
+            if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            {
+                return "Accepted";
+            }
+            else {
+                return "Proposal";
+            }
         }
 
         private string GetDatasetType(Dataset dataset)

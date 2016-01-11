@@ -57,28 +57,18 @@
 }
 
 
-
-.document .statusIcon-Accepted:after{
-  content:"\e601";
-  color: #97c93c;
-  margin-left: -1em;
-}
-
-
-
-
 .statusIcon-Candidate:after, .statusIcon-Draft:after {
   content: "\e602";
   color: #97c93c;
   margin-left: -1em;
 }
 
-.dataset .statusIcon-Accepted:after {
+.statusIcon-Accepted:after {
   content: "\e600";
   color: #97c93c;
 }
 
-.dataset .statusIcon-Accepted:before {
+.statusIcon-Accepted:before {
   content: "";
 }
 

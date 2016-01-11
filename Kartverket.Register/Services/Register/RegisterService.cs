@@ -74,7 +74,7 @@ namespace Kartverket.Register.Services.Register
             AccessControlService access = new AccessControlService();
             if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                if (access.IsAdmin())
+                if (access.IsAdmin() && string.IsNullOrWhiteSpace(filter.municipality))
                 {
                     GetMunicipalDatasetAddedByAdmin(register, registerItems, access);
                 }

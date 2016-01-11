@@ -8,6 +8,7 @@ namespace Kartverket.Register
         {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/leaflet.css",
+                "~/Content/statusIcons.css",
                 "~/Content/custom.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(

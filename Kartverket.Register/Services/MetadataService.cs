@@ -9,7 +9,7 @@ namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
-        public void UpdateDatasetWithMetadata(Dataset dataset, string uuid)
+        public void UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
             SimpleMetadata metadata = FetchMetadata(uuid);
             if (metadata != null)
@@ -22,8 +22,20 @@ namespace Kartverket.DOK.Service
                 dataset.PresentationRulesUrl = metadata.LegendDescriptionUrl;
                 dataset.ProductSheetUrl = metadata.ProductSheetUrl;
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
-
                 dataset.datasetthumbnail = FetchThumbnailUrl(metadata);
+                dataset.register = originalDataset.register;
+
+                dataset.dokStatusId = originalDataset.dokStatusId;
+                dataset.datasetownerId = originalDataset.datasetownerId;
+                dataset.datasetowner = originalDataset.datasetowner;
+                dataset.ThemeGroupId = originalDataset.ThemeGroupId;
+                dataset.WmsUrl = originalDataset.WmsUrl;
+                dataset.registerId = originalDataset.registerId;
+
+                dataset.submitterId = originalDataset.submitterId;
+                dataset.submitter = originalDataset.submitter;
+                dataset.DatasetType = originalDataset.DatasetType;
+                if (dontUpdateDescription) dataset.description = originalDataset.description;
 
                 SimpleDistributionDetails distributionDetails = metadata.DistributionDetails;
                 if (distributionDetails != null)
@@ -36,7 +48,7 @@ namespace Kartverket.DOK.Service
                     else
                     {
                         dataset.DistributionUrl = distributionDetails.URL;
-                        
+
                     }
                     dataset.DistributionArea = distributionDetails.UnitsOfDistribution;
                 }

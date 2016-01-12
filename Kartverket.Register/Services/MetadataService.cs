@@ -31,6 +31,7 @@ namespace Kartverket.DOK.Service
                 dataset.ThemeGroupId = originalDataset.ThemeGroupId;
                 dataset.WmsUrl = originalDataset.WmsUrl;
                 dataset.registerId = originalDataset.registerId;
+                dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
 
                 dataset.submitterId = originalDataset.submitterId;
                 dataset.submitter = originalDataset.submitter;

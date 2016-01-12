@@ -1,0 +1,85 @@
+﻿@model Kartverket.Register.Models.Dataset
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.name
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2 " })
+        <div class="col-md-10">
+            @Model.description
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.ProductSheetUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.PresentationRulesUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.ProductSpecificationUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.MetadataUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.DistributionFormat
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.DistributionUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.DistributionArea
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.WmsUrl
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.datasetthumbnail, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Model.datasetthumbnail
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            </p>@Model.ThemeGroupId
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+
+

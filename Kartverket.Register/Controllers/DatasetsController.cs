@@ -8,7 +8,6 @@ using Kartverket.Register.Services;
 using System.Web;
 using System.Net.Http;
 using Kartverket.Register.Helpers;
-using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -47,6 +46,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
+                dataset.DatasetType = GetDatasetType(dataset.register.name);
                 ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
                 if (_accessControlService.Access(dataset))
                 {
@@ -73,6 +73,7 @@ namespace Kartverket.Register.Controllers
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
+                dataset.DatasetType = GetDatasetType(dataset.register.name);
                 if (uuid != null)
                 {
                     Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
@@ -244,12 +245,12 @@ namespace Kartverket.Register.Controllers
             dataset.seoname = DatasetSeoName(dataset.name);
             dataset.versioningId = GetVersioningId(dataset);
             SetDatasetOwnerAndSubmitter(dataset);
-            dataset.DatasetType = GetDatasetType(dataset);
+            dataset.DatasetType = GetDatasetType(dataset.register.name);
+            CreateCoverage(dataset);
         }
 
-        private string GetDokStatusId(Models.Register register)
-        {
-            if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+        private string GetDokStatusId(Models.Register register) {
+            if (DokMunicipalDataset(register.name))
             {
                 return "Accepted";
             }
@@ -258,11 +259,18 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string GetDatasetType(Dataset dataset)
+        private void CreateCoverage(Dataset dataset)
         {
-            if (DokMunicipalDataset(dataset))
+            if (DokMunicipalDataset(dataset.register.name))
             {
                 dataset.Coverage.Add(_registerItemService.NewCoverage(dataset));
+            }
+        }
+
+        private string GetDatasetType(string registerName)
+        {
+            if (DokMunicipalDataset(registerName))
+            {
                 return "Kommunalt";
             }
             else
@@ -271,9 +279,9 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private static bool DokMunicipalDataset(Dataset dataset)
+        private static bool DokMunicipalDataset(string registerName)
         {
-            return dataset.register.name == "Det offentlige kartgrunnlaget - Kommunalt";
+            return registerName == "Det offentlige kartgrunnlaget - Kommunalt";
         }
 
         private void initialisationDataset(Dataset dataset, Dataset originalDataset)

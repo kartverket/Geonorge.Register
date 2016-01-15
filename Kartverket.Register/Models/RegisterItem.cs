@@ -153,7 +153,7 @@ namespace Kartverket.Register.Models
             else if (item is Organization)
             {
                 Organization organization = (Organization)item;
-                organization.GetOrganizationEditUrl();
+                return organization.GetOrganizationEditUrl();
             }
             return "#";
         }
@@ -188,7 +188,7 @@ namespace Kartverket.Register.Models
             else if (item is Organization)
             {
                 Organization organization = (Organization)item;
-                organization.GetOrganizationDeleteUrl();
+                return organization.GetOrganizationDeleteUrl();
             }
             return "#";
         }

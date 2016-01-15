@@ -16,7 +16,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kartverket.Register.Models
 {
-	public class Document : RegisterItem {
+    public class Document : RegisterItem
+    {
         // logos will be stored in this directory
         public const string DataDirectory = "documents/";
 
@@ -26,6 +27,40 @@ namespace Kartverket.Register.Models
         [ForeignKey("documentowner")]
         public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
-        
-	}//end Document
+
+        public virtual string GetDocumentUrl()
+        {
+            if (register.parentRegisterId == Guid.Empty)
+            {
+                return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+            }
+            else {
+                return "/subregister/versjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+            }
+        }
+
+        public virtual string GetDocumentEditUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/dokument/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/rediger";
+            }
+            else {
+                return "/dokument/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/rediger";
+            }
+        }
+
+        public virtual string GetDocumentDeleteUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/dokument/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/slett";
+            }
+            else {
+                return "/dokument/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/slett";
+            }
+        }
+
+
+    }//end Document
 }//end namespace Datamodell

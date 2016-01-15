@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Uuid")]
         public string Uuid { get; set; }
 
+        [Required(ErrorMessage = "Dette feltet er påkrevd")]
         [ForeignKey("datasetowner")]
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
@@ -76,9 +77,36 @@ namespace Kartverket.Register.Models
         public string DatasetType { get; set; }
 
         public virtual List<CoverageDataset> Coverage{get; set;}
-        
-       
-                   
-	}//end Dataset
+
+
+
+        public virtual string GetDatasetUrl()
+        {
+            return register.GetObjectUrl() + "/" + datasetowner.seoname + "/" + seoname;
+        }
+
+        public virtual string GetDatasetEditUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/dataset/" + register.seoname + "/" + datasetowner.seoname + "/" + seoname + "/rediger";
+            }
+            else {
+                return "/dataset/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + datasetowner.seoname + "/" + seoname + "/rediger";
+            }
+        }
+
+        public virtual string GetDatasetDeleteUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/dataset/" + register.seoname + "/" + datasetowner.seoname + "/" + seoname + "/slett";
+            }
+            else {
+                return "/dataset/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + datasetowner.seoname + "/" + seoname + "/slett";
+            }
+        }
+
+    }//end Dataset
 
 }//end namespace Datamodell

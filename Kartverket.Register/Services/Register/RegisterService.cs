@@ -74,29 +74,22 @@ namespace Kartverket.Register.Services.Register
             AccessControlService access = new AccessControlService();
             if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                if (access.IsAdmin() && string.IsNullOrWhiteSpace(filter.municipality))
+                if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
-                    GetMunicipalDatasetAddedByAdmin(register, registerItems, access);
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(filter.municipality))
-                    {
-                        AddNationalDatasets(registerItems);
-                        //Finn valgt kommune
-                        Models.RegisterItem municipal = _registerItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                    AddNationalDatasets(registerItems);
+                    Models.RegisterItem municipal = _registerItemService.GetMunicipalOrganizationByNr(filter.municipality);
 
-                        if (municipal != null)
-                        {
-                            GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipal);
-                        }
-                    }
-                    else if (access.IsMunicipalUser())
+                    if (municipal != null)
                     {
-                        AddNationalDatasets(registerItems);
-                        GetMunicipalDatasetsByUser(register, registerItems);
+                        GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipal);
                     }
                 }
+                else if (access.IsMunicipalUser())
+                {
+                    AddNationalDatasets(registerItems);
+                    GetMunicipalDatasetsByUser(register, registerItems);
+                }
+
                 register.items.Clear();
             }
 
@@ -118,17 +111,6 @@ namespace Kartverket.Register.Services.Register
             AccessControlService access = new AccessControlService();
             Organization municipalityOrganization = GetOrganizationByUserName();
             GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipalityOrganization);
-        }
-
-        private static void GetMunicipalDatasetAddedByAdmin(Models.Register register, List<Models.RegisterItem> registerItems, AccessControlService access)
-        {
-            foreach (Dataset item in register.items)
-            {
-                if (access.GetSecurityClaim("organization") == item.datasetowner.name)
-                {
-                    registerItems.Add(item);
-                }
-            }
         }
 
         private static void GetMunicipalDatasetBySelectedMunicipality(Models.Register register, List<Models.RegisterItem> registerItems, Models.RegisterItem municipal)

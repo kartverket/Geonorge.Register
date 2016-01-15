@@ -1,6 +1,11 @@
 ﻿@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Helpers
 
+@{ 
+    Kartverket.Register.Models.CoverageDataset Coverage = HtmlHelperExtensions.GetCoverage(Model);
+
+}
+
 <h2>Rediger</h2>
 <h4>@Model.name</h4>
 <hr />
@@ -44,18 +49,86 @@
 
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
+            @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">                
+                @Html.DisplayFor(model => model.name)
+                @Html.HiddenFor(model => model.name)
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2 " })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                @Html.DisplayFor(model => model.description)
+                @Html.HiddenFor(model => model.description)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.ProductSheetUrl)
+                @Html.HiddenFor(model => model.ProductSheetUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.PresentationRulesUrl)
+                @Html.HiddenFor(model => model.PresentationRulesUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.ProductSpecificationUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.MetadataUrl)
+                @Html.HiddenFor(model => model.MetadataUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.DistributionFormat)
+                @Html.HiddenFor(model => model.DistributionFormat)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.DistributionUrl)
+                @Html.HiddenFor(model => model.DistributionUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.DistributionArea)
+                @Html.HiddenFor(model => model.DistributionArea)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.WmsUrl)
+                @Html.HiddenFor(model => model.WmsUrl)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.datasetthumbnail, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.datasetthumbnail)
+                @Html.HiddenFor(model => model.datasetthumbnail)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DisplayFor(model => model.ThemeGroupId)
+                @Html.HiddenFor(model => model.ThemeGroupId)
             </div>
         </div>
 
@@ -76,10 +149,21 @@
                     @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
                 </div>
             </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    @Html.Label("Bekreftet")
+                </div>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.Coverage.ElementAt(0).ConfirmedDok)
+                    @Html.ValidationMessage("ErrorMessage")
+                </div>
+            </div>
         }
         else {
             @Html.HiddenFor(model => model.submitterId)
             @Html.HiddenFor(model => model.datasetownerId)
+            @Html.HiddenFor(model => model.Coverage.ElementAt(0).ConfirmedDok)
         }
 
         <div class="form-group" id="dokStatus">
@@ -95,86 +179,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.dokStatusDateAccepted, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.dokStatusDateAccepted, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.datasetthumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.datasetthumbnail, new { htmlAttributes = new { @class = "form-control" } })
-                @*@Html.ValidationMessageFor(model => model.datasetthumbnail, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThemeGroupId, "Nasjonal temainndeling", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ThemeGroupId", null, new { @class = "form-control" })
-                @*@Html.ValidationMessageFor(model => model.theme, "", new { @class = "text-danger" })*@
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductSheetUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductSheetUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductSheetUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PresentationRulesUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PresentationRulesUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PresentationRulesUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductSpecificationUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductSpecificationUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductSpecificationUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MetadataUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MetadataUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MetadataUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionFormat, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DistributionFormat, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DistributionFormat, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DistributionUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DistributionUrl, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionArea, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DistributionArea, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DistributionArea, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.WmsUrl, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.WmsUrl, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.WmsUrl, "", new { @class = "text-danger" })
             </div>
         </div>
 

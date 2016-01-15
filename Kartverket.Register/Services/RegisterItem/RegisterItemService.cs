@@ -258,10 +258,11 @@ namespace Kartverket.Register.Services.RegisterItem
             coverage.CoverageDOKStatusId = "Accepted";
             coverage.ConfirmedDok = false;
             coverage.DatasetId = registerItem.systemId;
-            coverage.MunicipalityId = registerItem.submitterId;
             if (registerItem is Dataset)
             {
                 Dataset dataset = (Dataset)registerItem;
+                dataset.dokStatusDateAccepted = DateTime.Now;
+                coverage.MunicipalityId = dataset.datasetownerId;
                 coverage.Note = dataset.Notes;
             }
 
@@ -270,8 +271,9 @@ namespace Kartverket.Register.Services.RegisterItem
             return coverage;
         }
 
-        public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr)
+        public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null)
         {
+            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
             if (string.IsNullOrWhiteSpace(parentregister))
             {
                 vnr = getVnr(parentregister, register, item, vnr);
@@ -281,7 +283,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    o.versionNumber == vnr
                                    select o;
 
-                return queryResults.FirstOrDefault();
+                registerItems = queryResults.ToList();
             }
             else
             {
@@ -293,8 +295,23 @@ namespace Kartverket.Register.Services.RegisterItem
                                    (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
                                    select o;
 
-                return queryResults.FirstOrDefault();
+                registerItems = queryResults.ToList();
             }
+            if (itemowner != null)
+            {
+                foreach (Models.RegisterItem registerItem in registerItems)
+                {
+                    if (registerItem is Dataset)
+                    {
+                        Dataset dataset = (Dataset)registerItem;
+                        if (dataset.datasetowner.seoname == itemowner)
+                        {
+                            return registerItem;
+                        }
+                    }
+                }
+            }
+            return registerItems.FirstOrDefault();
         }
 
         private int? getVnr(string parentregister, string register, string item, int? vnr)
@@ -334,21 +351,58 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (model is Models.RegisterItem)
             {
-                Models.RegisterItem registeritem = (Models.RegisterItem)model;
-                var queryResults = from o in _dbContext.RegisterItems
-                                   where o.name == registeritem.name && 
-                                         o.systemId != registeritem.systemId 
-                                         && o.registerId == registeritem.registerId
-                                         && o.versioningId != registeritem.versioningId
-                                   select o.systemId;
+                if (model is Dataset)
+                {
+                    return ValidateNameDataset(model);
+                }
+                else {
+                    return ValidateNameRegisterItem(model);
+                }
+            }
+            return false;
+        }
 
-                if (queryResults.Count() > 0)
+        private bool ValidateNameRegisterItem(object model)
+        {
+            Models.RegisterItem registeritem = (Models.RegisterItem)model;
+            var queryResults = from o in _dbContext.RegisterItems
+                               where o.name == registeritem.name &&
+                                     o.systemId != registeritem.systemId
+                                     && o.registerId == registeritem.registerId
+                                     && o.versioningId != registeritem.versioningId
+                               select o.systemId;
+            if (queryResults.Count() > 0)
+            {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        private bool ValidateNameDataset(object model)
+        {
+            Dataset dataset = (Dataset)model;
+            if (dataset.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            {
+                var queryResultsDataset = from o in _dbContext.Datasets
+                                          where o.name == dataset.name
+                                                && o.systemId != dataset.systemId
+                                                && o.registerId == dataset.registerId
+                                                && o.versioningId != dataset.versioningId
+                                                && o.datasetownerId == dataset.datasetownerId
+                                          select o.systemId;
+
+                if (queryResultsDataset.Count() > 0)
                 {
                     return false;
                 }
                 else {
                     return true;
                 }
+            }
+            else {
+                ValidateNameRegisterItem(model);
             }
             return false;
         }
@@ -444,10 +498,11 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryresultMunicipality.ToList();
         }
 
-        public CoverageDataset GetMunicipalityCoverage(Dataset dataset)
+        public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? owner = null)
         {
             AccessControlService _accessControlService = new AccessControlService();
-            Organization municipality = _accessControlService.MunicipalUserOrganization();
+            Organization municipality = GetMunicipality(owner, _accessControlService);
+
             var queryResult = from c in _dbContext.CoverageDatasets
                               where c.Municipality.systemId == municipality.systemId
                               && c.dataset.systemId == dataset.systemId
@@ -456,6 +511,20 @@ namespace Kartverket.Register.Services.RegisterItem
             CoverageDataset municipalCoverage = queryResult.FirstOrDefault();
 
             return municipalCoverage;
+        }
+
+        private Organization GetMunicipality(Guid? owner, AccessControlService _accessControlService)
+        {
+            Organization municipality;
+            if (owner != null && owner != Guid.Empty)
+            {
+                municipality = (Organization)GetRegisterItemBySystemId(owner.Value);
+            }
+            else {
+                municipality = _accessControlService.MunicipalUserOrganization();
+            }
+
+            return municipality;
         }
 
         public void SaveNewCoverage(CoverageDataset cover)
@@ -484,6 +553,6 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return queryResult.FirstOrDefault();
         }
-    }    
+    }
 
 }

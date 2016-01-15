@@ -911,6 +911,8 @@
     <Content Include="Views\Datasets\_CreateCoverage.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
+    <Content Include="Views\Datasets\_CreateMunicipalDataset.cshtml" />
+    <Content Include="Views\Datasets\_CreateNationalDataset.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

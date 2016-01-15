@@ -42,9 +42,9 @@
             @foreach (Dataset item in Model)
                 {
                 <tr>
-                    <td title="Temagruppe for @item.name: @item.theme.description">@item.theme.description</td>
+                    <td title="Temagruppe for @item.name: @item.ThemeGroupId">@item.ThemeGroupId</td>
                     <td title="Datasett: @item.name">
-                        <a href="@item.GetObjectUrl()">
+                        <a href="@item.GetObjectUrl(item)">
                             @item.name
                         </a>
                     </td>

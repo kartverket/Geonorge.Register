@@ -27,13 +27,13 @@ namespace Kartverket.Register.Models
         [Key]
         public Guid systemId { get; set; }
         //public virtual ICollection<Version> replaces { get; set; }
-        
+
         [Display(Name = "Navn:")]
         public string name { get; set; }
-        
+
         [Display(Name = "Beskrivelse:")]
         public string description { get; set; }
-        
+
         [ForeignKey("submitter")]
         [Display(Name = "Innsender:")]
         public Guid submitterId { get; set; }
@@ -46,7 +46,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Dato endret:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
-        
+
         [ForeignKey("status")]
         [Display(Name = "Status:")]
         public string statusId { get; set; }
@@ -92,10 +92,10 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Godkjenningsreferanse:")]
         public string approvalReference { get; set; }
-        
+
         [Display(Name = "Godkjent")]
         public bool? Accepted { get; set; }
-    //end RegisterItem
+        //end RegisterItem
 
         /// <summary>
         /// Gets Url to current object
@@ -104,6 +104,93 @@ namespace Kartverket.Register.Models
         public virtual string GetObjectUrl()
         {
             return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+        }
+
+        public virtual string GetObjectUrl(RegisterItem item)
+        {
+            if (item is Dataset)
+            {
+                Dataset dataset = (Dataset)item;
+                return dataset.GetDatasetUrl();
+            }
+            else if (item is Document)
+            {
+                Document document = (Document)item;
+                return document.GetDocumentUrl();
+            }
+            else {
+                return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+            }
+        }
+
+        public virtual string GetObjectEditUrl(RegisterItem item)
+        {
+            if (item is Document)
+            {
+                Document document = (Document)item;
+                return document.GetDocumentEditUrl();
+            }
+            else if (item is Dataset)
+            {
+                Dataset dataset = (Dataset)item;
+                return dataset.GetDatasetEditUrl();
+            }
+            else if (item is EPSG)
+            {
+                EPSG epsg = (EPSG)item;
+                return epsg.GetEPSGEditUrl();
+            }
+            else if (item is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)item;
+                return codelistValue.GetCodelistValueEditUrl();
+            }
+            else if (item is NameSpace)
+            {
+                NameSpace nameSpace = (NameSpace)item;
+                return nameSpace.GetNameSpaceEditUrl();
+            }
+            else if (item is Organization)
+            {
+                Organization organization = (Organization)item;
+                organization.GetOrganizationEditUrl();
+            }
+            return "#";
+        }
+
+        public virtual string GetObjectDeleteUrl(RegisterItem item)
+        {
+            if (item is Document)
+            {
+                Document document = (Document)item;
+                return document.GetDocumentDeleteUrl();
+            }
+            else if (item is Dataset)
+            {
+                Dataset dataset = (Dataset)item;
+                return dataset.GetDatasetDeleteUrl();
+            }
+            else if (item is EPSG)
+            {
+                EPSG epsg = (EPSG)item;
+                return epsg.GetEPSGDeleteUrl();
+            }
+            else if (item is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)item;
+                return codelistValue.GetCodelistValueDeleteUrl();
+            }
+            else if (item is NameSpace)
+            {
+                NameSpace nameSpace = (NameSpace)item;
+                return nameSpace.GetNameSpaceDeleteUrl();
+            }
+            else if (item is Organization)
+            {
+                Organization organization = (Organization)item;
+                organization.GetOrganizationDeleteUrl();
+            }
+            return "#";
         }
     }
 }//end namespace Datamodell

@@ -32,6 +32,27 @@ namespace Kartverket.Register.Models
 
         public virtual ICollection<CodelistValue> narrowerItems { get; set; }
 
-	}//end CodelistValue
+        public virtual string GetCodelistValueEditUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/kodeliste/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+            else {
+                return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+        }
+
+        public virtual string GetCodelistValueDeleteUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/kodeliste/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+            else {
+                return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+        }
+    }//end CodelistValue
 
 }//end namespace Datamodell

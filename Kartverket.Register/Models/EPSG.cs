@@ -56,6 +56,28 @@ namespace Kartverket.Register.Models
         public virtual Dimension dimension { get; set; }
         public string dimensionId { get; set; }
 
-	}//end EPSG
+        public virtual string GetEPSGEditUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/epsg/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+            else {
+                return "/epsg/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+        }
+
+        public virtual string GetEPSGDeleteUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/epsg/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+            else {
+                return "/epsg/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+        }
+
+    }//end EPSG
 
 }//end namespace Datamodell

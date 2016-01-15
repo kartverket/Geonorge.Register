@@ -6,10 +6,6 @@
 //  Original author: Tor Kjetil
 ///////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.ComponentModel.DataAnnotations;
 using Resources;
 
@@ -53,6 +49,28 @@ namespace Kartverket.Register.Models
         [Display(Name = "Kortnavn")]
         public string shortname { get; set; }
 
-	}//end Organization
+        public virtual string GetOrganizationEditUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/organisasjoner/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+            else {
+                return "/organisasjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
+            }
+        }
+
+        public virtual string GetOrganizationDeleteUrl()
+        {
+            if (register.parentRegister == null)
+            {
+                return "/organisasjoner/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+            else {
+                return "/organisasjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
+            }
+        }
+
+    }//end Organization
 
 }//end namespace Datamodell

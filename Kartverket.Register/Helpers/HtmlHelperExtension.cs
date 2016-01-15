@@ -958,12 +958,13 @@ namespace Kartverket.Register.Helpers
             }
         }
 
-        public static string GetNationalDokStatus(Dataset item) {
+        public static string GetNationalDokStatus(Dataset item)
+        {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
                 return " ";
             }
-            else 
+            else
                 return item.dokStatus.description;
         }
 
@@ -984,26 +985,20 @@ namespace Kartverket.Register.Helpers
 
         public static string GetConfirmedFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
             {
-                return "Ja";
-            }
-            else
-            {
-                CoverageDataset coverage = Coverage(item, selectedMunicipality);
-                if (coverage != null)
+                if (coverage.ConfirmedDok)
                 {
-                    if (coverage.ConfirmedDok)
-                    {
-                        return "Ja";
-                    }
-                    else
-                    {
-                        return "Nei";
-                    }
+                    return "Ja";
                 }
-                else return "Nei";
+                else
+                {
+                    return "Nei";
+                }
             }
+            else return "Nei";
+
         }
 
         public static string GetNoteFromCoverage(Dataset item, CodelistValue selectedMunicipality)
@@ -1043,6 +1038,11 @@ namespace Kartverket.Register.Helpers
             {
                 return "Ja";
             }
+        }
+
+        public static CoverageDataset GetCoverage(Dataset dataset)
+        {
+            return _registeritemService.GetMunicipalityCoverage(dataset);
         }
 
     }

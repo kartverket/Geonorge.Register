@@ -22,7 +22,7 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem);
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
-        Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr);
+        Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null);
         bool validateName(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);
         void SaveEditedRegisterItem(Models.RegisterItem registerItem);
@@ -38,7 +38,7 @@ namespace Kartverket.Register.Services.RegisterItem
         CoverageDataset NewCoverage(Models.RegisterItem registerItem);
         Organization GetMunicipalOrganizationByNr(string municipalityNr);
         List<CodelistValue> GetMunicipalityList();
-        CoverageDataset GetMunicipalityCoverage(Dataset dataset);
+        CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? owner = null);
         void SaveNewCoverage(CoverageDataset coverage);
         void DeleteCoverage(CoverageDataset coverage);
         void Save();

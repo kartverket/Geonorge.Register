@@ -127,7 +127,7 @@ namespace Kartverket.Register.Tests.Controllers
             List<RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(s => s.GetRegisterItem(null, "register_name", "itemname", 2)).Returns(versions[2]);
+            registerItemService.Setup(s => s.GetRegisterItem(null, "register_name", "itemname", 2, null)).Returns(versions[2]);
             var controller = createController(url, null, registerItemService.Object);
             var result = controller.GetRegisterItemByVersionNr("register_name", "itemname", 2) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 

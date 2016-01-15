@@ -57,7 +57,9 @@
                     <td title="Kommunal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)
                     </td>
-                    <td title="Datasett type: @item.DatasetType">@item.DatasetType</td>
+                    <td title="Datasett type: @item.DatasetType">
+                        <span title="Datasett type: @item.DatasetType" class="label label-@item.DatasetType">@item.DatasetType</span>
+                    </td>
                     <td style="text-align: center" title="Bekrefter: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal))">
                         @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
                     </td>

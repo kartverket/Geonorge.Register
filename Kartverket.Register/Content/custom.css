@@ -211,9 +211,9 @@
 }
 
 
-.search-results.document.table-view .col-title img {
-    display: none;
-}
+    .search-results.document.table-view .col-title img {
+        display: none;
+    }
 
 .search-results.document.table-view .col-actions h4 {
     width: 100%;
@@ -888,3 +888,11 @@
         background-color: #fe5000;
         color: #FFF;
     }
+
+.label-Kommunalt {
+    border-color: #FE5000;
+}
+
+.label-Nasjonalt {
+    border-color: #5D4777;
+}

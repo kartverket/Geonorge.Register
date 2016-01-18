@@ -21,6 +21,8 @@ namespace Kartverket.Register.Models.Api
         public string logo { get; set; }
         public string documentreference { get; set; }
 
+        public string epsgcode { get; set; }
+        public string sosiReferencesystem { get; set; }
         public string inspireRequirement { get; set; }
         public string nationalRequirement { get; set; }
         public string nationalSeasRequirement { get; set; }
@@ -69,6 +71,8 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "EPSG";
                 var d = (EPSG)item;
+                epsgcode = d.epsgcode;
+                sosiReferencesystem = d.sosiReferencesystem;
                 documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
                 inspireRequirement = d.inspireRequirement.description;
                 nationalRequirement = d.nationalRequirement.description;

@@ -130,6 +130,10 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.label + ";" + item.codevalue +";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
             }
+            else if (item.itemclass == "EPSG")
+            {
+                text = item.label + ";" + item.epsgcode + ";" + item.sosiReferencesystem + ";" + item.verticalReferenceSystem + ";" + item.horizontalReferenceSystem + ";" + item.dimension + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+            }
             else if (item.itemclass == "Dataset")
             {
                 text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
@@ -169,6 +173,10 @@ namespace Kartverket.Register.Formatter
             else if (containedItemClass == "CodelistValue")
             {
                 return "Navn; Kode; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; ID";
+            }
+            else if (containedItemClass == "EPSG")
+            {
+                return "Tittel; EPSG; SOSI; Vertikalt; Horisontalt; Dimensjon; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; ID";
             }
             else if (containedItemClass == "Dataset")
             {

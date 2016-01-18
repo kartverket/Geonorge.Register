@@ -79,7 +79,7 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItem registerItem = _registerItemService.GetRegisterItem(null, registername, itemname, 1);
+            RegisterItem registerItem = _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);

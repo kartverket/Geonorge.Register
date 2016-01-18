@@ -138,7 +138,7 @@ namespace Kartverket.Register.Controllers
 
         private void SetEPSGOwnerAndSubmitter(EPSG epsgKode)
         {
-            Organization submitterOrganisasjon = _registerService.GetOrganization();
+            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
             epsgKode.submitterId = submitterOrganisasjon.systemId;
             epsgKode.submitter = submitterOrganisasjon;
         }

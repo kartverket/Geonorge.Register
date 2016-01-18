@@ -49,6 +49,7 @@ namespace Kartverket.Register.Services
         private bool accessRegisterItem(object model)
         {
             string user = GetSecurityClaim("organization");
+            Organization userOrganization = _registerService.GetOrganizationByUserName();
 
             RegisterDbContext db = new RegisterDbContext();
             Models.RegisterItem registerItem = (Models.RegisterItem)model;
@@ -58,16 +59,16 @@ namespace Kartverket.Register.Services
                 if (IsDocument(registerItem))
                 {
                     Document document = (Document)registerItem;
-                    return IsOwner(document.documentowner.name, user);
+                    return IsOwner(document.documentowner.name, userOrganization.name);
                 }
                 else if (IsDataset(registerItem))
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    return IsOwnerOrMunicipal(user, dataset);
+                    return IsOwnerOrMunicipal(userOrganization.name, dataset);
                 }
                 else
                 {
-                    IsOwner(registerItem.submitter.name, user);
+                    IsOwner(registerItem.submitter.name, userOrganization.name);
                 }
             }
             return false;

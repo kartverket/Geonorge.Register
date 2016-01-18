@@ -518,7 +518,7 @@ namespace Kartverket.Register.Controllers
 
         private Guid SetMunicipality()
         {
-            Organization municipality = _accessControlService.MunicipalUserOrganization();
+            Organization municipality = _registerService.GetOrganizationByUserName();
             return municipality.systemId;
         }
 

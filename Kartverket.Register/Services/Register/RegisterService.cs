@@ -309,7 +309,7 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
-        public Organization GetOrganization()
+        private Organization GetOrganization()
         {
             AccessControlService access = new AccessControlService();
             string organizationLogin = access.GetSecurityClaim("organization");

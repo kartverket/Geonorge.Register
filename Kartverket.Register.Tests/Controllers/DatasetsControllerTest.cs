@@ -152,7 +152,7 @@ namespace Kartverket.Register.Tests.Controllers
             accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
             accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
-            registerService.Setup(o => o.GetOrganization()).Returns(dataset.submitter);
+            registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
             var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
             var result = controller.Edit(dataset, null, dataset.register.seoname, dataset.seoname, null, null, null, null) as ActionResult;

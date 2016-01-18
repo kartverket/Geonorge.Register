@@ -98,7 +98,7 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (Model.statusId == "Submitted")
+            if (Model.statusId == "Submitted" || Model.statusId == "Draft")
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -156,6 +156,8 @@
                     </div>
                 </div>
                 <hr />
+
+                @Html.Hidden("retired", false)
             }
             else {
                 @Html.HiddenFor(model => model.name)
@@ -217,13 +219,13 @@
                         </div>
                     </div>
 
-
+                    <hr />
             }
         }
 
     </div>
     <div class="form-group">
-        <hr />
+        
         <input type="submit" value="Lagre" class="btn btn-default pull-right" />
         @if (Model.register.parentRegisterId != null)
         {

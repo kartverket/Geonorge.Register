@@ -126,43 +126,7 @@ namespace Kartverket.Register.Helpers
 
         public static bool accessRegisterItem(RegisterItem item)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (role == "nd.metadata_admin")
-            {
-                return true;
-            }
-
-            if (item.register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor"))
-            {
-                if (item.register.containedItemClass == "Document")
-                {
-                    Kartverket.Register.Models.Document document = db.Documents.Find(item.systemId);
-                    if (document.documentowner.name.ToLower() == user.ToLower())
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-
-                if (item.register.containedItemClass == "Dataset")
-                {
-                    Kartverket.Register.Models.Dataset dataset = db.Datasets.Find(item.systemId);
-                    if (dataset.datasetowner.name.ToLower() == user.ToLower())
-                    {
-                        return true;
-                    }
-                    return false;
-                }
-
-                if (item.submitter.name.ToLower() == user.ToLower())
-                {
-                    return true;
-                }
-                return false;
-            }
-            return false;
+            return _accessControl.Access(item);
         }
 
         public static bool IsGeonorgeAdmin(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
@@ -1024,7 +988,7 @@ namespace Kartverket.Register.Helpers
             {
                 dataset = dataset,
                 DatasetId = dataset.systemId,
-                Municipality = _accessControl.MunicipalUserOrganization()
+                Municipality = _registerService.GetOrganizationByUserName()
             };
         }
 

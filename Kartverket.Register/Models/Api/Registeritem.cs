@@ -19,6 +19,7 @@ namespace Kartverket.Register.Models.Api
         public int versionNumber { get; set; }
 
         public string logo { get; set; }
+        public string number { get; set; }
         public string documentreference { get; set; }
 
         public string epsgcode { get; set; }
@@ -81,7 +82,7 @@ namespace Kartverket.Register.Models.Api
                 verticalReferenceSystem = d.verticalReferenceSystem;
                 dimension = d.dimension != null ? d.dimension.description : "";
             }
-            if (item is CodelistValue)
+            else if (item is CodelistValue)
             {
                 itemclass = "CodelistValue";
                 var c = (CodelistValue)item;
@@ -93,7 +94,7 @@ namespace Kartverket.Register.Models.Api
                     narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
                 }
             }
-            if (item is Document)
+            else if (item is Document)
             {
                 itemclass = "Document";
                 var d = (Document)item;
@@ -101,7 +102,7 @@ namespace Kartverket.Register.Models.Api
                 documentreference = d.documentUrl;
             }
 
-            if (item is Dataset)
+            else if (item is Dataset)
             {
                 itemclass = "Dataset";
                 var d = (Dataset)item;
@@ -109,11 +110,17 @@ namespace Kartverket.Register.Models.Api
                 if (d.theme != null) theme = d.theme.description;
                 if (d.dokStatus != null) dokStatus = d.dokStatus.description;
             }
-            if (item is NameSpace)
+            else if (item is NameSpace)
             {
                 itemclass = "NameSpace";
                 var n = (NameSpace)item;
                 serviceUrl = n.serviceUrl;
+            }
+            else if (item is Kartverket.Register.Models.Organization)
+            {
+                itemclass = "Organization";
+                var o = (Kartverket.Register.Models.Organization)item;
+                number = o.number;
             }
 
         }

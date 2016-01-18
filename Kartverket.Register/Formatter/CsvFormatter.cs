@@ -138,6 +138,10 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
              }
+            else if (item.itemclass == "Organization")
+            {
+                text = item.label + ";" + item.number + ";";
+            }
 
             streamWriter.WriteLine(text);
         }
@@ -182,6 +186,11 @@ namespace Kartverket.Register.Formatter
             {
                 return "Temagruppe; Navn; Eier; DOK-status; Oppdatert; Versjons Id; Beskrivelse; ID";
             }
+            else if (containedItemClass == "Organization")
+            {
+                return "Navn; Nummer;";
+            }
+
             return null;
         }
 

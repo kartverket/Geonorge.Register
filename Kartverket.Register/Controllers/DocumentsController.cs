@@ -400,7 +400,7 @@ namespace Kartverket.Register.Controllers
             document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
             document.documentUrl = documentUrl(url, documentfile, inputDocument);
-            document.thumbnail = GetThumbnail(inputDocument, documentfile, url, thumbnail);
+            document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
 

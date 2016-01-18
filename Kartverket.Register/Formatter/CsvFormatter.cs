@@ -100,7 +100,7 @@ namespace Kartverket.Register.Formatter
 
         private void ConvertRegisters(StreamWriter streamWriter, Models.Api.Register register)
         {
-            if (register.containeditems != null)
+            if (register.containeditems != null && register.containeditems.Count > 0)
             {
                 streamWriter.WriteLine(RegisterItemHeading(register.containedItemClass));
                 foreach (Models.Api.Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))

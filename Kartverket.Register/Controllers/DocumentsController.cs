@@ -266,21 +266,21 @@ namespace Kartverket.Register.Controllers
             }
             if (document.versioning.currentVersion == document.systemId)
             {
-                Document nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Retired").Where(o => o.systemId != document.systemId).OrderByDescending(d => d.DateRetired).FirstOrDefault();
+                Document nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Draft").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
                 if (nyGjeldendeVersjon != null)
                 {
                     document.versioning.currentVersion = nyGjeldendeVersjon.systemId;
                 }
                 else
                 {
-                    nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Draft").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                    nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Submitted").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
                     if (nyGjeldendeVersjon != null)
                     {
                         document.versioning.currentVersion = nyGjeldendeVersjon.systemId;
                     }
                     else
                     {
-                        nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Submitted").Where(o => o.systemId != document.systemId).OrderBy(d => d.dateSubmitted).FirstOrDefault();
+                        nyGjeldendeVersjon = (Document)versionsOfDocument.Where(o => o.statusId == "Retired").Where(o => o.systemId != document.systemId).OrderByDescending(d => d.DateRetired).FirstOrDefault();
                         if (nyGjeldendeVersjon != null)
                         {
                             document.versioning.currentVersion = nyGjeldendeVersjon.systemId;

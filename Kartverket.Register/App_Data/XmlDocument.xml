@@ -723,13 +723,6 @@
             <param name="inputVersioningId"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.GetVersionNr(System.Int32)">
-            <summary>
-            Returns new version number. 
-            </summary>
-            <param name="versionNumber"></param>
-            <returns></returns>
-        </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.DocumentSeoName(System.String)">
             <summary>
             Make SEO friendly name

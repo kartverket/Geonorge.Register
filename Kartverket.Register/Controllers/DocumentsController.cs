@@ -193,7 +193,7 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{organization}/{documentname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
-            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);            
+            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
             if (DocumentIsCurrentVersion(document))
             {
                 Models.Version versjonsgruppe = document.versioning;
@@ -396,10 +396,11 @@ namespace Kartverket.Register.Controllers
             document.approvalDocument = inputDocument.approvalDocument;
             document.approvalReference = inputDocument.approvalReference;
             document.versionName = inputDocument.versionName;
+            document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument);
             document.registerId = GetRegisterId(inputDocument, document);
             document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            document.documentUrl = documentUrl(url, documentfile, inputDocument);
+            document.documentUrl = documentUrl(url, documentfile, inputDocument.documentUrl, document.register.name, document.versionNumber);
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
@@ -408,14 +409,12 @@ namespace Kartverket.Register.Controllers
             {
                 document.dateSubmitted = DateTime.Now;
                 document.statusId = "Submitted";
-                document.versionNumber = GetVersionNr(inputDocument.versionNumber);
                 document.versioningId = GetVersioningId(document, inputDocument.versioningId);
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
             }
             else {
                 ApprovalProcess(document, retired, inputDocument);
-                document.versionNumber = inputDocument.versionNumber;
                 db.Entry(document).State = EntityState.Modified;
             }
             db.SaveChanges();
@@ -748,20 +747,19 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        /// <summary>
-        /// Returns new version number. 
-        /// </summary>
-        /// <param name="versionNumber"></param>
-        /// <returns></returns>
-        private int GetVersionNr(int versionNumber)
+               
+        private int GetVersionNr(int versionNumber, Document originalDocument)
         {
-            if (versionNumber == 0)
+            if (originalDocument == null)
             {
-                versionNumber = 1;
-            }
-            else
-            {
-                versionNumber++;
+                if (versionNumber == 0)
+                {
+                    versionNumber = 1;
+                }
+                else
+                {
+                    versionNumber++;
+                }
             }
             return versionNumber;
         }
@@ -812,11 +810,11 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string documentUrl(string url, HttpPostedFileBase documentfile, Document document)
+        private string documentUrl(string url, HttpPostedFileBase documentfile, string documentname, string registername, int versionNr)
         {
             if (documentfile != null)
             {
-                return url + SaveFileToDisk(documentfile, document.name, document.register.seoname, document.versionNumber);
+                return url + SaveFileToDisk(documentfile, documentname, registername, versionNr);
             }
             else
             {

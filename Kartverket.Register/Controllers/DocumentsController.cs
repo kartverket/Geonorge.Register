@@ -10,6 +10,9 @@ using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services;
+using GhostscriptSharp.Settings;
+using System.Drawing;
+using GhostscriptSharp;
 
 namespace Kartverket.Register.Controllers
 {
@@ -320,9 +323,11 @@ namespace Kartverket.Register.Controllers
                 string seofilename;
                 MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
-                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
-                GhostscriptSharp.GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 197);
+                string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
+                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
+                
+                GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 160);
+
                 return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
             }
             else
@@ -400,7 +405,7 @@ namespace Kartverket.Register.Controllers
             document.registerId = GetRegisterId(inputDocument, document);
             document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
-            document.documentUrl = documentUrl(url, documentfile, inputDocument.documentUrl, document.register.name, document.versionNumber);
+            document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, document.register.name, document.versionNumber);
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
@@ -810,11 +815,15 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private string documentUrl(string url, HttpPostedFileBase documentfile, string documentname, string registername, int versionNr)
+        private string documentUrl(string url, HttpPostedFileBase documentfile, string documenturl, string documentname, string registername, int versionNr)
         {
             if (documentfile != null)
             {
                 return url + SaveFileToDisk(documentfile, documentname, registername, versionNr);
+            }
+            else if (documenturl != null)
+            {
+                return documenturl;
             }
             else
             {

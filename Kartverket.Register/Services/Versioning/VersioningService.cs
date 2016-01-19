@@ -18,12 +18,24 @@ namespace Kartverket.Register.Services.Versioning
         public VersionsItem Versions(string registername, string parantRegister, string itemname)
         {
             // Finn versjonsgruppen
-            var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
-                                           where ri.register.seoname == registername && ri.register.parentRegister.seoname == parantRegister
-                                           && ri.seoname == itemname
-                                           select ri.versioning;
+            Models.Version versjonsGruppe = new Models.Version();
+            if (parantRegister != null)
+            {
+                var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
+                                               where ri.register.seoname == registername && ri.register.parentRegister.seoname == parantRegister
+                                               && ri.seoname == itemname
+                                            select ri.versioning;
 
-            Models.Version versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
+                versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
+            }
+            else {
+                var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
+                                               where ri.register.seoname == registername && ri.register.parentRegister == null
+                                               && ri.seoname == itemname
+                                               select ri.versioning;
+
+                versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
+            }
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
             
             Guid currentVersionId = versjonsGruppe.currentVersion;

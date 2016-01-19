@@ -160,7 +160,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail, retired, originalDocument);
-                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, itemowner, documentname));
+                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, originalDocument.documentowner.seoname, originalDocument.seoname));
                 }
             }
             Viewbags(document);
@@ -325,8 +325,30 @@ namespace Kartverket.Register.Controllers
 
                 string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
                 string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
-                
-                GhostscriptWrapper.GeneratePageThumb(input, output, 1, 150, 160);
+
+                GhostscriptSettings gsSettings = new GhostscriptSettings
+                {
+                    Device = GhostscriptDevices.jpeg,
+                    Page = new GhostscriptPages
+                    {
+                        Start = 1,
+                        End = 1,
+                        AllPages = false
+                    },
+                    Resolution = new Size
+                    {
+                        //dpi
+                        Height = 36,
+                        Width = 36
+                    },
+                    Size = new GhostscriptPageSize
+                    {
+                        Native = GhostscriptPageSizes.a4
+                    }
+                };
+
+
+                GhostscriptWrapper.GenerateOutput(input, output, gsSettings);
 
                 return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
             }

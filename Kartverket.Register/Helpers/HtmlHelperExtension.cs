@@ -1009,5 +1009,16 @@ namespace Kartverket.Register.Helpers
             return _registeritemService.GetMunicipalityCoverage(dataset);
         }
 
+        public static bool SosiIsChecked(string statusId)
+        {
+            if (statusId == "Sosi-valid")
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
     }
 }

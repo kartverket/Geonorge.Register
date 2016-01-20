@@ -3,6 +3,7 @@
 
 @{
     ViewBag.Title = "Rediger " + Model.name;
+    bool sosiChecked = false;
 }
 
 <script>
@@ -12,25 +13,25 @@
 
     window.onload = function () {
         if (document.getElementById('accepted').checked == true) {
-            document.getElementById('retired').hidden = false;
+            document.getElementById('cbRetired').hidden = false;
             enable();
         }
         if (document.getElementById('not-accepted').checked == true) {
-            document.getElementById('retired').hidden = false;
+            document.getElementById('cbRetired').hidden = false;
             disable();
         }
         if (document.getElementById('accepted').checked == false && document.getElementById('not-accepted').checked == false) {
-            document.getElementById('retired').hidden = true;
+            document.getElementById('cbRetired').hidden = true;
             disable();
         }
 
         if ((document.getElementById('accepted').checked == true || document.getElementById('not-accepted').checked == true) && @Model.statusId != "Superseded") {
-            document.getElementById('retired').hidden = false;
+            document.getElementById('cbRetired').hidden = false;
         }
 
         if (@Model.statusId == "Retired" || @Model.statusId == "Superseded") {
-            document.getElementById('accepted').disabled == true
-            document.getElementById('not-accepted').disabled == true
+            document.getElementById('accepted').disabled == true;
+            document.getElementById('not-accepted').disabled == true;
         }
     }
 
@@ -44,6 +45,7 @@
         else{
             document.getElementById('NotAcceptedate').hidden = false;
         }
+        document.getElementById('sosi').hidden = true;
     }
 
     function enable() {
@@ -51,7 +53,8 @@
         document.getElementById('approvalDoc').hidden = false;
         document.getElementById('approvalRef').hidden = false;
         document.getElementById('NotAcceptedate').hidden = true;
-        document.getElementById('retired').hidden = false;
+        document.getElementById('cbRetired').hidden = false;
+        document.getElementById('sosi').hidden = false;
     }
 
 
@@ -83,6 +86,9 @@
 
 <h2>Rediger</h2>
 <h4>@Model.name</h4>
+<p id="registerName">Register: @Model.register.name</p>
+<p>Versjons id: @Model.versionNumber</p>
+
 <hr />
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
@@ -147,7 +153,6 @@
                         @Html.ValidationMessageFor(model => model.documentUrl, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -168,41 +173,58 @@
                 @Html.HiddenFor(model => model.thumbnail)
                 @Html.HiddenFor(model => model.documentUrl)
             }
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            if (HtmlHelperExtensions.IsAdmin())
             {
                 @Html.HiddenFor(model => model.documentownerId)
-
                 <br />
                 <h3>Dokumentgodkjenning</h3>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-1">
-                            @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) Ja
-                        </div>
-                        <div class="col-md-1">
-                            @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) Nei
-                        </div>
-                        <div class="col-md-1" id="retired">
-                            @Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "form-control" } }) Utgått
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-1">
+                        @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) Ja
                     </div>
-
-                    <div class="form-group" id="approvalDate">
-                        @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-1">
+                        @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) Nei
+                    </div>
+                    <div class="col-md-2" id="cbRetired">
+                        <b>Men</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) Utgått</span>
+                    </div>
+                </div>
+                if (Model.register.name == "Produktspesifikasjoner")
+                {
+                    <div class="form-group" id="sosi">
+                        @Html.Label("SOSI godkjent", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.CheckBox("sosi", HtmlHelperExtensions.SosiIsChecked(Model.statusId), new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               @id = "cbSosi",
+                               @onload = "checksosi()"
+                           }
+                       }) SOSI godkjent
                             @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                }
 
-                    <div class="form-group" id="NotAcceptedate">
-                        @Html.LabelFor(model => model.dateNotAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.dateNotAccepted, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.dateNotAccepted, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group" id="approvalDate">
+                    @Html.LabelFor(model => model.dateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.dateAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
                     </div>
+                </div>
+
+                <div class="form-group" id="NotAcceptedate">
+                    @Html.LabelFor(model => model.dateNotAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.dateNotAccepted, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.dateNotAccepted, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                     <div class="form-group" id="approvalDoc">
                         @Html.LabelFor(model => model.approvalDocument, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -226,7 +248,7 @@
 
     </div>
     <div class="form-group">
-        
+
         <input type="submit" value="Lagre" class="btn btn-default pull-right" />
         @if (Model.register.parentRegisterId != null)
         {
@@ -240,5 +262,6 @@
 </form>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-}
 
+
+}

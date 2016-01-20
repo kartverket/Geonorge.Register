@@ -592,17 +592,6 @@
             <param name="filtype"></param>
             <param name="seofilename"></param>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.initialisationDocument(Kartverket.Register.Models.Document,System.Web.HttpPostedFileBase,System.Web.HttpPostedFileBase,System.Boolean,Kartverket.Register.Models.Document)">
-            <summary>
-            Initialize a document object
-            </summary>
-            <param name="inputDocument"></param>
-            <param name="documentfile"></param>
-            <param name="thumbnail"></param>
-            <param name="retired"></param>
-            <param name="originalDocument"></param>
-            <returns></returns>
-        </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.GetSystemId(System.Guid)">
             <summary>
             Returns systemId
@@ -617,14 +606,6 @@
             <param name="inputDocument"></param>
             <param name="document"></param>
             <returns></returns>
-        </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.ApprovalProcess(Kartverket.Register.Models.Document,System.Boolean,Kartverket.Register.Models.Document)">
-            <summary>
-            Check if document is accepted or not and set status.
-            </summary>
-            <param name="document"></param>
-            <param name="retired"></param>
-            <param name="inputDocument"></param>
         </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.GetStatusIdWhenDocumentIsNotAccepted(Kartverket.Register.Models.Document,System.Boolean,Kartverket.Register.Models.Document)">
             <summary>
@@ -643,13 +624,14 @@
             <param name="inputDocument"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.SetStatusIdWhenDocumentIsAccepted(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,System.Boolean)">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.SetStatusIdWhenDocumentIsAccepted(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,System.Boolean,System.Boolean)">
             <summary>
             If document is accepted, document status can be either  "Retired", "Valid" or "Superseded"
             </summary>
             <param name="document"></param>
             <param name="inputDocument"></param>
             <param name="retired"></param>
+            <param name="sosi"></param>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.GetDateRetired(System.Nullable{System.DateTime})">
@@ -659,13 +641,13 @@
             <param name="dateRetired"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.CheckIfCurrentVersionIsValid(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document)">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.CheckIfCurrentVersionIsValid(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,System.Boolean)">
             <summary>
             If current version is valid, date accepted decides if status should be set as "Valid" or "Superseded". 
             </summary>
             <param name="document"></param>
-            <param name="originalDocument"></param>
             <param name="currentVersion"></param>
+            <param name="sosi"></param>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.CheckIfItIsANewerDateAcceptedAmongSupersededVersions(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document,Kartverket.Register.Models.Document)">
@@ -684,12 +666,13 @@
             <param name="document"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.SetDocumentStatusToValid(Kartverket.Register.Models.Document,Kartverket.Register.Models.Document)">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.SetDocumentStatusToValid(Kartverket.Register.Models.Document,System.Boolean,Kartverket.Register.Models.Document)">
             <summary>
             Set document status to "Valid". If there is an other valid version, change status of version to "Superseded"
             </summary>
             <param name="document"></param>
             <param name="version"></param>
+            <param name="sosi"></param>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.DocumentDateAcceptedAreLatest(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">

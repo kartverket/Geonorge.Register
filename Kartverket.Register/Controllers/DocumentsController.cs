@@ -148,7 +148,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired)
+        public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi)
         {
             Document originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
@@ -159,7 +159,7 @@ namespace Kartverket.Register.Controllers
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail, retired, originalDocument);
+                    document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
                     return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, originalDocument.documentowner.seoname, originalDocument.seoname));
                 }
             }
@@ -405,16 +405,8 @@ namespace Kartverket.Register.Controllers
             Log.Error("Error", filterContext.Exception);
         }
 
-        /// <summary>
-        /// Initialize a document object
-        /// </summary>
-        /// <param name="inputDocument"></param>
-        /// <param name="documentfile"></param>
-        /// <param name="thumbnail"></param>
-        /// <param name="retired"></param>
-        /// <param name="originalDocument"></param>
-        /// <returns></returns>
-        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, Document originalDocument = null)
+
+        private Document initialisationDocument(Document inputDocument, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired = false, bool sosi = false, Document originalDocument = null)
         {
             Document document = GetDocument(originalDocument);
             document.systemId = GetSystemId(document.systemId);
@@ -443,7 +435,7 @@ namespace Kartverket.Register.Controllers
                 db.RegisterItems.Add(document);
             }
             else {
-                ApprovalProcess(document, retired, inputDocument);
+                ApprovalProcess(document, retired, inputDocument, sosi);
                 db.Entry(document).State = EntityState.Modified;
             }
             db.SaveChanges();
@@ -495,17 +487,12 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        /// <summary>
-        /// Check if document is accepted or not and set status.
-        /// </summary>
-        /// <param name="document"></param>
-        /// <param name="retired"></param>
-        /// <param name="inputDocument"></param>
-        private void ApprovalProcess(Document document, bool retired, Document inputDocument)
+
+        private void ApprovalProcess(Document document, bool retired, Document inputDocument, bool sosi)
         {
             if (document.Accepted == true)
             {
-                document = SetStatusIdWhenDocumentIsAccepted(document, inputDocument, retired);
+                document = SetStatusIdWhenDocumentIsAccepted(document, inputDocument, retired, sosi);
             }
             else if (document.Accepted == false)
             {
@@ -522,7 +509,7 @@ namespace Kartverket.Register.Controllers
         /// <returns></returns>
         private string GetStatusIdWhenDocumentIsNotAccepted(Document document, bool retired, Document inputDocument)
         {
-            if (document.statusId == "Valid")
+            if (document.statusId == "Valid" || document.statusId == "Sosi-valid")
             {
                 GetNewCurrentVersion(document);
             }
@@ -564,8 +551,9 @@ namespace Kartverket.Register.Controllers
         /// <param name="document"></param>
         /// <param name="inputDocument"></param>
         /// <param name="retired"></param>
+        /// <param name="sosi"></param>
         /// <returns></returns>
-        private Document SetStatusIdWhenDocumentIsAccepted(Document document, Document inputDocument, bool retired)
+        private Document SetStatusIdWhenDocumentIsAccepted(Document document, Document inputDocument, bool retired, bool sosi)
         {
             Document currentVersion = (Document)_registerItemService.GetRegisterItemBySystemId(document.versioning.currentVersion);
             if (retired == true)
@@ -580,12 +568,15 @@ namespace Kartverket.Register.Controllers
                     document.dateAccepted = DateAccepted(document.dateAccepted, inputDocument.dateAccepted);
                     if (OtherVersions(document))
                     {
-                        document.statusId = CheckIfCurrentVersionIsValid(document, currentVersion);
+                        document.statusId = CheckIfCurrentVersionIsValid(document, currentVersion, sosi);
                     }
                     else
                     {
-                        document.statusId = SetDocumentStatusToValid(document);
+                        document.statusId = SetDocumentStatusToValid(document, sosi);
                     }
+                }
+                else {
+                    document.statusId = SetDocumentStatusToValid(document, sosi);
                 }
                 db.SaveChanges();
 
@@ -617,16 +608,16 @@ namespace Kartverket.Register.Controllers
         /// If current version is valid, date accepted decides if status should be set as "Valid" or "Superseded". 
         /// </summary>
         /// <param name="document"></param>
-        /// <param name="originalDocument"></param>
         /// <param name="currentVersion"></param>
+        /// <param name="sosi"></param>
         /// <returns></returns>
-        private string CheckIfCurrentVersionIsValid(Document document, Document currentVersion)
+        private string CheckIfCurrentVersionIsValid(Document document, Document currentVersion, bool sosi)
         {
-            if (currentVersion.statusId == "Valid")
+            if (currentVersion.statusId == "Valid" || currentVersion.statusId == "Sosi-valid")
             {
                 if (DocumentDateAcceptedAreLatest(document.dateAccepted, currentVersion.dateAccepted))
                 {
-                    return SetDocumentStatusToValid(document, currentVersion);
+                    return SetDocumentStatusToValid(document, sosi, currentVersion);
                 }
                 else
                 {
@@ -634,7 +625,7 @@ namespace Kartverket.Register.Controllers
                 }
             }
             else {
-                return SetDocumentStatusToValid(document);
+                return SetDocumentStatusToValid(document, sosi);
             }
         }
 
@@ -688,8 +679,9 @@ namespace Kartverket.Register.Controllers
         /// </summary>
         /// <param name="document"></param>
         /// <param name="version"></param>
+        /// <param name="sosi"></param>
         /// <returns></returns>
-        private string SetDocumentStatusToValid(Document document, Document version = null)
+        private string SetDocumentStatusToValid(Document document, bool sosi, Document version = null)
         {
             if (version != null)
             {
@@ -697,6 +689,11 @@ namespace Kartverket.Register.Controllers
                 version.modified = DateTime.Now;
             }
             document.versioning.currentVersion = document.systemId;
+
+            if (sosi)
+            {
+                return "Sosi-valid";
+            }
             return "Valid";
         }
 
@@ -776,7 +773,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-               
+
         private int GetVersionNr(int versionNumber, Document originalDocument)
         {
             if (originalDocument == null)

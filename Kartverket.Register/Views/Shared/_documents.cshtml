@@ -63,14 +63,9 @@
                             </a>
                         }
                         <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)"/>
                         </a>
-                        <div>
-                            <a href="/register/@item.register.seoname/@item.documentowner.seoname">
-                                @Html.DisplayFor(modelItem => item.documentowner.name)
-                            </a>
-                        </div>
-                        <p class=" ">
+                        <p>
                             @Html.DisplayFor(modelItem => item.description)
                         </p>
                     </div>

@@ -3,12 +3,10 @@ namespace Kartverket.Register.Migrations
     using Models;
     using System;
     using System.Collections.Generic;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
-    using Helpers;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Kartverket.Register.Models.RegisterDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<RegisterDbContext>
     {
         public Configuration()
         {
@@ -17,7 +15,7 @@ namespace Kartverket.Register.Migrations
 
         }
 
-        protected override void Seed(Kartverket.Register.Models.RegisterDbContext context)
+        protected override void Seed(RegisterDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -29,6 +27,7 @@ namespace Kartverket.Register.Migrations
                 new Status { value = "Submitted", description = "Sendt inn", group = "suggested" },
                 new Status { value = "Draft", description = "Utkast", group = "suggested" },
                 new Status { value = "Valid", description = "Gyldig", group = "current" },
+                new Status { value = "Sosi-valid", description = "SOSI godkjent", group = "current"},
                 new Status { value = "Superseded", description = "Erstattet", group = "historical" },
                 new Status { value = "Retired", description = "Utgått", group = "historical" }
             );

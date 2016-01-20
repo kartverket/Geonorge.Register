@@ -325,29 +325,7 @@ namespace Kartverket.Register.Controllers
 
                 string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
                 string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
-
-                GhostscriptSettings gsSettings = new GhostscriptSettings
-                {
-                    Device = GhostscriptDevices.jpeg,
-                    Page = new GhostscriptPages
-                    {
-                        Start = 1,
-                        End = 1,
-                        AllPages = false
-                    },
-                    Resolution = new Size
-                    {
-                        //dpi
-                        Height = 36,
-                        Width = 36
-                    },
-                    Size = new GhostscriptPageSize
-                    {
-                        Native = GhostscriptPageSizes.a4
-                    }
-                };
-
-
+                GhostscriptSettings gsSettings = GsSettings();
                 GhostscriptWrapper.GenerateOutput(input, output, gsSettings);
 
                 return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
@@ -356,6 +334,31 @@ namespace Kartverket.Register.Controllers
             {
                 return "/Content/pdf.jpg";
             }
+        }
+
+        private static GhostscriptSettings GsSettings()
+        {
+            GhostscriptSettings gsSettings = new GhostscriptSettings
+            {
+                Device = GhostscriptDevices.png16m,
+                Page = new GhostscriptPages
+                {
+                    Start = 1,
+                    End = 1,
+                    AllPages = false
+                },
+                Resolution = new Size
+                {
+                    //dpi
+                    Height = 20,
+                    Width = 20
+                },
+                Size = new GhostscriptPageSize
+                {
+                    Native = GhostscriptPageSizes.a10
+                }
+            };
+            return gsSettings;
         }
 
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)

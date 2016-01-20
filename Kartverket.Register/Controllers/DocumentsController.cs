@@ -325,8 +325,7 @@ namespace Kartverket.Register.Controllers
 
                 string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
                 string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
-                GhostscriptSettings gsSettings = GsSettings();
-                GhostscriptWrapper.GenerateOutput(input, output, gsSettings);
+                GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
                 return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
             }
@@ -340,7 +339,7 @@ namespace Kartverket.Register.Controllers
         {
             GhostscriptSettings gsSettings = new GhostscriptSettings
             {
-                Device = GhostscriptDevices.png16m,
+                Device = GhostscriptDevices.jpeg,
                 Page = new GhostscriptPages
                 {
                     Start = 1,
@@ -355,7 +354,7 @@ namespace Kartverket.Register.Controllers
                 },
                 Size = new GhostscriptPageSize
                 {
-                    Native = GhostscriptPageSizes.a10
+                    Native = GhostscriptPageSizes.a4
                 }
             };
             return gsSettings;

@@ -43,12 +43,15 @@ namespace Kartverket.Register.Controllers
         {
             Document document = new Document();
             document.register = _registerService.GetRegister(parentRegister, registername);
-
-            if (_accessControlService.Access(document.register))
+            if (document.register != null)
             {
-                return View(document);
+                if (_accessControlService.Access(document.register))
+                {
+                    return View(document);
+                }
+                return HttpNotFound("Ingen tilgang");
             }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound("Finner ikke registeret");
         }
 
 
@@ -71,7 +74,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, registerowner, registername, document.documentowner.seoname, document.seoname));
+                    return Redirect(document.GetObjectUrl(document));
                 }
             }
             return View(document);
@@ -85,13 +88,18 @@ namespace Kartverket.Register.Controllers
         public ActionResult CreateNewVersion(string parentRegister, string registername, string itemname)
         {
             Document document = (Document)_registerItemService.GetCurrentRegisterItem(parentRegister, registername, itemname);
-
-            if (_accessControlService.Access(document.register))
+            if (document != null)
             {
-                Viewbags(document);
-                return View(document);
+                if (_accessControlService.Access(document.register))
+                {
+                    Viewbags(document);
+                    return View(document);
+                }
+                else {
+                    throw new HttpException(401, "Access Denied");
+                }
             }
-            return HttpNotFound("Ingen tilgang");
+            return HttpNotFound("Finner ikke dokumentet");
         }
 
 

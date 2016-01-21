@@ -48,27 +48,30 @@ namespace Kartverket.Register.Services
 
         private bool accessRegisterItem(object model)
         {
-            string user = GetSecurityClaim("organization");
             Organization userOrganization = _registerService.GetOrganizationByUserName();
-
             RegisterDbContext db = new RegisterDbContext();
             Models.RegisterItem registerItem = (Models.RegisterItem)model;
 
             if (accessRegister(registerItem.register))
             {
-                if (IsDocument(registerItem))
+                if (registerItem is Document)
                 {
                     Document document = (Document)registerItem;
                     return IsOwner(document.documentowner.name, userOrganization.name);
                 }
-                else if (IsDataset(registerItem))
+                else if (registerItem is Dataset)
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    return IsOwnerOrMunicipal(userOrganization.name, dataset);
+                    if (dataset.IsNationalDataset())
+                    {
+                        return IsOwnerOrMunicipal(userOrganization.name, dataset);
+                    }
+                    else {
+                        return IsOwner(dataset.datasetowner.name, userOrganization.name);
+                    }
                 }
-                else
-                {
-                    IsOwner(registerItem.submitter.name, userOrganization.name);
+                else {
+                    return IsOwner(registerItem.submitter.name, userOrganization.name);
                 }
             }
             return false;
@@ -92,17 +95,10 @@ namespace Kartverket.Register.Services
             {
                 return IsMunicipalUser();
             }
+            else if (register.name == "Det offentlige kartgrunnlaget") {
+                return IsMunicipalUser();
+            }
             return false;
-        }
-
-        private bool IsDataset(Models.RegisterItem item)
-        {
-            return item.register.containedItemClass == "Dataset";
-        }
-
-        private bool IsDocument(Models.RegisterItem item)
-        {
-            return item.register.containedItemClass == "Document";
         }
 
         private bool IsOwner(string owner, string user)

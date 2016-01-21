@@ -402,7 +402,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 }
             }
             else {
-                ValidateNameRegisterItem(model);
+                return ValidateNameRegisterItem(model);
             }
             return false;
         }

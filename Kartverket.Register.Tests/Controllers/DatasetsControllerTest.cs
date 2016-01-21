@@ -103,7 +103,7 @@ namespace Kartverket.Register.Tests.Controllers
             var accessControlService = new Mock<IAccessControlService>();
             var registerItemService = new Mock<IRegisterItemService>();
 
-            registerItemService.Setup(r => r.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber, dataset.datasetowner.seoname)).Returns(dataset);
+            registerItemService.Setup(r => r.GetCurrentRegisterItem(null, dataset.register.seoname, dataset.seoname)).Returns(dataset);
             accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
 
             var controller = CreateController(null, registerItemService.Object, accessControlService.Object);
@@ -132,7 +132,7 @@ namespace Kartverket.Register.Tests.Controllers
         {
             Dataset dataset = NewDataset("Test Datasett");
             var registerItemService = new Mock<IRegisterItemService>();
-            registerItemService.Setup(r => r.GetRegisterItem(null, null, null, 1, null)).Returns(dataset);
+            registerItemService.Setup(r => r.GetCurrentRegisterItem(null, null, null)).Returns(dataset);
 
             var controller = CreateController(null, registerItemService.Object, null);
             var result = controller.Edit(dataset, null, null, null, "123", null, null, null) as ViewResult;
@@ -148,7 +148,7 @@ namespace Kartverket.Register.Tests.Controllers
             var accessControlService = new Mock<IAccessControlService>();
             var registerItemService = new Mock<IRegisterItemService>();
             var registerService = new Mock<IRegisterService>();
-            registerItemService.Setup(v => v.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, dataset.versionNumber, null)).Returns(dataset);
+            registerItemService.Setup(v => v.GetCurrentRegisterItem(null, dataset.register.seoname, dataset.seoname)).Returns(dataset);
             accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
             accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);

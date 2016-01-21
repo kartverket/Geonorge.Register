@@ -79,7 +79,6 @@ namespace Kartverket.Register.Models
         public virtual List<CoverageDataset> Coverage{get; set;}
 
 
-
         public virtual string GetDatasetUrl()
         {
             return register.GetObjectUrl() + "/" + datasetowner.seoname + "/" + seoname;
@@ -107,6 +106,15 @@ namespace Kartverket.Register.Models
             }
         }
 
+        public bool IsNationalDataset()
+        {
+            return DatasetType == "Nasjonalt";
+        }
+
+        public bool IsMunicipalDataset()
+        {
+            return DatasetType == "Kommunalt";
+        }
     }//end Dataset
 
 }//end namespace Datamodell

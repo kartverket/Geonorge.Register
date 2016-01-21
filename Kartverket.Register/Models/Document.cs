@@ -30,7 +30,7 @@ namespace Kartverket.Register.Models
 
         public virtual string GetDocumentUrl()
         {
-            if (register.parentRegisterId == Guid.Empty)
+            if (register.parentRegisterId == Guid.Empty || register.parentRegister == null)
             {
                 return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
             }

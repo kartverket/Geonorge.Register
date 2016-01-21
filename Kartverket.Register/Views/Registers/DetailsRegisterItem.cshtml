@@ -71,7 +71,7 @@
             @if (Model.register.containedItemClass != "NameSpace")
             { <p> @Model.description</p>}
             @if (Model.register.containedItemClass != "Dataset")
-            { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
+            { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
             @if (Model is Kartverket.Register.Models.Dataset)
             {
                 Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;

@@ -43,7 +43,7 @@
                     <td title="Innsendt: @item.dateSubmitted">
                         @Html.DisplayFor(modelItem => item.dateSubmitted)
                     </td>
-                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())">
+                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>
                 </tr>

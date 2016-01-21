@@ -827,7 +827,7 @@ namespace Kartverket.Register.Helpers
         }
 
 
-        public static string StatusBeskrivelse()
+        public static string StatusBeskrivelse(Models.Register register)
         {
             RegisterDbContext db = new RegisterDbContext();
 
@@ -850,7 +850,16 @@ namespace Kartverket.Register.Helpers
                 }
                 if (s.group == "current")
                 {
-                    gyldig += "- " + s.description + "&#013";
+                    if (register.name != "Produktspesifikasjoner")
+                    {
+                        if (s.value != "Sosi-valid")
+                        {
+                            gyldig += "- " + s.description + "&#013";
+                        }
+                    }
+                    else {
+                        gyldig += "- " + s.description + "&#013";
+                    }
                 }
             }
 

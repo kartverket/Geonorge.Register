@@ -9,7 +9,7 @@
 <div class="search-result-navigation register-navigation">
     <div class="row">
         <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)  
+            @Html.Partial("_pagedListPager", Model)
         </div>
         <div class="col-md-4">
             @Html.Partial("_otherformats")
@@ -32,11 +32,11 @@
                 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                     <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
                         @{
-            string thumb = "/Content/pdf.jpg";
-            if (item.thumbnail != null)
-            {
-                thumb = item.thumbnail;
-            }
+                            string thumb = "/Content/pdf.jpg";
+                            if (item.thumbnail != null)
+                            {
+                                thumb = item.thumbnail;
+                            }
                         }
                         @if (item.documentUrl.Contains("ikke angitt"))
                         {
@@ -53,23 +53,28 @@
                         @if (item.register.parentRegister != null)
                         {
                             <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                    @item.name
+                                @item.name
                             </a>
                         }
                         else
                         {
                             <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                    @item.name
+                                @item.name
                             </a>
                         }
                         <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)"/>
+                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                         </a>
+                        <div>
+                            <a href="/register/@item.register.seoname/@item.documentowner.seoname">
+                                @Html.DisplayFor(modelItem => item.documentowner.name)
+                            </a>
+                        </div>
                         <p>
                             @Html.DisplayFor(modelItem => item.description)
                         </p>
                     </div>
-                    <div class="col-no-padding-xs col-actions col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                    <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
                         @if (item.documentUrl.Contains("ikke angitt"))
                         {
                             <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
@@ -83,29 +88,29 @@
                             </a><br />
                         }
                     </div>
-                    <div class="col-no-padding-xs col-xs-6 col-sm-2 col-md-2 col-lg-2 col-information pull-right">
+                    <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 col-information pull-right">
 
                         @if (item.status == null)
                         {
-                            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</p>
+                            <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>Ikke angitt</p>
                         }
                         else
                         {
-                            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                            <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
                         }
                     </div>
                 </div>
             </div>
             <hr />
-        }
-    }
+                                }
+                            }
 </div>
 
 <div class="search-filter-wrapper">
-    
+
 
     <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
+        @Html.Partial("_pagedListPager", Model)
     </div>
 </div>
 

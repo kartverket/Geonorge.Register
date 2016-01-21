@@ -30,6 +30,15 @@
 .statusIcon-vedtatt:before, .statusIcon-Valid:before {
   content: "";
 }
+
+.statusIcon-vedtatt:after, .statusIcon-Sosi-valid:after {
+  content: "\e600";
+  color: #97c93c;
+}
+.statusIcon-vedtatt:before, .statusIcon-Sosi-valid:before {
+  content: "";
+}
+
 .statusIcon-avvist:after {
   content: "\e600";
   color: #cb2026;

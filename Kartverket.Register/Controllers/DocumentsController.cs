@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentRegister, parentRegisterOwner, registername, document.documentowner.seoname, document.seoname));
+                    return Redirect(document.GetObjectUrl(document));
                 }
             }
             return View(document);
@@ -168,7 +168,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
-                    return Redirect(RegisterUrls.DeatilsDocumentUrl(parentregister, registerowner, registername, originalDocument.documentowner.seoname, originalDocument.seoname));
+                    return Redirect(document.GetObjectUrl(originalDocument));
                 }
             }
             Viewbags(document);
@@ -205,6 +205,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string documentname, int versionNumber, string parentregister, string parentregisterowner)
         {
             Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, versionNumber);
+            string registerUrl = document.register.GetObjectUrl();
             if (DocumentIsCurrentVersion(document))
             {
                 Models.Version versjonsgruppe = document.versioning;
@@ -227,7 +228,7 @@ namespace Kartverket.Register.Controllers
             }
             db.SaveChanges();
 
-            return Redirect(RegisterUrls.registerUrl(parentregister, parentregisterowner, registername));
+            return Redirect(registerUrl);
         }
 
 

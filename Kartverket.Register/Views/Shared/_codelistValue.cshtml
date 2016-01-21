@@ -61,11 +61,11 @@
                 <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
                     @if (item.status == null)
                     {
-                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>Ikke angitt</p>
+                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>Ikke angitt</p>
                     }
                     else
                     {
-                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse())"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
                 </div>
             </div>

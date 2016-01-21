@@ -164,6 +164,7 @@
                 <hr />
 
                 @Html.Hidden("retired", false)
+                @Html.Hidden("sosi", HtmlHelperExtensions.SosiIsChecked(Model.statusId))
             }
             else {
                 @Html.HiddenFor(model => model.name)
@@ -208,6 +209,9 @@
                             @Html.ValidationMessageFor(model => model.dateAccepted, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                }
+                else {
+                    @Html.Hidden("sosi", HtmlHelperExtensions.SosiIsChecked(Model.statusId))
                 }
 
                 <div class="form-group" id="approvalDate">

@@ -377,8 +377,8 @@ namespace Kartverket.Register.Controllers
             Guid originalDatasetownerId = GetDatasetOriginalOwnerId(originalDataset);
             dataset.datasetownerId = GetDatasetOwnerId(inputDataset.datasetownerId);
             dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
-            dataset.submitter = GetSubmitter(inputDataset.submitter);
-            dataset.submitterId = dataset.submitter.systemId;
+            dataset.submitterId = GetSubmitterId(inputDataset.submitterId);
+            dataset.submitter = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.submitterId);
             dataset.DistributionUrl = inputDataset.GetDistributionUrl();
             dataset.MetadataUrl = inputDataset.GetMetadataUrl();
             dataset.PresentationRulesUrl = inputDataset.GetPresentationRulesUrl();
@@ -393,6 +393,16 @@ namespace Kartverket.Register.Controllers
 
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;
+        }
+
+        private Guid GetSubmitterId(Guid submitterId)
+        {
+            if (submitterId == null || submitterId == Guid.Empty)
+            {
+                Organization submitter = _registerService.GetOrganizationByUserName();
+                return submitter.systemId;
+            }
+            return submitterId;
         }
 
         private Guid GetDatasetOriginalOwnerId(Dataset originalDataset)

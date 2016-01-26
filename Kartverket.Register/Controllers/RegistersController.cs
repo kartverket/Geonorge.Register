@@ -79,12 +79,23 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItem registerItem = _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
+            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname); 
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);
         }
 
+        private RegisterItem GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
+        {
+            Models.Register register = _registerService.GetRegister(parentregister, registername);
+            if (register.IsDokMunicipal())
+            {
+                return _registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
+            }
+            else {
+                return _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
+            }
+        }
 
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]

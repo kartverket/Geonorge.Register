@@ -884,6 +884,11 @@ namespace Kartverket.Register.Helpers
             return "Navnet finnes fra før!";
         }
 
+        public static string ErrorMessageValidationDataset()
+        {
+            return "Datasettet finnes fra før!";
+        }
+
 
         public static CodelistValue GetSelectedMunicipality(string selectedMunicipality)
         {

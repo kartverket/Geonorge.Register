@@ -38,7 +38,7 @@ namespace Kartverket.Register.Services.RegisterItem
         CoverageDataset NewCoverage(Models.RegisterItem registerItem);
         Organization GetMunicipalOrganizationByNr(string municipalityNr);
         List<CodelistValue> GetMunicipalityList();
-        CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? owner = null);
+        CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDatasetOwnerId = null);
         void SaveNewCoverage(CoverageDataset coverage);
         void DeleteCoverage(CoverageDataset coverage);
         void Save();

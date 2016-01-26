@@ -3,108 +3,111 @@
 
 @if (Model.name != null)
 {
-    <div class="form-horizontal">
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.name)
-                @Html.HiddenFor(model => model.name)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2 " })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.description)
-                @Html.HiddenFor(model => model.description)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.ProductSheetUrl)
-                @Html.HiddenFor(model => model.ProductSheetUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.PresentationRulesUrl)
-                @Html.HiddenFor(model => model.PresentationRulesUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.ProductSpecificationUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.MetadataUrl)
-                @Html.HiddenFor(model => model.MetadataUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.DistributionFormat)
-                @Html.HiddenFor(model => model.DistributionFormat)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.DistributionUrl)
-                @Html.HiddenFor(model => model.DistributionUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.DistributionArea)
-                @Html.HiddenFor(model => model.DistributionArea)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.WmsUrl)
-                @Html.HiddenFor(model => model.WmsUrl)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.datasetthumbnail, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.datasetthumbnail)
-                @Html.HiddenFor(model => model.datasetthumbnail)
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.ThemeGroupId)
-                @Html.HiddenFor(model => model.ThemeGroupId)
-            </div>
-        </div>
-
-        @if (HtmlHelperExtensions.IsAdmin())
-        {
-        <div class="form-group">
-            @Html.Label("Kommune", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("datasetownerId", null, "Velg kommune", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        }
-        <div class="form-group">
-            @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-            </div>
-        </div>        
+    <div class="col-md-10 pull-right">
+        @Html.ValidationMessage("ErrorMessage")
     </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.name)
+                    @Html.HiddenFor(model => model.name)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.description)
+                    @Html.HiddenFor(model => model.description)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProductSheetUrl)
+                    @Html.HiddenFor(model => model.ProductSheetUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.PresentationRulesUrl)
+                    @Html.HiddenFor(model => model.PresentationRulesUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ProductSpecificationUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.MetadataUrl)
+                    @Html.HiddenFor(model => model.MetadataUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.DistributionFormat)
+                    @Html.HiddenFor(model => model.DistributionFormat)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.DistributionUrl)
+                    @Html.HiddenFor(model => model.DistributionUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.DistributionArea)
+                    @Html.HiddenFor(model => model.DistributionArea)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.WmsUrl)
+                    @Html.HiddenFor(model => model.WmsUrl)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.datasetthumbnail, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.datasetthumbnail)
+                    @Html.HiddenFor(model => model.datasetthumbnail)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.ThemeGroupId)
+                    @Html.HiddenFor(model => model.ThemeGroupId)
+                </div>
+            </div>
+
+            @if (HtmlHelperExtensions.IsAdmin())
+            {
+                <div class="form-group">
+                    @Html.Label("Kommune", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("datasetownerId", null, "Velg kommune", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
 }
 

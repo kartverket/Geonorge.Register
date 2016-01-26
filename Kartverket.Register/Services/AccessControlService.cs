@@ -95,7 +95,8 @@ namespace Kartverket.Register.Services
             {
                 return IsMunicipalUser();
             }
-            else if (register.name == "Det offentlige kartgrunnlaget") {
+            else if (register.name == "Det offentlige kartgrunnlaget")
+            {
                 return IsMunicipalUser();
             }
             return false;

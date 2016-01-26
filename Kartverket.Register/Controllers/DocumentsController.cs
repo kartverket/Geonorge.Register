@@ -496,7 +496,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-
         private void ApprovalProcess(Document document, bool retired, Document inputDocument, bool sosi)
         {
             if (document.Accepted == true)

@@ -6,6 +6,8 @@
 //  Original author: Tor Kjetil
 ///////////////////////////////////////////////////////////
 
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,9 +18,12 @@ namespace Kartverket.Register.Models
 {
     public abstract class RegisterItem
     {
+        private RegisterDbContext db = new RegisterDbContext();
+        private IRegisterItemService _registerItemService;
+
         public RegisterItem()
         {
-            //this.replaces = new HashSet<Version>();
+            _registerItemService = new RegisterItemService(db);
         }
         [Key]
         public Guid systemId { get; set; }
@@ -187,6 +192,78 @@ namespace Kartverket.Register.Models
                 return organization.GetOrganizationDeleteUrl();
             }
             return "#";
+        }
+
+        public virtual Guid GetSystemId()
+        {
+            if (systemId == null || systemId == Guid.Empty)
+            {
+                return Guid.NewGuid();
+            }
+            else {
+                return systemId;
+            }
+        }
+
+        public DateTime GetDateModified()
+        {
+            return DateTime.Now;
+        }
+
+        public DateTime GetDateSubmbitted()
+        {
+            return DateTime.Now;
+        }
+
+        public string GetStatusId(string status = null)
+        {
+            if (register != null)
+            {
+                if (register.IsOfTypeDataset())
+                {
+                    return "Valid";
+                }
+            }
+            if (status == null || statusId == null)
+            {
+                return "Submitted";
+            }
+            else
+                return status;
+        }
+
+        public int GetVersionNr()
+        {
+            if (versionNumber == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return versionNumber++;
+            }
+        }
+
+        public string GetName()
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return "ikke angitt";
+            }
+            else
+            {          
+                return name;
+            }
+        }
+
+        public string GetDescription()
+        {
+            return description;
+        }
+
+        public Guid? GetVersioningId()
+        {
+            return versioningId;
         }
     }
 }//end namespace Datamodell

@@ -52,14 +52,14 @@ namespace Kartverket.Register.Models
         [Required(ErrorMessage = "Det må settes lovlig innhold for registeret")]
         [Display(Name = "Lovlig innhold")]
         public string containedItemClass { get; set; }
-        
+
         public virtual ICollection<RegisterItem> items { get; set; }
         [ForeignKey("parentRegister")]
         public Guid? parentRegisterId { get; set; }
         public virtual Register parentRegister { get; set; }
         public virtual ICollection<Register> subregisters { get; set; }
         [Url]
-        public string targetNamespace { get; set; }        
+        public string targetNamespace { get; set; }
         public string seoname { get; set; }
         [ForeignKey("versioning")]
         public Guid? versioningId { get; set; }
@@ -85,6 +85,29 @@ namespace Kartverket.Register.Models
             }
         }
 
+        public bool IsOfTypeDataset()
+        {
+            if (containedItemClass == "Dataset")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        internal bool IsDokMunicipal()
+        {
+            return name == "Det offentlige kartgrunnlaget - Kommunalt";
+        }
+
+        internal Guid GetSystemId()
+        {
+            if (systemId == null || systemId == Guid.Empty)
+            {
+                return Guid.NewGuid();
+            }
+            else
+                return systemId;
+        }
     }//end Register
 
 }//end namespace Datamodell

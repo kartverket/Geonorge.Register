@@ -13,7 +13,8 @@ using System.Collections.Generic;
 
 namespace Kartverket.Register.Models
 {
-	public class Dataset : RegisterItem {
+    public class Dataset : RegisterItem
+    {
 
         public Dataset()
         {
@@ -59,7 +60,7 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Tema:")]
         [ForeignKey("theme")]
-        public string ThemeGroupId { get; set; }        
+        public string ThemeGroupId { get; set; }
         public virtual DOKTheme theme { get; set; }
 
         [Display(Name = "Miniatyrbilde")]
@@ -76,7 +77,7 @@ namespace Kartverket.Register.Models
 
         public string DatasetType { get; set; }
 
-        public virtual List<CoverageDataset> Coverage{get; set;}
+        public virtual List<CoverageDataset> Coverage { get; set; }
 
 
         public virtual string GetDatasetUrl()
@@ -114,6 +115,104 @@ namespace Kartverket.Register.Models
         public bool IsMunicipalDataset()
         {
             return DatasetType == "Kommunalt";
+        }
+
+        public string GetDokStatus()
+        {
+            if (dokStatusId == null)
+            {
+                if (IsMunicipalDataset())
+                {
+                    return "Accepted";
+                }
+                else
+                {
+                    return "Proposal";
+                }
+            }
+            else {
+                return dokStatusId;
+            }
+        }
+
+        public DateTime? GetDokStatusDateAccepted()
+        {        
+            if (dokStatusId == "Accepted")
+            {
+                if (dokStatusDateAccepted == null)
+                {
+                    return DateTime.Now;
+                }
+            }
+            return dokStatusDateAccepted;
+        }
+
+
+        public string GetDatasetType()
+        {
+            if (register.IsDokMunicipal())
+            {
+                return "Kommunalt";
+            }
+            else
+            {
+                return "Nasjonalt";
+            }
+        }
+
+        public string GetDistributionUrl()
+        {
+            return DistributionUrl;
+        }
+
+        public string GetMetadataUrl()
+        {
+            return MetadataUrl;
+        }
+
+        public string GetPresentationRulesUrl()
+        {
+            return PresentationRulesUrl;
+        }
+
+        public string GetProductSheetUrl()
+        {
+            return ProductSheetUrl;
+        }
+
+        public string GetProductSpecificationUrl()
+        {
+            return ProductSpecificationUrl;
+        }
+
+        public string GetWmsUrl()
+        {
+            return WmsUrl;
+        }
+
+        public string GetDistributionFormat()
+        {
+            return DistributionFormat;
+        }
+
+        public string GetDistributionArea()
+        {
+            return DistributionArea;
+        }
+
+        public string GetNotes()
+        {
+            return Notes;
+        }
+
+        public string GetThemeGroupId()
+        {
+            return ThemeGroupId;
+        }
+
+        public string Getdatasetthumbnail()
+        {
+            return datasetthumbnail;
         }
     }//end Dataset
 

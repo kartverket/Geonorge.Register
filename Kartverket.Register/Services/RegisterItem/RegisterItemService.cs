@@ -389,7 +389,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                           where o.name == dataset.name
                                                 && o.systemId != dataset.systemId
                                                 && o.registerId == dataset.registerId
-                                                && o.versioningId != dataset.versioningId
+                                                //&& o.versioningId != dataset.versioningId
                                                 && o.datasetownerId == dataset.datasetownerId
                                           select o.systemId;
 
@@ -498,11 +498,23 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryresultMunicipality.ToList();
         }
 
-        public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? owner = null)
+        public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDocumentOwnerId = null)
         {
             AccessControlService _accessControlService = new AccessControlService();
-            Organization municipality = GetMunicipality(owner, _accessControlService);
-
+            Organization municipality = new Organization();
+            if (dataset.IsNationalDataset())
+            {
+                municipality = _accessControlService.MunicipalUserOrganization();
+            }
+            else {
+                if (originalDocumentOwnerId == null || originalDocumentOwnerId == Guid.Empty)
+                {
+                    municipality = GetMunicipality(dataset.datasetownerId, _accessControlService);
+                }
+                else {
+                    municipality = GetMunicipality(originalDocumentOwnerId.Value, _accessControlService);
+                }
+            }
             var queryResult = from c in _dbContext.CoverageDatasets
                               where c.Municipality.systemId == municipality.systemId
                               && c.dataset.systemId == dataset.systemId

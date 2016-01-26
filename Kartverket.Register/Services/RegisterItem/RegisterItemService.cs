@@ -121,7 +121,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name)
         {
-
+            Models.RegisterItem registerItem = null;
             if (string.IsNullOrWhiteSpace(parentregister))
             {
                 var queryResults = from o in _dbContext.RegisterItems
@@ -130,7 +130,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    && o.versioning.currentVersion == o.systemId
                                    select o;
 
-                return queryResults.FirstOrDefault();
+                registerItem = queryResults.FirstOrDefault();
             }
             else
             {
@@ -139,6 +139,36 @@ namespace Kartverket.Register.Services.RegisterItem
                                    (o.register.seoname == register || o.register.name == register) &&
                                    (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
                                    && o.versioning.currentVersion == o.systemId
+                                   select o;
+
+                registerItem = queryResults.FirstOrDefault();
+            }
+
+            if (registerItem == null)
+            {
+                registerItem = GetRegisterItemByName(parentregister, register, name);
+            }
+            return registerItem;
+
+        }
+
+        private Models.RegisterItem GetRegisterItemByName(string parentregister, string register, string item)
+        {
+            if (string.IsNullOrWhiteSpace(parentregister))
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register)
+                                   select o;
+
+                return queryResults.FirstOrDefault();
+            }
+            else
+            {
+                var queryResults = from o in _dbContext.RegisterItems
+                                   where (o.seoname == item || o.name == item) &&
+                                   (o.register.seoname == register || o.register.name == register) &&
+                                   (o.register.parentRegister.seoname == parentregister || o.register.parentRegister.name == parentregister)
                                    select o;
 
                 return queryResults.FirstOrDefault();

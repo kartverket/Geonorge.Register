@@ -142,6 +142,10 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.label + ";" + item.number + ";";
             }
+            else if (item.itemclass == "NameSpace")
+            {
+                text = item.label + ";" + item.owner + ";" + item.description + ";" + item.serviceUrl + ";";
+            }
 
             streamWriter.WriteLine(text);
         }
@@ -189,6 +193,10 @@ namespace Kartverket.Register.Formatter
             else if (containedItemClass == "Organization")
             {
                 return "Navn; Nummer;";
+            }
+            else if (containedItemClass == "NameSpace")
+            {
+                return "Navn; Etat; Innhold; Tjeneste";
             }
 
             return null;

@@ -329,14 +329,14 @@ namespace Kartverket.Register.Controllers
             if (document.documentUrl.Contains(".pdf"))
             {
                 string filtype;
-                string seofilename;
-                MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
+                string seofilename = MakeSeoFriendlyDocumentName(documentfile, out filtype, out seofilename);
 
                 string input = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_" + document.name + "_v" + document.versionNumber + "_" + seofilename + "." + filtype);
-                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg");
+                string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
                 GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
-                return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + ".jpg";
+                return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
+
             }
             else
             {
@@ -372,8 +372,7 @@ namespace Kartverket.Register.Controllers
         private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
         {
             string filtype;
-            string seofilename;
-            MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
+            string seofilename = MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
 
             string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
             var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), filename);
@@ -387,7 +386,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="file"></param>
         /// <param name="filtype"></param>
         /// <param name="seofilename"></param>
-        private static void MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
+        private string MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
         {
             string[] documentfilename = file.FileName.Split('.');
             filtype = documentfilename.Last();
@@ -400,6 +399,7 @@ namespace Kartverket.Register.Controllers
                 }
                 seofilename += RegisterUrls.MakeSeoFriendlyString(item) + "_";
             }
+            return seofilename;
         }
 
         private void Viewbags(Document document)

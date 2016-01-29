@@ -19,7 +19,8 @@ namespace Kartverket.Register
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected void Application_Start(){
-            
+            MvcHandler.DisableMvcResponseHeader = true;
+
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Migrations.Configuration>());
 
             AreaRegistration.RegisterAllAreas();

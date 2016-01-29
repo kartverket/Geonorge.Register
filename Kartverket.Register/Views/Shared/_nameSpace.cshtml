@@ -1,11 +1,21 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 
-<div class="search-filter-wrapper">
-    <ul class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
-    </ul>
-    @Html.Partial("_visningstyper")
+<div class="search-result-navigation register-navigation">
+    <div class="row">
+        <div class="col-md-5">
+            @Html.Partial("_pagedListPager", Model)
+        </div>
+        <div class="col-md-4">
+            @Html.Partial("_otherformats")
+        </div>
+        <div class="col-md-3">
+            @Html.Partial("_LayoutSelect")
+        </div>
+    </div>
+    <div class="row">
+        @Html.Partial("_visningstyper")
+    </div>
 </div>
 
 <div class="register namespace search-results">

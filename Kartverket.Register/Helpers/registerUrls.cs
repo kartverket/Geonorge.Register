@@ -41,6 +41,11 @@ namespace Kartverket.Register.Helpers
             return WebConfigurationManager.AppSettings["DokRegisterUrl"];
         }
 
+        public static string EditorUrl(this HtmlHelper helper)
+        {
+            return WebConfigurationManager.AppSettings["EditorUrl"];
+        }
+
         public static string ToUrl(this HtmlHelper helper, string name)
         {
             return MakeSeoFriendlyString(name);

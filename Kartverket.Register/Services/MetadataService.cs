@@ -99,5 +99,46 @@ namespace Kartverket.DOK.Service
             MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
             return metadata != null ? new SimpleMetadata(metadata) : null;
         }
+
+        public SearchResultsType SearchMetadata(string searchString)
+        {
+            GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
+            //SearchResultsType result = g.Search(searchString);
+            var filters = new object[]
+                   {
+                    new BinaryLogicOpType()
+                    {
+                       Items = new object[]
+                        {
+                        new PropertyIsLikeType
+                        {
+                            escapeChar = "\\",
+                            singleChar = "_",
+                            wildCard = "%",
+                            PropertyName = new PropertyNameType {Text = new[] {"srv:title"}},
+                            Literal = new LiteralType {Text = new[] {searchString}}
+                        },
+                        new PropertyIsLikeType
+                            {
+                                PropertyName = new PropertyNameType {Text = new[] {"srv:type"}},
+                                Literal = new LiteralType {Text = new[] {"dataset"}}
+                            }
+                       },
+                       ItemsElementName = new ItemsChoiceType22[]
+                        {
+                            ItemsChoiceType22.PropertyIsLike, ItemsChoiceType22.PropertyIsLike,
+                        }
+                    }
+                   };
+
+
+            var filterNames = new ItemsChoiceType23[]
+            {
+                        ItemsChoiceType23.And
+            };
+
+            var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
+            return result;
+        }
     }
 }

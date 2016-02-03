@@ -7,6 +7,9 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using System.Web;
 using Kartverket.Register.Helpers;
+using System.Collections.Generic;
+using www.opengis.net;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Controllers
 {
@@ -67,17 +70,28 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string uuid, string parentRegister, string registerowner)
+        public ActionResult Create(Dataset dataset, string registername, string uuid, string parentRegister, string registerowner, string searchString)
         {
+            ViewBag.SearchString = searchString;
+            ViewBag.SearchResultList = null;
+            ViewBag.Message = null;
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
                 dataset.DatasetType = dataset.GetDatasetType();
-                if (uuid != null)
+                if (!string.IsNullOrEmpty(uuid))
                 {
                     Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
                     Viewbags(dataset);
                     return View(model);
+                }
+                else if (!string.IsNullOrEmpty(searchString))
+                {
+                    SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
+                    var resList = ParseSearchResult(result);
+                    if (resList.Count == 0)
+                        ViewBag.Message = "Søket gav ingen treff";
+                    ViewBag.SearchResultList = resList;
                 }
                 else if (_accessControlService.Access(dataset.register))
                 {
@@ -108,6 +122,30 @@ namespace Kartverket.Register.Controllers
             }
             Viewbags(dataset);
             return View(dataset);
+        }
+
+        private List<MetadataItemViewModel> ParseSearchResult(SearchResultsType res)
+        {
+            List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
+
+            if (res.numberOfRecordsMatched != "0")
+            {
+                for (int s = 0; s < res.Items.Length; s++)
+                {
+                    MetadataItemViewModel m = new MetadataItemViewModel();
+                    m.Uuid = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[0].Text[0];
+                    m.Title = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[2].Text[0];
+                    result.Add(m);
+                }
+            }
+
+            return result;
+        }
+
+        private SearchResultsType SearchMetadataFromKartkatalogen(string searchString)
+        {
+            SearchResultsType result = new MetadataService().SearchMetadata(searchString);
+            return result;
         }
 
         private Guid GetDatasetOwnerId(Guid datasetownerId)

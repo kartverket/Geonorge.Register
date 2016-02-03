@@ -66,7 +66,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerItemService.Setup(s => s.GetRegisterSelectList(Guid.NewGuid())).Returns(NewList());
             registerItemService.Setup(s => s.GetSubmitterSelectList(Guid.NewGuid())).Returns(NewList());
             var controller = CreateController(registerService.Object, registerItemService.Object, null);
-            var result = controller.Create(dataset, dataset.register.seoname, "123", null, null) as ViewResult;
+            var result = controller.Create(dataset, dataset.register.seoname, "123", null, null, null) as ViewResult;
 
             result.Should().NotBeNull();
         }
@@ -87,7 +87,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
             var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
-            var result = controller.Create(dataset, dataset.register.seoname, null, null, null) as ActionResult;
+            var result = controller.Create(dataset, dataset.register.seoname, null, null, null, null) as ActionResult;
 
             result.Should().NotBeNull();
         }

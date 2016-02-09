@@ -369,7 +369,7 @@ namespace Kartverket.Register.Controllers
         {
             initialisationCoverageDataset(coverage, originalDataset);
             _registerItemService.SaveEditedRegisterItem(originalDataset);
-            return Redirect(originalDataset.GetObjectUrl(originalDataset));
+            return Redirect(originalDataset.register.GetDokMunicipalityUrl());
         }
 
         private Guid SetMunicipality()

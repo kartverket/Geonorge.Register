@@ -108,6 +108,11 @@ namespace Kartverket.Register.Models
             else
                 return systemId;
         }
+
+        public string GetDokMunicipalityUrl()
+        {
+            return "/register/det-offentlige-kartgrunnlaget-kommunalt";
+        }
     }//end Register
 
 }//end namespace Datamodell

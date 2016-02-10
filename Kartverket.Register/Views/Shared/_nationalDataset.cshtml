@@ -120,9 +120,17 @@
                             </li>
                         }
 
-                        <li>
-                            <a href="@item.WmsUrl" title="WMS lag for @item.name"><span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)</a>
-                        </li>
+                        @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
+                        {
+                            <li>
+                                <a href="@item.WmsUrl" title="WMS lag for @item.name"><span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)<i class="custom-icon-sm custom-icon-eksternlink"></i></a>
+                            </li>
+                        }
+                        else {
+                            <li>
+                                <span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)
+                            </li>
+                        }
                         @if (item.dokStatus != null)
                 {
                             <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
@@ -147,4 +155,3 @@
         <hr />
     }
 </div>
-

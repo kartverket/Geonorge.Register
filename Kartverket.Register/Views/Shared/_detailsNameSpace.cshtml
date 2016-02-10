@@ -11,7 +11,7 @@
                     }
                     else
                     {
-                        <p title="Link til innholdet i @Model.name"><span>Innhold: </span><a href="@Model.description">Vis</a></p>
+                        <p title="Link til innholdet i @Model.name"><span>Innhold: </span><a href="@Model.description">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
 
                     @if (Model.serviceUrl == null)
@@ -20,7 +20,7 @@
                     }
                     else
                     {
-                        <p title="URL til tjeneste i navnerommet @Model.name"><span>Tjeneste: </span><a href="@Model.serviceUrl">Vis</a></p>
+                        <p title="URL til tjeneste i navnerommet @Model.name"><span>Tjeneste: </span><a href="@Model.serviceUrl">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
 
             </div>

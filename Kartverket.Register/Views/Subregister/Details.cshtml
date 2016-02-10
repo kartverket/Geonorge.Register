@@ -11,12 +11,12 @@
 @section breadcrumb {
 
     <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-    <li>@Model.name</li>
     @while (parent != null && parent != mainRegister)
     {
         <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
         parent = parent.parentRegister;
     }
+    <li>@Model.name</li>
 
 }
 @Html.Partial("_SearchBarPartial")
@@ -79,7 +79,7 @@
             }
         }
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">  
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
             @if (Model.containedItemClass == "CodelistValue")
             {

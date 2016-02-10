@@ -15,12 +15,12 @@
 @section breadcrumb {
 
     <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
     @while (parent != null && parent != mainRegister)
     {
         <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
         parent = parent.parentRegister;
     }
+    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
     <li>@Model.name</li>
 }
 

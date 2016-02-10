@@ -57,9 +57,16 @@ namespace Kartverket.Register.Controllers
         [Route("api/register/{registerName}.{ext}")]
         [Route("api/register/{registerName}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterByName(string registerName)
+        public IHttpActionResult GetRegisterByName(string registerName, string municipality = null)
         {
             var register = _registerService.GetRegisterByName(registerName);
+            if(municipality!= null)
+            {
+                register = _searchService.Search(register, null);
+                register = _registerService.FilterRegisterItems(register, new FilterParameters { municipality = municipality });
+            }
+
+
             return Ok(ConvertRegisterAndNextLevel(register));
         }
 

@@ -330,14 +330,14 @@ namespace Kartverket.Register.Controllers
         {
             if (!string.IsNullOrWhiteSpace(format))
             {
-                return "/api/" + Request.FilePath;
+                return "/api/" + Request.FilePath + "?" + Request.QueryString;
             }
             else
             {
                 format = _registerService.ContentNegotiation(ControllerContext);
                 if (!string.IsNullOrWhiteSpace(format))
                 {
-                    return "/api/" + Request.FilePath + "." + format;
+                    return "/api/" + Request.FilePath + "." + format + "?" + Request.QueryString;
                 }
             }
             return null;

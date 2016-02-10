@@ -53,7 +53,7 @@ namespace Kartverket.Register.Helpers
 
         public static string urlFormat(HttpRequestBase request, string format)
         {
-            string url = request.FilePath + "." + format;
+            string url = request.FilePath + "." + format + "?" + request.QueryString;
             return url;
         }
 

@@ -70,7 +70,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string MetadataUuid, string parentRegister, string registerowner, string searchString)
+        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString)
         {
             ViewBag.SearchString = searchString;
             ViewBag.SearchResultList = null;
@@ -79,9 +79,9 @@ namespace Kartverket.Register.Controllers
             if (dataset.register != null)
             {
                 dataset.DatasetType = dataset.GetDatasetType();
-                if (!string.IsNullOrEmpty(MetadataUuid))
+                if (!string.IsNullOrEmpty(metadataUuid))
                 {
-                    Dataset model = GetMetadataFromKartkatalogen(dataset, MetadataUuid);
+                    Dataset model = GetMetadataFromKartkatalogen(dataset, metadataUuid);
                     Viewbags(dataset);
                     return View(model);
                 }
@@ -188,14 +188,14 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string MetadataUuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
+        public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string metadataUuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
         {
             Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
             if (originalDataset != null)
             {
-                if (MetadataUuid != null)
+                if (metadataUuid != null)
                 {
-                    Dataset model = GetMetadataFromKartkatalogen(originalDataset, MetadataUuid, dontUpdateDescription);
+                    Dataset model = GetMetadataFromKartkatalogen(originalDataset, metadataUuid, dontUpdateDescription);
                     Viewbags(model);
                     return View(model);
                 }

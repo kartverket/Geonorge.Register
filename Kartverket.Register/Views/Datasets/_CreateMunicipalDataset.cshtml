@@ -3,6 +3,7 @@
 
 @if (Model.name != null)
 {
+    @Html.HiddenFor(model => model.Uuid)
     <div class="col-md-10 pull-right">
         @Html.ValidationMessage("ErrorMessage")
     </div>

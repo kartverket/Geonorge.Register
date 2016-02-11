@@ -12,6 +12,7 @@
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @Html.HiddenFor(model => model.systemId)
 @Html.HiddenFor(model => model.registerId)
+@Html.HiddenFor(model => model.Uuid)
 
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
@@ -25,7 +26,7 @@
                     <div class="form-group">
                         <div class="col-sm-6">
                             @Html.LabelFor(model => model.Uuid, new { @class = "" })
-                            @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control", style = "width: 280px; padding:5px" } })
+                            <input type="text" class="form-control" id="metadataUuid" name="metadataUuid" value="@ViewBag.uuId" style="width: 280px; padding:5px" />
                         </div>
                         <div class="col-sm-2">
                             <small>Ikke oppdater beskrivelse</small>
@@ -149,36 +150,19 @@
                     @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            <div class="form-group">
-                <div class="control-label col-md-2">
-                    @Html.Label("Bekreftet")
-                </div>
-                <div class="col-md-10">
-                    @Html.CheckBoxFor(model => model.Coverage.ElementAt(0).ConfirmedDok)
-                    @Html.ValidationMessage("ErrorMessage")
-                </div>
-            </div>
         }
         else {
             @Html.HiddenFor(model => model.submitterId)
             @Html.HiddenFor(model => model.datasetownerId)
-            @Html.HiddenFor(model => model.Coverage.ElementAt(0).ConfirmedDok)
         }
 
-        <div class="form-group" id="dokStatus">
-            @Html.LabelFor(model => model.dokStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("dokStatusId", null, htmlAttributes: new { @onchange = "dokStatus()", @class = "form-control", @id = "dokStatusId" })
-                @Html.ValidationMessageFor(model => model.dokStatusId, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                @Html.Label("Bekreftet")
             </div>
-        </div>
-
-        <div class="form-group" id="approvalDate">
-            @Html.LabelFor(model => model.dokStatusDateAccepted, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.dokStatusDateAccepted, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.dokStatusDateAccepted, "", new { @class = "text-danger" })
+                @Html.CheckBoxFor(model => model.Coverage.ElementAt(0).ConfirmedDok)
+                @Html.ValidationMessage("ErrorMessage")
             </div>
         </div>
 

@@ -41,7 +41,7 @@
                 {
                     <div class="form-group">
                         @Html.LabelFor(model => model.Uuid, new { @class = "" })
-                        <input type="text" class="form-control" id="MetadataUuid" name="MetadataUuid" value="@ViewBag.uuId" style="width: 280px; padding:5px" />
+                        <input type="text" class="form-control" id="metadataUuid" name="metadataUuid" value="@ViewBag.uuId" style="width: 280px; padding:5px" />
                     </div>
                     <div class="form-group">
                         <label for="searchString">Fritekst søk:</label>
@@ -64,13 +64,13 @@
 {
     <div class="search-results table-view">
         @foreach (var metadata in (List<MetadataItemViewModel>)ViewBag.SearchResultList)
-           {
+        {
             <div class="row result-row metadata">
                 <div class="col-sm-11">
                     @metadata.Title
                 </div>
                 <div class="col-sm-1">
-                    <input type="button" value="Velg" class="btn" onclick="$(this).selectMetadata('@metadata.Uuid');" />
+                    <input type="button" value="Velg" class="btn" name="metadataUuid" id="metadataUuid" onclick="$(this).selectMetadata('@metadata.Uuid');" />
                 </div>
             </div>
             <hr>
@@ -79,7 +79,7 @@
 }
 @using (Html.BeginForm("Create", "Datasets", FormMethod.Post))
 {
-    if (Model.DatasetType == "Kommunalt")
+    if (Model.IsMunicipalDataset())
     {
         @Html.Partial("_CreateMunicipalDataset", Model);
     }
@@ -90,7 +90,13 @@
 
     <div class="form-group">
         <hr />
-        <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+        @if (Model.IsMunicipalDataset() && Model.name == null)
+        {
+            <a class="btn btn-default pull-right disabled">Foreslå</a>
+        }
+        else {
+            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+        }
         @if (Model.register.parentRegister != null)
         {
             <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
@@ -107,7 +113,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script>
         $.fn.selectMetadata = function (uuid) {
-            $('#Uuid').val(uuid);
+            $('#metadataUuid').val(uuid);
             $('#searchString').val('');
             $("#suggestDataset").submit();
         };

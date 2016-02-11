@@ -79,23 +79,12 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname); 
+            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname);
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);
         }
 
-        private RegisterItem GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
-        {
-            Models.Register register = _registerService.GetRegister(parentregister, registername);
-            if (register.IsDokMunicipal())
-            {
-                return _registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
-            }
-            else {
-                return _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
-            }
-        }
 
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
@@ -239,6 +228,45 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+        // Edit DOK-Municipal-Dataset
+        [Authorize]
+        [Route("dok/kommunalt/rediger")]
+        public ActionResult EditDokMunicipal(List<Dataset> municipalDatasets)
+        {
+            MunicipalDatasetsViewModel model = new MunicipalDatasetsViewModel();
+            foreach (var dataset in municipalDatasets)
+            {
+                DokMunicipalRow row = new DokMunicipalRow(dataset);
+                model.DokMunicipalDatasets.Add(row);
+            }
+            return View(model);
+        }
+
+
+        // POST: Registers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("dok/kommunalt/rediger")]
+        [Authorize]
+        public ActionResult EditDokMunicipal(MunicipalDatasetsViewModel municipalDatasets)
+        {
+            foreach (DokMunicipalRow item in municipalDatasets.DokMunicipalDatasets)
+            {
+                Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
+                CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(Guid.Parse(item.Owner));
+                if (originalCoverage != null)
+                {
+                    originalCoverage.ConfirmedDok = item.Confirmed;
+                    originalCoverage.Note = item.Note;
+                    //Kommunale datasett skal lagres direkte i note. ikke nødvendigvis coverage...
+                }
+                db.Entry(originalCoverage).State = EntityState.Modified;
+            }
+            db.SaveChanges();
+            return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt");
+        }
+
 
         // GET: Registers/Delete/5
         [Authorize]
@@ -348,6 +376,18 @@ namespace Kartverket.Register.Controllers
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
             return register;
+        }
+
+        private RegisterItem GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
+        {
+            Models.Register register = _registerService.GetRegister(parentregister, registername);
+            if (register.IsDokMunicipal())
+            {
+                return _registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
+            }
+            else {
+                return _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
+            }
         }
 
         private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)

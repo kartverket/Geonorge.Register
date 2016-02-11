@@ -607,6 +607,7 @@
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
+    <Compile Include="Models\ViewModels\DokMunicipalRow.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
     <Compile Include="Models\ViewModels\FilteringViewModel.cs" />
@@ -631,6 +632,7 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Version.cs" />
     <Compile Include="Models\ViewModels\MetadataItemViewModel.cs" />
+    <Compile Include="Models\ViewModels\MunicipalDatasetsViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />

@@ -214,6 +214,47 @@ namespace Kartverket.Register.Models
         {
             return datasetthumbnail;
         }
+
+        public bool GetCoverageConfirmedByUser(Guid datasetOwnerId) {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == datasetOwnerId)
+                {
+                    return coverage.ConfirmedDok;
+                }
+            }
+            return false;
+        }
+
+        public string GetCoverageNoteByUser(Guid datasetownerId)
+        {
+            if (IsNationalDataset())
+            {
+                foreach (CoverageDataset coverage in Coverage)
+                {
+                    if (coverage.MunicipalityId == datasetownerId)
+                    {
+                        return coverage.Note;
+                    }
+                }
+                return null;
+            }
+            else {
+                return Notes;
+            }
+        }
+
+        public CoverageDataset GetCoverageByOwner(Guid owner)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == owner)
+                {
+                    return coverage;
+                }
+            }
+            return null;
+        }
     }//end Dataset
 
 }//end namespace Datamodell

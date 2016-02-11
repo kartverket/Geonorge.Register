@@ -7,10 +7,12 @@
 {
     <div class="form-horizontal">
         <div class="form-group">
-            @Html.LabelFor(model => model.CoverageDOKStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="control-label col-md-2">
+                @Html.Label("Bekreftet")
+            </div>
             <div class="col-md-10">
-                @Html.DropDownList("CoverageDOKStatusId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CoverageDOKStatusId, "", new { @class = "text-danger" })
+                @Html.CheckBoxFor(model => model.ConfirmedDok)
+                @Html.ValidationMessage("ErrorMessage")
             </div>
         </div>
 

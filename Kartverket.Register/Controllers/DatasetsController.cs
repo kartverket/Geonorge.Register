@@ -70,7 +70,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string uuid, string parentRegister, string registerowner, string searchString)
+        public ActionResult Create(Dataset dataset, string registername, string MetadataUuid, string parentRegister, string registerowner, string searchString)
         {
             ViewBag.SearchString = searchString;
             ViewBag.SearchResultList = null;
@@ -79,9 +79,9 @@ namespace Kartverket.Register.Controllers
             if (dataset.register != null)
             {
                 dataset.DatasetType = dataset.GetDatasetType();
-                if (!string.IsNullOrEmpty(uuid))
+                if (!string.IsNullOrEmpty(MetadataUuid))
                 {
-                    Dataset model = GetMetadataFromKartkatalogen(dataset, uuid);
+                    Dataset model = GetMetadataFromKartkatalogen(dataset, MetadataUuid);
                     Viewbags(dataset);
                     return View(model);
                 }
@@ -99,7 +99,6 @@ namespace Kartverket.Register.Controllers
                     dataset.registerId = dataset.register.GetSystemId();
                     dataset.datasetownerId = GetDatasetOwnerId(dataset.datasetownerId);
                     dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
-
 
                     // TODO fikse validering... 
                     if (!NameIsValid(dataset))
@@ -189,14 +188,14 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
         //[ValidateAntiForgeryToken]
-        public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string uuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
+        public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string MetadataUuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
         {
             Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
             if (originalDataset != null)
             {
-                if (uuid != null)
+                if (MetadataUuid != null)
                 {
-                    Dataset model = GetMetadataFromKartkatalogen(originalDataset, uuid, dontUpdateDescription);
+                    Dataset model = GetMetadataFromKartkatalogen(originalDataset, MetadataUuid, dontUpdateDescription);
                     Viewbags(model);
                     return View(model);
                 }
@@ -428,6 +427,7 @@ namespace Kartverket.Register.Controllers
             dataset.Notes = inputDataset.GetNotes();
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
+            dataset.Uuid = inputDataset.Uuid;
 
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;

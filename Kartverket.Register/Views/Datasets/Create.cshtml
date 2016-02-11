@@ -41,7 +41,7 @@
                 {
                     <div class="form-group">
                         @Html.LabelFor(model => model.Uuid, new { @class = "" })
-                        @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control", style = "width: 300px;" } })
+                        <input type="text" class="form-control" id="MetadataUuid" name="MetadataUuid" value="@ViewBag.uuId" style="width: 280px; padding:5px" />
                     </div>
                     <div class="form-group">
                         <label for="searchString">Fritekst søk:</label>

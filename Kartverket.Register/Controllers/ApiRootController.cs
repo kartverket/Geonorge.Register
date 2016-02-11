@@ -60,7 +60,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterByName(string registerName, string municipality = null)
         {
             var register = _registerService.GetRegisterByName(registerName);
-            if(municipality!= null)
+            if(municipality!= null || registerName == "det-offentlige-kartgrunnlaget-kommunalt")
             {
                 register = _searchService.Search(register, null);
                 register = _registerService.FilterRegisterItems(register, new FilterParameters { municipality = municipality });

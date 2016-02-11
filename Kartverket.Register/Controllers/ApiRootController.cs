@@ -62,12 +62,22 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegisterByName(registerName);
             if(municipality!= null || registerName == "det-offentlige-kartgrunnlaget-kommunalt")
             {
-                register = _searchService.Search(register, null);
-                register = _registerService.FilterRegisterItems(register, new FilterParameters { municipality = municipality });
+                register = RegisterItems(register, new FilterParameters { municipality = municipality });
             }
 
-
             return Ok(ConvertRegisterAndNextLevel(register));
+        }
+
+        private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
+        {
+            if (Search(filter)) register = _searchService.Search(register, filter.text);
+            register = _registerService.FilterRegisterItems(register, filter);
+            return register;
+        }
+
+        private static bool Search(FilterParameters filter)
+        {
+            return !string.IsNullOrWhiteSpace(filter.text);
         }
 
 

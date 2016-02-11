@@ -34,9 +34,8 @@
                 <th style="width:20%">Tittel</th>
                 <th style="width:10%">Eier</th>
                 <th style="width:10%">Nasjonal DOK-status</th>
-                <th style="width:10%">Kommunal DOK-status</th>
                 <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
-                <th style="width:10%">Bekreftet</th>
+                <th style="width:10%" title="Bekreftet som kommunens DOK">Bekreftet</th>
                 <th style="width:20%">Merknad</th>
             </tr>
             @foreach (Dataset item in Model)
@@ -54,13 +53,10 @@
                     <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">                        
                         @HtmlHelperExtensions.GetNationalDokStatus(item)
                     </td>
-                    <td title="Kommunal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
-                        @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)
-                    </td>
                     <td title="Datasett type: @item.DatasetType">
                         <span title="Datasett type: @item.DatasetType" class="label label-@item.DatasetType">@item.DatasetType</span>
                     </td>
-                    <td style="text-align: center" title="Bekrefter: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal))">
+                    <td style="text-align: center" title="Bekreftet som kommunens DOK: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
                     </td>
                     <td title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)">

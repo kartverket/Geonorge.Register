@@ -45,15 +45,17 @@
                     <td title="Datasett: @item.name">
                         @if (item.MetadataUrl != null)
                         {
-                            if (item.MetadataUrl.Contains("http") && item.IsMunicipalDataset())
+                            if (item.MetadataUrl.Contains("http"))
                             {
                                 <a href="@item.MetadataUrl">
                                     @item.name
                                 </a>
                             }
-                            <a href="@item.GetObjectUrl(item)">
-                                @item.name
-                            </a>
+                            else {
+                                <a href="@item.GetObjectUrl(item)">
+                                    @item.name
+                                </a>
+                            }
                         }
                         else {
                             <a href="@item.GetObjectUrl(item)">

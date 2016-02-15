@@ -24,10 +24,6 @@
             </div>
         </div>
     </form>
-    @if (selectedMunicipal != null && HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value))
-    {
-        <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default pull-right" >Rediger</a>
-    }
 </div>
 @if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
 {

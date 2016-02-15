@@ -280,7 +280,7 @@ namespace Kartverket.Register.Controllers
                 }
                 db.SaveChanges();
             }
-            return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt");
+            return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
         }
 
         private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)

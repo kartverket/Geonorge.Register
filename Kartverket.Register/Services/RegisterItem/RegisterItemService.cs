@@ -571,7 +571,6 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public void SaveNewCoverage(CoverageDataset cover)
         {
-            _dbContext.Entry(cover).State = EntityState.Modified;
             _dbContext.CoverageDatasets.Add(cover);
             _dbContext.SaveChanges();
         }

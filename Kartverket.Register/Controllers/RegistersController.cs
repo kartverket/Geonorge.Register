@@ -79,23 +79,12 @@ namespace Kartverket.Register.Controllers
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname); 
+            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname);
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);
         }
 
-        private RegisterItem GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
-        {
-            Models.Register register = _registerService.GetRegister(parentregister, registername);
-            if (register.IsDokMunicipal())
-            {
-                return _registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
-            }
-            else {
-                return _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
-            }
-        }
 
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
@@ -239,6 +228,86 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+        // Edit DOK-Municipal-Dataset
+        [Authorize]
+        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        public ActionResult EditDokMunicipal(string municipalityCode)
+        {
+            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
+            {
+                RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+                Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
+                List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
+
+                if (municipality != null)
+                {
+                    List<DokMunicipalRow> dokMunicipalList = new List<DokMunicipalRow>();
+                    foreach (Dataset dataset in municipalDatasets)
+                    {
+                        DokMunicipalRow row = new DokMunicipalRow(dataset, municipality);
+                        dokMunicipalList.Add(row);
+                    }
+                    ViewBag.selectedMunicipality = municipality.name;
+                    return View(dokMunicipalList);
+                }
+                else {
+                    return HttpNotFound();
+                }
+            }
+            return HttpNotFound();
+        }
+
+
+        // POST: Registers/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        [Authorize]
+        public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode)
+        {
+            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
+            {
+                foreach (DokMunicipalRow item in dokMunicipalList)
+                {
+                    Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
+                    CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.OwnerId);
+                    if (originalCoverage == null)
+                    {
+                        originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                    }
+                    else
+                    {
+                        originalCoverage.ConfirmedDok = item.Confirmed;
+                        originalCoverage.Note = item.Note;
+                        originalDataset.Notes = item.Note;
+                        db.Entry(originalCoverage).State = EntityState.Modified;
+                        db.Entry(originalDataset).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
+                }
+                return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
+            }
+            return HttpNotFound();
+        }
+
+        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)
+        {
+            Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+            CoverageDataset coverage = new CoverageDataset
+            {
+                CoverageId = Guid.NewGuid(),
+                CoverageDOKStatusId = "Accepted",
+                ConfirmedDok = item.Confirmed,
+                dataset = originalDataset,
+                DatasetId = originalDataset.systemId,
+                MunicipalityId = municipality.systemId,
+                Note = item.Note
+            };
+            _registerItemService.SaveNewCoverage(coverage);
+            return coverage;           
+        }
+
 
         // GET: Registers/Delete/5
         [Authorize]
@@ -348,6 +417,18 @@ namespace Kartverket.Register.Controllers
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
             return register;
+        }
+
+        private RegisterItem GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
+        {
+            Models.Register register = _registerService.GetRegister(parentregister, registername);
+            if (register.IsDokMunicipal())
+            {
+                return _registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner);
+            }
+            else {
+                return _registerItemService.GetCurrentRegisterItem(null, registername, itemname);
+            }
         }
 
         private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)

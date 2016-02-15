@@ -1,0 +1,72 @@
+﻿@using Kartverket.Register.Models.ViewModels
+@model List<DokMunicipalRow>
+@using Kartverket.Register.Helpers
+
+    @{
+        string selectedMunicipal = ViewBag.selectedMunicipality;
+    }
+
+    @section breadcrumb {
+        <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
+        <li>Rediger liste</li>
+    }
+
+    @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
+    {
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <h2>@selectedMunicipal</h2>
+        </div>
+
+        <div class="col-sm-12 col-md-6 col-lg-6 no-padding" style="margin-top: 60px;">
+            <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+        </div>
+
+        <table class="table-responsive table-hover table" style="width:100%">
+            <tbody>
+                <tr>
+                    <th style="width:10%">Temagruppe</th>
+                    <th style="width:20%">Tittel</th>
+                    <th style="width:10%">Eier</th>
+                    <th style="width:10%">Nasjonal DOK-status</th>
+                    <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
+                    <th style="width:10%" title="Bekreftet som kommunens DOK">Bekreftet</th>
+                    <th style="width:20%">Merknad</th>
+                </tr>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
+                        @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
+
+                        <td title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
+                        <td title="Datasett: @Model[i].Name">
+                            @Model[i].Name
+                            @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                        </td>
+                        <td title="Datasett eier: @Model[i].Owner">
+                            @Model[i].Owner
+                            @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
+                        </td>
+                        <td title="Nasjonal Dok-status: @Model[i].NationalDokStatus">
+                            @Model[i].NationalDokStatus
+                            @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
+                        </td>
+                        <td title="Datasett type: @Model[i].Type">
+                            <span title="Datasett type: @Model[i].Type" class="label label-@Model[i].Type">@Model[i].Type</span>
+                            @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
+                        </td>
+                        <td style="text-align: center" title="Bekreftet som kommunens DOK: @Model[i].Confirmed">
+                            @*@Html.CheckBoxFor(model => model.ElementAt(i).Confirmed)*@
+                            @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly" })
+                        </td>
+                        <td title="Merknad: @Model[i].Note">
+                            @*@Html.TextAreaFor(model => model.ElementAt(i).Note, 2, 10, new { @style = "min-height:0px" })*@
+                            @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+    }

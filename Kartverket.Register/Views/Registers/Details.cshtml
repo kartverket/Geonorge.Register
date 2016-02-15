@@ -1,6 +1,7 @@
 ﻿@model Kartverket.Register.Models.Register
 ﻿@using Kartverket.Register.Helpers
 @using PagedList;
+@using Kartverket.Register.Models
 
 @{
     ViewBag.Title = @Model.name;
@@ -10,6 +11,7 @@
     string UrlCreateNew = RegisterUrls.CreateNewRegisterItemUrl(parentRegister, Model.owner.seoname, Model.seoname, Model.containedItemClass);
     string UrlEdit = RegisterUrls.EditRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
     string UrlDelete = RegisterUrls.DeleteRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
+    CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
 }
 
 @section breadcrumb {
@@ -82,7 +84,7 @@
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-           
+
 
             @if (Model.containedItemClass == "Organization")
             {
@@ -112,12 +114,16 @@
             {
                 @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            
+
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
             @if (Request.IsAuthenticated)
             {
+                if (selectedMunicipal != null && HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value))
+                {
+                    <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
+                }
                 if (HtmlHelperExtensions.Access(Model))
                 {
                     <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>

@@ -233,24 +233,28 @@ namespace Kartverket.Register.Controllers
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         public ActionResult EditDokMunicipal(string municipalityCode)
         {
-            RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
-            Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
-            List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
-
-            if (municipality != null)
+            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
-                List<DokMunicipalRow> dokMunicipalList = new List<DokMunicipalRow>();
-                foreach (Dataset dataset in municipalDatasets)
+                RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+                Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
+                List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
+
+                if (municipality != null)
                 {
-                    DokMunicipalRow row = new DokMunicipalRow(dataset, municipality);
-                    dokMunicipalList.Add(row);
+                    List<DokMunicipalRow> dokMunicipalList = new List<DokMunicipalRow>();
+                    foreach (Dataset dataset in municipalDatasets)
+                    {
+                        DokMunicipalRow row = new DokMunicipalRow(dataset, municipality);
+                        dokMunicipalList.Add(row);
+                    }
+                    ViewBag.selectedMunicipality = municipality.name;
+                    return View(dokMunicipalList);
                 }
-                ViewBag.selectedMunicipality = municipality.name;
-                return View(dokMunicipalList);
+                else {
+                    return HttpNotFound();
+                }
             }
-            else {
-                return HttpNotFound();
-            }
+            return HttpNotFound();
         }
 
 
@@ -262,25 +266,29 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode)
         {
-            foreach (DokMunicipalRow item in dokMunicipalList)
+            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
-                Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
-                CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.OwnerId);
-                if (originalCoverage == null)
+                foreach (DokMunicipalRow item in dokMunicipalList)
                 {
-                    originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                    Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
+                    CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.OwnerId);
+                    if (originalCoverage == null)
+                    {
+                        originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                    }
+                    else
+                    {
+                        originalCoverage.ConfirmedDok = item.Confirmed;
+                        originalCoverage.Note = item.Note;
+                        originalDataset.Notes = item.Note;
+                        db.Entry(originalCoverage).State = EntityState.Modified;
+                        db.Entry(originalDataset).State = EntityState.Modified;
+                    }
+                    db.SaveChanges();
                 }
-                else
-                {
-                    originalCoverage.ConfirmedDok = item.Confirmed;
-                    originalCoverage.Note = item.Note;
-                    originalDataset.Notes = item.Note;
-                    db.Entry(originalCoverage).State = EntityState.Modified;
-                    db.Entry(originalDataset).State = EntityState.Modified;
-                }
-                db.SaveChanges();
+                return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
             }
-            return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
+            return HttpNotFound();
         }
 
         private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)

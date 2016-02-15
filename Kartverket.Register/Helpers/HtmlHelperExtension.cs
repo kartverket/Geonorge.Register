@@ -1034,5 +1034,9 @@ namespace Kartverket.Register.Helpers
             }
         }
 
+        public static bool AccessEditDOKMunicipalBySelectedMunicipality(string municipalityCode)
+        {
+            return _accessControl.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode);
+        }
     }
 }

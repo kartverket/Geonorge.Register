@@ -212,5 +212,22 @@ namespace Kartverket.Register.Services
                 return Access(dataset);
             }
         }
+
+        public bool AccessEditDOKMunicipalBySelectedMunicipality(string municipalityCode)
+        {
+            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode);
+        }
+
+        private bool UserIsSelectedMunicipality(string municipalityCode)
+        {
+            Organization user = MunicipalUserOrganization();
+            string organizationNrOfSelectedMunicipality = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(municipalityCode);
+
+            if (user != null)
+            {
+                return user.number == organizationNrOfSelectedMunicipality;
+            }
+            return false;
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace Kartverket.Register.Services
         Organization MunicipalUserOrganization();
         string GetUserName();
         CodelistValue Municipality();
+        bool AccessEditDOKMunicipalBySelectedMunicipality(string municipalityCode);
     }
 }

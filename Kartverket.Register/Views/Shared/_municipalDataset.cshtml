@@ -24,7 +24,7 @@
             </div>
         </div>
     </form>
-    @if (selectedMunicipal != null)
+    @if (selectedMunicipal != null && HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value))
     {
         <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default pull-right" >Rediger</a>
     }

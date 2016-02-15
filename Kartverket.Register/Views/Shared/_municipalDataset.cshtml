@@ -43,9 +43,15 @@
                 <tr>
                     <td title="Temagruppe for @item.name: @item.ThemeGroupId">@item.ThemeGroupId</td>
                     <td title="Datasett: @item.name">
-                        @if (item.MetadataUrl.Contains("http") && item.IsMunicipalDataset())
+                        @if (item.MetadataUrl != null)
                         {
-                            <a href="@item.MetadataUrl">
+                            if (item.MetadataUrl.Contains("http") && item.IsMunicipalDataset())
+                            {
+                                <a href="@item.MetadataUrl">
+                                    @item.name
+                                </a>
+                            }
+                            <a href="@item.GetObjectUrl(item)">
                                 @item.name
                             </a>
                         }

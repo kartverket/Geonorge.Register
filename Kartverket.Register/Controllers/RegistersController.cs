@@ -228,7 +228,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        // Edit DOK-Municipal-Dataset
+        // GET: Edit DOK-Municipal-Dataset
         [Authorize]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         public ActionResult EditDokMunicipal(string municipalityCode)
@@ -258,7 +258,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // POST: Registers/Edit/5
+        // POST: DOK-Municipal-Dataset
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -272,17 +272,27 @@ namespace Kartverket.Register.Controllers
                 {
                     Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
                     CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.OwnerId);
-                    if (originalCoverage == null)
+                    if (item.Delete)
                     {
-                        originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                        if (originalCoverage != null)
+                        {
+                            _registerItemService.DeleteCoverage(originalCoverage);
+                        }
+                        _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
-                    else
-                    {
-                        originalCoverage.ConfirmedDok = item.Confirmed;
-                        originalCoverage.Note = item.Note;
-                        originalDataset.Notes = item.Note;
-                        db.Entry(originalCoverage).State = EntityState.Modified;
-                        db.Entry(originalDataset).State = EntityState.Modified;
+                    else {
+                        if (originalCoverage == null)
+                        {
+                            originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                        }
+                        else
+                        {
+                            originalCoverage.ConfirmedDok = item.Confirmed;
+                            originalCoverage.Note = item.Note;
+                            originalDataset.Notes = item.Note;
+                            db.Entry(originalCoverage).State = EntityState.Modified;
+                            db.Entry(originalDataset).State = EntityState.Modified;
+                        }
                     }
                     db.SaveChanges();
                 }

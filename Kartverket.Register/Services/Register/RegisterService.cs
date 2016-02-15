@@ -148,7 +148,7 @@ namespace Kartverket.Register.Services.Register
                     }
                 }
             }
-            return datasets;
+            return datasets.OrderBy(n => n.name).ToList();
         }
 
         private void AddNationalDatasets(List<Models.RegisterItem> registerItems)

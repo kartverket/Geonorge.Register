@@ -230,16 +230,27 @@ namespace Kartverket.Register.Controllers
 
         // Edit DOK-Municipal-Dataset
         [Authorize]
-        [Route("dok/kommunalt/rediger")]
-        public ActionResult EditDokMunicipal(List<Dataset> municipalDatasets)
+        [Route("dok/kommunalt/{municipalityCode}/rediger")]
+        public ActionResult EditDokMunicipal(string municipalityCode)
         {
-            MunicipalDatasetsViewModel model = new MunicipalDatasetsViewModel();
-            foreach (var dataset in municipalDatasets)
+            RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+            Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
+            List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
+
+            if (municipality != null)
             {
-                DokMunicipalRow row = new DokMunicipalRow(dataset);
-                model.DokMunicipalDatasets.Add(row);
+                List<DokMunicipalRow> dokMunicipalList = new List<DokMunicipalRow>();
+                foreach (Dataset dataset in municipalDatasets)
+                {
+                    DokMunicipalRow row = new DokMunicipalRow(dataset, municipality);
+                    dokMunicipalList.Add(row);
+                }
+                ViewBag.selectedMunicipality = municipality.name;
+                return View(dokMunicipalList);
             }
-            return View(model);
+            else {
+                return HttpNotFound();
+            }
         }
 
 
@@ -247,24 +258,46 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Route("dok/kommunalt/rediger")]
+        [Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
-        public ActionResult EditDokMunicipal(MunicipalDatasetsViewModel municipalDatasets)
+        public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode)
         {
-            foreach (DokMunicipalRow item in municipalDatasets.DokMunicipalDatasets)
+            foreach (DokMunicipalRow item in dokMunicipalList)
             {
                 Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
-                CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(Guid.Parse(item.Owner));
-                if (originalCoverage != null)
+                CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.OwnerId);
+                if (originalCoverage == null)
+                {
+                    originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                }
+                else
                 {
                     originalCoverage.ConfirmedDok = item.Confirmed;
                     originalCoverage.Note = item.Note;
-                    //Kommunale datasett skal lagres direkte i note. ikke nødvendigvis coverage...
+                    originalDataset.Notes = item.Note;
+                    db.Entry(originalCoverage).State = EntityState.Modified;
+                    db.Entry(originalDataset).State = EntityState.Modified;
                 }
-                db.Entry(originalCoverage).State = EntityState.Modified;
+                db.SaveChanges();
             }
-            db.SaveChanges();
             return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt");
+        }
+
+        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)
+        {
+            Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+            CoverageDataset coverage = new CoverageDataset
+            {
+                CoverageId = Guid.NewGuid(),
+                CoverageDOKStatusId = "Accepted",
+                ConfirmedDok = item.Confirmed,
+                dataset = originalDataset,
+                DatasetId = originalDataset.systemId,
+                MunicipalityId = municipality.systemId,
+                Note = item.Note
+            };
+            _registerItemService.SaveNewCoverage(coverage);
+            return coverage;           
         }
 
 

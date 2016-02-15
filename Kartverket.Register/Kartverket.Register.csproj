@@ -916,6 +916,7 @@
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
     <Content Include="Views\Datasets\_CreateMunicipalDataset.cshtml" />
     <Content Include="Views\Datasets\_CreateNationalDataset.cshtml" />
+    <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

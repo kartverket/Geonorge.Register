@@ -130,6 +130,27 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
+        public List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipal)
+        {
+            List<Models.RegisterItem> datasets = new List<Models.RegisterItem>(); 
+            AddNationalDatasets(datasets);
+
+            //Gå gjennom alle datasett i registeret
+            foreach (Dataset item in register.items)
+            {
+                //Gå gjennom dekningslisten for datasettet
+                foreach (CoverageDataset coverage in item.Coverage)
+                {
+                    //Er det registrert dekning av datasett for valgt kommune...
+                    if (coverage.Municipality.systemId == municipal.systemId)
+                    {
+                        datasets.Add(item);
+                    }
+                }
+            }
+            return datasets;
+        }
+
         private void AddNationalDatasets(List<Models.RegisterItem> registerItems)
         {
             Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
@@ -450,6 +471,14 @@ namespace Kartverket.Register.Services.Register
                                select o;
 
             return queryResults.FirstOrDefault();
+        }
+
+        public Models.Register GetDokMunicipalRegister()
+        {
+            var queryResult = from r in _dbContext.Registers
+                              where r.name == "Det offentlige kartgrunnlaget - Kommunalt"
+                              select r;
+            return queryResult.FirstOrDefault();
         }
     }
 }

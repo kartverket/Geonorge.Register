@@ -25,6 +25,7 @@ namespace Kartverket.Register.Services.Register
         bool validationName(Object model);
         Organization GetOrganizationByUserName();
         Organization GetOrganizationByOrganizationNr(string number);
-
+        List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipality);
+        Models.Register GetDokMunicipalRegister();
     }
 }

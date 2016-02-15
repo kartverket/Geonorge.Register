@@ -24,6 +24,10 @@
             </div>
         </div>
     </form>
+    @if (selectedMunicipal != null)
+    {
+        <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default pull-right" >Rediger</a>
+    }
 </div>
 @if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
 {
@@ -50,7 +54,7 @@
                     <td title="Datasett eier: @item.datasetowner.seoname">
                         @item.datasetowner.name
                     </td>
-                    <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">                        
+                    <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetNationalDokStatus(item)
                     </td>
                     <td title="Datasett type: @item.DatasetType">

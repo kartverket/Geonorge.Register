@@ -29,8 +29,8 @@
                     <th style="width:10%">Eier</th>
                     <th style="width:10%">Nasjonal DOK-status</th>
                     <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
-                    <th style="width:5%" title="Bekreftet som kommunens DOK">Bekreftet</th>
-                    <th style="width:15%">Merknad</th>
+                    <th style="width:5%" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">Bekreft som kommunens DOK</th>
+                    <th style="width:15%" title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">Kommunes merknad</th>
                     <th style="width:5%">Slett</th>
                 </tr>
                 @for (int i = 0; i < Model.Count; i++)
@@ -56,10 +56,10 @@
                             <span title="Datasett type: @Model[i].Type" class="label label-@Model[i].Type">@Model[i].Type</span>
                             @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
                         </td>
-                        <td style="text-align: center" title="Bekreftet som kommunens DOK: @Model[i].Confirmed">
+                        <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                             @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly" })
                         </td>
-                        <td title="Merknad: @Model[i].Note">
+                        <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
                             @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
                         </td>
                         <td>

@@ -486,7 +486,7 @@
             List top level registers. Use id in response to navigate.
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterByName(System.String,System.String)">
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.GetRegisterByName(System.String,Kartverket.Register.Models.FilterParameters)">
             <summary>
             Gets register by name
             </summary>

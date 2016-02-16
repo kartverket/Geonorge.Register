@@ -17,6 +17,7 @@ namespace Kartverket.Register.Models.ViewModels
         public bool Confirmed { get; set; }
         public string Note { get; set; }
         public bool Delete { get; set; }
+        public Guid MunicipalityId { get; set; }
 
         public DokMunicipalRow(Dataset dataset, RegisterItem municipality)
         {
@@ -25,6 +26,7 @@ namespace Kartverket.Register.Models.ViewModels
             Themegroup = dataset.ThemeGroupId;
             Owner = dataset.datasetowner.name;
             OwnerId = dataset.datasetownerId;
+            MunicipalityId = municipality.systemId;
             if (dataset.IsNationalDataset())
             {
                 NationalDokStatus = dataset.dokStatus.description;

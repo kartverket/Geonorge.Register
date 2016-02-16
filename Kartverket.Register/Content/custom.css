@@ -952,17 +952,35 @@ label#cbDelete input[type="checkbox"] {
         cursor: pointer;
     }
 
-table.tablesorter thead tr .tablesorter-headerAsc {
-    height: 20px;
-    width: 20px;
-    color: #fe5000;
+
+/*Det offentlige kargrunnlaget - kommunalt, sortering*/
+
+table.tablesorter thead tr {
+    border-bottom: 3px solid #fe5000;
+    height: 27px;
+    margin-bottom: 8px !important;
 }
 
-table.tablesorter thead tr .tablesorter-headerDesc {
-    height: 20px;
-    width: 20px;
-    color: #fe5000;
+table.tablesorter thead tr th {
+    font-weight:normal;
 }
+
+table.tablesorter thead tr th .sorter-false {
+    font-weight:normal;
+}
+
+
+    table.tablesorter thead tr .tablesorter-headerAsc {
+        height: 20px;
+        width: 20px;
+        color: #fe5000;
+    }
+
+    table.tablesorter thead tr .tablesorter-headerDesc {
+        height: 20px;
+        width: 20px;
+        color: #fe5000;
+    }
 
 .tablesorter-headerAsc .tablesorter-header-inner:after {
     content: "\e114" !important;

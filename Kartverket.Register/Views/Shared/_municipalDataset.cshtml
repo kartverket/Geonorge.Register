@@ -10,6 +10,19 @@
         selectedMunicipalName = selectedMunicipal.name;
     }
 }
+
+<script>
+    $(document).ready(function () {
+        $("table").tablesorter({
+            headers: {
+                5: { sorter: false },
+                6: { sorter: false },
+                7: { sorter: false }
+            }
+        });
+    });
+</script>
+
 <div class="col-sm-12 col-md-6 col-lg-6">
     <h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
 </div>
@@ -27,7 +40,7 @@
 </div>
 @if (selectedMunicipal != null || HtmlHelperExtensions.IsAdmin())
 {
-    <table class="table-responsive table-hover table" style="width:100%">
+    <table id="myTable" class="table-responsive table-hover table tablesorter" style="width:100%">
         <thead>
             <tr>
                 <th style="width:10%">Temagruppe</th>
@@ -40,49 +53,49 @@
             </tr>
         </thead>
         <tbody>
-    @foreach (Dataset item in Model)
+            @foreach (Dataset item in Model)
                 {
-        <tr>
-            <td title="Temagruppe for @item.name: @item.ThemeGroupId">@item.ThemeGroupId</td>
-            <td title="Datasett: @item.name">
-                @if (item.MetadataUrl != null)
-                {
-                    if (item.MetadataUrl.Contains("http"))
-                    {
-                        <a href="@item.MetadataUrl">
-                            @item.name
-                        </a>
-                    }
-                    else {
-                        <a href="@item.GetObjectUrl(item)">
-                            @item.name
-                        </a>
-                    }
-                }
-                else {
-                    <a href="@item.GetObjectUrl(item)">
-                        @item.name
-                    </a>
-                }
-            </td>
-            <td title="Datasett eier: @item.datasetowner.seoname">
-                @item.datasetowner.name
-            </td>
-            <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
-                @HtmlHelperExtensions.GetNationalDokStatus(item)
-            </td>
-            <td title="Datasett type: @item.DatasetType">
-                <span title="Datasett type: @item.DatasetType" class="label label-@item.DatasetType">@item.DatasetType</span>
-            </td>
-            <td style="text-align: center" title="Bekreftet som kommunens DOK: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)">
-                @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
-            </td>
-            <td title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)">
-                @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)
-            </td>
-        </tr>
-    }
-</tbody>
+                <tr>
+                    <td title="Temagruppe for @item.name: @item.ThemeGroupId">@item.ThemeGroupId</td>
+                    <td title="Datasett: @item.name">
+                        @if (item.MetadataUrl != null)
+                        {
+                            if (item.MetadataUrl.Contains("http"))
+                            {
+                                <a href="@item.MetadataUrl">
+                                    @item.name
+                                </a>
+                            }
+                            else {
+                                <a href="@item.GetObjectUrl(item)">
+                                    @item.name
+                                </a>
+                            }
+                        }
+                        else {
+                            <a href="@item.GetObjectUrl(item)">
+                                @item.name
+                            </a>
+                        }
+                    </td>
+                    <td title="Datasett eier: @item.datasetowner.seoname">
+                        @item.datasetowner.name
+                    </td>
+                    <td title="Nasjonal Dok-status: @HtmlHelperExtensions.GetDokStatusFromCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetNationalDokStatus(item)
+                    </td>
+                    <td title="Datasett type: @item.DatasetType">
+                        <span title="Datasett type: @item.DatasetType" class="label label-@item.DatasetType">@item.DatasetType</span>
+                    </td>
+                    <td style="text-align: center" title="Bekreftet som kommunens DOK: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
+                    </td>
+                    <td title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)
+                    </td>
+                </tr>
+            }
+        </tbody>
 
     </table>
 }

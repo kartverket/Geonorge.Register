@@ -932,7 +932,6 @@ label#cbDelete input[type="checkbox"] {
     z-index: 1;
     bottom: 36px;
     right: 7px;
-
 }
 
 #cbDelete input[type="checkbox"]:checked + input + label:before {
@@ -949,7 +948,36 @@ label#cbDelete input[type="checkbox"] {
     margin-top: -5px;
 }
 
-#cbDelete input[type="checkbox"]:hover{
+    #cbDelete input[type="checkbox"]:hover {
+        cursor: pointer;
+    }
 
-    cursor: pointer;
+table.tablesorter thead tr .tablesorter-headerAsc {
+    height: 20px;
+    width: 20px;
+    color: #fe5000;
+}
+
+table.tablesorter thead tr .tablesorter-headerDesc {
+    height: 20px;
+    width: 20px;
+    color: #fe5000;
+}
+
+.tablesorter-headerAsc .tablesorter-header-inner:after {
+    content: "\e114" !important;
+    font-family: 'Glyphicons Halflings' !important;
+    float: right;
+    font-weight: normal;
+    font-size: 12px;
+    padding-top: 4px;
+}
+
+.tablesorter-headerDesc .tablesorter-header-inner:after {
+    content: "\e113" !important;
+    font-family: 'Glyphicons Halflings' !important;
+    float: right;
+    font-weight: normal;
+    font-size: 12px;
+    padding-top: 4px;
 }

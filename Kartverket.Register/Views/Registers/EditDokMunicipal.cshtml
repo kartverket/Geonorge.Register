@@ -10,6 +10,17 @@
     <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
     <li>Rediger liste</li>
 }
+<script>
+    $(document).ready(function () {
+        $("table").tablesorter({
+            headers: {
+                5: { sorter: false },
+                6: { sorter: false },
+                7: { sorter: false }
+            }
+        });
+    });
+</script>
 
 @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
 {
@@ -21,8 +32,8 @@
         <input type="submit" value="Lagre" class="btn btn-default pull-right" />
     </div>
 
-        <table class="table-responsive table-hover table" style="width:100%">
-            <tbody>
+        <table id="myTable" class="tablesorter table-responsive table-hover table" style="width:100%">
+            <thead>
                 <tr>
                     <th style="width:10%">Temagruppe</th>
                     <th style="width:15%">Tittel</th>
@@ -33,11 +44,14 @@
                     <th style="width:15%" title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">Kommunes merknad</th>
                     <th style="width:5%">Slett</th>
                 </tr>
+            </thead>
+            <tbody>
                 @for (int i = 0; i < Model.Count; i++)
                 {
                     <tr>
                         @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
                         @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
+                        @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
 
                         <td title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
                         <td title="Datasett: @Model[i].Name">
@@ -66,7 +80,7 @@
                             @if (Model[i].IsMunicipalDataset())
                             {
 
-                                  @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
+                                @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
 
                             }
                         </td>

@@ -14,12 +14,24 @@
     $(document).ready(function () {
         $("table").tablesorter({
             headers: {
-                5: { sorter: false },
+                5: { usNumberFormat: true },
                 6: { sorter: false },
                 7: { sorter: false }
             }
         });
     });
+
+    function cbChecked(id) {
+        var className = "cb" + id;
+        var element = document.getElementsByClassName(className);
+        var checked = element.item(0).checked;
+
+        if (checked) {
+            document.getElementById(id).innerHTML = '1';
+        } else {
+            document.getElementById(id).innerHTML = '0';
+        }
+    }
 </script>
 
 @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
@@ -32,62 +44,67 @@
         <input type="submit" value="Lagre" class="btn btn-default pull-right" />
     </div>
 
-        <table id="myTable" class="tablesorter table-responsive table-hover table" style="width:100%">
-            <thead>
-                <tr>
-                    <th style="width:10%">Temagruppe</th>
-                    <th style="width:15%">Tittel</th>
-                    <th style="width:10%">Eier</th>
-                    <th style="width:10%">Nasjonal DOK-status</th>
-                    <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
-                    <th style="width:5%" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">Bekreft som kommunens DOK</th>
-                    <th style="width:15%" title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">Kommunes merknad</th>
-                    <th style="width:5%">Slett</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Count; i++)
+    <table id="myTable" class="tablesorter table-responsive table-hover table" style="width:100%">
+        <thead>
+            <tr>
+                <th style="width:10%">Temagruppe</th>
+                <th style="width:15%">Tittel</th>
+                <th style="width:10%">Eier</th>
+                <th style="width:10%">Nasjonal DOK-status</th>
+                <th style="width:10%">Nasjonalt/ <br />Kommunalt</th>
+                <th style="width:5%" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">Bekreft som kommunens DOK</th>
+                <th style="width:15%" title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">Kommunes merknad</th>
+                <th style="width:5%">Slett</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
                 {
-                    <tr>
-                        @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
-                        @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
-                        @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
+                <tr>
+                    @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
+                    @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
+                    @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
 
-                        <td title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
-                        <td title="Datasett: @Model[i].Name">
-                            @Model[i].Name
-                            @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Datasett eier: @Model[i].Owner">
-                            @Model[i].Owner
-                            @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Nasjonal Dok-status: @Model[i].NationalDokStatus">
-                            @Model[i].NationalDokStatus
-                            @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Datasett type: @Model[i].Type">
-                            <span title="Datasett type: @Model[i].Type" class="label label-@Model[i].Type">@Model[i].Type</span>
-                            @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
-                        </td>
-                        <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
-                            @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
-                            @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
-                        </td>
-                        <td id="cbDelete">
-                            @if (Model[i].IsMunicipalDataset())
-                            {
-
-                                @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
-
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+                    <td title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
+                    <td title="Datasett: @Model[i].Name">
+                        @Model[i].Name
+                        @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                    </td>
+                    <td title="Datasett eier: @Model[i].Owner">
+                        @Model[i].Owner
+                        @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
+                    </td>
+                    <td title="Nasjonal Dok-status: @Model[i].NationalDokStatus">
+                        @Model[i].NationalDokStatus
+                        @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
+                    </td>
+                    <td title="Datasett type: @Model[i].Type">
+                        <span title="Datasett type: @Model[i].Type" class="label label-@Model[i].Type">@Model[i].Type</span>
+                        @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
+                    </td>
+                    <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
+                        @if (Model[i].Confirmed)
+                        {
+                            <span id="@i" class="hidden">1</span>
+                        }
+                        else {
+                            <span id="@i" class="hidden">0</span>
+                        }
+                        @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                    </td>
+                    <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
+                        @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
+                    </td>
+                    <td id="cbDelete">
+                        @if (Model[i].IsMunicipalDataset())
+                        {
+                            @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+    <input type="submit" value="Lagre" class="btn btn-default pull-right" />
 }

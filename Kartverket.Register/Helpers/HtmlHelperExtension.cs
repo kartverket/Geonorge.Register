@@ -475,6 +475,16 @@ namespace Kartverket.Register.Helpers
                 var theme = register.items.OfType<Dataset>().OrderByDescending(o => o.theme.value);
                 sortedList = theme.Cast<RegisterItem>().ToList();
             }
+            else if (sortingType == "type")
+            {
+                var type = register.items.OfType<Dataset>().OrderBy(o => o.DatasetType);
+                sortedList = type.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "type_desc")
+            {
+                var type = register.items.OfType<Dataset>().OrderByDescending(o => o.DatasetType);
+                sortedList = type.Cast<RegisterItem>().ToList();
+            }
             else if (sortingType == "epsg")
             {
                 var epsg = register.items.OfType<EPSG>().OrderBy(o => o.epsgcode);

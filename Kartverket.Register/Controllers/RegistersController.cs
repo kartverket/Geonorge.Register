@@ -55,6 +55,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registername}/{filterOrganization}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
+            DokOrderBy(sorting);
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
@@ -71,6 +72,19 @@ namespace Kartverket.Register.Controllers
             }
         }
 
+        private void DokOrderBy(string sorting)
+        {
+            if (sorting != null)
+            {
+                if (sorting.Contains("_desc"))
+                {
+                    ViewBag.DokOrderBy = "";
+                }
+                else {
+                    ViewBag.DokOrderBy = "_desc";
+                }
+            }
+        }
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
@@ -315,7 +329,7 @@ namespace Kartverket.Register.Controllers
                 Note = item.Note
             };
             _registerItemService.SaveNewCoverage(coverage);
-            return coverage;           
+            return coverage;
         }
 
 

@@ -963,10 +963,19 @@ table.tablesorter thead tr {
 
 table.tablesorter thead tr th {
     font-weight:normal;
+    color:#3867c8;
+    text-transform: uppercase;
 }
 
-table.tablesorter thead tr th .sorter-false {
+.sorter-false {
     font-weight:normal;
+    color:black !important;
+    text-transform:none !important;
+}
+
+.dataset .sorter-false a{
+    font-weight:normal;
+    text-transform:uppercase !important;
 }
 
 

@@ -523,9 +523,15 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             var queryresultMunicipality = from c in _dbContext.CodelistValues
                                           where c.register.name == "Kommunenummer"
+                                          && c.value != "2321"
+                                          && c.value != "2311"
+                                          && c.value != "2211"
+                                          && c.value != "2121"
+                                          && c.value != "2131"
+                                          && c.value != "2111"
                                           select c;
 
-            return queryresultMunicipality.ToList();
+            return queryresultMunicipality.OrderBy(o => o.name).ToList();
         }
 
         public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDocumentOwnerId = null)

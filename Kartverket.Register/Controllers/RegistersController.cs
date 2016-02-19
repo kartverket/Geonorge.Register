@@ -462,7 +462,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.SortOrder = sorting;
             ViewBag.selectedMunicipality = filter.municipality;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-            ViewBag.municipality = db.RegisterItems.Where(ri => ri.register.name == "Kommunenummer").OrderBy(o => o.name).ToList();
+            ViewBag.municipality = _registerItemService.GetMunicipalityList();
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
             ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);

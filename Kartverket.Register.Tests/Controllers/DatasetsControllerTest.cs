@@ -53,23 +53,6 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().BeNull();
         }
 
-        [Test]
-        public void PostCreateShouldReturnViewWhenUuidIsNotNull()
-        {
-            Dataset dataset = NewDataset("datasett Navn");
-            var registerService = new Mock<IRegisterService>();
-            var registerItemService = new Mock<IRegisterItemService>();
-            registerService.Setup(r => r.GetRegister(null, dataset.register.seoname)).Returns(dataset.register);
-            registerItemService.Setup(s => s.GetThemeGroupSelectList("ThemeGroup")).Returns(NewList());
-            registerItemService.Setup(s => s.GetDokStatusSelectList("ThemeGroup")).Returns(NewList());
-            registerItemService.Setup(s => s.GetOwnerSelectList(Guid.NewGuid())).Returns(NewList());
-            registerItemService.Setup(s => s.GetRegisterSelectList(Guid.NewGuid())).Returns(NewList());
-            registerItemService.Setup(s => s.GetSubmitterSelectList(Guid.NewGuid())).Returns(NewList());
-            var controller = CreateController(registerService.Object, registerItemService.Object, null);
-            var result = controller.Create(dataset, dataset.register.seoname, "123", null, null, null, null) as ViewResult;
-
-            result.Should().NotBeNull();
-        }
 
         [Test]
         public void PostCreateShouldReturnRegisterItemDetailsPag()

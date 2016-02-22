@@ -107,7 +107,7 @@ namespace Kartverket.Register.Controllers
                             dataset = GetMetadataFromKartkatalogen(dataset, metadataUuid);
                             dataset = initialisationDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
-                            return Redirect(dataset.GetObjectUrl(dataset));
+                            return Redirect(dataset.register.GetObjectUrl() + "?municipality=" + municipality);
                         }
                     }
                     else {

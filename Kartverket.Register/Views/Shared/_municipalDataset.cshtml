@@ -30,10 +30,9 @@
     <h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
 </div>
 <div class="col-sm-12 col-md-6 col-lg-6 no-padding">
-    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 38px; float: right;">
+    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 56px; float: right;">
         <div class="save-as-dropdown">
             <div class="sorter pagination">
-                Velg kommune:
                 <div class="custom-select">
                     @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>

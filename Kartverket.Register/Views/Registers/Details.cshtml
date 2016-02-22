@@ -126,7 +126,17 @@
                 }
                 if (HtmlHelperExtensions.Access(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
+                    if (Model.IsDokMunicipal())
+                    {
+                        if (selectedMunicipal != null)
+                        {
+                            <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew?municipality=@selectedMunicipal.value">Legg til</a>
+                        }
+                    }
+                    else {
+                        <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
+                    }
+
                 }
                 if (HtmlHelperExtensions.IsAdmin())
                 {

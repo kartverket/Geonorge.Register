@@ -94,12 +94,12 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        internal bool IsDokMunicipal()
+        public bool IsDokMunicipal()
         {
             return name == "Det offentlige kartgrunnlaget - Kommunalt";
         }
 
-        internal Guid GetSystemId()
+        public Guid GetSystemId()
         {
             if (systemId == null || systemId == Guid.Empty)
             {

@@ -42,10 +42,16 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister)
+        public ActionResult Create(string registername, string parentRegister, string municipality)
         {
             Dataset dataset = new Dataset();
             dataset.register = _registerService.GetRegister(parentRegister, registername);
+            ViewBag.municipalityCode = municipality;
+            if (municipality != null)
+            {
+                dataset.datasetowner = _registerItemService.GetMunicipalOrganizationByNr(municipality);
+                dataset.datasetownerId = dataset.datasetowner.systemId;
+            }
             if (dataset.register != null)
             {
                 dataset.DatasetType = GetDatasetType(dataset.register.name);
@@ -62,7 +68,6 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound("Finner ikke registeret");
         }
 
-
         // POST: Datasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -70,48 +75,71 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString)
+        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString, string municipality)
         {
-            ViewBag.SearchString = searchString;
-            ViewBag.SearchResultList = null;
-            ViewBag.Message = null;
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
             {
-                dataset.DatasetType = dataset.GetDatasetType();
-                if (!string.IsNullOrEmpty(metadataUuid))
-                {
-                    Dataset model = GetMetadataFromKartkatalogen(dataset, metadataUuid);
-                    Viewbags(dataset);
-                    return View(model);
-                }
-                else if (!string.IsNullOrEmpty(searchString))
-                {
-                    SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
-                    var resList = ParseSearchResult(result);
-                    if (resList.Count == 0)
-                        ViewBag.Message = "Søket gav ingen treff";
-                    ViewBag.SearchResultList = resList;
-                }
-                else if (_accessControlService.Access(dataset.register))
+                if (_accessControlService.Access(dataset.register))
                 {
                     dataset.systemId = dataset.GetSystemId();
                     dataset.registerId = dataset.register.GetSystemId();
                     dataset.datasetownerId = GetDatasetOwnerId(dataset.datasetownerId);
                     dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
+                    dataset.DatasetType = dataset.GetDatasetType();
 
-                    // TODO fikse validering... 
-                    if (!NameIsValid(dataset))
+                    if (dataset.register.IsDokMunicipal())
                     {
-                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
-                        Viewbags(dataset);
-                        return View(dataset);
+                        ViewBag.SearchString = searchString;
+                        ViewBag.SearchResultList = null;
+                        ViewBag.municipalityCode = municipality;
+
+                        if (!string.IsNullOrEmpty(searchString))
+                        {
+                            SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
+                            var resList = ParseSearchResult(result);
+                            if (resList.Count == 0)
+                                ViewBag.Message = "Søket gav ingen treff";
+                            ViewBag.SearchResultList = resList;
+                        }
+                        else if (!string.IsNullOrEmpty(metadataUuid))
+                        {
+                            dataset = GetMetadataFromKartkatalogen(dataset, metadataUuid);
+                            dataset = initialisationDataset(dataset);
+                            _registerItemService.SaveNewRegisterItem(dataset);
+                            return Redirect(dataset.GetObjectUrl(dataset));
+                        }
                     }
-                    if (ModelState.IsValid)
-                    {
-                        dataset = initialisationDataset(dataset);
-                        _registerItemService.SaveNewRegisterItem(dataset);
-                        return Redirect(dataset.GetObjectUrl(dataset));
+                    else {
+                        if (!string.IsNullOrEmpty(searchString))
+                        {
+                            SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
+                            var resList = ParseSearchResult(result);
+                            if (resList.Count == 0)
+                                ViewBag.Message = "Søket gav ingen treff";
+                            ViewBag.SearchResultList = resList;
+                        }
+                        else if (!string.IsNullOrEmpty(metadataUuid))
+                        {
+                            Dataset model = GetMetadataFromKartkatalogen(dataset, metadataUuid);
+                            Viewbags(dataset);
+                            return View(model);
+                        }
+                        else {
+                            // TODO fikse validering... 
+                            if (!NameIsValid(dataset))
+                            {
+                                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
+                                Viewbags(dataset);
+                                return View(dataset);
+                            }
+                            if (ModelState.IsValid)
+                            {
+                                dataset = initialisationDataset(dataset);
+                                _registerItemService.SaveNewRegisterItem(dataset);
+                                return Redirect(dataset.GetObjectUrl(dataset));
+                            }
+                        }
                     }
                 }
                 else
@@ -122,6 +150,7 @@ namespace Kartverket.Register.Controllers
             Viewbags(dataset);
             return View(dataset);
         }
+
 
         private List<MetadataItemViewModel> ParseSearchResult(SearchResultsType res)
         {
@@ -394,7 +423,6 @@ namespace Kartverket.Register.Controllers
         private Dataset initialisationDataset(Dataset inputDataset, Dataset originalDataset = null, CoverageDataset inputCoverage = null)
         {
             Dataset dataset = GetDataset(originalDataset);
-            //dataset.systemId = dataset.GetSystemId();
             dataset.systemId = inputDataset.GetSystemId();
             dataset.modified = dataset.GetDateModified();
             dataset.dateSubmitted = dataset.GetDateSubmbitted();

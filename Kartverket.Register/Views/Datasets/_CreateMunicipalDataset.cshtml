@@ -1,56 +1,62 @@
 ﻿@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Models.ViewModels
 
-@if (Model.name != null)
+<h2 class="">Legg til ekstra DOK-datasett for din kommune</h2>
+<hr />
+<h3>Søk</h3>
+<p>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</p>
+
+@using (Html.BeginForm("Create", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "suggestDataset" }))
 {
-    @Html.HiddenFor(model => model.Uuid)
-    <div class="col-md-10 pull-right">
-        @Html.ValidationMessage("ErrorMessage")
-    </div>
-        <div class="form-horizontal">
-            <div class="form-group">
-                @Html.LabelFor(model => model.name, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.name)
-                    @Html.HiddenFor(model => model.name)
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.description, new { @class = "control-label col-md-2 " })
-                <div class="col-md-10">
-                    @Html.DisplayFor(model => model.description)
-                    @Html.HiddenFor(model => model.description)
-                </div>
-            </div>
-            
-            @Html.HiddenFor(model => model.ProductSheetUrl)
-            @Html.HiddenFor(model => model.PresentationRulesUrl)
-            @Html.HiddenFor(model => model.ProductSpecificationUrl)
-            @Html.HiddenFor(model => model.MetadataUrl)
-            @Html.HiddenFor(model => model.DistributionFormat)
-            @Html.HiddenFor(model => model.DistributionUrl)
-            @Html.HiddenFor(model => model.DistributionArea)
-            @Html.HiddenFor(model => model.WmsUrl)
-            @Html.HiddenFor(model => model.datasetthumbnail)
-            @Html.HiddenFor(model => model.ThemeGroupId)
+    <input type="hidden" id="datasetownerId" name="datasetownerId" value="@Model.datasetownerId" />
+    <input type="hidden" value="" name="metadataUuid" id="metadataUuid" />
+    <input type="hidden" value="@ViewBag.municipalityCode" name="municipality" id="municipality" />
 
-            @if (HtmlHelperExtensions.IsAdmin())
-            {
-                <div class="form-group">
-                    @Html.Label("Kommune", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("datasetownerId", null, "Velg kommune", htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            }
-            <div class="form-group">
-                @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
-                </div>
-            </div>
+    <div class="form-horizontal" style="margin: 30px 0px;">
+        <div class="form-group">
+            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" value="@ViewBag.SearchString" />
+            <input type="submit" value="Finn metadata" class="btn btn-primary" style="margin-bottom:0px" />
         </div>
+    </div>
 }
 
+@if (ViewBag.SearchResultList != null)
+{
+    <h4>Treffliste over datasett</h4>
+    if (ViewBag.SearchResultList.Count > 0)
+    {
+        <table class="table-responsive table">
+            <thead>
+                <tr>
+                    <th>Navn</th>
+                    <th>Velg</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var metadata in (List<MetadataItemViewModel>)ViewBag.SearchResultList)
+                {
+                    <tr>
+                        <td width="80%">@metadata.Title</td>
+                        <td width="20%">
+                            <input type="button" value="Velg som kommunalt datasett" name="test" id="test" class="btn pull-right" onclick="$(this).selectMetadata('@metadata.Uuid');" />
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    }
+    else {
+        <p>Ingen treff...</p>
+    }
+}
+
+
+<div>
+    <h3>Opprett metadata</h3>
+    <p>Hvis datasettet ikke finnes i Geonorge, må du registrere nye metadata for de data som du ønsker å registrere. Dette vil ofte være geografiske data som kommunen selv har</p>
+    <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank" class="btn btn-primary">Opprett metadata</a>
+</div>
+
+<a href="@Model.register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>

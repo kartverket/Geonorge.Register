@@ -275,7 +275,7 @@ namespace Kartverket.Register.Controllers
                 }
                 if (fileSmal != null && fileSmal.ContentLength > 0)
                 {
-                    originalOrganization.logoFilename = SaveLogoToDisk(fileSmal, org.number);
+                    originalOrganization.logoFilename = SaveLogoOptimizedToDisk(fileSmal, org.number);
                 }
                 if (fileLarge != null && fileLarge.ContentLength > 0)
                 {
@@ -469,6 +469,20 @@ namespace Kartverket.Register.Controllers
             return filename;
         }
 
+        private string SaveLogoOptimizedToDisk(HttpPostedFileBase file, string organizationNumber)
+        {
+            string filename = organizationNumber + "_" + Path.GetFileName(file.FileName);
+            var path = Path.Combine(Server.MapPath(Constants.DataDirectory + Organization.DataDirectory), filename);
+
+            ImageResizer.ImageJob newImage =
+               new ImageResizer.ImageJob(file, path,
+               new ImageResizer.Instructions("maxwidth=215;maxheight=215;quality=75"));
+
+            newImage.Build();
+
+            return filename;
+        }
+
         private void ValidationName(Organization organization, Models.Register register)
         {
             var queryResultsDataset = from o in db.Organizations
@@ -537,7 +551,7 @@ namespace Kartverket.Register.Controllers
         {
             if (fileSmal != null && fileSmal.ContentLength > 0)
             {
-                organization.logoFilename = SaveLogoToDisk(fileSmal, organization.number);
+                organization.logoFilename = SaveLogoOptimizedToDisk(fileSmal, organization.number);
             }
         }
 

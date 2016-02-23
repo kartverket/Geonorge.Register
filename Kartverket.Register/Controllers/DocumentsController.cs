@@ -335,6 +335,12 @@ namespace Kartverket.Register.Controllers
                 string output = Path.Combine(Server.MapPath(Constants.DataDirectory + Document.DataDirectory), document.register.name + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg");
                 GhostscriptWrapper.GenerateOutput(input, output, GsSettings());
 
+                ImageResizer.ImageJob newImage =
+                                new ImageResizer.ImageJob(output, output,
+                                new ImageResizer.Instructions("maxwidth=160;maxheight=300;quality=75"));
+
+                newImage.Build();
+
                 return url + document.register.seoname + "_thumbnail_" + document.name + "_v" + document.versionNumber + "_" + seofilename + ".jpg";
 
             }

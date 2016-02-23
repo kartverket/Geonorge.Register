@@ -14,8 +14,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string MunicipalityCode { get; set; }
 
         public CreateDokMunicipalViewModel() {
-            //SelectedList = new List<MetadataItemViewModel>();
-            //SearchResult = new List<MetadataItemViewModel>();
+
         }
 
     }

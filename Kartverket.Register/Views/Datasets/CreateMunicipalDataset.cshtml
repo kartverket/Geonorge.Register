@@ -114,17 +114,17 @@
                         <th class="text-center">Slett</th>
                     </tr>
                 </thead>
-                <tbody>                    
+                <tbody>
                     @for (int i = 0; i < Model.SelectedList.Count; i++)
                     {
                         <tr>
                             <td width="90%">@Model.SelectedList[i].Title</td>
-                            <td width="10%" class="text-center">
-                                @*@Html.CheckBox("SearchResult[" + i + "].Selected", Model.SearchResult[i].Selected, new { @readonly = "readonly" })*@
-                                @Html.Hidden("SelectedList[" + i + "].Uuid", Model.SelectedList[i].Uuid, new { @readonly = "readonly" })
-                                @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
+                            <td id="cbDelete" width="10%" class="text-center">
+                                @Html.CheckBox("SelectedList[" + i + "].Delete", Model.SelectedList[i].Delete)<label></label>
                             </td>
                         </tr>
+                        @Html.Hidden("SelectedList[" + i + "].Uuid", Model.SelectedList[i].Uuid, new { @readonly = "readonly" })
+                        @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
                     }
                 </tbody>
             </table>

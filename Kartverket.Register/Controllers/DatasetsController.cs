@@ -185,13 +185,16 @@ namespace Kartverket.Register.Controllers
                 {
                     foreach (var item in model.SelectedList)
                     {
-                        Dataset dataset = new Dataset();
-                        dataset = GetMetadataFromKartkatalogen(dataset, item.Uuid);
-                        dataset.register = model.Register;
-                        dataset.datasetowner = model.DatasetOwner;
-                        dataset.datasetownerId = model.DatasetOwner.systemId;
-                        dataset = initialisationDataset(dataset);
-                        _registerItemService.SaveNewRegisterItem(dataset);
+                        if (!item.Delete)
+                        {
+                            Dataset dataset = new Dataset();
+                            dataset = GetMetadataFromKartkatalogen(dataset, item.Uuid);
+                            dataset.register = model.Register;
+                            dataset.datasetowner = model.DatasetOwner;
+                            dataset.datasetownerId = model.DatasetOwner.systemId;
+                            dataset = initialisationDataset(dataset);
+                            _registerItemService.SaveNewRegisterItem(dataset);
+                        }
                     }
                     return Redirect(model.Register.GetObjectUrl() + "?municipality=" + model.MunicipalityCode);
                 }

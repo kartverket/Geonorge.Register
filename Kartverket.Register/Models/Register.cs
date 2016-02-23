@@ -113,6 +113,63 @@ namespace Kartverket.Register.Models
         {
             return "/register/det-offentlige-kartgrunnlaget-kommunalt";
         }
-    }//end Register
 
-}//end namespace Datamodell
+        public string GetObjectCreateUrl(string municipalityCode = null)
+        {
+            string url;
+            if (parentRegister == null)
+            {
+                url = seoname + "/ny";
+            }
+            else {
+                url = parentRegister.seoname + "/" + owner.seoname + "/" + name + "/ny";
+            }
+
+            if (containedItemClass == "Document") return "/dokument/" + url;
+            else if (containedItemClass == "CodelistValue") return "/kodeliste/" + url;
+            else if (containedItemClass == "Register") return "/subregister/" + url;
+            else if (containedItemClass == "Organization") return "/organisasjoner/" + url;
+            else if (containedItemClass == "EPSG") return "/epsg/" + url;
+            else if (containedItemClass == "NameSpace") return "/navnerom/" + url;
+            else if (containedItemClass == "Dataset")
+            {
+                if (IsDokMunicipal())
+                {
+                    return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
+                }
+                else {
+                    return "/dataset/" + url;
+                }
+            }
+            else {
+                return "#";
+            }
+        }
+
+        public string GetEditObjectUrl() {
+            if (parentRegister == null)
+            {
+                return "/rediger/" + name;
+            }
+            else
+            {
+                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + name + "/rediger";
+            }
+        }
+
+        public string GetDeleteObjectUrl()
+        {
+            if (parentRegister == null)
+            {
+                return "/slett/" + name;
+            }
+            else
+            {
+                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + name + "/slett";
+            }
+        }
+
+        //end Register
+
+    }//end namespace Datamodell
+}

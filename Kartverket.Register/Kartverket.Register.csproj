@@ -610,6 +610,7 @@
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalRow.cs" />
     <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
@@ -920,9 +921,8 @@
     <Content Include="Views\Datasets\_CreateCoverage.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
-    <Content Include="Views\Datasets\_CreateMunicipalDataset.cshtml" />
-    <Content Include="Views\Datasets\_CreateNationalDataset.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
+    <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

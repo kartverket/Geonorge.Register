@@ -9,5 +9,6 @@ namespace Kartverket.Register.Models.ViewModels
     {
         public string Uuid { get; set; }
         public string Title { get; set; }
+        public bool Selected { get; set; }
     }
 }

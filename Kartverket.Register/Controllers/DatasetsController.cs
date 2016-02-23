@@ -42,16 +42,10 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(string registername, string parentRegister, string municipality)
+        public ActionResult Create(string registername, string parentRegister)
         {
             Dataset dataset = new Dataset();
             dataset.register = _registerService.GetRegister(parentRegister, registername);
-            ViewBag.municipalityCode = municipality;
-            if (municipality != null)
-            {
-                dataset.datasetowner = _registerItemService.GetMunicipalOrganizationByNr(municipality);
-                dataset.datasetownerId = dataset.datasetowner.systemId;
-            }
             if (dataset.register != null)
             {
                 dataset.DatasetType = GetDatasetType(dataset.register.name);
@@ -75,7 +69,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("dataset/{registername}/ny")]
-        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString, string municipality)
+        public ActionResult Create(Dataset dataset, string registername, string metadataUuid, string parentRegister, string registerowner, string searchString)
         {
             dataset.register = _registerService.GetRegister(parentRegister, registername);
             if (dataset.register != null)
@@ -88,57 +82,33 @@ namespace Kartverket.Register.Controllers
                     dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
                     dataset.DatasetType = dataset.GetDatasetType();
 
-                    if (dataset.register.IsDokMunicipal())
+                    if (!string.IsNullOrEmpty(searchString))
                     {
-                        ViewBag.SearchString = searchString;
-                        ViewBag.SearchResultList = null;
-                        ViewBag.municipalityCode = municipality;
-
-                        if (!string.IsNullOrEmpty(searchString))
-                        {
-                            SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
-                            var resList = ParseSearchResult(result);
-                            if (resList.Count == 0)
-                                ViewBag.Message = "Søket gav ingen treff";
-                            ViewBag.SearchResultList = resList;
-                        }
-                        else if (!string.IsNullOrEmpty(metadataUuid))
-                        {
-                            dataset = GetMetadataFromKartkatalogen(dataset, metadataUuid);
-                            dataset = initialisationDataset(dataset);
-                            _registerItemService.SaveNewRegisterItem(dataset);
-                            return Redirect(dataset.register.GetObjectUrl() + "?municipality=" + municipality);
-                        }
+                        SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
+                        var resList = ParseSearchResult(result);
+                        if (resList.Count == 0)
+                            ViewBag.Message = "Søket gav ingen treff";
+                        ViewBag.SearchResultList = resList;
+                    }
+                    else if (!string.IsNullOrEmpty(metadataUuid))
+                    {
+                        Dataset model = GetMetadataFromKartkatalogen(dataset, metadataUuid);
+                        Viewbags(dataset);
+                        return View(model);
                     }
                     else {
-                        if (!string.IsNullOrEmpty(searchString))
+                        // TODO fikse validering... 
+                        if (!NameIsValid(dataset))
                         {
-                            SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
-                            var resList = ParseSearchResult(result);
-                            if (resList.Count == 0)
-                                ViewBag.Message = "Søket gav ingen treff";
-                            ViewBag.SearchResultList = resList;
-                        }
-                        else if (!string.IsNullOrEmpty(metadataUuid))
-                        {
-                            Dataset model = GetMetadataFromKartkatalogen(dataset, metadataUuid);
+                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
                             Viewbags(dataset);
-                            return View(model);
+                            return View(dataset);
                         }
-                        else {
-                            // TODO fikse validering... 
-                            if (!NameIsValid(dataset))
-                            {
-                                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
-                                Viewbags(dataset);
-                                return View(dataset);
-                            }
-                            if (ModelState.IsValid)
-                            {
-                                dataset = initialisationDataset(dataset);
-                                _registerItemService.SaveNewRegisterItem(dataset);
-                                return Redirect(dataset.GetObjectUrl(dataset));
-                            }
+                        if (ModelState.IsValid)
+                        {
+                            dataset = initialisationDataset(dataset);
+                            _registerItemService.SaveNewRegisterItem(dataset);
+                            return Redirect(dataset.GetObjectUrl(dataset));
                         }
                     }
                 }
@@ -151,41 +121,87 @@ namespace Kartverket.Register.Controllers
             return View(dataset);
         }
 
-
-        private List<MetadataItemViewModel> ParseSearchResult(SearchResultsType res)
+        // GET: Datasets/Create
+        [Authorize]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
+        [Route("dataset/{registername}/{municipality}/ny")]
+        public ActionResult CreateMunicipalDataset(string municipality)
         {
-            List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
-
-            if (res.numberOfRecordsMatched != "0")
+            if (municipality != null)
             {
-                for (int s = 0; s < res.Items.Length; s++)
+                CreateDokMunicipalViewModel model = new CreateDokMunicipalViewModel();
+                model.Register = _registerService.GetDokMunicipalRegister();
+                model.MunicipalityCode = municipality;
+                model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(municipality);
+
+                if (_accessControlService.Access(model.Register))
                 {
-                    MetadataItemViewModel m = new MetadataItemViewModel();
-                    m.Uuid = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[0].Text[0];
-                    m.Title = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[2].Text[0];
-                    result.Add(m);
+                    return View(model);
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
                 }
             }
-
-            return result;
+            return HttpNotFound("Finner ikke kommunenr.");
         }
 
-        private SearchResultsType SearchMetadataFromKartkatalogen(string searchString)
+        // POST: Datasets/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Authorize]
+        [Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
+        [Route("dataset/{registername}/{municipality}/ny")]
+        public ActionResult CreateMunicipalDataset(CreateDokMunicipalViewModel model, string searchString, bool save = false)
         {
-            SearchResultsType result = new MetadataService().SearchMetadata(searchString);
-            return result;
-        }
-
-        private Guid GetDatasetOwnerId(Guid datasetownerId)
-        {
-            if (datasetownerId == null || datasetownerId == Guid.Empty)
+            if (_accessControlService.Access(model.Register))
             {
-                Organization datasetOwner = _registerService.GetOrganizationByUserName();
-                return datasetOwner.systemId;
-            }
-            return datasetownerId;
-        }
+                model.Register = _registerService.GetDokMunicipalRegister();
+                model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(model.MunicipalityCode);
 
+                if (model.SearchResult != null)
+                {
+                    foreach (var item in model.SearchResult)
+                    {
+                        if (item.Selected)
+                        {
+                            if (model.SelectedList == null)
+                            {
+                                model.SelectedList = new List<MetadataItemViewModel>();
+                            }
+                            model.SelectedList.Add(item);
+                        }
+                    }
+                    model.SearchResult = null;
+                }
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
+                    model.SearchResult = ParseSearchResult(result);
+                    return View(model);
+                }
+                if (save)
+                {
+                    foreach (var item in model.SelectedList)
+                    {
+                        Dataset dataset = new Dataset();
+                        dataset = GetMetadataFromKartkatalogen(dataset, item.Uuid);
+                        dataset.register = model.Register;
+                        dataset.datasetowner = model.DatasetOwner;
+                        dataset.datasetownerId = model.DatasetOwner.systemId;
+                        dataset = initialisationDataset(dataset);
+                        _registerItemService.SaveNewRegisterItem(dataset);
+                    }
+                    return Redirect(model.Register.GetObjectUrl() + "?municipality=" + model.MunicipalityCode);
+                }
+                return View(model);
+            }
+            else
+            {
+                throw new HttpException(401, "Access Denied");
+            }
+        }
 
         // GET: Datasets/Edit/5
         [Authorize]
@@ -294,6 +310,40 @@ namespace Kartverket.Register.Controllers
 
 
         // *** HJELPEMETODER
+
+        private List<MetadataItemViewModel> ParseSearchResult(SearchResultsType res)
+        {
+            List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
+
+            if (res.numberOfRecordsMatched != "0")
+            {
+                for (int s = 0; s < res.Items.Length; s++)
+                {
+                    MetadataItemViewModel m = new MetadataItemViewModel();
+                    m.Uuid = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[0].Text[0];
+                    m.Title = ((www.opengis.net.DCMIRecordType)(res.Items[s])).Items[2].Text[0];
+                    result.Add(m);
+                }
+            }
+
+            return result;
+        }
+
+        private SearchResultsType SearchMetadataFromKartkatalogen(string searchString)
+        {
+            SearchResultsType result = new MetadataService().SearchMetadata(searchString);
+            return result;
+        }
+
+        private Guid GetDatasetOwnerId(Guid datasetownerId)
+        {
+            if (datasetownerId == null || datasetownerId == Guid.Empty)
+            {
+                Organization datasetOwner = _registerService.GetOrganizationByUserName();
+                return datasetOwner.systemId;
+            }
+            return datasetownerId;
+        }
 
         protected override void Dispose(bool disposing)
         {

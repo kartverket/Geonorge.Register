@@ -8,9 +8,6 @@
     Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
     Kartverket.Register.Models.Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
-    string UrlCreateNew = RegisterUrls.CreateNewRegisterItemUrl(parentRegister, Model.owner.seoname, Model.seoname, Model.containedItemClass);
-    string UrlEdit = RegisterUrls.EditRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
-    string UrlDelete = RegisterUrls.DeleteRegisterUrl(parentRegister, Model.owner.seoname, Model.seoname);
     CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
 }
 
@@ -130,18 +127,17 @@
                     {
                         if (selectedMunicipal != null)
                         {
-                            <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew?municipality=@selectedMunicipal.value">Legg til</a>
+                            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(selectedMunicipal.value)">Legg til</a>
                         }
                     }
                     else {
-                        <a class="btn btn-default btn-space pull-right" href="@UrlCreateNew">Legg til</a>
+                        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
                     }
-
                 }
                 if (HtmlHelperExtensions.IsAdmin())
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">Slett</a>
                 }
             }
             <a class="hidden-print" href="/">Tilbake</a>

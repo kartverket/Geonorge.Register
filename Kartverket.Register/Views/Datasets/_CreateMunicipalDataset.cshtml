@@ -13,50 +13,55 @@
     <input type="hidden" value="" name="metadataUuid" id="metadataUuid" />
     <input type="hidden" value="@ViewBag.municipalityCode" name="municipality" id="municipality" />
 
-    <div class="form-horizontal" style="margin: 30px 0px;">
-        <div class="form-group">
-            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" value="@ViewBag.SearchString" />
-            <input type="submit" value="Finn metadata" class="btn btn-primary" style="margin-bottom:0px" />
+    <div class="form-group col-sm-12" style="margin:20px 0px; padding-left:0px">
+        <div class="col-md-8" style="padding-left: 0px; padding-right: 0px;">
+            <input type="text" class="col-md-6" id="searchString" name="searchString" value="@ViewBag.SearchString" />
+            </div>
+        <div class="col-md-2" style="padding-left: 0px;">
+            <input type="submit" value="Søk" class="btn btn-primary" style="margin-bottom:0px" />
         </div>
     </div>
 }
 
 @if (ViewBag.SearchResultList != null)
 {
-    <h4>Treffliste over datasett</h4>
-    if (ViewBag.SearchResultList.Count > 0)
-    {
-        <table class="table-responsive table">
-            <thead>
-                <tr>
-                    <th>Navn</th>
-                    <th>Velg</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var metadata in (List<MetadataItemViewModel>)ViewBag.SearchResultList)
-                {
+    <div class="col-sm-12" style="padding-left: 0px">
+        <h4>Treffliste over datasett</h4>
+        @if (ViewBag.SearchResultList.Count > 0)
+        {
+            <table class="table-responsive table">
+                <thead>
                     <tr>
-                        <td width="80%">@metadata.Title</td>
-                        <td width="20%">
-                            <input type="button" value="Velg som kommunalt datasett" name="test" id="test" class="btn pull-right" onclick="$(this).selectMetadata('@metadata.Uuid');" />
-                        </td>
+                        <th>Navn</th>
+                        <th>Velg</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var metadata in (List<MetadataItemViewModel>)ViewBag.SearchResultList)
+                    {
+                        <tr>
+                            <td width="80%">@metadata.Title</td>
+                            <td width="20%">
+                                <input type="button" value="Registrer tilleggsdatasett" name="test" id="test" class="btn pull-right" onclick="$(this).selectMetadata('@metadata.Uuid');" />
+                            </td>
+                        </tr>
+                    }
 
-            </tbody>
-        </table>
-    }
-    else {
-        <p>Ingen treff...</p>
-    }
+                </tbody>
+            </table>
+        }
+        else {
+            <p>Ingen treff...</p>
+        }
+    </div>
 }
 
 
-<div>
-    <h3>Opprett metadata</h3>
-    <p>Hvis datasettet ikke finnes i Geonorge, må du registrere nye metadata for de data som du ønsker å registrere. Dette vil ofte være geografiske data som kommunen selv har</p>
-    <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank" class="btn btn-primary">Opprett metadata</a>
-</div>
+        <div>
+            <h3>Opprett metadata</h3>
+            <p>Hvis datasettet ikke finnes i Geonorge, må du registrere nye metadata for de data som du ønsker å registrere. Dette vil ofte være geografiske data som kommunen selv har. Trykker du på «Opprett metadata» hopper du til et annet verktøy. </p>
+            <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank" class="btn btn-primary">Opprett metadata</a>
+        </div>
+        
 
-<a href="@Model.register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
+        <a href="@Model.register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>

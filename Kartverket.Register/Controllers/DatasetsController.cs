@@ -155,9 +155,9 @@ namespace Kartverket.Register.Controllers
         [Route("dataset/{registername}/{municipality}/ny")]
         public ActionResult CreateMunicipalDataset(CreateDokMunicipalViewModel model, string searchString, bool save = false)
         {
+            model.Register = _registerService.GetDokMunicipalRegister();
             if (_accessControlService.Access(model.Register))
             {
-                model.Register = _registerService.GetDokMunicipalRegister();
                 model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(model.MunicipalityCode);
 
                 if (model.SearchResult != null)

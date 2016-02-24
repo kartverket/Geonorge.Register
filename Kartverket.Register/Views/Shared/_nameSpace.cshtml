@@ -1,38 +1,22 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)
-        </div>
-        <div class="col-md-4">
-            @Html.Partial("_otherformats")
-        </div>
-        <div class="col-md-3">
-            @Html.Partial("_LayoutSelect")
-        </div>
-    </div>
-    <div class="row">
-        @Html.Partial("_visningstyper")
-    </div>
-</div>
-
 <div class="register namespace search-results">
-
     @foreach (NameSpace item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+
                 <div class="col-title col-xs-12 col-sm-12 col-md-6 col-lg-6">
                     <a href="@item.GetObjectUrl()">
-                            @item.name
+                        @item.name
                     </a>
                 </div>
+                
                 <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-information">
-                        @Html.DisplayFor(modelItem => item.submitter.name)
-
+                    @Html.DisplayFor(modelItem => item.submitter.name)
                 </div>
+                
                 <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-descripton">
                     @if (item.description == null)
                     {
@@ -43,6 +27,7 @@
                         <p title="Link til innholdet i @item.name"><span>Innhold: </span><a href="@item.description">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
                 </div>
+                
                 <div class="col-actions col-xs-6 col-sm-6 col-md-2 col-lg-2">
                     @if (item.serviceUrl == null)
                     {
@@ -53,20 +38,9 @@
                         <p title="URL til tjeneste i navnerommet @item.name"><span>Tjeneste: </span><a href="@item.serviceUrl">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
                 </div>
-            </div>
 
+            </div>
         </div>
         <hr />
     }
-
 </div>
-
-<br />
-
-<div class="search-filter-wrapper">
-
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
-    </div>
-</div>
-

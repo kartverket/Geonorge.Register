@@ -1,46 +1,25 @@
 ﻿﻿@using Kartverket.Register.Helpers
 @model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
 
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)  
-        </div>
-        <div class="col-md-4">
-            @Html.Partial("_otherformats")
-        </div>
-        <div class="col-md-3">
-            @Html.Partial("_LayoutSelect")
-        </div>
-    </div>
-    <div class="row">
-        @Html.Partial("_visningstyper")
-    </div>
-</div>
-
-<h3>Kodeliste</h3>
-<hr/>
+<h3 style="margin-top: 0px;">Kodeliste</h3>
+<hr />
 <div class="register codelist search-results">
-
     @foreach (Kartverket.Register.Models.CodelistValue item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+
                 <div class="col-title col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     @if (item.register.parentRegister != null)
                     {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                           
-                                @item.name
-                           
+                        <a href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname">
+                            @item.name
                         </a>
                     }
                     else
                     {
                         <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                           
-                                @item.name
-                           
+                            @item.name
                         </a>
                     }
                 </div>
@@ -48,6 +27,7 @@
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-descripton">
                     <p>@item.description</p>
                 </div>
+
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
                     @if (item.value != null)
                     {
@@ -58,6 +38,7 @@
                         <p title="Kodeverdi: Ikke angitt"><span>Kodeverdi: </span>Ikke angitt</p>
                     }
                 </div>
+
                 <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
                     @if (item.status == null)
                     {
@@ -68,18 +49,9 @@
                         <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
                 </div>
-            </div>
 
+            </div>
         </div>
         <hr />
     }
-    
-</div>
-
-<br />
-
-<div class="search-filter-wrapper">    
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
-    </div>
 </div>

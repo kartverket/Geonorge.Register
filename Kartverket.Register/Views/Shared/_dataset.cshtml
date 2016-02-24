@@ -5,25 +5,6 @@
     var registerName = ViewBag.register;
 }
 
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)
-        </div>
-        <div class="col-md-4">
-            @if (Model.Count > 0)
-            {
-                @Html.Partial("_otherformats")
-            }
-        </div>
-        <div class="col-md-3">
-            @if (registerName == "Det offentlige kartgrunnlaget")
-            {
-                @Html.Partial("_LayoutSelect")
-            }
-        </div>
-    </div>
-</div>
 @if (registerName == "Det offentlige kartgrunnlaget")
             {
     @Html.Partial("_nationalDataset", Model)
@@ -32,12 +13,3 @@ else if (registerName == "Det offentlige kartgrunnlaget - Kommunalt")
 {
     @Html.Partial("_municipalDataset", Model)
 }
-
-
-<div class="search-filter-wrapper">
-    <br /><br />
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)
-    </div>
-</div>
-

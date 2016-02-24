@@ -889,7 +889,6 @@
     <Content Include="Views\Shared\_detailsCodelistValue.cshtml" />
     <Content Include="Views\Subregister\Create.cshtml" />
     <Content Include="Views\Subregister\Delete.cshtml" />
-    <Content Include="Views\Subregister\Details.cshtml" />
     <Content Include="Views\Subregister\Edit.cshtml" />
     <Content Include="Views\Registers\Edit.cshtml" />
     <Content Include="Views\CodelistValues\Import.cshtml" />
@@ -923,6 +922,7 @@
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
+    <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

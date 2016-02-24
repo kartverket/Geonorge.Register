@@ -851,10 +851,15 @@
         line-height: 14pt;
     }
 
-.search-result-navigation.register-navigation .save-as-menu .save-as-dropdown {
-    padding-right: 0px;
-    padding-left: 15px;
+.search-result-navigation {
+    min-height: 44px;
+    padding: 20px 0px;
 }
+
+    .search-result-navigation.register-navigation .save-as-menu .save-as-dropdown {
+        padding-right: 0px;
+        padding-left: 15px;
+    }
 
 .search-results.table-view .btn {
     color: #3867c8;
@@ -961,35 +966,35 @@ table.tablesorter thead tr {
     margin-bottom: 8px !important;
 }
 
-table.tablesorter thead tr th {
-    font-weight:normal;
-    color:#3867c8;
-    text-transform: uppercase;
-}
+    table.tablesorter thead tr th {
+        font-weight: normal;
+        color: #3867c8;
+        text-transform: uppercase;
+    }
 
 .sorter-false {
-    font-weight:normal;
-    color:black !important;
-    text-transform:none !important;
+    font-weight: normal;
+    color: black !important;
+    text-transform: none !important;
 }
 
-.dataset .sorter-false a{
-    font-weight:normal;
-    text-transform:uppercase !important;
+.dataset .sorter-false a {
+    font-weight: normal;
+    text-transform: uppercase !important;
 }
 
 
-    table.tablesorter thead tr .tablesorter-headerAsc {
-        height: 20px;
-        width: 20px;
-        color: #fe5000;
-    }
+table.tablesorter thead tr .tablesorter-headerAsc {
+    height: 20px;
+    width: 20px;
+    color: #fe5000;
+}
 
-    table.tablesorter thead tr .tablesorter-headerDesc {
-        height: 20px;
-        width: 20px;
-        color: #fe5000;
-    }
+table.tablesorter thead tr .tablesorter-headerDesc {
+    height: 20px;
+    width: 20px;
+    color: #fe5000;
+}
 
 .tablesorter-headerAsc .tablesorter-header-inner:after {
     content: "\e114" !important;

@@ -6,111 +6,84 @@
     var registerName = ViewBag.register;
 }
 
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)
-        </div>
-        <div class="col-md-4">
-            @Html.Partial("_otherformats")
-        </div>
-        <div class="col-md-3">
-            @Html.Partial("_LayoutSelect")
-        </div>
-    </div>
-    <div class="row">
-        @Html.Partial("_visningstyper")
-    </div>
-</div>
-
 <div class="register document search-results @registerName">
     @foreach (Document item in Model)
     {
-        if (item.versioning.currentVersion == item.systemId)
-        {
-            <div class="row result-row metadata">
-                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                        @{
-                            string thumb = "/Content/pdf.jpg";
-                            if (item.thumbnail != null)
-                            {
-                                thumb = item.thumbnail;
-                            }
-                        }
-                        @if (item.documentUrl.Contains("ikke angitt"))
-                        {
-                            <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
-                        }
-                        else
-                        {
-                            <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
-                        }
-                    </div>
-                    <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
 
+                <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                    @{
+                        string thumb = "/Content/pdf.jpg";
+                        if (item.thumbnail != null)
+                        {
+                            thumb = item.thumbnail;
+                        }
+                    }
+                    @if (item.documentUrl.Contains("ikke angitt"))
+                    {
+                        <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+                    }
+                    else
+                    {
+                        <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                    }
+                </div>
 
-                        @if (item.register.parentRegister != null)
-                        {
-                            <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                @item.name
-                            </a>
-                        }
-                        else
-                        {
-                            <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
-                                @item.name
-                            </a>
-                        }
-                        <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
-                            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
+                    @if (item.register.parentRegister != null)
+                    {
+                        <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
+                            @item.name
                         </a>
-                        <div>
-                            <a href="/register/@item.register.seoname/@item.documentowner.seoname">
-                                @Html.DisplayFor(modelItem => item.documentowner.name)
-                            </a>
-                        </div>
-                        <p>
-                            @Html.DisplayFor(modelItem => item.description)
-                        </p>
+                    }
+                    else
+                    {
+                        <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
+                            @item.name
+                        </a>
+                    }
+                    <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
+                        <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                    </a>
+                    <div>
+                        <a href="/register/@item.register.seoname/@item.documentowner.seoname">
+                            @Html.DisplayFor(modelItem => item.documentowner.name)
+                        </a>
                     </div>
-                    <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                        @if (item.documentUrl.Contains("ikke angitt"))
-                        {
-                            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
-                                <span class="glyphicon glyphicon-download-alt"> </span>Last ned
-                            </a><br />
-                        }
-                        else
-                        {
-                            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
-                                <span class="glyphicon glyphicon-download-alt"> </span>Last ned
-                            </a><br />
-                        }
-                    </div>
-                    <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 col-information pull-right">
+                    <p>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </p>
+                </div>
 
-                        @if (item.status == null)
-                        {
-                            <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>Ikke angitt</p>
-                        }
-                        else
-                        {
-                            <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
-                        }
-                    </div>
+                <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                    @if (item.documentUrl.Contains("ikke angitt"))
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
+                            <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                        </a><br />
+                    }
+                    else
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
+                            <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                        </a><br />
+                    }
+                </div>
+
+                <div class="col-no-padding-xs col-xs-6 col-sm-3 col-md-3 col-lg-3 col-information pull-right">
+                    @if (item.status == null)
+                    {
+                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>Ikke angitt</p>
+                    }
+                    else
+                    {
+                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                    }
                 </div>
             </div>
-            <hr />
-                                }
-                            }
-</div>
-
-<div class="search-filter-wrapper">
-
-
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)
-    </div>
+        </div>
+        <hr />
+    }
 </div>
 

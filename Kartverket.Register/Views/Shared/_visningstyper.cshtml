@@ -1,33 +1,15 @@
-﻿﻿@using Kartverket.Register.Helpers
-@using Kartverket.Register.Models
-
-@{
+﻿@{
     var register = ViewBag.register;
     var registerSEO = ViewBag.registerSEO;
     var owner = ViewBag.owner;
     var ownerSEO = ViewBag.ownerSEO;
     var subregister = ViewBag.subregister;
-    var selectedVertical = ViewBag.selectedVertical;
-    var selectedHorizontal = ViewBag.selectedHorizontal;
-    CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
-    var selectedMunicipalName = "Velg kommune";
-    if (selectedMunicipal != null)
-    {
-        selectedMunicipalName = selectedMunicipal.name;
-    }
-
-
-    var kontroller = "/register/" + registerSEO;
-    if (owner != null) { kontroller = "/register/" + registerSEO + "/" + ownerSEO; }
-    if (subregister != null) { kontroller = "/subregister/" + registerSEO + "/" + ownerSEO + "/" + subregister; }
-
 }
 
+@if (register == "EPSG koder")
+{
+    <div class="col-md-9">
 
-<br />
-<div class="col-md-9">
-    @if (register == "EPSG koder")
-    {
         <form action="/register/epsg-koder" method="get" name="filtering">
             <input type="hidden" name="text" value="@ViewBag.search" />
             <input type="hidden" name="sorting" value="@ViewBag.SortOrder" />
@@ -45,8 +27,6 @@
                 </div>
             </div>
         </form>
-    }
-</div>
 
-
-<div class="result-header"></div>
+    </div>
+}

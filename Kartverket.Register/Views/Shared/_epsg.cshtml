@@ -1,115 +1,86 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 
-
-@{
-    var inspireRequirement = ViewBag.inspireRequirement;
-    var nationalRequirement = ViewBag.nationalRequirement;
-    var seaRequirement = ViewBag.nationalSeaRequirement;
-}
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)  
-        </div>
-        <div class="col-md-4">
-            @Html.Partial("_otherformats")
-        </div>
-        <div class="col-md-3">
-            @Html.Partial("_LayoutSelect")
-        </div>
-    </div>
-    <div class="row">
-        @Html.Partial("_visningstyper")
-    </div>
-</div>
-
 <div class="register epsg search-results">
-    @if (Model.Count() != 0)
+    @foreach (EPSG item in Model)
     {
-        foreach (EPSG item in Model)
-        {
-            <div class="row result-row metadata">
-                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                        <a href="@item.GetObjectUrl()">
-                                @item.name
-                        </a>
-                        <p>
-                            @item.description
-                        </p>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                
+                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <a href="@item.GetObjectUrl()">
+                        @item.name
+                    </a>
+                    <p>
+                        @item.description
+                    </p>
+                </div>
 
-                        @if (item.epsgcode == null)
-                        {
-                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
-                        }
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
 
-                        @if (item.sosiReferencesystem == null)
-                        {
-                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
-                        }
+                    @if (item.epsgcode == null)
+                    {
+                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
+                    }
 
-                        @if (item.verticalReferenceSystem == null)
-                        {
-                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
-                        }
+                    @if (item.sosiReferencesystem == null)
+                    {
+                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                    }
 
-                        @if (item.horizontalReferenceSystem == null)
-                        {
-                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
-                        }
+                    @if (item.verticalReferenceSystem == null)
+                    {
+                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
+                    }
 
-                        @if (item.dimensionId == null)
-                        {
-                            <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
-                        }
+                    @if (item.horizontalReferenceSystem == null)
+                    {
+                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
+                    }
 
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
-                        
-                        @if (item.externalReference == null)
-                        {
-                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
-                        }
-                        else
-                        {
-                            <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-                        }
-                    </div>
+                    @if (item.dimensionId == null)
+                    {
+                        <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                    }
+
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
+
+                    @if (item.externalReference == null)
+                    {
+                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
+                    }
+                    else
+                    {
+                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                    }
                 </div>
 
             </div>
-            <hr />
-        }
+        </div>
+        <hr />
     }
 </div>
 
-<div class="search-filter-wrapper">
-    <br /><br />
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
-    </div>
-</div>
 

@@ -1,12 +1,12 @@
-﻿@model Kartverket.Register.Models.Register
+﻿@model Register
 ﻿@using Kartverket.Register.Helpers
 @using PagedList;
 @using Kartverket.Register.Models
 
 @{
     ViewBag.Title = @Model.name;
-    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
-    Kartverket.Register.Models.Register parent = Model.parentRegister;
+    Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
+    Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
     CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
 }
@@ -22,13 +22,32 @@
     }
 }
 
+@{
+    var page = ViewBag.page;
+    var sortering = Model.items.OrderBy(o => o.name).ToList();
+    var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
+    int pageSize = 50;
+    int pageNumber = (page ?? 1);
+
+    if (Model.containedItemClass != "Register")
+    {
+        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
+    }
+    else
+    {
+        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
+    }
+}
+
 <script>
     $(function () {
         var menu_state = localStorage.setItem("navtabselected", "gjeldende");
     }
 )
 </script>
+
 @Html.Partial("_SearchBarPartial")
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -44,45 +63,41 @@
 
 <div class="row">
     <div class="col-sm-12">
+
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
             ID: <a href="@Model.GetObjectUrl()">http://@Request.Url.Host@Model.GetObjectUrl()</a>
             <br />
             Navn: @Html.DisplayFor(model => model.name)
             <br />
             Beskrivelse: @Html.DisplayFor(model => model.description)
-
-
         </div>
+
         <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
             <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
         </div>
 
-
-
-        @{
-            var page = ViewBag.page;
-            var currentFilter = ViewBag.currentFilter;
-            var sortering = Model.items.OrderBy(o => o.name).ToList();
-            var sorteringRegister = Model.subregisters.OrderByDescending(s => s.name).ToList();
-            int pageSize = 50;
-            int pageNumber = (page ?? 1);
-            var search = ViewBag.search;
-
-            if (Model.containedItemClass != "Register")
-            {
-                sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
-            }
-            else
-            {
-                sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
-            }
-        }
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+            <div class="search-result-navigation register-navigation">
+                <div class="col-md-5">
+                    @if (Model.containedItemClass != "Register")
+                    {
+                        @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+                    }
+                    else {
+                        @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+                    }
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("_otherformats")
+                </div>
+                <div class="col-md-3">
+                    @Html.Partial("_LayoutSelect")
+                </div>
+            </div>
+        </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-
-
             @if (Model.containedItemClass == "Organization")
             {
                 @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
@@ -111,8 +126,18 @@
             {
                 @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-
         </div>
+
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            @if (Model.containedItemClass != "Register")
+            {
+                @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+            }
+            else {
+                @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
+
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
             @if (Request.IsAuthenticated)
@@ -140,7 +165,14 @@
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">Slett</a>
                 }
             }
-            <a class="hidden-print" href="/">Tilbake</a>
+
+            @if (Model.parentRegister != null)
+            {
+                <a class="hidden-print" href="@Model.parentRegister.GetObjectUrl()">Tilbake</a>
+            }
+            else {
+                <a class="hidden-print" href="/">Tilbake</a>
+            }
         </div>
     </div>
 </div>

@@ -1,31 +1,12 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
-
-
 @using Kartverket.Register.Models
-
-<div class="search-result-navigation register-navigation">
-    <div class="row">
-        <div class="col-md-5">
-            @Html.Partial("_pagedListPager", Model)  
-        </div>
-        <div class="col-md-4">
-            @Html.Partial("_otherformats")
-        </div>
-        <div class="col-md-3">
-            @Html.Partial("_LayoutSelect")
-        </div>
-    </div>
-    <div class="row">
-        @Html.Partial("_visningstyper")
-    </div>
-</div>
 
 <div class="register organization search-results">
     @foreach (Organization item in Model)
     {
-
         <div class="row result-row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                
                 <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding col-img">
                     <a href="@item.GetObjectUrl()" title="@item.name">
                         <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name">
@@ -44,20 +25,11 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </p>
                 </div>
+
             </div>
         </div>
         <hr />
     }
-
-
-</div>
-
-
-<div class="search-filter-wrapper">
-    <br /><br />
-    <div class="nav nav-tabs col-sm-12 col-md-12 col-lg-12">
-        @Html.Partial("_pagedListPager", Model)  
-    </div>
 </div>
 
 

@@ -51,8 +51,10 @@ namespace Kartverket.Register.Controllers
         //[Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
         //[Route("subregister/{parentRegister}/{owner}/{registername}")]
         [Route("register/{registername}")]
-        [Route("register/{registernamename}.{format}")]
+        [Route("register/{registername}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]
+        [Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
+        [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
             DokOrderBy(sorting);

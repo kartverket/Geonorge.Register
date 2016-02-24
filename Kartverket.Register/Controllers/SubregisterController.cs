@@ -40,51 +40,6 @@ namespace Kartverket.Register.Controllers
             return View(registers.ToList());
         }
 
-        // GET: Registers/Details/5
-        [Route("subregister/{parentRegister}/{owner}/{subregister}.{format}")]
-        [Route("subregister/{parentRegister}/{owner}/{subregister}")]
-        public ActionResult Details(string parentRegister, string owner, string subregister, string sorting, int? page, string export, string format, FilterParameters filter)
-        {
-            string ApiRedirectUrl = GetApiUrl(ref format);
-            if (!string.IsNullOrWhiteSpace(ApiRedirectUrl))
-            {
-                return Redirect(ApiRedirectUrl);
-            }
-
-            Models.Register register = _registerService.GetSubregisterByName(parentRegister, subregister);
-            if (register != null)
-            {
-                if (!string.IsNullOrWhiteSpace(filter.text))
-                {
-                    register = _searchService.Search(register, filter.text);
-                }
-                register = _registerService.FilterRegisterItems(register, filter);
-
-                ViewBag.page = page;
-                ViewBag.SortOrder = sorting;
-                ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
-                //Kartverket.Register.Models.Register parent = register.parentRegister;
-                //while (parent.parentRegisterId != null)
-                //{
-                //    parent = parent.parentRegister;
-                //}
-                ViewBag.register = register.name;
-
-                ViewBag.registerSEO = register.parentRegister.seoname;
-                ViewBag.ownerSEO = owner;
-                ViewBag.subregister = subregister;
-                ViewBag.search = filter.text;
-
-                if (register == null)
-                {
-                    return HttpNotFound();
-                }
-
-                return View(register);
-            }
-            return HttpNotFound();
-        }
-
 
         [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}.{format}")]
         [Route("subregister/{registername}/{owner}/{subregister}/{submitter}/{itemname}")]

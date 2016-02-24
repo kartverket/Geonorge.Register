@@ -110,6 +110,7 @@ function SortBy(sort) {
 $(document).ready(function () {
     var visningstype = localStorage.getItem("visningstype");
 
+    if (visningstype == null) { tableView() }
     if (visningstype == "liste") { listView() }
     if (visningstype == "tabell") {
         // Listevisning ved liten skjerm

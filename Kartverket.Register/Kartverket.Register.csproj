@@ -877,7 +877,7 @@
     <Content Include="Views\Datasets\Delete.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />
     <Content Include="Views\Shared\_detailsDataset.cshtml" />
-    <Content Include="Views\Shared\_visningstyper.cshtml" />
+    <Content Include="Views\Shared\_filter.cshtml" />
     <Content Include="Views\Search\DetailsFilter.cshtml" />
     <Content Include="Views\Search\_filterDocument.cshtml" />
     <Content Include="Views\Search\_filterDataset.cshtml" />

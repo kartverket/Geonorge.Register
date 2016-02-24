@@ -32,18 +32,6 @@ function listView() {
     localStorage.setItem("visningstype", "liste");
 }
 
-function galleryView() {
-    $(".table-heading").remove();
-
-
-    $('.search-results').removeClass('table-view');
-    $('.search-results').removeClass('list-view');
-    $('.search-results').addClass('gallery-view');
-
-    localStorage.setItem("visningstype", "galleri");
-
-}
-
 function qP(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || ""
 }
@@ -76,31 +64,10 @@ function sLink(tittel, defaultSort) {
     }
 
     var text = qP('text');
-    var filterVertikalt = qP('filterVertikalt');
-    var filterHorisontalt = qP('filterHorisontalt');
-    //var InspireRequirement = qP('inspireRequirement');
-    //var nationalRequirement = qP('nationalRequirement');
-    //var nationalSeaRequirement = qP('nationalSeaRequirement');
-
     var linkSort = "<a title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
 
     if (text != '')
         linkSort = linkSort + '&text=' + text;
-
-    if (filterVertikalt != '')
-        linkSort = linkSort + '&filterVertikalt=' + filterVertikalt;
-
-    if (filterHorisontalt != '')
-        linkSort = linkSort + '&filterHorisontalt=' + filterHorisontalt;
-
-    //if (InspireRequirement != '')
-    //    linkSort = linkSort + '&inspireRequirement=' + InspireRequirement;
-
-    //if (nationalRequirement != '')
-    //    linkSort = linkSort + '&nationalRequirement=' + nationalRequirement;
-
-    //if (nationalSeaRequirement != '')
-    //    linkSort = linkSort + '&nationalSeaRequirement=' + nationalSeaRequirement;
 
     linkSort = linkSort + "'>" + tittel + "</a>";
 
@@ -139,50 +106,10 @@ function SortBy(sort) {
     document.FilterForm.submit();
 }
 
-function Filter() {
-    var filterVertikalt = document.getElementById("filterVertikalt");
-    var filterHorisontalt = document.getElementById("filterHorisontalt");
-    //var inspireRequirement = document.getElementById("inspireRequirement");
-    //var nationalRequirement = document.getElementById("nationalRequirement");
-    //var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
-    var municipality = document.getElementById("municipalityFilter");
-
-    if (qP('filterVertikalt') != "") {
-        filterVertikalt.checked;
-    }
-    if (qP('filterHorisontalt') != "") {
-        filterHorisontalt.checked;
-    }
-    //inspireRequirement.options[inspireRequirement.selectedIndex].text;
-    //nationalRequirement.options[nationalRequirement.selectedIndex].text;
-    //nationalSeaRequirement.options[nationalSeaRequirement.selectedIndex].text;
-
-    document.filtering.submit();
-
-
-}
-
-function filterDefault() {
-
-    alert('HeiUtNy');
-
-    var filterVertikalt = document.getElementById("filterVertikalt");
-    var filterHorisontalt = document.getElementById("filterHorisontalt");
-    //var inspireRequirement = document.getElementById("inspireRequirement");
-    //var nationalRequirement = document.getElementById("nationalRequirement");
-    //var nationalSeaRequirement = document.getElementById("nationalSeaRequirement");
-
-    if (qP("filterVertikalt") != "") {
-        filterVertikalt.checked;
-    }
-}
-
-
 
 $(document).ready(function () {
     var visningstype = localStorage.getItem("visningstype");
 
-    if (visningstype == "galleri") { galleryView() }
     if (visningstype == "liste") { listView() }
     if (visningstype == "tabell") {
         // Listevisning ved liten skjerm

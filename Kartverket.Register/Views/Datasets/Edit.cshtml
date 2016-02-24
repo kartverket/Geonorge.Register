@@ -30,14 +30,13 @@
 
 
 @section breadcrumb {
-    @if (Model.register.parentRegisterId != null)
+    @if (Model.register.parentRegister != null)
     {
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
         Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li>Rediger</li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.datasetowner.seoname/@Model.seoname">@Model.name</a></li>
         <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        <li>Rediger</li>
         while (parentRegister != null && parentRegister != mainRegister)
         {
             <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
@@ -46,34 +45,23 @@
     }
     else
     {
-        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
         <li>Rediger</li>
     }
 }
 
-@if (Model.DatasetType == "Nasjonalt")
+@if (HtmlHelperExtensions.IsAdmin())
 {
-    if (HtmlHelperExtensions.IsAdmin())
+    @Html.Partial("_EditNationalDataset", Model);
+}
+else if (HtmlHelperExtensions.IsMunicipalUser())
+{
+    if (HtmlHelperExtensions.GetMunicipalCoverage(Model) != null)
     {
-        @Html.Partial("_EditNationalDataset", Model);
+        @Html.Partial("_EditCoverageDataset", HtmlHelperExtensions.GetMunicipalCoverage(Model));
     }
-    else if (HtmlHelperExtensions.IsMunicipalUser())
+    else
     {
-        if (HtmlHelperExtensions.GetMunicipalCoverage(Model) != null)
-        {
-            @Html.Partial("_EditCoverageDataset", HtmlHelperExtensions.GetMunicipalCoverage(Model));
-        }
-        else
-        {
-            @Html.Partial("_CreateCoverage", HtmlHelperExtensions.NewCoverage(Model));
-        }
+        @Html.Partial("_CreateCoverage", HtmlHelperExtensions.NewCoverage(Model));
     }
 }
-else if (Model.DatasetType == "Kommunalt")
-{
-    @Html.Partial("_EditMunicipalDataset", Model);
-}
-
-
-

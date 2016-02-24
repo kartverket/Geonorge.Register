@@ -12,7 +12,7 @@
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Oppdater datasettet med informasjon fra metadatakatalogen @*<i class="infomessage" title="Påvirker ikke feltene 'Distibusjonsområde', 'Temagruppe', 'WMS-url' og 'Merknad'">(info)</i>*@
+                Oppdater datasettet med informasjon fra metadatakatalogen
             </div>
             <div class="panel-body">
                 @using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
@@ -69,7 +69,7 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            if (HtmlHelperExtensions.IsAdmin())
             {
                 <div class="form-group" id="dokStatus">
                     @Html.LabelFor(model => model.dokStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -109,7 +109,6 @@
             @Html.LabelFor(model => model.ThemeGroupId, "Nasjonal temainndeling", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ThemeGroupId", null, new { @class = "form-control" })
-                @*@Html.ValidationMessageFor(model => model.theme, "", new { @class = "text-danger" })*@
             </div>
         </div>
 
@@ -198,15 +197,7 @@
         <div class="form-group">
             <hr />
             <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-            @if (Model.register.parentRegisterId != null)
-            {
-                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
-            }
-            else
-            {
-                <a href="/register/@Model.register.seoname/@Model.datasetowner.seoname/@Model.seoname/">Tilbake</a>
-            }
-
+            <a href="@Model.GetObjectUrl()">Tilbake</a>
         </div>
     </div>
 }

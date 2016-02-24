@@ -30,12 +30,12 @@
 
 <h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
 <hr />
-    @using (Html.BeginForm())
-    {
+@using (Html.BeginForm())
+{
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Slett" class="btn btn-default pull-right" />
-            <a href="@Model.GetObjectUrl()">Tilbake</a>
-        </div>
-    }
+    <div class="form-actions no-color">
+        <input type="submit" value="Slett" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">Tilbake</a>
+    </div>
+}
 

@@ -43,14 +43,7 @@
 
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
-        @if (parentregister != null)
-        {
-            <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Tilbake</a>
-        }
-        else
-        {
-            <a href="/kodeliste/@registerSeoName/ny/">Tilbake</a>
-        }
+        <a href="@Model.register.GetObjectUrl()">Tilbake</a>
     </div>
 
 </form>

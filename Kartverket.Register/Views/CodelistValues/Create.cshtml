@@ -6,24 +6,16 @@
 }
 
 <h2>Foreslå</h2>
-@if (Model.register.parentRegisterId != null)
-{
-    <a href="/kodeliste/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
-}
-else
-{
-    <a href="/kodeliste/@Model.register.seoname/ny/import" class="btn btn-default pull-right">Importer</a>
-}
+<a href="@Model.GetImportUrl()" class="btn btn-default pull-right">Importer</a>
 
 @section breadcrumb {
     @if (Model.register.parentRegister != null)
     {
-
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
         Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li>Ny</li>
         <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        <li>Ny</li>
         while (parentRegister != null && parentRegister != mainRegister)
         {
             <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
@@ -40,7 +32,6 @@ else
 <form action="@Request.Url.LocalPath" method="post">
     <div class="form-horizontal">
         <h4>Foreslå ny kodeverdi i @Model.register.name</h4>
-
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -67,7 +58,7 @@ else
             </div>
         </div>
 
-        @if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+        @if (HtmlHelperExtensions.IsAdmin())
         {
             <hr />
             <h4>Hierarkiske kodelister</h4>
@@ -115,14 +106,7 @@ else
     <div class="form-group">
         <hr />
         <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
-        @if (Model.register.parentRegister != null)
-        {
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.register.seoname/">Tilbake</a>
-        }
+        <a href="@Model.register.GetObjectUrl()">Tilbake</a>
     </div>
 </form>
 

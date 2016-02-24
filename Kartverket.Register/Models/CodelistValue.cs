@@ -53,6 +53,18 @@ namespace Kartverket.Register.Models
                 return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
             }
         }
+
+        public string GetImportUrl()
+        {
+            if (register.parentRegister != null)
+            {
+                return "/kodeliste/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/ny/import";
+            }
+            else
+            {
+                return "/kodeliste/" + register.seoname + "/ny/import";
+            }
+        }
     }//end CodelistValue
 
 }//end namespace Datamodell

@@ -74,7 +74,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(document.GetObjectUrl(document));
+                    return Redirect(document.GetObjectUrl());
                 }
             }
             return View(document);
@@ -122,7 +122,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail);
-                    return Redirect(document.GetObjectUrl(document));
+                    return Redirect(document.GetObjectUrl());
                 }
             }
             return View(document);
@@ -168,7 +168,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
-                    return Redirect(document.GetObjectUrl(originalDocument));
+                    return Redirect(document.GetObjectUrl());
                 }
             }
             Viewbags(document);

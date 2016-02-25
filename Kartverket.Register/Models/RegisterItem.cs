@@ -98,25 +98,17 @@ namespace Kartverket.Register.Models
         public bool? Accepted { get; set; }
         //end RegisterItem
 
-        /// <summary>
-        /// Gets Url to current object
-        /// </summary>
-        /// <returns>Url</returns>
+
         public virtual string GetObjectUrl()
         {
-            return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
-        }
-
-        public virtual string GetObjectUrl(RegisterItem item)
-        {
-            if (item is Dataset)
+            if (this is Dataset)
             {
-                Dataset dataset = (Dataset)item;
+                Dataset dataset = (Dataset)this;
                 return dataset.GetDatasetUrl();
             }
-            else if (item is Document)
+            else if (this is Document)
             {
-                Document document = (Document)item;
+                Document document = (Document)this;
                 return document.GetDocumentUrl();
             }
             else {
@@ -124,71 +116,71 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public virtual string GetObjectEditUrl(RegisterItem item)
+        public virtual string GetObjectEditUrl()
         {
-            if (item is Document)
+            if (this is Document)
             {
-                Document document = (Document)item;
+                Document document = (Document)this;
                 return document.GetDocumentEditUrl();
             }
-            else if (item is Dataset)
+            else if (this is Dataset)
             {
-                Dataset dataset = (Dataset)item;
+                Dataset dataset = (Dataset)this;
                 return dataset.GetDatasetEditUrl();
             }
-            else if (item is EPSG)
+            else if (this is EPSG)
             {
-                EPSG epsg = (EPSG)item;
+                EPSG epsg = (EPSG)this;
                 return epsg.GetEPSGEditUrl();
             }
-            else if (item is CodelistValue)
+            else if (this is CodelistValue)
             {
-                CodelistValue codelistValue = (CodelistValue)item;
+                CodelistValue codelistValue = (CodelistValue)this;
                 return codelistValue.GetCodelistValueEditUrl();
             }
-            else if (item is NameSpace)
+            else if (this is NameSpace)
             {
-                NameSpace nameSpace = (NameSpace)item;
+                NameSpace nameSpace = (NameSpace)this;
                 return nameSpace.GetNameSpaceEditUrl();
             }
-            else if (item is Organization)
+            else if (this is Organization)
             {
-                Organization organization = (Organization)item;
+                Organization organization = (Organization)this;
                 return organization.GetOrganizationEditUrl();
             }
             return "#";
         }
 
-        public virtual string GetObjectDeleteUrl(RegisterItem item)
+        public virtual string GetObjectDeleteUrl()
         {
-            if (item is Document)
+            if (this is Document)
             {
-                Document document = (Document)item;
+                Document document = (Document)this;
                 return document.GetDocumentDeleteUrl();
             }
-            else if (item is Dataset)
+            else if (this is Dataset)
             {
-                Dataset dataset = (Dataset)item;
+                Dataset dataset = (Dataset)this;
                 return dataset.GetDatasetDeleteUrl();
             }
-            else if (item is EPSG)
+            else if (this is EPSG)
             {
-                EPSG epsg = (EPSG)item;
+                EPSG epsg = (EPSG)this;
                 return epsg.GetEPSGDeleteUrl();
             }
-            else if (item is CodelistValue)
+            else if (this is CodelistValue)
             {
-                CodelistValue codelistValue = (CodelistValue)item;
+                CodelistValue codelistValue = (CodelistValue)this;
                 return codelistValue.GetCodelistValueDeleteUrl();
             }
-            else if (item is NameSpace)
+            else if (this is NameSpace)
             {
-                NameSpace nameSpace = (NameSpace)item;
+                NameSpace nameSpace = (NameSpace)this;
                 return nameSpace.GetNameSpaceDeleteUrl();
             }
-            else if (item is Organization)
+            else if (this is Organization)
             {
-                Organization organization = (Organization)item;
+                Organization organization = (Organization)this;
                 return organization.GetOrganizationDeleteUrl();
             }
             return "#";
@@ -215,7 +207,7 @@ namespace Kartverket.Register.Models
             return DateTime.Now;
         }
 
-        public string GetStatusId(string status = null)
+        public string SetStatusId(string status = null)
         {
             if (register != null)
             {
@@ -251,7 +243,7 @@ namespace Kartverket.Register.Models
                 return "ikke angitt";
             }
             else
-            {          
+            {
                 return name;
             }
         }

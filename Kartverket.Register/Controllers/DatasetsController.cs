@@ -108,7 +108,7 @@ namespace Kartverket.Register.Controllers
                         {
                             dataset = initialisationDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
-                            return Redirect(dataset.GetObjectUrl(dataset));
+                            return Redirect(dataset.GetObjectUrl());
                         }
                     }
                 }
@@ -443,7 +443,7 @@ namespace Kartverket.Register.Controllers
             }
             initialisationDataset(dataset, originalDataset, coverage);
             _registerItemService.SaveEditedRegisterItem(originalDataset);
-            return Redirect(originalDataset.GetObjectUrl(originalDataset));
+            return Redirect(originalDataset.GetObjectUrl());
         }
 
         private ActionResult EditCoverageDataset(CoverageDataset coverage, string registername, string parentRegister, string registerowner, Dataset originalDataset)
@@ -482,7 +482,7 @@ namespace Kartverket.Register.Controllers
             dataset.registerId = inputDataset.register.GetSystemId();
             dataset.register = GetRegister(inputDataset.register, dataset.register);
             dataset.DatasetType = dataset.GetDatasetType();
-            dataset.statusId = dataset.GetStatusId();
+            dataset.statusId = dataset.SetStatusId();
             dataset.dokStatusId = inputDataset.GetDokStatus();
             dataset.dokStatusDateAccepted = inputDataset.GetDokStatusDateAccepted();
             dataset.versionNumber = dataset.GetVersionNr();

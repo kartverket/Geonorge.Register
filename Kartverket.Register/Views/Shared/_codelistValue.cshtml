@@ -1,8 +1,7 @@
-﻿﻿@using Kartverket.Register.Helpers
+﻿@using Kartverket.Register.Helpers
 @model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
 
 <h3 style="margin-top: 0px;">Kodeliste</h3>
-<hr />
 <div class="register codelist search-results">
     @foreach (Kartverket.Register.Models.CodelistValue item in Model)
     {

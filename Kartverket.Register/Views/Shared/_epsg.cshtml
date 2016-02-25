@@ -1,6 +1,10 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 
+@{
+    var registerName = ViewBag.register;
+}
+
 <div class="register epsg search-results">
     @foreach (EPSG item in Model)
     {

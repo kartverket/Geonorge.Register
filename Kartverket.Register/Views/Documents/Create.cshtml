@@ -6,14 +6,13 @@
 }
 
 @section breadcrumb {
-
-    @if (Model.register.parentRegisterId != null)
+    @if (Model.register.parentRegister != null)
     {
         Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
         Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
         <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li>Ny</li>
         <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        <li>Ny</li>
         while (parentRegister != null && parentRegister != mainRegister)
         {
             <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
@@ -32,9 +31,9 @@
 <hr />
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
-     @if (Model.register.parentRegister != null)
+    @if (Model.register.parentRegister != null)
     {
-    <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
+        <input type="hidden" value="@Model.register.parentRegister.seoname" id="parentRegister" name="parentRegister" />
     }
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -82,18 +81,11 @@
     <div class="form-group">
         <hr />
         <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
-        @if (Model.register.parentRegister != null)
-        {
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.register.seoname/">Tilbake</a>
-        }
+        <a href="@Model.register.GetObjectUrl()">Tilbake</a>
     </div>
 </form>
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

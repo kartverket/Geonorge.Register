@@ -77,7 +77,7 @@
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
         </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" style="padding-right: 0px;">
             <div class="search-result-navigation register-navigation">
                 <div class="col-md-5">
                     @if (Model.containedItemClass != "Register")
@@ -91,8 +91,11 @@
                 <div class="col-md-4">
                     @Html.Partial("_otherformats")
                 </div>
-                <div class="col-md-3">
-                    @Html.Partial("_LayoutSelect")
+                <div class="col-md-3" style="padding-right: 0px;">
+                    @if (!Model.IsDokMunicipal())
+                    {
+                        @Html.Partial("_LayoutSelect")
+                    }
                 </div>
             </div>
         </div>
@@ -108,7 +111,7 @@
             }
             @if (Model.containedItemClass == "Document")
             {
-                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize));
             }
             @if (Model.containedItemClass == "Dataset")
             {

@@ -1,11 +1,10 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
-﻿@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
+@using Kartverket.Register.Helpers
 
 <div class="register dataset search-results">
     @foreach (Dataset item in Model)
     {
-
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
@@ -152,6 +151,6 @@
             </div>
 
         </div>
-        <hr />
+            <hr />
     }
 </div>

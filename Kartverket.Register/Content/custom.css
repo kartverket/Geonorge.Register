@@ -853,7 +853,7 @@
 
 .search-result-navigation {
     min-height: 44px;
-    padding: 20px 0px;
+    margin: 20px 0px 30px;
 }
 
     .search-result-navigation.register-navigation .save-as-menu .save-as-dropdown {

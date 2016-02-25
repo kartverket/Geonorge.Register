@@ -1,12 +1,10 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
-
-@{
-    var registerName = ViewBag.register;
+@{ 
+    var registerName = ViewBag.register; 
 }
-
 @if (registerName == "Det offentlige kartgrunnlaget")
-            {
+{
     @Html.Partial("_nationalDataset", Model)
 }
 else if (registerName == "Det offentlige kartgrunnlaget - Kommunalt")

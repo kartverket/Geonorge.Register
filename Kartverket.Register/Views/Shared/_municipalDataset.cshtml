@@ -1,7 +1,6 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
-﻿@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
-
+@using Kartverket.Register.Helpers
 @{
     CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
     var selectedMunicipalName = "Velg kommune";
@@ -26,17 +25,17 @@
     });
 </script>
 
-<div class="col-sm-12 col-md-6 col-lg-6">
-    <h2>@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
+<div class="col-sm-12 col-md-6 col-lg-6 row">
+    <h2 style="margin-top: 10px;">@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
 </div>
-<div class="col-sm-12 col-md-6 col-lg-6 no-padding">
-    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 56px; float: right;">
+<div class="col-sm-3 col-md-3 col-lg-3 pull-right" style="padding: 0px;">
+    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 10px; float: right; width: 100%; padding: 0px;">
         <div class="save-as-dropdown">
-            <div class="sorter pagination">
+
                 <div class="custom-select">
                     @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>
-            </div>
+            
         </div>
     </form>
 </div>
@@ -81,13 +80,13 @@
                                 </a>
                             }
                             else {
-                                <a href="@item.GetObjectUrl(item)">
+                                <a href="@item.GetObjectUrl()">
                                     @item.name
                                 </a>
                             }
                         }
                         else {
-                            <a href="@item.GetObjectUrl(item)">
+                            <a href="@item.GetObjectUrl()">
                                 @item.name
                             </a>
                         }

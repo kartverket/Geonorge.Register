@@ -93,7 +93,8 @@ namespace Kartverket.Register.Migrations
                 new ContainedItemClass { value = "Document", description = "Dokumenter" },
                 new ContainedItemClass { value = "EPSG", description = "EPSG koder" },
                 new ContainedItemClass { value = "Organization", description = "Organisasjoner" },
-                new ContainedItemClass { value = "NameSpace", description = "Navnerom" }
+                new ContainedItemClass { value = "NameSpace", description = "Navnerom" },
+                new ContainedItemClass { value = "ServiceAlert", description = "Tjenestevarsel" }
             );
 
             context.Dimensions.AddOrUpdate(

@@ -577,6 +577,10 @@
     <Compile Include="Migrations\201512091351569_FixDatasetType.Designer.cs">
       <DependentUpon>201512091351569_FixDatasetType.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603011416358_AddServiceAlertRegister.cs" />
+    <Compile Include="Migrations\201603011416358_AddServiceAlertRegister.Designer.cs">
+      <DependentUpon>201603011416358_AddServiceAlertRegister.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -604,6 +608,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
+    <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\FilterItems.cs" />
     <Compile Include="Models\DokStatus.cs" />
@@ -1176,6 +1181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512091351569_FixDatasetType.resx">
       <DependentUpon>201512091351569_FixDatasetType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603011416358_AddServiceAlertRegister.resx">
+      <DependentUpon>201603011416358_AddServiceAlertRegister.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

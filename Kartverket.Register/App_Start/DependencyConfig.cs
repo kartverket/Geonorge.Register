@@ -35,6 +35,8 @@ namespace Kartverket.Register
             builder.RegisterType<VersioningService>().As<IVersioningService>();
             builder.RegisterType<MunicipalityService>().As<IMunicipalityService>();
             builder.RegisterType<DatasetService>().As<IDatasetService>();
+            builder.RegisterType<AccessControlService>().As<IAccessControlService>();
+
 
             var container = builder.Build();
 

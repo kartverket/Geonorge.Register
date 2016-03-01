@@ -4,6 +4,7 @@ using Kartverket.Register.Models;
 using www.opengis.net;
 using System.Web.Configuration;
 using Kartverket.Register.Helpers;
+using System;
 
 namespace Kartverket.DOK.Service
 {
@@ -62,6 +63,38 @@ namespace Kartverket.DOK.Service
             }
         }
 
+        internal dynamic GetMetadataServices()
+        {
+            GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
+            var filters = new object[]
+                   {
+                    new BinaryLogicOpType()
+                    {
+                       Items = new object[]
+                        {
+                        new PropertyIsLikeType
+                            {
+                                PropertyName = new PropertyNameType {Text = new[] {"srv:type"}},
+                                Literal = new LiteralType {Text = new[] {"service"}}
+                            }
+                       },
+                       ItemsElementName = new ItemsChoiceType22[]
+                        {
+                            ItemsChoiceType22.PropertyIsLike, ItemsChoiceType22.PropertyIsLike,
+                        }
+                    }
+                   };
+
+
+            var filterNames = new ItemsChoiceType23[]
+            {
+                        ItemsChoiceType23.And
+            };
+
+            var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
+            return result;
+        }
+
         private static string FetchThumbnailUrl(SimpleMetadata metadata)
         {
             string thumbnailUrl = null;
@@ -93,7 +126,7 @@ namespace Kartverket.DOK.Service
             return thumbnailUrl;
         }
 
-        private SimpleMetadata FetchMetadata(string uuid)
+        public static SimpleMetadata FetchMetadata(string uuid)
         {
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
             MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);

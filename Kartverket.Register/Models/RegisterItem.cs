@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////
 
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -18,13 +19,6 @@ namespace Kartverket.Register.Models
 {
     public abstract class RegisterItem
     {
-        private RegisterDbContext db = new RegisterDbContext();
-        private IRegisterItemService _registerItemService;
-
-        public RegisterItem()
-        {
-            _registerItemService = new RegisterItemService(db);
-        }
         [Key]
         public Guid systemId { get; set; }
         //public virtual ICollection<Version> replaces { get; set; }
@@ -256,6 +250,21 @@ namespace Kartverket.Register.Models
         public Guid? GetVersioningId()
         {
             return versioningId;
+        }
+
+        public void InitializeNew()
+        {
+            systemId = Guid.NewGuid();
+            modified = DateTime.Now;
+            //submitter = _registerService.GetOrganizationByUserName();
+            //submitterId = submitter.systemId;
+            dateSubmitted = DateTime.Now;
+            modified = DateTime.Now;
+            statusId = "Submitted";
+            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            versionNumber = 1;
+            //versioningId = _registerItemService.NewVersioningGroup(this);
+
         }
     }
 }//end namespace Datamodell

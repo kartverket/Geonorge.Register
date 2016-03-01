@@ -171,8 +171,8 @@
         {
             if (HtmlHelperExtensions.AccessEdit(Model))
             {
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl(Model)">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl(Model)">Slett</a>
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
             }
         }
 

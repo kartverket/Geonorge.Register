@@ -131,6 +131,7 @@ namespace Kartverket.Register.Models
             else if (containedItemClass == "Organization") return "/organisasjoner/" + url;
             else if (containedItemClass == "EPSG") return "/epsg/" + url;
             else if (containedItemClass == "NameSpace") return "/navnerom/" + url;
+            else if (containedItemClass == "ServiceAlert") return "/tjenestevarsler/" + url;
             else if (containedItemClass == "Dataset")
             {
                 if (IsDokMunicipal())

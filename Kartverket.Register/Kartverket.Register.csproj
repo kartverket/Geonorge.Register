@@ -63,11 +63,13 @@
     <Reference Include="Autofac.Integration.WebApi">
       <HintPath>..\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="GeoNorgeAPI">
       <HintPath>..\packages\GeoNorgeAPI.2.7.0.0\lib\net40\GeoNorgeAPI.dll</HintPath>
@@ -235,6 +237,7 @@
     <Compile Include="Controllers\OrganizationsController.cs" />
     <Compile Include="Controllers\RegistersController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\ServiceAlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
     <Compile Include="Formatter\GMLFormatter.cs" />
@@ -927,6 +930,11 @@
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
+    <Content Include="Views\ServiceAlerts\Create.cshtml" />
+    <Content Include="Views\ServiceAlerts\Delete.cshtml" />
+    <Content Include="Views\ServiceAlerts\Details.cshtml" />
+    <Content Include="Views\ServiceAlerts\Edit.cshtml" />
+    <Content Include="Views\ServiceAlerts\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

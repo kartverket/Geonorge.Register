@@ -1,0 +1,240 @@
+﻿@model Kartverket.Register.Models.ServiceAlert
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ServiceAlert</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.register.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.register.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.status.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.submitter.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.submitter.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.versioning.containedItemClass)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.versioning.containedItemClass)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateSubmitted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateSubmitted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.modified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.modified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateAccepted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateAccepted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateNotAccepted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateNotAccepted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateSuperseded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateSuperseded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRetired)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRetired)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.seoname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.seoname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.versionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.versionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.versionName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.versionName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.documentUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.documentUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.approvalDocument)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.approvalDocument)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.approvalReference)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.approvalReference)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Accepted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accepted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlertDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlertDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EffectiveDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EffectiveDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlertType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlertType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceMetadataUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceMetadataUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceUuid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceUuid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner.name)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

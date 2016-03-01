@@ -38,14 +38,14 @@
         sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
     }
 }
-
+@section Scripts {
 <script>
     $(function () {
         var menu_state = localStorage.setItem("navtabselected", "gjeldende");
     }
 )
 </script>
-
+}
 @Html.Partial("_SearchBarPartial")
 
 <section class="heading">

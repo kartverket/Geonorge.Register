@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Rediger " + Model.name;
 }
-
+@section Scripts {
 <script>
     $(document).ready(function () {
         $('.date').datepicker({ dateFormat: "dd/mm/yy" });
@@ -27,7 +27,7 @@
         }
     }
 </script>
-
+}
 
 @section breadcrumb {
     @if (Model.register.parentRegister != null)

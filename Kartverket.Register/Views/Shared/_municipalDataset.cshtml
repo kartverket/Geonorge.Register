@@ -9,7 +9,7 @@
         selectedMunicipalName = selectedMunicipal.name;
     }
 }
-
+@section Scripts {
 <script>
     $(document).ready(function () {
         $("table").tablesorter({
@@ -24,7 +24,7 @@
         });
     });
 </script>
-
+}
 <div class="col-sm-12 col-md-6 col-lg-6 row">
     <h2 style="margin-top: 10px;">@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
 </div>

@@ -15,7 +15,7 @@
     <li><a href="/register/@Model.Register">@registerName</a></li>
     <li>@OwnerName</li> 
 }
-
+@section Scripts {
 <script>
     function SortBy(sort) {
         var sort = document.getElementById("sorting");
@@ -24,7 +24,7 @@
         localStorage['SortingType'] = selected;
     }
 </script>
-
+}
 <div class="page-header">
     <h2 class="h-md">@OwnerName</h2>
     <hr>

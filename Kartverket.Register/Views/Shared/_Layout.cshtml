@@ -22,34 +22,11 @@
     <!-- Fonts -->
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
     <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
-
     <!-- Stylesheets -->
     @Styles.Render(@Html.KartkatalogenUrl() + "Content/kartkatalog-styles")
- 
-    <!-- Scripts -->
-    @Scripts.Render(@Html.KartkatalogenUrl() + "bundles/kartkatalog-scripts")
-
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/js")
-        
+    @Styles.Render("~/Content/css")    
     @RenderSection("head", false)
-    @Html.Partial("_Analytics")
-    
-    <script>
-        $(function(){
-            $(".jqueryui-marker-datepicker").datepicker({
-                dateFormat: "dd/mm/yy",
-                changeYear: true,
-                showOn: "button"
-            }).css("display", "inline-block")
-            .next("button").button({
-                icons: { primary: "ui-icon-calendar" },
-                label: "Velg dato",
-                text: false
-            });
-        });
-    </script>
-    @RenderSection("scripts", false)
+    @Html.Partial("_Analytics")    
 
 </head>
 
@@ -120,7 +97,22 @@
             </div>
         </div>
     </footer>
-
-
+    @Scripts.Render(@Html.KartkatalogenUrl() + "bundles/kartkatalog-scripts")
+    @Scripts.Render("~/bundles/js")
+    @RenderSection("scripts", false)
+    <script>
+        $(function(){
+            $(".jqueryui-marker-datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                showOn: "button"
+            }).css("display", "inline-block")
+            .next("button").button({
+                icons: { primary: "ui-icon-calendar" },
+                label: "Velg dato",
+                text: false
+            });
+        });
+    </script>
 </body>
 </html>

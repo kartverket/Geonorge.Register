@@ -19,6 +19,13 @@
         }
         @Resources.UI.AppPageTitle
     </title>
+    <!-- Fonts -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
+    <!-- Stylesheets -->
+    @Styles.Render(@Html.KartkatalogenUrl() + "Content/kartkatalog-styles")
+    @Styles.Render("~/Content/css")
+    
     @RenderSection("head", false)
     @Html.Partial("_Analytics")    
 
@@ -91,31 +98,6 @@
             </div>
         </div>
     </footer>
-    <!-- Fonts -->
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700" rel="stylesheet" type="text/css">
-    <link href="//fonts.googleapis.com/css?family=Raleway:400,100,300,500,600,700" rel="stylesheet" type="text/css">
-    <!-- Stylesheets -->
-    <script>
-      var cb = function() {
-        var l = document.createElement('link'); l.rel = 'stylesheet';
-        l.href = "@Html.KartkatalogenUrl()Content/kartkatalog-styles";
-          var h = document.getElementsByTagName('head')[0]; h.appendChild(l, h);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(cb);
-      else window.addEventListener('load', cb);
-
-      var cb2 = function () {
-          var l = document.createElement('link'); l.rel = 'stylesheet';
-          l.href = "/Content/css";
-          var h = document.getElementsByTagName('head')[0]; h.appendChild(l, h);
-      };
-      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
-          webkitRequestAnimationFrame || msRequestAnimationFrame;
-      if (raf) raf(cb2);
-      else window.addEventListener('load', cb2);
-    </script>
     @Scripts.Render(@Html.KartkatalogenUrl() + "bundles/kartkatalog-scripts")
     @Scripts.Render("~/bundles/js")
     @RenderSection("scripts", false)

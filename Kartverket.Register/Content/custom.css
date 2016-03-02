@@ -405,6 +405,60 @@
 }
 
 
+/* Tjenestevarsel */
+
+.search-results.serviceAlert.table-view .col-title {
+    width: 20%;
+}
+    .search-results.serviceAlert.table-view .col-title h4, .serviceAlert.table-view .result-row .col-title a{
+        float: left;
+        width: 25%;
+    }
+    .search-results.serviceAlert.table-view .col-title a {
+        width:100%
+    }
+
+.search-results.serviceAlert.table-view .col-description {
+    width: 10%;
+    float: right;
+}
+
+    .search-results.serviceAlert.table-view .col-description h4, .serviceAlert.table-view .result-row .col-description a{
+        float: left;
+        width: 10%;
+    }
+    .search-results.serviceAlert.table-view .col-description a {
+        width:100%
+    }
+
+
+.search-results.serviceAlert.table-view .col-date {
+    width: 25%;
+    float: left !important;
+}
+
+    .search-results.serviceAlert.table-view .table-heading .col-date h4, .serviceAlert.table-view .result-row .col-date p {
+        float: left;
+        width: 50%;
+    }
+
+    .serviceAlert.table-view .result-row .col-date p span{
+        display: none;
+    }
+
+.search-results.serviceAlert.table-view .col-information {
+    width: 45%;
+    float: left !important;
+}
+    .search-results.serviceAlert.table-view .table-heading .col-information h4, .serviceAlert.table-view .result-row .col-information p {
+        float: left;
+        width: 33.3%;
+    }
+
+    .serviceAlert.table-view .result-row .col-information p span{
+        display: none;
+    }
+
 
 
 /*organization*/

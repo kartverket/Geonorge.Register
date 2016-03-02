@@ -125,6 +125,10 @@
             {
                 @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
             }
+            @if (Model.containedItemClass == "ServiceAlert")
+            {
+                @Html.Partial("_serviceAlert", sortering.ToPagedList(pageNumber, pageSize))
+            }
             @if (Model.containedItemClass == "Register")
             {
                 @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))

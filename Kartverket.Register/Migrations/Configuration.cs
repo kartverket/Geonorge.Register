@@ -255,7 +255,7 @@ namespace Kartverket.Register.Migrations
                 managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
                 name = "Tjenestevarsler",
                 seoname = "tjenestevarsler",
-                containedItemClass = "ServiceAlerts",
+                containedItemClass = "ServiceAlert",
                 statusId = "Valid",
                 accessId = 2
             };

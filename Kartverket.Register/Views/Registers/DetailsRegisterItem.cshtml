@@ -81,7 +81,7 @@
                 }
                 if (dataset.DatasetType != null)
                 {
-                    <span>Type datasett: @dataset.DatasetType</span><br/>
+                    <span>Type datasett: @dataset.DatasetType</span><br />
                 }
             }
 
@@ -127,9 +127,7 @@
             }
         </div>
         <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <div class="page-header">
-                <hr>
-            </div>
+            <hr>
         </div>
         <br />
 
@@ -161,6 +159,10 @@
         {
             @Html.Partial("_detailsNameSpace")
         }
+        @if (Model.register.containedItemClass == "ServiceAlert")
+        {
+            @Html.Partial("_detailsServiceAlert")
+        }
 
     </div>
 
@@ -176,13 +178,7 @@
             }
         }
 
-        @if (Model.register.containedItemClass == "Document")
-        {
-            <a class="hidden-print" href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">Tilbake</a>
-        }
-        else
-        {
-            <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
-        }
+        <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
+
     </div>
 </div>

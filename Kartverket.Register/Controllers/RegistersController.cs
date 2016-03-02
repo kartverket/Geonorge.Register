@@ -415,6 +415,10 @@ namespace Kartverket.Register.Controllers
                 Dataset dataset = db.Datasets.Find(registerItem.systemId);
                 return dataset.datasetowner.name;
             }
+            else if (registerItem.register.containedItemClass == "ServiceAlert") {
+                ServiceAlert serviceAlert = db.ServiceAlerts.Find(registerItem.systemId);
+                return serviceAlert.Owner.name;
+            }
             else
             {
                 return registerItem.submitter.seoname;

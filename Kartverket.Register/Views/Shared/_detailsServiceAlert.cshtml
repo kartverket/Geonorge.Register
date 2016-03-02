@@ -1,0 +1,28 @@
+﻿@model Kartverket.Register.Models.ServiceAlert
+
+<div class="row result-row metadata">
+    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <b>Varselet gjelder: </b>
+            <p>@Model.Note</p>
+        </div> 
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <b>Beskrivelse: </b> <a href="@Model.ServiceMetadataUrl" title="Beskrivelse av @Model.name">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a>
+        </div>   
+
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <p><b>Eier: </b>@Model.Owner.name</p>
+            <p><b>Tjeneste varsel: </b>@Model.AlertType</p>
+            <p><b>Tjenestetype: </b>@Model.ServiceType</p>
+        </div>
+        
+        <div class="col-sm-3 col-md-3 col-lg-3">
+            <p><b>Siste varsel: </b>@Html.DisplayFor(model => model.AlertDate)</p>
+            <p><b>Ikrafttredelse: </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
+        </div>    
+
+    </div>
+</div>
+

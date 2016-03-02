@@ -936,6 +936,7 @@
     <Content Include="Views\ServiceAlerts\Edit.cshtml" />
     <Content Include="Views\ServiceAlerts\Index.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
+    <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

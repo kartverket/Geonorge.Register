@@ -412,7 +412,7 @@
 }
     .search-results.serviceAlert.table-view .col-title h4, .serviceAlert.table-view .result-row .col-title a{
         float: left;
-        width: 25%;
+        width: 100%;
     }
     .search-results.serviceAlert.table-view .col-title a {
         width:100%
@@ -425,10 +425,14 @@
 
     .search-results.serviceAlert.table-view .col-description h4, .serviceAlert.table-view .result-row .col-description a{
         float: left;
-        width: 10%;
+        width: 100%;
     }
     .search-results.serviceAlert.table-view .col-description a {
         width:100%
+    }
+
+    .serviceAlert.table-view .result-row .col-description span{
+        display: none;
     }
 
 

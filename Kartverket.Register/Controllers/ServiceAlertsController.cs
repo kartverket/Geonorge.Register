@@ -38,9 +38,7 @@ namespace Kartverket.Register.Controllers
         {
             ServiceAlert serviceAlert = new ServiceAlert();
             serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
-            ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
-            ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes());
-            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value");
+            ViewBags(serviceAlert);
 
             if (serviceAlert.register != null)
             {
@@ -83,9 +81,7 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
-            ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
-            ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes());
-            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value");
+            ViewBags(serviceAlert);
             return View(serviceAlert);
         }
 
@@ -100,9 +96,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(serviceAlert))
                 {
-                    ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
-                    ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-                    ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
+                    ViewBags(serviceAlert);
                     return View(serviceAlert);
                 }
                 return HttpNotFound("Ingen tilgang");
@@ -127,16 +121,14 @@ namespace Kartverket.Register.Controllers
                     if (!_registerItemService.validateName(serviceAlert))
                     {
                         ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                        ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
-                        ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-                        ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", originalServiceAlert.ServiceUuid);
+                        ViewBags(originalServiceAlert);
                         return View(originalServiceAlert);
                     }
                     if (ModelState.IsValid)
                     {
                         originalServiceAlert.UpdateServiceAlert(serviceAlert);
                         _registerItemService.SaveEditedRegisterItem(originalServiceAlert);
-                        return Redirect(originalServiceAlert.register.GetObjectUrl());
+                        return Redirect(originalServiceAlert.GetObjectUrl());
                     }
                 }
                 else
@@ -144,9 +136,7 @@ namespace Kartverket.Register.Controllers
                     throw new HttpException(401, "Access Denied");
                 }
             }
-            ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
-            ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", originalServiceAlert.ServiceUuid);
+            ViewBags(originalServiceAlert);
             return View(originalServiceAlert);
         }
 
@@ -194,29 +184,12 @@ namespace Kartverket.Register.Controllers
         }
 
 
-
-
-
-        // ***** Hjelpemetoder *****
-
-        //private SelectList GetServicesFromKartkatalogen(string serviceUuid = null)
-        //{
-        //    var servicesFromKartkatalogen = new MetadataService().GetMetadataServices();
-        //    List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
-
-        //    if (servicesFromKartkatalogen.numberOfRecordsMatched != "0")
-        //    {
-        //        for (int s = 0; s < servicesFromKartkatalogen.Items.Length; s++)
-        //        {
-        //            MetadataItemViewModel m = new MetadataItemViewModel();
-        //            m.Uuid = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[0].Text[0];
-        //            m.Title = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[2].Text[0];
-        //            result.Add(m);
-        //        }
-        //    }
-        //    return new SelectList(result, "Uuid", "Title", serviceUuid);
-        //}
-
+        private void ViewBags(ServiceAlert serviceAlert)
+        {
+            ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
+            ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
+            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
+        }
 
         public Dictionary<string, string> GetServicesFromKartkatalogen()
         {

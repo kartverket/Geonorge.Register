@@ -25,11 +25,11 @@ namespace Kartverket.Register.Formatter
         Func<Type, bool> SupportedTypeCSV = (type) =>
         {
             if (type == typeof(Models.Api.Register) ||
-                type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
+                type == typeof(Registeritem) ||
                 type == typeof(IEnumerable<Models.Api.Register>) ||
                 type == typeof(List<Models.Api.Register>) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
+                type == typeof(IEnumerable<Registeritem>) ||
+                type == typeof(List<Registeritem>))
 
                 return true;
             else
@@ -48,11 +48,11 @@ namespace Kartverket.Register.Formatter
         public override void WriteToStream(Type type, object value, Stream writeStream, HttpContent content)
         {
             if (type == typeof(Models.Api.Register) ||
-                type == typeof(Kartverket.Register.Models.Api.Registeritem) ||
+                type == typeof(Registeritem) ||
                 type == typeof(IEnumerable<Models.Api.Register>) ||
                 type == typeof(List<Models.Api.Register>) ||
-                type == typeof(IEnumerable<Kartverket.Register.Models.Api.Registeritem>) ||
-                type == typeof(List<Kartverket.Register.Models.Api.Registeritem>))
+                type == typeof(IEnumerable<Registeritem>) ||
+                type == typeof(List<Registeritem>))
                 BuildCSV(value, writeStream, content.Headers.ContentType.MediaType);
         }
 
@@ -64,12 +64,12 @@ namespace Kartverket.Register.Formatter
                 Models.Api.Register register = (Models.Api.Register)models;
                 ConvertRegisters(streamWriter, register);
             }
-            if (models is Models.Api.Registeritem)
+            if (models is Registeritem)
             {
-                Models.Api.Registeritem registerItem = (Models.Api.Registeritem)models;
+                Registeritem registerItem = (Registeritem)models;
                 streamWriter.WriteLine(RegisterItemHeading(registerItem.itemclass));
                 ConvertRegisterItemToCSV(streamWriter, registerItem);
-                foreach (Models.Api.Registeritem item in registerItem.versions.OrderBy(v => v.versionNumber))
+                foreach (Registeritem item in registerItem.versions.OrderBy(v => v.versionNumber))
                 {
                     ConvertRegisterItemToCSV(streamWriter, item);
                 }
@@ -83,13 +83,13 @@ namespace Kartverket.Register.Formatter
                     ConvertRegisterToCSV(streamWriter, reg);
                 }
             }
-            if (models is List<Models.Api.Registeritem>)
+            if (models is List<Registeritem>)
             {
-                List<Models.Api.Registeritem> registerItems = (List<Models.Api.Registeritem>)models;
+                List<Registeritem> registerItems = (List<Registeritem>)models;
                 if (registerItems.Count() > 0)
                 {
                     streamWriter.WriteLine(RegisterItemHeading(registerItems[0].itemclass));
-                    foreach (Models.Api.Registeritem item in registerItems.OrderBy(r => r.label))
+                    foreach (Registeritem item in registerItems.OrderBy(r => r.label))
                     {
                         ConvertRegisterItemToCSV(streamWriter, item);
                     }
@@ -103,7 +103,7 @@ namespace Kartverket.Register.Formatter
             if (register.containeditems != null && register.containeditems.Count > 0)
             {
                 streamWriter.WriteLine(RegisterItemHeading(register.containedItemClass));
-                foreach (Models.Api.Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))
+                foreach (Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))
                 {
                     ConvertRegisterItemToCSV(streamWriter, item);
                 }
@@ -118,7 +118,7 @@ namespace Kartverket.Register.Formatter
             }
         }
 
-        private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Models.Api.Registeritem item)
+        private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Registeritem item)
         {
             item.description = RemoveBreaksFromDescription(item.description);
             string text = null;
@@ -145,6 +145,10 @@ namespace Kartverket.Register.Formatter
             else if (item.itemclass == "NameSpace")
             {
                 text = item.label + ";" + item.owner + ";" + item.description + ";" + item.serviceUrl + ";";
+            }
+            else if (item.itemclass == "ServiceAlert")
+            {
+                text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + item.Note + ";" + item.MetadataUrl + ";";
             }
 
             streamWriter.WriteLine(text);
@@ -197,6 +201,10 @@ namespace Kartverket.Register.Formatter
             else if (containedItemClass == "NameSpace")
             {
                 return "Navn; Etat; Innhold; Tjeneste";
+            }
+            else if (containedItemClass == "ServiceAlert")
+            {
+                return "Siste varsel; Ikrafttredelse; Tjeneste; Tjenestetype; Tjenestevarsel; Eier; Varselet gjelder; Url til tjeneste detaljside ";
             }
 
             return null;

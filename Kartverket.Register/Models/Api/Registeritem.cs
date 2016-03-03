@@ -7,7 +7,8 @@ namespace Kartverket.Register.Models.Api
 {
     public class Registeritem
     {
-        
+
+        // RegisterItem
         public string id { get; set; }
         public string label { get; set; }
         public string itemclass { get; set; }
@@ -17,37 +18,45 @@ namespace Kartverket.Register.Models.Api
         public string owner { get; set; }
         public string versionName { get; set; }
         public int versionNumber { get; set; }
+        public ICollection<Registeritem> versions { get; set; }
+        public DateTime lastUpdated { get; set; }
+        public DateTime dateSubmitted { get; set; }
+        public DateTime dateAccepted { get; set; }
 
+        // Organization
         public string logo { get; set; }
         public string number { get; set; }
-        public string documentreference { get; set; }
 
+        // EPSG
+        public string documentreference { get; set; }
         public string epsgcode { get; set; }
         public string sosiReferencesystem { get; set; }
         public string inspireRequirement { get; set; }
         public string nationalRequirement { get; set; }
         public string nationalSeasRequirement { get; set; }
-
         public string verticalReferenceSystem { get; set; }
         public string horizontalReferenceSystem { get; set; }
         public string dimension { get; set; }
 
+        // CodelistValue
         public string codevalue { get; set; }
-
-        public string serviceUrl { get; set; }
-
         public string broader { get; set; }
-
         public ICollection<string> narrower { get; set; }
 
+        //NameSpace
+        public string serviceUrl { get; set; }
+
+        // Dataset
         public string theme { get; set; }
         public string dokStatus { get; set; }
 
-        public ICollection<Registeritem> versions { get; set; } 
-
-        public DateTime lastUpdated { get; set; }
-        public DateTime dateSubmitted { get; set; }
-        public DateTime dateAccepted { get; set; }
+        // ServiceAlert
+        public string MetadataUrl { get; set; }
+        public DateTime AlertDate { get; set; }
+        public string AlertType { get; set; }
+        public string ServiceType { get; set; }
+        public DateTime EffectiveDate { get; set; }
+        public string Note { get; set; }
 
         public Registeritem(Models.RegisterItem item, string baseUrl)
         {
@@ -58,7 +67,7 @@ namespace Kartverket.Register.Models.Api
             label = item.name;
             lastUpdated = item.modified;
             itemclass = item.register.containedItemClass;
-            if (item.submitter != null)owner = item.submitter.name;
+            if (item.submitter != null) owner = item.submitter.name;
             if (item.status != null) status = item.status.description;
             if (item.description != null) description = item.description;
             if (item.versionName != null) versionName = item.description;
@@ -88,7 +97,7 @@ namespace Kartverket.Register.Models.Api
                 var c = (CodelistValue)item;
                 codevalue = c.value;
                 if (c.broaderItemId != null)
-                    broader = baseUrl + c.broaderItem.GetObjectUrl(); 
+                    broader = baseUrl + c.broaderItem.GetObjectUrl();
                 foreach (var codelistvalue in c.narrowerItems)
                 {
                     narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
@@ -116,13 +125,24 @@ namespace Kartverket.Register.Models.Api
                 var n = (NameSpace)item;
                 serviceUrl = n.serviceUrl;
             }
-            else if (item is Kartverket.Register.Models.Organization)
+            else if (item is Models.Organization)
             {
                 itemclass = "Organization";
-                var o = (Kartverket.Register.Models.Organization)item;
+                var o = (Models.Organization)item;
                 number = o.number;
             }
-
+            else if (item is ServiceAlert)
+            {
+                itemclass = "ServiceAlert";
+                var s = (ServiceAlert)item;
+                owner = s.Owner.name;
+                MetadataUrl = s.ServiceMetadataUrl;
+                AlertDate = s.AlertDate;
+                AlertType = s.AlertType;
+                ServiceType = s.ServiceType;
+                EffectiveDate = s.EffectiveDate;
+                Note = s.Note;
+            }
         }
     }
 }

@@ -74,7 +74,7 @@ namespace Kartverket.DOK.Service
                         {
                         new PropertyIsLikeType
                             {
-                                PropertyName = new PropertyNameType {Text = new[] {"srv:type"}},
+                                PropertyName = new PropertyNameType {Text = new[] {"Type"}},
                                 Literal = new LiteralType {Text = new[] {"service"}}
                             }
                        },
@@ -91,7 +91,7 @@ namespace Kartverket.DOK.Service
                         ItemsChoiceType23.And
             };
 
-            var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
+            var result = g.SearchWithFilters(filters, filterNames,1,300,true);
             return result;
         }
 
@@ -136,7 +136,6 @@ namespace Kartverket.DOK.Service
         public SearchResultsType SearchMetadata(string searchString)
         {
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
-            //SearchResultsType result = g.Search(searchString);
             var filters = new object[]
                    {
                     new BinaryLogicOpType()

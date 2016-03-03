@@ -142,6 +142,11 @@ namespace Kartverket.Register.Models
                 Organization organization = (Organization)this;
                 return organization.GetOrganizationEditUrl();
             }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                return serviceAlert.GetServiceAlertEditUrl();
+            }
             return "#";
         }
 
@@ -176,6 +181,11 @@ namespace Kartverket.Register.Models
             {
                 Organization organization = (Organization)this;
                 return organization.GetOrganizationDeleteUrl();
+            }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                return serviceAlert.GetServiceAlertDeleteUrl();
             }
             return "#";
         }

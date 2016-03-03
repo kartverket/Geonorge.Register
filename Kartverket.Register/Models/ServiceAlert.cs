@@ -67,7 +67,7 @@ namespace Kartverket.Register.Models
             };
         }
 
-        public virtual string GetDocumentEditUrl()
+        public virtual string GetServiceAlertEditUrl()
         {
             if (register.parentRegister == null)
             {
@@ -79,7 +79,7 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public virtual string GetDocumentDeleteUrl()
+        public virtual string GetServiceAlertDeleteUrl()
         {
             if (register.parentRegister == null)
             {
@@ -98,6 +98,20 @@ namespace Kartverket.Register.Models
             {
                 registerId = register.systemId;
             }
+        }
+
+        public void UpdateServiceAlert(ServiceAlert serviceAlert)
+        {
+            serviceAlert.GetMetadataByUuid();
+            name = serviceAlert.name;
+            ServiceUuid = serviceAlert.ServiceUuid;
+            ServiceMetadataUrl = serviceAlert.ServiceMetadataUrl;
+            AlertDate = serviceAlert.AlertDate;
+            AlertType = serviceAlert.AlertType;
+            ServiceType = serviceAlert.ServiceType;
+            EffectiveDate = serviceAlert.EffectiveDate;
+            OwnerId = serviceAlert.OwnerId;
+            Note = serviceAlert.Note;
         }
     }
 }

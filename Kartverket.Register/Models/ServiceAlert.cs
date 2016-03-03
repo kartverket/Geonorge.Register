@@ -53,6 +53,7 @@ namespace Kartverket.Register.Models
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
             name = metadata.Title;
+            if (metadata.DistributionFormat != null) ServiceType = metadata.DistributionFormat.Name;
             ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }
 
@@ -108,7 +109,6 @@ namespace Kartverket.Register.Models
             ServiceMetadataUrl = serviceAlert.ServiceMetadataUrl;
             AlertDate = serviceAlert.AlertDate;
             AlertType = serviceAlert.AlertType;
-            ServiceType = serviceAlert.ServiceType;
             EffectiveDate = serviceAlert.EffectiveDate;
             OwnerId = serviceAlert.OwnerId;
             Note = serviceAlert.Note;

@@ -65,6 +65,12 @@ namespace Kartverket.Register.Models
         public Guid? versioningId { get; set; }
         public virtual Version versioning { get; set; }
         public int versionNumber { get; set; }
+
+        internal bool IsServiceAlertRegister()
+        {
+            return systemId == Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
+        }
+
         [ForeignKey("access")]
         public int? accessId { get; set; }
         public virtual accessType access { get; set; }

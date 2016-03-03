@@ -26,7 +26,6 @@ namespace Kartverket.Register.Controllers
         private ISearchService _searchService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
-        //private string role = HtmlHelperExtensions.GetSecurityClaim("role");
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -48,8 +47,6 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: Registers/Details/5
-        //[Route("subregister/{parentRegister}/{owner}/{registername}.{format}")]
-        //[Route("subregister/{parentRegister}/{owner}/{registername}")]
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
         [Route("register/{registername}/{filterOrganization}")]
@@ -62,6 +59,7 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             Models.Register register = _registerService.GetRegister(parentRegister, registername);
+            sorting = DefaultSortingServiceAlertRegister(sorting, register);
             if (register != null)
             {
                 register = RegisterItems(register, filter, page);
@@ -71,20 +69,6 @@ namespace Kartverket.Register.Controllers
             else
             {
                 return HttpNotFound();
-            }
-        }
-
-        private void DokOrderBy(string sorting)
-        {
-            if (sorting != null)
-            {
-                if (sorting.Contains("_desc"))
-                {
-                    ViewBag.DokOrderBy = "";
-                }
-                else {
-                    ViewBag.DokOrderBy = "_desc";
-                }
             }
         }
 
@@ -317,23 +301,6 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)
-        {
-            Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
-            CoverageDataset coverage = new CoverageDataset
-            {
-                CoverageId = Guid.NewGuid(),
-                CoverageDOKStatusId = "Accepted",
-                ConfirmedDok = item.Confirmed,
-                dataset = originalDataset,
-                DatasetId = originalDataset.systemId,
-                MunicipalityId = municipality.systemId,
-                Note = item.Note
-            };
-            _registerItemService.SaveNewCoverage(coverage);
-            return coverage;
-        }
-
 
         // GET: Registers/Delete/5
         [Authorize]
@@ -401,6 +368,23 @@ namespace Kartverket.Register.Controllers
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
             ViewBag.parentRegisterId = new SelectList(db.Registers.Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+        }
+
+        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)
+        {
+            Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+            CoverageDataset coverage = new CoverageDataset
+            {
+                CoverageId = Guid.NewGuid(),
+                CoverageDOKStatusId = "Accepted",
+                ConfirmedDok = item.Confirmed,
+                dataset = originalDataset,
+                DatasetId = originalDataset.systemId,
+                MunicipalityId = municipality.systemId,
+                Note = item.Note
+            };
+            _registerItemService.SaveNewCoverage(coverage);
+            return coverage;
         }
 
         private string GetOwner(RegisterItem registerItem)
@@ -487,6 +471,31 @@ namespace Kartverket.Register.Controllers
             return _accessControlService.IsAdmin();
         }
 
-    }
+        private static string DefaultSortingServiceAlertRegister(string sorting, Models.Register register)
+        {
+            if (register.IsServiceAlertRegister())
+            {
+                if (string.IsNullOrWhiteSpace(sorting))
+                {
+                    sorting = "dateSubmitted_desc";
+                }
+            }
 
+            return sorting;
+        }
+
+        private void DokOrderBy(string sorting)
+        {
+            if (sorting != null)
+            {
+                if (sorting.Contains("_desc"))
+                {
+                    ViewBag.DokOrderBy = "";
+                }
+                else {
+                    ViewBag.DokOrderBy = "_desc";
+                }
+            }
+        }
+    }
 }

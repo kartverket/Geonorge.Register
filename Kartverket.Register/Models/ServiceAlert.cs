@@ -35,10 +35,7 @@ namespace Kartverket.Register.Models
         public string ServiceType { get; set; }
 
         [Required]
-        [Display(Name = "Eier:")]
-        [ForeignKey("Owner")]
-        public Guid OwnerId { get; set; }
-        public virtual Organization Owner { get; set; }
+        public string Owner { get; set; }
 
         public string ServiceMetadataUrl { get; set; }
 
@@ -53,7 +50,8 @@ namespace Kartverket.Register.Models
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
             name = metadata.Title;
-            if (metadata.DistributionFormat != null) ServiceType = metadata.DistributionFormat.Name;
+            if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionFormat.Name;
+            if (metadata.ContactOwner != null) Owner = metadata.ContactOwner.Organization;
             ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }
 
@@ -72,10 +70,10 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/tjenestevarsler/" + register.seoname + "/" + Owner.seoname + "/" + seoname + "/rediger";
+                return "/tjenestevarsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
             }
             else {
-                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + Owner.seoname + "/" + seoname + "/rediger";
+                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/rediger";
 
             }
         }
@@ -84,10 +82,10 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegister == null)
             {
-                return "/tjenestevarsler/" + register.seoname + "/" + Owner.seoname + "/" + seoname + "/slett";
+                return "/tjenestevarsler/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
             }
             else {
-                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + Owner.seoname + "/" + seoname + "/slett";
+                return "/tjenestevarsler/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
 
             }
         }
@@ -110,7 +108,6 @@ namespace Kartverket.Register.Models
             AlertDate = serviceAlert.AlertDate;
             AlertType = serviceAlert.AlertType;
             EffectiveDate = serviceAlert.EffectiveDate;
-            OwnerId = serviceAlert.OwnerId;
             Note = serviceAlert.Note;
         }
     }

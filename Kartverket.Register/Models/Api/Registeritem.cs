@@ -135,7 +135,7 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "ServiceAlert";
                 var s = (ServiceAlert)item;
-                owner = s.Owner.name;
+                owner = s.Owner;
                 MetadataUrl = s.ServiceMetadataUrl;
                 AlertDate = s.AlertDate;
                 AlertType = s.AlertType;

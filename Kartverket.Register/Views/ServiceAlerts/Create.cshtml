@@ -54,13 +54,7 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("OwnerId", null, "Velg organisasjon", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @Html.Hidden("Owner", "Ikke angitt")
 
         <div class="form-group">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })

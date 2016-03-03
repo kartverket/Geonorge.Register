@@ -401,7 +401,7 @@ namespace Kartverket.Register.Controllers
             }
             else if (registerItem.register.containedItemClass == "ServiceAlert") {
                 ServiceAlert serviceAlert = db.ServiceAlerts.Find(registerItem.systemId);
-                return serviceAlert.Owner.name;
+                return serviceAlert.Owner;
             }
             else
             {

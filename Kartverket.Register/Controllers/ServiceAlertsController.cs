@@ -186,7 +186,6 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBags(ServiceAlert serviceAlert)
         {
-            ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
             ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
             ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
         }

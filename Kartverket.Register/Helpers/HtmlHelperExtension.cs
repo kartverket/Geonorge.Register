@@ -634,12 +634,12 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingType == "owner")
             {
-                var sorting = register.items.OfType<ServiceAlert>().OrderBy(o => o.Owner.name);
+                var sorting = register.items.OfType<ServiceAlert>().OrderBy(o => o.Owner);
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "owner_desc")
             {
-                var sorting = register.items.OfType<ServiceAlert>().OrderByDescending(o => o.Owner.name);
+                var sorting = register.items.OfType<ServiceAlert>().OrderByDescending(o => o.Owner);
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "servicetype")

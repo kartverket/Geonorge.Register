@@ -588,6 +588,10 @@
     <Compile Include="Migrations\201603030808036_UpdateRegisterVersioningIdShallNotBeNull.Designer.cs">
       <DependentUpon>201603030808036_UpdateRegisterVersioningIdShallNotBeNull.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603031409179_SetServiceAlertOwnerAsString.cs" />
+    <Compile Include="Migrations\201603031409179_SetServiceAlertOwnerAsString.Designer.cs">
+      <DependentUpon>201603031409179_SetServiceAlertOwnerAsString.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1201,6 +1205,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603030808036_UpdateRegisterVersioningIdShallNotBeNull.resx">
       <DependentUpon>201603030808036_UpdateRegisterVersioningIdShallNotBeNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603031409179_SetServiceAlertOwnerAsString.resx">
+      <DependentUpon>201603031409179_SetServiceAlertOwnerAsString.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -10,6 +10,6 @@ namespace Kartverket.Register.Services.Versioning
     public interface IVersioningService
     {
         VersionsItem Versions(string registername, string parantRegister, string itemname);
-        //VersionsItem versions(string parentregister, string registername, string itemname);
+        void DeleteVersionGroup(Guid versioningId);
     }
 }

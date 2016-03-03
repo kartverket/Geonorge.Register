@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System;
 using System.Net;
 using System.Web;
+using Kartverket.Register.Services.Versioning;
 
 namespace Kartverket.Register.Controllers
 {
@@ -18,13 +19,15 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
-        private IAccessControlService _AccessControlService;
+        private IAccessControlService _accessControlService;
+        private IVersioningService _versioningService;
 
-        public ServiceAlertsController(IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService)
+        public ServiceAlertsController(IRegisterItemService registerItemServive, IRegisterService registerService, IAccessControlService accessControlService, IVersioningService versioningService)
         {
             _registerItemService = registerItemServive;
             _registerService = registerService;
-            _AccessControlService = accessControlService;
+            _accessControlService = accessControlService;
+            _versioningService = versioningService;
         }
 
 
@@ -37,11 +40,11 @@ namespace Kartverket.Register.Controllers
             serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
             ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes());
-            ViewBag.ServiceUuid = GetServicesFromKartkatalogen();
+            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value");
 
             if (serviceAlert.register != null)
             {
-                if (_AccessControlService.Access(serviceAlert.register))
+                if (_accessControlService.Access(serviceAlert.register))
                 {
                     return View(serviceAlert);
                 }
@@ -61,7 +64,7 @@ namespace Kartverket.Register.Controllers
             serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
             if (serviceAlert.register != null)
             {
-                if (_AccessControlService.Access(serviceAlert.register))
+                if (_accessControlService.Access(serviceAlert.register))
                 {
                     if (!_registerItemService.validateName(serviceAlert))
                     {
@@ -82,7 +85,7 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
             ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes());
-            ViewBag.ServiceUuid = GetServicesFromKartkatalogen();
+            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value");
             return View(serviceAlert);
         }
 
@@ -95,11 +98,11 @@ namespace Kartverket.Register.Controllers
             ServiceAlert serviceAlert = (ServiceAlert)_registerItemService.GetRegisterItem(parentRegister, registerName, item, 1);
             if (serviceAlert != null)
             {
-                if (_AccessControlService.Access(serviceAlert))
+                if (_accessControlService.Access(serviceAlert))
                 {
                     ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
                     ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-                    ViewBag.ServiceUuid = GetServicesFromKartkatalogen(serviceAlert.ServiceUuid);
+                    ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
                     return View(serviceAlert);
                 }
                 return HttpNotFound("Ingen tilgang");
@@ -119,14 +122,14 @@ namespace Kartverket.Register.Controllers
             ServiceAlert originalServiceAlert = (ServiceAlert)_registerItemService.GetRegisterItem(parentRegister, registerName, item, 1);
             if (originalServiceAlert != null)
             {
-                if (_AccessControlService.Access(originalServiceAlert))
+                if (_accessControlService.Access(originalServiceAlert))
                 {
                     if (!_registerItemService.validateName(serviceAlert))
                     {
                         ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                         ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
                         ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-                        ViewBag.ServiceUuid = GetServicesFromKartkatalogen(originalServiceAlert.ServiceUuid);
+                        ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", originalServiceAlert.ServiceUuid);
                         return View(originalServiceAlert);
                     }
                     if (ModelState.IsValid)
@@ -143,30 +146,101 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(serviceAlert.OwnerId);
             ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
-            ViewBag.ServiceUuid = GetServicesFromKartkatalogen(originalServiceAlert.ServiceUuid);
+            ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", originalServiceAlert.ServiceUuid);
             return View(originalServiceAlert);
         }
+
+
+        // GET: ServiceAlerts/Delete
+        [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/{itemowner}/{item}/slett")]
+        [Route("tjenestevarsler/{registerName}/{itemowner}/{item}/slett")]
+        public ActionResult Delete(string parentRegister, string registerName, string item)
+        {
+            ServiceAlert serviceAlert = (ServiceAlert)_registerItemService.GetRegisterItem(parentRegister, registerName, item, 1);
+            if (serviceAlert != null)
+            {
+                if (_accessControlService.Access(serviceAlert))
+                {
+                    return View(serviceAlert);
+                }
+                else
+                {
+                    throw new HttpException(401, "Access Denied");
+                }
+            }
+            return HttpNotFound("Finner ikke tjenestevarselet");
+        }
+
+
+        // POST: ServiceAlerts/Delete
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/{itemowner}/{item}/slett")]
+        [Route("tjenestevarsler/{registerName}/{itemowner}/{item}/slett")]
+        public ActionResult DeleteConfirmed(string parentRegister, string registerName, string item)
+        {
+            ServiceAlert serviceAlert = (ServiceAlert)_registerItemService.GetCurrentRegisterItem(parentRegister, registerName, item);
+            string registerUrl = serviceAlert.register.GetObjectUrl();
+            DeleteServiceAlert(serviceAlert);
+            return Redirect(registerUrl);
+        }
+
+        private void DeleteServiceAlert(ServiceAlert serviceAlert)
+        {
+            Guid versioningId = serviceAlert.versioningId;
+            _registerItemService.SaveDeleteRegisterItem(serviceAlert);
+            _versioningService.DeleteVersionGroup(versioningId);
+        }
+
+
 
 
 
         // ***** Hjelpemetoder *****
 
-        private SelectList GetServicesFromKartkatalogen(string serviceUuid = null)
-        {
-            var servicesFromKartkatalogen = new MetadataService().GetMetadataServices();
-            List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
+        //private SelectList GetServicesFromKartkatalogen(string serviceUuid = null)
+        //{
+        //    var servicesFromKartkatalogen = new MetadataService().GetMetadataServices();
+        //    List<MetadataItemViewModel> result = new List<MetadataItemViewModel>();
 
-            if (servicesFromKartkatalogen.numberOfRecordsMatched != "0")
+        //    if (servicesFromKartkatalogen.numberOfRecordsMatched != "0")
+        //    {
+        //        for (int s = 0; s < servicesFromKartkatalogen.Items.Length; s++)
+        //        {
+        //            MetadataItemViewModel m = new MetadataItemViewModel();
+        //            m.Uuid = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[0].Text[0];
+        //            m.Title = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[2].Text[0];
+        //            result.Add(m);
+        //        }
+        //    }
+        //    return new SelectList(result, "Uuid", "Title", serviceUuid);
+        //}
+
+
+        public Dictionary<string, string> GetServicesFromKartkatalogen()
+        {
+            Dictionary<string, string> ServiceList = new Dictionary<string, string>();
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000";
+            WebClient c = new WebClient();
+            c.Encoding = System.Text.Encoding.UTF8;
+            var data = c.DownloadString(url);
+            var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+
+            var result = response["Results"];
+
+            foreach (var service in result)
             {
-                for (int s = 0; s < servicesFromKartkatalogen.Items.Length; s++)
+                var ServiceUuid = service["Uuid"].ToString();
+                if (string.IsNullOrWhiteSpace(ServiceUuid))
+                    ServiceUuid = service["Uuid"].ToString();
+
+                if (!ServiceList.ContainsKey(ServiceUuid))
                 {
-                    MetadataItemViewModel m = new MetadataItemViewModel();
-                    m.Uuid = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[0].Text[0];
-                    m.Title = ((www.opengis.net.DCMIRecordType)(servicesFromKartkatalogen.Items[s])).Items[2].Text[0];
-                    result.Add(m);
+                    ServiceList.Add(ServiceUuid, service["Title"].ToString());
                 }
             }
-            return new SelectList(result, "Uuid", "Title", serviceUuid);
+            return ServiceList;
         }
 
 

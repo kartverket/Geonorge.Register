@@ -63,38 +63,6 @@ namespace Kartverket.DOK.Service
             }
         }
 
-        internal dynamic GetMetadataServices()
-        {
-            GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
-            var filters = new object[]
-                   {
-                    new BinaryLogicOpType()
-                    {
-                       Items = new object[]
-                        {
-                        new PropertyIsLikeType
-                            {
-                                PropertyName = new PropertyNameType {Text = new[] {"Type"}},
-                                Literal = new LiteralType {Text = new[] {"service"}}
-                            }
-                       },
-                       ItemsElementName = new ItemsChoiceType22[]
-                        {
-                            ItemsChoiceType22.PropertyIsLike, ItemsChoiceType22.PropertyIsLike,
-                        }
-                    }
-                   };
-
-
-            var filterNames = new ItemsChoiceType23[]
-            {
-                        ItemsChoiceType23.And
-            };
-
-            var result = g.SearchWithFilters(filters, filterNames,1,300,true);
-            return result;
-        }
-
         private static string FetchThumbnailUrl(SimpleMetadata metadata)
         {
             string thumbnailUrl = null;

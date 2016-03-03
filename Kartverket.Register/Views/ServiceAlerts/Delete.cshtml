@@ -1,240 +1,48 @@
 ﻿@model Kartverket.Register.Models.ServiceAlert
+﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Slett " + Model.name;
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ServiceAlert</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.register.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.register.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.status.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.status.description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.submitter.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.submitter.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.versioning.containedItemClass)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.versioning.containedItemClass)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dateSubmitted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dateSubmitted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.modified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.modified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dateAccepted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dateAccepted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dateNotAccepted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dateNotAccepted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.dateSuperseded)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.dateSuperseded)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateRetired)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateRetired)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.seoname)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.seoname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.versionNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.versionNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.versionName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.versionName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.documentUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.documentUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.approvalDocument)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.approvalDocument)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.approvalReference)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.approvalReference)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Accepted)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Accepted)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AlertDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AlertDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EffectiveDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EffectiveDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AlertType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AlertType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ServiceType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ServiceType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ServiceMetadataUrl)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ServiceMetadataUrl)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ServiceUuid)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ServiceUuid)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner.name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Owner.name)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+@section breadcrumb {
+    @if (Model.register.parentRegisterId != null)
+    {
+        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
+        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
+        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
+        <li>Slett</li>
+        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Model.name</a></li>
+        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+        while (parentRegister != null && parentRegister != mainRegister)
+        {
+            <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
+            parentRegister = parentRegister.parentRegister;
+        }
     }
-</div>
+    else
+    {
+        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
+        <li><a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
+        <li>Slett</li>
+    }
+}
+
+<h2>Slett</h2>
+
+<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.systemId)
+    <div class="form-actions no-color">
+        <input type="submit" value="Slett" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">Tilbake</a>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

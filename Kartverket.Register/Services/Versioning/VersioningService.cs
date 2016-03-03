@@ -15,6 +15,17 @@ namespace Kartverket.Register.Services.Versioning
             _dbContext = dbContext;
         }
 
+        public void DeleteVersionGroup(Guid versioningId)
+        {
+            var queryResult = from v in _dbContext.Versions
+                              where v.systemId == versioningId
+                              select v;
+
+            Models.Version versiongroup = queryResult.FirstOrDefault();
+            _dbContext.Versions.Remove(versiongroup);
+            _dbContext.SaveChanges();
+        }
+
         public VersionsItem Versions(string registername, string parantRegister, string itemname)
         {
             // Finn versjonsgruppen

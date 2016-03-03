@@ -390,7 +390,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private Guid? GetVersioningId(Dataset dataset)
+        private Guid GetVersioningId(Dataset dataset)
         {
             if (dataset.versioningId == null)
             {

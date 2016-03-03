@@ -698,7 +698,7 @@
             <param name="document"></param>
             <returns></returns>
         </member>
-        <member name="M:Kartverket.Register.Controllers.DocumentsController.GetVersioningId(Kartverket.Register.Models.Document,System.Nullable{System.Guid})">
+        <member name="M:Kartverket.Register.Controllers.DocumentsController.GetVersioningId(Kartverket.Register.Models.Document,System.Guid)">
             <summary>
             Gets new or return allreadu existing versioningId
             </summary>

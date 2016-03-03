@@ -70,7 +70,7 @@ namespace Kartverket.Register.Models
         public string seoname { get; set; }
 
         [ForeignKey("versioning")]
-        public Guid? versioningId { get; set; }
+        public Guid versioningId { get; set; }
         public virtual Version versioning { get; set; }
 
         [Display(Name = "Versjons ID:")]
@@ -257,7 +257,7 @@ namespace Kartverket.Register.Models
             return description;
         }
 
-        public Guid? GetVersioningId()
+        public Guid GetVersioningId()
         {
             return versioningId;
         }

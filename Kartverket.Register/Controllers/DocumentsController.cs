@@ -770,7 +770,7 @@ namespace Kartverket.Register.Controllers
         /// <param name="document"></param>
         /// <param name="inputVersioningId"></param>
         /// <returns></returns>
-        private Guid? GetVersioningId(Document document, Guid? inputVersioningId)
+        private Guid GetVersioningId(Document document, Guid inputVersioningId)
         {
             if (document.versioningId == null && inputVersioningId == null)
             {

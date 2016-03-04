@@ -26,9 +26,18 @@
     }
 }
 
-<h2>Foreslå</h2>
-<h4>Foreslå nytt dokument i @Model.register.name</h4>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Nytt dokument
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @if (Model.register.parentRegister != null)

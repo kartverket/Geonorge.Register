@@ -1,6 +1,5 @@
 ﻿@model Kartverket.Register.Models.ViewModels.CreateDokMunicipalViewModel
 ﻿@using Kartverket.Register.Helpers
-﻿@using Kartverket.Register.Models.ViewModels
 
 @{
     ViewBag.Title = "Foreslå nytt datasett";
@@ -26,8 +25,19 @@
     }
 }
 
-<h2 class="">Legg til ekstra DOK-datasett for din kommune</h2>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Legg til ekstra DOK-datasett for din kommune
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
 <h3>Søk</h3>
 <p>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</p>
 

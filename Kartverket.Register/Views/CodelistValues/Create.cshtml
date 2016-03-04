@@ -5,8 +5,18 @@
     ViewBag.Title = "Foreslå ny kodeverdi";
 }
 
-<h2>Foreslå</h2>
-<a href="@Model.GetImportUrl()" class="btn btn-default pull-right">Importer</a>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Ny kodeverdi
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 @section breadcrumb {
     @if (Model.register.parentRegister != null)
@@ -29,10 +39,13 @@
     }
 }
 
+<div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
+    <a href="@Model.GetImportUrl()" class="btn btn-default pull-right">Importer</a>
+</div>
+
+
 <form action="@Request.Url.LocalPath" method="post">
     <div class="form-horizontal">
-        <h4>Foreslå ny kodeverdi i @Model.register.name</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -59,17 +72,35 @@
         </div>
 
         @if (HtmlHelperExtensions.IsAdmin())
-        {
+            {
             <hr />
-            <h4>Hierarkiske kodelister</h4>
-            <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
-            <br /><br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="dropdown">
-                        <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
-                            <option selected="selected"></option>
+                <h4>Hierarkiske kodelister</h4>
+                <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+                <br /><br />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="dropdown">
+                            <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
+                                <option selected="selected"></option>
+                                @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                                {
+                                    <optgroup label="@register.name">
+                                        @foreach (Kartverket.Register.Models.CodelistValue code in register.items.OrderBy(c => c.name))
+                                        {
+                                            <option value="@code.systemId">@code.name</option>
+                                        }
+                                    </optgroup>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {
                                 <optgroup label="@register.name">
@@ -80,27 +111,9 @@
                                 </optgroup>
                             }
                         </select>
+                        <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
-                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                        {
-                            <optgroup label="@register.name">
-                                @foreach (Kartverket.Register.Models.CodelistValue code in register.items.OrderBy(c => c.name))
-                                {
-                                    <option value="@code.systemId">@code.name</option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
-                    <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
-                </div>
-            </div>
         }
     </div>
     <div class="form-group">

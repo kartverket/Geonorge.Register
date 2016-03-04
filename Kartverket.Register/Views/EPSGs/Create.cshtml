@@ -26,9 +26,18 @@
     }
 }
 
-<h2>Foreslå</h2>
-<h4>Foreslå ny EPSG-kode i @Model.register.name</h4>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Ny EPSG kode
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 @using (Html.BeginForm("Create", "EPSGs", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

@@ -83,12 +83,20 @@
     }
 }
 
-<h2>Rediger</h2>
-<h4>@Model.name</h4>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Rediger @Model.name
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 <p id="registerName">Register: @Model.register.name</p>
 <p>Versjons id: @Model.versionNumber</p>
-
-<hr />
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -253,6 +261,4 @@
         <a href="@Model.GetObjectUrl()">Tilbake</a>
     </div>
 </form>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+

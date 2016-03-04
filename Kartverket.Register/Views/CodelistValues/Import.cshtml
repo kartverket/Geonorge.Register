@@ -23,7 +23,18 @@
     }
 }
 
-<h2>Import fra CSV fil</h2>
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Import fra CSV fil
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 <p>Velg csv fil i UTF-8 med kodeliste...</p>
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @if (parentregister != null)
@@ -36,14 +47,14 @@
         <div class="form-group">
             <div class="col-md-10">
                 <input type="file" name="csvfile" />
-                @Html.ValidationMessage("ErrorMessageFile")
+                @*@Html.ValidationMessage("ErrorMessageFile")*@
             </div>
         </div>
     </div>
 
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
-        <a href="@Model.register.GetObjectUrl()">Tilbake</a>
+        <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Tilbake</a>
     </div>
 
 </form>

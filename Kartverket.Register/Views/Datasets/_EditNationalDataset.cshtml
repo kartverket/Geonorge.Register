@@ -1,9 +1,18 @@
 ﻿@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Helpers
 
-<h2>Rediger</h2>
-<h4>@Model.name</h4>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Rediger @Model.name
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @Html.HiddenFor(model => model.systemId)
 @Html.HiddenFor(model => model.registerId)

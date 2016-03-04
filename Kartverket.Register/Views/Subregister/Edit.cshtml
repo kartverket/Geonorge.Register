@@ -28,9 +28,18 @@
     }
 }
 
-<h2>Rediger</h2>
-<h4>@Model.name</h4>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Rediger @Model.name
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 @using (Html.BeginForm("Edit", "Subregister", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

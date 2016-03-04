@@ -8,9 +8,18 @@
     <li>Ny</li>
 }
 
-<h2>Foreslå</h2>
-<h4>Foreslå nytt register</h4>
-<hr />
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                Nytt register
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
 
 @using (Html.BeginForm("Create", "Registers", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {

@@ -1,4 +1,5 @@
-﻿﻿@using Kartverket.Register.Helpers
+﻿@using  Kartverket.Register.Helpers
+
 Lagre som:
 <div class="row save-as-menu">
     <div class="col-xs-5 no-padding-bottom save-as-dropdown">
@@ -6,7 +7,10 @@ Lagre som:
             <select onchange="additionalView(this.value)" class="form-control">
                 @*<option value="helpUrl">API</option>*@
                 <option value="atomUrl">ATOM</option>
-                <option value="rssUrl">RSS</option>
+                @if (ViewBag.Title != "Tjenestevarsler")
+                {
+                    <option value="rssUrl">RSS</option>
+                }
                 <option value="csvUrl" selected="selected">CSV</option>
                 <option value="gmlUrl">GML</option>
                 <option value="rdfUrl">RDF</option>
@@ -15,7 +19,6 @@ Lagre som:
         </div>
     </div>
     <div id="saveButtons" class="col-xs-3 no-padding-bottom save-as-buttons">
-        @*<a id="helpUrl" href="/Help" class="hidden" title="Hjelp til API og formater(Beta)">Lagre</a>*@
         <a id="atomUrl" href="@RegisterUrls.urlFormat(Request, "atom")" class="hidden" title="Vis Atom feed(Beta)">Lagre</a>
         <a id="rssUrl" href="@RegisterUrls.urlFormat(Request, "rss")" class="hidden" title="Vis rss feed(Beta)">Lagre</a>
         <a id="csvUrl" href="@RegisterUrls.urlFormat(Request, "csv")" class="btn" title="Vis CSV(Beta)">Lagre</a>

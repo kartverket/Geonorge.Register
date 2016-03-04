@@ -894,9 +894,6 @@
     <Content Include="Views\Datasets\Edit.cshtml" />
     <Content Include="Views\Shared\_detailsDataset.cshtml" />
     <Content Include="Views\Shared\_filter.cshtml" />
-    <Content Include="Views\Search\DetailsFilter.cshtml" />
-    <Content Include="Views\Search\_filterDocument.cshtml" />
-    <Content Include="Views\Search\_filterDataset.cshtml" />
     <Content Include="Views\Shared\_codelistValue.cshtml" />
     <Content Include="Views\CodelistValues\Create.cshtml" />
     <Content Include="Views\CodelistValues\Delete.cshtml" />
@@ -930,9 +927,6 @@
     <Content Include="Views\DokCoverage\Index.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
     <Content Include="Views\Shared\_municipalDataset.cshtml" />
-    <Content Include="Views\Datasets\_EditNationalDataset.cshtml" />
-    <Content Include="Views\Datasets\_EditCoverageDataset.cshtml" />
-    <Content Include="Views\Datasets\_CreateCoverage.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
@@ -940,9 +934,7 @@
     <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
     <Content Include="Views\ServiceAlerts\Delete.cshtml" />
-    <Content Include="Views\ServiceAlerts\Details.cshtml" />
     <Content Include="Views\ServiceAlerts\Edit.cshtml" />
-    <Content Include="Views\ServiceAlerts\Index.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
   </ItemGroup>

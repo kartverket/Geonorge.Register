@@ -65,23 +65,19 @@
     <div class="col-sm-12">
 
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-            ID: <a href="@Model.GetObjectUrl()">http://@Request.Url.Host@Model.GetObjectUrl()</a>
-            <br />
-            Navn: @Html.DisplayFor(model => model.name)
-            <br />
-            Beskrivelse: @Html.DisplayFor(model => model.description)
+            @if (Model.description != null)
+            {
+                <p>Beskrivelse: @Html.DisplayFor(model => model.description)</p>
+            }
+            @if (Model.IsServiceAlertRegister())
+            {
+                <a href="@RegisterUrls.urlFormat(Request, "rss")" class="">Abonnere på @Model.name</a>
+            }
         </div>
 
         <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
             <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
-        </div>
-
-        <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            @if (Model.IsServiceAlertRegister())
-            {
-                <a href="@RegisterUrls.urlFormat(Request, "rss")" class="btn btn-default pull-right">Abonnere på tjenestevarsler</a>
-            }
         </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" style="padding-right: 0px;">

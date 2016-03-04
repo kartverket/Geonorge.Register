@@ -4,12 +4,8 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
-using Kartverket.DOK.Service;
-using Kartverket.Register.Models.ViewModels;
 using System.Collections.Generic;
-using System;
 using System.Net;
-using System.Web;
 using Kartverket.Register.Services.Versioning;
 
 namespace Kartverket.Register.Controllers

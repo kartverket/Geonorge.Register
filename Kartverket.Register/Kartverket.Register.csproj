@@ -933,8 +933,6 @@
     <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
-    <Content Include="Views\ServiceAlerts\Delete.cshtml" />
-    <Content Include="Views\ServiceAlerts\Edit.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
   </ItemGroup>

@@ -171,10 +171,13 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (HtmlHelperExtensions.AccessEdit(Model))
+            if (!Model.register.IsServiceAlertRegister())
             {
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
+                if (HtmlHelperExtensions.AccessEdit(Model))
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
+                }
             }
         }
 

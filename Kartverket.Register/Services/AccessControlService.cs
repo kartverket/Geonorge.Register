@@ -34,7 +34,6 @@ namespace Kartverket.Register.Services
             {
                 return true;
             }
-
             if (model is Models.Register)
             {
                 return accessRegister(model);
@@ -67,7 +66,7 @@ namespace Kartverket.Register.Services
                         return IsOwnerOrMunicipal(userOrganization.name, dataset);
                     }
                     else {
-                        return IsOwner(dataset.datasetowner.name, userOrganization.name);
+                        return IsOwner(dataset.datasetowner.name, userOrganization.name) || IsDokEditor();
                     }
                 }
                 else {
@@ -75,6 +74,12 @@ namespace Kartverket.Register.Services
                 }
             }
             return false;
+        }
+
+        private bool IsDokEditor()
+        {
+            string role = GetSecurityClaim("role");
+            return role == "nd.dok_editor";
         }
 
         public bool IsAdmin()
@@ -92,10 +97,6 @@ namespace Kartverket.Register.Services
                 return role == "nd.metadata" || role == "nd.metadata_editor";
             }
             else if (register.accessId == 4)
-            {
-                return IsMunicipalUser();
-            }
-            else if (register.name == "Det offentlige kartgrunnlaget")
             {
                 return IsMunicipalUser();
             }
@@ -196,16 +197,13 @@ namespace Kartverket.Register.Services
 
         public bool EditDOK(Dataset dataset)
         {
-            if (dataset.DatasetType == "Nasjonalt")
+            if (dataset.IsNationalDataset())
             {
                 if (IsAdmin())
                 {
                     return true;
                 }
-                else
-                {
-                    return IsMunicipalUser();
-                }
+                return false;
             }
             else
             {

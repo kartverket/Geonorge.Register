@@ -392,7 +392,7 @@ namespace Kartverket.Register.Controllers
 
         private Guid GetVersioningId(Dataset dataset)
         {
-            if (dataset.versioningId == null)
+            if (dataset.versioningId == null || dataset.versioningId == Guid.Empty)
             {
                 return _registerItemService.NewVersioningGroup(dataset);
             }

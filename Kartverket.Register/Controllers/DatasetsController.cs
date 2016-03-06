@@ -96,7 +96,8 @@ namespace Kartverket.Register.Controllers
                         Viewbags(dataset);
                         return View(model);
                     }
-                    else {
+                    else if (!string.IsNullOrWhiteSpace(dataset.name))
+                    {
                         // TODO fikse validering... 
                         if (!NameIsValid(dataset))
                         {

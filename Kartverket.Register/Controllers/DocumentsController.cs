@@ -854,7 +854,18 @@ namespace Kartverket.Register.Controllers
         {
             if (documentfile != null)
             {
-                return url + SaveFileToDisk(documentfile, documentname, registername, versionNr);
+                string fileName = SaveFileToDisk(documentfile, documentname, registername, versionNr);
+
+                if (System.Web.Configuration.WebConfigurationManager.AppSettings["SchemaRemoteSynchEnabled"] == "false" ? false : true)
+                {
+                    string syncUrl = new SchemaSynchronizer().Synchronize(documentfile, fileName);
+                    if (!string.IsNullOrEmpty(syncUrl))
+                        url = syncUrl;
+                    else
+                        return "fil ikke synkronisert";
+                }
+                string documentUrl = url + fileName;
+                return documentUrl;
             }
             else if (documenturl != null)
             {

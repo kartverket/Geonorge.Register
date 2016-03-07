@@ -683,6 +683,7 @@
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
+    <Compile Include="Services\SchemaSynchronizer.cs" />
     <Compile Include="Services\Search\ISearchIndexService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
     <Compile Include="Services\Search\SearchIndexService.cs" />
@@ -813,6 +814,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="PostDeploy.ps1" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="readme.txt" />
@@ -935,6 +937,8 @@
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
+    <Content Include="settings.config" />
+    <Content Include="settings.default.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

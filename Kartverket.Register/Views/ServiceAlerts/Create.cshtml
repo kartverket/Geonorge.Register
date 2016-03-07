@@ -5,6 +5,23 @@
     ViewBag.Title = "Foreslå nytt tjenestevarsel";
 }
 
+@section scripts
+{
+<script>
+    $(function () {
+        // help text
+
+        $("a.help-text-toggle").click(function (event) {
+            event.preventDefault();
+            var helpTextId = $(this).data("help-text-id");
+            $("#" + helpTextId).toggle();
+        });
+
+        // add help icon to each help text paragraph
+        $(".help-text").prepend("<span class=\"badge\">?</span> ");
+    });
+</script>
+}
 
 @section breadcrumb {
     @if (Model.register.parentRegister != null)
@@ -107,13 +124,13 @@
             <div class="col-md-9">
                 @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-name" style="display: none">
+                <p class="help-text bg-success" id="help-text-note" style="display: none">
                     Dette navnet kombinert med navnerom må være unikt for datasettet.
                 </p>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
-                    <a href="#" data-help-text-id="help-text-name" class="badge help-text-toggle">?</a>
+                    <a href="#" data-help-text-id="help-text-note" class="badge help-text-toggle">?</a>
                 </p>
             </div>
         </div>

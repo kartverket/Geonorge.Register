@@ -814,6 +814,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="PostDeploy.ps1" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="lib\PDFLibNet.dll" />
     <Content Include="readme.txt" />

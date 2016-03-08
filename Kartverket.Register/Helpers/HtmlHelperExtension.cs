@@ -70,81 +70,9 @@ namespace Kartverket.Register.Helpers
             return _registeritemService.GetMunicipalityCoverage(model);
         }
 
-        public static string GetSecurityClaim(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims, string type)
-        {
-            string result = null;
-            foreach (var claim in claims)
-            {
-                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
-                {
-                    result = claim.Value;
-                    break;
-                }
-            }
-
-            // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result = "Kartverket";
-            }
-
-            return result;
-        }
-
-
-        public static bool accessRegister(Models.Register register)
-        {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (role == "nd.metadata_admin")
-            {
-                return true;
-            }
-            if (register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor"))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static bool accessRegisterOwner(Models.Register register)
-        {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            if (role == "nd.metadata_admin")
-            {
-                return true;
-            }
-            if (register.accessId == 2 && (role == "nd.metadata" || role == "nd.metadata_editor") && register.owner.name.ToLower() == user.ToLower())
-            {
-                return true;
-            }
-            return false;
-        }
-
         public static bool accessRegisterItem(RegisterItem item)
         {
             return _accessControl.Access(item);
-        }
-
-        public static bool IsGeonorgeAdmin(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
-        {
-            bool isInRole = false;
-            foreach (var c in claims)
-            {
-                if (c.Type == "role")
-                {
-                    if (c.Value == "nd.metadata_admin")
-                    {
-                        isInRole = true;
-                        break;
-                    }
-                }
-            }
-
-            return isInRole;
         }
 
         public static string lovligInnhold(string containedItemClass)
@@ -245,24 +173,6 @@ namespace Kartverket.Register.Helpers
             RegistersList.OrderBy(r => r.name);
 
             return RegistersList;
-        }
-
-        public static bool IsGeonorgeEditor(this HtmlHelper helper, IEnumerable<System.Security.Claims.Claim> claims)
-        {
-            bool isInRole = false;
-            foreach (var c in claims)
-            {
-                if (c.Type == "role")
-                {
-                    if (c.Value == "nd.metadata_editor" || c.Value == "nd.metadata")
-                    {
-                        isInRole = true;
-                        break;
-                    }
-                }
-            }
-
-            return isInRole;
         }
 
         // SORTERING av registeritems
@@ -1112,9 +1022,9 @@ namespace Kartverket.Register.Helpers
             }
         }
 
-        public static bool AccessEditDOKMunicipalBySelectedMunicipality(string municipalityCode)
+        public static bool AccessEditDOKMunicipalBySelectedMunicipality(string selectedMunicipalityCode)
         {
-            return _accessControl.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode);
+            return _accessControl.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(selectedMunicipalityCode);
         }
     }
 }

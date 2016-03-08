@@ -152,17 +152,17 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
             @if (Request.IsAuthenticated)
             {
-                if (selectedMunicipal != null && HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value) && Model.IsDokMunicipal())
-                {
-                    <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
-                }
                 if (HtmlHelperExtensions.Access(Model))
                 {
                     if (Model.IsDokMunicipal())
                     {
                         if (selectedMunicipal != null)
                         {
-                            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(selectedMunicipal.value)">Legg til</a>
+                            if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value))
+                            {
+                                <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
+                                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(selectedMunicipal.value)">Legg til</a>
+                            }
                         }
                     }
                     else {

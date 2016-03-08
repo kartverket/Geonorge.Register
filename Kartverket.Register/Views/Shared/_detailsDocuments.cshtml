@@ -38,7 +38,7 @@
             {
                 if (HtmlHelperExtensions.accessRegisterItem(Model))
                 {
-                    if ((Model.statusId == "Submitted" || Model.statusId == "Draft" || Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims)))
+                    if ((Model.statusId == "Submitted" || Model.statusId == "Draft" || HtmlHelperExtensions.IsAdmin()))
                     {
                         if (Model.register.parentRegisterId != null)
                         {

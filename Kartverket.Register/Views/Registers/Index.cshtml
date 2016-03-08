@@ -87,7 +87,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @if (Request.IsAuthenticated)
             {
-                if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+                if (HtmlHelperExtensions.IsAdmin())
                 {
                     <a class="btn btn-default pull-right" href="/ny">Nytt register</a>
                 }

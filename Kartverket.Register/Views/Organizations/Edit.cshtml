@@ -91,7 +91,7 @@
 
         @if (Request.IsAuthenticated)
         {
-            if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+            if (HtmlHelperExtensions.IsAdmin())
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })

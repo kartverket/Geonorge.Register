@@ -332,8 +332,7 @@ namespace Kartverket.Register.Services.Register
 
         private Organization GetOrganization()
         {
-            AccessControlService access = new AccessControlService();
-            string organizationLogin = access.GetSecurityClaim("organization");
+            string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
             var queryResults = from o in _dbContext.Organizations
                                where organizationLogin.Contains(o.name)
                                select o;

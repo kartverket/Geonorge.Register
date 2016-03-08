@@ -66,7 +66,7 @@ namespace Kartverket.Register.Tests.Controllers
             accessControlService.Setup(a => a.Access(It.IsAny<Models.Register>())).Returns(true);
             registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(o => o.GetRegisterItemBySystemId(dataset.datasetownerId)).Returns(dataset.datasetowner);
-            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
+            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(new List<string> { dataset.submitter.seoname });
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 
             var controller = CreateController(registerService.Object, registerItemService.Object, accessControlService.Object);
@@ -134,7 +134,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerItemService.Setup(v => v.GetRegisterItem(null, dataset.register.seoname, dataset.seoname, 1, null)).Returns(dataset);
             accessControlService.Setup(a => a.Access(It.IsAny<Dataset>())).Returns(true);
             registerItemService.Setup(v => v.validateName(It.IsAny<Dataset>())).Returns(true);
-            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(dataset.submitter.seoname);
+            accessControlService.Setup(a => a.GetSecurityClaim("organization")).Returns(new List<string> { dataset.submitter.seoname });
             registerItemService.Setup(a => a.GetRegisterItemBySystemId(dataset.datasetownerId)).Returns(dataset.datasetowner);
             registerService.Setup(o => o.GetOrganizationByUserName()).Returns(dataset.submitter);
 

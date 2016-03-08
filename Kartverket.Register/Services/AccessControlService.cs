@@ -61,12 +61,9 @@ namespace Kartverket.Register.Services
                 else if (registerItem is Dataset)
                 {
                     Dataset dataset = (Dataset)registerItem;
-                    if (dataset.IsNationalDataset())
+                    if (dataset.IsMunicipalDataset())
                     {
-                        return IsOwnerOrMunicipal(userOrganization.name, dataset);
-                    }
-                    else {
-                        return IsOwner(dataset.datasetowner.name, userOrganization.name) || IsDokEditor();
+                        return IsOwner(dataset.datasetowner.name, userOrganization.name) || IsDokAdmin();
                     }
                 }
                 else {
@@ -78,27 +75,69 @@ namespace Kartverket.Register.Services
 
         private bool IsDokEditor()
         {
-            string role = GetSecurityClaim("role");
-            return role == "nd.dok_editor";
+            List<string> roles = GetSecurityClaim("role");
+            foreach (string role in roles)
+            {
+                if (role == "nd.dok_editor")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool IsAdmin()
         {
-            string role = GetSecurityClaim("role");
-            return role == "nd.metadata_admin";
+            List<string> roles = GetSecurityClaim("role");
+            foreach (string role in roles)
+            {
+                if (role == "nd.metadata_admin")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool accessRegister(object model)
         {
-            string role = GetSecurityClaim("role");
             Models.Register register = (Models.Register)model;
             if (register.accessId == 2)
             {
-                return role == "nd.metadata" || role == "nd.metadata_editor";
+                if (IsEditor())
+                {
+                    return true;
+                }
             }
             else if (register.accessId == 4)
             {
-                return IsMunicipalUser();
+                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
+            }
+            return false;
+        }
+
+        private bool IsEditor()
+        {
+            List<string> roles = GetSecurityClaim("role");
+            foreach (string role in roles)
+            {
+                if (role == "nd.metadata" || role == "nd.metadata_editor")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsDokAdmin()
+        {
+            List<string> roles = GetSecurityClaim("role");
+            foreach (string role in roles)
+            {
+                if (role == "nd.dok_admin")
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -162,22 +201,21 @@ namespace Kartverket.Register.Services
             return null;
         }
 
-        public string GetSecurityClaim(string type)
+        public List<string> GetSecurityClaim(string type)
         {
-            string result = null;
-            foreach (var claim in System.Security.Claims.ClaimsPrincipal.Current.Claims)
+            List<string> result = new List<string>();
+            foreach (var claim in ClaimsPrincipal.Current.Claims)
             {
                 if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
                 {
-                    result = claim.Value;
-                    break;
+                    result.Add(claim.Value);
                 }
             }
 
             // bad hack, must fix BAAT
-            if (!string.IsNullOrWhiteSpace(result) && type.Equals("organization") && result.Equals("Statens kartverk"))
+            if (result.Count == 0 && type.Equals("organization") && result.Equals("Statens kartverk"))
             {
-                result = "Kartverket";
+                result.Add("Kartverket");
             }
 
             return result;
@@ -211,9 +249,9 @@ namespace Kartverket.Register.Services
             }
         }
 
-        public bool AccessEditDOKMunicipalBySelectedMunicipality(string municipalityCode)
+        public bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode)
         {
-            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode);
+            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
 
         private bool UserIsSelectedMunicipality(string municipalityCode)
@@ -226,6 +264,11 @@ namespace Kartverket.Register.Services
                 return user.number == organizationNrOfSelectedMunicipality;
             }
             return false;
+        }
+
+        public bool AccessCreateNewMunicipalDataset(string municipalityCode)
+        {
+            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
     }
 }

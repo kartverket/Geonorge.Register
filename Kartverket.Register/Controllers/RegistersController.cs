@@ -233,7 +233,7 @@ namespace Kartverket.Register.Controllers
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         public ActionResult EditDokMunicipal(string municipalityCode)
         {
-            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
+            if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
                 RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
                 Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
@@ -266,7 +266,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode)
         {
-            if (_accessControlService.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
+            if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
                 foreach (DokMunicipalRow item in dokMunicipalList)
                 {

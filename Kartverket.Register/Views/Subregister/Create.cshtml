@@ -85,7 +85,7 @@
         </div>
 
 
-        @if (Html.IsGeonorgeAdmin(System.Security.Claims.ClaimsPrincipal.Current.Claims))
+        @if (HtmlHelperExtensions.IsAdmin())
         {
             <div class="form-group">
                 <div class="col-md-2"></div>

@@ -132,7 +132,7 @@ namespace Kartverket.Register.Services.Register
 
         public List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipal)
         {
-            List<Models.RegisterItem> datasets = new List<Models.RegisterItem>(); 
+            List<Models.RegisterItem> datasets = new List<Models.RegisterItem>();
             AddNationalDatasets(datasets);
 
             //Gå gjennom alle datasett i registeret
@@ -173,11 +173,13 @@ namespace Kartverket.Register.Services.Register
                     string role = HtmlHelperExtensions.GetSecurityClaim("role");
                     string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                    if (item.isCurrentVersion())
                     {
-                        registerItems.Add(item);
+                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                        {
+                            registerItems.Add(item);
+                        }
                     }
-
                 }
             }
         }

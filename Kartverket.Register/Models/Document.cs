@@ -61,6 +61,13 @@ namespace Kartverket.Register.Models
             }
         }
 
-
+        internal bool isCurrentVersion()
+        {
+            if (versioning != null)
+            {
+                return systemId == versioning.currentVersion;
+            }
+            return false;
+        }
     }//end Document
 }//end namespace Datamodell

@@ -440,12 +440,12 @@ namespace Kartverket.Register.Controllers
             document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
             document.documentownerId = GetDocumentOwnerId(inputDocument.documentownerId);
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
+            document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
             if (originalDocument == null)
             {
                 document.dateSubmitted = DateTime.Now;
                 document.statusId = "Submitted";
-                document.versioningId = GetVersioningId(document, inputDocument.versioningId);
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
             }
@@ -772,7 +772,7 @@ namespace Kartverket.Register.Controllers
         /// <returns></returns>
         private Guid GetVersioningId(Document document, Guid inputVersioningId)
         {
-            if (document.versioningId == null && inputVersioningId == null)
+            if ((document.versioningId == null || document.versioningId == Guid.Empty) && (inputVersioningId == null || inputVersioningId == Guid.Empty))
             {
                 return _registerItemService.NewVersioningGroup(document);
             }

@@ -491,8 +491,6 @@ namespace Kartverket.Register.Controllers
             dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);
             dataset.description = inputDataset.GetDescription();
             dataset.versioningId = GetVersioningId(dataset);
-            //dataset.datasetowner = GetDatasetOwner(inputDataset.datasetowner);
-            //dataset.datasetownerId = dataset.datasetowner.systemId;
             Guid originalDatasetownerId = GetDatasetOriginalOwnerId(originalDataset);
             dataset.datasetownerId = GetDatasetOwnerId(inputDataset.datasetownerId);
             dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);

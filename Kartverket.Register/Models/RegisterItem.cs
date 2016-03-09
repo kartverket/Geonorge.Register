@@ -266,15 +266,13 @@ namespace Kartverket.Register.Models
         {
             systemId = Guid.NewGuid();
             modified = DateTime.Now;
-            //submitter = _registerService.GetOrganizationByUserName();
-            //submitterId = submitter.systemId;
             dateSubmitted = DateTime.Now;
             modified = DateTime.Now;
             statusId = "Submitted";
             seoname = RegisterUrls.MakeSeoFriendlyString(name);
             versionNumber = 1;
-            //versioningId = _registerItemService.NewVersioningGroup(this);
-
+            if (submitter != null) submitterId = submitter.systemId;
+            if (register != null) registerId = register.systemId;
         }
     }
 }//end namespace Datamodell

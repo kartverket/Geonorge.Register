@@ -11,13 +11,12 @@ namespace Kartverket.Register.Services.RegisterItem
     {
         private readonly RegisterDbContext _dbContext;
         private IMunicipalityService _municipalityService;
-        //private IRegisterService _registerService;
+        private IRegisterItemService _registerItemService;
 
         public RegisterItemService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _municipalityService = new MunicipalityService();
-            //_registerService = new RegisterService(_dbContext);
         }
 
         public void SetNarrowerItems(List<Guid> narrowerList, CodelistValue codelistValue)
@@ -44,7 +43,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
                     if (skalSlette == true)
                     {
-                        CodelistValue NarrowerItemsBroader = (CodelistValue)getItemById(kodeSomSkalSlettes.systemId);
+                        CodelistValue NarrowerItemsBroader = (CodelistValue)GetRegisterItemBySystemId(kodeSomSkalSlettes.systemId);
                         if (NarrowerItemsBroader == kodeSomSkalSlettes)
                         {
                             NarrowerItemsBroader.broaderItemId = null;
@@ -63,7 +62,7 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 foreach (Guid narrowerId in narrowerList)
                 {
-                    CodelistValue narrowerItem = _dbContext.CodelistValues.Find(narrowerId);
+                    CodelistValue narrowerItem = (CodelistValue)GetRegisterItemBySystemId(narrowerId);
                     codelistValue.narrowerItems.Add(narrowerItem);
                     narrowerItem.broaderItemId = codelistValue.systemId;
                     narrowerItem.modified = DateTime.Now;
@@ -79,7 +78,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 originalBroaderItem.narrowerItems.Remove(codelistValue);
             }
             codelistValue.broaderItemId = broader;
-            CodelistValue broaderItem = (CodelistValue)getItemById(broader);
+            CodelistValue broaderItem = (CodelistValue)GetRegisterItemBySystemId(broader);
             broaderItem.narrowerItems.Add(codelistValue);
         }
 
@@ -107,16 +106,6 @@ namespace Kartverket.Register.Services.RegisterItem
                 broaderItem.narrowerItems.Remove(codelistValue);
                 codelistValue.broaderItemId = null;
             }
-        }
-
-        private Models.RegisterItem getItemById(Guid id)
-        {
-            var queryresult = from ri in _dbContext.RegisterItems
-                              where ri.systemId == id
-                              select ri;
-
-            Models.RegisterItem item = queryresult.FirstOrDefault();
-            return item;
         }
 
         public Models.RegisterItem GetCurrentRegisterItem(string parentregister, string register, string name)
@@ -251,20 +240,6 @@ namespace Kartverket.Register.Services.RegisterItem
                 itemsByOwner = queryResult.ToList();
             }
             return itemsByOwner;
-        }
-
-        public Models.RegisterItem SetStatusId(Models.RegisterItem item, Models.RegisterItem originalItem)
-        {
-            originalItem.statusId = item.statusId;
-            if (originalItem.statusId != "Valid" && item.statusId == "Valid")
-            {
-                originalItem.dateAccepted = DateTime.Now;
-            }
-            if (originalItem.statusId == "Valid" && item.statusId != "Valid")
-            {
-                originalItem.dateAccepted = null;
-            }
-            return originalItem;
         }
 
         public Guid NewVersioningGroup(Models.RegisterItem registerItem)
@@ -434,7 +409,6 @@ namespace Kartverket.Register.Services.RegisterItem
             else {
                 return ValidateNameRegisterItem(model);
             }
-            return false;
         }
 
         public void SaveNewRegisterItem(Models.RegisterItem item)
@@ -601,5 +575,4 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryResult.FirstOrDefault();
         }
     }
-
 }

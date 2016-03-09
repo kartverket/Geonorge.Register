@@ -21,17 +21,15 @@ namespace Kartverket.Register.Controllers
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
-        private IOrganizationService _organizationService;
         private IAccessControlService _accessControlService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CodelistValuesController()
+        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService)
         {
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
-            _organizationService = new OrganizationsService(db);
-            _accessControlService = new AccessControlService();
+            _registerItemService = registerItemService;
+            _registerService = registerService;
+            _accessControlService = accessControlService;
         }
 
 
@@ -92,11 +90,13 @@ namespace Kartverket.Register.Controllers
         {
             CodelistValue codeListValue = new CodelistValue();
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
-
-            if (_accessControlService.Access(codeListValue.register))
+            if (codeListValue.register != null)
             {
-                ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
-                return View(codeListValue);
+                if (_accessControlService.Access(codeListValue.register))
+                {
+                    ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
+                    return View(codeListValue);
+                }
             }
             return HttpNotFound("Ingen tilgang");
         }
@@ -114,24 +114,39 @@ namespace Kartverket.Register.Controllers
             codelistValue.register = _registerService.GetRegister(parentregister, registername);
             if (codelistValue.register != null)
             {
-                if (_accessControlService.Access(codelistValue))
+                if (_accessControlService.Access(codelistValue.register))
                 {
+                    if (!_registerItemService.validateName(codelistValue))
+                    {
+                        ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
+                        return View(codelistValue);
+                    }
                     if (ModelState.IsValid)
                     {
-                        initialisationCodelistValue(codelistValue, narrower, broader);
-                        if (!NameIsValid(codelistValue))
-                        {
-                            ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                            ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
-                            return View(codelistValue);
-                        }
+                        codelistValue.submitter = _registerService.GetOrganizationByUserName();
+                        codelistValue.InitializeNewCodelistValue();
+                        codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
+                        SetBroaderAndNarrowerItems(codelistValue, narrower, broader);
+
                         _registerItemService.SaveNewRegisterItem(codelistValue);
-                        return Redirect(RegisterUrls.DeatilsRegisterItemUrl(parentregister, registerowner, registername, codelistValue.submitter.seoname, codelistValue.seoname));
+                        return Redirect(codelistValue.GetObjectUrl());
                     }
                 }
             }
             ViewBag.broaderItemsList = _registerItemService.GetBroaderItems();
             return View(codelistValue);
+        }
+
+        private void SetBroaderAndNarrowerItems(CodelistValue codelistValue, List<Guid> narrower, Guid? broader)
+        {
+            if (narrower != null)
+            {
+                _registerItemService.SetNarrowerItems(narrower, codelistValue);
+            }
+            if (broader != null)
+            {
+                _registerItemService.SetBroaderItem(broader.Value, codelistValue);
+            }
         }
 
 

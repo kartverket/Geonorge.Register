@@ -26,7 +26,6 @@ namespace Kartverket.Register.Controllers
             _versioningService = versioningService;
         }
 
-
         // GET: ServiceAlerts/Create
         [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         [Route("tjenestevarsler/{registerName}/ny")]
@@ -68,9 +67,8 @@ namespace Kartverket.Register.Controllers
                     if (ModelState.IsValid)
                     {
                         serviceAlert.GetMetadataByUuid();
-                        serviceAlert.InitializeNewServiceAlert();
                         serviceAlert.submitter = _registerService.GetOrganizationByUserName();
-                        serviceAlert.submitterId = serviceAlert.submitter.systemId;
+                        serviceAlert.InitializeNewServiceAlert();
                         serviceAlert.versioningId = _registerItemService.NewVersioningGroup(serviceAlert);
                         _registerItemService.SaveNewRegisterItem(serviceAlert);
                         return Redirect(serviceAlert.GetObjectUrl());

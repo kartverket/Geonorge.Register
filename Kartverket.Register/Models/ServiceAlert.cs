@@ -93,10 +93,6 @@ namespace Kartverket.Register.Models
         public void InitializeNewServiceAlert()
         {
             InitializeNew();
-            if (register != null)
-            {
-                registerId = register.systemId;
-            }
         }
 
         public void UpdateServiceAlert(ServiceAlert serviceAlert)

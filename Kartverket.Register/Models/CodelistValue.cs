@@ -65,6 +65,11 @@ namespace Kartverket.Register.Models
                 return "/kodeliste/" + register.seoname + "/ny/import";
             }
         }
+
+        internal void InitializeNewCodelistValue()
+        {
+            InitializeNew();
+        }
     }//end CodelistValue
 
 }//end namespace Datamodell

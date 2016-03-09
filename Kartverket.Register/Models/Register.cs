@@ -128,7 +128,7 @@ namespace Kartverket.Register.Models
                 url = seoname + "/ny";
             }
             else {
-                url = parentRegister.seoname + "/" + owner.seoname + "/" + name + "/ny";
+                url = parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/ny";
             }
 
             if (containedItemClass == "Document") return "/dokument/" + url;
@@ -156,11 +156,11 @@ namespace Kartverket.Register.Models
         public string GetEditObjectUrl() {
             if (parentRegister == null)
             {
-                return "/rediger/" + name;
+                return "/rediger/" + seoname;
             }
             else
             {
-                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + name + "/rediger";
+                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/rediger";
             }
         }
 
@@ -168,11 +168,11 @@ namespace Kartverket.Register.Models
         {
             if (parentRegister == null)
             {
-                return "/slett/" + name;
+                return "/slett/" + seoname;
             }
             else
             {
-                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + name + "/slett";
+                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/slett";
             }
         }
 

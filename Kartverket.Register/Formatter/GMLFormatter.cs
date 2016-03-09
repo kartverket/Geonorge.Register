@@ -16,7 +16,7 @@ namespace Kartverket.Register.Formatter
 {
     public class GMLFormatter : MediaTypeFormatter
     {
-        private readonly string gml = "application/xml";
+        private readonly string gml = "application/gml+xml";
 
         public GMLFormatter()
         {

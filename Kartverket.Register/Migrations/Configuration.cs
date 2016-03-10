@@ -246,22 +246,22 @@ namespace Kartverket.Register.Migrations
             //    accessId = 2
             //};
 
-            Register tjenestevarsler = new Register
-            {
-                systemId = Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418"),
-                dateSubmitted = DateTime.Now,
-                modified = DateTime.Now,
-                ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
-                name = "Tjenestevarsler",
-                seoname = "tjenestevarsler",
-                description = "Register over alle endringsvarsler for tjenester registrert i Geonorge",
-                containedItemClass = "ServiceAlert",
-                statusId = "Valid",
-                accessId = 2
-            };
+            //Register tjenestevarsler = new Register
+            //{
+            //    systemId = Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418"),
+            //    dateSubmitted = DateTime.Now,
+            //    modified = DateTime.Now,
+            //    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+            //    name = "Tjenestevarsler",
+            //    seoname = "tjenestevarsler",
+            //    description = "Register over alle endringsvarsler for tjenester registrert i Geonorge",
+            //    containedItemClass = "ServiceAlert",
+            //    statusId = "Valid",
+            //    accessId = 2
+            //};
 
-            context.Registers.AddOrUpdate(
+            //context.Registers.AddOrUpdate(
             //    produktspesifikasjon,
             //    organisasjoner,
             //    produktark,
@@ -272,8 +272,8 @@ namespace Kartverket.Register.Migrations
             //    dokRegister,
             //    dokKommunalt,
             //    navnerom
-                  tjenestevarsler
-            );
+            //      tjenestevarsler
+            //);
 
 
             //Eksempeldata

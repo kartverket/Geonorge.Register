@@ -102,10 +102,19 @@ namespace Kartverket.Register.Formatter
         {
             if (register.containeditems != null && register.containeditems.Count > 0)
             {
-                streamWriter.WriteLine(RegisterItemHeading(register.containedItemClass));
+                SetDokMunicipalDataset(register.label);
+
+                if (IsRegisterDokMunicipal)
+                    streamWriter.WriteLine(RegisterItemDokMunicipalHeading(register));
+                else
+                    streamWriter.WriteLine(RegisterItemHeading(register.containedItemClass));
+
                 foreach (Registeritem item in register.containeditems.ToList().OrderBy(i => i.label))
                 {
-                    ConvertRegisterItemToCSV(streamWriter, item);
+                    if (IsRegisterDokMunicipal)
+                        ConvertRegisterItemDokMunicipalToCSV(streamWriter, item);
+                    else
+                        ConvertRegisterItemToCSV(streamWriter, item);
                 }
             }
             else if (register.containedSubRegisters != null)
@@ -137,6 +146,10 @@ namespace Kartverket.Register.Formatter
             else if (item.itemclass == "Dataset")
             {
                 text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+            }
+            else if (item.itemclass == "Dataset")
+            {
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
              }
             else if (item.itemclass == "Organization")
             {
@@ -151,6 +164,14 @@ namespace Kartverket.Register.Formatter
                 text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + item.Note + ";" + item.MetadataUrl + ";";
             }
 
+            streamWriter.WriteLine(text);
+        }
+
+        private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
+        {
+            item.description = RemoveBreaksFromDescription(item.description);
+            string text = null;          
+            text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.NoteMunicipal + ";" +item.MetadataUrl;
             streamWriter.WriteLine(text);
         }
 
@@ -214,5 +235,19 @@ namespace Kartverket.Register.Formatter
         {
             return "Id ;Navn; Beskrivelse; Eier; Oppdatert";
         }
+
+        private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
+        {
+            string heading = "Det offentlige kartgrunnlaget for " + register.SelectedDOKMunicipality + " , " + DateTime.Today.ToString("d") + "\r\n";
+            heading = heading + "Temagruppe;Tittel;Eier;DOK-status;Oppdatert;Versjons Id;Beskrivelse;Nasjonalt/kommunalt;Bekreftet som kommunens DOK;Kommunens merknad;Url til kartkatalog";
+            return heading;
+        }
+
+        private void SetDokMunicipalDataset(string registerName)
+        {
+            IsRegisterDokMunicipal = (registerName == "Det offentlige kartgrunnlaget - Kommunalt");
+        }
+
+        bool IsRegisterDokMunicipal = false;
     }
 }

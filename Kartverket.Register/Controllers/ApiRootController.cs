@@ -65,7 +65,7 @@ namespace Kartverket.Register.Controllers
                 register = RegisterItems(register, filter);
             }
 
-            return Ok(ConvertRegisterAndNextLevel(register));
+            return Ok(ConvertRegisterAndNextLevel(register, filter));
         }
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
@@ -247,18 +247,28 @@ namespace Kartverket.Register.Controllers
             return currentVersion;
         }
 
-        private Models.Api.Register ConvertRegister(Models.Register item)
+        private Models.Api.Register ConvertRegister(Models.Register item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"]; //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Models.Api.Register(item, registerId);
+            string selectedDOKMunicipality = "";
+            if (filter != null && !string.IsNullOrEmpty(filter.municipality))
+            {
+                Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
+                Models.Organization org = regItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                if (org != null)
+                {
+                    selectedDOKMunicipality = org.name;
+                }
+            }
+            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality);
             return tmp;
         }
 
 
-        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item)
+        private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, FilterParameters filter = null)
         {
-            var tmp = ConvertRegister(item);
+            var tmp = ConvertRegister(item, filter);
             if (item.items.Count() > 0 && item.items != null)
             {
                 tmp.containeditems = new List<Models.Api.Registeritem>();
@@ -269,12 +279,12 @@ namespace Kartverket.Register.Controllers
                     {
                         if (d.statusId != "Submitted" && d.versioning.currentVersion == d.systemId)
                         {
-                            tmp.containeditems.Add(ConvertRegisterItem(item, d));
+                            tmp.containeditems.Add(ConvertRegisterItem(item, d, filter));
                         }
                     }
                     else
                     {
-                        tmp.containeditems.Add(ConvertRegisterItem(item, d));
+                        tmp.containeditems.Add(ConvertRegisterItem(item, d, filter));
                     }
                 }
             }
@@ -294,11 +304,11 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item)
+        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Models.Api.Registeritem(item,registerId);
+            var tmp = new Models.Api.Registeritem(item,registerId, filter);
             return tmp;
         }
 

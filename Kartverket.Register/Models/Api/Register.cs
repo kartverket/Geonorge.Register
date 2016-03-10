@@ -19,8 +19,9 @@ namespace Kartverket.Register.Models.Api
         public List<Register> containedSubRegisters { get; set; }
         public DateTime lastUpdated { get; set; }
         public string targetNamespace { get; set; }
+        public string SelectedDOKMunicipality { get; set; }
 
-        public Register(Models.Register item, string baseUrl) 
+        public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null) 
         {
             id = baseUrl + item.GetObjectUrl();
             label = item.name;
@@ -32,6 +33,7 @@ namespace Kartverket.Register.Models.Api
             if (item.manager != null) manager = item.manager.seoname;
             containeditems = new List<Registeritem>();
             containedSubRegisters = new List<Register>();
+            SelectedDOKMunicipality = selectedDOKMunicipality;
         }
     }
 }

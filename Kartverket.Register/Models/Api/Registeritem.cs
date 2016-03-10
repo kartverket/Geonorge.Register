@@ -50,6 +50,12 @@ namespace Kartverket.Register.Models.Api
         public string theme { get; set; }
         public string dokStatus { get; set; }
 
+        public string DatasetType { get; set; }
+
+        //MunicipalDataset
+        public string ConfirmedDok { get; set; }
+        public string NoteMunicipal { get; set; }
+
         // ServiceAlert
         public string MetadataUrl { get; set; }
         public DateTime AlertDate { get; set; }
@@ -58,7 +64,7 @@ namespace Kartverket.Register.Models.Api
         public DateTime EffectiveDate { get; set; }
         public string Note { get; set; }
 
-        public Registeritem(Models.RegisterItem item, string baseUrl)
+        public Registeritem(Models.RegisterItem item, string baseUrl, FilterParameters filter = null)
         {
             this.versions = new HashSet<Registeritem>();
             this.narrower = new HashSet<string>();
@@ -118,6 +124,23 @@ namespace Kartverket.Register.Models.Api
                 if (d.datasetowner != null) owner = d.datasetowner.name;
                 if (d.theme != null) theme = d.theme.description;
                 if (d.dokStatus != null) dokStatus = d.dokStatus.description;
+                if (d.DatasetType != null) DatasetType = d.DatasetType;
+                MetadataUrl = d.MetadataUrl;
+                ConfirmedDok = "NEI";
+                if (filter != null && !string.IsNullOrEmpty(filter.municipality))
+                {
+                    Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
+                    Models.Organization org = regItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                    if (org != null)
+                    {
+                        var coverage = d.Coverage.Where(c => c.DatasetId == d.systemId && c.MunicipalityId == org.systemId).FirstOrDefault();
+                        if (coverage != null)
+                        {
+                            NoteMunicipal = coverage.Note;
+                            ConfirmedDok = coverage.ConfirmedDok ? "JA" : "NEI";
+                        }
+                    }
+                }
             }
             else if (item is NameSpace)
             {

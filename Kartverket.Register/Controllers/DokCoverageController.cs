@@ -103,15 +103,18 @@ namespace Kartverket.Register.Controllers
 
             foreach (CoverageDataset coverage in dataset.Coverage)
             {
-                var confirmedMunicipality = new CoverageConfirmedMunicipalityViewModel();
-                confirmedMunicipality.Name = coverage.Municipality.name;
-                confirmedMunicipality.Number = _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(coverage.Municipality.number);
+                if (coverage.ConfirmedDok)
+                { 
+                    var confirmedMunicipality = new CoverageConfirmedMunicipalityViewModel();
+                    confirmedMunicipality.Name = coverage.Municipality.name;
+                    confirmedMunicipality.Number = _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(coverage.Municipality.number);
 
-                MunicipalityCenterPoint centerPoint = _municipalityService.GetMunicipalityCenterPoint(confirmedMunicipality.Number);
-                confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
-                confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
+                    MunicipalityCenterPoint centerPoint = _municipalityService.GetMunicipalityCenterPoint(confirmedMunicipality.Number);
+                    confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
+                    confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
 
-                confirmed.Add(confirmedMunicipality);
+                    confirmed.Add(confirmedMunicipality);
+                }
             }
             return confirmed;
         }

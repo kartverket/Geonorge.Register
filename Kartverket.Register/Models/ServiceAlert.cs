@@ -57,7 +57,7 @@ namespace Kartverket.Register.Models
         public List<string> GetAlertTypes()
         {
             return new List<string>() {
-                "Endre URL",
+                "Endret URL",
                 "Endre datakvalitet",
                 "Endre datastruktur",
                 "Ny tjeneste",

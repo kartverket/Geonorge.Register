@@ -124,10 +124,5 @@ $(document).ready(function () {
     getSelectedLayout(visningstype);
 });
 
-// Loading animation
-/*
-$(window).load(function () {
-    $('#loading').hide();
-});
-*/
+
 

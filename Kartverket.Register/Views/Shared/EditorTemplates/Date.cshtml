@@ -1,2 +1,11 @@
 ﻿@model DateTime?
-@Html.TextBoxFor(model => Model, "{0:dd'/'MM'/'yyyy}", new { @class = "form-control jqueryui-marker-datepicker", @placeholder=DateTime.Today.ToString("dd'/'MM'/'yyyy") })
+@{
+    var values = ViewData.ModelMetadata.AdditionalValues;
+
+    string cssClass = "";
+    if (ViewData.ContainsKey("cssClass"))
+    {
+        cssClass = (string)ViewData["cssClass"];
+    }
+}
+@Html.TextBox("", String.Format("{0:d}", Model.HasValue ? Model : null), new { @class = "form-control " + cssClass })

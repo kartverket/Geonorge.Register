@@ -12,4 +12,11 @@ $(function () {
             return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
         }
     };
+
+    $.validator.methods.date = function (value, element) {
+        if (!isNaN(Globalize.parseDate(value))) {
+            return true;
+        }
+        return false;
+    }
 });

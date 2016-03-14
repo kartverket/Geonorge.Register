@@ -19,6 +19,7 @@ namespace Kartverket.Register
                 "~/Scripts/L.TileLayer.Kartverket.min.js",
                 "~/Scripts/proj4-compressed.js",
                 "~/Scripts/tablesorter/jquery.tablesorter.combined.js",
+                "~/Scripts/geonorge-register.js",
                 "~/Scripts/proj4leaflet.js"));
 
         }        

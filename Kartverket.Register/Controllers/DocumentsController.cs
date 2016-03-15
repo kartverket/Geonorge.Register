@@ -861,8 +861,6 @@ namespace Kartverket.Register.Controllers
                     string syncUrl = new SchemaSynchronizer().Synchronize(documentfile, fileName);
                     if (!string.IsNullOrEmpty(syncUrl))
                         url = syncUrl;
-                    else
-                        return "fil ikke synkronisert";
                 }
                 string documentUrl = url + fileName;
                 return documentUrl;

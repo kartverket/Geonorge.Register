@@ -12,7 +12,6 @@ namespace Kartverket.Register.Models
         public int Offset { get; set; }
         public List<SearchResultItem> Items { get; set; }
         public List<Facet> Facets { get; set; }
-        //public List<Filter> ItemsFilter { get; set; }
 
 
         public SearchResult()

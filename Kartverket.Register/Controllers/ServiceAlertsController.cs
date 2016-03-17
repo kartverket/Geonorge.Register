@@ -27,6 +27,7 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: ServiceAlerts/Create
+        [Authorize]
         [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         [Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(string parentRegister, string registerName)
@@ -50,6 +51,7 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("tjenestevarsler/{parentregister}/{registerowner}/{registerName}/ny")]
         [Route("tjenestevarsler/{registerName}/ny")]
         public ActionResult Create(ServiceAlert serviceAlert, string parentRegister, string registerName)

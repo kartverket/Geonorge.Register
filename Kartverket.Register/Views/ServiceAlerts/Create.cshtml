@@ -7,20 +7,20 @@
 
 @section scripts
 {
-<script>
-    $(function () {
-        // help text
+    <script>
+        $(function () {
+            // help text
 
-        $("a.help-text-toggle").click(function (event) {
-            event.preventDefault();
-            var helpTextId = $(this).data("help-text-id");
-            $("#" + helpTextId).toggle();
+            $("a.help-text-toggle").click(function (event) {
+                event.preventDefault();
+                var helpTextId = $(this).data("help-text-id");
+                $("#" + helpTextId).toggle();
+            });
+
+            // add help icon to each help text paragraph
+            $(".help-text").prepend("<span class=\"badge\">?</span> ");
         });
-
-        // add help icon to each help text paragraph
-        $(".help-text").prepend("<span class=\"badge\">?</span> ");
-    });
-</script>
+    </script>
 }
 
 @section breadcrumb {
@@ -102,7 +102,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
-                @Html.EditorFor(model => model.AlertDate, DateTime.Today.ToString("dd'/'MM'/'yyyy"), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
                 @Html.ValidationMessageFor(model => model.AlertDate, "", new { @class = "text-danger" })
                 <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
                     Tekst kommer senere
@@ -118,7 +118,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-2">
-                @Html.EditorFor(model => model.EffectiveDate, DateTime.Today.ToString("dd'/'MM'/'yyyy"), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
                 @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
                 <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
                     Tekst kommer senere
@@ -149,7 +149,7 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+            <input type="submit" value="Publiser" class="btn btn-default pull-right" />
             <a href="@Model.register.GetObjectUrl()">Tilbake</a>
         </div>
     </div>

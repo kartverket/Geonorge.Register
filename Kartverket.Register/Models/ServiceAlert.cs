@@ -3,7 +3,6 @@ using Kartverket.DOK.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Configuration;
 
 namespace Kartverket.Register.Models
@@ -13,7 +12,7 @@ namespace Kartverket.Register.Models
         public ServiceAlert()
         {
             AlertDate = DateTime.Now;
-            EffectiveDate = DateTime.Now;
+            EffectiveDate = DateTime.Now.AddMonths(3);
         }
 
         [Required]
@@ -58,7 +57,7 @@ namespace Kartverket.Register.Models
         public List<string> GetAlertTypes()
         {
             return new List<string>() {
-                "Endre URL",
+                "Endret URL",
                 "Endre datakvalitet",
                 "Endre datastruktur",
                 "Ny tjeneste",

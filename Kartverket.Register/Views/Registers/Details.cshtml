@@ -71,7 +71,7 @@
             }
             @if (Model.IsServiceAlertRegister())
             {
-                <a href="@RegisterUrls.urlFormat(Request, "rss")" class="">Abonnere på @Model.name</a>
+                <a href="@RegisterUrls.urlFormat(Request, "rss")" class="">Abonnere på tjenestevarsler</a><br/>
             }
         </div>
 
@@ -169,7 +169,7 @@
                         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
                     }
                 }
-                if (HtmlHelperExtensions.IsAdmin())
+                if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
                 {
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
                 }

@@ -613,7 +613,6 @@
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
-    <Compile Include="Models\FilterResult.cs" />
     <Compile Include="Models\MunicipalityCenterPoint.cs" />
     <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -621,7 +620,6 @@
     <Compile Include="Models\RegisterIndexDoc.cs" />
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
-    <Compile Include="Models\FilterItems.cs" />
     <Compile Include="Models\DokStatus.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
@@ -629,9 +627,6 @@
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalRow.cs" />
-    <Compile Include="Models\ViewModels\FilteringResultItemViewModel.cs" />
-    <Compile Include="Models\ViewModels\FilteringResultViewModel.cs" />
-    <Compile Include="Models\ViewModels\FilteringViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Api\Item.cs" />
     <Compile Include="Models\Api\Organization.cs" />
@@ -822,6 +817,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\geonorge-register.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Scripts\jquery-2.1.1.min.map" />

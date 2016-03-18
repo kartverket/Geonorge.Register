@@ -61,6 +61,7 @@ var baseurl_local = searchOption.baseUrl;
         var lang = '';
         if (txtLang) lang = txtLang.value;
 
+        var methodToExecute = undefined;
 
         return ({
             triggerSearch: triggerSearch,

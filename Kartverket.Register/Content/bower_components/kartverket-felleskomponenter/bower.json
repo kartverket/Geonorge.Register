@@ -1,0 +1,45 @@
+{
+  "name": "felleskomponenter",
+  "homepage": "https://github.com/kartverket/felleskomponenter",
+  "authors": [
+    "Kartverket <post@kartverket.no>"
+  ],
+  "description": "Felleskomponenter for Geonorge",
+  "main": [
+    "assets/js/*.js",
+    "assets/css/*.css",
+    "assets/images/*.png",
+    "assets/images/*.svg",
+    "assets/images/*.gif",
+    "assets/images/*.ico"
+  ],
+  "moduleType": [],
+  "keywords": [
+    "kartverket",
+    "geonorge"
+  ],
+  "license": "MIT",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "/gulp-config.json",
+    "/Gulpfile.js",
+    "/package.json",
+    "bower_components",
+    "/sass",
+    "/js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "jquery": "^2.2.1",
+    "bootstrap": "^3.3.6",
+    "jquery-ui": "^1.11.4",
+    "components-font-awesome": "^4.5.0",
+    "chosen": "^1.5.1",
+    "angular-bootstrap": "^1.2.4",
+    "js-cookie": "^2.1.0"
+  }
+}

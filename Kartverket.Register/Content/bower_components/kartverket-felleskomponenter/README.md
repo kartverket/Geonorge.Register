@@ -1,0 +1,2 @@
+# felleskomponenter
+Felleskomponenter for geonorge

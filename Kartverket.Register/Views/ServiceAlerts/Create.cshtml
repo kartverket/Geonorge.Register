@@ -65,12 +65,18 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ServiceUuid, "Tjeneste:", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ServiceUuid, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
-                    Tekst kommer senere
-                </p>
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-12 row">
+                    @Html.ValidationMessageFor(model => model.ServiceUuid, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
+                        Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker.
+                    </p>
+                </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
@@ -83,12 +89,18 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-5">
-                @Html.DropDownList("AlertType", null, "Velg tjenestevarsel", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AlertType, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
-                    Tekst kommer senere
-                </p>
+            <div class="col-md-9">
+                <div class="col-md-6 row">
+                    @Html.DropDownList("AlertType", null, "Velg tjenestevarsel", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-12 row">
+                    @Html.ValidationMessageFor(model => model.AlertType, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
+                        Velg en type tjenestevarsel fra nedtrekkslisten.
+                    </p>
+                </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
@@ -101,12 +113,18 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
-                @Html.ValidationMessageFor(model => model.AlertDate, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
-                    Tekst kommer senere
-                </p>
+            <div class="col-md-9">
+                <div class="col-md-3 row">
+                    @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
+                </div>
+                <div class="col-md-12 row">
+                    @Html.ValidationMessageFor(model => model.AlertDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
+                        Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.
+                    </p>
+                </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
@@ -117,12 +135,18 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
-                @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
-                    Tekst kommer senere
-                </p>
+            <div class="col-md-9">
+                <div class="col-md-3 row">
+                    @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
+                </div>
+                <div class="col-md-12 row">
+                    @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
+                        Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.
+                    </p>
+                </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">
@@ -134,11 +158,20 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
-                @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
-                <p class="help-text bg-success" id="help-text-note" style="display: none">
-                    Tekst kommer senere
-                </p>
+                <div class="col-md-12 row">
+                    @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="col-md-12 row">
+                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-12 row">
+                    <p class="help-text bg-success" id="help-text-note" style="display: none">
+                        Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+                        Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
+                        I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre i tjenesten.
+
+                    </p>
+                </div>
             </div>
             <div class="col-sm-1 pull-right">
                 <p class="form-control-static">

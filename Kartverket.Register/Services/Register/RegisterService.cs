@@ -191,11 +191,14 @@ namespace Kartverket.Register.Services.Register
                 string role = HtmlHelperExtensions.GetSecurityClaim("role");
                 string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
-                if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                if (item.isCurrentVersion())
                 {
-                    if (item.documentowner.seoname == filter.filterOrganization)
+                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
                     {
-                        filterRegisterItems.Add(item);
+                        if (item.documentowner.seoname == filter.filterOrganization)
+                        {
+                            filterRegisterItems.Add(item);
+                        }
                     }
                 }
             }

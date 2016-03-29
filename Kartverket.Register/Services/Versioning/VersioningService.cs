@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models;
+﻿using Kartverket.Register.Helpers;
+using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace Kartverket.Register.Services.Versioning
                 var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
                                                where ri.register.seoname == registername && ri.register.parentRegister.seoname == parantRegister
                                                && ri.seoname == itemname
-                                            select ri.versioning;
+                                               select ri.versioning;
 
                 versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             }
@@ -48,7 +49,7 @@ namespace Kartverket.Register.Services.Versioning
                 versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             }
             Guid? versjonsGruppeId = versjonsGruppe.systemId;
-            
+
             Guid currentVersionId = versjonsGruppe.currentVersion;
             List<Models.RegisterItem> suggestionsItems = new List<Models.RegisterItem>();
             List<Models.RegisterItem> historicalItems = new List<Models.RegisterItem>();
@@ -73,9 +74,12 @@ namespace Kartverket.Register.Services.Versioning
                            //|| ri.status.value == "Candidate"                           
                            select ri;
 
-            foreach (Models.RegisterItem item in queryResults)
+            foreach (Models.RegisterItem item in queryResults.ToList())
             {
-                suggestionsItems.Add(item);
+                if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                {
+                    suggestionsItems.Add(item);
+                }
             }
 
 
@@ -85,7 +89,7 @@ namespace Kartverket.Register.Services.Versioning
                                           && ri.versioningId == currentVersion.versioningId
                                           && (ri.status.value == "Superseded"
                                           || ri.status.value == "Retired")
-                                          //ri.status.value == "Deprecated"                                          
+                                         //ri.status.value == "Deprecated"                                          
                                          select ri;
 
             foreach (Models.RegisterItem item in queryResultsHistorical)
@@ -100,7 +104,7 @@ namespace Kartverket.Register.Services.Versioning
                 suggestions = suggestionsItems
             };
 
-            
+
         }
     }
 }

@@ -16,21 +16,21 @@ namespace Kartverket.Register.Models
         }
 
         [Required(ErrorMessage = "Varslingsdato er påkrevd")]
-        [Display(Name = "Varslingsdato:")]
+        [Display(Name = "Varslingsdato")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime AlertDate { get; set; }
 
         [Required(ErrorMessage = "Ikrafttredelsesdato er påkrevd")]
-        [Display(Name = "Ikrafttredelsesdato:")]
+        [Display(Name = "Ikrafttredelsesdato")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDate { get; set; }
 
         [Required(ErrorMessage = "Valg av type varsel er påkrevd")]
-        [Display(Name = "Type varsel:")]
+        [Display(Name = "Type varsel")]
         public string AlertType { get; set; }
 
         [Required(ErrorMessage = "Valg av tjeneste er påkrevd")]
-        [Display(Name = "Tjenestetype:")]
+        [Display(Name = "Tjenestetype")]
         public string ServiceType { get; set; }
 
         [Required]
@@ -43,7 +43,7 @@ namespace Kartverket.Register.Models
 
         [Required(ErrorMessage = "Det er påkrevd å skrive hva varselet gjelder")]
         [StringLength(500, MinimumLength = 3)]
-        [Display(Name = "Varselet gjelder:")]
+        [Display(Name = "Varselet gjelder")]
         public string Note { get; set; }
 
 

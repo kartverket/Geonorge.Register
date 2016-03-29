@@ -63,8 +63,8 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.Hidden("name", "navn")
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ServiceUuid, "Tjeneste:", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="form-group required">
+            @Html.LabelFor(model => model.ServiceUuid, "Tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
@@ -87,7 +87,7 @@
 
         @Html.Hidden("ServiceType", "Ikke angitt")
 
-        <div class="form-group">
+        <div class="form-group required">
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
@@ -111,7 +111,7 @@
 
         @Html.Hidden("Owner", "Ikke angitt")
 
-        <div class="form-group">
+        <div class="form-group required">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-3 row">
@@ -133,7 +133,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group required">
             @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-3 row">
@@ -155,7 +155,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group required">
             @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-12 row">

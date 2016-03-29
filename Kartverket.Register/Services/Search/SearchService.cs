@@ -128,10 +128,13 @@ namespace Kartverket.Register.Services.Search
                 {
                     foreach (var item in queryResults.ToList())
                     {
-                        if ((item.statusId != "Submitted") || item.documentowner.seoname == user || role == "nd.metadata_admin")
+                        if (item.isCurrentVersion())
                         {
-                            Document document = item;
-                            registerItems.Add(document);
+                            if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                            {
+                                Document document = item;
+                                registerItems.Add(document);
+                            }
                         }
                     }
                     register.items = registerItems;

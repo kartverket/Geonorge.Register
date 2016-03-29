@@ -55,19 +55,6 @@
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-            @if (Model.register.containedItemClass == "Document")
-            {
-                <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
-            }
-            else if (Model.register.containedItemClass == "Dataset")
-            {
-                <p>ID: <a href="@RegisterUrls.DeatilsRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Html.ToUrl(owner), Model.seoname)">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
-            }
-            else
-            {
-                <p>ID: <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">http://@Request.Url.Host@Request.Url.LocalPath </a></p>
-            }
-
             @if (Model.register.containedItemClass != "NameSpace")
             { <p> @Model.description</p>}
             @if (Model.register.containedItemClass != "Dataset")

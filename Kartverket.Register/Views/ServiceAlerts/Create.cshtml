@@ -60,7 +60,7 @@
 {
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(false, "Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler:", new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
 
         <div class="form-group required">
@@ -68,9 +68,6 @@
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
-                </div>
-                <div class="col-md-12 row">
-                    @Html.ValidationMessageFor(model => model.ServiceUuid, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
@@ -94,9 +91,6 @@
                     @Html.DropDownList("AlertType", null, "Velg tjenestevarsel", htmlAttributes: new { @class = "form-control" })
                 </div>
                 <div class="col-md-12 row">
-                    @Html.ValidationMessageFor(model => model.AlertType, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
                         Velg en type tjenestevarsel fra nedtrekkslisten.
                     </p>
@@ -118,9 +112,6 @@
                     @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
                 </div>
                 <div class="col-md-12 row">
-                    @Html.ValidationMessageFor(model => model.AlertDate, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
                         Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.
                     </p>
@@ -140,9 +131,6 @@
                     @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
                 </div>
                 <div class="col-md-12 row">
-                    @Html.ValidationMessageFor(model => model.EffectiveDate, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
                         Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.
                     </p>
@@ -160,9 +148,6 @@
             <div class="col-md-9">
                 <div class="col-md-12 row">
                     @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="col-md-12 row">
-                    @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-note" style="display: none">

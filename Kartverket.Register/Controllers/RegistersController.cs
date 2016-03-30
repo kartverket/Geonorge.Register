@@ -383,7 +383,7 @@ namespace Kartverket.Register.Controllers
                 MunicipalityId = municipality.systemId,
                 Note = item.Note
             };
-            _registerItemService.SaveNewCoverage(coverage);
+            db.CoverageDatasets.Add(coverage);
             return coverage;
         }
 

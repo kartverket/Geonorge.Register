@@ -51,7 +51,7 @@ namespace Kartverket.Register.Models
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
             name = metadata.Title;
-            if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionFormat.Name;
+            if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionDetails.Protocol;
             if (metadata.ContactOwner != null) Owner = metadata.ContactOwner.Organization;
             ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }
@@ -60,8 +60,8 @@ namespace Kartverket.Register.Models
         {
             return new List<string>() {
                 "Endret URL",
-                "Endre datakvalitet",
-                "Endre datastruktur",
+                "Endret datakvalitet",
+                "Endret datastruktur",
                 "Ny tjeneste",
                 "Fjernet tjeneste"
             };

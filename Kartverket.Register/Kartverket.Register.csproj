@@ -750,6 +750,8 @@
     <Content Include="Content\custom.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\img\arrow-down.svg" />
+    <Content Include="Content\img\arrow-up.svg" />
     <Content Include="Content\img\chosen-sprite.png" />
     <Content Include="Content\img\leaflet\layers-2x.png" />
     <Content Include="Content\img\leaflet\layers.png" />

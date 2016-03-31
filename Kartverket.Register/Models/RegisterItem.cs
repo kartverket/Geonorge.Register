@@ -105,6 +105,11 @@ namespace Kartverket.Register.Models
                 Document document = (Document)this;
                 return document.GetDocumentUrl();
             }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                return serviceAlert.GetServiceAlertUrl();
+            }
             else {
                 return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
             }

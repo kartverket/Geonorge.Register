@@ -880,6 +880,41 @@
               Looks up a localized string similar to Vis.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Bekreftet_Kommune">
+            <summary>
+              Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Eier">
+            <summary>
+              Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Kommentar">
+            <summary>
+              Looks up a localized string similar to Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Nasjonal_Status">
+            <summary>
+              Looks up a localized string similar to Datasettet sin status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Nasjonalt_Kommunalt">
+            <summary>
+              Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Temagruppe">
+            <summary>
+              Looks up a localized string similar to Datasett overordnet kategorisering.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Tittel">
+            <summary>
+              Looks up a localized string similar to Offisiell tittel (navn) på datasett.
+            </summary>
+        </member>
         <member name="P:Resources.UI.Edit">
             <summary>
               Looks up a localized string similar to Rediger.

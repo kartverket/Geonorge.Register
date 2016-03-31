@@ -147,4 +147,25 @@
   <data name="Organization_Number" xml:space="preserve">
     <value>Organisasjonsnummer</value>
   </data>
+  <data name="DOK_Bekreftet_Kommune" xml:space="preserve">
+    <value>Bekreftelse på data som skal være kommunes DOK</value>
+  </data>
+  <data name="DOK_Eier" xml:space="preserve">
+    <value>Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold</value>
+  </data>
+  <data name="DOK_Kommentar" xml:space="preserve">
+    <value>Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett</value>
+  </data>
+  <data name="DOK_Nasjonalt_Kommunalt" xml:space="preserve">
+    <value>Viser om datasettet er nasjonalt eller kommunalt</value>
+  </data>
+  <data name="DOK_Nasjonal_Status" xml:space="preserve">
+    <value>Datasettet sin status</value>
+  </data>
+  <data name="DOK_Temagruppe" xml:space="preserve">
+    <value>Datasett overordnet kategorisering</value>
+  </data>
+  <data name="DOK_Tittel" xml:space="preserve">
+    <value>Offisiell tittel (navn) på datasett</value>
+  </data>
 </root>

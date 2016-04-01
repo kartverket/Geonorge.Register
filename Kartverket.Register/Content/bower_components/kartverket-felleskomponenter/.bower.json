@@ -8,10 +8,10 @@
   "main": [
     "assets/js/*.js",
     "assets/css/*.css",
-    "assets/images/*.png",
-    "assets/images/*.svg",
-    "assets/images/*.gif",
-    "assets/images/*.ico"
+    "assets/images/**/*.png",
+    "assets/images/**/*.svg",
+    "assets/images/**/*.gif",
+    "assets/images/**/*.ico"
   ],
   "moduleType": [],
   "keywords": [
@@ -27,8 +27,7 @@
     "/Gulpfile.js",
     "/package.json",
     "bower_components",
-    "/sass",
-    "/js",
+    "/src",
     "test",
     "tests"
   ],
@@ -42,14 +41,14 @@
     "angular-bootstrap": "^1.2.4",
     "js-cookie": "^2.1.0"
   },
-  "version": "0.0.18",
-  "_release": "0.0.18",
+  "version": "0.0.29",
+  "_release": "0.0.29",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.18",
-    "commit": "cf748db59dca108832d55d42dda99e55450070c6"
+    "tag": "v0.0.29",
+    "commit": "3e965ea33bd38d00822dbb5241bf909c0b53419e"
   },
   "_source": "git://github.com/kartverket/felleskomponenter.git",
-  "_target": "0.0.18",
+  "_target": "0.0.29",
   "_originalSource": "kartverket-felleskomponenter"
 }

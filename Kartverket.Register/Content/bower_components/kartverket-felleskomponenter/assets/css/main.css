@@ -21,7 +21,7 @@ body {
   padding: 0; }
 
 .container-breadcrumbs ul > li {
-  background-image: url("/Static/img/arrow_414042_6px-01-01.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow_414042_6px-01-01.svg");
   background-position: 0 center;
   background-repeat: no-repeat;
   background-size: 8px 8px;
@@ -155,7 +155,7 @@ a.external + .separator-md {
   display: block; }
 
 a.external:after {
-  background-image: url("/Static/img/external_link_3867c8_12px-01.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/external_link_3867c8_12px-01.svg");
   background-size: 12px 11px;
   content: "";
   display: inline-block;
@@ -197,7 +197,7 @@ aside ul li,
 
 aside ul li,
 .container-footer ul li {
-  background-image: url("/Static/img/arrow_414042_8px-01.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow_414042_8px-01.svg");
   margin-left: 0;
   padding-left: 15px; }
 
@@ -714,10 +714,10 @@ div.start-page-main-image {
   width: 50px; }
 
 .container .layout-block-toggle .collapsed {
-  background-image: url("/Static/img/open_fe5000_50px-01.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/open_fe5000_50px-01.svg"); }
 
 .container .layout-block-toggle > :not(.collapsed) {
-  background-image: url("/Static/img/lukk_968c83_50px-01-01.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lukk_968c83_50px-01-01.svg"); }
 
 .editorialblock img {
   height: auto;
@@ -746,7 +746,7 @@ div.start-page-main-image {
 .container .to-top,
 .container .to-top:active {
   background-color: transparent;
-  background-image: url("/Static/img/totop_3867c8_75px-01.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/totop_3867c8_75px-01.svg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -881,7 +881,7 @@ div.start-page-main-image {
   width: 20px; }
 
 .standard-page-main-content-area .formblock form .checkbox .checked label {
-  background-image: url("/Static/img/tick_fe5000_16px.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/tick_fe5000_16px.svg");
   background-position: center;
   background-size: 15px 15px; }
 
@@ -1237,7 +1237,7 @@ iframe {
   -o-transition: all 0.35s ease-in-out;
   -webkit-transition: all 0.35s ease-in-out;
   background-color: #B6AFA8;
-  background-image: url("/KartverketSharedMenu/Images/Arrow_414042_12px_mobile.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/Arrow_414042_12px_mobile.svg");
   background-position: 11px center;
   background-repeat: no-repeat;
   background-size: auto 12px;
@@ -1290,7 +1290,7 @@ iframe {
   font-weight: 500; }
 
 .navbar-nav .dropdown .dropdown-menu > li > ul > li > a {
-  background-image: url("/KartverketSharedMenu/Images/Dot_ffffff_8px-01.png");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/png/Dot_ffffff_8px-01.png");
   background-position: 13px 20px;
   background-repeat: no-repeat;
   background-size: 8px;
@@ -1309,7 +1309,7 @@ iframe {
   padding: 0; }
 
 .navbar-nav .dropdown .dropdown-menu > li > ul > li ul > li > a.external:after {
-  background: url("/KartverketSharedMenu/Images/external_link_ffffff_12px-01.svg");
+  background: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/external_link_ffffff_12px-01.svg");
   background-size: 12px 11px;
   content: "";
   display: inline-block;
@@ -1328,7 +1328,7 @@ iframe {
 .nav .open > a:hover,
 .navbar .open > a:focus {
   background-color: #414042;
-  background-image: url("/KartverketSharedMenu/Images/Arrow_968c83_12px_mobile.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/Arrow_968c83_12px_mobile.svg");
   background-position: 11px center;
   background-repeat: no-repeat;
   background-size: auto 12px;
@@ -1636,7 +1636,7 @@ iframe {
   position: relative; }
 
 .container .searchbar .input-group-addon .loader {
-  background-image: url("/KartverketSharedMenu/Images/gif_loading-01.gif");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/gif_loading-01.gif");
   background-repeat: no-repeat;
   background-size: 23px auto;
   height: 27.60px;
@@ -1737,6 +1737,16 @@ h3.article-h3:after {
 
 h1.small-h1 {
   font-size: 48pt; }
+  @media (max-width: 767px) {
+    h1.small-h1 {
+      font-size: 34pt;
+      padding-top: 26px;
+      word-wrap: break-word; } }
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 24pt;
+    word-wrap: break-word; } }
 
 p.article-p {
   font-size: 14pt;
@@ -1764,7 +1774,7 @@ a {
   border-radius: 4px; }
 
 aside ul li, .container-footer ul li {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-right.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg"); }
 
 .btn {
   font-family: "Open Sans", sans-serif;
@@ -1834,6 +1844,34 @@ aside ul li, .container-footer ul li {
 .btn-group > .btn {
   float: none !important; }
 
+.btn-table-row-5 {
+  margin: -2px; }
+  .btn-table-row-5:after {
+    clear: both;
+    display: block;
+    content: "";
+    margin-bottom: 4px; }
+  .btn-table-row-5 .table-btn-container {
+    width: 20%;
+    float: left;
+    display: inline-block;
+    padding: 2px; }
+    .btn-table-row-5 .table-btn-container .btn {
+      width: 100%;
+      margin: 0; }
+    @media (max-width: 1199px) {
+      .btn-table-row-5 .table-btn-container {
+        width: 25%; } }
+    @media (max-width: 991px) {
+      .btn-table-row-5 .table-btn-container {
+        width: 33.333%; } }
+    @media (max-width: 720px) {
+      .btn-table-row-5 .table-btn-container {
+        width: 50%; } }
+    @media (max-width: 400px) {
+      .btn-table-row-5 .table-btn-container {
+        width: 100%; } }
+
 .search-filter-wrapper {
   margin-top: 10px; }
 
@@ -1865,59 +1903,59 @@ aside ul li, .container-footer ul li {
 
 /* Info */
 .custom-icon.custom-icon-info {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/info.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/info.svg");
   width: 20px;
   height: 20px;
   vertical-align: bottom; }
 
 .btn .custom-icon.custom-icon-info {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/info-white.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/info-white.svg");
   width: 10pt;
-  height: 10pt;
+  height: 16pt;
   margin-left: -3px; }
 
 .disabled .custom-icon.custom-icon-info {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/info-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/info-disabled.svg"); }
 
 /* Kartmarkoer */
 .custom-icon.custom-icon-kartmarkoer {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/kartmarkoer.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer.svg"); }
 
 .btn .custom-icon.custom-icon-kartmarkoer {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/kartmarkoer-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-white.svg"); }
 
 .disabled .custom-icon.custom-icon-kartmarkoer {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/kartmarkoer-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-disabled.svg"); }
 
 /* Handlekurv*/
 .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/handlekurv.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv.svg"); }
 
 .btn .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/handlekurv-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-white.svg"); }
 
 .disabled .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/handlekurv-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-disabled.svg"); }
 
 /* Last ned */
 .custom-icon.custom-icon-lastned {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/lastned.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lastned.svg"); }
 
 .btn .custom-icon.custom-icon-lastned {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/lastned-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lastned-white.svg"); }
 
 .disabled .custom-icon.custom-icon-lastned {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/lastned-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lastned-disabled.svg"); }
 
 /* Last ned */
 .custom-icon.custom-icon-eksternlink, .custom-icon-sm.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/images/ikoner/ekternlink.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ikoner/ekternlink.svg"); }
 
 .btn .custom-icon.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/ekternlink-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-white.svg"); }
 
 .disabled .custom-icon.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/ikoner/ekternlink-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-disabled.svg"); }
 
 .download-form p {
   margin-bottom: 0; }
@@ -2155,7 +2193,7 @@ aside ul li, .container-footer ul li {
     font-size: 12pt;
     line-height: 16pt; }
   .facet-sok-tittel .indicator {
-    background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-down.svg");
+    background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg");
     width: 11px;
     height: 12px;
     padding: 0;
@@ -2168,7 +2206,7 @@ aside ul li, .container-footer ul li {
       /* content: "\e113";*/ }
 
 .facet-sok-tittel.collapsed .indicator {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-right.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg"); }
 
 .facet-sok-undertitler li {
   font-size: 12pt;
@@ -2313,13 +2351,13 @@ textarea, textarea.form-control {
   background-color: #FFF;
   content: "";
   background-repeat: no-repeat;
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-down.svg");
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg");
   background-size: 16px 16px;
   background-position: right 8px center;
   border-radius: 0; }
 
 .custom-select:hover {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-down.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
 
 .custom-select select, .custom-select select.form-control {
   -webkit-appearance: none;
@@ -2510,6 +2548,9 @@ ul#thumbnailsCoverage {
       .container-login ul li a {
         color: #968c83; }
 
+.search-button-wrapper .btn:focus, .search-button-wrapper .btn:hover {
+  background-color: #FFF; }
+
 @media (max-width: 767px) {
   .container-login {
     display: none; }
@@ -2558,7 +2599,7 @@ ul#thumbnailsCoverage {
   line-height: 1.42857; }
 
 .container-breadcrumbs ul > li {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/breadcrumb-arrow.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/breadcrumb-arrow.svg"); }
 
 .tooltip-inner {
   min-width: 100px; }
@@ -2614,8 +2655,8 @@ input[type="checkbox"].input-validation-error {
     bottom: -5px;
     line-height: 25pt; }
   .search-result-navigation .save-as-menu .save-as-dropdown {
-    padding-left: 5px;
-    padding-right: 5px; }
+    padding-left: 15px;
+    padding-right: 0px; }
   .search-result-navigation .save-as-menu .save-as-buttons {
     padding-left: 5px;
     text-align: right; }
@@ -2667,10 +2708,10 @@ input[type="checkbox"].input-validation-error {
   margin-left: 7px; }
 
 #tableView .active-orderby.orderby-desc .orderby-indicator {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-up.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-up.svg"); }
 
 #tableView .active-orderby.orderby-asc .orderby-indicator {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-down.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
 
 #tableView .search-results-logo {
   display: none; }
@@ -2715,6 +2756,9 @@ input[type="checkbox"].input-validation-error {
 
 #listView .search-results-title {
   width: 50%; }
+  @media (max-width: 767px) {
+    #listView .search-results-title {
+      width: 100%; } }
 
 #listView .search-results-name {
   font-size: 18pt; }
@@ -2728,8 +2772,27 @@ input[type="checkbox"].input-validation-error {
 #listView .search-results-action-icons {
   display: none; }
 
+@media (max-width: 767px) {
+  #listView .search-results-list-image {
+    display: none; } }
+
 #listView .search-results-action-buttons .btn {
   width: 130px; }
+  @media (max-width: 1199px) {
+    #listView .search-results-action-buttons .btn {
+      width: 110px;
+      padding: 6px 4px; } }
+  @media (max-width: 767px) {
+    #listView .search-results-action-buttons .btn {
+      width: 130px;
+      padding: 6px 12px; } }
+  @media (max-width: 445px) {
+    #listView .search-results-action-buttons .btn {
+      width: 100%; } }
+
+@media (max-width: 767px) {
+  #listView .search-results-action-buttons {
+    margin-top: 20px; } }
 
 #listView .search-results-gallery-image {
   display: none; }
@@ -2776,15 +2839,21 @@ input[type="checkbox"].input-validation-error {
 
 #galleryView .teaser-with-background-image {
   text-align: center; }
-
-#galleryView .teaser-with-background-image .teaser-heading {
-  font-size: 16pt; }
+  #galleryView .teaser-with-background-image a:hover {
+    text-decoration: none; }
+  #galleryView .teaser-with-background-image .teaser-caption {
+    position: relative; }
+    #galleryView .teaser-with-background-image .teaser-caption .teaser-heading {
+      font-size: 12pt; }
+      @media (min-width: 1200px) {
+        #galleryView .teaser-with-background-image .teaser-caption .teaser-heading {
+          font-size: 14pt; } }
 
 .view-navigation {
   margin-top: 38px; }
 
 .facet-sok-emne .block.listblock {
-  padding: 30px 0; }
+  padding: 15px 0; }
 
 /* Register */
 .table-heading .sorted-asc:after, .table-heading .sorted-desc:after {
@@ -2799,14 +2868,16 @@ input[type="checkbox"].input-validation-error {
   margin-left: 7px; }
 
 .table-heading .sorted-asc:after {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-up.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-up.svg"); }
 
 .table-heading .sorted-desc:after {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/arrow-down.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
 
 .container .shopping-cart {
   top: initial;
   bottom: 0; }
+  .container .shopping-cart img {
+    max-width: none; }
 
 #orderitem-count {
   position: absolute;

@@ -1079,3 +1079,9 @@ table.tablesorter thead tr .tablesorter-headerDesc {
     display: inline-block;
     margin-left: 7px;
 }
+
+/*Bower?*/
+a.link-unstyled {
+text-decoration: none;
+color: #333;
+}

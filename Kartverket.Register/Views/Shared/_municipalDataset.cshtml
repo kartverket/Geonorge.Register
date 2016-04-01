@@ -14,6 +14,7 @@
 <script>
     $(document).ready(function () {
         $("table").tablesorter({
+
             headers: {
                 0: { sorter: false },
                 1: { sorter: false },
@@ -44,26 +45,26 @@
 {
     <table id="myTable" class="dataset table-responsive table tablesorter" style="width:100%">
         <thead>
-            <tr>
+            <tr role="row" class="tablesorter-headerRow">
+                <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("theme") ?  (ViewBag.SortOrder == "theme_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
+                    @Html.ActionLink("Temagruppe", "Details", new { sorting = "theme" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Temagruppe, @class = "tablesorter-header-inner" })
+                </th>
+                <th style="width:20%" class="tablesorter-header @(ViewBag.SortOrder.Contains("name") ?  (ViewBag.SortOrder == "name_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
+                    @Html.ActionLink("Tittel", "Details", new { sorting = "name" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Tittel, @class = "tablesorter-header-inner" })
+                </th>
+                <th style="width:10%;" class="tablesorter-header @(ViewBag.SortOrder.Contains("datasetOwner") ?  (ViewBag.SortOrder == "datasetOwner_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
+                    @Html.ActionLink("Eier", "Details", new { sorting = "datasetOwner" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Eier, @class = "tablesorter-header-inner" })
+                </th>
+                <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("dokStatus") ?  (ViewBag.SortOrder == "dokStatus_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
+                    @Html.ActionLink("Nasjonal DOK-status", "Details", new { sorting = "dokStatus" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonal_Status, @class = "tablesorter-header-inner" })
+                </th>
+                <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("type") ?  (ViewBag.SortOrder == "type_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
+                    @Html.ActionLink("Nasjonalt/ Kommunalt", "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonalt_Kommunalt, @class = "tablesorter-header-inner" })
+                </th>
                 <th style="width:10%">
-                    @Html.ActionLink("Temagruppe", "Details", new { sorting = "theme" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Temagruppe })
+                    <a href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft som kommunens DOK</a>
                 </th>
-                <th style="width:20%">
-                    @Html.ActionLink("Tittel", "Details", new { sorting = "name" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Tittel })
-                </th>
-                <th style="width:10%;">
-                    @Html.ActionLink("Eier", "Details", new { sorting = "datasetOwner" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Eier })
-                </th>
-                <th style="width:10%">
-                    @Html.ActionLink("Nasjonal DOK-status", "Details", new { sorting = "dokStatus" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonal_Status })
-                </th>
-                <th style="width:10%">
-                    @Html.ActionLink("Nasjonalt/ Kommunalt", "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonalt_Kommunalt })
-                </th>
-                <th style="width:10%">
-                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft som kommunens DOK</a>
-                </th>
-                <th style="width:20%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Kommentar">Kommunes merknad</a></th>
+                <th style="width:20%"><a href="#" class="link-unstyled" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Kommentar">Kommunes merknad</a></th>
             </tr>
         </thead>
         <tbody>

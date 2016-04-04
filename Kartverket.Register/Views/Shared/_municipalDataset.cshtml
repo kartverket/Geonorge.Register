@@ -27,13 +27,10 @@
     });
 </script>
 }
-<div class="col-sm-12 col-md-6 col-lg-6 row">
-    <h2 style="margin-top: 10px;">@HtmlHelperExtensions.selectedMunicipalName(selectedMunicipal)</h2>
-</div>
-<div class="col-sm-3 col-md-3 col-lg-3 pull-right" style="padding: 0px;">
+<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
     <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 10px; float: right; width: 100%; padding: 0px;">
         <div class="save-as-dropdown">
-
+                <span>Velg kommune:</span>
                 <div class="custom-select">
                     @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" })
                 </div>

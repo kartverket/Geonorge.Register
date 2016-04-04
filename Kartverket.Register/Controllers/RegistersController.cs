@@ -248,6 +248,7 @@ namespace Kartverket.Register.Controllers
                         dokMunicipalList.Add(row);
                     }
                     ViewBag.selectedMunicipality = municipality.name;
+                    ViewBag.selectedMunicipalityCode = municipalityCode;
                     return View(dokMunicipalList);
                 }
                 else {

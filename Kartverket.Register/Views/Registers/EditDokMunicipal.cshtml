@@ -106,6 +106,13 @@
             }
         </tbody>
     </table>
-    <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
-    <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-}
+    <div class="row">
+        <div class="col-sm-2">
+            <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+        </div>
+        <div class="col-sm-10 text-right">
+            <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
+            <input type="submit" value="Lagre" class="btn btn-default" />
+        </div>
+     </div>
+     }

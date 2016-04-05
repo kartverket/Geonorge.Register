@@ -8,12 +8,12 @@ namespace Kartverket.Register
         {
             
 
-            bundles.Add(new StyleBundle("~/Content/bower-styles").Include(
+            bundles.Add(new StyleBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles").Include(
                 "~/Content/bower_components/kartverket-felleskomponenter/assets/css/vendor.min.css",
                 "~/Content/bower_components/kartverket-felleskomponenter/assets/css/main.min.css"
             ));
 
-            bundles.Add(new ScriptBundle("~/bundles/bower-scripts").Include(
+            bundles.Add(new ScriptBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts").Include(
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/vendor.min.js",
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/main.js"
            ));
@@ -24,7 +24,7 @@ namespace Kartverket.Register
                 "~/Content/statusIcons.css",
                 "~/Content/custom.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/local-scripts").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/local-scripts").Include(
                 "~/Scripts/jquery.validate.date.js",
                 "~/Scripts/jquery.validate.min.js",
                 "~/Scripts/visninger.js",
@@ -35,6 +35,7 @@ namespace Kartverket.Register
                 "~/Scripts/tablesorter/jquery.tablesorter.combined.js",
                 "~/Scripts/geonorge-register.js",
                 "~/Scripts/proj4leaflet.js"));
+
         }        
     }
 }

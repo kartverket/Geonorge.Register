@@ -705,6 +705,7 @@
     <Content Include="changelog.txt" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\main.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\main.min.css" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.min.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />

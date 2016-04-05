@@ -8,10 +8,10 @@
   "main": [
     "assets/js/*.js",
     "assets/css/*.css",
-    "assets/images/*.png",
-    "assets/images/*.svg",
-    "assets/images/*.gif",
-    "assets/images/*.ico"
+    "assets/images/**/*.png",
+    "assets/images/**/*.svg",
+    "assets/images/**/*.gif",
+    "assets/images/**/*.ico"
   ],
   "moduleType": [],
   "keywords": [
@@ -27,8 +27,7 @@
     "/Gulpfile.js",
     "/package.json",
     "bower_components",
-    "/sass",
-    "/js",
+    "/src",
     "test",
     "tests"
   ],

@@ -238,7 +238,7 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
         {
-            string heading = "Det offentlige kartgrunnlaget for " + register.SelectedDOKMunicipality + " , " + DateTime.Today.ToString("d") + "\r\n";
+            string heading = "Det offentlige kartgrunnlaget - " + register.SelectedDOKMunicipality + ", " + DateTime.Today.ToString("d") + "\r\n";
             heading = heading + "Temagruppe;Tittel;Eier;DOK-status;Oppdatert;Versjons Id;Beskrivelse;Nasjonalt/kommunalt;Bekreftet som kommunens DOK;Kommunens merknad;Url til kartkatalog";
             return heading;
         }

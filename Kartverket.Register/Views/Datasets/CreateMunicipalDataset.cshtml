@@ -90,6 +90,13 @@
                             </td>
                         </tr>
                     }
+                    <tr>
+                    <td colspan="2" class="text-right">
+                        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">Avbryt</a>
+                        <input type="submit" value="Registrer tilleggsdatasett" class="btn btn-primary" />
+                    </td>
+                    <td></td>
+                    </tr>
                 </tbody>
             </table>
             @Html.HiddenFor(model => model.MunicipalityCode)
@@ -102,7 +109,6 @@
                     @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
                 }
             }
-            <input type="submit" value="Registrer tilleggsdatasett" class="btn btn-primary pull-right" />
         }
     }
     else {
@@ -144,15 +150,14 @@
     }
 }
 
-
-<div>
-    <h3>Opprett metadata</h3>
+<div style="margin-top:15px">
+    <h3>Opprett nye metadata</h3>
     <p>Hvis datasettet ikke finnes i Geonorge, må du registrere nye metadata for de data som du ønsker å registrere. Dette vil ofte være geografiske data som kommunen selv har</p>
-    <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank" class="btn btn-primary">Opprett metadata</a>
+    <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">Gå til metadataeditor</a>
 </div>
-
-<a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
-
+<div style="margin-top:15px">
+    <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>

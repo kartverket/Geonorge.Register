@@ -20,17 +20,16 @@
 <form action="@Request.Url.LocalPath" method="get">
     <div class="row">
         <div class="col-md-3">
+            <label for="fylke">Velg zoom-nivå:</label>
             <div class="form-group custom-select">
-                <label for="fylke" class="sr-only">Velg fylke:</label> @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class = "chosen-select form-control" })
+                @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class = "chosen-select form-control", onchange = "form.submit();" })
             </div>
         </div>
         <div class="col-md-5">
+            <label for="dataset">Velg DOK-datasett:</label>
             <div class="form-group custom-select">
-                <label for="dataset" class="sr-only">Velg fylke:</label> @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select form-control" })
+                @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select form-control", onchange = "form.submit();" })
             </div>
-        </div>
-        <div class="col-md-3">
-            <input type="submit" value="Vis dekningskart for valgte datasett" class="btn btn-default" />
         </div>
     </div>
 </form>

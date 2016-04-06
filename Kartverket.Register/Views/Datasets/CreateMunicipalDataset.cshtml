@@ -40,130 +40,113 @@
 
 <h3>Søk</h3>
 <p>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</p>
+<p>Hvis datasettet ikke finnes i Geonorge, må du <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">registrere nye metadata</a> for de data som du ønsker som dine kommunale DOK-data</p>
 
 @using (Html.BeginForm("CreateMunicipalDataset", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "searchDataset" }))
 {
     @Html.HiddenFor(model => model.MunicipalityCode)
     @Html.HiddenFor(model => model.Register)
-    if (Model.SelectedList != null)
-    {
-        for (int i = 0; i < Model.SelectedList.Count; i++)
-        {
-            @Html.Hidden("SelectedList[" + i + "].Selected", Model.SelectedList[i].Selected, new { @readonly = "readonly" })
-            @Html.Hidden("SelectedList[" + i + "].Uuid", Model.SelectedList[i].Uuid, new { @readonly = "readonly" })
-            @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
-        }
-    }
-
     @Html.HiddenFor(model => model.DatasetOwner)
     <div class="form-horizontal" style="margin: 30px 0px;">
         <div class="form-group">
-            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" value="@ViewBag.SearchString" />
+            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" placeholder="Skriv inn" value="@ViewBag.SearchString" />
             <input type="submit" value="Søk" class="btn btn-primary" style="margin-bottom:0px" />
         </div>
     </div>
-}
 
-@if (Model.SearchResult != null)
-{
-    <h4>Treffliste over datasett</h4>
-    if (Model.SearchResult.Count > 0)
-    {
-        using (Html.BeginForm("CreateMunicipalDataset", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "suggestDataset" }))
+<div class="row">
+    <div class="col-lg-6">
+        @if (Model.SearchResult != null)
         {
-            <table class="table-responsive table" style="margin-bottom:50px">
-                <thead>
-                    <tr>
-                        <th>Navn</th>
-                        <th class="text-center">Velg</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.SearchResult.Count; i++)
-                    {
-                        <tr>
-                            <td width="90%">@Model.SearchResult[i].Title</td>
-                            <td width="10%" class="text-center">
-                                @Html.CheckBox("SearchResult[" + i + "].Selected", Model.SearchResult[i].Selected, new { @readonly = "readonly" })
-                                @Html.Hidden("SearchResult[" + i + "].Uuid", Model.SearchResult[i].Uuid, new { @readonly = "readonly" })
-                                @Html.Hidden("SearchResult[" + i + "].Title", Model.SearchResult[i].Title, new { @readonly = "readonly" })
-                            </td>
-                        </tr>
-                    }
-                    <tr>
-                    <td colspan="2" class="text-right">
-                        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">Avbryt</a>
-                        <input type="submit" value="Registrer tilleggsdatasett" class="btn btn-primary" />
-                    </td>
-                    <td></td>
-                    </tr>
-                </tbody>
-            </table>
-            @Html.HiddenFor(model => model.MunicipalityCode)
-            if (Model.SelectedList != null)
+            if (Model.SearchResult.Count > 0)
             {
-                for (int i = 0; i < Model.SelectedList.Count; i++)
-                {
-                    @Html.Hidden("SelectedList[" + i + "].Selected", Model.SelectedList[i].Selected, new { @readonly = "readonly" })
-                    @Html.Hidden("SelectedList[" + i + "].Uuid", Model.SelectedList[i].Uuid, new { @readonly = "readonly" })
-                    @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
+                    <table class="table-responsive table" style="margin-bottom:50px">
+                        <thead>
+                            <tr>
+                                <th>Treffliste datasett</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.SearchResult.Count; i++)
+                            {
+                                <input id="SearchResult_@(@i)__Uuid" name="SearchResult[@(@i)].Uuid" type="hidden" value="@Model.SearchResult[i].Uuid" />
+                                <input id="SearchResult_@(@i)__Title" name="SearchResult[@(@i)].Title" type="hidden" value="@Model.SearchResult[i].Title" />
+                                <input id="SearchResult_@(@i)__Selected" name="SearchResult[@(@i)].Selected" type="hidden" value="False" />
+                                <tr>
+                                    <td width="90%">@Model.SearchResult[i].Title</td>
+                                    <td width="10%" class="text-center">
+                                        <input type="submit" value="Legg til" class="btn btn-primary" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @Html.HiddenFor(model => model.MunicipalityCode)
                 }
             }
-        }
-    }
-    else {
-        <p> Ingen treff...</p>
-    }
-}
-@if (Model.SelectedList != null)
-{
-    if (Model.SelectedList.Count > 0)
-    {
-        using (Html.BeginForm("CreateMunicipalDataset", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "suggestDataset" }))
-        {
-            <h4>Valgte tilleggsdatasett</h4>
+            else
+            {
+                if (!string.IsNullOrEmpty(ViewBag.SearchString))
+                {
+                <p> Ingen treff...</p>
+                }
+            }
+    </div>
+    <div class="col-lg-6">
+
             <table class="table-responsive table">
+                @if (Model.SelectedList != null)
+                {
                 <thead>
                     <tr>
-                        <th>Navn</th>
-                        <th class="text-center">Slett</th>
+                        <th>Valgte tilleggsdatasett</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.SelectedList.Count; i++)
+                    @if (Model.SelectedList.Count > 0)
                     {
-                        <tr>
-                            <td width="90%">@Model.SelectedList[i].Title</td>
-                            <td id="cbDelete" width="10%" class="text-center">
-                                @Html.CheckBox("SelectedList[" + i + "].Delete", Model.SelectedList[i].Delete)<label></label>
-                            </td>
-                        </tr>
-                        @Html.Hidden("SelectedList[" + i + "].Uuid", Model.SelectedList[i].Uuid, new { @readonly = "readonly" })
-                        @Html.Hidden("SelectedList[" + i + "].Title", Model.SelectedList[i].Title, new { @readonly = "readonly" })
-                    }
+                        for (int i = 0; i < Model.SelectedList.Count; i++)
+                        {
+                            <tr id="cbDelete_@i">
+                                <td width="90%">@Model.SelectedList[i].Title</td>
+                                <td  width="10%" class="text-center">
+                                    <input value="Fjern" type="button" class="btn btn-primary" onclick="removeMunicipalDataset(@i);"  />
+                                </td>
+                            </tr>
+                            <input id="SelectedList_@(@i)__Selected" name="SelectedList[@(@i)].Selected" type="hidden" value="True" />
+                            <input id="SelectedList_@(@i)__Uuid" name="SelectedList[@(@i)].Uuid" type="hidden" value="@Model.SelectedList[i].Uuid" />
+                            <input id="SelectedList_@(@i)__Title" name="SelectedList[@(@i)].Title" type="hidden" value="@Model.SelectedList[i].Title" />
+                        }
+                    }  
                 </tbody>
+                }
             </table>
-            @Html.Hidden("save", true)
+            @Html.Hidden("save", false)
             @Html.HiddenFor(model => model.MunicipalityCode)
-            <input type="submit" value="Lagre" class="btn btn-primary pull-right" />
-        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2">
+        <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
+    </div>
+    <div class="col-lg-10 text-right">
+    @if (Model.SelectedList != null)
+    {
+        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">Avbryt</a>
+        <input type="submit" value="Lagre" class="btn btn-primary" onclick="$('#save').attr('value', 'True');" />
     }
+    </div>
+</div>
 }
-
-<div style="margin-top:15px">
-    <h3>Opprett nye metadata</h3>
-    <p>Hvis datasettet ikke finnes i Geonorge, må du registrere nye metadata for de data som du ønsker å registrere. Dette vil ofte være geografiske data som kommunen selv har</p>
-    <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">Gå til metadataeditor</a>
-</div>
-<div style="margin-top:15px">
-    <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
-</div>
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $.fn.selectMetadata = function () {
-            $('#searchString').val('');
-            $("#suggestDataset").submit();
-        };
+        function removeMunicipalDataset(id)
+        {
+            $('#SelectedList_' + id + '__Selected').attr('value', "False");
+            $('#cbDelete_' + id).addClass("hidden");
+        }
+
     </script>
 }

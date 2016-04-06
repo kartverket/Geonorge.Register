@@ -10,6 +10,7 @@ using Kartverket.Register.Helpers;
 using System.Collections.Generic;
 using www.opengis.net;
 using Kartverket.Register.Models.ViewModels;
+using System.Linq;
 
 namespace Kartverket.Register.Controllers
 {
@@ -159,7 +160,22 @@ namespace Kartverket.Register.Controllers
             model.Register = _registerService.GetDokMunicipalRegister();
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(model.MunicipalityCode))
             {
+                ViewBag.SearchString = searchString;
+
                 model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(model.MunicipalityCode);
+
+                if (model.SelectedList != null)
+                {
+                    List<MetadataItemViewModel> items = new List<MetadataItemViewModel>();
+                    foreach (var metaItem in model.SelectedList)
+                        items.Add(metaItem);
+
+                    foreach (var item in items)
+                    {
+                        if (!item.Selected)
+                            model.SelectedList.Remove(item);
+                    }
+                }
 
                 if (model.SearchResult != null)
                 {
@@ -171,12 +187,13 @@ namespace Kartverket.Register.Controllers
                             {
                                 model.SelectedList = new List<MetadataItemViewModel>();
                             }
-                            model.SelectedList.Add(item);
+                            if(!model.SelectedList.Any(metaItem => metaItem.Uuid == item.Uuid))
+                                model.SelectedList.Add(item);
                         }
                     }
                     model.SearchResult = null;
                 }
-                if (!string.IsNullOrEmpty(searchString))
+                if (!string.IsNullOrEmpty(searchString) && !save)
                 {
                     SearchResultsType result = SearchMetadataFromKartkatalogen(searchString);
                     model.SearchResult = ParseSearchResult(result);
@@ -186,8 +203,7 @@ namespace Kartverket.Register.Controllers
                 {
                     foreach (var item in model.SelectedList)
                     {
-                        if (!item.Delete)
-                        {
+
                             Dataset dataset = new Dataset();
                             dataset = GetMetadataFromKartkatalogen(dataset, item.Uuid);
                             dataset.register = model.Register;
@@ -195,7 +211,6 @@ namespace Kartverket.Register.Controllers
                             dataset.datasetownerId = model.DatasetOwner.systemId;
                             dataset = initialisationDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
-                        }
                     }
                     return Redirect(model.Register.GetObjectUrl() + "?municipality=" + model.MunicipalityCode);
                 }

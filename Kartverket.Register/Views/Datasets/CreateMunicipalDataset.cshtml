@@ -70,13 +70,20 @@
                         <tbody>
                             @for (int i = 0; i < Model.SearchResult.Count; i++)
                             {
+                                bool itemSelected = false;
+                                if (Model.SelectedList != null)
+                                {
+                                    itemSelected = Model.SelectedList.Any(metaItem => metaItem.Uuid == Model.SearchResult[i].Uuid);
+                                }
                                 <input id="SearchResult_@(@i)__Uuid" name="SearchResult[@(@i)].Uuid" type="hidden" value="@Model.SearchResult[i].Uuid" />
                                 <input id="SearchResult_@(@i)__Title" name="SearchResult[@(@i)].Title" type="hidden" value="@Model.SearchResult[i].Title" />
                                 <input id="SearchResult_@(@i)__Selected" name="SearchResult[@(@i)].Selected" type="hidden" value="False" />
                                 <tr>
-                                    <td width="90%">@Model.SearchResult[i].Title</td>
+                                    <td width="90%" style="@( itemSelected  ? "color: #DCDAD1" : "" )">@Model.SearchResult[i].Title</td>
                                     <td width="10%" class="text-center">
+                                        @if (!itemSelected) { 
                                         <input type="submit" value="Legg til" class="btn btn-primary" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
+                                        }
                                     </td>
                                 </tr>
                             }

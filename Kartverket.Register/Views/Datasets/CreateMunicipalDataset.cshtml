@@ -51,52 +51,47 @@
         <div class="form-group">
             <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" placeholder="Skriv inn" value="@ViewBag.SearchString" />
             <input type="submit" value="Søk" class="btn btn-primary" style="margin-bottom:0px" />
+            @if (Model.SearchResult != null && Model.SearchResult.Count == 0 && !string.IsNullOrEmpty(ViewBag.SearchString))
+            {
+            <div><b>Ingen treff...</b></div>
+            }
         </div>
+        
     </div>
 
 <div class="row">
     <div class="col-lg-6">
-        @if (Model.SearchResult != null)
+        @if (Model.SearchResult != null && Model.SearchResult.Count > 0)
         {
-            if (Model.SearchResult.Count > 0)
-            {
-                    <table class="table-responsive table" style="margin-bottom:50px">
-                        <thead>
-                            <tr>
-                                <th>Treffliste datasett</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @for (int i = 0; i < Model.SearchResult.Count; i++)
-                            {
-                                bool itemSelected = false;
-                                if (Model.SelectedList != null)
-                                {
-                                    itemSelected = Model.SelectedList.Any(metaItem => metaItem.Uuid == Model.SearchResult[i].Uuid);
-                                }
-                                <input id="SearchResult_@(@i)__Uuid" name="SearchResult[@(@i)].Uuid" type="hidden" value="@Model.SearchResult[i].Uuid" />
-                                <input id="SearchResult_@(@i)__Title" name="SearchResult[@(@i)].Title" type="hidden" value="@Model.SearchResult[i].Title" />
-                                <input id="SearchResult_@(@i)__Selected" name="SearchResult[@(@i)].Selected" type="hidden" value="False" />
-                                <tr>
-                                    <td width="90%" id="title-@Model.SearchResult[i].Uuid" class="@( itemSelected  ? "text-muted" : "" )">@Model.SearchResult[i].Title</td>
-                                    <td width="10%" class="text-center">
-                                        <input type="submit" value="Legg til" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                    @Html.HiddenFor(model => model.MunicipalityCode)
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(ViewBag.SearchString))
+        <table class="table-responsive table" style="margin-bottom:50px">
+            <thead>
+                <tr>
+                    <th>Treffliste datasett</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.SearchResult.Count; i++)
                 {
-                <p> Ingen treff...</p>
+                    bool itemSelected = false;
+                    if (Model.SelectedList != null)
+                    {
+                        itemSelected = Model.SelectedList.Any(metaItem => metaItem.Uuid == Model.SearchResult[i].Uuid);
+                    }
+                    <input id="SearchResult_@(@i)__Uuid" name="SearchResult[@(@i)].Uuid" type="hidden" value="@Model.SearchResult[i].Uuid" />
+                    <input id="SearchResult_@(@i)__Title" name="SearchResult[@(@i)].Title" type="hidden" value="@Model.SearchResult[i].Title" />
+                    <input id="SearchResult_@(@i)__Selected" name="SearchResult[@(@i)].Selected" type="hidden" value="False" />
+                    <tr>
+                        <td width="90%" id="title-@Model.SearchResult[i].Uuid" class="@( itemSelected  ? "text-muted" : "" )">@Model.SearchResult[i].Title</td>
+                        <td width="10%" class="text-center">
+                            <input type="submit" value="Legg til" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
+                        </td>
+                    </tr>
                 }
-            }
+            </tbody>
+        </table>
+        @Html.HiddenFor(model => model.MunicipalityCode)
+        }
     </div>
     <div class="col-lg-6">
 

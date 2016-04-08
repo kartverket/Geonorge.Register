@@ -79,11 +79,9 @@
                                 <input id="SearchResult_@(@i)__Title" name="SearchResult[@(@i)].Title" type="hidden" value="@Model.SearchResult[i].Title" />
                                 <input id="SearchResult_@(@i)__Selected" name="SearchResult[@(@i)].Selected" type="hidden" value="False" />
                                 <tr>
-                                    <td width="90%" style="@( itemSelected  ? "color: #DCDAD1" : "" )">@Model.SearchResult[i].Title</td>
+                                    <td width="90%" id="title-@Model.SearchResult[i].Uuid" class="@( itemSelected  ? "text-muted" : "" )">@Model.SearchResult[i].Title</td>
                                     <td width="10%" class="text-center">
-                                        @if (!itemSelected) { 
-                                        <input type="submit" value="Legg til" class="btn btn-primary" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
-                                        }
+                                        <input type="submit" value="Legg til" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
                                     </td>
                                 </tr>
                             }
@@ -119,7 +117,7 @@
                             <tr id="cbDelete_@i">
                                 <td width="90%">@Model.SelectedList[i].Title</td>
                                 <td  width="10%" class="text-center">
-                                    <input value="Fjern" type="button" class="btn btn-primary" onclick="removeMunicipalDataset(@i);"  />
+                                    <input value="Fjern" type="button" class="btn btn-primary" onclick="removeMunicipalDataset(@i,'@Model.SelectedList[i].Uuid');"  />
                                 </td>
                             </tr>
                             <input id="SelectedList_@(@i)__Selected" name="SelectedList[@(@i)].Selected" type="hidden" value="True" />
@@ -149,10 +147,12 @@
 }
 @section Scripts {
     <script>
-        function removeMunicipalDataset(id)
+        function removeMunicipalDataset(id, uuid)
         {
             $('#SelectedList_' + id + '__Selected').attr('value', "False");
             $('#cbDelete_' + id).addClass("hidden");
+            $('#add-' + uuid).removeClass("disabled");
+            $('#title-' + uuid).removeClass("text-muted");
         }
 
     </script>

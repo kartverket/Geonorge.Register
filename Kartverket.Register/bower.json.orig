@@ -2,6 +2,10 @@
   "name": "ASP.NET",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
+    "kartverket-felleskomponenter": "0.0.29"
+=======
     "kartverket-felleskomponenter": "0.0.34"
+>>>>>>> master
   }
 }

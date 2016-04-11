@@ -709,17 +709,13 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.min.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-down.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-right.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-blue.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-orange.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-up.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\breadcrumb-arrow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-down.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-up.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\favicon.ico" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\geonorge.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\gif\gif_loading-01.gif" />
+<<<<<<< HEAD
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\ekternlink-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\ekternlink-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\ekternlink.svg" />
@@ -737,6 +733,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\lastned-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\lastned-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\lastned.svg" />
+=======
+>>>>>>> master
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\kartverket.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\kvlogo_col.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\loader.gif" />

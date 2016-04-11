@@ -74,12 +74,19 @@ namespace Kartverket.Register.Controllers
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format)
+        [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-
-            RegisterItem registerItem = GetRegisterItem(null, registername, itemowner, itemname);
+            RegisterItem registerItem = null;
+            if (string.IsNullOrWhiteSpace(systemId))
+            {
+                registerItem = GetRegisterItem(null, registername, itemowner, itemname);
+            }
+            else {
+                registerItem = _registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId));
+            }
             ViewBag.owner = GetOwner(registerItem);
 
             return View(registerItem);

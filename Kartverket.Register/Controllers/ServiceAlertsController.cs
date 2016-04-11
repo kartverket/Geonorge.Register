@@ -91,7 +91,7 @@ namespace Kartverket.Register.Controllers
         public Dictionary<string, string> GetServicesFromKartkatalogen()
         {
             Dictionary<string, string> ServiceList = new Dictionary<string, string>();
-            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000";
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/search/?facets[0]name=type&facets[0]value=service&limit=1000&orderby=title";
             WebClient c = new WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
             var data = c.DownloadString(url);

@@ -385,12 +385,12 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingType == "theme")
             {
-                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.theme.value);
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.theme == null ? "" : o.theme.value);
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "theme_desc")
             {
-                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.theme.value);
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.theme == null ? "" : o.theme.value);
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "type")

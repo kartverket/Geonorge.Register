@@ -27,10 +27,20 @@ $(window).load(function () {
 });
 
 $("document").ready( function(){
+    // Geonorge logo
 	if ($("#geonorge-logo").length){ 
 		$("#geonorge-logo a").prop("href", geonorgeUrl);
 		$("#geonorge-logo a img").prop("src", "/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/geonorge_" + applicationEnvironment + "logo.svg");
 	}
+
+    // Shopping cart
+    var downloadUrl = "https://kartkatalog.geonorge.no/Download";
+    if (applicationEnvironment !== "") {
+        downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
+    }
+    $("#shopping-car-url").prop("href", downloadUrl);
+
+    // Login
 	if (supportsLogin && $("#container-login").length){
 		$("#container-login").append("<ul></ul>");
 		$("#container-login ul").append("<li><a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a></li>");
@@ -653,7 +663,7 @@ function updateShoppingCart() {
         orderItemsObj = JSON.parse(orderItems);
         cookieValue = orderItemsObj.length;
         shoppingCartElement.html(cookieValue);
-    } else if (Cookies.get(cookieName) !== 0 && Cookies.get(cookieName) !== null) {
+    } else if (Cookies.get(cookieName) !== undefined && Cookies.get(cookieName) !== 0 && Cookies.get(cookieName) !== "0") {
         cookieValue = Cookies.get(cookieName);
         shoppingCartElement.css("display", "block");
         shoppingCartElement.html(cookieValue);

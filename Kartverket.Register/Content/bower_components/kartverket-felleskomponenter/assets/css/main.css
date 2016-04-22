@@ -1776,6 +1776,22 @@ a {
 aside ul li, .container-footer ul li {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg"); }
 
+.help-text-toggle,
+.panel-default > .panel-heading .help-text-toggle {
+  background-color: #3867C8;
+  transition: all .35s linear 0s; }
+  .help-text-toggle:hover, .help-text-toggle.active,
+  .panel-default > .panel-heading .help-text-toggle:hover,
+  .panel-default > .panel-heading .help-text-toggle.active {
+    background-color: #fe5000; }
+
+.help-text-toggle:hover,
+.help-text-toggle.active,
+.panel-default > .panel-heading .help-text-toggle:hover,
+.panel-default > .panel-heading .help-text-toggle.active {
+  background-color: #fe5000;
+  color: #fff; }
+
 .btn {
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
@@ -1835,7 +1851,8 @@ aside ul li, .container-footer ul li {
 .btn-xs {
   font-size: 10pt !important;
   padding: 3px;
-  height: 22px !important; }
+  height: 25px !important;
+  line-height: 19px; }
 
 .input-group-btn > .btn {
   padding: 6px 12px;
@@ -1956,6 +1973,51 @@ aside ul li, .container-footer ul li {
 
 .disabled .custom-icon.custom-icon-eksternlink {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-disabled.svg"); }
+
+/* Open data */
+.custom-icon.custom-icon-hengelaas-open-green {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-green.svg");
+  width: 30px;
+  margin-right: -8px; }
+
+.custom-icon.custom-icon-hengelaas-open-red {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-red.svg");
+  width: 30px;
+  margin-right: -8px; }
+
+.custom-icon.custom-icon-hengelaas-open-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-yellow.svg");
+  width: 30px;
+  margin-right: -8px; }
+
+.custom-icon.custom-icon-hengelaas-closed-green {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-green.svg"); }
+
+.custom-icon.custom-icon-hengelaas-closed-red {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-red.svg"); }
+
+.custom-icon.custom-icon-hengelaas-closed-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-yellow.svg"); }
+
+.btn .custom-icon.custom-icon-hengelaas-open-green,
+.btn .custom-icon.custom-icon-hengelaas-open-red,
+.btn .custom-icon.custom-icon-hengelaas-open-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-white.svg"); }
+
+.btn .custom-icon.custom-icon-hengelaas-closed-green,
+.btn .custom-icon.custom-icon-hengelaas-closed-red,
+.btn .custom-icon.custom-icon-hengelaas-closed-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-white.svg"); }
+
+.disabled .custom-icon.custom-icon-hengelaas-open-green,
+.disabled .custom-icon.custom-icon-hengelaas-open-red,
+.disabled .custom-icon.custom-icon-hengelaas-open-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-disabled.svg"); }
+
+.disabled .custom-icon.custom-icon-hengelaas-closed-green,
+.disabled .custom-icon.custom-icon-hengelaas-closed-red,
+.disabled .custom-icon.custom-icon-hengelaas-closed-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-disabled.svg"); }
 
 .download-form p {
   margin-bottom: 0; }
@@ -2238,6 +2300,18 @@ aside.facet-sok-emne ul li a:hover {
 input[readonly] {
   cursor: default !important; }
 
+.form-horizontal .has-feedback .form-control-feedback {
+  right: -15px; }
+
+.form-horizontal .form-group {
+  padding-bottom: 10px; }
+
+.form-horizontal .control-label {
+  padding-top: 2px; }
+
+.form-control-static {
+  padding-top: 4px; }
+
 .form-group.required .control-label:after, .panel-heading.required:after {
   content: " *";
   color: red; }
@@ -2248,11 +2322,40 @@ input[readonly] {
 .form-group.has-feedback.has-error .form-control-feedback {
   display: block; }
 
+.checkbox-inline {
+  margin-right: 10px; }
+
+.upload-group .bootstrap-filestyle {
+  width: calc(100% - 93px);
+  display: inline-table; }
+  @media (max-width: 480px) {
+    .upload-group .bootstrap-filestyle {
+      display: table;
+      width: auto; } }
+
+.upload-group .upload-btn {
+  position: relative;
+  top: -9.5px; }
+  @media (max-width: 480px) {
+    .upload-group .upload-btn {
+      display: block; } }
+
 .no-padding {
   padding: 0; }
 
 .margin-bottom-10 {
   margin-bottom: 10px; }
+
+.full-width {
+  width: 100% !important; }
+
+.no-border-radius, .help-text, .panel, .panel-heading,
+.no-border-radius input, .help-text input, .panel input, .panel-heading input {
+  border-radius: 0 !important; }
+
+@media (max-width: 991px) {
+  span.hypernation {
+    display: none; } }
 
 img {
   max-width: 100%; }
@@ -2269,7 +2372,6 @@ img {
   font-weight: 600;
   font-size: 10pt;
   line-height: 14pt;
-  text-indent: 10px;
   text-align: left;
   vertical-align: middle;
   border: none;
@@ -2398,6 +2500,15 @@ textarea, textarea.form-control {
 .form-horizontal .form-group {
   margin-right: 0;
   margin-left: 0; }
+  .form-horizontal .form-group .control-label {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto; }
 
 .required-indicator::after,
 .form-group.required .control-label::after,
@@ -2704,15 +2815,6 @@ input[type="checkbox"].input-validation-error {
   display: inline-block;
   margin-left: 7px; }
 
-<<<<<<< HEAD
-#tableView .active-orderby.orderby-desc .orderby-indicator {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-up.svg"); }
-
-#tableView .active-orderby.orderby-asc .orderby-indicator {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
-
-#tableView .search-results-logo {
-=======
 #tableView .active-orderby.orderby-desc .orderby-indicator, .table-view .active-orderby.orderby-desc .orderby-indicator {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-up.svg"); }
 
@@ -2728,7 +2830,6 @@ input[type="checkbox"].input-validation-error {
 .table-view .search-results-action-buttons,
 .table-view .search-results-list-image,
 .table-view .search-results-gallery-image {
->>>>>>> master
   display: none; }
 
 #tableView .search-results-action-icons, #tableView .col-actions, .table-view .search-results-action-icons, .table-view .col-actions {
@@ -2910,6 +3011,67 @@ input[type="checkbox"].input-validation-error {
     left: 21px;
     top: 6px;
     line-height: 14pt; } }
+
+.ui-datepicker {
+  border-radius: 0;
+  font-family: Open Sans,sans-serif; }
+
+.ui-widget-header {
+  background: none;
+  border-radius: 0;
+  border: none;
+  border-bottom: 2px solid #fe5000; }
+
+.ui-datepicker-header .ui-corner-all {
+  background-color: #7da1c4;
+  color: #FFF;
+  border: 1px solid #FFF;
+  border-radius: 0;
+  transition: all .35s linear 0s;
+  height: 34px;
+  padding: 5px 10px; }
+
+.ui-datepicker-header .ui-corner-all:hover {
+  background-color: #fe5000;
+  color: #FFF;
+  border: 1px solid #FFF; }
+
+.ui-datepicker .ui-datepicker-next-hover {
+  right: 2px;
+  top: 2px; }
+
+.ui-datepicker .ui-datepicker-prev-hover {
+  left: 2px;
+  top: 2px; }
+
+.ui-corner-all .ui-icon.ui-icon-circle-triangle-e, .ui-corner-all .ui-icon.ui-icon-circle-triangle-w {
+  font-size: 0;
+  text-indent: 0;
+  line-height: 16pt;
+  text-align: center; }
+
+.ui-corner-all .ui-corner-all .ui-icon.ui-icon-circle-triangle-e:before, .ui-corner-all .ui-icon.ui-icon-circle-triangle-w:before {
+  font: normal normal normal 12pt/1 FontAwesome;
+  color: #FFF;
+  font-weight: normal; }
+
+.ui-corner-all .ui-icon.ui-icon-circle-triangle-e:before {
+  content: "\f101"; }
+
+.ui-corner-all .ui-icon.ui-icon-circle-triangle-w:before {
+  content: "\f100"; }
+
+/* Days */
+.ui-widget-content .ui-state-default {
+  background-color: #7da1c4;
+  color: #FFF;
+  border: 1px solid #FFF;
+  transition: all .35s linear 0s; }
+
+.ui-widget-content .ui-state-default.ui-state-active, .ui-widget-content .ui-state-default:hover {
+  background-color: #fe5000;
+  color: #FFF;
+  border: 1px solid #FFF; }
 
 html[data-useragent*='MSIE 10.0'] .chosen-input-group .input-group-btn {
   display: table-row; }

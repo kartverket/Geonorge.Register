@@ -22,7 +22,7 @@ namespace Kartverket.Register.Tests.Controllers
         public void GetCreateShouldReturnView()
         {
             Dataset dataset = new Dataset();
-            dataset.register = NewRegister("Det offentlige kartgrunnlaget", 1);
+            dataset.register = NewRegister("DOK-statusregisteret", 1);
 
             var registerService = new Mock<IRegisterService>();
             var accessControlService = new Mock<IAccessControlService>();
@@ -198,7 +198,7 @@ namespace Kartverket.Register.Tests.Controllers
             dataset.submitter = dataset.datasetowner;
             dataset.submitterId = dataset.submitterId;
             dataset.versionNumber = 1;
-            dataset.register = NewRegister("Det offentlige kartgrunnlaget");
+            dataset.register = NewRegister("DOK-statusregisteret");
             return dataset;
         }
 

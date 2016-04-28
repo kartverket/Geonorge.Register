@@ -434,6 +434,11 @@ namespace Kartverket.Register.Services.RegisterItem
             return new SelectList(_dbContext.DokStatuses.OrderBy(s => s.description), "value", "description", dokStatusId);
         }
 
+        public SelectList GetDokDeliveryStatusSelectList(string dokDeliveryStatusId)
+        {
+            return new SelectList(_dbContext.DokDeliveryStatuses.OrderBy(s => s.description), "value", "description", dokDeliveryStatusId);
+        }
+
         public SelectList GetSubmitterSelectList(Guid submitterId)
         {
             return new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "systemId", "name", submitterId);

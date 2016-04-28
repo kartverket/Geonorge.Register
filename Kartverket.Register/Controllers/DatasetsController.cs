@@ -442,6 +442,16 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerId = _registerItemService.GetRegisterSelectList(dataset.registerId);
             ViewBag.dokStatusId = _registerItemService.GetDokStatusSelectList(dataset.dokStatusId);
+            ViewBag.dokDeliveryMetadataStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryMetadataStatusId);
+            ViewBag.dokDeliveryProductSheetStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryProductSheetStatusId);
+            ViewBag.dokDeliveryPresentationRulesStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryPresentationRulesStatusId);
+            ViewBag.dokDeliveryProductSpecificationStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryProductSpecificationStatusId);
+            ViewBag.dokDeliveryWmsStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryWmsStatusId);
+            ViewBag.dokDeliveryWfsStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryWfsStatusId);
+            ViewBag.dokDeliveryDistributionAreaStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryDistributionAreaStatusId);
+            ViewBag.dokDeliveryDistributionStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryDistributionStatusId);
+            ViewBag.dokDeliveryServiceAlertStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryServiceAlertStatusId);
+            ViewBag.dokDeliveryGeodataLawStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryGeodataLawStatusId);
             ViewBag.CoverageDOKStatusId = _registerItemService.GetDokStatusSelectList(null);
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
@@ -523,6 +533,16 @@ namespace Kartverket.Register.Controllers
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
+            dataset.dokDeliveryMetadataStatusId = inputDataset.dokDeliveryMetadataStatusId;
+            dataset.dokDeliveryProductSheetStatusId = inputDataset.dokDeliveryProductSheetStatusId;
+            dataset.dokDeliveryPresentationRulesStatusId = inputDataset.dokDeliveryPresentationRulesStatusId;
+            dataset.dokDeliveryProductSpecificationStatusId = inputDataset.dokDeliveryProductSpecificationStatusId;
+            dataset.dokDeliveryWmsStatusId = inputDataset.dokDeliveryWmsStatusId;
+            dataset.dokDeliveryWfsStatusId = inputDataset.dokDeliveryWfsStatusId;
+            dataset.dokDeliveryDistributionAreaStatusId = inputDataset.dokDeliveryDistributionAreaStatusId;
+            dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
+            dataset.dokDeliveryServiceAlertStatusId = inputDataset.dokDeliveryServiceAlertStatusId;
+            dataset.dokDeliveryGeodataLawStatusId = inputDataset.dokDeliveryGeodataLawStatusId;
 
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;

@@ -596,6 +596,14 @@
     <Compile Include="Migrations\201603291107049_DoServiceAlertNoteRequired.Designer.cs">
       <DependentUpon>201603291107049_DoServiceAlertNoteRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604280951531_DokDeliveryStatus.cs" />
+    <Compile Include="Migrations\201604280951531_DokDeliveryStatus.Designer.cs">
+      <DependentUpon>201604280951531_DokDeliveryStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604281033366_DokDeliveryStatusDetails.cs" />
+    <Compile Include="Migrations\201604281033366_DokDeliveryStatusDetails.Designer.cs">
+      <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -614,6 +622,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\Dimension.cs" />
+    <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
@@ -1315,6 +1324,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603291107049_DoServiceAlertNoteRequired.resx">
       <DependentUpon>201603291107049_DoServiceAlertNoteRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604280951531_DokDeliveryStatus.resx">
+      <DependentUpon>201604280951531_DokDeliveryStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604281033366_DokDeliveryStatusDetails.resx">
+      <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

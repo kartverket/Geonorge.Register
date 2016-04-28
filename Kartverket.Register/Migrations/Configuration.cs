@@ -39,6 +39,12 @@ namespace Kartverket.Register.Migrations
                 new DokStatus { value = "Accepted", description = "Godkjent" }
             );
 
+            context.DokDeliveryStatuses.AddOrUpdate(
+                new Models.DokDeliveryStatus { value = "deficient", description = "Mangelfull" },
+                new Models.DokDeliveryStatus { value = "useable", description = "Brukbar" },
+                new Models.DokDeliveryStatus { value = "good", description = "God" }
+            );
+
 
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },

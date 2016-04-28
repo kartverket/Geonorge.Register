@@ -533,16 +533,16 @@ namespace Kartverket.Register.Controllers
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
-            dataset.dokDeliveryMetadataStatusId = inputDataset.dokDeliveryMetadataStatusId;
-            dataset.dokDeliveryProductSheetStatusId = inputDataset.dokDeliveryProductSheetStatusId;
-            dataset.dokDeliveryPresentationRulesStatusId = inputDataset.dokDeliveryPresentationRulesStatusId;
-            dataset.dokDeliveryProductSpecificationStatusId = inputDataset.dokDeliveryProductSpecificationStatusId;
-            dataset.dokDeliveryWmsStatusId = inputDataset.dokDeliveryWmsStatusId;
-            dataset.dokDeliveryWfsStatusId = inputDataset.dokDeliveryWfsStatusId;
-            dataset.dokDeliveryDistributionAreaStatusId = inputDataset.dokDeliveryDistributionAreaStatusId;
-            dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
-            dataset.dokDeliveryServiceAlertStatusId = inputDataset.dokDeliveryServiceAlertStatusId;
-            dataset.dokDeliveryGeodataLawStatusId = inputDataset.dokDeliveryGeodataLawStatusId;
+            dataset.dokDeliveryMetadataStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryMetadataStatusId) ? inputDataset.dokDeliveryMetadataStatusId : "deficient";
+            dataset.dokDeliveryProductSheetStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSheetStatusId) ? inputDataset.dokDeliveryProductSheetStatusId : "deficient";
+            dataset.dokDeliveryPresentationRulesStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryPresentationRulesStatusId) ? inputDataset.dokDeliveryPresentationRulesStatusId : "deficient";
+            dataset.dokDeliveryProductSpecificationStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSpecificationStatusId) ? inputDataset.dokDeliveryProductSpecificationStatusId : "deficient";
+            dataset.dokDeliveryWmsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWmsStatusId) ? inputDataset.dokDeliveryWmsStatusId : "deficient";
+            dataset.dokDeliveryWfsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWfsStatusId) ? inputDataset.dokDeliveryWfsStatusId : "deficient";
+            dataset.dokDeliveryDistributionAreaStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionAreaStatusId) ? inputDataset.dokDeliveryDistributionAreaStatusId : "deficient";
+            dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "deficient";
+            dataset.dokDeliveryServiceAlertStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryServiceAlertStatusId) ? inputDataset.dokDeliveryServiceAlertStatusId : "deficient";
+            dataset.dokDeliveryGeodataLawStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryGeodataLawStatusId) ? inputDataset.dokDeliveryGeodataLawStatusId : "deficient";
 
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;

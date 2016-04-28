@@ -312,6 +312,18 @@ namespace Kartverket.Register.Migrations
 
             //Change Det offentlige kartgrunnlaget  DOK-statusregisteret
             context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'DOK-statusregisteret' WHERE  (name='Det offentlige kartgrunnlaget')");
+
+            //Set default value for DokDeliveryStatus
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryMetadataStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryMetadataStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSheetStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSheetStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryPresentationRulesStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryPresentationRulesStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSpecificationStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSpecificationStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWmsStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryWmsStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWfsStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryWfsStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionAreaStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionAreaStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryServiceAlertStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryServiceAlertStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGeodataLawStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryGeodataLawStatusId IS NULL");
         }
     }
 }

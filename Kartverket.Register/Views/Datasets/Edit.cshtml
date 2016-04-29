@@ -70,7 +70,7 @@
     <div class="col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Oppdater datasettet med informasjon fra metadatakatalogen
+                Oppdater datasettet med informasjon fra kartkatalogen
             </div>
             <div class="panel-body">
                 @using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { @class = "form-inline" }))
@@ -99,6 +99,7 @@
 {
     @Html.HiddenFor(model => model.systemId)
     @Html.HiddenFor(model => model.registerId)
+    @Html.HiddenFor(model => model.restricted)
     <ul class="nav nav-tabs" style="clear:both">
         <li class="active"><a href="#general" id="generallink" data-toggle="tab">Generelt</a></li>
         <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">Statusverdier</a></li>

@@ -543,7 +543,7 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "deficient";
             dataset.dokDeliveryServiceAlertStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryServiceAlertStatusId) ? inputDataset.dokDeliveryServiceAlertStatusId : "deficient";
             dataset.dokDeliveryGeodataLawStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryGeodataLawStatusId) ? inputDataset.dokDeliveryGeodataLawStatusId : "deficient";
-
+            dataset.restricted = inputDataset.restricted;
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;
         }

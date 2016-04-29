@@ -604,6 +604,10 @@
     <Compile Include="Migrations\201604281033366_DokDeliveryStatusDetails.Designer.cs">
       <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604291206482_DatasetRestricted.cs" />
+    <Compile Include="Migrations\201604291206482_DatasetRestricted.Designer.cs">
+      <DependentUpon>201604291206482_DatasetRestricted.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1330,6 +1334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604281033366_DokDeliveryStatusDetails.resx">
       <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604291206482_DatasetRestricted.resx">
+      <DependentUpon>201604291206482_DatasetRestricted.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -131,6 +131,8 @@ namespace Kartverket.Register.Models
         public string dokDeliveryGeodataLawStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryGeodataLawStatus { get; set; }
 
+        public bool? restricted { get; set; }
+
 
         public virtual string GetDatasetUrl()
         {

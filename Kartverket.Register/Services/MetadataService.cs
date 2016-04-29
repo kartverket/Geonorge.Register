@@ -39,6 +39,12 @@ namespace Kartverket.DOK.Service
                 dataset.DatasetType = originalDataset.DatasetType;
                 if (dontUpdateDescription) dataset.description = originalDataset.description;
 
+                dataset.restricted = false;
+                string accessConstraint = "";
+                SimpleConstraints constraints = metadata.Constraints;
+                if (!string.IsNullOrEmpty(constraints.AccessConstraints))
+                    accessConstraint = constraints.AccessConstraints;
+
                 SimpleDistributionDetails distributionDetails = metadata.DistributionDetails;
                 if (distributionDetails != null)
                 {
@@ -53,6 +59,12 @@ namespace Kartverket.DOK.Service
 
                     }
                     dataset.DistributionArea = distributionDetails.UnitsOfDistribution;
+
+                    if(accessConstraint == "restricted" && distributionDetails.Protocol != null
+                        && distributionDetails.Protocol =="GEONORGE:OFFLINE" )
+                        {
+                        dataset.restricted = true;
+                        }
                 }
 
                 if (metadata.DistributionFormat != null)

@@ -61,6 +61,7 @@
             { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
             @if (Model is Kartverket.Register.Models.Dataset)
             {
+                <h3>DOK-status</h3>
                 Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
                 if (dataset.dokStatus != null)
                 {
@@ -113,6 +114,23 @@
                 <br /><span class="small">DOK-Godkjent: @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</span>
             }
         </div>
+        @if (Model is Kartverket.Register.Models.Dataset)
+        {
+            Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
+            <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <h3>Leveransestatus</h3>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryMetadataStatusId)@Html.DisplayFor(model => dataset.dokDeliveryMetadataStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)@Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId)@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)@Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)@Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)@Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionAreaStatusId)@Html.DisplayFor(model => dataset.dokDeliveryDistributionAreaStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)@Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryServiceAlertStatusId)@Html.DisplayFor(model => dataset.dokDeliveryServiceAlertStatus.description)</span><br>
+                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryGeodataLawStatusId)@Html.DisplayFor(model => dataset.dokDeliveryGeodataLawStatus.description)</span><br>
+            </div>
+        }
         <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <hr>
         </div>

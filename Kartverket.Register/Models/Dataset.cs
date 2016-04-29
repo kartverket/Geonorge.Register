@@ -92,7 +92,7 @@ namespace Kartverket.Register.Models
         public virtual DokDeliveryStatus dokDeliveryProductSheetStatus { get; set; }
         //PresentationRules
         [ForeignKey("dokDeliveryPresentationRulesStatus")]
-        [Display(Name = "Kartigrafidokumentasjon:")]
+        [Display(Name = "Kartografidokumentasjon:")]
         public string dokDeliveryPresentationRulesStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryPresentationRulesStatus { get; set; }
         //ProductSpecification

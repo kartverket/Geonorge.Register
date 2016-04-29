@@ -53,25 +53,104 @@
     </div>
 </section>
 <div class="row">
+    @if (Model is Kartverket.Register.Models.Dataset)
+    {
+        Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
+        <div>
+            <p> @Model.description</p>
+            <h3>DOK-status</h3>
+            <div class="row">
+                <div class="col-md-3">Versjons ID </div><div class="col-md-9">@Model.versionNumber</div>
+            </div>
+            @if (Model.versionName != null)
+            {
+                <div class="row">
+                    <div class="col-md-3">Utgave:</div><div class="col-md-9"> @Model.versionName</div>
+                </div>
+            }
+            @if (dataset.dokStatus != null)
+            {
+                <div class="row">
+                    <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-3">DOK-Godkjent:</div><div class="col-md-9"> @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Innsendt:</div><div class="col-md-9"> @Html.DisplayFor(model => model.dateSubmitted)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Endret:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">Innsender:</div><div class="col-md-9"> @Model.submitter.name</div>
+            </div>
+            @if (owner != null)
+            {
+                <div class="row">
+                    <div class="col-md-3">Eier:</div><div class="col-md-9"> @owner</div>
+                </div>
+            }
+            @if (dataset.DatasetType != null)
+            {
+                <div class="row">
+                    <div class="col-md-3">Type datasett:</div><div class="col-md-9"> @dataset.DatasetType</div>
+                </div>
+            }
+            @if (dataset.theme != null)
+            {
+                <div class="row">
+                    <div class="col-md-3">Temagruppe:</div><div class="col-md-9"> @dataset.theme.description</div>
+                </div>
+            }
+
+            <h3>Leveransestatus</h3>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryMetadataStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryMetadataStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId) </div><div class="col-md-9">@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionAreaStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryDistributionAreaStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryServiceAlertStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryServiceAlertStatus.description)</div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryGeodataLawStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryGeodataLawStatus.description)</div>
+            </div>
+            @if (!string.IsNullOrWhiteSpace(dataset.MetadataUrl))
+            {
+                <h3>Produktinformasjon</h3>
+                <p><a href="@dataset.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> Vis i kartkatalogen</a></p>
+            }
+        </div>
+    }
+    else
+    {
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
             @if (Model.register.containedItemClass != "NameSpace")
             { <p> @Model.description</p>}
             @if (Model.register.containedItemClass != "Dataset")
             { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
-            @if (Model is Kartverket.Register.Models.Dataset)
-            {
-                <h3>DOK-status</h3>
-                Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
-                if (dataset.dokStatus != null)
-                {
-                    <span title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status: @dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></span><br>
-                }
-                if (dataset.DatasetType != null)
-                {
-                    <span>Type datasett: @dataset.DatasetType</span><br />
-                }
-            }
 
             @if (Model.register.containedItemClass == "NameSpace")
             { <span>Eier: @Model.submitter.name</span><br>}
@@ -108,29 +187,8 @@
                     <br /><span class="small">Utkast: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
                 }
             }
-            else
-            {
-                Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
-                <br /><span class="small">DOK-Godkjent: @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</span>
-            }
         </div>
-        @if (Model is Kartverket.Register.Models.Dataset)
-        {
-            Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
-            <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                <h3>Leveransestatus</h3>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryMetadataStatusId)@Html.DisplayFor(model => dataset.dokDeliveryMetadataStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)@Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId)@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)@Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)@Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)@Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionAreaStatusId)@Html.DisplayFor(model => dataset.dokDeliveryDistributionAreaStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)@Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryServiceAlertStatusId)@Html.DisplayFor(model => dataset.dokDeliveryServiceAlertStatus.description)</span><br>
-                <span>@Html.DisplayNameFor(model => dataset.dokDeliveryGeodataLawStatusId)@Html.DisplayFor(model => dataset.dokDeliveryGeodataLawStatus.description)</span><br>
-            </div>
-        }
+
         <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <hr>
         </div>
@@ -143,10 +201,6 @@
         @if (Model.register.containedItemClass == "Document")
         {
             @Html.Partial("_detailsDocuments")
-        }
-        @if (Model.register.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_detailsDataset")
         }
         @if (Model.register.containedItemClass == "EPSG")
         {
@@ -170,6 +224,7 @@
         }
 
     </div>
+    }
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         <hr />

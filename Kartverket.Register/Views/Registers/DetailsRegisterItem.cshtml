@@ -110,31 +110,121 @@
                 <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryMetadataStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryMetadataStatus.description)</div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)</div>
+                <div class="col-md-9">
+                @if (dataset.restricted == true)
+                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                 @Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)
+                }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId) </div><div class="col-md-9">@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId) </div>
+                <div class="col-md-9">
+                @if (dataset.restricted == true)
+                {
+                        <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                @Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)
+                }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)</div>
+                <div class="col-md-9">
+                @if (dataset.restricted == true)
+                                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                @Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)
+                }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)</div>
+                <div class="col-md-9"> 
+                    @if (dataset.restricted == true)
+                                    {
+                        <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                    }
+                    else
+                    {
+                    @Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)
+                    }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)</div>
+                <div class="col-md-9">
+                    @if (dataset.restricted == true)
+                                    {
+                        <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                    }
+                    else
+                    {
+                    @Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)
+                    }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionAreaStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryDistributionAreaStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionAreaStatusId)</div>
+                <div class="col-md-9">
+                @if (dataset.restricted == true)
+                                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                 @Html.DisplayFor(model => dataset.dokDeliveryDistributionAreaStatus.description)
+                 }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)</div>
+                <div class="col-md-9"> 
+                @if (dataset.restricted == true)
+                                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                @Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)
+                }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryServiceAlertStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryServiceAlertStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryServiceAlertStatusId)</div>
+                <div class="col-md-9"> 
+                @if (dataset.restricted == true)
+                                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                @Html.DisplayFor(model => dataset.dokDeliveryServiceAlertStatus.description)
+                    }
+                </div>
             </div>
             <div class="row">
-                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryGeodataLawStatusId)</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.dokDeliveryGeodataLawStatus.description)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryGeodataLawStatusId)</div>
+                <div class="col-md-9"> 
+                @if (dataset.restricted == true)
+                                {
+                    <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
+                }
+                else
+                {
+                @Html.DisplayFor(model => dataset.dokDeliveryGeodataLawStatus.description)
+                }
+                </div>
             </div>
             @if (!string.IsNullOrWhiteSpace(dataset.MetadataUrl))
             {

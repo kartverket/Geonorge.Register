@@ -3,27 +3,38 @@
 @using Kartverket.Register.Helpers
 
 @functions {
-    public string GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null) {
+    public IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null) {
 
         string symbolDeficient = "custom-icon custom-icon-smile-red";
         string symbolUseable = "custom-icon custom-icon-smile-yellow";
         string symbolGood = "custom-icon custom-icon-smile-green";
 
         string statusSymbol = symbolUseable;
+        string title = "";
 
-        if (restricted.HasValue && restricted.Value == true && type != "metadata")
+        if (restricted.HasValue && restricted.Value == true && type != "metadata") {
             statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
+            title = UI.DOK_Delivery_Restricted;
+        }
         else if (!string.IsNullOrEmpty(status))
         {
-            if (status == "deficient")
+            if (status == "deficient") {
                 statusSymbol = symbolDeficient;
-            else if (status == "useable")
+                title = UI.DOK_Delivery_Status_Deficient;
+            }
+            else if (status == "useable") {
                 statusSymbol = symbolUseable;
-            else if (status == "good")
+                title = UI.DOK_Delivery_Status_Useable;
+            }
+            else if (status == "good") {
                 statusSymbol = symbolGood;
+                title = UI.DOK_Delivery_Status_Good;
+            }
         }
 
-        return statusSymbol;
+        string html = "<a href='#' data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></a>";
+
+        return new HtmlString(html);
     }
 
     public IHtmlString OrderByLink(string tittel, string defaultSort, string statusIcon = null)
@@ -145,21 +156,23 @@
             </div>
 
             <div class="col-md-5">
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted)"></span>
-                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted)"></span>
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted)
             </div>
             <div class="col-md-1">
-            @if(item.dokStatus != null)
+            @if (item.dokStatus != null)
             {
-                <i class="statusIcon-@item.dokStatusId"></i>
+                <a href="#" data-toggle='tooltip' data-placement = 'bottom' title='@item.dokStatus.description'>
+                    <i class="statusIcon-@item.dokStatusId"></i>
+                </a>
             }
             </div>
         </div>

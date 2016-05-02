@@ -192,11 +192,23 @@
   <data name="DOK_Delivery_ProductSpesification" xml:space="preserve">
     <value>Produktspesifikasjoner status</value>
   </data>
+  <data name="DOK_Delivery_Restricted" xml:space="preserve">
+    <value>Skjermede data - kontakt dataeier for tilgangsforespørsel</value>
+  </data>
   <data name="DOK_Delivery_ServiceAlert" xml:space="preserve">
     <value>Endringsvarsling status</value>
   </data>
   <data name="DOK_Delivery_Status" xml:space="preserve">
     <value>Status datasett</value>
+  </data>
+  <data name="DOK_Delivery_Status_Deficient" xml:space="preserve">
+    <value>Mangelfull</value>
+  </data>
+  <data name="DOK_Delivery_Status_Good" xml:space="preserve">
+    <value>God</value>
+  </data>
+  <data name="DOK_Delivery_Status_Useable" xml:space="preserve">
+    <value>Brukbar</value>
   </data>
   <data name="DOK_Delivery_Theme" xml:space="preserve">
     <value>Temagruppe</value>

@@ -925,6 +925,11 @@
               Looks up a localized string similar to Produktspesifikasjoner status.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Delivery_Restricted">
+            <summary>
+              Looks up a localized string similar to Skjermede data - kontakt dataeier for tilgangsforespørsel.
+            </summary>
+        </member>
         <member name="P:Resources.UI.DOK_Delivery_ServiceAlert">
             <summary>
               Looks up a localized string similar to Endringsvarsling status.
@@ -933,6 +938,21 @@
         <member name="P:Resources.UI.DOK_Delivery_Status">
             <summary>
               Looks up a localized string similar to Status datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Deficient">
+            <summary>
+              Looks up a localized string similar to Mangelfull.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Good">
+            <summary>
+              Looks up a localized string similar to God.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Useable">
+            <summary>
+              Looks up a localized string similar to Brukbar.
             </summary>
         </member>
         <member name="P:Resources.UI.DOK_Delivery_Theme">

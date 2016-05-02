@@ -178,6 +178,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skjermede data - kontakt dataeier for tilgangsforespørsel.
+        /// </summary>
+        public static string DOK_Delivery_Restricted {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Restricted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Endringsvarsling status.
         /// </summary>
         public static string DOK_Delivery_ServiceAlert {
@@ -192,6 +201,33 @@ namespace Resources {
         public static string DOK_Delivery_Status {
             get {
                 return ResourceManager.GetString("DOK_Delivery_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mangelfull.
+        /// </summary>
+        public static string DOK_Delivery_Status_Deficient {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status_Deficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to God.
+        /// </summary>
+        public static string DOK_Delivery_Status_Good {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status_Good", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brukbar.
+        /// </summary>
+        public static string DOK_Delivery_Status_Useable {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status_Useable", resourceCulture);
             }
         }
         

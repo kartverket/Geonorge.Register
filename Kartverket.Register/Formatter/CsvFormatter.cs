@@ -9,6 +9,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Resources;
 
 namespace Kartverket.Register.Formatter
 {
@@ -145,7 +146,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) ;
             }
             else if (item.itemclass == "Dataset")
             {
@@ -165,6 +166,15 @@ namespace Kartverket.Register.Formatter
             }
 
             streamWriter.WriteLine(text);
+        }
+
+        private static string GetDOKDeliveryStatus(Registeritem item)
+        {
+            
+            return item.dokDeliveryMetadataStatus +";" + item.dokDeliveryProductSheetStatus + ";" + item.dokDeliveryPresentationRulesStatus +
+                ";" + item.dokDeliveryProductSpecificationStatus+ ";" + item.dokDeliveryWmsStatus+ ";" + item.dokDeliveryWfsStatus +
+                ";" + item.dokDeliveryDistributionAreaStatus+ ";" + item.dokDeliveryDistributionStatus + ";"+ item.dokDeliveryServiceAlertStatus+";" + item.dokDeliveryGeodataLawStatus;
+
         }
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
@@ -213,7 +223,10 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Temagruppe; Navn; Eier; DOK-status; Oppdatert; Versjons Id; Beskrivelse; ID";
+                return "Temagruppe; Navn; Eier; DOK-status; Oppdatert; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
+                    + UI.DOK_Delivery_ProductSheet + ";" + UI.DOK_Delivery_PresentationRules + ";" + UI.DOK_Delivery_ProductSpesification + ";"
+                    + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_DistributionArea + ";" 
+                    + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_ServiceAlert + ";" + UI.DOK_Delivery_GeodataLaw;
             }
             else if (containedItemClass == "Organization")
             {

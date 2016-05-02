@@ -2,155 +2,166 @@
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
 
-<div class="register dataset search-results">
-    @foreach (Dataset item in Model)
+@functions {
+    public string GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null) {
+
+        string symbolDeficient = "custom-icon custom-icon-smile-red";
+        string symbolUseable = "custom-icon custom-icon-smile-yellow";
+        string symbolGood = "custom-icon custom-icon-smile-green";
+
+        string statusSymbol = symbolUseable;
+
+        if (restricted.HasValue && restricted.Value == true && type != "metadata")
+            statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
+        else if (!string.IsNullOrEmpty(status))
+        {
+            if (status == "deficient")
+                statusSymbol = symbolDeficient;
+            else if (status == "useable")
+                statusSymbol = symbolUseable;
+            else if (status == "good")
+                statusSymbol = symbolGood;
+        }
+
+        return statusSymbol;
+    }
+
+    public IHtmlString OrderByLink(string tittel, string defaultSort, string statusIcon = null)
     {
+
+        string sortingClass = "";
+        string sortTitle = "";
+        string sortingParam = "";
+        string sortingSelected = Request.QueryString["sorting"];
+
+        if (sortingSelected == null)
+            sortingSelected = "name";
+
+        if (sortingSelected == defaultSort)
+        {
+            sortingClass = "sorted-asc";
+            sortTitle = UI.DOK_Delivery_Title;
+            sortingParam = defaultSort + "_desc";
+        }
+        else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
+        {
+            sortingClass = "sorted-desc";
+            sortTitle = UI.DOK_Delivery_Title;
+            sortingParam = defaultSort;
+        }
+        else
+        {
+            sortingClass = "";
+            sortTitle = "";
+            sortingParam = defaultSort;
+        }
+
+        if (sortingParam.IndexOf("Requirement") > -1)
+        {
+            sortTitle = "Sortert etter logisk rekkefølge";
+        }
+        var text = Request.QueryString["text"];
+
+        if (sortingParam.Contains("title"))
+            sortTitle = UI.DOK_Delivery_Title;
+        else if (sortingParam.Contains("datasetOwner"))
+            sortTitle = UI.DOK_Delivery_Owner;
+        else if (sortingParam.Contains("theme"))
+            sortTitle = UI.DOK_Delivery_Theme;
+        else if (sortingParam.Contains("dokDeliveryMetadataStatus"))
+            sortTitle = UI.DOK_Delivery_Metadata;
+        else if (sortingParam.Contains("dokDeliveryProductSheetStatus"))
+            sortTitle = UI.DOK_Delivery_ProductSheet;
+        else if (sortingParam.Contains("dokDeliveryPresentationRulesStatus"))
+            sortTitle = UI.DOK_Delivery_PresentationRules;
+        else if (sortingParam.Contains("dokDeliveryProductSpecificationStatus"))
+            sortTitle = UI.DOK_Delivery_ProductSpesification;
+        else if (sortingParam.Contains("dokDeliveryWmsStatus"))
+            sortTitle = UI.DOK_Delivery_Wms;
+        else if (sortingParam.Contains("dokDeliveryWfsStatus"))
+            sortTitle = UI.DOK_Delivery_Wfs;
+        else if (sortingParam.Contains("dokDeliveryDistributionAreaStatus"))
+            sortTitle = UI.DOK_Delivery_DistributionArea;
+        else if (sortingParam.Contains("dokDeliveryDistributionStatus"))
+            sortTitle = UI.DOK_Delivery_Distribution;
+        else if (sortingParam.Contains("dokDeliveryServiceAlertStatus"))
+            sortTitle = UI.DOK_Delivery_ServiceAlert;
+        else if (sortingParam.Contains("dokDeliveryGeodataLawStatus"))
+            sortTitle = UI.DOK_Delivery_GeodataLaw;
+        else if (sortingParam.Contains("dokStatus"))
+            sortTitle = UI.DOK_Delivery_Status;
+
+
+        var linkSort = "<a data-toggle='tooltip' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+
+        if (text != null)
+            linkSort = linkSort + "&text=" + text;
+
+        if (!string.IsNullOrEmpty(statusIcon))
+            tittel = "<span class='" + statusIcon + "'></span>";
+
+        linkSort = linkSort + "'>" + tittel + "</a>";
+
+        return new HtmlString(linkSort);
+    }
+
+}
+
+<div class="register dataset search-results-table-heading">
+    <div class="row result-row metadata" >
+        <div class="col-md-2">@OrderByLink("Tittel", "name")</div>
+        <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
+        <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
+        <div class="col-md-5">
+            @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
+            @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-info alert-success")
+            @OrderByLink("", "dokDeliveryPresentationRulesStatus", "glyphicon glyphicon-picture")
+            @OrderByLink("", "dokDeliveryProductSpecificationStatus", "glyphicon glyphicon-list-alt")
+            @OrderByLink("", "dokDeliveryWmsStatus", "glyphicon glyphicon-globe")
+            @OrderByLink("", "dokDeliveryWfsStatus", "glyphicon glyphicon-list-alt alert-success")
+            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "glyphicon glyphicon-globe alert-success")
+            @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
+            @OrderByLink("", "dokDeliveryServiceAlertStatus", "fa fa-rss")
+            @OrderByLink("", "dokDeliveryGeodataLawStatus", "glyphicon glyphicon-asterisk")
+        </div>
+        <div class="col-md-1">@OrderByLink("STATUS", "dokStatus")</div>
+    </div>
+    <div class="menu-separator search-results-table-heading"></div>
+    @foreach(Dataset item in Model)
+            {
         <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                    <a href="@item.GetObjectUrl()">
-                        <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
-                    </a>
-                </div>
-                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <a href="@item.GetObjectUrl()">
-                        @item.name
-                    </a>
 
-                    <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
-                        <img src="@Url.Content("~/data/organizations/" + item.datasetowner.logoFilename)" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
-                    </a>
-                    <div class="orglogo">
-                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                            @Html.DisplayFor(modelItem => item.datasetowner.name)
-                        </a>
-                    </div>
-
-                    <a class="beskrivelse-print visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                        <p>Eier: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
-                    </a>
-
-                    <br class="hidden-print" />
-                    <div class="hidden-print">
-                        @if (item.description != null)
-                {
-                            <p>
-                                @if (item.description.Length < 80)
-                                {
-                                    @item.description.Substring(0, item.description.Length)
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
-                                }
-                                else
-                                {
-                                    @item.description.Substring(0, 80)<text>...</text>
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
-                                }
-                            </p>
-                        }
-                    </div>
-                    <p class="visible-print">@item.description</p>
-                </div>
-                <div class="col-actions col-xs-6 col-sm-3 col-md-2 col-lg-2">
-                    <ul style="list-style-type:none">
-                        @if (!string.IsNullOrWhiteSpace(item.MetadataUrl))
-                {
-                            <li>
-                                <a href="@item.MetadataUrl" class="btn btn-sm btn-fresh-green btn-link" title="Vis metadata for @item.name"><span class="glyphicon glyphicon-globe"></span> Metadata</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                &nbsp;
-                            </li>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.ProductSheetUrl))
-                {
-                            <li>
-                                <a href="@item.ProductSheetUrl" class="btn btn-sm btn-fresh-blue btn-link" title="Last ned produktark for @item.name"><span class="glyphicon glyphicon-info-sign"></span> Produktark</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                &nbsp;
-                            </li>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.PresentationRulesUrl))
-                {
-                            <li>
-                                <a href="@item.PresentationRulesUrl" class="btn btn-sm btn-fresh-green btn-link" title="Last ned tegneregler for @item.name"><span class="glyphicon glyphicon-picture"></span> Tegneregler</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                &nbsp;
-                            </li>
-                        }
-                        @if (!string.IsNullOrWhiteSpace(item.ProductSpecificationUrl))
-                {
-                            <li>
-                                <a href="@item.ProductSpecificationUrl" class="btn btn-sm btn-fresh-blue btn-link" title="Last ned produktspesifikasjon for @item.name"><span class="glyphicon glyphicon-list-alt"></span> Produktspesifikasjon</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                &nbsp;
-                            </li>
-                        }
-
-                    </ul>
-                </div>
-                <div class="col-information col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                    <ul style="list-style-type:none">
-
-                        @if (!string.IsNullOrWhiteSpace(item.DistributionFormat) && item.DistributionFormat.Trim().ToLower().Equals("sosi"))
-                {
-                            <li title="Sosi: Ja">
-                                <span>SOSI:</span> Ja
-                            </li>
-                        }
-                        else
-                        {
-                            <li title="Sosi: Nei">
-                                <span>SOSI:</span> Nei
-                            </li>
-                        }
-
-                        @if (!string.IsNullOrWhiteSpace(item.WmsUrl))
-                        {
-                            <li>
-                                <a href="@item.WmsUrl" title="WMS lag for @item.name"><span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)</a>
-                            </li>
-                        }
-                        else {
-                            <li>
-                                <span>WMS: </span>@HtmlHelperExtensions.IsWMSURL(item.WmsUrl)
-                            </li>
-                        }
-                        @if (item.dokStatus != null)
-                {
-                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
-                        }
-                        @if (item.ThemeGroupId != null)
-                {
-                            <li title="Temagruppe: @item.theme.description">
-                                <span>Gruppe: </span>@item.theme.description
-                            </li>
-                        }
-                        else
-                        {
-                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
-                        }
-                    </ul>
-
-                </div>
-
+            <div class="col-md-2"><a href = "@item.GetObjectUrl()" > @item.name </a></div>
+            <div class="col-md-2"><a href = "/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-2">
+            @if(item.ThemeGroupId != null)
+            {
+                <span> @item.theme.description </span>
+            }
+            else
+            {
+                <span>Ikke angitt</span>
+            }
             </div>
 
+            <div class="col-md-5">
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted)"></span>
+                <span class="@GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted)"></span>
+            </div>
+            <div class="col-md-1">
+            @if(item.dokStatus != null)
+            {
+                <i class="statusIcon-@item.dokStatusId"></i>
+            }
+            </div>
         </div>
-            <hr />
     }
 </div>

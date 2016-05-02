@@ -106,6 +106,132 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nedlastning status.
+        /// </summary>
+        public static string DOK_Delivery_Distribution {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Distribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dekningskart status.
+        /// </summary>
+        public static string DOK_Delivery_DistributionArea {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_DistributionArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geodataloven status.
+        /// </summary>
+        public static string DOK_Delivery_GeodataLaw {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_GeodataLaw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata status.
+        /// </summary>
+        public static string DOK_Delivery_Metadata {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Metadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eier.
+        /// </summary>
+        public static string DOK_Delivery_Owner {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tegneregler status.
+        /// </summary>
+        public static string DOK_Delivery_PresentationRules {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_PresentationRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktark status.
+        /// </summary>
+        public static string DOK_Delivery_ProductSheet {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_ProductSheet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktspesifikasjoner status.
+        /// </summary>
+        public static string DOK_Delivery_ProductSpesification {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_ProductSpesification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Endringsvarsling status.
+        /// </summary>
+        public static string DOK_Delivery_ServiceAlert {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_ServiceAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status datasett.
+        /// </summary>
+        public static string DOK_Delivery_Status {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temagruppe.
+        /// </summary>
+        public static string DOK_Delivery_Theme {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tittel.
+        /// </summary>
+        public static string DOK_Delivery_Title {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wfs status.
+        /// </summary>
+        public static string DOK_Delivery_Wfs {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Wfs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wms status.
+        /// </summary>
+        public static string DOK_Delivery_Wms {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Wms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
         /// </summary>
         public static string DOK_Eier {

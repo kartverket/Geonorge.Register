@@ -19,6 +19,11 @@ function changeLayout(selectElement) {
     }
 }
 
+function additionalView(buttonId) {
+    $("#saveButtons a").attr("class", "hidden");
+    $("#" + buttonId).attr("class", "btn");
+}
+
 function listView() {
 
     $("#sortBox").show();

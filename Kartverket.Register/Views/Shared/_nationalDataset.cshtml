@@ -118,7 +118,7 @@
 
 }
 
-<div class="register dataset search-results-table-heading">
+<div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata" >
         <div class="col-md-2">@OrderByLink("Tittel", "name")</div>
         <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
@@ -176,5 +176,93 @@
             }
             </div>
         </div>
+    }
+</div>
+<div id="listView">
+    @foreach (Dataset item in Model)
+    {
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <a href="@item.GetObjectUrl()">
+                        <img src="@item.datasetthumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.name" />
+                    </a>
+                </div>
+                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <a href="@item.GetObjectUrl()">
+                        @item.name
+                    </a>
+
+                    <a href="/register/@item.register.seoname/@item.datasetowner.seoname/" title="Datasett eier: @item.datasetowner.name">
+                        <img src="@Url.Content("~/data/organizations/" + item.datasetowner.logoFilename)" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.datasetowner.name)" />
+                    </a>
+                    <div class="orglogo">
+                        <a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
+                            @Html.DisplayFor(modelItem => item.datasetowner.name)
+                        </a>
+                    </div>
+
+                    <a class="beskrivelse-print visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
+                        <p>Eier: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
+                    </a>
+
+                    <br class="hidden-print" />
+                    <div class="hidden-print">
+                        @if (item.description != null)
+                {
+                            <p>
+                                @if (item.description.Length < 80)
+                                {
+                                    @item.description.Substring(0, item.description.Length)
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                }
+                                else
+                                {
+                                    @item.description.Substring(0, 80)<text>...</text>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                }
+                            </p>
+                        }
+                    </div>
+                    <p class="visible-print">@item.description</p>
+                </div>
+                <div class="col-information col-xs-8 col-sm-5 col-md-5 col-lg-5">
+                    <ul style="list-style-type:none;">
+                        @if (item.dokStatus != null)
+                        {
+                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
+                        }
+                        @if (item.dokStatusDateAccepted != null)
+                        {
+                            <li><span>DOK-godkjenningsdato: </span>@item.dokStatusDateAccepted </li>
+                        }
+                        @if (item.dateSubmitted != null)
+                        {
+                            <li><span>Innsendt: </span>@item.dateSubmitted </li>
+                        }
+                        @if (item.modified != null)
+                        {
+                            <li><span>Siste endret: </span>@item.modified </li>
+                        }
+
+
+                        @if (item.ThemeGroupId != null)
+                        {
+                            <li title="Temagruppe: @item.theme.description">
+                                <span>Gruppe: </span>@item.theme.description
+                            </li>
+                        }
+                        else
+                        {
+                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
+                        }
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+        <hr />
     }
 </div>

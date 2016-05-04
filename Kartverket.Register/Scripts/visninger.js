@@ -34,6 +34,14 @@ function listView() {
     $('.search-results').removeClass('gallery-view');
     $('.search-results').addClass('list-view');
 
+    console.log("listView");
+
+    if ($("#listView").length > 0) {
+        console.log("listView enter");
+        $("#listView").show();
+        $("#tableView").hide();
+    }
+
     localStorage.setItem("visningstype", "liste");
 }
 
@@ -98,6 +106,13 @@ function tableView() {
     $('.search-results').removeClass('gallery-view');
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
+
+    console.log("tableView");
+
+    if ($("#tableView").length > 0) {
+        $("#tableView").show();
+        $("#listView").hide();
+    }
 
 
     localStorage.setItem("visningstype", "tabell");

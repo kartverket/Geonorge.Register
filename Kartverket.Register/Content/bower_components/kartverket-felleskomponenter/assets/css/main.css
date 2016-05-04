@@ -1624,8 +1624,7 @@ iframe {
   padding-left: 34.6px; }
 
 .auto-results-inner,
-.auto-results-inner:hover
-.auto-results-inner[data-ng-class="highlight"] {
+.auto-results-inner:hover .auto-results-inner[data-ng-class="highlight"] {
   color: #3867c8;
   font-family: 'Open Sans', sans-serif;
   font-size: 14pt;
@@ -1913,6 +1912,15 @@ aside ul li, .container-footer ul li {
   vertical-align: middle;
   margin-right: 5px !important;
   margin-left: 5px !important; }
+
+.status-icons .custom-icon, .status-icons .fa, .status-icons .glyphicon {
+  width: 20px !important;
+  height: 20px;
+  margin: 0 4px;
+  text-align: center;
+  vertical-align: middle; }
+  .status-icons .custom-icon.custom-icon-info, .status-icons .fa.custom-icon-info, .status-icons .glyphicon.custom-icon-info {
+    height: 17px; }
 
 .btn .custom-icon {
   vertical-align: middle;
@@ -2372,6 +2380,12 @@ input.form-control, input[type=text], textarea {
 .no-padding {
   padding: 0; }
 
+.no-padding-bottom {
+  padding-bottom: 0 !important; }
+
+.no-margin-bottom {
+  margin-bottom: 0 !important; }
+
 .margin-bottom-10 {
   margin-bottom: 10px; }
 
@@ -2384,6 +2398,9 @@ input.form-control, input[type=text], textarea {
 .no-border-radius, .help-text, .panel, .panel-heading,
 .no-border-radius input, .help-text input, .panel input, .panel-heading input {
   border-radius: 0 !important; }
+
+.text-left {
+  text-align: left !important; }
 
 @media (max-width: 991px) {
   span.hypernation {
@@ -2737,6 +2754,9 @@ ul#thumbnailsCoverage {
 .search-button-wrapper .btn:focus, .search-button-wrapper .btn:hover {
   background-color: #FFF; }
 
+.container .search .searchbar input {
+  padding: 0 10px; }
+
 @media (max-width: 767px) {
   .container-login {
     display: none; }
@@ -2748,7 +2768,9 @@ ul#thumbnailsCoverage {
     width: 0; }
   .top-row .col-xs-2 {
     width: 250px;
-    text-align: right; } }
+    text-align: right; }
+  .container .search .searchbar .input {
+    padding-left: 34.6px !important; } }
 
 #norgeskartmodal {
   width: 90%;

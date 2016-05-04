@@ -123,17 +123,17 @@
         <div class="col-md-2">@OrderByLink("Tittel", "name")</div>
         <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
         <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
-        <div class="col-md-5">
-            @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
-            @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-info alert-success")
+        <div class="col-md-5 status-icons">
+            @OrderByLink("", "dokDeliveryMetadataStatus", "fa fa-info-circle")
+            @OrderByLink("", "dokDeliveryProductSheetStatus", "fa fa-info-circle text-success")
             @OrderByLink("", "dokDeliveryPresentationRulesStatus", "glyphicon glyphicon-picture")
             @OrderByLink("", "dokDeliveryProductSpecificationStatus", "glyphicon glyphicon-list-alt")
             @OrderByLink("", "dokDeliveryWmsStatus", "glyphicon glyphicon-globe")
-            @OrderByLink("", "dokDeliveryWfsStatus", "glyphicon glyphicon-list-alt alert-success")
-            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "glyphicon glyphicon-globe alert-success")
+            @OrderByLink("", "dokDeliveryWfsStatus", "glyphicon glyphicon-globe text-success")
+            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "fa fa-map")
             @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
             @OrderByLink("", "dokDeliveryServiceAlertStatus", "fa fa-rss")
-            @OrderByLink("", "dokDeliveryGeodataLawStatus", "glyphicon glyphicon-asterisk")
+            @OrderByLink("", "dokDeliveryGeodataLawStatus", "fa fa-paragraph")
         </div>
         <div class="col-md-1">@OrderByLink("STATUS", "dokStatus")</div>
     </div>
@@ -155,7 +155,7 @@
             }
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 status-icons">
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)

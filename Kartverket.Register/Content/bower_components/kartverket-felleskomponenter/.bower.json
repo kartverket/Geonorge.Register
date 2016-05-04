@@ -41,14 +41,14 @@
     "angular-bootstrap": "^1.2.4",
     "js-cookie": "^2.1.0"
   },
-  "version": "0.0.59",
-  "_release": "0.0.59",
+  "version": "0.0.65",
+  "_release": "0.0.65",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.59",
-    "commit": "a5d9b4a14c10dff918e2247fd1e4aed8168393ea"
+    "tag": "v0.0.65",
+    "commit": "603e00f74525f6ab23ca2a6d5af225e5a019ab59"
   },
   "_source": "https://github.com/kartverket/felleskomponenter.git",
-  "_target": "0.0.59",
+  "_target": "0.0.65",
   "_originalSource": "kartverket-felleskomponenter"
 }

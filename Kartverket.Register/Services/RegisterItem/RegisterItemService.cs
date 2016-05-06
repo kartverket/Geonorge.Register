@@ -269,6 +269,18 @@ namespace Kartverket.Register.Services.RegisterItem
                 dataset.dokStatusDateAccepted = DateTime.Now;
                 coverage.MunicipalityId = dataset.datasetownerId;
                 coverage.Note = dataset.Notes;
+                bool coverageFound = false;
+                try
+                {
+                    var uuid = dataset.Uuid;
+                    var organization = (Organization) _dbContext.RegisterItems.Where(org => org.systemId == coverage.MunicipalityId).FirstOrDefault();
+                    var municipalityService = new MunicipalityService();
+                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organization.number);
+                    CoverageService coverageService = new CoverageService();
+                    coverageFound = coverageService.GetCoverage(uuid, municipalityCode);
+                }
+                catch { }
+                coverage.Coverage = coverageFound;
             }
 
             _dbContext.Entry(coverage).State = EntityState.Modified;

@@ -885,6 +885,11 @@
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Coverage_Municipality">
+            <summary>
+              Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
+            </summary>
+        </member>
         <member name="P:Resources.UI.DOK_Delivery_Distribution">
             <summary>
               Looks up a localized string similar to Nedlastning status.

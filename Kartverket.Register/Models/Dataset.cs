@@ -280,6 +280,18 @@ namespace Kartverket.Register.Models
             return false;
         }
 
+        public bool GetCoverageByUser(Guid datasetOwnerId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == datasetOwnerId)
+                {
+                    return coverage.Coverage;
+                }
+            }
+            return false;
+        }
+
         public string GetCoverageNoteByUser(Guid datasetownerId)
         {
             if (IsNationalDataset())

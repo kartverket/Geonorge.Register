@@ -1071,6 +1071,24 @@ namespace Kartverket.Register.Helpers
 
         }
 
+        public static string GetCoverage(Dataset item, CodelistValue selectedMunicipality)
+        {
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
+            {
+                if (coverage.Coverage)
+                {
+                    return "Ja";
+                }
+                else
+                {
+                    return "Nei";
+                }
+            }
+            else return "Nei";
+
+        }
+
         public static string GetNoteFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")

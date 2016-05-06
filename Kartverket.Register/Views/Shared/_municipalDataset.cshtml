@@ -53,13 +53,16 @@
                     @Html.ActionLink("Eier", "Details", new { sorting = "datasetOwner" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Eier, @class = "tablesorter-header-inner" })
                 </th>
                 <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("dokStatus") ?  (ViewBag.SortOrder == "dokStatus_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
-                    @Html.ActionLink("Nasjonal DOK-status", "Details", new { sorting = "dokStatus" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonal_Status, @class = "tablesorter-header-inner" })
+                    @Html.ActionLink("DOK-status", "Details", new { sorting = "dokStatus" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonal_Status, @class = "tablesorter-header-inner" })
                 </th>
                 <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("type") ?  (ViewBag.SortOrder == "type_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
-                    @Html.ActionLink("Nasjonalt/ Kommunalt", "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonalt_Kommunalt, @class = "tablesorter-header-inner" })
+                    @Html.ActionLink("Regions-type", "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipal.value }, new { data_toggle = "tooltip", data_placement = "bottom", title = UI.DOK_Nasjonalt_Kommunalt, @class = "tablesorter-header-inner" })
                 </th>
                 <th style="width:10%">
-                    <a href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft som kommunens DOK</a>
+                    <a href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a>
+                </th>
+                <th style="width:10%">
+                    <a href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Coverage_Municipality">Dekning</a>
                 </th>
                 <th style="width:20%"><a href="#" class="link-unstyled" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Kommentar">Kommunes merknad</a></th>
             </tr>
@@ -101,6 +104,9 @@
                     </td>
                     <td style="text-align: center" title="Bekreftet som kommunens DOK: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipal)
+                    </td>
+                    <td style="text-align: center" title="Dekningsangivelse: @HtmlHelperExtensions.GetCoverage(item, selectedMunicipal)">
+                        @HtmlHelperExtensions.GetCoverage(item, selectedMunicipal)
                     </td>
                     <td title="Merknad: @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)">
                         @HtmlHelperExtensions.GetNoteFromCoverage(item, selectedMunicipal)

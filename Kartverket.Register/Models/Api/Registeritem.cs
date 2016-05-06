@@ -67,6 +67,7 @@ namespace Kartverket.Register.Models.Api
 
         //MunicipalDataset
         public string ConfirmedDok { get; set; }
+        public string Coverage { get; set; }
         public string NoteMunicipal { get; set; }
 
         // ServiceAlert
@@ -152,6 +153,7 @@ namespace Kartverket.Register.Models.Api
 
                 MetadataUrl = d.MetadataUrl;
                 ConfirmedDok = "NEI";
+                Coverage = "NEI";
                 if (filter != null && !string.IsNullOrEmpty(filter.municipality))
                 {
                     Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
@@ -163,6 +165,7 @@ namespace Kartverket.Register.Models.Api
                         {
                             NoteMunicipal = coverage.Note;
                             ConfirmedDok = coverage.ConfirmedDok ? "JA" : "NEI";
+                            Coverage = coverage.Coverage ? "JA" : "NEI";
                         }
                     }
                 }

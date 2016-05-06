@@ -181,7 +181,7 @@ namespace Kartverket.Register.Formatter
         {
             item.description = RemoveBreaksFromDescription(item.description);
             string text = null;          
-            text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.NoteMunicipal + ";" +item.MetadataUrl;
+            text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.Coverage + ";" + item.NoteMunicipal + ";" +item.MetadataUrl;
             streamWriter.WriteLine(text);
         }
 
@@ -252,7 +252,7 @@ namespace Kartverket.Register.Formatter
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
         {
             string heading = "Det offentlige kartgrunnlaget - " + register.SelectedDOKMunicipality + ", " + DateTime.Today.ToString("d") + "\r\n";
-            heading = heading + "Temagruppe;Tittel;Eier;DOK-status;Oppdatert;Versjons Id;Beskrivelse;Nasjonalt/kommunalt;Bekreftet som kommunens DOK;Kommunens merknad;Url til kartkatalog";
+            heading = heading + "Temagruppe;Tittel;Eier;DOK-status;Oppdatert;Versjons Id;Beskrivelse;Regions-type;Bekreftet;Dekning;Merknad;Url til kartkatalog";
             return heading;
         }
 

@@ -276,7 +276,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     var organization = (Organization) _dbContext.RegisterItems.Where(org => org.systemId == coverage.MunicipalityId).FirstOrDefault();
                     var municipalityService = new MunicipalityService();
                     var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organization.number);
-                    CoverageService coverageService = new CoverageService();
+                    CoverageService coverageService = new CoverageService(_dbContext);
                     coverageFound = coverageService.GetCoverage(uuid, municipalityCode);
                 }
                 catch { }

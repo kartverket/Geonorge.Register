@@ -290,7 +290,7 @@ namespace Kartverket.Register.Controllers
                     }
                     else {
 
-                        CoverageService coverage = new CoverageService();
+                        CoverageService coverage = new CoverageService(db);
                         bool coverageFound = coverage.GetCoverage(originalDataset.Uuid, municipalityCode);
                         if (originalCoverage == null)
                         {

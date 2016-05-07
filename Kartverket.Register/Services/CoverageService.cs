@@ -47,7 +47,7 @@ namespace Kartverket.Register.Services
 
             foreach (var municipality in municipalities)
             {
-                if (municipality.ToString() == municipalityCode)
+                if (municipality.ToString() == municipalityCode.TrimStart('0'))
                 {
                     foundCoverage = true;
                     break;

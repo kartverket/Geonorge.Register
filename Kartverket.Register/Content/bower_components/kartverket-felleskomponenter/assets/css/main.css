@@ -1624,8 +1624,7 @@ iframe {
   padding-left: 34.6px; }
 
 .auto-results-inner,
-.auto-results-inner:hover
-.auto-results-inner[data-ng-class="highlight"] {
+.auto-results-inner:hover .auto-results-inner[data-ng-class="highlight"] {
   color: #3867c8;
   font-family: 'Open Sans', sans-serif;
   font-size: 14pt;
@@ -1892,6 +1891,10 @@ aside ul li, .container-footer ul li {
 .search-filter-wrapper {
   margin-top: 10px; }
 
+#tab-content {
+  transition: opacity .35s linear 0s;
+  -webkit-transition: opacity .35s linear 0s; }
+
 .custom-icon {
   background-repeat: no-repeat;
   background-position: center;
@@ -1909,6 +1912,15 @@ aside ul li, .container-footer ul li {
   vertical-align: middle;
   margin-right: 5px !important;
   margin-left: 5px !important; }
+
+.status-icons .custom-icon, .status-icons .fa, .status-icons .glyphicon {
+  width: 20px !important;
+  height: 20px;
+  margin: 0 4px;
+  text-align: center;
+  vertical-align: middle; }
+  .status-icons .custom-icon.custom-icon-info, .status-icons .fa.custom-icon-info, .status-icons .glyphicon.custom-icon-info {
+    height: 17px; }
 
 .btn .custom-icon {
   vertical-align: middle;
@@ -1973,6 +1985,19 @@ aside ul li, .container-footer ul li {
 
 .disabled .custom-icon.custom-icon-eksternlink {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-disabled.svg"); }
+
+/* Smileys */
+.custom-icon.custom-icon-smile-green {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/smile-green.svg");
+  width: 30px; }
+
+.custom-icon.custom-icon-smile-yellow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/smile-yellow.svg");
+  width: 30px; }
+
+.custom-icon.custom-icon-smile-red {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/smile-red.svg");
+  width: 30px; }
 
 /* Open data */
 .custom-icon.custom-icon-hengelaas-open-green {
@@ -2340,11 +2365,32 @@ input[readonly] {
     .upload-group .upload-btn {
       display: block; } }
 
+.container .input-group .form-control,
+.container .input-group .form-control:not(:first-child):not(:last-child),
+.container .input-group input {
+  border-top-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  padding: 0 10px; }
+
+input.form-control, input[type=text], textarea {
+  padding: 0 10px; }
+
 .no-padding {
   padding: 0; }
 
+.no-padding-bottom {
+  padding-bottom: 0 !important; }
+
+.no-margin-bottom {
+  margin-bottom: 0 !important; }
+
 .margin-bottom-10 {
   margin-bottom: 10px; }
+
+.margin-top-10 {
+  margin-top: 10px; }
 
 .full-width {
   width: 100% !important; }
@@ -2352,6 +2398,9 @@ input[readonly] {
 .no-border-radius, .help-text, .panel, .panel-heading,
 .no-border-radius input, .help-text input, .panel input, .panel-heading input {
   border-radius: 0 !important; }
+
+.text-left {
+  text-align: left !important; }
 
 @media (max-width: 991px) {
   span.hypernation {
@@ -2563,16 +2612,59 @@ textarea, textarea.form-control {
   border-bottom: 1px solid #414042;
   margin-bottom: 10px; }
   .nav-tabs > li > a {
-    background-color: #7DA1C4;
+    background-color: #7da1c4;
     transition: all 0.35s linear 0s;
     color: #FFF;
-    border-bottom: 1px solid #414042;
+    border-bottom: none;
     border-radius: 0;
-    font-size: 13px; }
+    font-size: 13px;
+    margin-bottom: 0; }
+    .nav-tabs > li > a.btn {
+      border: none;
+      font-size: 12pt;
+      line-height: 16pt;
+      padding: 6px 12px; }
+  .nav-tabs > li.active.has-error a {
+    color: #ED1C24;
+    background-color: #FFF; }
   .nav-tabs li.has-error > span.glyphicon-warning-sign {
     position: absolute;
     z-index: 2;
-    color: #a94442; }
+    color: #ED1C24; }
+  .nav-tabs li.has-error a {
+    background-color: #C47D7D; }
+
+@media (max-width: 1199px) {
+  .nav-tabs {
+    border-bottom: none; }
+    .nav-tabs > li {
+      display: inline-block;
+      padding: 0 3px;
+      text-align: center;
+      width: 33.333%; }
+      .nav-tabs > li.pull-right {
+        float: none !important; }
+      .nav-tabs > li > a {
+        border: none;
+        font-size: 12pt;
+        line-height: 16pt;
+        padding: 6px 12px;
+        margin-bottom: 7px;
+        height: 34px;
+        display: inline-block;
+        width: 100%; }
+      .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
+        background-color: #fe5000 !important;
+        color: #FFF !important;
+        border: none !important; } }
+
+@media (max-width: 767px) {
+  .nav-tabs > li {
+    width: 50%; } }
+
+@media (max-width: 540px) {
+  .nav-tabs > li {
+    width: 100%; } }
 
 .label-list {
   padding: 0;
@@ -2597,7 +2689,7 @@ textarea, textarea.form-control {
       top: 0;
       right: 0;
       text-decoration: none;
-      background-color: #7DA1C4;
+      background-color: #7da1c4;
       line-height: 19pt;
       color: #FFF;
       font-size: 10pt;
@@ -2610,7 +2702,7 @@ textarea, textarea.form-control {
       .label-list li .label-list-remove:hover {
         text-decoration: none;
         color: #FFF;
-        background-color: #FE5000; }
+        background-color: #fe5000; }
       .label-list li .label-list-remove:before {
         font-family: "Glyphicons Halflings";
         content: "\e014"; }
@@ -2662,6 +2754,9 @@ ul#thumbnailsCoverage {
 .search-button-wrapper .btn:focus, .search-button-wrapper .btn:hover {
   background-color: #FFF; }
 
+.container .search .searchbar input {
+  padding: 0 10px; }
+
 @media (max-width: 767px) {
   .container-login {
     display: none; }
@@ -2673,7 +2768,9 @@ ul#thumbnailsCoverage {
     width: 0; }
   .top-row .col-xs-2 {
     width: 250px;
-    text-align: right; } }
+    text-align: right; }
+  .container .search .searchbar .input {
+    padding-left: 34.6px !important; } }
 
 #norgeskartmodal {
   width: 90%;
@@ -2721,23 +2818,27 @@ ul#thumbnailsCoverage {
 .progress-bar {
   font-size: 12pt;
   line-height: 20pt;
-  background-color: #FE5000; }
+  background-color: #fe5000; }
 
 /* styles for validation helpers */
 .field-validation-error {
-  color: #b94a48; }
+  color: #ED1C24; }
 
 .field-validation-valid {
   display: none; }
 
 input.input-validation-error {
-  border: 1px solid #b94a48; }
+  border: 1px solid #ED1C24; }
 
 input[type="checkbox"].input-validation-error {
   border: 0 none; }
 
 .validation-summary-errors {
-  color: #b94a48; }
+  color: #333;
+  border: none;
+  border-left: 8px solid #ED1C24;
+  border-radius: 0;
+  background-color: #FFF; }
 
 .validation-summary-valid {
   display: none; }
@@ -2752,7 +2853,19 @@ input[type="checkbox"].input-validation-error {
   border-style: solid; }
 
 .help-text.bg-success {
-  border-left: 8px solid #A9C47F; }
+  border-left: 8px solid #4EB365; }
+
+.has-error.checkbox-inline label,
+.has-error.checkbox label,
+.has-error.radio-inline label, .has-error.radio,
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error .form-control-feedback {
+  color: #ED1C24; }
 
 .modal-footer .btn {
   margin-bottom: 0; }
@@ -3030,11 +3143,11 @@ input[type="checkbox"].input-validation-error {
   transition: all .35s linear 0s;
   height: 34px;
   padding: 5px 10px; }
-
-.ui-datepicker-header .ui-corner-all:hover {
-  background-color: #fe5000;
-  color: #FFF;
-  border: 1px solid #FFF; }
+  .ui-datepicker-header .ui-corner-all:hover {
+    background: none;
+    background-color: #fe5000;
+    color: #FFF;
+    border: 1px solid #FFF; }
 
 .ui-datepicker .ui-datepicker-next-hover {
   right: 2px;
@@ -3048,7 +3161,8 @@ input[type="checkbox"].input-validation-error {
   font-size: 0;
   text-indent: 0;
   line-height: 16pt;
-  text-align: center; }
+  text-align: center;
+  background: none; }
 
 .ui-corner-all .ui-corner-all .ui-icon.ui-icon-circle-triangle-e:before, .ui-corner-all .ui-icon.ui-icon-circle-triangle-w:before {
   font: normal normal normal 12pt/1 FontAwesome;
@@ -3063,6 +3177,7 @@ input[type="checkbox"].input-validation-error {
 
 /* Days */
 .ui-widget-content .ui-state-default {
+  background: none;
   background-color: #7da1c4;
   color: #FFF;
   border: 1px solid #FFF;
@@ -3072,6 +3187,29 @@ input[type="checkbox"].input-validation-error {
   background-color: #fe5000;
   color: #FFF;
   border: 1px solid #FFF; }
+
+.ui-tooltip {
+  min-width: 100px;
+  max-width: 200px;
+  padding: 3px 8px;
+  color: #fff;
+  text-align: center;
+  background: none;
+  background-color: #000;
+  border-radius: 4px;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 12px;
+  opacity: .9;
+  position: absolute; }
+
+.ui-tooltip:before {
+  border-width: 0 5px 5px;
+  border-bottom-color: #000;
+  border-style: solid;
+  content: "";
+  position: absolute;
+  top: -5px;
+  color: transparent; }
 
 html[data-useragent*='MSIE 10.0'] .chosen-input-group .input-group-btn {
   display: table-row; }

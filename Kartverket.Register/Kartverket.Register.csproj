@@ -596,6 +596,22 @@
     <Compile Include="Migrations\201603291107049_DoServiceAlertNoteRequired.Designer.cs">
       <DependentUpon>201603291107049_DoServiceAlertNoteRequired.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604280951531_DokDeliveryStatus.cs" />
+    <Compile Include="Migrations\201604280951531_DokDeliveryStatus.Designer.cs">
+      <DependentUpon>201604280951531_DokDeliveryStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604281033366_DokDeliveryStatusDetails.cs" />
+    <Compile Include="Migrations\201604281033366_DokDeliveryStatusDetails.Designer.cs">
+      <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604291206482_DatasetRestricted.cs" />
+    <Compile Include="Migrations\201604291206482_DatasetRestricted.Designer.cs">
+      <DependentUpon>201604291206482_DatasetRestricted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605060354154_AddCoverageForDataset.cs" />
+    <Compile Include="Migrations\201605060354154_AddCoverageForDataset.Designer.cs">
+      <DependentUpon>201605060354154_AddCoverageForDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -614,6 +630,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\Dimension.cs" />
+    <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
@@ -667,6 +684,7 @@
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccessControlService.cs" />
+    <Compile Include="Services\CoverageService.cs" />
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
@@ -781,6 +799,9 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lukk_968c83_50px-01-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\open_fe5000_50px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-green.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-red.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-yellow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\soek.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
@@ -1048,7 +1069,9 @@
     <Content Include="settings.config" />
     <Content Include="settings.default.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\bower_components\kartverket-felleskomponenter\assets\images\ikoner\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -1313,6 +1336,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603291107049_DoServiceAlertNoteRequired.resx">
       <DependentUpon>201603291107049_DoServiceAlertNoteRequired.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604280951531_DokDeliveryStatus.resx">
+      <DependentUpon>201604280951531_DokDeliveryStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604281033366_DokDeliveryStatusDetails.resx">
+      <DependentUpon>201604281033366_DokDeliveryStatusDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604291206482_DatasetRestricted.resx">
+      <DependentUpon>201604291206482_DatasetRestricted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605060354154_AddCoverageForDataset.resx">
+      <DependentUpon>201605060354154_AddCoverageForDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

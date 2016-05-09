@@ -413,6 +413,110 @@ namespace Kartverket.Register.Helpers
                 sortedList = register.items.OrderByDescending(o => o.description).ToList();
             }
 
+            //DOK delivery status
+            else if (sortingType == "dokDeliveryMetadataStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryMetadataStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryMetadataStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryMetadataStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+
+            else if (sortingType == "dokDeliveryProductSheetStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSheetStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryProductSheetStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSheetStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryPresentationRulesStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryPresentationRulesStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryPresentationRulesStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryPresentationRulesStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryProductSpecificationStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSpecificationStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryProductSpecificationStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSpecificationStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryWmsStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryWmsStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryWmsStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWmsStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryWfsStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryWfsStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryWfsStatusId_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWfsStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryDistributionAreaStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryDistributionAreaStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryDistributionAreaStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryDistributionAreaStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryDistributionStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryDistributionStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryDistributionStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryDistributionStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryServiceAlertStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryServiceAlertStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryServiceAlertStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryServiceAlertStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryGeodataLawStatus")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokDeliveryGeodataLawStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+            else if (sortingType == "dokDeliveryGeodataLawStatus_desc")
+            {
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryGeodataLawStatusId);
+                sortedList = sorting.Cast<RegisterItem>().ToList();
+            }
+
+
             // ***** CodelistValue
 
             else if (sortingType == "codevalue")
@@ -955,6 +1059,24 @@ namespace Kartverket.Register.Helpers
             if (coverage != null)
             {
                 if (coverage.ConfirmedDok)
+                {
+                    return "Ja";
+                }
+                else
+                {
+                    return "Nei";
+                }
+            }
+            else return "Nei";
+
+        }
+
+        public static string GetCoverage(Dataset item, CodelistValue selectedMunicipality)
+        {
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
+            {
+                if (coverage.Coverage)
                 {
                     return "Ja";
                 }

@@ -269,6 +269,18 @@ namespace Kartverket.Register.Services.RegisterItem
                 dataset.dokStatusDateAccepted = DateTime.Now;
                 coverage.MunicipalityId = dataset.datasetownerId;
                 coverage.Note = dataset.Notes;
+                bool coverageFound = false;
+                try
+                {
+                    var uuid = dataset.Uuid;
+                    var organization = (Organization) _dbContext.RegisterItems.Where(org => org.systemId == coverage.MunicipalityId).FirstOrDefault();
+                    var municipalityService = new MunicipalityService();
+                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organization.number);
+                    CoverageService coverageService = new CoverageService(_dbContext);
+                    coverageFound = coverageService.GetCoverage(uuid, municipalityCode);
+                }
+                catch { }
+                coverage.Coverage = coverageFound;
             }
 
             _dbContext.Entry(coverage).State = EntityState.Modified;
@@ -432,6 +444,11 @@ namespace Kartverket.Register.Services.RegisterItem
         public SelectList GetDokStatusSelectList(string dokStatusId)
         {
             return new SelectList(_dbContext.DokStatuses.OrderBy(s => s.description), "value", "description", dokStatusId);
+        }
+
+        public SelectList GetDokDeliveryStatusSelectList(string dokDeliveryStatusId)
+        {
+            return new SelectList(_dbContext.DokDeliveryStatuses.OrderBy(s => s.description), "value", "description", dokDeliveryStatusId);
         }
 
         public SelectList GetSubmitterSelectList(Guid submitterId)

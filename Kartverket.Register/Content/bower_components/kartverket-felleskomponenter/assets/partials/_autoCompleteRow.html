@@ -11,6 +11,17 @@
                 </table>
             </a>
         </div>
+        <div>
+            <a data-ng-href="{{result.url}}?text={{$root.searchQuery}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner" href="{{result.url}}?text={{$root.searchQuery}}">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Vis alle treff...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </a>
+        </div>
     </div>
 </div>
 <div class="col-xs-12 auto-result-row" data-ng-show="autoCompleteResult.length == 0 && ajaxCallActive == false">

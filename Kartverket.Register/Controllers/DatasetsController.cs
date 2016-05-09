@@ -442,6 +442,16 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.registerId = _registerItemService.GetRegisterSelectList(dataset.registerId);
             ViewBag.dokStatusId = _registerItemService.GetDokStatusSelectList(dataset.dokStatusId);
+            ViewBag.dokDeliveryMetadataStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryMetadataStatusId);
+            ViewBag.dokDeliveryProductSheetStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryProductSheetStatusId);
+            ViewBag.dokDeliveryPresentationRulesStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryPresentationRulesStatusId);
+            ViewBag.dokDeliveryProductSpecificationStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryProductSpecificationStatusId);
+            ViewBag.dokDeliveryWmsStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryWmsStatusId);
+            ViewBag.dokDeliveryWfsStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryWfsStatusId);
+            ViewBag.dokDeliveryDistributionAreaStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryDistributionAreaStatusId);
+            ViewBag.dokDeliveryDistributionStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryDistributionStatusId);
+            ViewBag.dokDeliveryServiceAlertStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryServiceAlertStatusId);
+            ViewBag.dokDeliveryGeodataLawStatusId = _registerItemService.GetDokDeliveryStatusSelectList(dataset.dokDeliveryGeodataLawStatusId);
             ViewBag.CoverageDOKStatusId = _registerItemService.GetDokStatusSelectList(null);
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
@@ -523,7 +533,17 @@ namespace Kartverket.Register.Controllers
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
-
+            dataset.dokDeliveryMetadataStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryMetadataStatusId) ? inputDataset.dokDeliveryMetadataStatusId : "deficient";
+            dataset.dokDeliveryProductSheetStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSheetStatusId) ? inputDataset.dokDeliveryProductSheetStatusId : "deficient";
+            dataset.dokDeliveryPresentationRulesStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryPresentationRulesStatusId) ? inputDataset.dokDeliveryPresentationRulesStatusId : "deficient";
+            dataset.dokDeliveryProductSpecificationStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSpecificationStatusId) ? inputDataset.dokDeliveryProductSpecificationStatusId : "deficient";
+            dataset.dokDeliveryWmsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWmsStatusId) ? inputDataset.dokDeliveryWmsStatusId : "deficient";
+            dataset.dokDeliveryWfsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWfsStatusId) ? inputDataset.dokDeliveryWfsStatusId : "deficient";
+            dataset.dokDeliveryDistributionAreaStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionAreaStatusId) ? inputDataset.dokDeliveryDistributionAreaStatusId : "deficient";
+            dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "deficient";
+            dataset.dokDeliveryServiceAlertStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryServiceAlertStatusId) ? inputDataset.dokDeliveryServiceAlertStatusId : "deficient";
+            dataset.dokDeliveryGeodataLawStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryGeodataLawStatusId) ? inputDataset.dokDeliveryGeodataLawStatusId : "deficient";
+            dataset.restricted = inputDataset.restricted;
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;
         }

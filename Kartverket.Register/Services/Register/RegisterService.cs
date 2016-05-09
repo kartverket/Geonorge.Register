@@ -153,7 +153,7 @@ namespace Kartverket.Register.Services.Register
 
         private void AddNationalDatasets(List<Models.RegisterItem> registerItems)
         {
-            Models.Register DOK = GetRegisterByName("Det offentlige kartgrunnlaget");
+            Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
             foreach (Models.RegisterItem item in DOK.items)
             {
                 registerItems.Add(item);

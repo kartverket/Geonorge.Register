@@ -289,13 +289,17 @@ namespace Kartverket.Register.Controllers
                         _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
                     else {
+
+                        CoverageService coverage = new CoverageService(db);
+                        bool coverageFound = coverage.GetCoverage(originalDataset.Uuid, municipalityCode);
                         if (originalCoverage == null)
                         {
-                            originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode));
+                            originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound));
                         }
                         else
                         {
                             originalCoverage.ConfirmedDok = item.Confirmed;
+                            originalCoverage.Coverage = coverageFound;
                             originalCoverage.Note = item.Note;
                             originalDataset.Notes = item.Note;
                             db.Entry(originalCoverage).State = EntityState.Modified;
@@ -378,7 +382,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 
-        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode)
+        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode, bool coverageFound)
         {
             Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
             CoverageDataset coverage = new CoverageDataset
@@ -386,6 +390,7 @@ namespace Kartverket.Register.Controllers
                 CoverageId = Guid.NewGuid(),
                 CoverageDOKStatusId = "Accepted",
                 ConfirmedDok = item.Confirmed,
+                Coverage = coverageFound,
                 dataset = originalDataset,
                 DatasetId = originalDataset.systemId,
                 MunicipalityId = municipality.systemId,

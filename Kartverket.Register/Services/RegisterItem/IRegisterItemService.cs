@@ -28,6 +28,7 @@ namespace Kartverket.Register.Services.RegisterItem
         void SaveDeleteRegisterItem(Models.RegisterItem registerItem);
         SelectList GetRegisterSelectList(Guid registerId);
         SelectList GetDokStatusSelectList(string dokStatusId);
+        SelectList GetDokDeliveryStatusSelectList(string dokDeliveryStatusId);
         SelectList GetSubmitterSelectList(Guid submitterId);
         SelectList GetOwnerSelectList(Guid ownerId);
         SelectList GetThemeGroupSelectList(string themeGroupId);

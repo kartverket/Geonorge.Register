@@ -79,6 +79,60 @@ namespace Kartverket.Register.Models
 
         public virtual List<CoverageDataset> Coverage { get; set; }
 
+        //Dok delivery statuses
+        //Metadata
+        [ForeignKey("dokDeliveryMetadataStatus")]
+        [Display(Name = "Metadatakvalitet:")]
+        public string dokDeliveryMetadataStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryMetadataStatus { get; set; }
+        //ProductSheet
+        [ForeignKey("dokDeliveryProductSheetStatus")]
+        [Display(Name = "Produktark:")]
+        public string dokDeliveryProductSheetStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryProductSheetStatus { get; set; }
+        //PresentationRules
+        [ForeignKey("dokDeliveryPresentationRulesStatus")]
+        [Display(Name = "Kartografidokumentasjon:")]
+        public string dokDeliveryPresentationRulesStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryPresentationRulesStatus { get; set; }
+        //ProductSpecification
+        [ForeignKey("dokDeliveryProductSpecificationStatus")]
+        [Display(Name = "Produktspesifikasjon:")]
+        public string dokDeliveryProductSpecificationStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryProductSpecificationStatus { get; set; }
+        //WMS
+        [ForeignKey("dokDeliveryWmsStatus")]
+        [Display(Name = "WMS-tjeneste:")]
+        public string dokDeliveryWmsStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryWmsStatus { get; set; }
+        //WFS
+        [ForeignKey("dokDeliveryWfsStatus")]
+        [Display(Name = "WFS-tjeneste:")]
+        public string dokDeliveryWfsStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryWfsStatus { get; set; }
+        //DistributionArea
+        [ForeignKey("dokDeliveryDistributionAreaStatus")]
+        [Display(Name = "Dekningskart:")]
+        public string dokDeliveryDistributionAreaStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryDistributionAreaStatus { get; set; }
+        //Distribution
+        [ForeignKey("dokDeliveryDistributionStatus")]
+        [Display(Name = "Filnedlasting:")]
+        public string dokDeliveryDistributionStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryDistributionStatus { get; set; }
+        //ServiceAlert
+        [ForeignKey("dokDeliveryServiceAlertStatus")]
+        [Display(Name = "Endringsvarsling:")]
+        public string dokDeliveryServiceAlertStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryServiceAlertStatus { get; set; }
+        //GeodataLaw
+        [ForeignKey("dokDeliveryGeodataLawStatus")]
+        [Display(Name = "Oppfyller geodataloven:")]
+        public string dokDeliveryGeodataLawStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryGeodataLawStatus { get; set; }
+
+        public bool? restricted { get; set; }
+
 
         public virtual string GetDatasetUrl()
         {
@@ -221,6 +275,18 @@ namespace Kartverket.Register.Models
                 if (coverage.MunicipalityId == datasetOwnerId)
                 {
                     return coverage.ConfirmedDok;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageByUser(Guid datasetOwnerId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == datasetOwnerId)
+                {
+                    return coverage.Coverage;
                 }
             }
             return false;

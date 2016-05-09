@@ -885,6 +885,101 @@
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Coverage_Municipality">
+            <summary>
+              Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Distribution">
+            <summary>
+              Looks up a localized string similar to Nedlastning status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_DistributionArea">
+            <summary>
+              Looks up a localized string similar to Dekningskart status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_GeodataLaw">
+            <summary>
+              Looks up a localized string similar to Geodataloven status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Metadata">
+            <summary>
+              Looks up a localized string similar to Metadata status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Owner">
+            <summary>
+              Looks up a localized string similar to Eier.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_PresentationRules">
+            <summary>
+              Looks up a localized string similar to Tegneregler status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_ProductSheet">
+            <summary>
+              Looks up a localized string similar to Produktark status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_ProductSpesification">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjoner status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Restricted">
+            <summary>
+              Looks up a localized string similar to Skjermede data - kontakt dataeier for tilgangsforespørsel.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_ServiceAlert">
+            <summary>
+              Looks up a localized string similar to Endringsvarsling status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status">
+            <summary>
+              Looks up a localized string similar to Status datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Deficient">
+            <summary>
+              Looks up a localized string similar to Mangelfull.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Good">
+            <summary>
+              Looks up a localized string similar to God.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_Useable">
+            <summary>
+              Looks up a localized string similar to Brukbar.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Theme">
+            <summary>
+              Looks up a localized string similar to Temagruppe.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Title">
+            <summary>
+              Looks up a localized string similar to Tittel.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Wfs">
+            <summary>
+              Looks up a localized string similar to Wfs status.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.DOK_Delivery_Wms">
+            <summary>
+              Looks up a localized string similar to Wms status.
+            </summary>
+        </member>
         <member name="P:Resources.UI.DOK_Eier">
             <summary>
               Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.

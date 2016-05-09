@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Resources;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -50,10 +51,23 @@ namespace Kartverket.Register.Models.Api
         public string theme { get; set; }
         public string dokStatus { get; set; }
 
+        public string dokDeliveryMetadataStatus { get; set; }
+        public string dokDeliveryProductSheetStatus { get; set; }
+        public string dokDeliveryPresentationRulesStatus { get; set; }
+        public string dokDeliveryProductSpecificationStatus { get; set; }
+        public string dokDeliveryWmsStatus { get; set; }
+        public string dokDeliveryWfsStatus { get; set; }
+        public string dokDeliveryDistributionAreaStatus { get; set; }
+        public string dokDeliveryDistributionStatus { get; set; }
+        public string dokDeliveryServiceAlertStatus { get; set; }
+        public string dokDeliveryGeodataLawStatus { get; set; }
+        public bool? restricted { get; set; }
+
         public string DatasetType { get; set; }
 
         //MunicipalDataset
         public string ConfirmedDok { get; set; }
+        public string Coverage { get; set; }
         public string NoteMunicipal { get; set; }
 
         // ServiceAlert
@@ -125,8 +139,21 @@ namespace Kartverket.Register.Models.Api
                 if (d.theme != null) theme = d.theme.description;
                 if (d.dokStatus != null) dokStatus = d.dokStatus.description;
                 if (d.DatasetType != null) DatasetType = d.DatasetType;
+                dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted :  d.dokDeliveryMetadataStatus.description;
+                dokDeliveryProductSheetStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
+                dokDeliveryPresentationRulesStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryPresentationRulesStatus.description;
+
+                dokDeliveryProductSpecificationStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSpecificationStatus.description;
+                dokDeliveryWmsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWmsStatus.description;
+                dokDeliveryWfsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWfsStatus.description;
+                dokDeliveryDistributionAreaStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryDistributionAreaStatus.description;
+                dokDeliveryDistributionStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryDistributionStatus.description;
+                dokDeliveryServiceAlertStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryServiceAlertStatus.description;
+                dokDeliveryGeodataLawStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryGeodataLawStatus.description;
+
                 MetadataUrl = d.MetadataUrl;
                 ConfirmedDok = "NEI";
+                Coverage = "NEI";
                 if (filter != null && !string.IsNullOrEmpty(filter.municipality))
                 {
                     Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
@@ -138,6 +165,7 @@ namespace Kartverket.Register.Models.Api
                         {
                             NoteMunicipal = coverage.Note;
                             ConfirmedDok = coverage.ConfirmedDok ? "JA" : "NEI";
+                            Coverage = coverage.Coverage ? "JA" : "NEI";
                         }
                     }
                 }

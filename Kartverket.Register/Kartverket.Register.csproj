@@ -82,11 +82,17 @@
       <HintPath>..\packages\ImageResizer.4.0.5\lib\net45\ImageResizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Kentor.AuthServices">
-      <HintPath>..\packages\Kentor.AuthServices.0.11.0\lib\net45\Kentor.AuthServices.dll</HintPath>
+    <Reference Include="Kentor.AuthServices, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kentor.AuthServices.0.17.2\lib\net45\Kentor.AuthServices.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="Kentor.AuthServices.Mvc">
-      <HintPath>..\packages\Kentor.AuthServices.Mvc.0.11.0\lib\net45\Kentor.AuthServices.Mvc.dll</HintPath>
+    <Reference Include="Kentor.AuthServices.HttpModule, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kentor.AuthServices.HttpModule.0.17.2\lib\net45\Kentor.AuthServices.HttpModule.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Kentor.AuthServices.Mvc, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Kentor.AuthServices.Mvc.0.17.2\lib\net45\Kentor.AuthServices.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -945,7 +951,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="lib\PDFLibNet.dll" />
-    <Content Include="readme.txt" />
     <Content Include="robots.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

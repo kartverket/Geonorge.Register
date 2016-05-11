@@ -74,7 +74,7 @@
                 if (!Request.IsAuthenticated) { 
                 <span><a href="@Url.Action("SignIn", "AuthServices")"> Logg inn</a> for å legge til nye varsler.</span><br />
                 }
-                <a href="@RegisterUrls.urlFormat(Request, "rss")" class="">Abonnere på tjenestevarsler</a><br/>
+                <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">Abonnere på tjenestevarsler</a><br/>
             }
         </div>
 

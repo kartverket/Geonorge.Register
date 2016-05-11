@@ -168,10 +168,19 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
+            var menuService2 = encodeURI(searchOption.api + '?limit=5&facets[1]name=type&facets[1]value=service' + '&text=' + query);
+            var request2 = $http({
+                method: 'GET',
+                url: menuService2,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'accept': '*/*'
+                },
+                data: {}
+            });
 
+            return $q.all([request, request2, request1]);
 
-
-            return $q.all([request, request1]);
         }
 
     }]).controller('searchTopController', [
@@ -453,6 +462,8 @@ var baseurl_local = searchOption.baseUrl;
                       return "Datasett";
                   case "servicelayer":
                       return "WMS-lag (Tjenestelag)";
+                  case "service":
+                      return "WMS-tjeneste";
                   default:
               }
 

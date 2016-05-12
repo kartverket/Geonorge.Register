@@ -182,6 +182,9 @@ namespace Kartverket.Register.Formatter
                 if (!string.IsNullOrEmpty(content))
                     content = content + "<br>";
 
+                if (!string.IsNullOrEmpty(u.owner))
+                    content = content + "Dataeier: " + u.owner + "<br>";
+
                 if (!string.IsNullOrEmpty(u.AlertType))
                     content = content + "Type varsel: " + u.AlertType + "<br>";
 
@@ -196,9 +199,6 @@ namespace Kartverket.Register.Formatter
 
                 if (!string.IsNullOrEmpty(u.Note))
                     content = content + "Varselet gjelder: " + u.Note + "<br>";
-
-                if (!string.IsNullOrEmpty(u.owner))
-                    content = content + "Dataeier: " + u.owner + "<br>";
 
                 if (!string.IsNullOrEmpty(u.id))
                     content = content + "Link til tjenestevarsel: " + "<a href='" + u.id + "'>" + u.label + "</a><br>";

@@ -196,6 +196,9 @@ namespace Kartverket.Register.Formatter
                 if (!string.IsNullOrEmpty(u.owner))
                     content = content + "Dataeier: " + u.owner + "<br>";
 
+                if (!string.IsNullOrEmpty(u.id))
+                    content = content + "Link til tjenestevarsel: " + "<a href='" + u.id + "'>" + u.label + "</a><br>";
+
                 if (!string.IsNullOrEmpty(u.MetadataUrl))
                     content = content + "Link til tjenestebeskrivelse: " + "<a href='" + u.MetadataUrl + "'>" +u.MetadataUrl + "</a>";
             }

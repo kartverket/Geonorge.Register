@@ -172,4 +172,29 @@
         </div>
     </div>
 }
+<script>
+    $(function () {
+
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        $(".date").datepicker("option", "minDate", today);
+
+
+        $('#AlertDate').change(function () {
+            var dateSelected = $('#AlertDate').val();
+
+            var selectedDay = dateSelected.substr(0, 2);
+            var selectedMonth = dateSelected.substr(3, 2);
+            var selectedYear = dateSelected.substr(6, 4);
+            var selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
+
+            if (selectedDate < today) {
+                alert("Varslingsdato bør ikke settes bakover i tid");
+                return false;
+            }
+        });
+
+    });
+</script>
 

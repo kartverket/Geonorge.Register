@@ -154,18 +154,53 @@ namespace Kartverket.Register.Formatter
         }
         private SyndicationItem BuildSyndicationRegisterItem(Kartverket.Register.Models.Api.Registeritem u)
         {
+            var content = GetContent(u);
             var item = new SyndicationItem()
             {
                 Title = new TextSyndicationContent(u.label),
                 BaseUri = new Uri(u.id),
                 LastUpdatedTime = u.lastUpdated,
-                Content = new TextSyndicationContent(u.description),
+                Content = new TextSyndicationContent(content, TextSyndicationContentKind.Html),
                 Id = u.id
             };
             item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             return item;
+        }
+
+        private string GetContent(Registeritem u)
+        {
+            var content = u.description;
+
+            if(u.itemclass == "ServiceAlert")
+            {
+                if (!string.IsNullOrEmpty(content))
+                    content = content + "<br>";
+
+                if (!string.IsNullOrEmpty(u.AlertType))
+                    content = content + "Type varsel: " + u.AlertType + "<br>";
+
+                if (!string.IsNullOrEmpty(u.ServiceType))
+                    content = content + "Tjenestetype: " + u.ServiceType + "<br>";
+
+                if (u.AlertDate != null)
+                    content = content + "Siste varsel: " + u.AlertDate.ToString("dd.MM.yyyy") + "<br>";
+
+                if (u.EffectiveDate != null)
+                    content = content + "Ikrafttredelse: " + u.EffectiveDate.ToString("dd.MM.yyyy") + "<br>";
+
+                if (!string.IsNullOrEmpty(u.Note))
+                    content = content + "Varselet gjelder: " + u.Note + "<br>";
+
+                if (!string.IsNullOrEmpty(u.owner))
+                    content = content + "Dataeier: " + u.owner + "<br>";
+
+                if (!string.IsNullOrEmpty(u.MetadataUrl))
+                    content = content + "Link til tjenestebeskrivelse: " + "<a href='" + u.MetadataUrl + "'>" +u.MetadataUrl + "</a>";
+            }
+
+            return content;
         }
 
         private SyndicationItem BuildSyndicationRegister(Models.Api.Register u)

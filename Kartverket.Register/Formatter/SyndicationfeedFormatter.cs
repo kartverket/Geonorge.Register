@@ -10,6 +10,7 @@ using System.ServiceModel.Syndication;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace Kartverket.Register.Formatter
 {
@@ -167,6 +168,8 @@ namespace Kartverket.Register.Formatter
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
             item.Categories.Add(new SyndicationCategory() { Name = u.owner });
+            if (u.itemclass == "ServiceAlert" && !string.IsNullOrEmpty(u.ServiceUuid))
+                item.ElementExtensions.Add(new XElement("uuid", u.ServiceUuid));
             return item;
         }
 

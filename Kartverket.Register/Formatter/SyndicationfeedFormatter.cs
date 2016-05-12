@@ -166,6 +166,7 @@ namespace Kartverket.Register.Formatter
             item.Links.Add(new SyndicationLink() { Title = u.label, Uri = new Uri((u.id)) });
             item.Authors.Add(new SyndicationPerson() { Name = u.owner });
             item.Categories.Add(new SyndicationCategory() { Name = u.status });
+            item.Categories.Add(new SyndicationCategory() { Name = u.owner });
             return item;
         }
 

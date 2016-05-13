@@ -1914,8 +1914,8 @@ aside ul li, .container-footer ul li {
   margin-left: 5px !important; }
 
 .status-icons .custom-icon, .status-icons .fa, .status-icons .glyphicon {
-  width: 20px !important;
-  height: 20px;
+  width: 12pt !important;
+  height: 12pt;
   margin: 0 4px;
   text-align: center;
   vertical-align: middle; }

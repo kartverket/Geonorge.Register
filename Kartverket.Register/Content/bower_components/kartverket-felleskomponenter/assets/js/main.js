@@ -156,8 +156,13 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
+            function getSearchParameters(facetValue, query){
+              var facetParameters = 'facets[1]name=type&facets[1]value=' + facetValue;
+              var queryParameters = 'text=' + query;
+              return '?limit=5&' + facetParameters + '&' + queryParameters;
+            }
 
-            var menuService1 = encodeURI(searchOption.api + '?limit=5&facets[1]name=type&facets[1]value=servicelayer' + '&text=' + query);
+            var menuService1 = encodeURI(searchOption.api + getSearchParameters('servicelayer', query));
             var request1 = $http({
                 method: 'GET',
                 url: menuService1,
@@ -168,7 +173,7 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
-            var menuService2 = encodeURI(searchOption.api + '?limit=5&facets[1]name=type&facets[1]value=service' + '&text=' + query);
+            var menuService2 = encodeURI(searchOption.api + getSearchParameters('service', query));
             var request2 = $http({
                 method: 'GET',
                 url: menuService2,
@@ -179,8 +184,18 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
-            return $q.all([request, request2, request1]);
+            var menuService3 = encodeURI(searchOption.api + getSearchParameters('dimensionGroup', query));
+            var request3 = $http({
+                method: 'GET',
+                url: menuService3,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'accept': '*/*'
+                },
+                data: {}
+            });
 
+            return $q.all([request3, request, request2, request1]);
         }
 
     }]).controller('searchTopController', [
@@ -456,7 +471,6 @@ var baseurl_local = searchOption.baseUrl;
           }
 
           function getType(type) {
-
               switch (type) {
                   case "dataset":
                       return "Datasett";
@@ -464,9 +478,10 @@ var baseurl_local = searchOption.baseUrl;
                       return "WMS-lag (Tjenestelag)";
                   case "service":
                       return "WMS-tjeneste";
+                  case "dimensionGroup":
+                      return "Datapakke";
                   default:
               }
-
           }
 
           var categoryCount = null;

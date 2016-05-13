@@ -32,7 +32,7 @@
             supportsLogin: true,
             isAuthenticated: @Request.IsAuthenticated.ToString().ToLower(),
             urlActionSignOut: '@Url.Action("SignOut", "AuthServices")',
-            urlActionSignIn: '@Url.Action("SignIn", "AuthServices")'
+            urlActionSignIn: '@Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url })'
             @if (Request.IsAuthenticated)
             {
                 foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims) {

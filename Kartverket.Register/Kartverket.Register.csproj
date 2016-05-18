@@ -766,6 +766,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow_414042_8px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\Arrow_968c83_12px_mobile.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\breadcrumb-arrow.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dekningskart.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\ekternlink-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\ekternlink-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\ekternlink.svg" />
@@ -799,12 +800,15 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lukk_968c83_50px-01-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\open_fe5000_50px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\produktark.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\seksjonstegn.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-green.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-red.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-yellow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\soek.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\unlock.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />

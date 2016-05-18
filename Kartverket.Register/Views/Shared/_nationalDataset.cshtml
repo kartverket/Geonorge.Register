@@ -120,29 +120,29 @@
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata" >
-        <div class="col-md-2">@OrderByLink("Tittel", "name")</div>
+        <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
         <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
         <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
-        <div class="col-md-5 status-icons">
-            @OrderByLink("", "dokDeliveryMetadataStatus", "fa fa-info-circle")
-            @OrderByLink("", "dokDeliveryProductSheetStatus", "fa fa-info-circle text-success")
+        <div class="col-md-4 col-sm-5 status-icons">
+            @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
+            @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-produktark")
             @OrderByLink("", "dokDeliveryPresentationRulesStatus", "glyphicon glyphicon-picture")
             @OrderByLink("", "dokDeliveryProductSpecificationStatus", "glyphicon glyphicon-list-alt")
             @OrderByLink("", "dokDeliveryWmsStatus", "glyphicon glyphicon-globe")
-            @OrderByLink("", "dokDeliveryWfsStatus", "glyphicon glyphicon-globe text-success")
-            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "fa fa-map")
+            @OrderByLink("", "dokDeliveryWfsStatus", "custom-icon custom-icon-wfs")
+            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "custom-icon custom-icon-dekningskart")
             @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
-            @OrderByLink("", "dokDeliveryServiceAlertStatus", "fa fa-rss")
-            @OrderByLink("", "dokDeliveryGeodataLawStatus", "fa fa-paragraph")
+            @OrderByLink("", "dokDeliveryServiceAlertStatus", "fa fa-rss-square")
+            @OrderByLink("", "dokDeliveryGeodataLawStatus", "custom-icon custom-icon-seksjonstegn")
         </div>
-        <div class="col-md-1">@OrderByLink("STATUS", "dokStatus")</div>
+        <div class="col-md-1 text-center">@OrderByLink("STATUS", "dokStatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
     @foreach(Dataset item in Model)
             {
         <div class="row result-row metadata">
 
-            <div class="col-md-2"><a href = "@item.GetObjectUrl()" > @item.name </a></div>
+            <div class="col-md-3 col-sm-2"><a href = "@item.GetObjectUrl()" > @item.name </a></div>
             <div class="col-md-2"><a href = "/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
             <div class="col-md-2">
             @if(item.ThemeGroupId != null)
@@ -155,7 +155,7 @@
             }
             </div>
 
-            <div class="col-md-5 status-icons">
+            <div class="col-md-4 col-sm-5 status-icons">
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)
@@ -167,7 +167,7 @@
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted)
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted)
             </div>
-            <div class="col-md-1">
+            <div class="col-md-1 text-center">
             @if (item.dokStatus != null)
             {
                 <a href="#" data-toggle='tooltip' data-placement = 'bottom' title='@item.dokStatus.description'>

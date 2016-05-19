@@ -3,20 +3,20 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 22 22" style="enable-background:new 0 0 22 22;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#3867C8;}
-	.st1{fill:#66CC66;stroke:#FFFFFF;stroke-width:0.6;stroke-miterlimit:10;}
-	.st2{fill:none;stroke:#FFFFFF;stroke-width:0.6;stroke-miterlimit:10;}
+	.st0{fill:#FFFFFF;stroke:#3867C8;stroke-miterlimit:10;}
+	.st1{fill:#3366CC;stroke:#3366CC;stroke-width:0.6;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#3366CC;stroke-width:0.6;stroke-miterlimit:10;}
+	.st3{fill:#FFFFFF;stroke:#3366CC;stroke-width:0.6;stroke-miterlimit:10;}
 </style>
-<rect class="st0" width="22" height="22"/>
-<polygon class="st1" points="13.6,5.8 11.8,5.8 10.1,5.8 9.7,6.4 9.6,7.9 8.9,8.2 8.1,9 7.5,9.5 8.6,10.2 7.9,10.6 6.9,10.9 
-	6.2,11.5 7.7,12 8.5,12.2 8.1,12.8 6.3,12.6 5.8,13.4 6.7,14.3 7.4,15.3 8.4,14.7 9,13.6 10,13.5 11.2,13.3 11.1,14.2 12,14.4 
-	11.9,15.7 13.9,15.7 13.8,12 14.7,12.2 15.5,11.1 14.4,10 13.3,9.6 13.4,7.5 13.7,6.4 13.6,5.8 "/>
-<polyline class="st2" points="14.8,3.6 13.2,3.5 12.4,3.3 11.9,4 12.2,4.7 12.1,5.8 14.7,5.8 15.7,5.2 18.7,7.8 19.9,9 22.3,10 "/>
-<polyline class="st2" points="9.6,6.7 7.3,5.8 9.3,4.3 9.6,3.2 10.2,2 9.1,1.2 6.4,1 5.7,-0.2 "/>
-<polyline class="st2" points="12.7,15.7 15.7,15.7 15.8,17.4 15.3,19.3 14.7,19.6 14.8,20.7 14.8,22 "/>
-<polyline class="st2" points="22.3,12 20.3,16 17.7,15.4 15.8,15.7 15.7,15.6 17.5,13.4 17.7,12.3 17.5,11.1 15.5,11.1 "/>
-<polyline class="st2" points="7.5,9.5 5.3,8.8 4.6,10 2.8,10.4 2.7,11.1 1.8,12.4 -0.2,13 "/>
-<polyline class="st2" points="15.6,5.1 14.9,3.8 14.9,2.6 15.9,1.7 17.3,1.9 17.7,0.7 17.7,0 "/>
-<polyline class="st2" points="11.9,15.7 9.6,15.6 9.1,15.8 9.1,16.5 9.1,18.3 9.2,19.3 8.4,19.7 7,20 5.2,20.6 4.6,21.2 4.3,22.2 
-	"/>
+<circle class="st0" cx="11" cy="11" r="10.5"/>
+<polygon class="st1" points="13.6,5.8 11.8,5.8 10.1,5.8 9.4,7.8 8.9,8.2 8.1,9 7.5,9.5 8.6,10.2 7.9,10.6 7.3,11.1 7.1,11.6 
+	6.8,12.4 6,12.8 5.7,13.9 6.7,14.3 7.4,14.8 8.1,14.1 9,13.6 10,13.5 11.2,13.3 11.7,13.8 12,14.4 11.9,15.7 13.9,15.7 13.8,12 
+	14.7,12.2 15.5,11.1 14.4,10 13.3,9.6 13.4,7.5 13.7,6.4 "/>
+<polyline class="st2" points="13.6,5.8 15.7,5.2 18.7,7.8 19.9,9 21.3,8.8 "/>
+<polyline class="st2" points="12.7,15.7 15.7,15.7 15.8,17.4 15.3,19.3 15.2,20.6 "/>
+<polyline class="st2" points="20.3,16 17.7,15.4 15.8,15.7 17.7,15.4 17.7,12.3 17.5,11.1 15.5,11.1 "/>
+<polyline class="st2" points="7.5,9.5 5.3,8.8 4.3,9.6 2.8,10.4 2.3,12.4 0.7,12.9 "/>
+<polyline class="st3" points="15.6,5.1 14.9,3.8 14.9,2.6 15.1,1.3 "/>
+<polyline class="st2" points="11.9,15.7 9.6,15.6 9.1,15.8 9.1,16.5 9.1,18.3 9.2,19.3 8.4,19.7 6.8,20.6 "/>
+<polyline class="st3" points="9.6,6.5 6.8,6 8.2,4 9.4,2.5 8.8,0.7 "/>
 </svg>

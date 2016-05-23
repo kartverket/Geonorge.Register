@@ -475,11 +475,11 @@ var baseurl_local = searchOption.baseUrl;
                   case "dataset":
                       return "Datasett";
                   case "servicelayer":
-                      return "WMS-lag (Tjenestelag)";
+                      return "Tjenestelag";
                   case "service":
-                      return "WMS-tjeneste";
+                      return "Tjenester";
                   case "dimensionGroup":
-                      return "Datapakke";
+                      return "Datapakker";
                   default:
               }
           }

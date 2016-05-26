@@ -8,6 +8,7 @@
         string symbolDeficient = "custom-icon custom-icon-smile-red";
         string symbolUseable = "custom-icon custom-icon-smile-yellow";
         string symbolGood = "custom-icon custom-icon-smile-green";
+        string symbolNotSet= "custom-icon";
 
         string statusSymbol = symbolUseable;
         string title = "";
@@ -18,7 +19,12 @@
         }
         else if (!string.IsNullOrEmpty(status))
         {
-            if (status == "deficient") {
+            if (status == "notset")
+            {
+                statusSymbol = symbolNotSet;
+                title = UI.DOK_Delivery_Status_NotSet;
+            }
+            else if (status == "deficient") {
                 statusSymbol = symbolDeficient;
                 title = UI.DOK_Delivery_Status_Deficient;
             }
@@ -31,6 +37,34 @@
                 title = UI.DOK_Delivery_Status_Good;
             }
         }
+
+        string label = "";
+
+
+        if (type.Contains("metadata"))
+            label = UI.DOK_Delivery_Metadata;
+        else if (type.Contains("dokDeliveryProductSheetStatus"))
+            label = UI.DOK_Delivery_ProductSheet;
+        else if (type.Contains("dokDeliveryPresentationRulesStatus"))
+            label = UI.DOK_Delivery_PresentationRules;
+        else if (type.Contains("dokDeliveryProductSpecificationStatus"))
+            label = UI.DOK_Delivery_ProductSpesification;
+        else if (type.Contains("dokDeliveryWmsStatus"))
+            label = UI.DOK_Delivery_Wms;
+        else if (type.Contains("dokDeliveryWfsStatus"))
+            label = UI.DOK_Delivery_Wfs;
+        else if (type.Contains("dokDeliveryDistributionAreaStatus"))
+            label = UI.DOK_Delivery_DistributionArea;
+        else if (type.Contains("dokDeliveryDistributionStatus"))
+            label = UI.DOK_Delivery_Distribution;
+        else if (type.Contains("dokDeliveryServiceAlertStatus"))
+            label = UI.DOK_Delivery_ServiceAlert;
+        else if (type.Contains("dokDeliveryGeodataLawStatus"))
+            label = UI.DOK_Delivery_GeodataLaw;
+
+        if (!string.IsNullOrEmpty(label))
+            title = label + ": " + title;
+
 
         string html = "<a href='#' data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></a>";
 
@@ -157,15 +191,15 @@
 
             <div class="col-md-4 col-sm-5 status-icons">
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted)
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted)
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted, "dokDeliveryProductSheetStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted, "dokDeliveryPresentationRulesStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted, "dokDeliveryProductSpecificationStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted, "dokDeliveryWmsStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, "dokDeliveryWfsStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted, "dokDeliveryDistributionAreaStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted, "dokDeliveryDistributionStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted, "dokDeliveryServiceAlertStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted, "dokDeliveryGeodataLawStatus")
             </div>
             <div class="col-md-1 text-center">
             @if (item.dokStatus != null)

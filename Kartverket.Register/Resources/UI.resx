@@ -225,4 +225,7 @@
   <data name="DOK_Coverage_Municipality" xml:space="preserve">
     <value>Dekning viser om datasettet faktisk finnes i kommunen</value>
   </data>
+  <data name="DOK_Delivery_Status_NotSet" xml:space="preserve">
+    <value>Leveransestatus er ikke satt</value>
+  </data>
 </root>

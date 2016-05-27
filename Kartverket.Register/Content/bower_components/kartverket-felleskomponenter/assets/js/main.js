@@ -20,8 +20,14 @@ $(window).load(function () {
     };
     $(".chosen-select").chosen(options);
     $("[data-toggle='tooltip']").tooltip();
+    
     $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
     $("li[data-toggle='tooltip']").mouseleave(function () {
+        $(".ui-helper-hidden-accessible").remove();
+    });
+
+    $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
+    $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
         $(".ui-helper-hidden-accessible").remove();
     });
 

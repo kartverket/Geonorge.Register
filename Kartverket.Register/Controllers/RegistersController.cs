@@ -289,9 +289,16 @@ namespace Kartverket.Register.Controllers
                         _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
                     else {
-
+                        bool coverageFound = (originalCoverage != null) ? originalCoverage.Coverage : false;
                         CoverageService coverage = new CoverageService(db);
-                        bool coverageFound = coverage.GetCoverage(originalDataset.Uuid, municipalityCode);
+                        try
+                        {
+                            coverageFound = coverage.GetCoverage(originalDataset.Uuid, municipalityCode);
+                        }
+                        catch (System.Net.WebException webex)
+                        {
+                            TempData["failure"] = "Tjenesten som henter dekning feilet";
+                        }
                         if (originalCoverage == null)
                         {
                             originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound));

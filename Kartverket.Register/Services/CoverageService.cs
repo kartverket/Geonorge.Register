@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json.Linq;
 
 namespace Kartverket.Register.Services
 {
@@ -12,14 +13,28 @@ namespace Kartverket.Register.Services
 
         private readonly RegisterDbContext _context;
 
-        public CoverageService(RegisterDbContext context)
+        List<string> coverageList;
+
+        string coverageApiUrl = "https://ws.geonorge.no/dekningsApi/kommune?kid=";
+
+        public CoverageService(RegisterDbContext context, string municipalityCode)
         {
             _context = context;
+            coverageList = FetchMunicipalityDatasets(municipalityCode);
         }
 
-        string coverageApiUrl = "https://ws.geonorge.no/dekningsApi/dekning?datasett=";
+        private List<string> FetchMunicipalityDatasets(string municipalityCode)
+        {
+            System.Net.WebClient c = new System.Net.WebClient();
+            c.Encoding = System.Text.Encoding.UTF8;
+            var data = c.DownloadString(coverageApiUrl + municipalityCode);
+            var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+            var datasets = response[municipalityCode].Children().Values<String>();
+            return datasets.ToList();
+        }
 
-        public bool GetCoverage(string datasetUuid, string municipalityCode)
+
+        public bool GetCoverage(string datasetUuid)
         {
             bool coverage = false;
             string name;
@@ -27,59 +42,20 @@ namespace Kartverket.Register.Services
             if (!string.IsNullOrEmpty(datasetUuid) && DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping.ContainsKey(datasetUuid))
             {
                 name = DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping[datasetUuid];
-                coverage = FetchDatasetCoverage(name, municipalityCode);
-                
+                coverage = GetMunicipalityCoverage(name);     
             }
             
             return coverage;
         }
 
-        private bool FetchDatasetCoverage(string name, string municipalityCode)
+        private bool GetMunicipalityCoverage(string name)
         {
-            bool foundCoverage = false;
+            bool coverage = false;
 
-            System.Net.WebClient c = new System.Net.WebClient();
-            c.Encoding = System.Text.Encoding.UTF8;
-            var data = c.DownloadString(coverageApiUrl + name);
-            var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+            if (coverageList.Contains(name))
+                coverage = true;
 
-            var municipalities = response["kommuner"];
-
-            foreach (var municipality in municipalities)
-            {
-                if (municipality.ToString() == municipalityCode.TrimStart('0'))
-                {
-                    foundCoverage = true;
-                    break;
-                }
-            }
-
-            return foundCoverage;
-        }
-
-        public bool UpdateAllCoverage()
-        {
-            var coverageDatasets = _context.CoverageDatasets;
-
-            foreach(var coverage in coverageDatasets.ToList())
-            {
-                bool coverageFound = false;
-                try
-                {
-                    var uuid = coverage.dataset.Uuid;
-                    var organization = (Organization)_context.RegisterItems.Where(org => org.systemId == coverage.MunicipalityId).FirstOrDefault();
-                    var municipalityService = new MunicipalityService();
-                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organization.number);
-                    coverageFound = GetCoverage(uuid, municipalityCode);
-                }
-                catch { }
-
-                coverage.Coverage = coverageFound;
-                _context.Entry(coverage).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
-
-            return true;
+            return coverage;
         }
 
     }

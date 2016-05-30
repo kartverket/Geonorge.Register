@@ -276,6 +276,8 @@ namespace Kartverket.Register.Controllers
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
+                CoverageService coverage = new CoverageService(db, municipalityCode);
+
                 foreach (DokMunicipalRow item in dokMunicipalList)
                 {
                     Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
@@ -289,9 +291,7 @@ namespace Kartverket.Register.Controllers
                         _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
                     else {
-
-                        CoverageService coverage = new CoverageService(db);
-                        bool coverageFound = coverage.GetCoverage(originalDataset.Uuid, municipalityCode);
+                        bool coverageFound = coverage.GetCoverage(originalDataset.Uuid);
                         if (originalCoverage == null)
                         {
                             originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound));

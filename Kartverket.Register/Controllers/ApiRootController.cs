@@ -221,15 +221,6 @@ namespace Kartverket.Register.Controllers
             return Ok(ConverteditemsByOwner);
         }
 
-        [ApiExplorerSettings(IgnoreApi = true)]
-        [Route("api/updateallcoverage")]
-        [HttpGet]
-        public IHttpActionResult UpdateAllCoverage()
-        {
-            var coverageService = new Services.CoverageService(db);
-            return Ok(coverageService.UpdateAllCoverage());
-        }
-
 
 
         // **** HJELPEMETODER ****

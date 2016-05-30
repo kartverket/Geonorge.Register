@@ -36,6 +36,7 @@ namespace Kartverket.Register.Controllers
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            db.Configuration.AutoDetectChangesEnabled = false;
         }
 
         // GET: Registers

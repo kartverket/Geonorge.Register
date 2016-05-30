@@ -746,6 +746,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendor.min.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-blue.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-orange.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-down.svg" />
@@ -896,7 +897,6 @@
     <Content Include="Content\navbar.css" />
     <Content Include="Content\pdf.jpg" />
     <Content Include="Content\searchbar.css" />
-    <Content Include="Content\statusIcons.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -946,6 +946,9 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.eot" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.woff" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />

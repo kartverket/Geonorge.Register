@@ -3188,6 +3188,83 @@ input[type="checkbox"].input-validation-error {
     top: 6px;
     line-height: 14pt; } }
 
+@font-face {
+  font-family: 'statusicon';
+  src: url("/Content/bower_components/kartverket-felleskomponenter/assets/fonts/statusicon.eot?pjbxg9");
+  src: url("/Content/bower_components/kartverket-felleskomponenter/assets/fonts/statusicon.eot?#iefixpjbxg9") format("embedded-opentype"), url("/Content/bower_components/kartverket-felleskomponenter/assets/fonts/statusicon.woff?pjbxg9") format("woff"), url("/Content/bower_components/kartverket-felleskomponenter/assets/fonts/statusicon.ttf?pjbxg9") format("truetype"), url("/Content/bower_components/kartverket-felleskomponenter/assets/fonts/statusicon.svg?pjbxg9#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+[class^="statusIcon-"],
+[class*=" statusIcon-"] {
+  font-family: 'statusicon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+[class^="statusIcon-"]:before,
+[class*=" statusIcon-"]:before {
+  content: "\e600";
+  color: #777; }
+
+.statusIcon-vedtatt:after, .statusIcon-Valid:after {
+  content: "\e600";
+  color: #26C045; }
+
+.statusIcon-vedtatt:before, .statusIcon-Valid:before {
+  content: ""; }
+
+.statusIcon-vedtatt:after, .statusIcon-Sosi-valid:after {
+  content: "\e600";
+  color: #26C045; }
+
+.statusIcon-vedtatt:before, .statusIcon-Sosi-valid:before {
+  content: ""; }
+
+.statusIcon-avvist:after {
+  content: "\e600";
+  color: #EE382B; }
+
+.statusIcon-avvist:before {
+  content: ""; }
+
+.statusIcon-underarbeid:after {
+  content: "\e602";
+  color: #FFBA33;
+  margin-left: -1em; }
+
+.statusIcon-InProgress:after {
+  content: "\e601";
+  color: #26C045;
+  margin-left: -1em; }
+
+.statusIcon-Superseded:after {
+  content: "\e600";
+  color: #FFBA33;
+  margin-left: -1em; }
+
+.statusIcon-Candidate:after, .statusIcon-Draft:after {
+  content: "\e602";
+  color: #26C045;
+  margin-left: -1em; }
+
+.statusIcon-Accepted:after {
+  content: "\e600";
+  color: #26C045; }
+
+.statusIcon-Accepted:before {
+  content: ""; }
+
+.statusIcon-Proposal:before {
+  content: "\e600";
+  color: #777; }
+
 .ui-datepicker {
   border-radius: 0;
   font-family: Open Sans,sans-serif; }

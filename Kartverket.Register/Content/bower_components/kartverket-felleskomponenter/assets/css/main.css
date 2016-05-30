@@ -2374,7 +2374,7 @@ input[readonly] {
 
 .form-group.required .control-label:after, .panel-heading.required:after, .panel-heading span.required:after {
   content: " *";
-  color: #FF4E33; }
+  color: #EE382B; }
 
 .form-group.has-feedback .form-control-feedback {
   display: none; }
@@ -2488,13 +2488,13 @@ h1 .label {
   border-color: #968c84; }
 
 .label-danger {
-  border-color: #FF4E33; }
+  border-color: #EE382B; }
 
 .label-warning {
   border-color: #FFBA33; }
 
 .label-success {
-  border-color: #2AD45D; }
+  border-color: #26C045; }
 
 .label-info {
   border-color: #7da1c4; }
@@ -2598,7 +2598,7 @@ textarea, textarea.form-control {
 .form-group.required .control-label::after,
 .panel-heading.required::after {
   content: "*";
-  color: #FF4E33; }
+  color: #EE382B; }
 
 .pagination {
   margin: 0; }
@@ -2660,12 +2660,12 @@ textarea, textarea.form-control {
       line-height: 16pt;
       padding: 6px 12px; }
   .nav-tabs > li.active.has-error a {
-    color: #FF4E33;
+    color: #EE382B;
     background-color: #FFF; }
   .nav-tabs li.has-error > span.glyphicon-warning-sign {
     position: absolute;
     z-index: 2;
-    color: #FF4E33; }
+    color: #EE382B; }
   .nav-tabs li.has-error a {
     background-color: #C47D7D; }
 
@@ -2883,13 +2883,13 @@ ul#thumbnailsCoverage {
 
 /* styles for validation helpers */
 .field-validation-error {
-  color: #FF4E33; }
+  color: #EE382B; }
 
 .field-validation-valid {
   display: none; }
 
 input.input-validation-error {
-  border: 1px solid #FF4E33; }
+  border: 1px solid #EE382B; }
 
 input[type="checkbox"].input-validation-error {
   border: 0 none; }
@@ -2897,7 +2897,7 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-errors {
   color: #333;
   border: none;
-  border-left: 8px solid #FF4E33;
+  border-left: 8px solid #EE382B;
   border-radius: 0;
   background-color: #FFF; }
 
@@ -2914,7 +2914,7 @@ input[type="checkbox"].input-validation-error {
   border-style: solid; }
 
 .help-text.bg-success {
-  border-left: 8px solid #2AD45D; }
+  border-left: 8px solid #26C045; }
 
 .has-error.checkbox-inline label,
 .has-error.checkbox label,
@@ -2926,7 +2926,7 @@ input[type="checkbox"].input-validation-error {
 .has-error .radio,
 .has-error .radio-inline,
 .has-error .form-control-feedback {
-  color: #FF4E33; }
+  color: #EE382B; }
 
 .modal-footer .btn {
   margin-bottom: 0; }

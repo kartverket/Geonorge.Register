@@ -3195,6 +3195,9 @@ input[type="checkbox"].input-validation-error {
   font-weight: normal;
   font-style: normal; }
 
+a.status-icon-link:hover {
+  text-decoration: none; }
+
 [class^="statusIcon-"],
 [class*=" statusIcon-"] {
   font-family: 'statusicon';
@@ -3204,6 +3207,9 @@ input[type="checkbox"].input-validation-error {
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  margin: 2px 4px;
+  display: inline-block;
+  vertical-align: bottom;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }

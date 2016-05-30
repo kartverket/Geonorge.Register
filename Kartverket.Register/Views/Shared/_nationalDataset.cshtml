@@ -3,17 +3,19 @@
 @using Kartverket.Register.Helpers
 
 @functions {
-    public IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null) {
+    public IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null)
+    {
 
         string symbolDeficient = "custom-icon custom-icon-smile-red";
         string symbolUseable = "custom-icon custom-icon-smile-yellow";
         string symbolGood = "custom-icon custom-icon-smile-green";
-        string symbolNotSet= "custom-icon";
+        string symbolNotSet = "custom-icon";
 
         string statusSymbol = symbolUseable;
         string title = "";
 
-        if (restricted.HasValue && restricted.Value == true && type != "metadata") {
+        if (restricted.HasValue && restricted.Value == true && type != "metadata")
+        {
             statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
             title = UI.DOK_Delivery_Restricted;
         }
@@ -24,15 +26,18 @@
                 statusSymbol = symbolNotSet;
                 title = UI.DOK_Delivery_Status_NotSet;
             }
-            else if (status == "deficient") {
+            else if (status == "deficient")
+            {
                 statusSymbol = symbolDeficient;
                 title = UI.DOK_Delivery_Status_Deficient;
             }
-            else if (status == "useable") {
+            else if (status == "useable")
+            {
                 statusSymbol = symbolUseable;
                 title = UI.DOK_Delivery_Status_Useable;
             }
-            else if (status == "good") {
+            else if (status == "good")
+            {
                 statusSymbol = symbolGood;
                 title = UI.DOK_Delivery_Status_Good;
             }
@@ -155,7 +160,7 @@
 }
 
 <div id="tableView" class="register dataset search-results-table-heading">
-    <div class="row result-row metadata" >
+    <div class="row result-row metadata">
         <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
         <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
         <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
@@ -174,21 +179,20 @@
         <div class="col-md-1 text-center">@OrderByLink("STATUS", "dokStatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
-    @foreach(Dataset item in Model)
-            {
+    @foreach (Dataset item in Model)
+    {
         <div class="row result-row metadata">
-
-            <div class="col-md-3 col-sm-2"><a href = "@item.GetObjectUrl()" > @item.name </a></div>
-            <div class="col-md-2"><a href = "/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()"> @item.name </a></div>
+            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
             <div class="col-md-2">
-            @if(item.ThemeGroupId != null)
-            {
-                <span> @item.theme.description </span>
-            }
-            else
-            {
-                <span>Ikke angitt</span>
-            }
+                @if (item.ThemeGroupId != null)
+                {
+                    <span> @item.theme.description </span>
+                }
+                else
+                {
+                    <span>Ikke angitt</span>
+                }
             </div>
 
             <div class="col-md-4 col-sm-5 status-icons">
@@ -204,12 +208,12 @@
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted, "dokDeliveryGeodataLawStatus")
             </div>
             <div class="col-md-1 text-center">
-            @if (item.dokStatus != null)
-            {
-                <a href="#" data-toggle='tooltip' data-placement = 'bottom' title='@item.dokStatus.description'>
-                    <i class="statusIcon-@item.dokStatusId"></i>
-                </a>
-            }
+                @if (item.dokStatus != null)
+                {
+                    <a href="#" class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.description'>
+                        <i class="statusIcon-@item.dokStatusId"></i>
+                    </a>
+                }
             </div>
         </div>
     }

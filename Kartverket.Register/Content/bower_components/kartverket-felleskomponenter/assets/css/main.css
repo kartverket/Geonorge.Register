@@ -2412,6 +2412,83 @@ input[readonly] {
 input.form-control, input[type=text], textarea {
   padding: 0 10px; }
 
+.help-page h1, .help-page .h1 {
+  font-size: 24pt;
+  font-family: Raleway,sans-serif;
+  font-weight: 300;
+  color: #5d4777; }
+
+.help-page pre.wrapped {
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: pre-wrap; }
+
+.help-page .warning-message-container {
+  margin-top: 20px;
+  padding: 0 10px;
+  color: #525252;
+  background: #EFDCA9;
+  border: 1px solid #CCCCCC; }
+
+.help-page .sample-header {
+  border: 1px solid #414042;
+  border-bottom: 1px solid #fff;
+  cursor: default;
+  font-size: 13px;
+  margin-bottom: -1px;
+  display: inline-block;
+  padding: 10px 15px; }
+
+.help-page .sample-content {
+  display: block;
+  border-width: 0;
+  padding: 15px 20px;
+  background: #FFFFFF;
+  border-top: 1px solid #414042;
+  margin: 0px 0px 10px 0px; }
+
+.help-page .api-name {
+  width: 40%; }
+
+.help-page .api-documentation {
+  width: 60%; }
+
+.help-page .parameter-name {
+  width: 20%; }
+
+.help-page .parameter-documentation {
+  width: 40%; }
+
+.help-page .parameter-type {
+  width: 20%; }
+
+.help-page .parameter-annotations {
+  width: 20%; }
+
+.help-page-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  margin: 0px 0px 20px 0px;
+  border-top: 1px solid #D4D4D4; }
+  .help-page-table tr {
+    border: 1px solid #ddd; }
+  .help-page-table th {
+    text-align: left;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 10px 15px;
+    background-color: #f5f5f5; }
+  .help-page-table td {
+    padding: 10px 15px;
+    vertical-align: top; }
+  .help-page-table pre, .help-page-table p {
+    margin: 0px;
+    padding: 0px;
+    font-family: inherit;
+    font-size: 100%; }
+
 .no-padding {
   padding: 0; }
 

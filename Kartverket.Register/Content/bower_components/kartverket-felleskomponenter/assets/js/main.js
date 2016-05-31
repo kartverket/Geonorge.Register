@@ -20,8 +20,14 @@ $(window).load(function () {
     };
     $(".chosen-select").chosen(options);
     $("[data-toggle='tooltip']").tooltip();
+    
     $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
     $("li[data-toggle='tooltip']").mouseleave(function () {
+        $(".ui-helper-hidden-accessible").remove();
+    });
+
+    $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
+    $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
         $(".ui-helper-hidden-accessible").remove();
     });
 
@@ -156,8 +162,13 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
+            function getSearchParameters(facetValue, query){
+              var facetParameters = 'facets[1]name=type&facets[1]value=' + facetValue;
+              var queryParameters = 'text=' + query;
+              return '?limit=5&' + facetParameters + '&' + queryParameters;
+            }
 
-            var menuService1 = encodeURI(searchOption.api + '?limit=5&facets[1]name=type&facets[1]value=servicelayer' + '&text=' + query);
+            var menuService1 = encodeURI(searchOption.api + getSearchParameters('servicelayer', query));
             var request1 = $http({
                 method: 'GET',
                 url: menuService1,
@@ -168,10 +179,29 @@ var baseurl_local = searchOption.baseUrl;
                 data: {}
             });
 
+            var menuService2 = encodeURI(searchOption.api + getSearchParameters('service', query));
+            var request2 = $http({
+                method: 'GET',
+                url: menuService2,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'accept': '*/*'
+                },
+                data: {}
+            });
 
+            var menuService3 = encodeURI(searchOption.api + getSearchParameters('dimensionGroup', query));
+            var request3 = $http({
+                method: 'GET',
+                url: menuService3,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'accept': '*/*'
+                },
+                data: {}
+            });
 
-
-            return $q.all([request, request1]);
+            return $q.all([request3, request, request2, request1]);
         }
 
     }]).controller('searchTopController', [
@@ -447,15 +477,17 @@ var baseurl_local = searchOption.baseUrl;
           }
 
           function getType(type) {
-
               switch (type) {
                   case "dataset":
                       return "Datasett";
                   case "servicelayer":
-                      return "WMS-lag (Tjenestelag)";
+                      return "Tjenestelag";
+                  case "service":
+                      return "Tjenester";
+                  case "dimensionGroup":
+                      return "Datapakker";
                   default:
               }
-
           }
 
           var categoryCount = null;
@@ -698,6 +730,21 @@ function updateShoppingCartCookie() {
 
 $(window).load(function () {
     updateShoppingCart();
+});
+$("document").ready( function(){
+    $("a.help-text-toggle").click(function (event) {
+        event.preventDefault();
+        var toggleButton = $(this);
+        var helpTextId = $(this).data("help-text-id");
+        $("#" + helpTextId).toggle();
+        if ($("#" + helpTextId).hasClass('active')) {
+            $("#" + helpTextId).removeClass('active');
+            toggleButton.removeClass('active');
+        } else {
+            $("#" + helpTextId).addClass('active');
+            toggleButton.addClass('active');
+        }
+    });
 });
 function activateTab(tab){
 	$(".link-tabs").ready(function () {

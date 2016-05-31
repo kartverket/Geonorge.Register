@@ -42,7 +42,8 @@ namespace Kartverket.Register.Migrations
             context.DokDeliveryStatuses.AddOrUpdate(
                 new Models.DokDeliveryStatus { value = "deficient", description = "Mangelfull" },
                 new Models.DokDeliveryStatus { value = "useable", description = "Brukbar" },
-                new Models.DokDeliveryStatus { value = "good", description = "God" }
+                new Models.DokDeliveryStatus { value = "good", description = "God" },
+                new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }
             );
 
 
@@ -314,16 +315,16 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE Registers SET name = 'DOK-statusregisteret' WHERE  (name='Det offentlige kartgrunnlaget')");
 
             //Set default value for DokDeliveryStatus
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryMetadataStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryMetadataStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSheetStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSheetStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryPresentationRulesStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryPresentationRulesStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSpecificationStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSpecificationStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWmsStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryWmsStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWfsStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryWfsStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionAreaStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionAreaStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryServiceAlertStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryServiceAlertStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGeodataLawStatusId = 'deficient' WHERE  Discriminator ='Dataset' AND dokDeliveryGeodataLawStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryMetadataStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryMetadataStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSheetStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSheetStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryPresentationRulesStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryPresentationRulesStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSpecificationStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSpecificationStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWmsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryWmsStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWfsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryWfsStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionAreaStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionAreaStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryServiceAlertStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryServiceAlertStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGeodataLawStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryGeodataLawStatusId IS NULL");
         }
     }
 }

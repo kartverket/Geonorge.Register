@@ -1,4 +1,5 @@
 ﻿@using Kartverket.Register.Models.ViewModels
+@using System.Web.Configuration;
 @model ShowDatasetCoverageViewModel
 @{
     ViewBag.Title = "Dekningskart for DOK-datasett";
@@ -39,67 +40,95 @@
     @ViewBag.Warning
 </p>
 
-
-<div id="map" class="col-sm-12 col-md-12" style="height: 600px;">
-
+<div id="maplayer">
 </div>
-@section Scripts{
-<script type="text/javascript">
-    (function() {
+<footer></footer>
 
-        L.Icon.Default.imagePath = '/Content/img/leaflet/';
+<script>
+    var win;
 
-        var crs = L.CRS.proj4js('EPSG:32633', '+proj=utm +zone=33+ellps=WGS84 +datum=WGS84 +units=m +no_defs', new L.Transformation(1, 2500000, -1, 9045984));
-        crs.scale = function(zoom) {
-            return 1 / (21674.7100160867 / Math.pow(2, zoom));
-        };
+    function postMessage(msg) {
+        var message = JSON.stringify(msg);
+        try{
+            win.postMessage(message,'@WebConfigurationManager.AppSettings["MapUrl"]');
+        }
+        catch(e) {}
+    }
 
-        var map = L.map('map', { crs: crs, continuousWorld: true }).setView([64.5, 10], 5);
+    var datasetLayer = "@Model.DatasetWmsLayerName";
 
-        var southWest = L.latLng(@Model.StateBoundingBox.South, @Model.StateBoundingBox.West),
-            northEast = L.latLng(@Model.StateBoundingBox.North, @Model.StateBoundingBox.East),
-            bounds = L.latLngBounds(southWest, northEast);
-        map.fitBounds(bounds);
-
-        new L.TileLayer.WMS("http://opencache.statkart.no/gatekeeper/gk/gk.open", {
-            layers: 'europa',
-            format: 'image/png',
-            attribution: "Kartverket",
-            version: '1.1.1',
-            crs: crs,
-            maxZoom: 18
-        }).addTo(map);
-
-        new L.TileLayer.WMS("http://opencache.statkart.no/gatekeeper/gk/gk.open", {
-            layers: 'norges_grunnkart',
-            format: 'image/png',
-            attribution: "Kartverket",
-            version: '1.1.1',
-            transparent: true,
-            maxZoom: 18
-        }).addTo(map);
-
-        var datasetLayerName = "@Model.DatasetWmsLayerName";
-        new L.TileLayer.WMS("http://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?datasett=" + datasetLayerName, {
-            layers: 'datasett_dekning',
-            format: 'image/png',
-            attribution: "Kartverket",
-            transparent: true,
-            opacity: 0.7,
-            maxZoom: 18
-        }).addTo(map);
-
-        var confirmedMunicipalities = [
-            @foreach (CoverageConfirmedMunicipalityViewModel municipality in Model.DatasetCoverageConfirmedCounties)
-            {
-                <text>{centerX: @municipality.CenterCoordinateX, centerY: @municipality.CenterCoordinateY, title: "@Html.Raw(municipality.Name)"},</text>
+    @{
+        string zoomLevel = "3";
+        if (!string.IsNullOrEmpty(Model.StateName))
+        {
+            if (Model.StateName == "18") {
+                zoomLevel = "5";
             }
-        ];
+            else if (Model.StateName == "04") {
+                zoomLevel = "5";
+            }
+            else if (Model.StateName == "20")
+            {
+                zoomLevel = "5";
+            }
+            else {
+                zoomLevel = "6";
+            }
+        }
+     }
 
-        confirmedMunicipalities.forEach(function(item) {
-            L.marker(crs.projection.unproject(new L.Point(item.centerX, item.centerY)), {title: "Bekreftet datasett for " + item.title}).addTo(map);
-        });
+    var zoomLevel = @zoomLevel;
 
-    }());
+    var BBWest = @Model.StateBoundingBox.West;
+    var BBEast = @Model.StateBoundingBox.East;
+    var BBSouth = @Model.StateBoundingBox.South;
+    var BBNorth = @Model.StateBoundingBox.North;
+    xCenter = (BBWest + BBEast) /2;
+    yCenter = (BBSouth + BBNorth) /2;
+
+    $.getJSON('@WebConfigurationManager.AppSettings["MapUrl"]/ws/trans.py?ost=' + xCenter + '&nord=' + yCenter + '&sosiKoordSys=84&resSosiKoordSys=23', function (result) 
+    {
+        if (result.errKode == 0) {
+
+            xCenter = Math.floor(result.ost);
+            yCenter = Math.floor(result.nord);
+
+            console.log("xCenter: " + xCenter);
+            console.log("yCenter: " + yCenter);
+
+            var iframe = document.createElement('iframe');
+            document.getElementById('maplayer').appendChild(iframe);
+            iframe.id = "iframe";
+            iframe.src= "@WebConfigurationManager.AppSettings["MapUrlDynamic"]/dynamisk.html#" + zoomLevel + "/" + xCenter +"/"+ yCenter +"/l/wms/[http://openwms.statkart.no/skwms1/wms.gp_dek_oversikt?datasett=@Model.DatasetWmsLayerName]";
+            iframe.frameBorder=0;
+            iframe.height = "600";
+            win = document.getElementById("iframe").contentWindow;
+
+        }
+    });
+
+
+    function AddMarker()
+    {
+        @foreach (CoverageConfirmedMunicipalityViewModel municipality in Model.DatasetCoverageConfirmedCounties)
+            {
+                @:postMessage({ "cmd":"addMarker","x":@municipality.CenterCoordinateX,"y":@municipality.CenterCoordinateY,"title":"@Html.Raw(municipality.Name)"} );
+            }
+        }
+
+    var counterInterVal = 0;
+
+    function setMarker() {
+        
+        if(counterInterVal <= 10) {
+            counterInterVal++;
+            AddMarker();
+        } else {
+            clearInterval(myTimer);
+        }
+    }
+    var myTimer = setInterval(setMarker, 1000);
+
+
+
 </script>
-}

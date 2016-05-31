@@ -63,11 +63,12 @@
         @Html.ValidationSummary(false, "Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler:", new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
 
-        <div class="form-group required">
+        <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.ServiceUuid, "Tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
@@ -84,15 +85,16 @@
 
         @Html.Hidden("ServiceType", "Ikke angitt")
 
-        <div class="form-group required">
+        <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("AlertType", null, "Velg tjenestevarsel", htmlAttributes: new { @class = "form-control" })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
-                        Velg en type tjenestevarsel fra nedtrekkslisten.
+                        Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til <a href="mailto:post@norgedigitalt.no">post@norgedigitalt.no</a> og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".
                     </p>
                 </div>
             </div>
@@ -105,11 +107,13 @@
 
         @Html.Hidden("Owner", "Ikke angitt")
 
-        <div class="form-group required">
+        <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
-                <div class="col-md-3 row">
+                <div class="col-md-4 row">
                     @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
+                    <span class="field-validation-valid" id="AlertDate_validationMessage">Varslingsdato bør ikke settes bakover i tid</span>
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
@@ -124,11 +128,12 @@
             </div>
         </div>
 
-        <div class="form-group required">
+        <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.EffectiveDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
-                <div class="col-md-3 row">
+                <div class="col-md-4 row">
                     @Html.EditorFor(model => model.EffectiveDate, new { cssClass = "date" })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
@@ -143,11 +148,12 @@
             </div>
         </div>
 
-        <div class="form-group required">
+        <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-12 row">
                     @Html.TextAreaFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                    <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-note" style="display: none">
@@ -172,4 +178,42 @@
         </div>
     </div>
 }
+<script>
+    $(function () {
+
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        $(".date").datepicker("option", "minDate", today);
+
+
+        $('#AlertDate').change(function () {
+            var dateSelected = $('#AlertDate').val();
+
+            var selectedDay = dateSelected.substr(0, 2);
+            var selectedMonth = dateSelected.substr(3, 2);
+            var selectedYear = dateSelected.substr(6, 4);
+            var selectedDate = new Date(selectedYear, selectedMonth - 1, selectedDay);
+
+            if (selectedDate < today) {
+                $('#AlertDate_validationMessage').removeClass("field-validation-valid");
+                $('#AlertDate_validationMessage').addClass("field-validation-error")
+                return false;
+            }
+            else
+                $('#AlertDate_validationMessage').removeClass("field-validation-error");
+                $('#AlertDate_validationMessage').addClass("field-validation-valid")
+        });
+
+        $('.input-validation-error').each(function () {
+            var inputElement = $(this);
+            console.log(inputElement);
+            inputElement.closest('.form-group').addClass('has-error');
+        });
+
+    });
+
+
+
+</script>
 

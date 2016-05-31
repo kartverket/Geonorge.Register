@@ -77,6 +77,7 @@ namespace Kartverket.Register.Models.Api
         public string ServiceType { get; set; }
         public DateTime EffectiveDate { get; set; }
         public string Note { get; set; }
+        public string ServiceUuid { get; set; }
 
         public Registeritem(Models.RegisterItem item, string baseUrl, FilterParameters filter = null)
         {
@@ -193,6 +194,7 @@ namespace Kartverket.Register.Models.Api
                 ServiceType = s.ServiceType;
                 EffectiveDate = s.EffectiveDate;
                 Note = s.Note;
+                ServiceUuid = s.ServiceUuid;
             }
         }
     }

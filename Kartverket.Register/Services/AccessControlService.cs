@@ -142,9 +142,9 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool IsOwner(string owner, string user)
+        public bool IsOwner(string owner, string user)
         {
-            return owner.ToLower() == user.ToLower();
+            return (!string.IsNullOrEmpty(owner) && !string.IsNullOrEmpty(user)) && (owner.ToLower() == user.ToLower());
         }
 
         private bool IsOwnerOrMunicipal(string user, Dataset dataset)

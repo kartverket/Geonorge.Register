@@ -21,7 +21,6 @@ namespace Kartverket.Register
 
             bundles.Add(new StyleBundle("~/Content/local-styles").Include(
                 "~/Content/leaflet.css",
-                "~/Content/statusIcons.css",
                 "~/Content/custom.css"));
 
             bundles.Add(new ScriptBundle("~/Scripts/local-scripts").Include(

@@ -105,8 +105,11 @@ namespace Kartverket.Register.Controllers
                 if (string.IsNullOrWhiteSpace(ServiceUuid))
                     ServiceUuid = service["Uuid"].ToString();
 
+                var Organization = service["Organization"] != null ? service["Organization"].ToString() : "";
+
                 if (!ServiceList.ContainsKey(ServiceUuid))
                 {
+                    if(_accessControlService.IsAdmin() || _accessControlService.IsOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
                     ServiceList.Add(ServiceUuid, service["Title"].ToString());
                 }
             }

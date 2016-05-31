@@ -955,6 +955,11 @@
               Looks up a localized string similar to God.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Delivery_Status_NotSet">
+            <summary>
+              Looks up a localized string similar to Leveransestatus er ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.UI.DOK_Delivery_Status_Useable">
             <summary>
               Looks up a localized string similar to Brukbar.

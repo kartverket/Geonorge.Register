@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
+using System.Linq;
 
 namespace Kartverket.Register.Models
 {
@@ -58,13 +59,17 @@ namespace Kartverket.Register.Models
 
         public List<string> GetAlertTypes()
         {
-            return new List<string>() {
+            var typeList = 
+             new List<string>() {
                 "Endret URL",
                 "Endret datakvalitet",
                 "Endret datastruktur",
                 "Ny tjeneste",
-                "Fjernet tjeneste"
+                "Fjernet tjeneste",
+                "Endret datainnhold",
+                "Endret kodelister"
             };
+            return typeList.OrderBy(o => o).ToList();
         }
 
         public virtual string GetServiceAlertEditUrl()

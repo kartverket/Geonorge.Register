@@ -292,7 +292,15 @@ namespace Kartverket.Register.Controllers
                         _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
                     else {
-                        bool coverageFound = coverage.GetCoverage(originalDataset.Uuid);
+                        bool coverageFound = (originalCoverage != null) ? originalCoverage.Coverage : false;
+                        try
+                        {
+                            coverageFound = coverage.GetCoverage(originalDataset.Uuid);
+                        }
+                        catch (System.Net.WebException webex)
+                        {
+                            TempData["failure"] = "Tjenesten som henter dekning feilet";
+                        }
                         if (originalCoverage == null)
                         {
                             originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound));

@@ -47,13 +47,13 @@
         <div class="col-no-padding-xs col-actions col-xs-12 col-sm-2 col-md-2 col-lg-2">
             @if (item.documentUrl.Contains("ikke angitt"))
             {
-                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link disabled" title="Ingen dokument er angitt for @item.name">
+                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @item.name">
                     <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                 </a><br />
             }
             else
             {
-                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn btn-lg btn-link" title="Last ned dokument for @item.name">
+                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
                     <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                 </a><br />
             }
@@ -77,9 +77,9 @@
                         {
                             if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">Rediger</a>
+                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">Rediger</a>
                             }
-                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Slett @item.name">Slett</a>
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">Slett</a>
                         }
                     }
                 }

@@ -36,7 +36,7 @@ namespace Kartverket.Register.Controllers
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
-            db.Configuration.AutoDetectChangesEnabled = false;
+            //db.Configuration.AutoDetectChangesEnabled = false;
         }
 
         // GET: Registers
@@ -315,8 +315,10 @@ namespace Kartverket.Register.Controllers
                             db.Entry(originalDataset).State = EntityState.Modified;
                         }
                     }
-                    db.SaveChanges();
                 }
+
+                db.SaveChanges();
+
                 return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
             }
             return HttpNotFound();

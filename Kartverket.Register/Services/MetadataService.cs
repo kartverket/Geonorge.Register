@@ -5,6 +5,7 @@ using www.opengis.net;
 using System.Web.Configuration;
 using Kartverket.Register.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace Kartverket.DOK.Service
 {
@@ -27,13 +28,14 @@ namespace Kartverket.DOK.Service
                 dataset.register = originalDataset.register;
 
                 dataset.dokStatusId = originalDataset.dokStatusId;
-                dataset.datasetownerId = originalDataset.datasetownerId;
+                dataset.datasetownerId = mapOrganizationNameToId(metadata.ContactOwner != null && metadata.ContactOwner.Organization != null ? metadata.ContactOwner.Organization : "");
                 dataset.datasetowner = originalDataset.datasetowner;
-                dataset.ThemeGroupId = originalDataset.ThemeGroupId;
+                List<SimpleKeyword> keywordsDok = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME);
+                dataset.ThemeGroupId = AddTheme(keywordsDok != null && keywordsDok.Count > 0 ? keywordsDok.First().Keyword : "Annen");
                 dataset.WmsUrl = originalDataset.WmsUrl;
                 dataset.registerId = originalDataset.registerId;
                 dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
-
+                dataset.Notes = originalDataset.Notes;
                 dataset.submitterId = originalDataset.submitterId;
                 dataset.submitter = originalDataset.submitter;
                 dataset.DatasetType = originalDataset.DatasetType;
@@ -73,6 +75,24 @@ namespace Kartverket.DOK.Service
 
                 }
             }
+        }
+
+        private string AddTheme(string theme)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from o in db.DOKThemes
+                                           where o.value == theme
+                                           select o.value;
+
+            if (queryResultsRegisterItem.ToList().Count == 0) { 
+                db.DOKThemes.Add(new DOKTheme { description = theme, value = theme });
+                db.SaveChanges();
+            }
+
+            db.Dispose();
+
+            return theme;
         }
 
         private static string FetchThumbnailUrl(SimpleMetadata metadata)
@@ -151,6 +171,21 @@ namespace Kartverket.DOK.Service
 
             var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
             return result;
+        }
+
+        private Guid mapOrganizationNameToId(string orgname)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from o in db.Organizations
+                                           where o.name == orgname 
+                                           select o.systemId;
+
+            Guid ID = queryResultsRegisterItem.FirstOrDefault();
+
+            db.Dispose();
+
+            return ID;
         }
     }
 }

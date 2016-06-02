@@ -233,6 +233,14 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(dataset))
                 {
+                    if (!string.IsNullOrEmpty(dataset.Uuid))
+                    {
+                        
+                        Dataset model = GetMetadataFromKartkatalogen(dataset, dataset.Uuid, false);
+                        model.systemId = dataset.systemId;
+                        Viewbags(model);
+                        return View(model);
+                    }
                     Viewbags(dataset);
                     return View(dataset);
                 }

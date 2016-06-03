@@ -377,7 +377,8 @@ namespace Kartverket.Register.Controllers
                     codelistValue.dateSubmitted = DateTime.Now;
                     codelistValue.statusId = "Submitted";
                     codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
-
+                    Guid version = _registerItemService.NewVersioningGroup(codelistValue);
+                    codelistValue.versioningId = version;
                     _registerItemService.SaveNewRegisterItem(codelistValue);
                 }
             }

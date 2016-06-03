@@ -187,5 +187,25 @@ namespace Kartverket.DOK.Service
 
             return ID;
         }
+
+        public void UpdateDatasetsWithMetadata()
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from d in db.Datasets
+                                           where !string.IsNullOrEmpty(d.Uuid)
+                                           select d;
+
+            var datasets = queryResultsRegisterItem.ToList();
+
+            foreach (var dataset in datasets)
+            {
+                UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
+                db.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
+            }
+
+            db.SaveChanges();
+            db.Dispose();
+        }
     }
 }

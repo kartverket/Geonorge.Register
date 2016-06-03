@@ -36,7 +36,6 @@ namespace Kartverket.Register.Controllers
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
-            //db.Configuration.AutoDetectChangesEnabled = false;
         }
 
         // GET: Registers
@@ -55,6 +54,8 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
+            try { SynchronizeDokMetadata(registername, sorting, page);}
+            catch (Exception ex) { TempData["error"] = "Det oppstod en feil ved henting av metadata: " + ex.Message; }
             DokOrderBy(sorting);
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
@@ -70,6 +71,13 @@ namespace Kartverket.Register.Controllers
             else
             {
                 return HttpNotFound();
+            }
+        }
+
+        private void SynchronizeDokMetadata(string registername, string sorting, int? page)
+        {
+            if (registername == "det-offentlige-kartgrunnlaget" && string.IsNullOrEmpty(sorting) && !page.HasValue) {
+                new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
             }
         }
 

@@ -31,7 +31,7 @@
         var authenticationData = {
             supportsLogin: true,
             isAuthenticated: @Request.IsAuthenticated.ToString().ToLower(),
-            urlActionSignOut: '@Url.Action("SignOut", "AuthServices")',
+            urlActionSignOut: '@Url.Action("Logout", "AuthServices")',
             urlActionSignIn: '@Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url })'
             @if (Request.IsAuthenticated)
             {

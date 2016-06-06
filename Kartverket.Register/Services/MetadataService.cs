@@ -188,7 +188,7 @@ namespace Kartverket.DOK.Service
             return ID;
         }
 
-        public void UpdateDatasetsWithMetadata()
+        public string UpdateDatasetsWithMetadata()
         {
             RegisterDbContext db = new RegisterDbContext();
 
@@ -203,9 +203,10 @@ namespace Kartverket.DOK.Service
                 UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
                 db.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
             }
-
             db.SaveChanges();
             db.Dispose();
+
+            return "updated";
         }
     }
 }

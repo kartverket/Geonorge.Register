@@ -237,10 +237,20 @@
             <div class="form-horizontal">
                 <div class="row">
                     <div class="form-group">
+                        <div class="col-md-offset-5 col-md-7">
+                            <label>Kommentar</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryMetadataStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
                             @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryMetadataStatusId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-7">
+                           @Html.EditorFor(model => model.dokDeliveryMetadataStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
@@ -251,6 +261,9 @@
                             @Html.DropDownList("dokDeliveryProductSheetStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSheetStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSheetStatusId, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryProductSheetStatusNote, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -259,6 +272,9 @@
                         <div class="col-md-2">
                             @Html.DropDownList("dokDeliveryPresentationRulesStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryPresentationRulesStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryPresentationRulesStatusId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryPresentationRulesStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
@@ -269,6 +285,9 @@
                             @Html.DropDownList("dokDeliveryProductSpecificationStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSpecificationStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSpecificationStatusId, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryProductSpecificationStatusNote, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -277,6 +296,9 @@
                         <div class="col-md-2">
                             @Html.DropDownList("dokDeliveryWmsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryWmsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryWmsStatusId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryWmsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
@@ -287,6 +309,9 @@
                             @Html.DropDownList("dokDeliveryWfsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryWfsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryWfsStatusId, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryWfsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -295,6 +320,9 @@
                         <div class="col-md-2">
                             @Html.DropDownList("dokDeliveryDistributionAreaStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryDistributionAreaStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryDistributionAreaStatusId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryDistributionAreaStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
@@ -305,6 +333,9 @@
                             @Html.DropDownList("dokDeliveryDistributionStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryDistributionStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryDistributionStatusId, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryDistributionStatusNote, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -314,6 +345,9 @@
                             @Html.DropDownList("dokDeliveryServiceAlertStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryServiceAlertStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryServiceAlertStatusId, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryServiceAlertStatusNote, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -322,6 +356,9 @@
                         <div class="col-md-2">
                             @Html.DropDownList("dokDeliveryGeodataLawStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryGeodataLawStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryGeodataLawStatusId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-7">
+                            @Html.EditorFor(model => model.dokDeliveryGeodataLawStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>

@@ -237,7 +237,6 @@ namespace Kartverket.Register.Controllers
                     {
                         
                         Dataset model = GetMetadataFromKartkatalogen(dataset, dataset.Uuid, false);
-                        model.systemId = dataset.systemId;
                         Viewbags(model);
                         return View(model);
                     }
@@ -437,7 +436,7 @@ namespace Kartverket.Register.Controllers
             var model = new Dataset();
             try
             {
-                new MetadataService().UpdateDatasetWithMetadata(model, uuid, dataset, dontUpdateDescription);
+                model = new MetadataService().UpdateDatasetWithMetadata(dataset, uuid, dataset, dontUpdateDescription);
             }
             catch (Exception e)
             {
@@ -542,15 +541,25 @@ namespace Kartverket.Register.Controllers
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
             dataset.dokDeliveryMetadataStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryMetadataStatusId) ? inputDataset.dokDeliveryMetadataStatusId : "notset";
+            dataset.dokDeliveryMetadataStatusNote = inputDataset.dokDeliveryMetadataStatusNote;
             dataset.dokDeliveryProductSheetStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSheetStatusId) ? inputDataset.dokDeliveryProductSheetStatusId : "notset";
+            dataset.dokDeliveryProductSheetStatusNote = inputDataset.dokDeliveryProductSheetStatusNote;
             dataset.dokDeliveryPresentationRulesStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryPresentationRulesStatusId) ? inputDataset.dokDeliveryPresentationRulesStatusId : "notset";
+            dataset.dokDeliveryPresentationRulesStatusNote = inputDataset.dokDeliveryPresentationRulesStatusNote;
             dataset.dokDeliveryProductSpecificationStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSpecificationStatusId) ? inputDataset.dokDeliveryProductSpecificationStatusId : "notset";
+            dataset.dokDeliveryProductSpecificationStatusNote = inputDataset.dokDeliveryProductSpecificationStatusNote;
             dataset.dokDeliveryWmsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWmsStatusId) ? inputDataset.dokDeliveryWmsStatusId : "notset";
+            dataset.dokDeliveryWmsStatusNote = inputDataset.dokDeliveryWmsStatusNote;
             dataset.dokDeliveryWfsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWfsStatusId) ? inputDataset.dokDeliveryWfsStatusId : "notset";
+            dataset.dokDeliveryWfsStatusNote = inputDataset.dokDeliveryWfsStatusNote;
             dataset.dokDeliveryDistributionAreaStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionAreaStatusId) ? inputDataset.dokDeliveryDistributionAreaStatusId : "notset";
+            dataset.dokDeliveryDistributionAreaStatusNote = inputDataset.dokDeliveryDistributionAreaStatusNote;
             dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "notset";
+            dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
             dataset.dokDeliveryServiceAlertStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryServiceAlertStatusId) ? inputDataset.dokDeliveryServiceAlertStatusId : "notset";
+            dataset.dokDeliveryServiceAlertStatusNote = inputDataset.dokDeliveryServiceAlertStatusNote;
             dataset.dokDeliveryGeodataLawStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryGeodataLawStatusId) ? inputDataset.dokDeliveryGeodataLawStatusId : "notset";
+            dataset.dokDeliveryGeodataLawStatusNote = inputDataset.dokDeliveryGeodataLawStatusNote;
             dataset.restricted = inputDataset.restricted;
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;

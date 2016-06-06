@@ -11,7 +11,7 @@ namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
-        public void UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
+        public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
             SimpleMetadata metadata = FetchMetadata(uuid);
             if (metadata != null)
@@ -75,6 +75,8 @@ namespace Kartverket.DOK.Service
 
                 }
             }
+
+            return dataset;
         }
 
         private string AddTheme(string theme)

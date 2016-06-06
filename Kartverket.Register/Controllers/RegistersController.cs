@@ -307,12 +307,8 @@ namespace Kartverket.Register.Controllers
                         }
                         else
                         {
-                            originalCoverage.ConfirmedDok = item.Confirmed;
-                            originalCoverage.Coverage = coverageFound;
-                            originalCoverage.Note = item.Note;
-                            originalDataset.Notes = item.Note;
-                            db.Entry(originalCoverage).State = EntityState.Modified;
-                            db.Entry(originalDataset).State = EntityState.Modified;
+
+                            db.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET ConfirmedDok = @p0 , Coverage = @p1 , Note = @p2 WHERE CoverageId=@p3", item.Confirmed, coverageFound, item.Note, originalCoverage.CoverageId);
                         }
                     }
                 }

@@ -223,6 +223,14 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(model => model.SpecificUsage, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.SpecificUsage, 5, 50, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SpecificUsage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })

@@ -36,6 +36,7 @@ namespace Kartverket.DOK.Service
                 dataset.registerId = originalDataset.registerId;
                 dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
                 dataset.Notes = originalDataset.Notes;
+                dataset.SpecificUsage = metadata.SpecificUsage;
                 dataset.submitterId = originalDataset.submitterId;
                 dataset.submitter = originalDataset.submitter;
                 dataset.DatasetType = originalDataset.DatasetType;

@@ -58,6 +58,10 @@
         Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
         <div>
             <p> @Model.description</p>
+            @if (!string.IsNullOrEmpty(dataset.SpecificUsage)) { 
+            <h3>Bruksområde</h3>
+            <p> @dataset.SpecificUsage</p>
+            }
             <h3>DOK-status</h3>
             <div class="row">
                 <div class="col-md-3">Versjons ID </div><div class="col-md-9">@Model.versionNumber</div>

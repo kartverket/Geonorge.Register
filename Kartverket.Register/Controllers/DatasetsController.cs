@@ -560,6 +560,7 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryServiceAlertStatusNote = inputDataset.dokDeliveryServiceAlertStatusNote;
             dataset.dokDeliveryGeodataLawStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryGeodataLawStatusId) ? inputDataset.dokDeliveryGeodataLawStatusId : "notset";
             dataset.dokDeliveryGeodataLawStatusNote = inputDataset.dokDeliveryGeodataLawStatusNote;
+            dataset.SpecificUsage = inputDataset.SpecificUsage;
             dataset.restricted = inputDataset.restricted;
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;

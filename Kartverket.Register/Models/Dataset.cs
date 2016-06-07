@@ -34,6 +34,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "Merknad")]
         public string Notes { get; set; }
 
+        [Display(Name = "Bruksområde")]
+        public string SpecificUsage { get; set; }
+
         [Display(Name = "Produktark url")]
         public string ProductSheetUrl { get; set; }
 

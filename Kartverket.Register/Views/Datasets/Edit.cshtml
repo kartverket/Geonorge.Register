@@ -79,7 +79,7 @@
     <div class="tab-content">
         <div class="tab-pane active" id="general">
             <div class="form-horizontal">
-                <p>Gå til <a href="@Html.EditorUrl()Metadata/Edit?uuid=@Model.Uuid" target="_blank">metadataeditoren</a> for å redigere metadata.</p>
+                <p>Gå til <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">metadataeditoren</a> for å redigere metadata.</p>
                 <div class="form-group">
                     @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">

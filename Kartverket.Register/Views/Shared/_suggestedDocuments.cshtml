@@ -20,9 +20,9 @@
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Utgave
                 </th>
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                @*<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Innsendt
-                </th>
+                </th>*@
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Status
                 </th>
@@ -40,9 +40,9 @@
                     <td title="Utgave: @item.versionName">
                         @Html.DisplayFor(modelItem => item.versionName)
                     </td>
-                    <td title="Innsendt: @item.dateSubmitted">
+                    @*<td title="Innsendt: @item.dateSubmitted">
                         @Html.DisplayFor(modelItem => item.dateSubmitted)
-                    </td>
+                    </td>*@
                     <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">
                         @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
                     </td>

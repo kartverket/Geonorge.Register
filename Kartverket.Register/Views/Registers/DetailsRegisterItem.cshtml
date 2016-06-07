@@ -81,9 +81,9 @@
             <div class="row">
                 <div class="col-md-3">DOK-Godkjent:</div><div class="col-md-9"> @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</div>
             </div>
-            <div class="row">
+            @*<div class="row">
                 <div class="col-md-3">Innsendt:</div><div class="col-md-9"> @Html.DisplayFor(model => model.dateSubmitted)</div>
-            </div>
+            </div>*@
             <div class="row">
                 <div class="col-md-3">Endret:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
             </div>
@@ -286,7 +286,7 @@
 
             </div>
             <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                <span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>
+                @*<span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>*@
                 <span class="small">Endret: @Html.DisplayFor(model => model.modified)</span>
                 @if (Model.register.containedItemClass != "Dataset")
                 {

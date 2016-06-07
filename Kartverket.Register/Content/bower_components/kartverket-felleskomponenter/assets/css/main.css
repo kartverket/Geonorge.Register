@@ -243,7 +243,7 @@ aside ul li a:hover,
   font-family: 'Open Sans', sans-serif;
   font-size: 16pt;
   font-weight: 400;
-  margin-bottom: 17px;
+  margin-bottom: 18px;
   margin-top: 0;
   text-transform: uppercase; }
 
@@ -1994,7 +1994,7 @@ aside ul li, .container-footer ul li {
 .disabled .custom-icon.custom-icon-lastned {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lastned-disabled.svg"); }
 
-/* Last ned */
+/* Ekstern link */
 .custom-icon.custom-icon-eksternlink, .custom-icon-sm.custom-icon-eksternlink {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ikoner/ekternlink.svg"); }
 
@@ -2031,17 +2031,17 @@ aside ul li, .container-footer ul li {
 .custom-icon.custom-icon-hengelaas-open-green {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-green.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-open-red {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-red.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-open-yellow {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-yellow.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-closed-green {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-green.svg"); }
@@ -2664,9 +2664,9 @@ textarea, textarea.form-control {
   .form-horizontal .form-group .control-label {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    -ms-word-break: break-all;
+    -ms-word-break: keep-all;
     word-break: break-word;
-    -ms-hyphens: auto;
+    -ms-hyphens: none;
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto; }
@@ -2893,7 +2893,10 @@ ul#thumbnailsCoverage {
   background-color: #FFF; }
 
 .container .search .searchbar input {
-  padding: 0 10px; }
+  -moz-border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+  border-radius: 6px !important;
+  padding: 0 0 0 21px; }
 
 @media (max-width: 767px) {
   .container-login {
@@ -2907,8 +2910,11 @@ ul#thumbnailsCoverage {
   .top-row .col-xs-2 {
     width: 250px;
     text-align: right; }
-  .container .search .searchbar .input {
-    padding-left: 34.6px !important; } }
+  .container .search .searchbar input {
+    -moz-border-radius: 3px 0 0 3px !important;
+    -webkit-border-radius: 3px 0 0 3px !important;
+    border-radius: 3px 0 0 3px !important;
+    padding: 0 0 0 34.6px; } }
 
 #norgeskartmodal {
   width: 90%;
@@ -3456,6 +3462,9 @@ html[data-useragent*='MSIE 10.0'] .custom-select select, html[data-useragent*='M
 html[data-useragent*='MSIE 10.0'] select::-ms-expand {
   display: block; }
 
+html[data-useragent*='MSIE 10.0'] .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  width: auto !important; }
+
 @media all and (-ms-high-contrast: none) {
   *::-ms-backdrop, .chosen-input-group .input-group-btn {
     display: table-row; }
@@ -3463,4 +3472,6 @@ html[data-useragent*='MSIE 10.0'] select::-ms-expand {
     height: 100%;
     position: absolute;
     top: 0;
-    right: -39px; } }
+    right: -39px; }
+  .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    width: auto !important; } }

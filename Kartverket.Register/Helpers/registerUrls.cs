@@ -36,6 +36,12 @@ namespace Kartverket.Register.Helpers
         {
             return WebConfigurationManager.AppSettings["KartkatalogenUrl"];
         }
+
+        public static string DokEvaluationCriteriaUrl(this HtmlHelper helper)
+        {
+            return WebConfigurationManager.AppSettings["DokEvaluationCriteriaUrl"];
+        }
+
         public static string DokRegisterUrl(this HtmlHelper helper)
         {
             return WebConfigurationManager.AppSettings["DokRegisterUrl"];

@@ -2,6 +2,7 @@
 <div class="custom-select">
     <select onchange="changeLayout(this)" class="form-control" id="layoutSelectList">
         <option id="layout-tabell" title="Tabellvisning">Tabell</option>
-        <option id="layout-liste" title="Listevisning">Liste</option>
+        @if(Model.name != "Det offentlige kartgrunnlaget - Kommunalt")
+        { <option id="layout-liste" title="Listevisning">Liste</option>}
     </select>
 </div>

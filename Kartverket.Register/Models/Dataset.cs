@@ -23,7 +23,7 @@ namespace Kartverket.Register.Models
 
         //public int Id { get; set; }
 
-        [Display(Name = "Uuid")]
+        [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
 
         [Required(ErrorMessage = "Dette feltet er påkrevd")]
@@ -31,34 +31,34 @@ namespace Kartverket.Register.Models
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
 
-        [Display(Name = "Merknad")]
+        [Display(Name = "Merknad:")]
         public string Notes { get; set; }
 
-        [Display(Name = "Bruksområde")]
+        [Display(Name = "Bruksområde:")]
         public string SpecificUsage { get; set; }
 
-        [Display(Name = "Produktark url")]
+        [Display(Name = "Produktark url:")]
         public string ProductSheetUrl { get; set; }
 
-        [Display(Name = "Presentasjonsregler url")]
+        [Display(Name = "Presentasjonsregler url:")]
         public string PresentationRulesUrl { get; set; }
 
-        [Display(Name = "Produktspesifikasjon url")]
+        [Display(Name = "Produktspesifikasjon url:")]
         public string ProductSpecificationUrl { get; set; }
 
-        [Display(Name = "Metadata url")]
+        [Display(Name = "Metadata url:")]
         public string MetadataUrl { get; set; }
 
-        [Display(Name = "Distribusjonsformat")]
+        [Display(Name = "Distribusjonsformat:")]
         public string DistributionFormat { get; set; }
 
-        [Display(Name = "Distribusjon url")]
+        [Display(Name = "Distribusjon url:")]
         public string DistributionUrl { get; set; }
 
-        [Display(Name = "Distribusjonsområde")]
+        [Display(Name = "Distribusjonsområde:")]
         public string DistributionArea { get; set; }
 
-        [Display(Name = "WMS url")]
+        [Display(Name = "WMS url:")]
         public string WmsUrl { get; set; }
 
         [Display(Name = "Tema:")]
@@ -66,7 +66,7 @@ namespace Kartverket.Register.Models
         public string ThemeGroupId { get; set; }
         public virtual DOKTheme theme { get; set; }
 
-        [Display(Name = "Miniatyrbilde")]
+        [Display(Name = "Miniatyrbilde:")]
         public string datasetthumbnail { get; set; }
 
         [ForeignKey("dokStatus")]

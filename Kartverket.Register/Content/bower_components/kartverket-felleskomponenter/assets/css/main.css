@@ -1850,8 +1850,8 @@ aside ul li, .container-footer ul li {
   opacity: 1;
   cursor: not-allowed; }
 
-.btn.disabled:hover {
-  color: #cfcfcf; }
+.btn.disabled:hover, .btn.disabled:hover span {
+  color: #cfcfcf !important; }
 
 .btn-xs {
   font-size: 10pt !important;
@@ -2503,6 +2503,9 @@ input.form-control, input[type=text], textarea {
 
 .margin-top-10 {
   margin-top: 10px; }
+
+.no-label {
+  margin-top: 27px; }
 
 .full-width {
   width: 100% !important; }

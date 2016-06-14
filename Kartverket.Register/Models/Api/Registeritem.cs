@@ -13,6 +13,7 @@ namespace Kartverket.Register.Models.Api
         public string id { get; set; }
         public string label { get; set; }
         public string itemclass { get; set; }
+        public Guid systemId { get; set; }
         public string status { get; set; }
         public string description { get; set; }
         public string seoname { get; set; }
@@ -97,6 +98,7 @@ namespace Kartverket.Register.Models.Api
             dateSubmitted = item.dateSubmitted;
             dateAccepted = item.dateAccepted.GetValueOrDefault();
             itemclass = "RegisterItem";
+            systemId = item.systemId;
 
             if (item is EPSG)
             {

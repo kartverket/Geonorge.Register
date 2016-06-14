@@ -15,7 +15,7 @@ namespace Kartverket.Register.Models.Api
         public string manager { get; set; }
         public string controlbody { get; set; }
         public string containedItemClass { get; set; }
-        public Guid systemId { get; set; }
+        public Guid uuid { get; set; }
         public List<Registeritem> containeditems { get; set; }
         public List<Register> containedSubRegisters { get; set; }
         public DateTime lastUpdated { get; set; }
@@ -35,7 +35,7 @@ namespace Kartverket.Register.Models.Api
             containeditems = new List<Registeritem>();
             containedSubRegisters = new List<Register>();
             SelectedDOKMunicipality = selectedDOKMunicipality;
-            systemId = item.systemId;
+            uuid = item.systemId;
         }
     }
 }

@@ -2121,7 +2121,8 @@ aside ul li, .container-footer ul li {
   font-size: 14pt;
   font-style: normal;
   font-variant: normal;
-  font-weight: 400; }
+  font-weight: 400;
+  min-height: 30px; }
 
 .chosen-input-group {
   width: calc(100% - 37px); }

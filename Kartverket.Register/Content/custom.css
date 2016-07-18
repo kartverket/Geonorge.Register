@@ -798,22 +798,6 @@
     margin-right: 2px;
 }
 
-
-.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
-    background: transparent none repeat scroll 0% 0%;
-    top: 3px;
-    font-size: 11px;
-    color: #777;
-    padding-left: 3px;
-    margin-right: 5px;
-    border-left: 1px solid #DDD;
-}
-
-    .chosen-container-multi .chosen-choices li.search-choice .search-choice-close::before {
-        font-family: "Glyphicons Halflings";
-        content: "";
-    }
-
 .chosen-container-single .chosen-single div b::before {
     font-family: "Glyphicons Halflings";
     content: "";

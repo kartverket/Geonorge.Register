@@ -243,7 +243,7 @@ aside ul li a:hover,
   font-family: 'Open Sans', sans-serif;
   font-size: 16pt;
   font-weight: 400;
-  margin-bottom: 17px;
+  margin-bottom: 18px;
   margin-top: 0;
   text-transform: uppercase; }
 
@@ -1794,15 +1794,75 @@ aside ul li, .container-footer ul li {
   background-color: #fe5000;
   color: #fff; }
 
-.btn {
+.btn,
+a.btn,
+button.btn {
   font-family: "Open Sans", sans-serif;
   font-weight: normal;
   font-size: 12pt;
+  font-style: normal;
   margin-bottom: 7px;
+  border: none;
   border-radius: 0;
   height: 34px;
   line-height: 16pt;
-  text-decoration: none; }
+  text-decoration: none;
+  background-color: #7da1c4;
+  color: #FFF;
+  transition: all 0.35s linear 0s; }
+  .btn:hover, .btn:focus,
+  a.btn:hover,
+  a.btn:focus,
+  button.btn:hover,
+  button.btn:focus {
+    background-color: #fe5000;
+    color: #FFFFFF !important;
+    border: none;
+    font-style: normal;
+    font-size: 12pt;
+    line-height: 16pt; }
+    .btn:hover span, .btn:focus span,
+    a.btn:hover span,
+    a.btn:focus span,
+    button.btn:hover span,
+    button.btn:focus span {
+      color: #FFFFFF; }
+  .btn.disabled, .btn[disabled],
+  a.btn.disabled,
+  a.btn[disabled],
+  button.btn.disabled,
+  button.btn[disabled] {
+    background-color: #FFFFFF;
+    color: #CFCFCF;
+    border: 1px solid #CFCFCF;
+    opacity: 1;
+    cursor: not-allowed; }
+    .btn.disabled:hover, .btn[disabled]:hover,
+    a.btn.disabled:hover,
+    a.btn[disabled]:hover,
+    button.btn.disabled:hover,
+    button.btn[disabled]:hover {
+      color: #CFCFCF; }
+      .btn.disabled:hover span, .btn[disabled]:hover span,
+      a.btn.disabled:hover span,
+      a.btn[disabled]:hover span,
+      button.btn.disabled:hover span,
+      button.btn[disabled]:hover span {
+        color: #CFCFCF; }
+    .btn.disabled span:hover, .btn[disabled] span:hover,
+    a.btn.disabled span:hover,
+    a.btn[disabled] span:hover,
+    button.btn.disabled span:hover,
+    button.btn[disabled] span:hover {
+      color: #CFCFCF; }
+  .btn span:hover,
+  a.btn span:hover,
+  button.btn span:hover {
+    color: #FFFFFF; }
+  .btn.btn-purple,
+  a.btn.btn-purple,
+  button.btn.btn-purple {
+    background-color: #5d4777; }
 
 .btn-file {
   position: relative;
@@ -1821,37 +1881,6 @@ aside ul li, .container-footer ul li {
     background: white;
     cursor: inherit;
     display: block; }
-
-.btn, .col-actions .btn {
-  background-color: #7da1c4;
-  transition: all 0.35s linear 0s;
-  color: #FFF;
-  border: none;
-  font-style: normal; }
-
-.btn.btn-purple {
-  background-color: #5d4777; }
-
-.btn:hover, .btn:focus, a.btn:hover, a.btn:focus {
-  background-color: #fe5000;
-  color: #FFFFFF !important;
-  border: none;
-  font-style: normal;
-  font-size: 12pt;
-  line-height: 16pt; }
-
-.btn:hover span, .btn span:hover {
-  color: #FFFFFF !important; }
-
-.btn.disabled {
-  background-color: #FFF !important;
-  color: #cfcfcf;
-  border: 1px solid #cfcfcf;
-  opacity: 1;
-  cursor: not-allowed; }
-
-.btn.disabled:hover {
-  color: #cfcfcf; }
 
 .btn-xs {
   font-size: 10pt !important;
@@ -1994,7 +2023,7 @@ aside ul li, .container-footer ul li {
 .disabled .custom-icon.custom-icon-lastned {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/lastned-disabled.svg"); }
 
-/* Last ned */
+/* Ekstern link */
 .custom-icon.custom-icon-eksternlink, .custom-icon-sm.custom-icon-eksternlink {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ikoner/ekternlink.svg"); }
 
@@ -2031,17 +2060,17 @@ aside ul li, .container-footer ul li {
 .custom-icon.custom-icon-hengelaas-open-green {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-green.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-open-red {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-red.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-open-yellow {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-yellow.svg");
   width: 30px;
-  margin-right: -8px; }
+  margin-right: -10px; }
 
 .custom-icon.custom-icon-hengelaas-closed-green {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-green.svg"); }
@@ -2121,7 +2150,8 @@ aside ul li, .container-footer ul li {
   font-size: 14pt;
   font-style: normal;
   font-variant: normal;
-  font-weight: 400; }
+  font-weight: 400;
+  min-height: 30px; }
 
 .chosen-input-group {
   width: calc(100% - 37px); }
@@ -2265,13 +2295,33 @@ aside ul li, .container-footer ul li {
 .chosen-container-active .chosen-choices {
   box-shadow: none; }
 
-.chosen-container .chosen-drop {
+.chosen-container .chosen-single,
+.chosen-container-single .chosen-single {
+  height: 34px; }
+  .chosen-container .chosen-single span,
+  .chosen-container-single .chosen-single span {
+    line-height: 34px;
+    font-size: 12pt;
+    padding: 0 6px; }
+
+.chosen-container .chosen-drop,
+.chosen-container-single .chosen-drop {
   background-color: #FFF;
-  border-radius: 3px;
-  box-shadow: 0px 0px 10px #BCBEC0;
-  border: none;
-  padding-bottom: 12px;
-  padding-left: 34.6px; }
+  border: 1px solid #cfcfcf;
+  border-top: 0; }
+  .chosen-container .chosen-drop .chosen-results,
+  .chosen-container-single .chosen-drop .chosen-results {
+    padding-left: 34.6px; }
+    .chosen-container .chosen-drop .chosen-results li.no-results,
+    .chosen-container-single .chosen-drop .chosen-results li.no-results {
+      margin-left: -28px;
+      padding: 0 15px; }
+  .chosen-container .chosen-drop .chosen-search input[type=text],
+  .chosen-container-single .chosen-drop .chosen-search input[type=text] {
+    border: 1px solid #cfcfcf;
+    padding: 0 15px;
+    font-size: 12pt;
+    font-family: Open Sans,sans-serif; }
 
 .chosen-container-multi .chosen-choices.has-error {
   box-shadow: 0px 0px 4px -2px #A94442 inset;
@@ -2286,7 +2336,6 @@ aside ul li, .container-footer ul li {
   border-radius: 0;
   font-size: 14pt;
   padding: 0px 8px !important;
-  height: 30px;
   box-shadow: none !important; }
 
 .chosen-container-single .chosen-single div b {
@@ -2412,6 +2461,102 @@ input[readonly] {
 input.form-control, input[type=text], textarea {
   padding: 0 10px; }
 
+input[type="text"],
+textarea,
+input.form-control {
+  border-radius: 0;
+  border: 1px solid #CFCFCF;
+  box-shadow: none;
+  font-family: "Open Sans",sans-serif;
+  font-style: normal;
+  font-variant: normal;
+  color: #000000;
+  font-size: 12pt !important;
+  font-weight: 400;
+  min-height: 30px;
+  width: 100%;
+  min-height: 34px;
+  padding: 0px 15px; }
+
+input:focus,
+textarea:focus,
+.form-control:focus {
+  border: 1px solid #CFCFCF;
+  outline: none;
+  box-shadow: none; }
+
+textarea, textarea.form-control {
+  border: 1px solid #CFCFCF;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12pt;
+  min-height: 180px;
+  padding: 6px 15px;
+  width: 100%;
+  border-radius: 0;
+  box-shadow: none; }
+
+.custom-select {
+  background-color: #FFF;
+  content: "";
+  background-repeat: no-repeat;
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg");
+  background-size: 16px 16px;
+  background-position: right 8px center;
+  border-radius: 0; }
+
+.custom-select:hover {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
+
+.custom-select select, .custom-select select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: none;
+  box-shadow: none;
+  font-family: "Open Sans",sans-serif;
+  background: none;
+  color: #000000;
+  font-size: 12pt;
+  padding: 0 15px;
+  height: 34px;
+  border: 1px solid #CFCFCF;
+  border-radius: 0;
+  margin-bottom: 10px; }
+
+.custom-select select::-ms-expand {
+  display: none; }
+
+.custom-select.input-group select {
+  margin-bottom: 0; }
+
+.container .searchbar input {
+  border-radius: 0px !important;
+  font-size: 14pt !important; }
+
+.container .searchbar input:focus {
+  border: none; }
+
+.input-group {
+  margin-bottom: 10px; }
+
+.input-group-addon {
+  border-radius: 0; }
+
+.form-horizontal .form-group {
+  margin-right: 0;
+  margin-left: 0; }
+  .form-horizontal .form-group .control-label {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: keep-all;
+    word-break: break-word;
+    -ms-hyphens: none;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto; }
+
 .help-page h1, .help-page .h1 {
   font-size: 24pt;
   font-family: Raleway,sans-serif;
@@ -2504,6 +2649,9 @@ input.form-control, input[type=text], textarea {
 .margin-top-10 {
   margin-top: 10px; }
 
+.no-label {
+  margin-top: 27px; }
+
 .full-width {
   width: 100% !important; }
 
@@ -2575,101 +2723,6 @@ h1 .label {
 
 .label-info {
   border-color: #7da1c4; }
-
-input[type="text"],
-textarea,
-input.form-control {
-  border-radius: 0;
-  border: 1px solid #CFCFCF;
-  box-shadow: none;
-  font-family: "Open Sans",sans-serif;
-  font-style: normal;
-  font-variant: normal;
-  color: #000000;
-  font-size: 12pt !important;
-  font-weight: 400;
-  min-height: 30px;
-  width: 100%;
-  min-height: 34px;
-  padding: 0px 15px; }
-
-input:focus,
-textarea:focus,
-.form-control:focus {
-  border: 1px solid #CFCFCF;
-  outline: none;
-  box-shadow: none; }
-
-textarea, textarea.form-control {
-  border: 1px solid #CFCFCF;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12pt;
-  min-height: 180px;
-  padding: 6px 15px;
-  width: 100%;
-  border-radius: 0;
-  box-shadow: none; }
-
-.custom-select {
-  background-color: #FFF;
-  content: "";
-  background-repeat: no-repeat;
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg");
-  background-size: 16px 16px;
-  background-position: right 8px center;
-  border-radius: 0; }
-
-.custom-select:hover {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
-
-.custom-select select, .custom-select select.form-control {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  border: none;
-  box-shadow: none;
-  font-family: "Open Sans",sans-serif;
-  background: none;
-  font-size: 12pt;
-  padding: 0 8px;
-  height: 34px;
-  border: 1px solid #CFCFCF;
-  border-radius: 0;
-  margin-bottom: 10px; }
-
-.custom-select select::-ms-expand {
-  display: none; }
-
-.custom-select.input-group select {
-  margin-bottom: 0; }
-
-.container .searchbar input {
-  border-radius: 0px !important;
-  font-size: 14pt !important; }
-
-.container .searchbar input:focus {
-  border: none; }
-
-.input-group {
-  margin-bottom: 10px; }
-
-.input-group-addon {
-  border-radius: 0; }
-
-.form-horizontal .form-group {
-  margin-right: 0;
-  margin-left: 0; }
-  .form-horizontal .form-group .control-label {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    -ms-word-break: break-all;
-    word-break: break-word;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto; }
 
 .required-indicator::after,
 .form-group.required .control-label::after,
@@ -2893,7 +2946,10 @@ ul#thumbnailsCoverage {
   background-color: #FFF; }
 
 .container .search .searchbar input {
-  padding: 0 10px; }
+  -moz-border-radius: 6px !important;
+  -webkit-border-radius: 6px !important;
+  border-radius: 6px !important;
+  padding: 0 0 0 21px; }
 
 @media (max-width: 767px) {
   .container-login {
@@ -2907,8 +2963,11 @@ ul#thumbnailsCoverage {
   .top-row .col-xs-2 {
     width: 250px;
     text-align: right; }
-  .container .search .searchbar .input {
-    padding-left: 34.6px !important; } }
+  .container .search .searchbar input {
+    -moz-border-radius: 3px 0 0 3px !important;
+    -webkit-border-radius: 3px 0 0 3px !important;
+    border-radius: 3px 0 0 3px !important;
+    padding: 0 0 0 34.6px; } }
 
 #norgeskartmodal {
   width: 90%;
@@ -3456,6 +3515,9 @@ html[data-useragent*='MSIE 10.0'] .custom-select select, html[data-useragent*='M
 html[data-useragent*='MSIE 10.0'] select::-ms-expand {
   display: block; }
 
+html[data-useragent*='MSIE 10.0'] .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+  width: auto !important; }
+
 @media all and (-ms-high-contrast: none) {
   *::-ms-backdrop, .chosen-input-group .input-group-btn {
     display: table-row; }
@@ -3463,4 +3525,6 @@ html[data-useragent*='MSIE 10.0'] select::-ms-expand {
     height: 100%;
     position: absolute;
     top: 0;
-    right: -39px; } }
+    right: -39px; }
+  .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    width: auto !important; } }

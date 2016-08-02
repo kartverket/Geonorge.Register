@@ -258,7 +258,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("dataset/{registername}/{itemowner}/{itemname}/rediger")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Edit(Dataset dataset, CoverageDataset coverage, string registername, string itemname, string metadataUuid, string parentRegister, string registerowner, string itemowner, bool dontUpdateDescription = false)
         {
             Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItem(parentRegister, registername, itemname, 1, itemowner);
@@ -325,7 +324,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("dataset/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
         [Route("dataset/{registername}/{itemowner}/{itemname}/slett")]
-        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string registername, string itemname, string parentregister, string registerowner, string itemowner)
         {
             Dataset dataset = (Dataset)_registerItemService.GetCurrentRegisterItem(parentregister, registername, itemname);

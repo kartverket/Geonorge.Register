@@ -8,6 +8,7 @@ namespace Kartverket.Register.Services
         {
             {"a33feac6-2c6f-4541-babd-290db1fe8a68", "akvakultur"},
             {"1489f7f8-40c8-4dc4-83b6-bcf277b56506", "avinor_stoysoner"},
+            {"b3c319bd-910d-4663-8ce8-23a246afe879", "dm_bergrettigheter"},
             {"c4436a5f-1e22-461a-8209-786f7052acb5", "dsb_110sentral"},
             {"12fa3360-ce91-4f02-82c8-22ff85cf0c67", "dsb_anleggfarligstoff"},
             {"0ccce81d-a72e-46ca-8bd9-57b362376485", "dsb_brannstasjon"},

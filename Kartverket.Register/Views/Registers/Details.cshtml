@@ -12,14 +12,12 @@
 }
 
 @section breadcrumb {
-    <li><a href="@RegisterUrls.registerUrl(null, null, mainRegister.seoname)">@mainRegister.name</a></li>
-    @while (parent != null && parent != mainRegister)
+
+    @foreach (var register in HtmlHelperExtensions.registers(Model))
     {
-        <li><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
-        parent = parent.parentRegister;
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    @if (mainRegister != Model)
-    { <li>@Model.name</li>}
+    <li>@Model.name</li>
 }
 
 @{

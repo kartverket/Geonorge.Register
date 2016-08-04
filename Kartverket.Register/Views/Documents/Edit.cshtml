@@ -59,30 +59,17 @@
 
 </script>
 }
+
 @section breadcrumb {
 
-    @if (Model.register.parentRegisterId != null)
+    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
     {
-        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
-        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
-        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li>Rediger</li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Model.name</a></li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
-        while (parentRegister != null && parentRegister != mainRegister)
-        {
-            <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
-            parentRegister = parentRegister.parentRegister;
-        }
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    else
-    {
-        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li><a href="/register/versjoner/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
-        <li>Rediger</li>
-    }
+    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
+    <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
+    <li>Rediger</li>
 }
-
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">

@@ -897,6 +897,31 @@ namespace Kartverket.Register.Helpers
             return register;
         }
 
+        public static List<Models.Register> registers(Models.Register current)
+        {
+            List<Models.Register> registerList = new List<Models.Register>();
+            Models.Register main = mainRegister(current);
+            Models.Register parentRegister = current.parentRegister;
+            if(parentRegister!= null)
+            { 
+                while (main != null && parentRegister != main)
+                {
+                   if(!registerList.Contains(parentRegister))
+                        registerList.Add(parentRegister);
+                   parentRegister = parentRegister.parentRegister;
+                }
+            }
+            registerList.Reverse();
+
+            if (!registerList.Contains(main) && main != current)
+                registerList.Insert(0, main);
+
+            //registerList.Add(current);
+
+            return registerList;
+
+        }
+
         public static string GetSecurityClaim(string type)
         {
             string result = null;

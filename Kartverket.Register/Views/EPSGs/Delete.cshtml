@@ -36,14 +36,7 @@
     {
         <div class="form-actions no-color">
             <input type="submit" value="Slett" class="btn btn-default pull-right" />
-            @if (Model.register.parentRegisterId != null)
-            {
-                <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname">Tilbake</a>
-            }
-            else
-            {
-                <a href="/register/@Model.register.seoname/@Model.submitter.seoname/@Model.seoname/">Tilbake</a>
-            }
+            <a href="@Model.GetObjectUrl()">Tilbake</a>
         </div>
     }
 

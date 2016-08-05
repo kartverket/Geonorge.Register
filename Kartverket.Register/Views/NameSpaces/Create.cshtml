@@ -65,14 +65,7 @@
     <div class="form-group">
         <hr />
         <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
-        @if (Model.register.parentRegister != null)
-        {
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
-        }
-        else
-        {
-            <a href="/register/@Model.register.seoname/">Tilbake</a>
-        }
+        <a href="@Model.GetObjectUrl()">Tilbake</a>
     </div>
 
 }

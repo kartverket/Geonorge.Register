@@ -282,6 +282,7 @@ namespace Kartverket.Register.Controllers
                 foreach (DokMunicipalRow item in dokMunicipalList)
                 {
                     Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
+                    originalDataset.modified = DateTime.Now;
                     CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.MunicipalityId);
                     if (item.Delete)
                     {

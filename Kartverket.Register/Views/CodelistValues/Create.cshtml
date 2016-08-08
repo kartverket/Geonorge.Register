@@ -19,24 +19,12 @@
 </section>
 
 @section breadcrumb {
-    @if (Model.register.parentRegister != null)
+    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
     {
-        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
-        Kartverket.Register.Models.Register parentRegister = Model.register.parentRegister;
-        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
-        <li>Ny</li>
-        while (parentRegister != null && parentRegister != mainRegister)
-        {
-            <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
-            parentRegister = parentRegister.parentRegister;
-        }
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    else
-    {
-        <li><a href="/register/@Model.register.seoname">@Model.register.name</a></li>
-        <li>Ny</li>
-    }
+    <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
+    <li>Ny</li>
 }
 
 <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">

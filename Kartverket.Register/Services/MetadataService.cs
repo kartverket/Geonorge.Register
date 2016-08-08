@@ -5,12 +5,13 @@ using www.opengis.net;
 using System.Web.Configuration;
 using Kartverket.Register.Helpers;
 using System;
+using System.Collections.Generic;
 
 namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
-        public void UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
+        public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
             SimpleMetadata metadata = FetchMetadata(uuid);
             if (metadata != null)
@@ -27,13 +28,15 @@ namespace Kartverket.DOK.Service
                 dataset.register = originalDataset.register;
 
                 dataset.dokStatusId = originalDataset.dokStatusId;
-                dataset.datasetownerId = originalDataset.datasetownerId;
+                dataset.datasetownerId = mapOrganizationNameToId(metadata.ContactOwner != null && metadata.ContactOwner.Organization != null ? metadata.ContactOwner.Organization : "");
                 dataset.datasetowner = originalDataset.datasetowner;
-                dataset.ThemeGroupId = originalDataset.ThemeGroupId;
+                List<SimpleKeyword> keywordsDok = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME);
+                dataset.ThemeGroupId = AddTheme(keywordsDok != null && keywordsDok.Count > 0 ? keywordsDok.First().Keyword : "Annen");
                 dataset.WmsUrl = originalDataset.WmsUrl;
                 dataset.registerId = originalDataset.registerId;
                 dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
-
+                dataset.Notes = originalDataset.Notes;
+                dataset.SpecificUsage = metadata.SpecificUsage;
                 dataset.submitterId = originalDataset.submitterId;
                 dataset.submitter = originalDataset.submitter;
                 dataset.DatasetType = originalDataset.DatasetType;
@@ -73,6 +76,26 @@ namespace Kartverket.DOK.Service
 
                 }
             }
+
+            return dataset;
+        }
+
+        private string AddTheme(string theme)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from o in db.DOKThemes
+                                           where o.value == theme
+                                           select o.value;
+
+            if (queryResultsRegisterItem.ToList().Count == 0) { 
+                db.DOKThemes.Add(new DOKTheme { description = theme, value = theme });
+                db.SaveChanges();
+            }
+
+            db.Dispose();
+
+            return theme;
         }
 
         private static string FetchThumbnailUrl(SimpleMetadata metadata)
@@ -151,6 +174,42 @@ namespace Kartverket.DOK.Service
 
             var result = g.SearchWithFilters(filters, filterNames, 1, 200, true);
             return result;
+        }
+
+        private Guid mapOrganizationNameToId(string orgname)
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from o in db.Organizations
+                                           where o.name == orgname 
+                                           select o.systemId;
+
+            Guid ID = queryResultsRegisterItem.FirstOrDefault();
+
+            db.Dispose();
+
+            return ID;
+        }
+
+        public string UpdateDatasetsWithMetadata()
+        {
+            RegisterDbContext db = new RegisterDbContext();
+
+            var queryResultsRegisterItem = from d in db.Datasets
+                                           where !string.IsNullOrEmpty(d.Uuid)
+                                           select d;
+
+            var datasets = queryResultsRegisterItem.ToList();
+
+            foreach (var dataset in datasets)
+            {
+                UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
+                db.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
+            }
+            db.SaveChanges();
+            db.Dispose();
+
+            return "updated";
         }
     }
 }

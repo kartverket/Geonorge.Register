@@ -36,7 +36,6 @@ namespace Kartverket.Register.Controllers
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
-            //db.Configuration.AutoDetectChangesEnabled = false;
         }
 
         // GET: Registers
@@ -282,7 +281,8 @@ namespace Kartverket.Register.Controllers
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
-                CoverageService coverage = new CoverageService(db, municipalityCode);
+                CoverageService coverage = new CoverageService(db);
+                coverage.SetCoverage(municipalityCode);
 
                 foreach (DokMunicipalRow item in dokMunicipalList)
                 {
@@ -312,12 +312,8 @@ namespace Kartverket.Register.Controllers
                         }
                         else
                         {
-                            originalCoverage.ConfirmedDok = item.Confirmed;
-                            originalCoverage.Coverage = coverageFound;
-                            originalCoverage.Note = item.Note;
-                            originalDataset.Notes = item.Note;
-                            db.Entry(originalCoverage).State = EntityState.Modified;
-                            db.Entry(originalDataset).State = EntityState.Modified;
+
+                            db.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET ConfirmedDok = @p0 , Coverage = @p1 , Note = @p2 WHERE CoverageId=@p3", item.Confirmed, coverageFound, item.Note, originalCoverage.CoverageId);
                         }
                     }
                 }

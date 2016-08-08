@@ -58,7 +58,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("epsg/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("epsg/{registername}/ny")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(EPSG epsgKode, string registername, string parentRegister, string registerowner)
         {
             epsgKode.register = _registerService.GetRegister(parentRegister, registername);
@@ -189,7 +188,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("epsg/{parentRegister}/{registerowner}/{registername}/{itemowner}/{epsgname}/rediger")]
         [Route("epsg/{registername}/{organization}/{epsgname}/rediger")]
-        //[ValidateAntiForgeryToken]
         //public ActionResult Edit(EPSG ePSG, string name, string id)
         public ActionResult Edit(EPSG ePSG, string epsgname, string parentRegister, string registername)
         {
@@ -302,7 +300,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("epsg/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{epsgname}/slett")]
         [Route("epsg/{registername}/{organization}/{epsgname}/slett")]
-        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string epsgname, string registername, string parentregister, string parentregisterowner)
         {
             var queryResultsOrganisasjon = from o in db.EPSGs

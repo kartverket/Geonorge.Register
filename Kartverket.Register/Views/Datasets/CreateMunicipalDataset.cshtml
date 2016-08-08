@@ -4,25 +4,14 @@
 @{
     ViewBag.Title = "Foreslå nytt datasett";
 }
+
 @section breadcrumb {
-    @if (Model.Register.parentRegister != null)
+    @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
     {
-        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.Register);
-        Kartverket.Register.Models.Register parentRegister = Model.Register.parentRegister;
-        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li><a href="/subregister/@Model.Register.parentRegister.seoname/@Model.Register.parentRegister.owner.seoname/@Model.Register.seoname">@Model.Register.name</a></li>
-        <li>Ny</li>
-        while (parentRegister != null && parentRegister != mainRegister)
-        {
-            <li><a href="/subregister/@parentRegister.parentRegister.seoname/@parentRegister.parentRegister.owner.seoname/@parentRegister.seoname">@parentRegister.name</a></li>
-            parentRegister = parentRegister.parentRegister;
-        }
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    else
-    {
-        <li><a href="/register/@Model.Register.seoname">@Model.Register.name</a></li>
-        <li>Ny</li>
-    }
+    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
+    <li>Nytt</li>
 }
 
 <section class="heading">

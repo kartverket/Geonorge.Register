@@ -17,9 +17,13 @@ namespace Kartverket.Register.Services
 
         string coverageApiUrl = "https://ws.geonorge.no/dekningsApi/kommune?kid=";
 
-        public CoverageService(RegisterDbContext context, string municipalityCode)
+        public CoverageService(RegisterDbContext context)
         {
-            _context = context;
+            _context = context;     
+        }
+
+        public void SetCoverage(string municipalityCode)
+        {
             coverageList = FetchMunicipalityDatasets(municipalityCode);
         }
 
@@ -56,6 +60,35 @@ namespace Kartverket.Register.Services
                 coverage = true;
 
             return coverage;
+        }
+
+        public string UpdateDatasetsWithCoverage()
+        {
+            var organizations = _context.CoverageDatasets.Select(m => m.Municipality.number).Distinct().ToList();
+
+            foreach (var orgNumber in organizations)
+            {
+                try
+                {
+                    var municipalityService = new MunicipalityService();
+                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(orgNumber);
+                    SetCoverage(municipalityCode);
+
+                    var coverageDatasets = _context.CoverageDatasets.Where(c => c.Municipality.number == orgNumber).Select(d => d).ToList();
+                    foreach (var coverage in coverageDatasets)
+                    { 
+                        bool coverageFound = false;
+                        coverageFound = GetCoverage(coverage.dataset.Uuid);
+                        coverage.Coverage = coverageFound;
+
+                        _context.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET Coverage = '" + coverage.Coverage + "' WHERE CoverageId='" + coverage.CoverageId +  "'");
+                        
+                    }
+                }
+                catch { }
+            }
+
+            return "updated";
         }
 
     }

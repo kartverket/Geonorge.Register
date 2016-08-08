@@ -11,33 +11,35 @@
     }
 }
 @section Scripts {
-<script>
-    $(document).ready(function () {
-        $("table").tablesorter({
+    <script>
+        $(document).ready(function () {
+            $("table").tablesorter({
 
-            headers: {
-                0: { sorter: false },
-                1: { sorter: false },
-                2: { sorter: false },
-                3: { sorter: false },
-                4: { sorter: false },
-                6: { sorter: false },
-            }
+                headers: {
+                    0: { sorter: false },
+                    1: { sorter: false },
+                    2: { sorter: false },
+                    3: { sorter: false },
+                    4: { sorter: false },
+                    6: { sorter: false },
+                }
+            });
         });
-    });
-</script>
+    </script>
 }
-<div class="col-sm-3 col-md-3 col-lg-3" style="padding: 0px;">
-    <form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 10px; float: right; width: 100%; padding: 0px;">
-        <div class="save-as-dropdown">
-                <span>Velg kommune:</span>
-                <div class="custom-select">
-                    @Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" })
-                </div>
-            
-        </div>
-    </form>
-</div>
+<script>
+    var dropdown = '@Html.Raw(Html.DropDownList("municipality", new SelectList(ViewBag.municipality, "value", "name"), selectedMunicipalName, new { @class = "form-control", onchange = "this.form.submit()" }).ToString().Replace("\n", "").Replace("\r", "").Trim())';
+    var htmlBlock = '<div class="col-sm-3 col-md-3 col-lg-3">';
+    htmlBlock += '<form action="@Request.Url.LocalPath" name="FilterForm" method="get" class="col-md-6" style="margin-top: 10px; float: right; width: 100%; padding: 0px;">';
+    htmlBlock += '<div class="save-as-dropdown">';
+    htmlBlock += '<div class="save-as-dropdown">';
+    htmlBlock += '<span>Velg kommune:</span>';
+    htmlBlock += '<div class="custom-select">' + dropdown + '</div>';
+    htmlBlock += '</div></div></form></div>';
+    htmlBlock += '<div class="clearfix"></div>';
+
+    $(".search-result-navigation").prepend(htmlBlock);
+</script>
 @if (selectedMunicipal != null)
 {
     <table id="myTable" class="dataset table-responsive table tablesorter" style="width:100%">
@@ -81,13 +83,15 @@
                                     @item.name
                                 </a>
                             }
-                            else {
+                            else
+                            {
                                 <a href="@item.GetObjectUrl()">
                                     @item.name
                                 </a>
                             }
                         }
-                        else {
+                        else
+                        {
                             <a href="@item.GetObjectUrl()">
                                 @item.name
                             </a>

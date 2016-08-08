@@ -14,13 +14,11 @@
 
 @section breadcrumb {
 
-    <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-    @while (parent != null && parent != mainRegister)
+    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
     {
-        <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-        parent = parent.parentRegister;
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    <li><a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Model.register.name</a></li>
+    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
     <li>@Model.name</li>
 }
 
@@ -67,7 +65,7 @@
 
         </div>
         <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
-            <span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />
+            @*<span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />*@
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span>
         </div>
 

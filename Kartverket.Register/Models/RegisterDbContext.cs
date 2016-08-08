@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Kartverket.Register.Services;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Kartverket.Register.Models
 {
@@ -57,12 +59,12 @@ namespace Kartverket.Register.Models
                 if (reg != null)
                 {
                     result = Save();
-                    Index(reg.systemId);
+                    new Task(() => { Index(reg.systemId); }).Start();
                 }
                 else if (regItem != null)
                 {
                     result = Save();
-                    Index(regItem.systemId);
+                    new Task(() => { Index(regItem.systemId); }).Start();
                 }
                 else { result = Save(); }
             }
@@ -74,16 +76,9 @@ namespace Kartverket.Register.Models
         void Index(System.Guid systemID)
         {
             string id = systemID.ToString();
-            string url = "http://" + System.Web.HttpContext.Current.Request.Url.Host + ":" + System.Web.HttpContext.Current.Request.Url.Port + "/IndexSingle/" + id;
-            System.Net.WebClient c = new System.Net.WebClient();
-            try
-            {
-                var data = c.DownloadString(url);
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
+            var indexer = new SolrRegisterIndexer(new SolrIndexer(), new SolrIndexDocumentCreator());
+            indexer.RunIndexingOn(id);
+                   
         }
         int Save()
         {

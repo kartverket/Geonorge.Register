@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Search;
@@ -219,6 +220,16 @@ namespace Kartverket.Register.Controllers
             }
 
             return Ok(ConverteditemsByOwner);
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeDokMetadata()
+        {
+            new CoverageService(db).UpdateDatasetsWithCoverage();
+            new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            return Ok();
         }
 
 

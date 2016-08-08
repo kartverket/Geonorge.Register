@@ -3,29 +3,17 @@
 
 @{
     ViewBag.Title = @Model.currentVersion.name;
-    var owner = ViewBag.registerItemOwner;
-    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.currentVersion.register);
-    Kartverket.Register.Models.Register parent = Model.currentVersion.register.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model.currentVersion.register);
 }
 
 @section breadcrumb {
-    @if (Model.currentVersion.register.parentRegister != null)
+
+    @foreach (var register in HtmlHelperExtensions.registers(Model.currentVersion.register))
     {
-        <li><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-        <li><a href="/subregister/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname">@Model.currentVersion.register.name</a></li>
-        <li>@Model.currentVersion.name</li>
-        while (parent != null && parent != mainRegister)
-        {
-            <li><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-            parent = parent.parentRegister;
-        }
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    else
-    {
-        <li><a href="/register/@mainRegister.seoname/">@mainRegister.name</a></li>
-        <li>@Model.currentVersion.name</li>
-    }
+    <li><a href="@Model.currentVersion.register.GetObjectUrl()">@Model.currentVersion.register.name</a></li>
+    <li>@Model.currentVersion.name</li>
 }
 <section class="heading">
     <div class="row">

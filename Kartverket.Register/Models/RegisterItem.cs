@@ -111,7 +111,10 @@ namespace Kartverket.Register.Models
                 return serviceAlert.GetServiceAlertUrl();
             }
             else {
-                return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+                if(submitter!=null && !string.IsNullOrEmpty(seoname))
+                    return register.GetObjectUrl() + "/" + submitter.seoname + "/" + seoname;
+                else
+                    return register.GetObjectUrl();
             }
         }
 

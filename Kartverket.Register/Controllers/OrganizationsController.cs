@@ -124,7 +124,6 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("organisasjoner/{parentRegister}/{registerowner}/{registername}/ny")]
         [Route("organisasjoner/{registername}/ny")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Create(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string parentRegister, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument, string registerOwner)
         {
             organization.register = _registerService.GetRegister(parentRegister, registername);
@@ -377,7 +376,6 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         [Route("organisasjoner/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{organisasjon}/slett")]
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
-        //[ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon, string parentregister, string parentregisterowner)
         {
             var queryResultsOrganisasjon = from o in db.Organizations

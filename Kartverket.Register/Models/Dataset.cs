@@ -23,7 +23,7 @@ namespace Kartverket.Register.Models
 
         //public int Id { get; set; }
 
-        [Display(Name = "Uuid")]
+        [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
 
         [Required(ErrorMessage = "Dette feltet er påkrevd")]
@@ -31,31 +31,34 @@ namespace Kartverket.Register.Models
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
 
-        [Display(Name = "Merknad")]
+        [Display(Name = "Merknad:")]
         public string Notes { get; set; }
 
-        [Display(Name = "Produktark url")]
+        [Display(Name = "Bruksområde:")]
+        public string SpecificUsage { get; set; }
+
+        [Display(Name = "Produktark url:")]
         public string ProductSheetUrl { get; set; }
 
-        [Display(Name = "Presentasjonsregler url")]
+        [Display(Name = "Presentasjonsregler url:")]
         public string PresentationRulesUrl { get; set; }
 
-        [Display(Name = "Produktspesifikasjon url")]
+        [Display(Name = "Produktspesifikasjon url:")]
         public string ProductSpecificationUrl { get; set; }
 
-        [Display(Name = "Metadata url")]
+        [Display(Name = "Metadata url:")]
         public string MetadataUrl { get; set; }
 
-        [Display(Name = "Distribusjonsformat")]
+        [Display(Name = "Distribusjonsformat:")]
         public string DistributionFormat { get; set; }
 
-        [Display(Name = "Distribusjon url")]
+        [Display(Name = "Distribusjon url:")]
         public string DistributionUrl { get; set; }
 
-        [Display(Name = "Distribusjonsområde")]
+        [Display(Name = "Distribusjonsområde:")]
         public string DistributionArea { get; set; }
 
-        [Display(Name = "WMS url")]
+        [Display(Name = "WMS url:")]
         public string WmsUrl { get; set; }
 
         [Display(Name = "Tema:")]
@@ -63,7 +66,7 @@ namespace Kartverket.Register.Models
         public string ThemeGroupId { get; set; }
         public virtual DOKTheme theme { get; set; }
 
-        [Display(Name = "Miniatyrbilde")]
+        [Display(Name = "Miniatyrbilde:")]
         public string datasetthumbnail { get; set; }
 
         [ForeignKey("dokStatus")]
@@ -85,51 +88,61 @@ namespace Kartverket.Register.Models
         [Display(Name = "Metadatakvalitet:")]
         public string dokDeliveryMetadataStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryMetadataStatus { get; set; }
+        public string dokDeliveryMetadataStatusNote { get; set; }
         //ProductSheet
         [ForeignKey("dokDeliveryProductSheetStatus")]
         [Display(Name = "Produktark:")]
         public string dokDeliveryProductSheetStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSheetStatus { get; set; }
+        public string dokDeliveryProductSheetStatusNote { get; set; }
         //PresentationRules
         [ForeignKey("dokDeliveryPresentationRulesStatus")]
         [Display(Name = "Kartografidokumentasjon:")]
         public string dokDeliveryPresentationRulesStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryPresentationRulesStatus { get; set; }
+        public string dokDeliveryPresentationRulesStatusNote { get; set; }
         //ProductSpecification
         [ForeignKey("dokDeliveryProductSpecificationStatus")]
         [Display(Name = "Produktspesifikasjon:")]
         public string dokDeliveryProductSpecificationStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSpecificationStatus { get; set; }
+        public string dokDeliveryProductSpecificationStatusNote { get; set; }
         //WMS
         [ForeignKey("dokDeliveryWmsStatus")]
         [Display(Name = "WMS-tjeneste:")]
         public string dokDeliveryWmsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWmsStatus { get; set; }
+        public string dokDeliveryWmsStatusNote { get; set; }
         //WFS
         [ForeignKey("dokDeliveryWfsStatus")]
         [Display(Name = "WFS-tjeneste:")]
         public string dokDeliveryWfsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWfsStatus { get; set; }
+        public string dokDeliveryWfsStatusNote { get; set; }
         //DistributionArea
         [ForeignKey("dokDeliveryDistributionAreaStatus")]
         [Display(Name = "Dekningskart:")]
         public string dokDeliveryDistributionAreaStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryDistributionAreaStatus { get; set; }
+        public string dokDeliveryDistributionAreaStatusNote { get; set; }
         //Distribution
         [ForeignKey("dokDeliveryDistributionStatus")]
         [Display(Name = "Filnedlasting:")]
         public string dokDeliveryDistributionStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryDistributionStatus { get; set; }
+        public string dokDeliveryDistributionStatusNote { get; set; }
         //ServiceAlert
         [ForeignKey("dokDeliveryServiceAlertStatus")]
         [Display(Name = "Endringsvarsling:")]
         public string dokDeliveryServiceAlertStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryServiceAlertStatus { get; set; }
+        public string dokDeliveryServiceAlertStatusNote { get; set; }
         //GeodataLaw
         [ForeignKey("dokDeliveryGeodataLawStatus")]
         [Display(Name = "Oppfyller geodataloven:")]
         public string dokDeliveryGeodataLawStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryGeodataLawStatus { get; set; }
+        public string dokDeliveryGeodataLawStatusNote { get; set; }
 
         public bool? restricted { get; set; }
 

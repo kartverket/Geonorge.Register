@@ -72,6 +72,7 @@ namespace Kartverket.Register.Controllers
                         serviceAlert.submitter = _registerService.GetOrganizationByUserName();
                         serviceAlert.InitializeNewServiceAlert();
                         serviceAlert.versioningId = _registerItemService.NewVersioningGroup(serviceAlert);
+                        serviceAlert.register.modified = System.DateTime.Now;
                         _registerItemService.SaveNewRegisterItem(serviceAlert);
                         return Redirect(serviceAlert.GetObjectUrl());
                     }

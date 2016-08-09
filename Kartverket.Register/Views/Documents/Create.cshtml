@@ -12,7 +12,9 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
+    @if (!string.IsNullOrEmpty(Model.name)) { 
     <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
+    }
     <li>Ny</li>
 }
 

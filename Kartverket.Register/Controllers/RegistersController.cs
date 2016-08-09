@@ -62,6 +62,11 @@ namespace Kartverket.Register.Controllers
             sorting = DefaultSortingServiceAlertRegister(sorting, register);
             if (register != null)
             {
+                if (register.name == "Det offentlige kartgrunnlaget - Kommunalt" && string.IsNullOrEmpty(filter.municipality))
+                {
+                    CodelistValue municipality = _accessControlService.Municipality();
+                    if (municipality != null) return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
+                }
                 register = RegisterItems(register, filter, page);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, register);
                 return View(register);

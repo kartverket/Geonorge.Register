@@ -130,30 +130,32 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.narrowerItems, "Mer spesialiserte begrep", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
-                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
-                        {
-                            <optgroup label="@register.name">
-                                @foreach (var code in register.items.OrderBy(c => c.name))
-                                {
-                                    Guid? narrower = null;
-                                    foreach (var narrowerItem in Model.narrowerItems)
+                    <div class="custom-select">
+                        <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                            @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                            {
+                                <optgroup label="@register.name">
+                                    @foreach (var code in register.items.OrderBy(c => c.name))
                                     {
-                                        if (code.systemId == narrowerItem.systemId)
+                                        Guid? narrower = null;
+                                        foreach (var narrowerItem in Model.narrowerItems)
                                         {
-                                            <option selected="selected" value="@code.systemId">@code.name</option>
-                                            narrower = narrowerItem.systemId;
-                                            break;
+                                            if (code.systemId == narrowerItem.systemId)
+                                            {
+                                                <option selected="selected" value="@code.systemId">@code.name</option>
+                                                narrower = narrowerItem.systemId;
+                                                break;
+                                            }
+                                        }
+                                        if (narrower == null)
+                                        {
+                                            <option value="@code.systemId">@code.name</option>
                                         }
                                     }
-                                    if (narrower == null)
-                                    {
-                                        <option value="@code.systemId">@code.name</option>
-                                    }
-                                }
-                            </optgroup>
-                        }
-                    </select>
+                                </optgroup>
+                            }
+                        </select>
+                    </div>
                     <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
                 </div>
             </div>

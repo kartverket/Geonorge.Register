@@ -32,7 +32,10 @@ namespace Kartverket.Register.Models
         {
             if (register.parentRegisterId == Guid.Empty || register.parentRegister == null)
             {
-                return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
+                if (documentowner == null && seoname == null)
+                    return "/register/versjoner/" + register.seoname;
+                else
+                    return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
             }
             else {
                 return "/subregister/versjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;

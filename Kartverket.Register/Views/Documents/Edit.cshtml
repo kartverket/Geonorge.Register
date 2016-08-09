@@ -44,7 +44,7 @@
         else{
             document.getElementById('NotAcceptedate').hidden = false;
         }
-        document.getElementById('sosi').hidden = true;
+        document.getElementById('sosiinfo').hidden = true;
     }
 
     function enable() {
@@ -53,7 +53,7 @@
         document.getElementById('approvalRef').hidden = false;
         document.getElementById('NotAcceptedate').hidden = true;
         document.getElementById('cbRetired').hidden = false;
-        document.getElementById('sosi').hidden = false;
+        document.getElementById('sosiinfo').hidden = false;
     }
 
 
@@ -156,8 +156,6 @@
 
                 <hr />
 
-                @Html.Hidden("retired", false)
-                @Html.Hidden("sosi", HtmlHelperExtensions.SosiIsChecked(Model.statusId))
             }
             else {
                 @Html.HiddenFor(model => model.name)
@@ -187,7 +185,7 @@
                 </div>
                 if (Model.register.name == "Produktspesifikasjoner")
                 {
-                    <div class="form-group" id="sosi">
+                    <div class="form-group" id="sosiinfo">
                         @Html.Label("SOSI godkjent", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.CheckBox("sosi", HtmlHelperExtensions.SosiIsChecked(Model.statusId), new

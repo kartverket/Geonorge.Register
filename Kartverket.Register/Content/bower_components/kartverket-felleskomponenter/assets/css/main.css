@@ -2339,14 +2339,25 @@ button.btn {
   padding: 0px 8px !important;
   box-shadow: none !important; }
 
-.chosen-container-single .chosen-single div b {
-  background: none; }
+.chosen-container-single.chosen-with-drop .chosen-single {
+  color: transparent; }
+
+.chosen-container-single .chosen-single {
+  color: #414042; }
+  .chosen-container-single .chosen-single div b {
+    background: none; }
 
 .chosen-container-single .chosen-drop {
-  padding-left: 5px; }
-
-.chosen-container-single .chosen-search input[type="text"] {
-  background-position: 100% -36px; }
+  padding: 0; }
+  .chosen-container-single .chosen-drop .chosen-search {
+    padding: 0;
+    margin: -32px 0 0 0;
+    border-bottom: 1px solid #cfcfcf;
+    height: 33px; }
+    .chosen-container-single .chosen-drop .chosen-search input[type="text"] {
+      border: none;
+      margin: 0;
+      background-position: 100% -36px; }
 
 /* Nedlastingskvittering */
 .download-list a.list-group-item {

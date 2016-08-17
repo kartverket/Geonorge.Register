@@ -10,7 +10,7 @@
         <meta name="description" content="@ViewBag.MetaDescription" />
     }
     <link rel="shortcut icon" type="image/x-icon" href="@Html.KartkatalogenUrl()Content/img/favicon.ico" />
-   
+
     <title>
         @ViewBag.Title
         @if (ViewBag.Title != null)
@@ -45,13 +45,25 @@
     </script>
     @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts")
     @Scripts.Render("~/Scripts/local-scripts")
-    
+
     @RenderSection("head", false)
-    @Html.Partial("_Analytics")    
+    @Html.Partial("_Analytics")
 
 </head>
 
 <body class="geonorge-container prototype  geonorge ng-scope" ng-app="geonorge">
+    <!-- Google Tag Manager -->
+    <noscript>
+        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-MR2X5P"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-MR2X5P');</script>
+    <!-- End Google Tag Manager -->
 
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_SharedMenu.min.cshtml")
 
@@ -83,7 +95,7 @@
             </div>
 
         </div>
-        
+
     </div>
     <footer class="page-footer">
         <div class="container container-footer">
@@ -92,7 +104,7 @@
 
                     <p><img alt="" src="@Html.KartkatalogenUrl()Content/img/geonorge.png" height="87" width="381" /></p>
                     <small>Versjon @Html.ApplicationVersionNumber()</small>
-                    
+
                     <ul class="editorialblock-list-item"></ul>
                 </div><div class="block editorialblock col-md-12 col-lg-4  ">
 
@@ -118,7 +130,7 @@
             </div>
         </div>
     </footer>
-    
+
     @RenderSection("scripts", false)
     <script>
         $(function(){

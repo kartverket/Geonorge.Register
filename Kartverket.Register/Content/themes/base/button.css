@@ -10,7 +10,7 @@
  */
 .ui-button {
 	display: inline-block;
-	position: absolute;
+	position: relative;
 	padding: 0;
 	line-height: normal;
 	margin-right: .1em;

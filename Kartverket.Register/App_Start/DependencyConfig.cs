@@ -9,6 +9,7 @@ using Kartverket.Register.Services;
 using Kartverket.Register.Services.Search;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Kartverket.Register.Services.Report;
 using Kartverket.Register.Services.Versioning;
 
 namespace Kartverket.Register
@@ -36,7 +37,7 @@ namespace Kartverket.Register
             builder.RegisterType<MunicipalityService>().As<IMunicipalityService>();
             builder.RegisterType<DatasetService>().As<IDatasetService>();
             builder.RegisterType<AccessControlService>().As<IAccessControlService>();
-
+            builder.RegisterType<DokReportService>().As<IDokReportService>();
 
             var container = builder.Build();
 

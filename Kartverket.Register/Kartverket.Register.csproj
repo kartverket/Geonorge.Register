@@ -728,6 +728,8 @@
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
+    <Compile Include="Services\Report\DokReportService.cs" />
+    <Compile Include="Services\Report\IDokReportService.cs" />
     <Compile Include="Services\SchemaSynchronizer.cs" />
     <Compile Include="Services\Search\ISearchIndexService.cs" />
     <Compile Include="Services\Search\ISearchService.cs" />
@@ -1426,6 +1428,7 @@
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.min.map" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

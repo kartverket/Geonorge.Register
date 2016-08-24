@@ -26,7 +26,7 @@ namespace Kartverket.Register.Services.Report
 
             var results = (from c in _dbContext.CoverageDatasets
                        where c.Coverage == true
-                       group c by c.MunicipalityId into grouped
+                       group c by c.Municipality.name into grouped
                        select new
                        {
                            MunicipalityId = grouped.Key,
@@ -44,7 +44,7 @@ namespace Kartverket.Register.Services.Report
 
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 
-                reportResultDataValue.Key = "";
+                reportResultDataValue.Key = "Det offentlige kartgrunnlaget";
                 reportResultDataValue.Value = result.Count.ToString();
 
                 reportResultDataValues.Add(reportResultDataValue);

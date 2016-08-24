@@ -18,11 +18,15 @@ namespace Kartverket.Register.Controllers
         {
             Trace.WriteLine("QueryName: " + query.QueryName);
 
+            ReportResult result = new ReportResult();
 
-            _dokReportService.GetSelectedDatasets();
+            if (query.QueryName == "Antall DOK-datasett valgt og tillegg pr kommune")
+            {
+                 result = _dokReportService.GetSelectedAndAdditionalDatasets();
+            }
+            
 
-
-            return new ReportResult() { TotalDataCount = 1 };
+            return result;
         }
 
 

@@ -16,7 +16,7 @@ namespace Kartverket.Register.Services.Report
 
         public ReportResult GetSelectedAndAdditionalDatasets()
         {
-
+                      
             ReportResult reportResult = new ReportResult();
             reportResult.Data = new List<ReportResultData>();
 
@@ -24,23 +24,43 @@ namespace Kartverket.Register.Services.Report
 
             reportResult.TotalDataCount = total;
 
-            var results = (from c in _dbContext.CoverageDatasets
+            var resultsSelected = (from c in _dbContext.CoverageDatasets
                        where c.Coverage == true
                        group c by c.Municipality.name into grouped
                        select new
                        {
-                           MunicipalityId = grouped.Key,
+                           name = grouped.Key,
                            Count = grouped.Count()
-                       }).OrderByDescending(x => x.Count);
+                       }).OrderByDescending(x => x.Count).ToList();
+
+            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
+                    select mun.Key).ToList();
+
+            var orgList = (from o in municipalityList
+                          join org in _dbContext.Organizations on o equals org.number
+                          select org.name).ToList();
+
+            var coverageList = (from c in _dbContext.CoverageDatasets
+                                select c.Municipality.number).ToList();
+
+            int Count = 0;
+            var resultsNotSelected =(
+                                  from name in orgList
+                                  where !(from c in coverageList
+                                          select c)
+                                         .Contains(name)
+                                  select new { name, Count }).ToList();
+
+            var results = resultsSelected.Union(resultsNotSelected);
 
 
-            foreach (var result in results.ToList())
+            foreach (var result in results)
             {
                 ReportResultData reportResultData = new ReportResultData();
 
                 List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
 
-                reportResultData.Label = result.MunicipalityId.ToString();
+                reportResultData.Label = result.name.ToString();
 
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 

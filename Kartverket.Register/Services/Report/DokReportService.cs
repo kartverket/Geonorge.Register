@@ -34,6 +34,18 @@ namespace Kartverket.Register.Services.Report
                            number = grouped.Key.number
                        }).OrderByDescending(x => x.Count).ToList();
 
+            var resultsSelectedAdditional = (from c in _dbContext.CoverageDatasets
+                                   join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
+                                   where ds.DatasetType == "Kommunalt"
+                                   group c by new { c.Municipality.name, c.Municipality.number } into grouped
+                                   select new
+                                   {
+                                       name = grouped.Key.name,
+                                       Count = grouped.Count(),
+                                       number = grouped.Key.number
+                                   }).ToList();
+
+
             var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
                     select mun.Key).ToList();
 
@@ -94,6 +106,18 @@ namespace Kartverket.Register.Services.Report
                 reportResultDataValue.Value = result.Count.ToString();
 
                 reportResultDataValues.Add(reportResultDataValue);
+
+                //additional start
+                var additionalItem = (from ra in resultsSelectedAdditional
+                                      where ra.number == result.number
+                                      select ra.Count).FirstOrDefault();
+ 
+                reportResultDataValue = new ReportResultDataValue();
+                reportResultDataValue.Key = "Tillegg";
+                reportResultDataValue.Value = additionalItem.ToString();
+                reportResultDataValues.Add(reportResultDataValue);
+                //additional end
+
 
                 reportResultData.Values = reportResultDataValues;
 

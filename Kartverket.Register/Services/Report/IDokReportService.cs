@@ -4,6 +4,6 @@ namespace Kartverket.Register.Services.Report
 {
     public interface IDokReportService
     {
-        ReportResult GetSelectedAndAdditionalDatasets();
+        ReportResult GetSelectedAndAdditionalDatasets(ReportQuery q);
     }
 }

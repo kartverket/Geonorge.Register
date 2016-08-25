@@ -14,9 +14,9 @@ namespace Kartverket.Register.Services.Report
             _dbContext = dbContext;
         }
 
-        public ReportResult GetSelectedAndAdditionalDatasets()
+        public ReportResult GetSelectedAndAdditionalDatasets(ReportQuery param)
         {
-                      
+
             ReportResult reportResult = new ReportResult();
             reportResult.Data = new List<ReportResultData>();
 
@@ -26,11 +26,12 @@ namespace Kartverket.Register.Services.Report
 
             var resultsSelected = (from c in _dbContext.CoverageDatasets
                        where c.Coverage == true
-                       group c by c.Municipality.name into grouped
+                       group c by new { c.Municipality.name, c.Municipality.number } into grouped
                        select new
                        {
-                           name = grouped.Key,
-                           Count = grouped.Count()
+                           name = grouped.Key.name,
+                           Count = grouped.Count(),
+                           number = grouped.Key.number
                        }).OrderByDescending(x => x.Count).ToList();
 
             var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
@@ -38,20 +39,45 @@ namespace Kartverket.Register.Services.Report
 
             var orgList = (from o in municipalityList
                           join org in _dbContext.Organizations on o equals org.number
-                          select org.name).ToList();
+                          select new { org.name, org.number }).ToList();
 
             var coverageList = (from c in _dbContext.CoverageDatasets
                                 select c.Municipality.name).ToList();
 
             int Count = 0;
             var resultsNotSelected =(
-                                  from name in orgList
+                                  from mun in orgList
                                   where !(from c in coverageList
                                           select c)
-                                         .Contains(name)
-                                  select new { name, Count }).ToList();
+                                         .Contains(mun.name)
+                                  select new { mun.name, Count, mun.number }).ToList();
 
             var results = resultsSelected.Union(resultsNotSelected).Distinct();
+
+
+            var areas = param.Parameters.Where(p => p.Name == "area").Select(a => a.Value).ToList();
+            if (areas.Any())
+            {
+                if(areas[0] != "Hele landet")
+                {
+
+                    var resultsNr = (from res in results
+                            join munici in MunicipalityData.MunicipalityFromOrganizationNumberToCode on res.number equals munici.Key
+                            select new { res.name, res.Count, res.number, munici.Value }).ToList();
+
+                    results = (from r in resultsNr
+                              where  (from c in areas
+                                      select c)
+                                         .Contains(r.Value)
+                                || (from c in areas
+                                    select c)
+                                         .Contains(r.Value.Substring(0,2))
+
+                               select new { r.name, r.Count,r.number }).ToList();
+
+
+                }
+            }
 
 
             foreach (var result in results)

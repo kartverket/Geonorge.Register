@@ -22,7 +22,7 @@ namespace Kartverket.Register.Controllers
 
             if (query.QueryName == "Antall DOK-datasett valgt og tillegg pr kommune")
             {
-                 result = _dokReportService.GetSelectedAndAdditionalDatasets();
+                 result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
             }
             
 

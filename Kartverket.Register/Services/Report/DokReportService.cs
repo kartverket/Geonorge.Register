@@ -41,7 +41,7 @@ namespace Kartverket.Register.Services.Report
                           select org.name).ToList();
 
             var coverageList = (from c in _dbContext.CoverageDatasets
-                                select c.Municipality.number).ToList();
+                                select c.Municipality.name).ToList();
 
             int Count = 0;
             var resultsNotSelected =(
@@ -51,7 +51,7 @@ namespace Kartverket.Register.Services.Report
                                          .Contains(name)
                                   select new { name, Count }).ToList();
 
-            var results = resultsSelected.Union(resultsNotSelected);
+            var results = resultsSelected.Union(resultsNotSelected).Distinct();
 
 
             foreach (var result in results)

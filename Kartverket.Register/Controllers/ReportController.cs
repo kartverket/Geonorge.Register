@@ -21,10 +21,10 @@ namespace Kartverket.Register.Controllers
             ReportResult result = new ReportResult();
 
             if (query.QueryName == "Antall DOK-datasett valgt og tillegg pr kommune")
-            {
-                 result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
-            }
-            
+                result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
+            else if (query.QueryName == "Valgte DOK-datasett pr tema")
+                result = _dokReportService.GetSelectedDatasetsByTheme(query);
+
 
             return result;
         }

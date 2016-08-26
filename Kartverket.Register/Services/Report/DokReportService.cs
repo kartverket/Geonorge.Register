@@ -20,17 +20,22 @@ namespace Kartverket.Register.Services.Report
             ReportResult reportResult = new ReportResult();
             reportResult.Data = new List<ReportResultData>();
 
-            var total = _dbContext.CoverageDatasets.Select(m => m.DatasetId).Distinct().Count();
+            _dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
+            var total = (from  dd in _dbContext.Datasets 
+                         where dd.DatasetType != "Kommunalt"
+                         select dd.systemId).Distinct().Count();
 
             reportResult.TotalDataCount = total;
 
             var resultsSelected = (from c in _dbContext.CoverageDatasets
-                                   where c.ConfirmedDok == true
+                                   join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
+                                   where c.ConfirmedDok == true && ds.DatasetType != "Kommunalt"
                                    group c by new { c.Municipality.name, c.Municipality.number } into grouped
                                    select new
                                    {
                                        name = grouped.Key.name,
-                                       Count = grouped.Count(),
+                                       Count = grouped.Distinct().Count(),
                                        number = grouped.Key.number
                                    }).OrderByDescending(x => x.Count).ToList();
 
@@ -140,8 +145,8 @@ namespace Kartverket.Register.Services.Report
 
             var results = (from c in _dbContext.CoverageDatasets.DefaultIfEmpty()
                                    join d in _dbContext.Datasets on c.DatasetId equals d.systemId
-                                   where c.ConfirmedDok == true
-                                   group c by new { d.theme.description, d.name } into grouped
+                                   where c.ConfirmedDok == true && d.DatasetType != "Kommunalt"
+                           group c by new { d.theme.description, d.name } into grouped
                                    select new
                                    {
                                        theme = grouped.Key.description,

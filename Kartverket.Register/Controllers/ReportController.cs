@@ -24,6 +24,8 @@ namespace Kartverket.Register.Controllers
                 result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
             else if (query.QueryName == "Valgte DOK-datasett pr tema")
                 result = _dokReportService.GetSelectedDatasetsByTheme(query);
+            else if (query.QueryName == "DOK-datasett dekning og valgt pr kommune")
+                result = _dokReportService.GetSelectedDatasetsCoverage(query);
 
 
             return result;

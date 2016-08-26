@@ -179,5 +179,88 @@ namespace Kartverket.Register.Services.Report
             return reportResult;
         }
 
+
+        public ReportResult GetSelectedDatasetsCoverage(ReportQuery param)
+        {
+
+            ReportResult reportResult = new ReportResult();
+            reportResult.Data = new List<ReportResultData>();
+
+            var total = 0;
+
+            reportResult.TotalDataCount = total;
+
+            var results = (from c in _dbContext.CoverageDatasets
+                           join d in _dbContext.Datasets on c.DatasetId equals d.systemId
+                           let datasetName = d.name
+                           select new { c.Municipality.name, datasetName, c.Coverage, c.ConfirmedDok,c.Municipality.number }).Distinct().OrderBy(o=>o.name).ThenBy(o2=>o2.datasetName).ToList();
+
+
+            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
+                                    select mun.Key).ToList();
+
+            var orgList = (from o in municipalityList
+                           join org in _dbContext.Organizations on o equals org.number
+                           select new { org.name, org.number }).ToList();
+
+            var coverageList = (from c in _dbContext.CoverageDatasets
+                                select c.Municipality.name).ToList();
+
+
+
+            var areas = param.Parameters.Where(p => p.Name == "area").Select(a => a.Value).ToList();
+            if (areas.Any())
+            {
+                if (areas[0] != "Hele landet")
+                {
+
+                    var resultsNr = (from res in results
+                                     join munici in MunicipalityData.MunicipalityFromOrganizationNumberToCode on res.number equals munici.Key
+                                     select new { res.name, res.datasetName, res.Coverage, res.ConfirmedDok, res.number, munici.Value }).ToList();
+
+                    results = (from r in resultsNr
+                               where (from c in areas
+                                      select c)
+                                          .Contains(r.Value)
+                                 || (from c in areas
+                                     select c)
+                                          .Contains(r.Value.Substring(0, 2))
+
+                               select new { r.name, r.datasetName, r.Coverage, r.ConfirmedDok, r.number }).ToList();
+
+
+                }
+            }
+
+
+            foreach (var result in results)
+            {
+                ReportResultData reportResultData = new ReportResultData();
+
+                List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
+
+                reportResultData.Label = result.name.ToString();
+
+                ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
+
+                reportResultDataValue.Key = result.datasetName;
+                reportResultDataValue.Value = result.Coverage ? "JA" : "NEI";
+
+                reportResultDataValues.Add(reportResultDataValue);
+
+
+                reportResultDataValue = new ReportResultDataValue();
+                reportResultDataValue.Key = "Valgt";
+                reportResultDataValue.Value = result.ConfirmedDok ? "JA" : "NEI";
+                reportResultDataValues.Add(reportResultDataValue);
+
+                reportResultData.Values = reportResultDataValues;
+
+                reportResult.Data.Add(reportResultData);
+            }
+
+            return reportResult;
+        }
+
     }
 }

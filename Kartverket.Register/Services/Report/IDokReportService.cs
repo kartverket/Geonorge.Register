@@ -6,5 +6,6 @@ namespace Kartverket.Register.Services.Report
     {
         ReportResult GetSelectedAndAdditionalDatasets(ReportQuery q);
         ReportResult GetSelectedDatasetsByTheme(ReportQuery q);
+        ReportResult GetSelectedDatasetsCoverage(ReportQuery q); 
     }
 }

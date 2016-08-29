@@ -264,7 +264,7 @@
 }
 
 .search-results.document.table-view .table-heading .col-actions a {
-    font-size: 14px !important;
+    font-size: 12pt !important;
 }
 
 /* Kodelister */
@@ -410,12 +410,14 @@
 .search-results.serviceAlert.table-view .col-title {
     width: 20%;
 }
-    .search-results.serviceAlert.table-view .col-title h4, .serviceAlert.table-view .result-row .col-title a{
+
+    .search-results.serviceAlert.table-view .col-title h4, .serviceAlert.table-view .result-row .col-title a {
         float: left;
         width: 100%;
     }
+
     .search-results.serviceAlert.table-view .col-title a {
-        width:100%
+        width: 100%;
     }
 
 .search-results.serviceAlert.table-view .col-description {
@@ -423,17 +425,18 @@
     float: right;
 }
 
-    .search-results.serviceAlert.table-view .col-description h4, .serviceAlert.table-view .result-row .col-description a{
+    .search-results.serviceAlert.table-view .col-description h4, .serviceAlert.table-view .result-row .col-description a {
         float: left;
         width: 100%;
     }
+
     .search-results.serviceAlert.table-view .col-description a {
-        width:100%
+        width: 100%;
     }
 
-    .serviceAlert.table-view .result-row .col-description span{
-        display: none;
-    }
+.serviceAlert.table-view .result-row .col-description span {
+    display: none;
+}
 
 
 .search-results.serviceAlert.table-view .col-date {
@@ -441,12 +444,12 @@
     float: left !important;
 }
 
-    .search-results.serviceAlert.table-view .table-heading .col-date h4, .serviceAlert.table-view .result-row .col-date p {
-        float: left;
-        width: 50%;
-    }
+.search-results.serviceAlert.table-view .table-heading .col-date h4, .serviceAlert.table-view .result-row .col-date p {
+    float: left;
+    width: 50%;
+}
 
-    .serviceAlert.table-view .result-row .col-date p span{
+    .serviceAlert.table-view .result-row .col-date p span {
         display: none;
     }
 
@@ -454,12 +457,13 @@
     width: 45%;
     float: left !important;
 }
-    .search-results.serviceAlert.table-view .table-heading .col-information h4, .serviceAlert.table-view .result-row .col-information p {
-        float: left;
-        width: 33.3%;
-    }
 
-    .serviceAlert.table-view .result-row .col-information p span{
+.search-results.serviceAlert.table-view .table-heading .col-information h4, .serviceAlert.table-view .result-row .col-information p {
+    float: left;
+    width: 33.3%;
+}
+
+    .serviceAlert.table-view .result-row .col-information p span {
         display: none;
     }
 
@@ -1024,6 +1028,6 @@ table.tablesorter thead tr .tablesorter-headerDesc {
 
 /*Bower?*/
 a.link-unstyled {
-text-decoration: none;
-color: #333;
+    text-decoration: none;
+    color: #333;
 }

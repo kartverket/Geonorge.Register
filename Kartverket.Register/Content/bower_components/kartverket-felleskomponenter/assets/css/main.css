@@ -1727,7 +1727,6 @@ body {
   background-color: #FFF; }
 
 h3.article-h3:after {
-  padding-bottom: 50px;
   width: 50px;
   border-bottom: 2.5px solid #fe5000;
   content: "";
@@ -2025,13 +2024,13 @@ button.btn {
 
 /* Ekstern link */
 .custom-icon.custom-icon-eksternlink, .custom-icon-sm.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ikoner/ekternlink.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/eksternlink.svg"); }
 
 .btn .custom-icon.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/eksternlink-white.svg"); }
 
 .disabled .custom-icon.custom-icon-eksternlink {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/ekternlink-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/eksternlink-disabled.svg"); }
 
 /* Smileys */
 .custom-icon.custom-icon-smile-green {
@@ -3076,6 +3075,30 @@ input[type="checkbox"].input-validation-error {
 .has-error .form-control-feedback {
   color: #EE382B; }
 
+.toggle-content {
+  text-decoration: none;
+  color: #3867c8; }
+  .toggle-content:hover, .toggle-content:focus {
+    text-decoration: none;
+    color: #3867c8; }
+  .toggle-content .toggle-icon:before {
+    font-family: Glyphicons Halflings;
+    content: "−";
+    display: inline-block;
+    font-size: .8em;
+    margin-right: .2em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+  .toggle-content.show-content .toggle-icon:before {
+    content: "+"; }
+  .toggle-content h2:after {
+    left: 40px; }
+  .toggle-content h2 .toggle-icon:before {
+    color: #3867c8;
+    font-size: .5em;
+    vertical-align: text-top;
+    line-height: 39pt; }
+
 .modal-footer .btn {
   margin-bottom: 0; }
 
@@ -3087,12 +3110,24 @@ input[type="checkbox"].input-validation-error {
     position: relative;
     bottom: -5px;
     line-height: 25pt; }
+  .search-result-navigation .save-as-menu label {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 0; }
   .search-result-navigation .save-as-menu .save-as-dropdown {
-    padding-left: 15px;
-    padding-right: 0px; }
+    padding-left: 0;
+    display: inline-block; }
+    .search-result-navigation .save-as-menu .save-as-dropdown .custom-select {
+      width: 218px; }
   .search-result-navigation .save-as-menu .save-as-buttons {
     padding-left: 5px;
-    text-align: right; }
+    text-align: right;
+    display: inline-block;
+    vertical-align: top; }
+
+@media (max-width: 991px) {
+  .search-result-navigation .custom-select {
+    max-width: 218px; } }
 
 .search-results {
   margin-bottom: 10px; }
@@ -3391,22 +3426,26 @@ a.status-icon-link:hover {
 .statusIcon-underarbeid:after {
   content: "\e602";
   color: #FFBA33;
-  margin-left: -1em; }
+  margin-left: -1em;
+  display: inline-block; }
 
 .statusIcon-InProgress:after {
   content: "\e601";
   color: #26C045;
-  margin-left: -1em; }
+  margin-left: -1em;
+  display: inline-block; }
 
 .statusIcon-Superseded:after {
   content: "\e600";
   color: #FFBA33;
-  margin-left: -1em; }
+  margin-left: -1em;
+  display: inline-block; }
 
 .statusIcon-Candidate:after, .statusIcon-Draft:after {
   content: "\e602";
   color: #26C045;
-  margin-left: -1em; }
+  margin-left: -1em;
+  display: inline-block; }
 
 .statusIcon-Accepted:after {
   content: "\e600";

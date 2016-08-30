@@ -1,15 +1,14 @@
 ﻿@model Register
-﻿@using Kartverket.Register.Helpers
-@using PagedList;
+@using Kartverket.Register.Helpers
+@using PagedList
 @using Kartverket.Register.Models
-
 @{
     ViewBag.Title = @Model.name;
     Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
     Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
     CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
-}
+    }
 
 @section breadcrumb {
 
@@ -44,8 +43,8 @@
     )
     </script>
 }
-@Html.Partial("_SearchBarPartial")
 
+@Html.Partial("_SearchBarPartial")
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -135,7 +134,7 @@
                 @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
         </div>
-
+        <div class="clearfix"></div>
         <div class="col-sm-12 col-md-12 col-lg-12">
             @if (Model.containedItemClass != "Register")
             {

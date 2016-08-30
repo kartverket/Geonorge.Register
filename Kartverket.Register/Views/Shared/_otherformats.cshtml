@@ -1,8 +1,8 @@
 ﻿@using  Kartverket.Register.Helpers
 
-Lagre som:
-<div class="row save-as-menu">
-    <div class="col-xs-5 no-padding-bottom save-as-dropdown">
+<div class="save-as-menu">
+    <label>Lagre som:</label>
+    <div class="no-padding-bottom save-as-dropdown">
         <div class="custom-select">
             <select onchange="additionalView(this.value)" class="form-control">
                 @*<option value="helpUrl">API</option>*@
@@ -18,7 +18,7 @@ Lagre som:
             </select>
         </div>
     </div>
-    <div id="saveButtons" class="col-xs-3 no-padding-bottom save-as-buttons">
+    <div id="saveButtons" class="no-padding-bottom save-as-buttons">
         <a id="atomUrl" href="@RegisterUrls.urlFormat(Request, "atom")" class="hidden" title="Vis Atom feed(Beta)">Lagre</a>
         <a id="rssUrl" href="@RegisterUrls.urlFormat(Request, "rss")" class="hidden" title="Vis rss feed(Beta)">Lagre</a>
         <a id="csvUrl" href="@RegisterUrls.urlFormat(Request, "csv")" class="btn" title="Vis CSV(Beta)">Lagre</a>

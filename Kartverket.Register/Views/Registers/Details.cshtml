@@ -59,7 +59,7 @@
 </section>
 
 <div class="row">
-    <div class="col-sm-12">
+  
 
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
             @if (Model.description != null)
@@ -80,9 +80,8 @@
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
         </div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" style="padding-right: 0px;">
             <div class="search-result-navigation register-navigation">
-                <div class="col-md-5">
+                <div class="col-md-4">
                     @if (Model.containedItemClass != "Register")
                     {
                         @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
@@ -94,11 +93,10 @@
                 <div class="col-md-4">
                     @Html.Partial("_otherformats")
                 </div>
-                <div class="col-md-3" style="padding-right: 0px;">
+                <div class="col-md-3 col-md-offset-1">
                         @Html.Partial("_LayoutSelect")
                 </div>
             </div>
-        </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             @if (Model.containedItemClass == "Organization")
@@ -181,4 +179,3 @@
             }
         </div>
     </div>
-</div>

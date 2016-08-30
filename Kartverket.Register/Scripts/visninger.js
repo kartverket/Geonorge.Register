@@ -34,8 +34,6 @@ function listView() {
     $('.search-results').removeClass('gallery-view');
     $('.search-results').addClass('list-view');
 
-    console.log("listView");
-
     if ($("#listView").length > 0) {
         console.log("listView enter");
         $("#listView").show();
@@ -87,12 +85,13 @@ function sLink(tittel, defaultSort) {
     return linkSort;
 }
 
-
-function tableView() {
-
-    $("#sortBox").hide();
-
+function removeTableHeading() {
     $(".table-heading").remove();
+}
+
+
+function addTableHeading() {
+    removeTableHeading();
     $('.search-results.kartkatalog').prepend("<div class='clearfix'></div><div class='col-xs-12 table-heading'><div class='col-xs-9'><div class='col-xs-4'><h4>Tittel</h4></div><div class='col-xs-4'><h4>Eier / leverandør</h4></div><div class='col-xs-4'><h4>Beskrivelse</h4></div></div><div class='col-xs-3'><div class='col-sm-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div><div class='col-xs-3'><h4></h4></div></div></div>");
     $('.search-results.document').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Tittel", "name") + "</h4><h4>" + sLink("Eier", "documentOwner") + "</h4></div><div class='space'>&nbsp;</div><div class='col-actions'><h4>" + sLink("Status", "status") + "</h4></div></div>");
     $('.search-results.organization').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Organisasjonsnavn", "name") + "</h4><h4>" + sLink("Organisasjonsnummer", "number") + "</h4></div></div>");
@@ -102,12 +101,20 @@ function tableView() {
     $('.search-results.codelist').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navn", "name") + "</h4></div><div class='col-descripton'><h4>" + sLink("Beskrivelse", "description") + "</h4></div><div class='col-actions'><h4>" + sLink("Kodeverdi", "codevalue") + "</h4></div><div class='col-information'><h4>" + sLink("Status", "status") + "</h4></div></div>");
     $('.search-results.namespace').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-title'><h4>" + sLink("Navnerom", "name") + "</h4></div><div class='col-information'><h4>" + sLink("Etat", "submitter") + "</h4></div><div class='col-descripton'><h4>Innhold</h4></div><div class='col-actions'><h4>Tjeneste</h4></div></div>");
     $('.search-results.serviceAlert').prepend("<div class='clearfix'></div><div class='table-heading'><div class='col-date'><h4>" + sLink("Siste varsel", "alertdate") + "</h4><h4>" + sLink("Ikrafttredelse", "effectivedate") + "</h4></div><div class='col-information'><h4>" + sLink("Eier", "owner") + "</h4><h4>" + sLink("Type varsel", "servicealert") + "</h4><h4>" + sLink("Tjenestetype", "servicetype") + "</h4></div><div class='col-title'><h4>" + sLink("Tjenestenavn", "name") + "</h4></div><div class='col-description'><h4>Beskrivelse</h4></div></div>");
+}
+
+
+
+
+function tableView() {
+
+    $("#sortBox").hide();
+    addTableHeading();
 
     $('.search-results').removeClass('gallery-view');
     $('.search-results').removeClass('list-view');
     $('.search-results').addClass('table-view');
 
-    console.log("tableView");
 
     if ($("#tableView").length > 0) {
         $("#tableView").show();
@@ -127,6 +134,35 @@ function SortBy(sort) {
 }
 
 
+function changeLayoutWithoutLocalStorage(layout) {
+    if (layout == "tabell") {
+        $('.search-results').removeClass('list-view');
+        $('.search-results').addClass('table-view');
+        addTableHeading();
+    }
+    else {
+        removeTableHeading();
+        $('.search-results').removeClass('table-view');
+        $('.search-results').addClass('list-view');
+    }
+}
+
+
+
+function triggerMobileLayout() {
+    var windowWidth = $(window).width();
+    if (windowWidth < 751) {
+        changeLayoutWithoutLocalStorage("liste");
+    } else {
+        var layout = localStorage.getItem("visningstype");
+        changeLayoutWithoutLocalStorage(layout);
+    }
+}
+
+window.onresize = function (event) {
+    triggerMobileLayout();
+}
+
 $(document).ready(function () {
     var visningstype = localStorage.getItem("visningstype");
 
@@ -134,15 +170,8 @@ $(document).ready(function () {
     if (visningstype == "liste") { listView() }
     if (visningstype == "tabell") {
         // Listevisning ved liten skjerm
-        if ($(window).width() < 600) {
-            listView();
-        } else {
-            tableView()
-        }
+        triggerMobileLayout();
     }
 
     getSelectedLayout(visningstype);
 });
-
-
-

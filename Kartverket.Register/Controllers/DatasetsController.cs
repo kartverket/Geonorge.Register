@@ -79,8 +79,6 @@ namespace Kartverket.Register.Controllers
                 {
                     dataset.systemId = dataset.GetSystemId();
                     dataset.registerId = dataset.register.GetSystemId();
-                    dataset.datasetownerId = GetDatasetOwnerId(dataset.datasetownerId);
-                    dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
                     dataset.DatasetType = dataset.GetDatasetType();
 
                     if (!string.IsNullOrEmpty(searchString))
@@ -109,6 +107,8 @@ namespace Kartverket.Register.Controllers
                         if (ModelState.IsValid)
                         {
                             dataset = initialisationDataset(dataset);
+                            dataset = GetMetadataFromKartkatalogen(dataset, dataset.Uuid);
+                            dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
                             _registerItemService.SaveNewRegisterItem(dataset);
                             return Redirect(dataset.GetObjectUrl());
                         }

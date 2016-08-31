@@ -64,6 +64,9 @@ namespace Kartverket.Register.Services
 
         public string UpdateDatasetsWithCoverage()
         {
+
+            AddCoverageDatasetsNotSet();
+
             var organizations = _context.CoverageDatasets.Select(m => m.Municipality.number).Distinct().ToList();
 
             foreach (var orgNumber in organizations)
@@ -91,5 +94,22 @@ namespace Kartverket.Register.Services
             return "updated";
         }
 
+        private void AddCoverageDatasetsNotSet()
+        {
+            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
+                                    select mun.Key).ToList();
+
+            var orgList = (from o in municipalityList
+                           join org in _context.Organizations on o equals org.number
+                           select new { org.systemId}).ToList();
+
+            foreach(var org in orgList)
+            {
+                try { 
+                _context.Database.ExecuteSqlCommand("INSERT INTO CoverageDatasets SELECT NEWID() AS CoverageId, '" + org.systemId + "' AS MunicipalityId, 0 AS ConfirmedDok, systemId AS datasetId, NULL AS Note, dokStatusId AS CoverageDOKStatusId, systemId AS Dataset_systemId, 0 AS coverage FROM RegisterItems WHERE(Discriminator = 'Dataset') AND(DatasetType <> 'Kommunalt') AND(systemId NOT IN(SELECT  DatasetId FROM CoverageDatasets AS CoverageDatasets_1 WHERE(MunicipalityId = '" + org.systemId + "')))");
+                }
+                catch { }
+            }
+        }
     }
 }

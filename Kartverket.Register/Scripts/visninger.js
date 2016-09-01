@@ -169,6 +169,7 @@ $(document).ready(function () {
     if (visningstype == null) { tableView() }
     if (visningstype == "liste") { listView() }
     if (visningstype == "tabell") {
+        tableView();
         // Listevisning ved liten skjerm
         triggerMobileLayout();
     }

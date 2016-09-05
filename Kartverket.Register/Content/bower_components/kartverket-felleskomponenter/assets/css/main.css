@@ -1807,6 +1807,7 @@ button.btn {
   line-height: 16pt;
   text-decoration: none;
   background-color: #7da1c4;
+  background-position: center;
   color: #FFF;
   transition: all 0.35s linear 0s; }
   .btn:hover, .btn:focus,
@@ -1854,6 +1855,18 @@ button.btn {
     button.btn.disabled span:hover,
     button.btn[disabled] span:hover {
       color: #CFCFCF; }
+    .btn.disabled:focus, .btn[disabled]:focus,
+    a.btn.disabled:focus,
+    a.btn[disabled]:focus,
+    button.btn.disabled:focus,
+    button.btn[disabled]:focus {
+      color: #CFCFCF !important; }
+      .btn.disabled:focus span, .btn[disabled]:focus span,
+      a.btn.disabled:focus span,
+      a.btn[disabled]:focus span,
+      button.btn.disabled:focus span,
+      button.btn[disabled]:focus span {
+        color: #CFCFCF !important; }
   .btn span:hover,
   a.btn span:hover,
   button.btn span:hover {
@@ -3098,6 +3111,17 @@ input[type="checkbox"].input-validation-error {
     font-size: .5em;
     vertical-align: text-top;
     line-height: 39pt; }
+
+.loading-animation.loading {
+  background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/gif_loading-01.gif);
+  background-repeat: no-repeat;
+  background-position: center; }
+  .loading-animation.loading > *,
+  .loading-animation.loading:hover > *,
+  .loading-animation.loading:active > * {
+    color: transparent !important; }
+  .loading-animation.loading.btn {
+    background-size: 20px; }
 
 .modal-footer .btn {
   margin-bottom: 0; }

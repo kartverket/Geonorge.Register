@@ -1,12 +1,13 @@
 var applicationEnvironment = (applicationEnvironment === undefined) ? "" : applicationEnvironment;
+var applicationVersionNumber = (applicationVersionNumber === undefined) ? "" : applicationVersionNumber;
 var supportsLogin = false;
 var authenticationData = (authenticationData === undefined) ? {} : authenticationData;
 if (authenticationData !== {}) {
-    supportsLogin = (authenticationData.supportsLogin === undefined) ? false : authenticationData.supportsLogin;
-    authenticationData.isAuthenticated = (authenticationData.isAuthenticated === undefined) ? false : authenticationData.isAuthenticated;
-    authenticationData.urlActionSignIn = (authenticationData.urlActionSignIn === undefined) ? "" : authenticationData.urlActionSignIn;
-    authenticationData.urlActionSignOut = (authenticationData.urlActionSignOut === undefined) ? "" : authenticationData.urlActionSignOut;
-    authenticationData.userName = (authenticationData.userName === undefined) ? "" : authenticationData.userName;
+  supportsLogin = (authenticationData.supportsLogin === undefined) ? false : authenticationData.supportsLogin;
+  authenticationData.isAuthenticated = (authenticationData.isAuthenticated === undefined) ? false : authenticationData.isAuthenticated;
+  authenticationData.urlActionSignIn = (authenticationData.urlActionSignIn === undefined) ? "" : authenticationData.urlActionSignIn;
+  authenticationData.urlActionSignOut = (authenticationData.urlActionSignOut === undefined) ? "" : authenticationData.urlActionSignOut;
+  authenticationData.userName = (authenticationData.userName === undefined) ? "" : authenticationData.userName;
 }
 
 
@@ -14,39 +15,43 @@ var geonorgeUrl = (applicationEnvironment === "") ? "https://www.geonorge.no/" :
 
 
 $(window).load(function () {
-    var options = {
-        disable_search_threshold: 10,
-        search_contains: true
-    };
-    $(".chosen-select").chosen(options);
-    $("[data-toggle='tooltip']").tooltip();
-    
-    $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
-    $("li[data-toggle='tooltip']").mouseleave(function () {
-        $(".ui-helper-hidden-accessible").remove();
-    });
+  var options = {
+    disable_search_threshold: 10,
+    search_contains: true
+  };
+  $(".chosen-select").chosen(options);
+  $("[data-toggle='tooltip']").tooltip();
+  $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
+  $("li[data-toggle='tooltip']").mouseleave(function () {
+    $(".ui-helper-hidden-accessible").remove();
+  });
 
-    $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
-    $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
-        $(".ui-helper-hidden-accessible").remove();
-    });
+  $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
+  $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
+    $(".ui-helper-hidden-accessible").remove();
+  });
 
     // Get useragent
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);
-});
+  });
 
-$("document").ready( function(){
+$(document).ready( function(){
     // Geonorge logo
     if ($("#geonorge-logo").length){ 
       $("#geonorge-logo a").prop("href", geonorgeUrl);
       $("#geonorge-logo a img").prop("src", "/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/geonorge_" + applicationEnvironment + "logo.svg");
-  }
+    }
+
+    //Version number
+    if ($("#applicationVersionNumber").length && applicationVersionNumber != ""){
+      $("#applicationVersionNumber").html("Versjon " + applicationVersionNumber);
+    }
 
     // Shopping cart
     var downloadUrl = "https://kartkatalog.geonorge.no/Download";
     if (applicationEnvironment !== "") {
-        downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
+      downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
     }
     $("#shopping-car-url").prop("href", downloadUrl);
 
@@ -56,11 +61,11 @@ $("document").ready( function(){
       $("#container-login ul").append("<li><a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a></li>");
       if (authenticationData.isAuthenticated){
        $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignOut + "' class='geonorge-aut' title='Logg ut " + authenticationData.userName + "'> Logg ut</a></li>");
-   }else{
+     }else{
        $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignIn + "' class='geonorge-aut'> Logg inn</a></li>");
+     }
    }
-}
-});
+ });
 
 
 angular.module('geonorge', ['ui.bootstrap']);
@@ -785,3 +790,36 @@ $("document").ready( function(){
 		}
 	});
 });
+
+
+/* Dynamic "add to cart" buttons*/
+function updateAllCartButtons(storedOrderItems) {
+	$('.add-to-cart-btn').each(function () {
+		var uuid = $(this).attr('itemuuid');
+		if ($.inArray(uuid, storedOrderItems) > -1) {
+			$(this).addClass('disabled');
+			$(this).attr('title', 'Allerede lagt til i kurv');
+			$(this).children('.button-text').text(' Lagt i kurv');
+		}
+	});
+}
+
+function updateCartButton(element) {
+	var uuid = $(element).attr('itemuuid');
+	$('.add-to-cart-btn[itemuuid="' + uuid + '"]').each(function () {
+		$(this).addClass('disabled');
+		$(this).attr('data-original-title', 'Allerede lagt til i kurv');
+		$(this).children('.button-text').text(' Lagt i kurv');
+	});
+}
+
+
+
+/* Loading animation */
+function addLoadingAnimation(element) {
+	element.addClass('loading');
+}
+
+function removeLoadingAnimation(element) {
+	element.removeClass('loading');
+}

@@ -222,6 +222,10 @@ namespace Kartverket.Register.Services.Search
                                     || d.datasetowner.name.Contains(text))
                                     select d);
 
+                if (register.name == "DOK-statusregisteret")
+                    queryResults = queryResults.Where(k => k.DatasetType == "Nasjonalt");
+
+
                 if (queryResults.Count() > 0)
                 {
                     foreach (var item in queryResults.ToList())

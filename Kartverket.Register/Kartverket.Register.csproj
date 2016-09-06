@@ -776,6 +776,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-down.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\chevron-up.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\gif\gif_loading-01.gif" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\gif\loading.gif" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\kvlogo_col.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\loader.gif" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\lock.png" />

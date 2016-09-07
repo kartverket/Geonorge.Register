@@ -3110,14 +3110,24 @@ input[type="checkbox"].input-validation-error {
     line-height: 39pt; }
 
 .loading-animation {
-  background-color: rgba(255, 255, 255, 0.5);
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/loading.gif");
+  background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/loading.gif);
   z-index: 2;
   position: fixed;
-  height: 100%;
-  width: 100%;
   background-repeat: no-repeat;
-  background-position: center; }
+  background-position: 50% 15px;
+  background-color: white;
+  top: 40%;
+  height: auto;
+  width: 200px;
+  border: 1px solid #ddd;
+  padding: 50px 15px 15px 15px;
+  color: #666;
+  margin: auto;
+  display: block;
+  left: 40%;
+  left: calc(50% - 100px);
+  text-align: center;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2); }
 
 header.main-header {
   z-index: 5;

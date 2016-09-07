@@ -33914,18 +33914,23 @@ return $.datepicker;
 * Copyright jQuery Foundation and other contributors; Licensed  */
 !function(a){"function"==typeof define&&define.amd?define(["../widgets/datepicker"],a):a(jQuery.datepicker)}(function(a){return a.regional.nb={closeText:"Lukk",prevText:"&#xAB;Forrige",nextText:"Neste&#xBB;",currentText:"I dag",monthNames:["januar","februar","mars","april","mai","juni","juli","august","september","oktober","november","desember"],monthNamesShort:["jan","feb","mar","apr","mai","jun","jul","aug","sep","okt","nov","des"],dayNamesShort:["søn","man","tir","ons","tor","fre","lør"],dayNames:["søndag","mandag","tirsdag","onsdag","torsdag","fredag","lørdag"],dayNamesMin:["sø","ma","ti","on","to","fr","lø"],weekHeader:"Uke",dateFormat:"dd.mm.yy",firstDay:1,isRTL:!1,showMonthAfterYear:!1,yearSuffix:""},a.setDefaults(a.regional.nb),a.regional.nb});
 /*!
- * JavaScript Cookie v2.1.2
+ * JavaScript Cookie v2.1.3
  * https://github.com/js-cookie/js-cookie
  *
  * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
  * Released under the MIT license
  */
 ;(function (factory) {
+	var registeredInModuleLoader = false;
 	if (typeof define === 'function' && define.amd) {
 		define(factory);
-	} else if (typeof exports === 'object') {
+		registeredInModuleLoader = true;
+	}
+	if (typeof exports === 'object') {
 		module.exports = factory();
-	} else {
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
 		var OldCookies = window.Cookies;
 		var api = window.Cookies = factory();
 		api.noConflict = function () {
@@ -33986,9 +33991,9 @@ return $.datepicker;
 
 				return (document.cookie = [
 					key, '=', value,
-					attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
-					attributes.path    && '; path=' + attributes.path,
-					attributes.domain  && '; domain=' + attributes.domain,
+					attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+					attributes.path ? '; path=' + attributes.path : '',
+					attributes.domain ? '; domain=' + attributes.domain : '',
 					attributes.secure ? '; secure' : ''
 				].join(''));
 			}
@@ -34042,7 +34047,7 @@ return $.datepicker;
 
 		api.set = api;
 		api.get = function (key) {
-			return api(key);
+			return api.call(api, key);
 		};
 		api.getJSON = function () {
 			return api.apply({

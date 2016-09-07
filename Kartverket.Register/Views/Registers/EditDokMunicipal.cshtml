@@ -40,9 +40,8 @@
     <div class="col-sm-12 col-md-6 col-lg-6">
         <h2>@selectedMunicipal</h2>
     </div>
-
     <div class="col-sm-12 col-md-6 col-lg-6 no-padding" style="margin-top: 60px;">
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
+        <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
     </div>
 
     <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
@@ -123,7 +122,7 @@
         </div>
         <div class="col-sm-10 text-right">
             <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
-            <input type="submit" value="Lagre" class="btn btn-default" />
+            <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
         </div>
      </div>
      }

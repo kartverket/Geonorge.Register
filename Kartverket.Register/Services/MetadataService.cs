@@ -63,8 +63,7 @@ namespace Kartverket.DOK.Service
                     }
                     dataset.DistributionArea = distributionDetails.UnitsOfDistribution;
 
-                    if(accessConstraint == "restricted" && distributionDetails.Protocol != null
-                        && distributionDetails.Protocol =="GEONORGE:OFFLINE" )
+                    if(accessConstraint == "restricted" && distributionDetails.Protocol != null)
                         {
                         dataset.restricted = true;
                         }

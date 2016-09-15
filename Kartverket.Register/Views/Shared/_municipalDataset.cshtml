@@ -39,6 +39,10 @@
     htmlBlock += '<div class="clearfix"></div>';
 
     $(".search-result-navigation").prepend(htmlBlock);
+
+    $(document).on('change', '#municipality', function () {
+        showLoadingAnimation('Henter kommunedata');
+    });
 </script>
 @if (selectedMunicipal != null)
 {

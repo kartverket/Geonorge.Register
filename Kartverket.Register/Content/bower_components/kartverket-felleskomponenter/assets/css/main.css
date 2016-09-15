@@ -3110,7 +3110,6 @@ input[type="checkbox"].input-validation-error {
     line-height: 39pt; }
 
 .loading-animation {
-  background-image: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/loading.gif);
   z-index: 2;
   position: fixed;
   background-repeat: no-repeat;
@@ -3120,7 +3119,7 @@ input[type="checkbox"].input-validation-error {
   height: auto;
   width: 200px;
   border: 1px solid #ddd;
-  padding: 50px 15px 15px 15px;
+  padding: 15px;
   color: #666;
   margin: auto;
   display: block;
@@ -3128,6 +3127,9 @@ input[type="checkbox"].input-validation-error {
   left: calc(50% - 100px);
   text-align: center;
   box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2); }
+  .loading-animation:before {
+    content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/gif/loading.gif");
+    display: block; }
 
 header.main-header {
   z-index: 5;

@@ -32,6 +32,11 @@ function notOpeningInNewTab(event){
   }
 }
 
+function addDefaultLoadingAnimation(element){
+  element.addClass('show-loading-animation');
+  element.data('loading-message', 'Henter innhold');
+}
+
 showLoadingAnimation('Laster innhold');
 /* ----------------------------- */
 
@@ -43,7 +48,7 @@ $(document).ready( function(){
 
   $(".show-loading-animation").click(function(event){
     if (notOpeningInNewTab(event)){
-      var loadingMessage = $(this).data('loading-message') != undefined ? $(this).data('loading-message') : '';
+      var loadingMessage = $(this).data('loading-message') !== undefined ? $(this).data('loading-message') : '';
       showLoadingAnimation(loadingMessage);
     }
   });
@@ -57,7 +62,7 @@ $(document).ready( function(){
 
 
   //Version number
-  if ($("#applicationVersionNumber").length && applicationVersionNumber != ""){
+  if ($("#applicationVersionNumber").length && applicationVersionNumber !== ""){
     $("#applicationVersionNumber").html("Versjon " + applicationVersionNumber);
   }
 
@@ -847,3 +852,14 @@ function updateCartButton(element) {
 		$(this).children('.button-text').text(' Lagt i kurv');
 	});
 }
+
+
+/* Loading animation for pagination */
+
+$("document").ready( function(){
+	$("ul.pagination a").each(function (){
+		if (!$(this).closest('li').hasClass('active')){
+			addDefaultLoadingAnimation($(this));
+		}
+	});
+});

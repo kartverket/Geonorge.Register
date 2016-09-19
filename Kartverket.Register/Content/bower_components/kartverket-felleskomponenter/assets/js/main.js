@@ -728,6 +728,17 @@ $(document).ready(function () {
       }]);
 }());
 
+function addShoppingCartTooltip(elementsCount) {
+    var element = $('#shopping-cart-url');
+    var elementsCountText = elementsCount !== 0 ? elementsCount : 'ingen';
+    var text = elementsCount == 1 ? 'Du har ' + elementsCountText + ' nedlasting i kurven din' : 'Du har ' + elementsCountText + ' nedlastinger i kurven din';
+    element.attr('title', text);
+    element.attr('data-original-title', text);
+    element.data('toggle', 'tooltip');
+    element.data('placement', 'bottom');
+    element.tooltip();
+}
+
 function updateShoppingCart() {
     var shoppingCartElement = $('#orderitem-count');
     var orderItems = "";
@@ -745,12 +756,15 @@ function updateShoppingCart() {
         orderItemsObj = JSON.parse(orderItems);
         cookieValue = orderItemsObj.length;
         shoppingCartElement.html(cookieValue);
+        addShoppingCartTooltip(cookieValue);
     } else if (Cookies.get(cookieName) !== undefined && Cookies.get(cookieName) !== 0 && Cookies.get(cookieName) !== "0") {
         cookieValue = Cookies.get(cookieName);
         shoppingCartElement.css("display", "block");
         shoppingCartElement.html(cookieValue);
+        addShoppingCartTooltip(cookieValue);
     } else {
         shoppingCartElement.css("display", "none");
+        addShoppingCartTooltip(0);
     }
     Cookies.set(cookieName, cookieValue, { expires: 7, path: '/', domain: cookieDomain });
 }
@@ -765,9 +779,11 @@ function updateShoppingCartCookie() {
         var orderItemsObj = JSON.parse(orderItems);
         cookieValue = orderItemsObj.length;
         shoppingCartElement.html(cookieValue);
+        addShoppingCartTooltip(cookieValue);
     } else {
         cookieValue = 0;
         shoppingCartElement.css("display", "none");
+        addShoppingCartTooltip(cookieValue);
     }
     Cookies.set(cookieName, cookieValue, { expires: 7, path: '/', domain: cookieDomain });
 }
@@ -857,7 +873,7 @@ function updateCartButton(element) {
 /* Loading animation for pagination */
 
 $("document").ready( function(){
-	$("ul.pagination a").each(function (){
+	$("ul.pagination a, ul.breadcrumbs a").each(function (){
 		if (!$(this).closest('li').hasClass('active')){
 			addDefaultLoadingAnimation($(this));
 		}

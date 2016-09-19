@@ -46,7 +46,7 @@ $(document).ready( function(){
   // Loading animation
   hideLoadingAnimation();
 
-  $(".show-loading-animation").click(function(event){
+  $(document).on("click", ".show-loading-animation", function (event){
     if (notOpeningInNewTab(event)){
       var loadingMessage = $(this).data('loading-message') !== undefined ? $(this).data('loading-message') : '';
       showLoadingAnimation(loadingMessage);

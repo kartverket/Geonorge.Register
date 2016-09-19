@@ -37,17 +37,19 @@
             </tr>
             <tr>
                 <td>
-                    <p><a href="@Html.ObjektkatalogUrl()">Objektregisteret</a></p>
+                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="Henter register" class="show-loading-animation">Objektregisteret</a></p>
                 </td>
                 <td>
                     Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.
                 </td>
-                <td></td>
+                <td>
+
+                </td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning">Det offentlige kartgrunnlaget - dekningskart</a></p>
+                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="Henter register" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
                 </td>
                 <td>
                     Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.
@@ -60,7 +62,7 @@
                 {
                     <tr>
                         <td>
-                            <p><a href="/register/@item.seoname">@item.name</a></p>
+                            <p><a href="/register/@item.seoname" data-loading-message="Henter register" class="show-loading-animation">@item.name</a></p>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.description)

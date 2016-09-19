@@ -83,20 +83,20 @@
                         {
                             if (item.MetadataUrl.Contains("http"))
                             {
-                                <a href="@item.MetadataUrl">
+                                <a href="@item.MetadataUrl" data-loading-message="Henter datasett" class="show-loading-animation">
                                     @item.name
                                 </a>
                             }
                             else
                             {
-                                <a href="@item.GetObjectUrl()">
+                                <a href="@item.GetObjectUrl()" data-loading-message="Henter datasett" class="show-loading-animation">
                                     @item.name
                                 </a>
                             }
                         }
                         else
                         {
-                            <a href="@item.GetObjectUrl()">
+                            <a href="@item.GetObjectUrl()" data-loading-message="Henter datasett" class="show-loading-animation">
                                 @item.name
                             </a>
                         }

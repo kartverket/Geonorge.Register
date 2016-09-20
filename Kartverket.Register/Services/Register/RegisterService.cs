@@ -184,6 +184,51 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
+        public void UpdateDOKStatus()
+        {
+            Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
+            foreach (Models.Dataset item in DOK.items)
+            {
+                item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl);
+                item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl);
+                item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl);
+
+            }
+            _dbContext.SaveChanges();
+        }
+
+        private string GetDOKStatus(string url)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(url))
+                {
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+
+                    var data = c.DownloadString(url + ".json");
+                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                    var status = response["status"];
+                    if (status != null)
+                    {
+                        string statusvalue = status?.ToString();
+
+                        if (statusvalue == "Gyldig")
+                            return "good";
+                        else
+                            return "useable";
+                    }
+                }
+
+                return "deficient";
+
+            }
+            catch (Exception ex)
+            {
+                return "deficient";
+            }
+        }
+
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             foreach (Document item in register.items)

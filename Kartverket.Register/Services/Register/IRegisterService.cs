@@ -27,5 +27,6 @@ namespace Kartverket.Register.Services.Register
         Organization GetOrganizationByOrganizationNr(string number);
         List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipality);
         Models.Register GetDokMunicipalRegister();
+        void UpdateDOKStatus();
     }
 }

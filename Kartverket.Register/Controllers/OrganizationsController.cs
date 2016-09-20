@@ -16,19 +16,19 @@ namespace Kartverket.Register.Controllers
     [HandleError]
     public class OrganizationsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
-
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private IRegisterService _registerService;
-        private IRegisterItemService _registerItemService;
-        private IAccessControlService _accessControlService;
+        private readonly RegisterDbContext _dbContext;
+        private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
+        private readonly IAccessControlService _accessControlService;
 
-        public OrganizationsController()
+        public OrganizationsController(RegisterDbContext dbContext, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
         {
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
-            _accessControlService = new AccessControlService();
+            _dbContext = dbContext;
+            _registerService = registerService;
+            _registerItemService = registerItemService;
+            _accessControlService = accessControlService;
         }
 
         [Authorize]
@@ -68,15 +68,15 @@ namespace Kartverket.Register.Controllers
                 }
                 
                 string organizationLogin = GetSecurityClaim("organization");
-                var queryResultsOrganization = from o in db.Organizations
+                var queryResultsOrganization = from o in _dbContext.Organizations
                                                where o.name == organizationLogin
                                                select o.systemId;
                 Guid orgId = queryResultsOrganization.FirstOrDefault();
-                Organization submitterOrganisasjon = db.Organizations.Find(orgId);
+                Organization submitterOrganisasjon = _dbContext.Organizations.Find(orgId);
 
                 organization.submitterId = orgId;
                 organization.submitter = submitterOrganisasjon;
-                var queryResultsRegister = from o in db.Registers
+                var queryResultsRegister = from o in _dbContext.Registers
                                            where o.name == "Organisasjoner"
                                            select o.systemId;
                 Guid regId = queryResultsRegister.FirstOrDefault();
@@ -85,13 +85,13 @@ namespace Kartverket.Register.Controllers
                 organization.dateSubmitted = DateTime.Now;
                 organization.registerId = regId;
                 organization.statusId = "Submitted";
-                organization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(organization.name);
+                organization.seoname = RegisterUrls.MakeSeoFriendlyString(organization.name);
 
                 organization.logoFilename = org[3];
                 organization.largeLogo = org[3];
 
-                db.RegisterItems.Add(organization);
-                db.SaveChanges(); 
+                _dbContext.RegisterItems.Add(organization);
+                _dbContext.SaveChanges(); 
             }
            
             return Redirect("/register/organisasjoner");
@@ -110,7 +110,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(organisasjon.register))
                 {
-                    ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+                    ViewBag.dimensionId = new SelectList(_dbContext.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(organisasjon);
                 }
             }
@@ -133,7 +133,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        initialisationOrganization(organization, fileSmal, fileLarge, agreementDocument, priceformDocument);
+                        InitializeOrganization(organization, fileSmal, fileLarge, agreementDocument, priceformDocument);
                         if (!NameIsValid(organization))
                         {
                             ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
@@ -166,26 +166,26 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResultsOrganisasjon = from o in db.Organizations
+            var queryResultsOrganisasjon = from o in _dbContext.Organizations
                                            where o.seoname == organisasjon && o.register.seoname == registername
                                            && o.register.parentRegister.seoname == registerParent
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
 
-            var queryResultsRegister = from o in db.Registers
+            var queryResultsRegister = from o in _dbContext.Registers
                                        where o.seoname == registername
                                        && o.parentRegister.seoname == registerParent
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.FirstOrDefault();
-            Models.Register register = db.Registers.Find(regId);
+            Models.Register register = _dbContext.Registers.Find(regId);
 
             if (systId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Kartverket.Register.Models.Organization org = db.Organizations.Find(systId);
+            Organization org = _dbContext.Organizations.Find(systId);
             if (org == null)
             {
                 return HttpNotFound();
@@ -200,7 +200,7 @@ namespace Kartverket.Register.Controllers
 
         
 
-        private void ViewbagsOrganization(Kartverket.Register.Models.Organization organization, Models.Register register)
+        private void ViewbagsOrganization(Organization organization, Models.Register register)
         {
             if (register.parentRegisterId != null)
             {
@@ -209,8 +209,8 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.registername = register.name;
             ViewBag.registerSEO = register.seoname;
-            ViewBag.statusId = new SelectList(db.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
+            ViewBag.statusId = new SelectList(_dbContext.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
         }
 
 
@@ -223,48 +223,44 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{registername}/{innsender}/{organisasjon}/rediger")]
         public ActionResult Edit(Organization org, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, string registername, string organisasjon, string registerParent, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
         {
-            var queryResultsRegister = from o in db.Registers
+            var queryResultsRegister = from o in _dbContext.Registers
                                        where o.seoname == registername
                                        && o.parentRegister.seoname == registerParent
                                        select o.systemId;
 
             Guid regId = queryResultsRegister.First();
-            Models.Register register = db.Registers.Find(regId);
+            Models.Register register = _dbContext.Registers.Find(regId);
           
-            var queryResultsOrganisasjon = from o in db.Organizations
+            var queryResultsOrganisasjon = from o in _dbContext.Organizations
                                            where o.seoname == organisasjon && o.register.seoname == registername
                                            && o.register.parentRegister.seoname == registerParent
                                            select o.systemId;
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
-            Organization originalOrganization = db.Organizations.Find(systId);
+            Organization originalOrganization = _dbContext.Organizations.Find(systId);
 
             ValidationName(org, register);
-
-            var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y => y.Count > 0)
-                           .ToList();
 
             if (ModelState.IsValid)
             {
                 if (org.name != null)
                 {
                     originalOrganization.name = org.name;
-                    originalOrganization.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(org.name);
+                    originalOrganization.seoname = RegisterUrls.MakeSeoFriendlyString(org.name);
                 }
                 if (org.submitterId != null)
                 {
                     originalOrganization.submitterId = org.submitterId;
                 }
-                if (org.number != null && org.number.Length > 0)
+                if (!string.IsNullOrEmpty(org.number))
                 {
                     originalOrganization.number = org.number;
                 }
-                if (org.description != null && org.description.Length > 0)
+                if (!string.IsNullOrEmpty(org.description))
                 {
                     originalOrganization.description = org.description;
                 }
-                if (org.contact != null && org.contact.Length > 0)
+                if (!string.IsNullOrEmpty(org.contact))
                 {
                     originalOrganization.contact = org.contact;
                 }
@@ -321,8 +317,8 @@ namespace Kartverket.Register.Controllers
                 }
 
                 originalOrganization.modified = DateTime.Now;
-                db.Entry(originalOrganization).State = EntityState.Modified;
-                db.SaveChanges();
+                _dbContext.Entry(originalOrganization).State = EntityState.Modified;
+                _dbContext.SaveChanges();
                 ViewbagsOrganization(org, register);
 
                 if (register.parentRegister != null)
@@ -348,7 +344,7 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
             
-            var queryResults = from o in db.Organizations
+            var queryResults = from o in _dbContext.Organizations
                                             where o.seoname == organisasjon && o.register.seoname == registername
                                             && o.register.parentRegister.seoname == parentregister
                                             select o.systemId;
@@ -359,7 +355,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Organization organization = db.Organizations.Find(systId);
+            Organization organization = _dbContext.Organizations.Find(systId);
             if (organization == null)
             {
                 return HttpNotFound();
@@ -378,7 +374,7 @@ namespace Kartverket.Register.Controllers
         [Route("organisasjoner/{registername}/{submitter}/{organisasjon}/slett")]
         public ActionResult DeleteConfirmed(Organization organization, string registername, string organisasjon, string parentregister, string parentregisterowner)
         {
-            var queryResultsOrganisasjon = from o in db.Organizations
+            var queryResultsOrganisasjon = from o in _dbContext.Organizations
                                            where o.seoname == organisasjon
                                            && o.register.seoname == registername
                                            && o.register.parentRegister.seoname == parentregister
@@ -386,10 +382,10 @@ namespace Kartverket.Register.Controllers
 
             Guid systId = queryResultsOrganisasjon.FirstOrDefault();
 
-            Organization originalOrganization = db.Organizations.Find(systId);            
+            Organization originalOrganization = _dbContext.Organizations.Find(systId);            
             
-            db.Organizations.Remove(originalOrganization);
-            db.SaveChanges();
+            _dbContext.Organizations.Remove(originalOrganization);
+            _dbContext.SaveChanges();
 
             if (parentregister != null)
             {
@@ -405,7 +401,7 @@ namespace Kartverket.Register.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _dbContext.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -455,7 +451,7 @@ namespace Kartverket.Register.Controllers
                 {
                     break;
                 }
-                seofilename += Helpers.RegisterUrls.MakeSeoFriendlyString(item) + "_";
+                seofilename += RegisterUrls.MakeSeoFriendlyString(item) + "_";
             }
         }
 
@@ -483,7 +479,7 @@ namespace Kartverket.Register.Controllers
 
         private void ValidationName(Organization organization, Models.Register register)
         {
-            var queryResultsDataset = from o in db.Organizations
+            var queryResultsDataset = from o in _dbContext.Organizations
                                       where o.name == organization.name 
                                       && o.systemId != organization.systemId 
                                       && o.register.name == register.name
@@ -496,7 +492,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private void initialisationOrganization(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
+        private void InitializeOrganization(Organization organization, HttpPostedFileBase fileSmal, HttpPostedFileBase fileLarge, HttpPostedFileBase agreementDocument, HttpPostedFileBase priceformDocument)
         {
 
             organization.systemId = Guid.NewGuid();

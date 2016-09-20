@@ -870,12 +870,32 @@ function updateCartButton(element) {
 }
 
 
+/* Check if href is the same as current url */
+function notCurrentUrl(url) {
+	if (url == window.location.href || url == window.location.pathname) {
+		return true;
+	} else if (url == window.location.href + "/" || url == window.location.pathname + "/") {
+		return true;
+	}
+}
+
+
 /* Loading animation for pagination */
 
 $("document").ready( function(){
 	$("ul.pagination a, ul.breadcrumbs a").each(function (){
 		if (!$(this).closest('li').hasClass('active')){
 			addDefaultLoadingAnimation($(this));
+		}
+	});
+});
+
+
+/* Remove loading animation from links same as current url */
+$("document").ready( function(){
+	$("a").click(function () {
+		if (notCurrentUrl($(this).attr("href"))) {
+			$(this).removeClass("show-loading-animation");
 		}
 	});
 });

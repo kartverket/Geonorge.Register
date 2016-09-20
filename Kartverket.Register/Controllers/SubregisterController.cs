@@ -351,7 +351,17 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBagSubregister(Models.Register register, string parentRegister)
         {
+            if (register.name == "Kodelister" || register.name == "Metadata kodelister" || parentRegister == "kodelister" || parentRegister == "metadata-kodelister")
+            {               
+                ViewBag.containedItemClass = new SelectList( new List<SelectListItem>
+                {
+                    new SelectListItem() {  Value = "CodelistValue", Text= "Kodeverdier" },
+                    new SelectListItem() { Value = "Register", Text = "Subregister" }
+                }, "Value", "Text", String.Empty);
+            }
+            else { 
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
+            }
             if (parentRegister != null)
             {
                 ViewBag.parentRegister = register.parentRegister.name;

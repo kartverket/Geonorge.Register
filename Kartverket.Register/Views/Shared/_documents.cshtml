@@ -25,28 +25,28 @@
                     }
                     else
                     {
-                        <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                        <a href="@Html.DisplayFor(model => item.documentUrl)" class="show-loading-animation" data-loading-message="Henter innhold"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
                     }
                 </div>
 
                 <div class="col-no-padding-xs col-title col-sm-5 col-md-5 col-lg-5">
                     @if (item.register.parentRegister != null)
                     {
-                        <a class="" href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
+                        <a href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="Henter innhold">
                             @item.name
                         </a>
                     }
                     else
                     {
-                        <a class="" href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname">
+                        <a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="Henter innhold">
                             @item.name
                         </a>
                     }
-                    <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname">
+                    <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname" class="show-loading-animation" data-loading-message="Henter innhold">
                         <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" title="@Html.DisplayFor(modelItem => item.documentowner.name)" />
                     </a>
                     <div>
-                        <a href="/register/@item.register.seoname/@item.documentowner.seoname">
+                        <a href="/register/@item.register.seoname/@item.documentowner.seoname" class="show-loading-animation" data-loading-message="Henter innhold">
                             @Html.DisplayFor(modelItem => item.documentowner.name)
                         </a>
                     </div>
@@ -58,13 +58,13 @@
                 <div class="col-no-padding-xs col-actions col-xs-6 col-sm-2 col-md-2 col-lg-2">
                     @if (item.documentUrl.Contains("ikke angitt"))
                     {
-                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @item.name">
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" title="Ingen dokument er angitt for @item.name" class="btn disabled">
                             <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                         </a><br />
                     }
                     else
                     {
-                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
+                        <a href="@Html.DisplayFor(modelItem => item.documentUrl)" title="Last ned dokument for @item.name" class="show-loading-animation btn" data-loading-message="Henter innhold">
                             <span class="glyphicon glyphicon-download-alt"> </span>Last ned
                         </a><br />
                     }

@@ -192,9 +192,40 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl);
                 item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl);
+                item.dokDeliveryMetadataStatusId = GetMetadataStatus(item.Uuid);
 
             }
             _dbContext.SaveChanges();
+        }
+
+        private string GetMetadataStatus(string uuid)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(uuid))
+                {
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+                    string url = System.Web.Configuration.WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + uuid;
+                    var data = c.DownloadString(url);
+                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                    var status = response["Status"];
+                    if (status != null)
+                    {
+                        string statusvalue = status?.ToString();
+
+                        if (statusvalue == "OK")
+                            return "good";
+                    }
+                }
+
+                return "deficient";
+
+            }
+            catch (Exception ex)
+            {
+                return "deficient";
+            }
         }
 
         private string GetDOKStatus(string url)

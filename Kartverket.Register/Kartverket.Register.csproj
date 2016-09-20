@@ -639,6 +639,10 @@
     <Compile Include="Migrations\201606071055102_DatasetSpecificUsage.Designer.cs">
       <DependentUpon>201606071055102_DatasetSpecificUsage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609201112023_AddMunicipalityModel.cs" />
+    <Compile Include="Migrations\201609201112023_AddMunicipalityModel.Designer.cs">
+      <DependentUpon>201609201112023_AddMunicipalityModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -661,6 +665,7 @@
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\Municipality.cs" />
     <Compile Include="Models\MunicipalityCenterPoint.cs" />
     <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -1419,6 +1424,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201606071055102_DatasetSpecificUsage.resx">
       <DependentUpon>201606071055102_DatasetSpecificUsage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609201112023_AddMunicipalityModel.resx">
+      <DependentUpon>201609201112023_AddMunicipalityModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

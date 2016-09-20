@@ -37,6 +37,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
+        public virtual DbSet<Municipality> Municipalities { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

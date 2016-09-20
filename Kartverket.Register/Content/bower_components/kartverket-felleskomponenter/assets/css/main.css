@@ -3577,7 +3577,8 @@ a.status-icon-link:hover {
   font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: 12px;
   opacity: .9;
-  position: absolute; }
+  position: absolute;
+  z-index: 5; }
 
 .ui-tooltip:before {
   border-width: 0 5px 5px;

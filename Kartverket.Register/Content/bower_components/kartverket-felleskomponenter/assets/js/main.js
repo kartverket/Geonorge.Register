@@ -879,3 +879,15 @@ $("document").ready( function(){
 		}
 	});
 });
+
+
+/* Breadcrumbs */
+function disableLastBreadcrumb(){
+	if($("ul.breadcrumbs li").last().has('a').length){
+		var lastBreadcrumbText = ($("ul.breadcrumbs li").last().text());
+		$("ul.breadcrumbs li").last().html(lastBreadcrumbText);
+	}
+}
+$("document").ready( function(){
+	disableLastBreadcrumb();
+});

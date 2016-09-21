@@ -162,21 +162,7 @@ namespace Kartverket.Register.Services
 
         public bool IsMunicipalUser()
         {
-            string username = GetUserName();
-            if (!string.IsNullOrWhiteSpace(username))
-            {
-                List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
-
-                foreach (CodelistValue item in municipalities)
-                {
-                    if ((username.Contains(item.value)))
-                    {
-
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return GetMunicipalityCode() != null;
         }
 
         public Organization MunicipalUserOrganization()
@@ -184,21 +170,40 @@ namespace Kartverket.Register.Services
             return _registerService.GetOrganizationByUserName();
         }
 
-        public CodelistValue Municipality()
+        public string GetOrganizationNumber()
         {
-            string username = GetUserName();
-            if (username != null)
+            Claim orgnrClaim = ClaimsPrincipal.Current.FindFirst("orgnr");
+            return orgnrClaim?.Value;
+        }
+
+        public CodelistValue GetMunicipality()
+        {
+            string municipalityCode = GetMunicipalityCode();
+            if (municipalityCode == null)
             {
-                List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
-                foreach (CodelistValue item in municipalities)
+                return null;
+            }
+
+            List<CodelistValue> municipalities = _registerItemService.GetMunicipalityList();
+            foreach (CodelistValue item in municipalities)
+            {
+                if (municipalityCode.Equals(item.value))
                 {
-                    if (username.Contains(item.value))
-                    {
-                        return item;
-                    }
+                    return item;
                 }
             }
             return null;
+        }
+
+        private string GetMunicipalityCode()
+        {
+            string organizationNumber = GetOrganizationNumber();
+            if (organizationNumber == null)
+            {
+                return null;
+            }
+
+            return _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organizationNumber);
         }
 
         public List<string> GetSecurityClaim(string type)
@@ -219,18 +224,6 @@ namespace Kartverket.Register.Services
             }
 
             return result;
-        }
-
-        public string GetUserName()
-        {
-            foreach (var claim in ClaimsPrincipal.Current.Claims)
-            {
-                if (claim.Type == "urn:oid:0.9.2342.19200300.100.1.1" || claim.Type == "username")
-                {
-                    return claim.Value;
-                }
-            }
-            return null;
         }
 
         public bool EditDOK(Dataset dataset)
@@ -256,14 +249,13 @@ namespace Kartverket.Register.Services
 
         private bool UserIsSelectedMunicipality(string municipalityCode)
         {
-            Organization user = MunicipalUserOrganization();
-            string organizationNrOfSelectedMunicipality = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(municipalityCode);
-
-            if (user != null)
+            string currentUserMunicipalityCode = GetMunicipalityCode();
+            if (municipalityCode == null || currentUserMunicipalityCode == null)
             {
-                return user.number == organizationNrOfSelectedMunicipality;
+                return false;
             }
-            return false;
+
+            return currentUserMunicipalityCode == municipalityCode;
         }
 
         public bool AccessCreateNewMunicipalDataset(string municipalityCode)

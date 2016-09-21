@@ -64,7 +64,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (register.name == "Det offentlige kartgrunnlaget - Kommunalt" && string.IsNullOrEmpty(filter.municipality))
                 {
-                    CodelistValue municipality = _accessControlService.Municipality();
+                    CodelistValue municipality = _accessControlService.GetMunicipality();
                     if (municipality != null) return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
                 }
                 register = RegisterItems(register, filter, page);

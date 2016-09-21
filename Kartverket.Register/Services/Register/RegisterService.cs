@@ -534,8 +534,7 @@ namespace Kartverket.Register.Services.Register
             AccessControlService access = new AccessControlService();
             if (access.IsMunicipalUser())
             {
-                CodelistValue user = access.Municipality();
-                string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(user.value);
+                string organizationNr = access.GetOrganizationNumber();
                 return GetOrganizationByOrganizationNr(organizationNr);
             }
             else

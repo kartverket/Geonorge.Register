@@ -7,8 +7,6 @@
 ///////////////////////////////////////////////////////////
 
 using Kartverket.Register.Helpers;
-using Kartverket.Register.Services.Register;
-using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

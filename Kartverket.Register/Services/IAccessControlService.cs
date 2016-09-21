@@ -11,8 +11,7 @@ namespace Kartverket.Register.Services
         bool EditDOK(Dataset dataset);
         bool IsMunicipalUser();
         Organization MunicipalUserOrganization();
-        string GetUserName();
-        CodelistValue Municipality();
+        CodelistValue GetMunicipality();
         bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode);
         bool IsOwner(string owner, string user);
     }

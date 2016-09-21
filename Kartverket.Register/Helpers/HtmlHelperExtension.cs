@@ -1011,8 +1011,7 @@ namespace Kartverket.Register.Helpers
         {
             if (selectedMunicipality == null)
             {
-                string username = _accessControl.GetUserName();
-                return _accessControl.Municipality();
+                return _accessControl.GetMunicipality();
             }
             else
             {

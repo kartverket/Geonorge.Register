@@ -6,7 +6,9 @@ namespace Kartverket.Register.Services
     {
         public string LookupMunicipalityCodeFromOrganizationNumber(string organizationNumber)
         {
-            return MunicipalityData.MunicipalityFromOrganizationNumberToCode[organizationNumber];
+            string municipalityCode = null;
+            MunicipalityData.MunicipalityFromOrganizationNumberToCode.TryGetValue(organizationNumber, out municipalityCode);
+            return municipalityCode;
         }
 
         public string LookupOrganizationNumberFromMunicipalityCode(string municipalityCode)

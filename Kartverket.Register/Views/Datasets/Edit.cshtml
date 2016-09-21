@@ -244,7 +244,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryMetadataStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId" })
+                            @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId", @disabled = "disabled" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryMetadataStatusId, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-7">
@@ -256,7 +256,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryProductSheetStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryProductSheetStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSheetStatusId" })
+                            @Html.DropDownList("dokDeliveryProductSheetStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSheetStatusId", @disabled="disabled" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSheetStatusId, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-7">
@@ -268,7 +268,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryPresentationRulesStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryPresentationRulesStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryPresentationRulesStatusId" })
+                            @Html.DropDownList("dokDeliveryPresentationRulesStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryPresentationRulesStatusId", @disabled = "disabled" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryPresentationRulesStatusId, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-7">
@@ -280,7 +280,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryProductSpecificationStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryProductSpecificationStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSpecificationStatusId" })
+                            @Html.DropDownList("dokDeliveryProductSpecificationStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSpecificationStatusId", @disabled = "disabled" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSpecificationStatusId, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-7">

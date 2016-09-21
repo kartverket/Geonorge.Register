@@ -28,5 +28,7 @@ namespace Kartverket.Register.Services.Register
         List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipality);
         Models.Register GetDokMunicipalRegister();
         void UpdateDOKStatus();
+        string GetMetadataStatus(string uuid);
+        string GetDOKStatus(string url);
     }
 }

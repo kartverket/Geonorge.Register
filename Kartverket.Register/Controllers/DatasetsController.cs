@@ -538,13 +538,13 @@ namespace Kartverket.Register.Controllers
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
-            dataset.dokDeliveryMetadataStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryMetadataStatusId) ? inputDataset.dokDeliveryMetadataStatusId : "notset";
+            dataset.dokDeliveryMetadataStatusId = _registerService.GetMetadataStatus(dataset.Uuid);
             dataset.dokDeliveryMetadataStatusNote = inputDataset.dokDeliveryMetadataStatusNote;
-            dataset.dokDeliveryProductSheetStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSheetStatusId) ? inputDataset.dokDeliveryProductSheetStatusId : "notset";
+            dataset.dokDeliveryProductSheetStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSheetUrl());
             dataset.dokDeliveryProductSheetStatusNote = inputDataset.dokDeliveryProductSheetStatusNote;
-            dataset.dokDeliveryPresentationRulesStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryPresentationRulesStatusId) ? inputDataset.dokDeliveryPresentationRulesStatusId : "notset";
+            dataset.dokDeliveryPresentationRulesStatusId = _registerService.GetDOKStatus(inputDataset.GetPresentationRulesUrl());
             dataset.dokDeliveryPresentationRulesStatusNote = inputDataset.dokDeliveryPresentationRulesStatusNote;
-            dataset.dokDeliveryProductSpecificationStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryProductSpecificationStatusId) ? inputDataset.dokDeliveryProductSpecificationStatusId : "notset";
+            dataset.dokDeliveryProductSpecificationStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSpecificationUrl());
             dataset.dokDeliveryProductSpecificationStatusNote = inputDataset.dokDeliveryProductSpecificationStatusNote;
             dataset.dokDeliveryWmsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWmsStatusId) ? inputDataset.dokDeliveryWmsStatusId : "notset";
             dataset.dokDeliveryWmsStatusNote = inputDataset.dokDeliveryWmsStatusNote;

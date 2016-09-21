@@ -198,7 +198,7 @@ namespace Kartverket.Register.Services.Register
             _dbContext.SaveChanges();
         }
 
-        private string GetMetadataStatus(string uuid)
+        public string GetMetadataStatus(string uuid)
         {
             try
             {
@@ -228,7 +228,7 @@ namespace Kartverket.Register.Services.Register
             }
         }
 
-        private string GetDOKStatus(string url)
+        public string GetDOKStatus(string url)
         {
             try
             {

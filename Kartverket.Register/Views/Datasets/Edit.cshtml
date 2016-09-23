@@ -244,7 +244,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryMetadataStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId", @disabled = "disabled" })
+                            @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryMetadataStatusId, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-7">

@@ -73,7 +73,7 @@
 
         string html = "";
         if (status != "notset")
-            html = "<a href='#' data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></a>";
+            html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
 
         return new HtmlString(html);
     }
@@ -182,8 +182,8 @@
     @foreach (Dataset item in Model)
     {
         <div class="row result-row metadata">
-            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()"> @item.name </a></div>
-            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.name </a></div>
+            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
             <div class="col-md-2">
                 @if (item.ThemeGroupId != null)
                 {
@@ -210,9 +210,9 @@
             <div class="col-md-1 text-center">
                 @if (item.dokStatus != null)
                 {
-                    <a href="#" class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.description'>
+                    <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.description'>
                         <i class="statusIcon-@item.dokStatusId"></i>
-                    </a>
+                    </span>
                 }
             </div>
         </div>

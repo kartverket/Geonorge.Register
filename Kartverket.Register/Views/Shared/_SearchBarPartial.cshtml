@@ -61,7 +61,7 @@
         </div><!-- /input-group-btn -->
         <input name="text" style="z-index: 0;" type="text" placeholder="Søk etter registerdata" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
-            <button class="btn" type="submit" style="z-index: 0;">Søk</button>
+            <button type="submit" class="show-loading-animation btn" data-loading-message="Henter søkeresultater" style="z-index: 0;">Søk</button>
         </span>
     </div>
 </form>

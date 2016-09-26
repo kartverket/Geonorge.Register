@@ -172,10 +172,10 @@
 
             @if (Model.parentRegister != null)
             {
-                <a class="hidden-print" href="@Model.parentRegister.GetObjectUrl()">Tilbake</a>
+                <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="@Model.parentRegister.GetObjectUrl()">Tilbake</a>
             }
             else {
-                <a class="hidden-print" href="/">Tilbake</a>
+                <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="/">Tilbake</a>
             }
         </div>
     </div>

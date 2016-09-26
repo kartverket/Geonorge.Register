@@ -1,21 +1,19 @@
 ﻿using Kartverket.Register.Models;
 using Kartverket.Register.Services.Register;
 using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Kartverket.Register.Helpers;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Services.Register
 {
     public class RegisterServiceTest
     {
-        [Test]
+        [Fact]
         public void GetTopLevelRegisters()
         {            
             Models.Register r1 = new Models.Register();
@@ -30,11 +28,10 @@ namespace Kartverket.Register.Tests.Services.Register
             var registerService = new RegisterService(CreateTestDbContext(registerList));
 
             List<Models.Register> actualListOfRegisters = registerService.GetRegisters();
-
-            Assert.AreEqual(2, actualListOfRegisters.Count);
+            actualListOfRegisters.Count.Should().Be(2);
         }
 
-        [Test]
+        [Fact]
         public void GetTopLevelRegisterByName()
         {
             Models.Register r1 = NewRegister("Register 1");
@@ -51,7 +48,7 @@ namespace Kartverket.Register.Tests.Services.Register
 
         }
 
-        [Test]
+        [Fact]
         public void GetSubregisterByName()
         {
             Models.Register r1 = NewRegister("Register 1");
@@ -69,7 +66,7 @@ namespace Kartverket.Register.Tests.Services.Register
             actualRegister.Should().Be(r1);
         }
 
-        [Test]
+        [Fact]
         public void GetSubregisterBysystemId()
         {
             Models.Register r1 = NewRegister("Register 1");

@@ -1,22 +1,19 @@
 ﻿using Kartverket.Register.Models;
-using Kartverket.Register.Services.Register;
 using Moq;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Services.RegisterItem
 {
     public class RegisterItemServiceTest
     {
-        [Test]
+        [Fact]
         public void getCurrentRegisterItem()
         {            
             Models.Register register = NewRegister("Register name");
@@ -28,7 +25,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             actualCurrentVersion.Should().Be(versions[0]);
         }
 
-        [Test]
+        [Fact]
         public void getVersionsOfItem()
         {
             Models.Register register = NewRegister("Register name");
@@ -41,7 +38,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             actualListOfVersions.Count.Should().Be(5);
         }
 
-        [Test]
+        [Fact]
         public void GetRegisterItemByVersionNr()
         {
             Models.Register register = NewRegister("Register name");
@@ -53,7 +50,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             actualVersion.Should().Be(versions[2]);
         }
 
-        [Test]
+        [Fact]
         public void GetRegisterItemByOrganization()
         {
             Models.Register register = NewRegister("Register name");
@@ -71,7 +68,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             actualVersion.Count.Should().Be(2);
         }
 
-        [Test]
+        [Fact]
         public void GetSubregisterItemByOrganization()
         {
             Models.Register register = NewRegister("Register name");

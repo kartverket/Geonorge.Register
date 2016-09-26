@@ -1,6 +1,5 @@
 ﻿using System;
 using Kartverket.Register.Models;
-using NUnit.Framework;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.Register;
 using Moq;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Web.Mvc;
 using FluentAssertions;
 using Kartverket.Register.Services;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Controllers
 {
@@ -18,7 +18,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         // *** CREATE DATASET
 
-        [Test]
+        [Fact]
         public void GetCreateShouldReturnView()
         {
             Dataset dataset = new Dataset();
@@ -39,7 +39,7 @@ namespace Kartverket.Register.Tests.Controllers
             resultDataset.register.name.Should().Be(dataset.register.name);
         }
 
-        [Test]
+        [Fact]
         public void GetCreateShouldReturnHttpNotFoundWhenRegisterIsNull()
         {
             Dataset dataset = new Dataset();
@@ -54,7 +54,7 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
 
-        [Test]
+        [Fact]
         public void PostCreateShouldReturnRegisterItemDetailsPag()
         {
             Dataset dataset = NewDataset("Navn på datasett");
@@ -78,7 +78,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         // *** EDIT DATASET
 
-        [Test]
+        [Fact]
         public void GetEditShouldReturnViewWhenUserHaveAccess()
         {
             Dataset dataset = NewDataset("Test Datasett");
@@ -97,7 +97,7 @@ namespace Kartverket.Register.Tests.Controllers
             resultDataset.register.name.Should().Be(dataset.register.name);
         }
 
-        [Test]
+        [Fact]
         public void GetEditShouldReturnHttpNotFoundWhenRegisterIdNull()
         {
             Dataset dataset = null;
@@ -110,7 +110,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public void PostEditShouldReturnViewWhenUuidIsNotNull()
         {
             Dataset dataset = NewDataset("Test Datasett");
@@ -123,7 +123,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().NotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void PostEditShouldReturnRegisterItemDetailsPageWhenOriginalDatasetIsNotNull()
         {
             Dataset dataset = NewDataset("Navn på datasett");
@@ -146,7 +146,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         // *** DELETE DATASET
 
-        [Test]
+        [Fact]
         public void GetDeleteShouldReturnViewWhenUserHaveAccess()
         {
             Dataset dataset = NewDataset("Test Datasett");
@@ -165,7 +165,7 @@ namespace Kartverket.Register.Tests.Controllers
             resultDataset.register.name.Should().Be(dataset.register.name);
         }
 
-        [Test]
+        [Fact]
         public void GetDeleteShouldReturnHttpNotFoundWhenRegisterIdNull()
         {
             Dataset dataset = null;

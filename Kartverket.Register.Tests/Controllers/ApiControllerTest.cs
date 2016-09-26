@@ -2,21 +2,14 @@
 using FluentAssertions;
 using Kartverket.Register.Controllers;
 using Kartverket.Register.Models;
-using Kartverket.Register.Services;
 using Moq;
-using NUnit.Framework;
-using System.Configuration;
 using Kartverket.Register.Services.Register;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
-using System.Reflection;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
 using System.Web.Http.Results;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
+using Xunit;
 
 
 namespace Kartverket.Register.Tests.Controllers
@@ -25,7 +18,7 @@ namespace Kartverket.Register.Tests.Controllers
     {
         string url = "https://register.geonorge.no/";
 
-        [Test]
+        [Fact]
         public void GetRegisters()
         {
             Models.Register r1 = NewRegister("Navn1");
@@ -44,7 +37,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualListOfRegisters.Count.Should().Be(3); 
         }
 
-        [Test]
+        [Fact]
         public void GetRegistersByName()
         {
             //Testdata
@@ -64,7 +57,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerApi.label.Should().Be("Navn");
         }
 
-        [Test]
+        [Fact]
         public void GetSubregisterByName()
         {
             //Testdata
@@ -88,7 +81,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerApi.label.Should().Be("RegisterName");
         }
 
-        [Test]
+        [Fact]
         public void GetRegistersBySystemId()
         {
             //Testdata
@@ -106,7 +99,7 @@ namespace Kartverket.Register.Tests.Controllers
             registerApi.label.Should().Be("Navn");
         }
 
-        [Test]
+        [Fact]
         public void GetRegisterItemByName() {
             Models.Register register = NewRegister("Register name");
             List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
@@ -120,7 +113,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.label.Should().Be("itemName");
         }
 
-        [Test]
+        [Fact]
         public void GetRegisterItemByNameAndVersion()
         {
             Models.Register register = NewRegister("Register name");
@@ -135,7 +128,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.versionNumber.Should().Be(2);
         }
 
-        [Test]
+        [Fact]
         public void GetSubregisterItemByName()
         {
             Models.Register register = NewRegister("Register name");
@@ -151,7 +144,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.label.Should().Be("itemName");
         }
 
-        [Test]
+        [Fact]
         public void GetRegisterItemsByOrganization()
         {
             Models.Register register = NewRegister("Register name");
@@ -168,7 +161,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualVersions.Count.Should().Be(5);
         }
 
-        [Test]
+        [Fact]
         public void GetCurrentAndOtherVersions()
         {
             Models.Register register = NewRegister("Register name");
@@ -183,7 +176,7 @@ namespace Kartverket.Register.Tests.Controllers
             actualCurrentVersion.versions.Count.Should().Be(4);
         }
 
-        [Test]
+        [Fact]
         public void RegisterShouldContainParentRegisterWhenRegisterIsASubRegister()
         {
             Models.Register r1 = NewRegister("TestRegister");
@@ -206,7 +199,7 @@ namespace Kartverket.Register.Tests.Controllers
             apiRegister.id.Should().Be("https://register.geonorge.no/subregister/parent/testorg/testregister");
         }
 
-        [Test]
+        [Fact]
         public void RegisterShouldNotContainParentRegisterWhenItIsATopLevelRegister()
         {
             Models.Register r1 = NewRegister("TestRegister");
@@ -224,7 +217,7 @@ namespace Kartverket.Register.Tests.Controllers
             apiRegister.id.Should().Be("https://register.geonorge.no/register/testregister");
         }
 
-        [Test]
+        [Fact]
         public void RegisterOwnerShouldNotBeNull()
         {
             Models.Register r1 = NewRegister("Navn");
@@ -244,7 +237,7 @@ namespace Kartverket.Register.Tests.Controllers
             apiRegister.owner.Should().Be("kartverket");
         }
 
-        [Test]
+        [Fact]
         public void RegisterManagerShouldNotBeNull()
         {
             Models.Register r1 = NewRegister("Navn");

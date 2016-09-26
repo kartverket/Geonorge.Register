@@ -1,12 +1,10 @@
 ﻿using System.Web.Http.Results;
-using System.Web.Http.Routing;
 using FluentAssertions;
 using Kartverket.Register.Controllers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Moq;
-using NUnit.Framework;
-using System.Configuration;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Controllers
 {
@@ -21,7 +19,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         private readonly Organization _organization = new Organization { name = OrganizationName, number = OrganizationNumber, logoFilename = OrganizationLogoFilename, largeLogo = OrganizationLogoLargeFilename, shortname = OrganizationShortName };
 
-        [Test]
+        [Fact]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByName()
         {
             var service = new Mock<IOrganizationService>();
@@ -33,7 +31,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().NotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnOrganizationByName()
         {
             var service = new Mock<IOrganizationService>();
@@ -46,7 +44,7 @@ namespace Kartverket.Register.Tests.Controllers
             ShouldReturnOrganization(result);
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnHttpNotFoundWhenOrganizationIsNotFoundByNumber()
         {
             var service = new Mock<IOrganizationService>();
@@ -58,7 +56,7 @@ namespace Kartverket.Register.Tests.Controllers
             result.Should().NotBeNull();
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnOrganizationByNumber()
         {
             var service = new Mock<IOrganizationService>();

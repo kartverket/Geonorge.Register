@@ -5,7 +5,7 @@ using FluentAssertions;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Services
 {
@@ -18,7 +18,7 @@ namespace Kartverket.Register.Tests.Services
         private const string OrganizationLogoLarge = "logoLarge.png";
         private const string OrganizationShortName = "IFSL";
 
-        [Test]
+        [Fact]
         public void ShouldReturnNullWhenOrganizationIsNotFoundByName()
         {
             var service = CreateService(new List<Organization>());
@@ -28,7 +28,7 @@ namespace Kartverket.Register.Tests.Services
             organization.Should().BeNull();
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnOrganizationByName()
         {
             var service = CreateService(CreateOrganizationSkogOgLandskap());
@@ -48,7 +48,7 @@ namespace Kartverket.Register.Tests.Services
             organization.shortname.Should().Be(OrganizationShortName);
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnOrganizationByNumber()
         {
             var service = CreateService(CreateOrganizationSkogOgLandskap());
@@ -58,7 +58,7 @@ namespace Kartverket.Register.Tests.Services
             ShouldBeSkogOgLandskap(organization);
         }
 
-        [Test]
+        [Fact]
         public void ShouldReturnNullWhenOrganizationIsNotFoundByNumber()
         {
             var service = CreateService(CreateOrganizationSkogOgLandskap());

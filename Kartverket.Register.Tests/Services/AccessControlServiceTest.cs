@@ -1,67 +1,63 @@
-﻿using System;
-using NUnit.Framework;
-
-using Kartverket.Register.Services;
+﻿using Kartverket.Register.Services;
 using FluentAssertions;
 using System.Security.Claims;
 using System.Threading;
 using System.Collections.Generic;
+using Xunit;
 
 namespace Kartverket.Register.Tests.Services
 {
     public class AccessControlServiceTest
     {
+        private readonly AccessControlService _accessControlService = new AccessControlService();
 
-        private AccessControlService accessControlService = new AccessControlService();
-
-        [TearDown]
-        public void TearDown()
+        public AccessControlServiceTest()
         {
             Thread.CurrentPrincipal = null;
         }
 
-        [Test]
+       [Fact]
         public void GetOrganizationNumberShouldReturnOrgnrFromClaim()
         {
             SetClaims("orgnr", "123456789");
 
-            accessControlService.GetOrganizationNumber().Should().Be("123456789");
+            _accessControlService.GetOrganizationNumber().Should().Be("123456789");
         }
 
-        [Test]
+       [Fact]
         public void GetOrganizationNumberShouldReturnNullIfNotSet()
         {
-            accessControlService.GetOrganizationNumber().Should().BeNull();
+            _accessControlService.GetOrganizationNumber().Should().BeNull();
         }
 
-        [Test]
+       [Fact]
         public void IsMunicipalUserShouldReturnFalseIfUserHasNoOrgnrClaim()
         {
-            accessControlService.IsMunicipalUser().Should().BeFalse();
+            _accessControlService.IsMunicipalUser().Should().BeFalse();
         }
 
-        [Test]
+       [Fact]
         public void IsMunicipalUserShouldReturnFalseIfOrganizationNumberDoesNotHaveMunicipalCode()
         {
             SetClaims("orgnr", "123456789");
 
-            accessControlService.IsMunicipalUser().Should().BeFalse();
+            _accessControlService.IsMunicipalUser().Should().BeFalse();
         }
 
-        [Test]
+       [Fact]
         public void IsMunicipalUserShouldReturnTrueIfOrganizationNumberHasMunicipalCode()
         {
             SetClaims("orgnr", "940330408");
 
-            accessControlService.IsMunicipalUser().Should().BeTrue();
+            _accessControlService.IsMunicipalUser().Should().BeTrue();
         }
 
-        [Test]
+       [Fact]
         public void MunicipalityShouldReturnMunicipalCode()
         {
             SetClaims("orgnr", "940330408");
 
-            accessControlService.IsMunicipalUser().Should().BeTrue();
+            _accessControlService.IsMunicipalUser().Should().BeTrue();
         }
 
 

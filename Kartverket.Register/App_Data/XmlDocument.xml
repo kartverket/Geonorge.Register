@@ -838,6 +838,13 @@
             Result grouped by facets
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
+            <summary>
+            Determines what kind of organization: regular or municipality.
+            If empty, then regular organization. 
+            If set to 'municipality' then the municipality specific attributes below should be populated
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Models.Register.GetObjectUrl">
             <summary>
             Gets Url to current object

@@ -49,6 +49,31 @@ namespace Kartverket.Register.Models
         [Display(Name = "Kortnavn")]
         public string shortname { get; set; }
 
+        /// <summary>
+        /// Determines what kind of organization: regular or municipality.
+        /// If empty, then regular organization. 
+        /// If set to 'municipality' then the municipality specific attributes below should be populated
+        /// </summary>
+        [Display(Name = "Organisasjonstype")]
+        public string OrganizationType { get; set; }
+
+        // municipality specific attributes
+        [Display(Name = "Kommunenummer")]
+        public string MunicipalityCode { get; set; }
+        [Display(Name = "Geografisk senterpunkt - x")]
+        public string GeographicCenterX { get; set; }
+        [Display(Name = "Geografisk senterpunkt - y")]
+        public string GeographicCenterY { get; set; }
+        [Display(Name = "Geografisk utstrekning - nord")]
+        public string BoundingBoxNorth { get; set; }
+        [Display(Name = "Geografisk utstrekning - sør")]
+        public string BoundingBoxSouth { get; set; }
+        [Display(Name = "Geografisk utstrekning - øst")]
+        public string BoundingBoxEast { get; set; }
+        [Display(Name = "Geografisk utstrekning - vest")]
+        public string BoundingBoxWest { get; set; }
+
+
         public virtual string GetOrganizationEditUrl()
         {
             if (register.parentRegister == null)
@@ -72,5 +97,11 @@ namespace Kartverket.Register.Models
         }
 
     }//end Organization
+
+    public class OrganizationType
+    {
+        public static string Regular = "regular";
+        public static string Municipality = "municipality";
+    }
 
 }//end namespace Datamodell

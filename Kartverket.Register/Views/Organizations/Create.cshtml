@@ -1,4 +1,6 @@
-﻿@model Kartverket.Register.Models.Organization
+﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
+@model Kartverket.Register.Models.Organization
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -135,12 +137,52 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.largeLogo, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.largeLogo, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                <input type="file" name="fileLarge" />
-                @Html.ValidationMessageFor(model => model.largeLogo, "", new { @class = "text-danger" })
+                <input type="file" name="fileLarge"/>
+                @Html.ValidationMessageFor(model => model.largeLogo, "", new {@class = "text-danger"})
             </div>
         </div>
+
+        <hr />
+        <h3>Organisasjonstype</h3>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.OrganizationType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Regular) Ordinær
+                </div>
+                <div class="col-md-2">
+                    @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Municipality) Kommune
+                </div>
+                @Html.ValidationMessageFor(model => model.OrganizationType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="municipality-attributes" style="display: none;">
+            <hr />
+            <h3>Kommuneinformasjon</h3>
+
+            <div class="form-group">
+                <p class="help-text bg-success" id="help-text-municipality-code" style="display: none;">
+                    Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821.
+                </p>
+                @Html.LabelFor(model => model.MunicipalityCode, htmlAttributes: new {@class = "control-label col-md-2"})
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.MunicipalityCode, new {htmlAttributes = new {@class = "form-control", maxlength = "4"}})
+                    @Html.ValidationMessageFor(model => model.MunicipalityCode, "", new {@class = "text-danger"})
+                </div>
+                <div class="col-md-1">
+                    <p class="form-control-static">
+                        <a href="#" data-help-text-id="help-text-municipality-code" class="badge help-text-toggle">?</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
     <div class="form-group">
         <hr />
@@ -150,3 +192,26 @@
 
 }
 
+@section scripts
+{
+    <script>
+        $(function () {
+
+            function showMunicipalityAttributes(organizationType) {
+                console.log("checking stuff");
+
+                if (organizationType === "municipality")
+                    $('#municipality-attributes').show();
+                else 
+                    $('#municipality-attributes').hide();
+            }
+
+            $('input[type=radio][name=OrganizationType]').change(function () {
+                showMunicipalityAttributes($(this).val());
+            });
+
+            showMunicipalityAttributes($(this).val());
+           
+        });
+    </script>
+}

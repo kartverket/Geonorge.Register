@@ -78,7 +78,10 @@ namespace Kartverket.Register.Models
             string id = systemID.ToString();
             var indexer = new SolrRegisterIndexer(new SolrIndexer(), new SolrIndexDocumentCreator());
             indexer.RunIndexingOn(id);
-                   
+
+            //notify metadataeditor
+            System.Net.WebClient c = new System.Net.WebClient();
+            c.DownloadString(System.Web.Configuration.WebConfigurationManager.AppSettings["EditorUrl"] + "Metadata/FlushCache");
         }
         int Save()
         {

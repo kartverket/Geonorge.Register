@@ -171,11 +171,11 @@
   <data name="DOK_Delivery_Distribution" xml:space="preserve">
     <value>Nedlastning status</value>
   </data>
-  <data name="DOK_Delivery_DistributionArea" xml:space="preserve">
-    <value>Dekningskart status</value>
+  <data name="DOK_Delivery_SosiRequirements" xml:space="preserve">
+    <value>SOSI-krav status</value>
   </data>
-  <data name="DOK_Delivery_GeodataLaw" xml:space="preserve">
-    <value>Geodataloven status</value>
+  <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
+    <value>Atom-feed status</value>
   </data>
   <data name="DOK_Delivery_Metadata" xml:space="preserve">
     <value>Metadata status</value>
@@ -195,8 +195,8 @@
   <data name="DOK_Delivery_Restricted" xml:space="preserve">
     <value>Skjermede data - kontakt dataeier for tilgangsforespørsel</value>
   </data>
-  <data name="DOK_Delivery_ServiceAlert" xml:space="preserve">
-    <value>Endringsvarsling status</value>
+  <data name="DOK_Delivery_GmlRequirements" xml:space="preserve">
+    <value>GML-krav status</value>
   </data>
   <data name="DOK_Delivery_Status" xml:space="preserve">
     <value>Status datasett</value>

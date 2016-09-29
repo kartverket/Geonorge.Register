@@ -173,7 +173,7 @@ namespace Kartverket.Register.Formatter
 
             return item.dokDeliveryMetadataStatus + ";" + item.dokDeliveryProductSheetStatus + ";" + item.dokDeliveryPresentationRulesStatus +
                 ";" + item.dokDeliveryProductSpecificationStatus + ";" + item.dokDeliveryWmsStatus + ";" + item.dokDeliveryWfsStatus +
-                ";" + item.dokDeliveryDistributionAreaStatus + ";" + item.dokDeliveryDistributionStatus + ";" + item.dokDeliveryServiceAlertStatus + ";" + item.dokDeliveryGeodataLawStatus;
+                ";" + item.dokDeliverySosiRequirementsStatus + ";" + item.dokDeliveryDistributionStatus + ";" + item.dokDeliveryGmlRequirementsStatus + ";" + item.dokDeliveryAtomFeedStatus;
 
         }
 
@@ -225,8 +225,8 @@ namespace Kartverket.Register.Formatter
             {
                 return "Temagruppe; Navn; Eier; DOK-status; Oppdatert; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
                     + UI.DOK_Delivery_ProductSheet + ";" + UI.DOK_Delivery_PresentationRules + ";" + UI.DOK_Delivery_ProductSpesification + ";"
-                    + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_DistributionArea + ";"
-                    + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_ServiceAlert + ";" + UI.DOK_Delivery_GeodataLaw;
+                    + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_SosiRequirements + ";"
+                    + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_GmlRequirements + ";" + UI.DOK_Delivery_AtomFeed;
             }
             else if (containedItemClass == "Organization")
             {

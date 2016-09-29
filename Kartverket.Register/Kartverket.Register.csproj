@@ -643,6 +643,10 @@
     <Compile Include="Migrations\201609271150112_AddMunicipalityFieldsToOrganization.Designer.cs">
       <DependentUpon>201609271150112_AddMunicipalityFieldsToOrganization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609290635472_DatasetDokDeliveryPropertyChanges.cs" />
+    <Compile Include="Migrations\201609290635472_DatasetDokDeliveryPropertyChanges.Designer.cs">
+      <DependentUpon>201609290635472_DatasetDokDeliveryPropertyChanges.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1426,6 +1430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609271150112_AddMunicipalityFieldsToOrganization.resx">
       <DependentUpon>201609271150112_AddMunicipalityFieldsToOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609290635472_DatasetDokDeliveryPropertyChanges.resx">
+      <DependentUpon>201609290635472_DatasetDokDeliveryPropertyChanges.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

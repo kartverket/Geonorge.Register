@@ -897,19 +897,19 @@
               Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
             </summary>
         </member>
+        <member name="P:Resources.UI.DOK_Delivery_AtomFeed">
+            <summary>
+              Looks up a localized string similar to Atom-feed status.
+            </summary>
+        </member>
         <member name="P:Resources.UI.DOK_Delivery_Distribution">
             <summary>
               Looks up a localized string similar to Nedlastning status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_DistributionArea">
+        <member name="P:Resources.UI.DOK_Delivery_GmlRequirements">
             <summary>
-              Looks up a localized string similar to Dekningskart status.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.DOK_Delivery_GeodataLaw">
-            <summary>
-              Looks up a localized string similar to Geodataloven status.
+              Looks up a localized string similar to GML-krav status.
             </summary>
         </member>
         <member name="P:Resources.UI.DOK_Delivery_Metadata">
@@ -942,9 +942,9 @@
               Looks up a localized string similar to Skjermede data - kontakt dataeier for tilgangsforespørsel.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_ServiceAlert">
+        <member name="P:Resources.UI.DOK_Delivery_SosiRequirements">
             <summary>
-              Looks up a localized string similar to Endringsvarsling status.
+              Looks up a localized string similar to SOSI-krav status.
             </summary>
         </member>
         <member name="P:Resources.UI.DOK_Delivery_Status">

@@ -58,10 +58,10 @@ namespace Kartverket.Register.Models.Api
         public string dokDeliveryProductSpecificationStatus { get; set; }
         public string dokDeliveryWmsStatus { get; set; }
         public string dokDeliveryWfsStatus { get; set; }
-        public string dokDeliveryDistributionAreaStatus { get; set; }
+        public string dokDeliverySosiRequirementsStatus { get; set; }
         public string dokDeliveryDistributionStatus { get; set; }
-        public string dokDeliveryServiceAlertStatus { get; set; }
-        public string dokDeliveryGeodataLawStatus { get; set; }
+        public string dokDeliveryGmlRequirementsStatus { get; set; }
+        public string dokDeliveryAtomFeedStatus { get; set; }
         public bool? restricted { get; set; }
 
         public string DatasetType { get; set; }
@@ -149,10 +149,10 @@ namespace Kartverket.Register.Models.Api
                 dokDeliveryProductSpecificationStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSpecificationStatus.description;
                 dokDeliveryWmsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWmsStatus.description;
                 dokDeliveryWfsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWfsStatus.description;
-                dokDeliveryDistributionAreaStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryDistributionAreaStatus.description;
+                dokDeliverySosiRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliverySosiRequirementsStatus.description;
                 dokDeliveryDistributionStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryDistributionStatus.description;
-                dokDeliveryServiceAlertStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryServiceAlertStatus.description;
-                dokDeliveryGeodataLawStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryGeodataLawStatus.description;
+                dokDeliveryGmlRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryGmlRequirementsStatus.description;
+                dokDeliveryAtomFeedStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryAtomFeedStatus.description;
 
                 MetadataUrl = d.MetadataUrl;
                 ConfirmedDok = "NEI";

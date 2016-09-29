@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atom-feed status.
+        /// </summary>
+        public static string DOK_Delivery_AtomFeed {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_AtomFeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nedlastning status.
         /// </summary>
         public static string DOK_Delivery_Distribution {
@@ -124,20 +133,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dekningskart status.
+        ///   Looks up a localized string similar to GML-krav status.
         /// </summary>
-        public static string DOK_Delivery_DistributionArea {
+        public static string DOK_Delivery_GmlRequirements {
             get {
-                return ResourceManager.GetString("DOK_Delivery_DistributionArea", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Geodataloven status.
-        /// </summary>
-        public static string DOK_Delivery_GeodataLaw {
-            get {
-                return ResourceManager.GetString("DOK_Delivery_GeodataLaw", resourceCulture);
+                return ResourceManager.GetString("DOK_Delivery_GmlRequirements", resourceCulture);
             }
         }
         
@@ -196,11 +196,11 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Endringsvarsling status.
+        ///   Looks up a localized string similar to SOSI-krav status.
         /// </summary>
-        public static string DOK_Delivery_ServiceAlert {
+        public static string DOK_Delivery_SosiRequirements {
             get {
-                return ResourceManager.GetString("DOK_Delivery_ServiceAlert", resourceCulture);
+                return ResourceManager.GetString("DOK_Delivery_SosiRequirements", resourceCulture);
             }
         }
         

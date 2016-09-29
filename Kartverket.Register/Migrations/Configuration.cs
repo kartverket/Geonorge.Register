@@ -321,10 +321,10 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryProductSpecificationStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryProductSpecificationStatusId IS NULL");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWmsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryWmsStatusId IS NULL");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryWfsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryWfsStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionAreaStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionAreaStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliverySosiRequirementsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliverySosiRequirementsStatusId IS NULL");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryServiceAlertStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryServiceAlertStatusId IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGeodataLawStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryGeodataLawStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGmlRequirementsStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryGmlRequirementsStatusId IS NULL");
+            context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryAtomFeedStatusId = 'notset' WHERE  Discriminator ='Dataset' AND dokDeliveryAtomFeedStatusId IS NULL");
         }
     }
 }

@@ -58,14 +58,14 @@
             label = UI.DOK_Delivery_Wms;
         else if (type.Contains("dokDeliveryWfsStatus"))
             label = UI.DOK_Delivery_Wfs;
-        else if (type.Contains("dokDeliveryDistributionAreaStatus"))
-            label = UI.DOK_Delivery_DistributionArea;
+        else if (type.Contains("dokDeliverySosiRequirementsStatus"))
+            label = UI.DOK_Delivery_SosiRequirements;
         else if (type.Contains("dokDeliveryDistributionStatus"))
             label = UI.DOK_Delivery_Distribution;
-        else if (type.Contains("dokDeliveryServiceAlertStatus"))
-            label = UI.DOK_Delivery_ServiceAlert;
-        else if (type.Contains("dokDeliveryGeodataLawStatus"))
-            label = UI.DOK_Delivery_GeodataLaw;
+        else if (type.Contains("dokDeliveryGmlRequirementsStatus"))
+            label = UI.DOK_Delivery_GmlRequirements;
+        else if (type.Contains("dokDeliveryAtomFeedStatus"))
+            label = UI.DOK_Delivery_AtomFeed;
 
         if (!string.IsNullOrEmpty(label))
             title = label + ": " + title;
@@ -132,14 +132,14 @@
             sortTitle = UI.DOK_Delivery_Wms;
         else if (sortingParam.Contains("dokDeliveryWfsStatus"))
             sortTitle = UI.DOK_Delivery_Wfs;
-        else if (sortingParam.Contains("dokDeliveryDistributionAreaStatus"))
-            sortTitle = UI.DOK_Delivery_DistributionArea;
+        else if (sortingParam.Contains("dokDeliverySosiRequirementsStatus"))
+            sortTitle = UI.DOK_Delivery_SosiRequirements;
         else if (sortingParam.Contains("dokDeliveryDistributionStatus"))
             sortTitle = UI.DOK_Delivery_Distribution;
-        else if (sortingParam.Contains("dokDeliveryServiceAlertStatus"))
-            sortTitle = UI.DOK_Delivery_ServiceAlert;
-        else if (sortingParam.Contains("dokDeliveryGeodataLawStatus"))
-            sortTitle = UI.DOK_Delivery_GeodataLaw;
+        else if (sortingParam.Contains("dokDeliveryGmlRequirementsStatus"))
+            sortTitle = UI.DOK_Delivery_GmlRequirements;
+        else if (sortingParam.Contains("dokDeliveryAtomFeedStatus"))
+            sortTitle = UI.DOK_Delivery_AtomFeed;
         else if (sortingParam.Contains("dokStatus"))
             sortTitle = UI.DOK_Delivery_Status;
 
@@ -171,10 +171,10 @@
             @OrderByLink("", "dokDeliveryProductSpecificationStatus", "glyphicon glyphicon-list-alt")
             @OrderByLink("", "dokDeliveryWmsStatus", "glyphicon glyphicon-globe")
             @OrderByLink("", "dokDeliveryWfsStatus", "custom-icon custom-icon-wfs")
-            @OrderByLink("", "dokDeliveryDistributionAreaStatus", "custom-icon custom-icon-dekningskart")
+            @OrderByLink("", "dokDeliverySosiRequirementsStatus", "custom-icon custom-icon-seksjonstegn")
+            @OrderByLink("", "dokDeliveryGmlRequirementsStatus", "custom-icon custom-icon-seksjonstegn")
             @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
-            @OrderByLink("", "dokDeliveryServiceAlertStatus", "fa fa-rss-square")
-            @OrderByLink("", "dokDeliveryGeodataLawStatus", "custom-icon custom-icon-seksjonstegn")
+            @OrderByLink("", "dokDeliveryAtomFeedStatus", "fa fa-rss-square")
         </div>
         <div class="col-md-1 text-center">@OrderByLink("STATUS", "dokStatus")</div>
     </div>
@@ -202,10 +202,10 @@
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted, "dokDeliveryProductSpecificationStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted, "dokDeliveryWmsStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, "dokDeliveryWfsStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionAreaStatusId, item.restricted, "dokDeliveryDistributionAreaStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, item.restricted, "dokDeliverySosiRequirementsStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, item.restricted, "dokDeliveryGmlRequirementsStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted, "dokDeliveryDistributionStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryServiceAlertStatusId, item.restricted, "dokDeliveryServiceAlertStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryGeodataLawStatusId, item.restricted, "dokDeliveryGeodataLawStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryAtomFeedStatusId, item.restricted, "dokDeliveryAtomFeedStatus")
             </div>
             <div class="col-md-1 text-center">
                 @if (item.dokStatus != null)

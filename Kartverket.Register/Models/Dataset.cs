@@ -119,30 +119,30 @@ namespace Kartverket.Register.Models
         public string dokDeliveryWfsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWfsStatus { get; set; }
         public string dokDeliveryWfsStatusNote { get; set; }
-        //DistributionArea
-        [ForeignKey("dokDeliveryDistributionAreaStatus")]
-        [Display(Name = "Dekningskart:")]
-        public string dokDeliveryDistributionAreaStatusId { get; set; }
-        public virtual DokDeliveryStatus dokDeliveryDistributionAreaStatus { get; set; }
-        public string dokDeliveryDistributionAreaStatusNote { get; set; }
         //Distribution
         [ForeignKey("dokDeliveryDistributionStatus")]
         [Display(Name = "Filnedlasting:")]
         public string dokDeliveryDistributionStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryDistributionStatus { get; set; }
         public string dokDeliveryDistributionStatusNote { get; set; }
-        //ServiceAlert
-        [ForeignKey("dokDeliveryServiceAlertStatus")]
-        [Display(Name = "Endringsvarsling:")]
-        public string dokDeliveryServiceAlertStatusId { get; set; }
-        public virtual DokDeliveryStatus dokDeliveryServiceAlertStatus { get; set; }
-        public string dokDeliveryServiceAlertStatusNote { get; set; }
-        //GeodataLaw
-        [ForeignKey("dokDeliveryGeodataLawStatus")]
-        [Display(Name = "Oppfyller geodataloven:")]
-        public string dokDeliveryGeodataLawStatusId { get; set; }
-        public virtual DokDeliveryStatus dokDeliveryGeodataLawStatus { get; set; }
-        public string dokDeliveryGeodataLawStatusNote { get; set; }
+        //SOSI requirements
+        [ForeignKey("dokDeliverySosiRequirementsStatus")]
+        [Display(Name = "SOSI-krav:")]
+        public string dokDeliverySosiRequirementsStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliverySosiRequirementsStatus { get; set; }
+        public string dokDeliverySosiRequirementsStatusNote { get; set; }
+        //GML requirements
+        [ForeignKey("dokDeliveryGmlRequirementsStatus")]
+        [Display(Name = "GML-krav:")]
+        public string dokDeliveryGmlRequirementsStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryGmlRequirementsStatus { get; set; }
+        public string dokDeliveryGmlRequirementsStatusNote { get; set; }
+        //Atom-feed
+        [ForeignKey("dokDeliveryAtomFeedStatus")]
+        [Display(Name = "Atom-feed:")]
+        public string dokDeliveryAtomFeedStatusId { get; set; }
+        public virtual DokDeliveryStatus dokDeliveryAtomFeedStatus { get; set; }
+        public string dokDeliveryAtomFeedStatusNote { get; set; }
 
         public bool? restricted { get; set; }
 

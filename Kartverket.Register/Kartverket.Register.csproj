@@ -651,6 +651,10 @@
     <Compile Include="Migrations\201609291017503_AddedDatasetUuidService.Designer.cs">
       <DependentUpon>201609291017503_AddedDatasetUuidService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.cs" />
+    <Compile Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.Designer.cs">
+      <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1440,6 +1444,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609291017503_AddedDatasetUuidService.resx">
       <DependentUpon>201609291017503_AddedDatasetUuidService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.resx">
+      <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

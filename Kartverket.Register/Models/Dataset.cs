@@ -89,60 +89,70 @@ namespace Kartverket.Register.Models
         public string dokDeliveryMetadataStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryMetadataStatus { get; set; }
         public string dokDeliveryMetadataStatusNote { get; set; }
+        public bool dokDeliveryMetadataStatusAutoUpdate { get; set; } = true;
         //ProductSheet
         [ForeignKey("dokDeliveryProductSheetStatus")]
         [Display(Name = "Produktark:")]
         public string dokDeliveryProductSheetStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSheetStatus { get; set; }
         public string dokDeliveryProductSheetStatusNote { get; set; }
+        public bool dokDeliveryProductSheetStatusAutoUpdate { get; set; } = true;
         //PresentationRules
         [ForeignKey("dokDeliveryPresentationRulesStatus")]
         [Display(Name = "Kartografidokumentasjon:")]
         public string dokDeliveryPresentationRulesStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryPresentationRulesStatus { get; set; }
         public string dokDeliveryPresentationRulesStatusNote { get; set; }
+        public bool dokDeliveryPresentationRulesStatusAutoUpdate { get; set; } = true;
         //ProductSpecification
         [ForeignKey("dokDeliveryProductSpecificationStatus")]
         [Display(Name = "Produktspesifikasjon:")]
         public string dokDeliveryProductSpecificationStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSpecificationStatus { get; set; }
         public string dokDeliveryProductSpecificationStatusNote { get; set; }
+        public bool dokDeliveryProductSpecificationStatusAutoUpdate { get; set; } = true;
         //WMS
         [ForeignKey("dokDeliveryWmsStatus")]
         [Display(Name = "WMS-tjeneste:")]
         public string dokDeliveryWmsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWmsStatus { get; set; }
         public string dokDeliveryWmsStatusNote { get; set; }
+        public bool dokDeliveryWmsStatusAutoUpdate { get; set; } = true;
         //WFS
         [ForeignKey("dokDeliveryWfsStatus")]
         [Display(Name = "WFS-tjeneste:")]
         public string dokDeliveryWfsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWfsStatus { get; set; }
         public string dokDeliveryWfsStatusNote { get; set; }
+        public bool dokDeliveryWfsStatusAutoUpdate { get; set; } = true;
         //Distribution
         [ForeignKey("dokDeliveryDistributionStatus")]
         [Display(Name = "Filnedlasting:")]
         public string dokDeliveryDistributionStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryDistributionStatus { get; set; }
         public string dokDeliveryDistributionStatusNote { get; set; }
+        public bool dokDeliveryDistributionStatusAutoUpdate { get; set; } = true;
         //SOSI requirements
         [ForeignKey("dokDeliverySosiRequirementsStatus")]
         [Display(Name = "SOSI-krav:")]
         public string dokDeliverySosiRequirementsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliverySosiRequirementsStatus { get; set; }
         public string dokDeliverySosiRequirementsStatusNote { get; set; }
+        public bool dokDeliverySosiStatusAutoUpdate { get; set; } = true;
         //GML requirements
         [ForeignKey("dokDeliveryGmlRequirementsStatus")]
         [Display(Name = "GML-krav:")]
         public string dokDeliveryGmlRequirementsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryGmlRequirementsStatus { get; set; }
         public string dokDeliveryGmlRequirementsStatusNote { get; set; }
+        public bool dokDeliveryGmlRequirementsStatusAutoUpdate { get; set; } = true;
         //Atom-feed
         [ForeignKey("dokDeliveryAtomFeedStatus")]
         [Display(Name = "Atom-feed:")]
         public string dokDeliveryAtomFeedStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryAtomFeedStatus { get; set; }
         public string dokDeliveryAtomFeedStatusNote { get; set; }
+        public bool dokDeliveryAtomFeedStatusAutoUpdate { get; set; } = true;
 
         public bool? restricted { get; set; }
 

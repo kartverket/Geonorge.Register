@@ -243,8 +243,11 @@
             <div class="form-horizontal">
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-offset-5 col-md-7">
+                        <div class="col-md-offset-5 col-md-6">
                             <label>Kommentar</label>
+                        </div>
+                        <div class="col-md-1">
+                            <label>Auto-<br />oppdater</label>
                         </div>
                     </div>
                 </div>
@@ -255,45 +258,49 @@
                             @Html.DropDownList("dokDeliveryMetadataStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryMetadataStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryMetadataStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                            @Html.EditorFor(model => model.dokDeliveryMetadataStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryMetadataStatusAutoUpdate", Model.dokDeliveryMetadataStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryProductSheetStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryProductSheetStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSheetStatusId", @disabled="disabled" })
+                            @Html.DropDownList("dokDeliveryProductSheetStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSheetStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSheetStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryProductSheetStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryProductSheetStatusAutoUpdate", Model.dokDeliveryProductSheetStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryPresentationRulesStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryPresentationRulesStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryPresentationRulesStatusId", @disabled = "disabled" })
+                            @Html.DropDownList("dokDeliveryPresentationRulesStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryPresentationRulesStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryPresentationRulesStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryPresentationRulesStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryPresentationRulesStatusAutoUpdate", Model.dokDeliveryPresentationRulesStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group">
                         @Html.LabelFor(model => model.dokDeliveryProductSpecificationStatusId, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("dokDeliveryProductSpecificationStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSpecificationStatusId", @disabled = "disabled" })
+                            @Html.DropDownList("dokDeliveryProductSpecificationStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryProductSpecificationStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryProductSpecificationStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryProductSpecificationStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryProductSpecificationStatusAutoUpdate", Model.dokDeliveryProductSpecificationStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -303,9 +310,10 @@
                             @Html.DropDownList("dokDeliveryWmsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryWmsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryWmsStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryWmsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryWmsStatusAutoUpdate", Model.dokDeliveryWmsStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -315,9 +323,10 @@
                             @Html.DropDownList("dokDeliveryWfsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryWfsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryWfsStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryWfsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryWfsStatusAutoUpdate", Model.dokDeliveryWfsStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -327,9 +336,10 @@
                             @Html.DropDownList("dokDeliverySosiRequirementsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliverySosiRequirementsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliverySosiRequirementsStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliverySosiRequirementsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliverySosiStatusAutoUpdate", Model.dokDeliverySosiStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -339,9 +349,10 @@
                             @Html.DropDownList("dokDeliveryDistributionStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryDistributionStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryDistributionStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryDistributionStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryDistributionStatusAutoUpdate", Model.dokDeliveryDistributionStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -351,9 +362,10 @@
                             @Html.DropDownList("dokDeliveryGmlRequirementsStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryGmlRequirementsStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryGmlRequirementsStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryGmlRequirementsStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryGmlRequirementsStatusAutoUpdate", Model.dokDeliveryGmlRequirementsStatusAutoUpdate)</div>
                     </div>
                 </div>
                 <div class="row">
@@ -363,9 +375,10 @@
                             @Html.DropDownList("dokDeliveryAtomFeedStatusId", null, htmlAttributes: new { @class = "form-control", @id = "dokDeliveryAtomFeedStatusId" })
                             @Html.ValidationMessageFor(model => model.dokDeliveryAtomFeedStatusId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             @Html.EditorFor(model => model.dokDeliveryAtomFeedStatusNote, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
+                        <div class="col-md-1">@Html.CheckBox("dokDeliveryAtomFeedStatusAutoUpdate", Model.dokDeliveryAtomFeedStatusAutoUpdate)</div>
                     </div>
                 </div>
             </div>

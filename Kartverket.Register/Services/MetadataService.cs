@@ -32,6 +32,7 @@ namespace Kartverket.DOK.Service
                 dataset.datasetowner = originalDataset.datasetowner;
                 List<SimpleKeyword> keywordsDok = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME);
                 dataset.ThemeGroupId = AddTheme(keywordsDok != null && keywordsDok.Count > 0 ? keywordsDok.First().Keyword : "Annen");
+                dataset.UuidService = originalDataset.UuidService;
                 dataset.WmsUrl = originalDataset.WmsUrl;
                 dataset.registerId = originalDataset.registerId;
                 dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;

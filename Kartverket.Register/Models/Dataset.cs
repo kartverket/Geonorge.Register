@@ -146,6 +146,9 @@ namespace Kartverket.Register.Models
 
         public bool? restricted { get; set; }
 
+        [Display(Name = "Tjeneste Uuid:")]
+        public string UuidService { get; set; }
+
 
         public virtual string GetDatasetUrl()
         {

@@ -647,6 +647,10 @@
     <Compile Include="Migrations\201609290635472_DatasetDokDeliveryPropertyChanges.Designer.cs">
       <DependentUpon>201609290635472_DatasetDokDeliveryPropertyChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609291017503_AddedDatasetUuidService.cs" />
+    <Compile Include="Migrations\201609291017503_AddedDatasetUuidService.Designer.cs">
+      <DependentUpon>201609291017503_AddedDatasetUuidService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1433,6 +1437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609290635472_DatasetDokDeliveryPropertyChanges.resx">
       <DependentUpon>201609290635472_DatasetDokDeliveryPropertyChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609291017503_AddedDatasetUuidService.resx">
+      <DependentUpon>201609291017503_AddedDatasetUuidService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

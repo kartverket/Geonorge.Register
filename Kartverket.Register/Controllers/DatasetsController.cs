@@ -531,6 +531,7 @@ namespace Kartverket.Register.Controllers
             dataset.PresentationRulesUrl = inputDataset.GetPresentationRulesUrl();
             dataset.ProductSheetUrl = inputDataset.GetProductSheetUrl();
             dataset.ProductSpecificationUrl = inputDataset.GetProductSpecificationUrl();
+            dataset.UuidService = inputDataset.UuidService;
             dataset.WmsUrl = inputDataset.GetWmsUrl();
             dataset.DistributionFormat = inputDataset.GetDistributionFormat();
             dataset.DistributionArea = inputDataset.GetDistributionArea();

@@ -196,15 +196,15 @@
             </div>
 
             <div class="col-md-4 col-sm-5 status-icons">
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, item.restricted, "metadata")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, item.restricted, "dokDeliveryProductSheetStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, item.restricted, "dokDeliveryPresentationRulesStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, item.restricted, "dokDeliveryProductSpecificationStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryMetadataStatusId, false, "metadata")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSheetStatusId, false, "dokDeliveryProductSheetStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryPresentationRulesStatusId, false, "dokDeliveryPresentationRulesStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryProductSpecificationStatusId, false, "dokDeliveryProductSpecificationStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryWmsStatusId, item.restricted, "dokDeliveryWmsStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, "dokDeliveryWfsStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, item.restricted, "dokDeliverySosiRequirementsStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, item.restricted, "dokDeliveryGmlRequirementsStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, item.restricted, "dokDeliveryDistributionStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, false, "dokDeliverySosiRequirementsStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, false, "dokDeliveryGmlRequirementsStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, false, "dokDeliveryDistributionStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryAtomFeedStatusId, item.restricted, "dokDeliveryAtomFeedStatus")
             </div>
             <div class="col-md-1 text-center">

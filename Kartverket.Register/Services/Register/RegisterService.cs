@@ -4,6 +4,8 @@ using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -257,6 +259,108 @@ namespace Kartverket.Register.Services.Register
             {
                 return "deficient";
             }
+        }
+
+        public string GetDokDeliveryServiceStatus(Dataset item)
+        {
+            string status = (!string.IsNullOrEmpty(item.dokDeliveryWmsStatusId) ? item.dokDeliveryWmsStatusId : "notset");
+
+            if (item.dokDeliveryWmsStatusAutoUpdate)
+            { 
+                string statusUrl = "https://status.geonorge.no/monitorApi/serviceDetail?uuid=";
+                statusUrl = statusUrl + item.UuidService;
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    try
+                    {
+                        HttpResponseMessage response = client.GetAsync(new Uri(statusUrl)).Result;
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var text = response.Content.ReadAsStringAsync().Result;
+                            dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+
+                            var responseTime = (double)data.svartid;
+                            var resposeGetCapabilities = false;
+                            var supportCors = false;
+                            var epsgSupport = false;
+                            var featuresSupport = false;
+                            var hasLegend = false;
+                            var hasCoverage = false;
+
+                            var details = data.details;
+
+                            foreach(var detail in details)
+                            {
+                                if (detail[0].Value == "connect")
+                                {
+                                    if (detail[2].Value == "yes")
+                                        resposeGetCapabilities = true;
+                                }
+                                if (detail[0].Value == "cors")
+                                {
+                                    if (detail[2].Value == "yes")
+                                        supportCors = true;
+                                }
+                                if (detail[0].Value == "epsgSupported")
+                                {
+                                    //Todo check epsg code
+                                    if (detail[2].Value == "yes")
+                                        epsgSupport = true;
+                                }
+                                if (detail[0].Value == "featuresVisible")
+                                {
+                                    if (detail[2].Value == "yes")
+                                        featuresSupport = true;
+                                }
+                                if (detail[0].Value == "hasLegend")
+                                {
+                                    if (detail[2].Value == "yes")
+                                        hasLegend = true;
+                                }
+                                if (detail[0].Value == "bbox")
+                                {
+                                    if (detail[2].Value == "yes")
+                                        hasCoverage = true;
+                                }
+                                
+                            }
+                            //Grønn på WMS:
+                            //Respons fra GetCapabilities
+                            //Svartid innen 4 sekunder
+                            //Støtter CORS
+                            //EPSG: 25832, 25833, 25835
+                            //Støtter egenskapsspørringer
+                            //Støtter tegnforklaring
+                            //Oppgir dekningsområde
+                            if (resposeGetCapabilities && responseTime <= 4
+                                && supportCors && epsgSupport && featuresSupport
+                                && hasLegend && hasCoverage)
+                                status = "good";
+                            //Gul:
+                            //Respons fra GetCapabilities
+                            //Svartid innen 10 sekunder
+                            //Støtter CORS
+                            //EPSG: 25833, 25835 eller 32633
+                            //Støtter tegnforklaring
+                            //Oppgir dekningsområde
+                            else if (resposeGetCapabilities && responseTime <= 10
+                                && supportCors && epsgSupport && hasLegend && hasCoverage)
+                                status = "useable";
+                            //Rød:
+                            //Feiler på en av testene til gul
+                            else
+                                status = "deficient";
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+                }
+            }
+            return status;
         }
 
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)

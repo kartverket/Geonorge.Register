@@ -30,5 +30,6 @@ namespace Kartverket.Register.Services.Register
         void UpdateDOKStatus();
         string GetMetadataStatus(string uuid);
         string GetDOKStatus(string url);
+        string GetDokDeliveryServiceStatus(Dataset item);
     }
 }

@@ -13,27 +13,26 @@ namespace Kartverket.DOK.Service
     {
         public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
-            SimpleMetadata metadata = FetchMetadata(uuid);
+            Dataset metadata = FetchMetadataFromKartkatalogen(uuid);
             if (metadata != null)
             {
                 dataset.Uuid = uuid;
-                dataset.name = metadata.Title;
+                dataset.name = metadata.name;
                 dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);
-                dataset.description = metadata.Abstract;
+                dataset.description = metadata.description;
                 dataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + uuid;
-                dataset.PresentationRulesUrl = metadata.LegendDescriptionUrl;
+                dataset.PresentationRulesUrl = metadata.PresentationRulesUrl;
                 dataset.ProductSheetUrl = metadata.ProductSheetUrl;
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
-                dataset.datasetthumbnail = FetchThumbnailUrl(metadata);
+                dataset.datasetthumbnail = metadata.datasetthumbnail;
                 dataset.register = originalDataset.register;
 
                 dataset.dokStatusId = originalDataset.dokStatusId;
-                dataset.datasetownerId = mapOrganizationNameToId(metadata.ContactOwner != null && metadata.ContactOwner.Organization != null ? metadata.ContactOwner.Organization : "");
+                dataset.datasetownerId = metadata.datasetownerId;
                 dataset.datasetowner = originalDataset.datasetowner;
-                List<SimpleKeyword> keywordsDok = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_NATIONAL_THEME);
-                dataset.ThemeGroupId = AddTheme(keywordsDok != null && keywordsDok.Count > 0 ? keywordsDok.First().Keyword : "Annen");
-                dataset.UuidService = originalDataset.UuidService;
-                dataset.WmsUrl = originalDataset.WmsUrl;
+                dataset.ThemeGroupId = metadata.ThemeGroupId;
+                dataset.UuidService = metadata.UuidService;
+                dataset.WmsUrl = metadata.WmsUrl;
                 dataset.registerId = originalDataset.registerId;
                 dataset.dokStatusDateAccepted = originalDataset.dokStatusDateAccepted;
                 dataset.Notes = originalDataset.Notes;
@@ -43,37 +42,14 @@ namespace Kartverket.DOK.Service
                 dataset.DatasetType = originalDataset.DatasetType;
                 if (dontUpdateDescription) dataset.description = originalDataset.description;
 
-                dataset.restricted = false;
-                string accessConstraint = "";
-                SimpleConstraints constraints = metadata.Constraints;
-                if (!string.IsNullOrEmpty(constraints.AccessConstraints))
-                    accessConstraint = constraints.AccessConstraints;
+                dataset.restricted = metadata.restricted;
 
-                SimpleDistributionDetails distributionDetails = metadata.DistributionDetails;
-                if (distributionDetails != null)
-                {
-                    if (distributionDetails.Protocol != null
-                        && distributionDetails.Protocol.ToLower().Contains("wms"))
-                    {
-                        dataset.WmsUrl = distributionDetails.URL;
-                    }
-                    else
-                    {
-                        dataset.DistributionUrl = distributionDetails.URL;
-
-                    }
-                    dataset.DistributionArea = distributionDetails.UnitsOfDistribution;
-
-                    if(accessConstraint == "restricted" && distributionDetails.Protocol != null)
-                        {
-                        dataset.restricted = true;
-                        }
-                }
+                dataset.DistributionUrl = metadata.DistributionUrl;
+                dataset.DistributionArea = metadata.DistributionArea;
 
                 if (metadata.DistributionFormat != null)
                 {
-                    dataset.DistributionFormat = metadata.DistributionFormat.Name;
-
+                    dataset.DistributionFormat = metadata.DistributionFormat;
                 }
             }
 
@@ -134,6 +110,89 @@ namespace Kartverket.DOK.Service
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
             MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
             return metadata != null ? new SimpleMetadata(metadata) : null;
+        }
+
+        public Dataset FetchMetadataFromKartkatalogen(string uuid)
+        {
+            Dataset metadata = new Dataset();
+
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/"+uuid;
+            System.Net.WebClient c = new System.Net.WebClient();
+            c.Encoding = System.Text.Encoding.UTF8;
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data  = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                { 
+                    metadata.name = data.Title;
+                    metadata.description = data.Abstract;
+                    metadata.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    metadata.ProductSheetUrl = data.ProductSheetUrl;
+                    metadata.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    metadata.SpecificUsage = data.SpecificUsage;
+                    var thumbnails = data.Thumbnails;
+                    if(thumbnails != null && thumbnails.Count > 0)
+                    {
+                        metadata.datasetthumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    metadata.datasetownerId = mapOrganizationNameToId(data.ContactOwner != null && data.ContactOwner.Organization != null ? data.ContactOwner.Organization.Value : "");
+                    metadata.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
+                    var related = data.Related;
+                    if(related != null)
+                    {
+                        for (int r = 0; r < related.Count; r++)
+                        {
+                            var distributionDetails = related[r].DistributionDetails;
+                            if (distributionDetails != null)
+                            {
+                                if (distributionDetails.Protocol.Value == "OGC:WMS")
+                                {
+                                    metadata.WmsUrl = distributionDetails.URL.Value;
+                                    metadata.UuidService = related[r].Uuid.Value;
+                                    break;
+                                } 
+                            }
+                        }
+                    }
+                }
+
+                if(data.DistributionDetails != null)
+                    metadata.DistributionUrl = data.DistributionDetails.URL;
+
+                if(data.UnitsOfDistribution != null)
+                    metadata.DistributionArea = data.UnitsOfDistribution.Value;
+
+                var distributionFormat = data.DistributionFormat;
+                if (distributionFormat != null)
+                {
+                    if(distributionFormat.Name != null)
+                        metadata.DistributionFormat = distributionFormat.Name.Value;
+                }
+
+                metadata.restricted = false;
+
+                var constraints = data.Constraints;
+
+                if(constraints != null)
+                { 
+                    string accessConstraint = constraints.AccessConstraints.Value;
+                    if (!string.IsNullOrEmpty(accessConstraint) && accessConstraint == "Beskyttet")
+                    {
+                        metadata.restricted = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return metadata;
         }
 
         public SearchResultsType SearchMetadata(string searchString)

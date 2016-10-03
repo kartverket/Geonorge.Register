@@ -1049,6 +1049,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\proj4-compressed.js" />
     <Content Include="Scripts\proj4leaflet.js" />
+    <Content Include="Scripts\register-organization-crud.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -1150,6 +1151,7 @@
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
     <Content Include="settings.config" />
     <Content Include="settings.default.config" />
+    <Content Include="Views\Organizations\_Fields.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

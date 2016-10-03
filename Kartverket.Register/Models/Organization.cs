@@ -96,12 +96,30 @@ namespace Kartverket.Register.Models
             }
         }
 
-    }//end Organization
+	    public bool IsMunicipality()
+	    {
+	        return OrganizationType != null && OrganizationType.Equals(Models.OrganizationType.Municipality);
+	    }
 
-    public class OrganizationType
+	    public bool HasGeographicCenter()
+	    {
+	        return !string.IsNullOrEmpty(GeographicCenterX) && !string.IsNullOrEmpty(GeographicCenterY);
+	    }
+
+	    public bool HasBoundingBox()
+	    {
+	        return !string.IsNullOrEmpty(BoundingBoxNorth)
+	               && !string.IsNullOrEmpty(BoundingBoxEast)
+	               && !string.IsNullOrEmpty(BoundingBoxSouth)
+	               && !string.IsNullOrEmpty(BoundingBoxWest);
+	    }
+
+    }
+
+    public static class OrganizationType
     {
         public static string Regular = "regular";
         public static string Municipality = "municipality";
     }
 
-}//end namespace Datamodell
+}

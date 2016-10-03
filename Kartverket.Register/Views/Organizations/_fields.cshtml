@@ -1,0 +1,213 @@
+﻿@using Kartverket.Register.Models
+@model Kartverket.Register.Models.Organization
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessage("ErrorMessage")
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.shortname, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.shortname, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.shortname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.number, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.number, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.number, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.logoFilename, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr />
+    <h3>Kontaktperson</h3>
+    <div class="form-group">
+        @Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.contact, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.contact, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.epost, htmlAttributes: new { @title = "Epost til kontaktperson", @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.epost, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.epost, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.member, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="col-md-1">
+                @Html.RadioButtonFor(m => m.member, "true") Ja
+            </div>
+            <div class="col-md-1">
+                @Html.RadioButtonFor(m => m.member, "false") Nei
+            </div>
+            @Html.ValidationMessageFor(model => model.member, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+    <h3>Dokumenter</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.agreementDocumentUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrWhiteSpace(Model.agreementDocumentUrl))
+            {
+                <a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span>@Model.agreementDocumentUrl</a>
+            }
+            <input type="file" name="agreementDocument"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.agreementYear, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.agreementYear, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.agreementYear, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.priceFormDocument, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))
+            {
+                <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link til prisskjema/kalkulator for @Model.name" style="font-size:15px"></span>@Model.priceFormDocument</a>
+            }
+            <input type="file" name="priceformDocument"/>
+        </div>
+    </div>
+
+    <hr />
+    <h3>Logo</h3>
+    <div class="form-group">
+        @Html.LabelFor(model => model.logoFilename, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(Model.logoFilename))
+            {
+                <br />
+                <p><img src="@Url.Content("~/data/organizations/" + Model.logoFilename)" /></p>
+            }
+            <input type="file" name="fileSmal"/>
+            @Html.ValidationMessageFor(model => model.logoFilename, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.largeLogo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(Model.largeLogo))
+            {
+                <br/>
+                <p><img src="@Url.Content("~/data/organizations/" + Model.largeLogo)"/></p>
+            }
+            <input type="file" name="fileLarge" />
+            @Html.ValidationMessageFor(model => model.largeLogo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <hr />
+    <h3>Organisasjonstype</h3>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.OrganizationType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="col-md-2">
+                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Regular) Ordinær
+            </div>
+            <div class="col-md-2">
+                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Municipality) Kommune
+            </div>
+            @Html.ValidationMessageFor(model => model.OrganizationType, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="municipality-attributes" style="display: none;">
+        <hr />
+        <h3>Kommuneinformasjon</h3>
+
+        <div class="form-group">
+            <p class="help-text bg-success" id="help-text-municipality-code" style="display: none;">
+                Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821.
+            </p>
+            @Html.LabelFor(model => model.MunicipalityCode, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.MunicipalityCode, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.MunicipalityCode, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-1">
+                <p class="form-control-static">
+                    <a href="#" data-help-text-id="help-text-municipality-code" class="badge help-text-toggle">?</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GeographicCenterX, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GeographicCenterX, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.GeographicCenterX, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GeographicCenterY, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.GeographicCenterY, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.GeographicCenterY, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoundingBoxNorth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BoundingBoxNorth, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.BoundingBoxNorth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoundingBoxWest, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BoundingBoxWest, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.BoundingBoxWest, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoundingBoxSouth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BoundingBoxSouth, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.BoundingBoxSouth, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BoundingBoxEast, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BoundingBoxEast, new { htmlAttributes = new { @class = "form-control", maxlength = "4" } })
+                @Html.ValidationMessageFor(model => model.BoundingBoxEast, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+

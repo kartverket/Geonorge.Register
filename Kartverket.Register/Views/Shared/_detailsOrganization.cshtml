@@ -3,7 +3,9 @@
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        
+        <h3>Generell informasjon</h3>
+        <p>Organisasjonsnummer: @Model.number</p>
+
         <h3>Dokumenter</h3>
         <p>
             @if (!string.IsNullOrWhiteSpace(Model.agreementDocumentUrl))
@@ -50,6 +52,41 @@
                 <span>Ikke angitt</span>
             }
         </p>
+
+        @if (Model.IsMunicipality())
+        {
+            <h3>Kommuneinformasjon</h3>
+            <p>Kommunenummer: @Html.DisplayFor(m => m.MunicipalityCode)</p>
+
+            <p>
+                Geografisk senterpunkt:
+                @if (Model.HasGeographicCenter())
+                {
+                    <text>@Html.DisplayFor(m => m.GeographicCenterX),@Html.DisplayFor(m => m.GeographicCenterY)</text>
+                }
+                else
+                {
+                    <text>Ikke angitt</text>
+                }
+            </p>
+
+            <p>Geografisk utstrekning:
+                @if (Model.HasBoundingBox())
+                {
+                    <ul>
+                        <li>Nord: @Html.DisplayFor(m => m.BoundingBoxNorth)</li>
+                        <li>Vest: @Html.DisplayFor(m => m.BoundingBoxWest)</li>
+                        <li>Sør: @Html.DisplayFor(m => m.BoundingBoxSouth)</li>
+                        <li>Øst: @Html.DisplayFor(m => m.BoundingBoxEast)</li>
+                    </ul>
+                }
+                else
+                {
+                    <text>Ikke angitt</text>
+                }
+            </p>
+        }
+
     </div>
 
 

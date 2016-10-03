@@ -1964,10 +1964,10 @@ button.btn {
   margin-left: 5px !important; }
 
 .status-icons .custom-icon, .status-icons .fa, .status-icons .glyphicon {
-  width: 16px !important;
-  height: 16px;
+  width: 18px !important;
+  height: 18px;
   line-height: 16px;
-  font-size: 16px;
+  font-size: 18px;
   margin: 2px 4px;
   text-align: center;
   vertical-align: bottom; }
@@ -2067,6 +2067,12 @@ button.btn {
 
 .custom-icon.custom-icon-seksjonstegn {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/seksjonstegn.svg"); }
+
+.custom-icon.custom-icon-sosi {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/sosi.svg"); }
+
+.custom-icon.custom-icon-gml {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/gml.svg"); }
 
 /* Open data */
 .custom-icon.custom-icon-hengelaas-open-green {

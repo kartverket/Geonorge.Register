@@ -818,6 +818,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_devlogo.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_logo.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_testlogo.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\gml.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-gray.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-white.svg" />
@@ -852,6 +853,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-red.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-yellow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\soek.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\sosi.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
@@ -1026,8 +1028,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />

@@ -191,16 +191,19 @@ namespace Kartverket.Register.Services.Register
             Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
             foreach (Models.Dataset item in DOK.items)
             {
-                item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl);
-                item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl);
-                item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl);
+                item.dokDeliveryMetadataStatusId = GetMetadataStatus(item.Uuid, item.dokDeliveryMetadataStatusAutoUpdate, item.dokDeliveryMetadataStatusId);
+                item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
+                item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
+                item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
 
             }
             _dbContext.SaveChanges();
         }
 
-        public string GetMetadataStatus(string uuid)
+        public string GetMetadataStatus(string uuid, bool autoUpdate, string currentStatus)
         {
+            string statusValue = currentStatus;
+            if (autoUpdate) { 
             try
             {
                 if (!string.IsNullOrEmpty(uuid))
@@ -227,10 +230,19 @@ namespace Kartverket.Register.Services.Register
             {
                 return "deficient";
             }
+
+            }
+
+            return statusValue;
         }
 
-        public string GetDOKStatus(string url)
+        public string GetDOKStatus(string url, bool autoUpdate, string currentStatus)
         {
+            string statusValue = currentStatus;
+
+            if (autoUpdate)
+            { 
+
             try
             {
                 if (!string.IsNullOrEmpty(url))
@@ -252,13 +264,16 @@ namespace Kartverket.Register.Services.Register
                     }
                 }
 
-                return "deficient";
+
+                }
+                catch (Exception ex)
+                {
+                    return "deficient";
+                }
 
             }
-            catch (Exception ex)
-            {
-                return "deficient";
-            }
+
+            return statusValue;
         }
 
         public string GetDokDeliveryServiceStatus(Dataset item)

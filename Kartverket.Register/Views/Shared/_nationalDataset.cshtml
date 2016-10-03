@@ -144,7 +144,7 @@
             sortTitle = UI.DOK_Delivery_Status;
 
 
-        var linkSort = "<a data-toggle='tooltip' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+        var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
 
         if (text != null)
             linkSort = linkSort + "&text=" + text;

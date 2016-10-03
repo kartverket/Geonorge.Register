@@ -195,7 +195,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
                 item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
-
+                item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
             }
             _dbContext.SaveChanges();
         }

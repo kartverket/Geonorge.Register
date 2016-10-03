@@ -196,6 +196,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
+                item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
             }
             _dbContext.SaveChanges();
         }
@@ -398,6 +399,96 @@ namespace Kartverket.Register.Services.Register
 
             return status;
         }
+
+        public string GetSosiRequirements(string uuid ,string url, bool autoUpdate, string currentStatus)
+        {
+ 
+            string statusValue = currentStatus;
+            string sosiStatus = "";
+            bool qualitySpecificationsResult = false;
+            bool sosiDistributionFormat = false;
+            string distributionProtocol = "";
+
+            if (autoUpdate)
+            {
+                try
+                {
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        System.Net.WebClient client = new System.Net.WebClient();
+                        client.Encoding = System.Text.Encoding.UTF8;
+
+                        var data = client.DownloadString(url + ".json");
+                        var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                        var status = response["status"];
+                        if (status != null)
+                        {
+                            sosiStatus = status?.ToString();
+                        }
+                    }
+
+
+                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+
+                    var json = c.DownloadString(metadataUrl);
+
+                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+                    if (metadata != null)
+                    {
+                        var qualitySpecifications = metadata.QualitySpecifications;
+                        if(qualitySpecifications != null && qualitySpecifications.Count > 0)
+                        {
+                            var qualitySpecification = qualitySpecifications[0];
+                            var result = qualitySpecification.Result;
+                            qualitySpecificationsResult = (bool)result;
+                        }
+
+                        var distributionFormats = metadata.DistributionFormats;
+                        if (distributionFormats != null && distributionFormats.Count > 0)
+                        {
+                            foreach(var format in distributionFormats)
+                            {
+                                if (format.Name == "SOSI")
+                                    sosiDistributionFormat = true;
+                            }
+                        }
+
+                        var distributionDetails = metadata.DistributionDetails;
+                        if (distributionDetails != null && distributionDetails.Count > 0)
+                        {
+                            distributionProtocol = distributionDetails.Protocol;
+                        }
+
+                    }
+
+                    //Hvis metadata viser til SOSI - produktspesifikasjon som har status "godkjent" i registeret og metadata har verdien "true" under <gmd:pass> under konformitetsseksjonen skal SOSI - krav være grønn. 
+                    //Hvis ovennevnte er oppfylt, men produkstspsifikasjonen ikke er godkjent/ gyldig blir SOSI-krav gul
+                    //Hvis metadata har SOSI som format under distribution og protocol er "Egen nedlastingsside (WWW:DOWNLOAD-1.0-http--download)" eller GEONORGE:DOWNLOAD, skal SOSI-krav være gul
+
+                    if (sosiStatus == "SOSI godkjent" && qualitySpecificationsResult)
+                        statusValue = "good";
+                    else if (sosiStatus == "SOSI godkjent" && !qualitySpecificationsResult)
+                        statusValue = "useable";
+                    else if(sosiDistributionFormat && (distributionProtocol == "GEONORGE:DOWNLOAD" || distributionProtocol == "WWW:DOWNLOAD-1.0-http--download"))
+                        statusValue = "useable";
+                    else
+                        statusValue = "deficient";
+                }
+
+                catch (Exception ex)
+                {
+                    return "deficient";
+                }
+            }
+
+            return statusValue;
+
+        }
+
+           
 
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {

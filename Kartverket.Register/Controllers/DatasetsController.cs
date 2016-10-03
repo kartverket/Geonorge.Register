@@ -557,7 +557,7 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryWfsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryWfsStatusId) ? inputDataset.dokDeliveryWfsStatusId : "notset";
             dataset.dokDeliveryWfsStatusNote = inputDataset.dokDeliveryWfsStatusNote;
             dataset.dokDeliveryWfsStatusAutoUpdate = inputDataset.dokDeliveryWfsStatusAutoUpdate;
-            dataset.dokDeliverySosiRequirementsStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliverySosiRequirementsStatusId) ? inputDataset.dokDeliverySosiRequirementsStatusId : "notset";
+            dataset.dokDeliverySosiRequirementsStatusId = _registerService.GetSosiRequirements(inputDataset.Uuid, inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliverySosiStatusAutoUpdate, inputDataset.dokDeliverySosiRequirementsStatusId);
             dataset.dokDeliverySosiRequirementsStatusNote = inputDataset.dokDeliverySosiRequirementsStatusNote;
             dataset.dokDeliverySosiStatusAutoUpdate = inputDataset.dokDeliverySosiStatusAutoUpdate;
             dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "notset";

@@ -2,13 +2,10 @@
 using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
-using System.Web.Configuration;
-using System.Web.Http.Description;
 
 namespace Kartverket.Register.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods:"*")]
-    [ApiExplorerSettings(IgnoreApi = true)]
     public class OrganizationsApiController : ApiController
     {
         private readonly IOrganizationService _organizationService;
@@ -26,7 +23,9 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            return Ok(Convert(organization));
+            var externalModel = new Models.Api.Organization();
+            externalModel.Convert(organization);
+            return Ok(externalModel);
         }
 
         [Route("api/organisasjon/orgnr/{number}")]
@@ -37,19 +36,36 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            return Ok(Convert(organization));
+            var externalModel = new Models.Api.Organization();
+            externalModel.Convert(organization);
+            return Ok(externalModel);
         }
 
-        private Models.Api.Organization Convert(Organization organization)
+        [Route("api/v2/organisasjon/navn/{name}")]
+        public IHttpActionResult GetOrganizationByNameV2(string name)
         {
-            return new Models.Api.Organization
-            {
-                Name = organization.name,
-                Number = organization.number,
-                LogoUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.logoFilename,
-                LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Organization.DataDirectory + organization.largeLogo,
-                ShortName = organization.shortname
-            };
+            Organization organization = _organizationService.GetOrganizationByName(name);
+
+            if (organization == null)
+                return NotFound();
+
+            var externalModel = new Models.Api.OrganizationV2();
+            externalModel.Convert(organization);
+            return Ok(externalModel);
         }
+
+        [Route("api/v2/organisasjon/orgnr/{number}")]
+        public IHttpActionResult GetOrganizationByNumberV2(string number)
+        {
+            Organization organization = _organizationService.GetOrganizationByNumber(number);
+
+            if (organization == null)
+                return NotFound();
+
+            var externalModel = new Models.Api.OrganizationV2();
+            externalModel.Convert(organization);
+            return Ok(externalModel);
+        }
+
     }
 }

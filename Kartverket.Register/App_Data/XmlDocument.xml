@@ -838,6 +838,11 @@
             Result grouped by facets
             </summary>
         </member>
+        <member name="T:Kartverket.Register.Models.IOrganizationConverter">
+            <summary>
+            API methods should rely on this interface to convert internal organization models to api models.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
             Determines what kind of organization: regular or municipality.

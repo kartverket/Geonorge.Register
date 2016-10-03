@@ -316,6 +316,18 @@ namespace Kartverket.Register.Controllers
                     originalOrganization.priceFormDocument = url + SaveFileToDisk(priceformDocument, originalOrganization);
                 }
 
+                if (org.IsMunicipality())
+                {
+                    originalOrganization.OrganizationType = org.OrganizationType;
+                    originalOrganization.MunicipalityCode = org.MunicipalityCode;
+                    originalOrganization.BoundingBoxEast = org.BoundingBoxEast;
+                    originalOrganization.BoundingBoxNorth = org.BoundingBoxNorth;
+                    originalOrganization.BoundingBoxSouth = org.BoundingBoxSouth;
+                    originalOrganization.BoundingBoxWest = org.BoundingBoxWest;
+                    originalOrganization.GeographicCenterX = org.GeographicCenterX;
+                    originalOrganization.GeographicCenterY = org.GeographicCenterY;
+                }
+
                 originalOrganization.modified = DateTime.Now;
                 _dbContext.Entry(originalOrganization).State = EntityState.Modified;
                 _dbContext.SaveChanges();

@@ -324,7 +324,7 @@ namespace Kartverket.Register.Services.Register
                                     if (detail[2].Value == "yes")
                                         epsgSupport = true;
                                 }
-                                if (detail[0].Value == "featuresVisible")
+                                if (detail[0].Value == "hasGFI")
                                 {
                                     if (detail[2].Value == "yes")
                                         featuresSupport = true;

@@ -571,6 +571,7 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryAtomFeedStatusAutoUpdate = inputDataset.dokDeliveryAtomFeedStatusAutoUpdate;
             dataset.SpecificUsage = inputDataset.SpecificUsage;
             dataset.restricted = inputDataset.restricted;
+            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             return dataset;
         }

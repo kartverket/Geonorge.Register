@@ -378,6 +378,27 @@ namespace Kartverket.Register.Services.Register
             return status;
         }
 
+        public string GetDeliveryDistributionStatus(Dataset item)
+        {
+            string status = item.dokDeliveryDistributionStatusId;
+
+            if (item.dokDeliveryDistributionStatusAutoUpdate)
+            {
+                //Regler:
+                //Hvis enten WFS eller Atom - feed er grønn blir "Nedlastingsstatus" grønn
+                //HVis enten WFS eller Atom Feed er gul blir "Nedlastingsstatus" gul" 
+                //Hvis både WFS og Atom - feed er rød blir "Nedlastingsstatus" rød
+                if (item.dokDeliveryWfsStatusId == "good" || item.dokDeliveryAtomFeedStatusId == "good")
+                    status = "good";
+                else if (item.dokDeliveryWfsStatusId == "useable" || item.dokDeliveryAtomFeedStatusId == "useable")
+                    status = "useable";
+                else if (item.dokDeliveryWfsStatusId == "deficient" && item.dokDeliveryAtomFeedStatusId == "deficient")
+                    status = "deficient";
+            }
+
+            return status;
+        }
+
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             foreach (Document item in register.items)

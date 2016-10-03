@@ -800,6 +800,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\Dot_ffffff_8px-01.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\geonorge.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\kartverket.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\norgeskart-marker.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-down.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-right.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-up.svg" />

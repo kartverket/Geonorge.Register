@@ -154,7 +154,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Organization")
             {
-                text = item.label + ";" + item.number + ";";
+                text = $"{item.label};{item.number};{item.MunicipalityCode};{item.GeographicCenterX};{item.GeographicCenterY};{item.BoundingBoxNorth};{item.BoundingBoxWest};{item.BoundingBoxSouth};{item.BoundingBoxEast}";
             }
             else if (item.itemclass == "NameSpace")
             {
@@ -230,7 +230,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Organization")
             {
-                return "Navn; Nummer;";
+                return "Navn; Nummer; Kommunenummer; GeografiskSenterpunktX; GeografiskSenterpunktY; BoundingBoxNord; BoundingBoxVest; BoundingBoxSør; BoundingBoxØst";
             }
             else if (containedItemClass == "NameSpace")
             {

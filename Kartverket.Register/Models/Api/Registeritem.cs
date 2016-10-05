@@ -202,6 +202,13 @@ namespace Kartverket.Register.Models.Api
                 itemclass = "Organization";
                 Models.Organization organization = (Models.Organization)item;
                 number = organization.number;
+                MunicipalityCode = organization.MunicipalityCode;
+                GeographicCenterX = organization.GeographicCenterX;
+                GeographicCenterY = organization.GeographicCenterX;
+                BoundingBoxNorth = organization.BoundingBoxNorth;
+                BoundingBoxEast = organization.BoundingBoxEast;
+                BoundingBoxSouth = organization.BoundingBoxSouth;
+                BoundingBoxWest = organization.BoundingBoxWest;
             }
             else if (item is ServiceAlert)
             {

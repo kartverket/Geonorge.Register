@@ -3,7 +3,7 @@
         <h5 class="auto-results-title">{{result.title}}</h5>
 
         <div class="" data-ng-repeat="item in result.list" role="button" tabindex="1">
-            <a data-ng-href="{{item.url}}" data-ng-mouseover="mouseOver(false, $parent.$index, item.id)" data-ng-mouseout="mouseOut(true)" data-ng-class="{{item.highlight ? 'highlight' : ''}}" id="{{item.externalId}}" class="col-xs-12 auto-results-inner">
+            <a data-ng-href="{{item.url}}" data-ng-mouseover="mouseOver(false, $parent.$index, item.id)" data-ng-mouseout="mouseOut(true)" data-ng-class="{{item.highlight ? 'highlight' : ''}}" id="{{item.externalId}}" class="col-xs-12 auto-results-inner show-loading-animation" data-loading-message="Henter innhold">
                 <table>
                     <tr>
                         <td data-ng-bind-html="$root.trustHtml(item.title)"></td>
@@ -12,7 +12,7 @@
             </a>
         </div>
         <div>
-            <a data-ng-href="{{result.url}}?text={{$root.searchQuery}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner" href="{{result.url}}?text={{$root.searchQuery}}">
+            <a data-ng-href="{{result.url}}?text={{$root.searchQuery}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner show-loading-animation" href="{{result.url}}?text={{$root.searchQuery}}" data-loading-message="Henter søkeresultater">
                 <table>
                     <tbody>
                         <tr>

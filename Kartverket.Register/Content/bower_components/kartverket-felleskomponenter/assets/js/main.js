@@ -893,7 +893,7 @@ $("document").ready( function(){
 
 /* Remove loading animation from links same as current url */
 $("document").ready( function(){
-	$("a").click(function () {
+	$("body").on("click", "a", function () {
 		if (notCurrentUrl($(this).attr("href"))) {
 			$(this).removeClass("show-loading-animation");
 		}

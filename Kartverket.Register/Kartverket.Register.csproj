@@ -678,7 +678,6 @@
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
-    <Compile Include="Models\IOrganizationConverter.cs" />
     <Compile Include="Models\MunicipalityCenterPoint.cs" />
     <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />

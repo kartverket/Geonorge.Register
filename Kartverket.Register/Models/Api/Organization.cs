@@ -2,7 +2,7 @@
 
 namespace Kartverket.Register.Models.Api
 {
-    public class Organization : IOrganizationConverter
+    public class Organization
     {
         public string Number { get; set; }
 

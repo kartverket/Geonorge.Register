@@ -2,6 +2,7 @@
 using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -41,6 +42,19 @@ namespace Kartverket.Register.Controllers
             return Ok(externalModel);
         }
 
+        [Route("api/v2/organisasjoner/kommuner")]
+        public IHttpActionResult GetOrganizationsV2()
+        {
+            List<Organization> organizations = _organizationService.GetMunicipalityOrganizations();
+
+            if (organizations == null)
+                return NotFound();
+
+            List<Models.Api.OrganizationV2> apiModels = Models.Api.OrganizationV2.Convert(organizations);
+
+            return Ok(apiModels);
+        }
+
         [Route("api/v2/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByNameV2(string name)
         {
@@ -49,9 +63,8 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            var externalModel = new Models.Api.OrganizationV2();
-            externalModel.Convert(organization);
-            return Ok(externalModel);
+            Models.Api.OrganizationV2 apiModel = Models.Api.OrganizationV2.Convert(organization);
+            return Ok(apiModel);
         }
 
         [Route("api/v2/organisasjon/orgnr/{number}")]
@@ -62,9 +75,9 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            var externalModel = new Models.Api.OrganizationV2();
-            externalModel.Convert(organization);
-            return Ok(externalModel);
+            Models.Api.OrganizationV2 apiModel = Models.Api.OrganizationV2.Convert(organization);
+
+            return Ok(apiModel);
         }
 
     }

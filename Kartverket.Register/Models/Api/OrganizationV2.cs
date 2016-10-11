@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Kartverket.Register.Models.Api
 {
-    public class OrganizationV2 : IOrganizationConverter
+    public class OrganizationV2
     {
         public string Name { get; set; }
         public string OrganizationNumber { get; set; }
@@ -27,28 +27,41 @@ namespace Kartverket.Register.Models.Api
         public string BoundingBoxEast { get; set; }
         public string BoundingBoxWest { get; set; }
 
-        public void Convert(Models.Organization item)
+        public static OrganizationV2 Convert(Models.Organization item)
         {
-            Name = item.name;
-            OrganizationNumber = item.number;
-            LogoFilename = item.logoFilename;
-            LogoLargeFilename = item.largeLogo;
-            ContactPerson = item.contact;
-            Email = item.epost;
-            NorgeDigitaltMember = item.member;
-            AgreementYear = item.agreementYear;
-            AgreementDocumentUrl = item.agreementDocumentUrl;
-            PriceFormDocument = item.priceFormDocument;
-            ShortName = item.shortname;
-            OrganizationType = item.OrganizationType ?? "regular";
-            MunicipalityCode = item.MunicipalityCode;
-            GeographicCenterX = item.GeographicCenterX;
-            GeographicCenterY = item.GeographicCenterY;
-            BoundingBoxNorth = item.BoundingBoxNorth;
-            BoundingBoxSouth = item.BoundingBoxSouth;
-            BoundingBoxEast = item.BoundingBoxEast;
-            BoundingBoxWest = item.BoundingBoxWest;
-        }
+            return new OrganizationV2
+            {
+                Name = item.name,
+                OrganizationNumber = item.number,
+                LogoFilename = item.logoFilename,
+                LogoLargeFilename = item.largeLogo,
+                ContactPerson = item.contact,
+                Email = item.epost,
+                NorgeDigitaltMember = item.member,
+                AgreementYear = item.agreementYear,
+                AgreementDocumentUrl = item.agreementDocumentUrl,
+                PriceFormDocument = item.priceFormDocument,
+                ShortName = item.shortname,
+                OrganizationType = item.OrganizationType ?? "regular",
+                MunicipalityCode = item.MunicipalityCode,
+                GeographicCenterX = item.GeographicCenterX,
+                GeographicCenterY = item.GeographicCenterY,
+                BoundingBoxNorth = item.BoundingBoxNorth,
+                BoundingBoxSouth = item.BoundingBoxSouth,
+                BoundingBoxEast = item.BoundingBoxEast,
+                BoundingBoxWest = item.BoundingBoxWest
+            };
+    }
 
+        public static List<OrganizationV2> Convert(List<Models.Organization> items)
+        {
+            var models = new List<OrganizationV2>();
+            foreach(var item in items)
+            {
+                models.Add(Convert(item));
+            }
+
+            return models;
+        }
     }
 }

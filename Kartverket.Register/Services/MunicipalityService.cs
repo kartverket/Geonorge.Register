@@ -15,10 +15,5 @@ namespace Kartverket.Register.Services
         {
             return MunicipalityData.MunicipalityFromCodeToOrganizationNumber[municipalityCode];
         }
-
-        public MunicipalityCenterPoint GetMunicipalityCenterPoint(string municipalityCode)
-        {
-            return MunicipalityData.MunicipalityCenterPoints[municipalityCode];
-        }
     }
 }

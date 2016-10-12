@@ -732,14 +732,11 @@
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
-    <Compile Include="Services\IMunicipalityService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
-    <Compile Include="Services\MunicipalityData.cs" />
-    <Compile Include="Services\MunicipalityService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />

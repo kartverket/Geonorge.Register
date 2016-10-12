@@ -15,13 +15,11 @@ namespace Kartverket.Register.Services.Register
     {
         private readonly RegisterDbContext _dbContext;
         private IRegisterItemService _registerItemService;
-        private IMunicipalityService _municipalityService;
 
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerItemService = new RegisterItemService(_dbContext);
-            _municipalityService = new MunicipalityService();
         }
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
@@ -777,6 +775,15 @@ namespace Kartverket.Register.Services.Register
         {
             var queryResults = from o in _dbContext.Organizations
                                where o.number == number
+                               select o;
+
+            return queryResults.FirstOrDefault();
+        }
+
+        public Organization GetOrganizationByMunicipalityCode(string municipalityCode)
+        {
+            var queryResults = from o in _dbContext.Organizations
+                               where o.MunicipalityCode == municipalityCode
                                select o;
 
             return queryResults.FirstOrDefault();

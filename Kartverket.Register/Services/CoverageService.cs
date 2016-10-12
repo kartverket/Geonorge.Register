@@ -67,17 +67,15 @@ namespace Kartverket.Register.Services
 
             AddCoverageDatasetsNotSet();
 
-            var organizations = _context.CoverageDatasets.Select(m => m.Municipality.number).Distinct().ToList();
+            var organizations = _context.CoverageDatasets.Select(m => m.Municipality.MunicipalityCode).Distinct().ToList();
 
-            foreach (var orgNumber in organizations)
+            foreach (var municipalityCode in organizations)
             {
                 try
                 {
-                    var municipalityService = new MunicipalityService();
-                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(orgNumber);
                     SetCoverage(municipalityCode);
 
-                    var coverageDatasets = _context.CoverageDatasets.Where(c => c.Municipality.number == orgNumber).Select(d => d).ToList();
+                    var coverageDatasets = _context.CoverageDatasets.Where(c => c.Municipality.MunicipalityCode == municipalityCode).Select(d => d).ToList();
                     foreach (var coverage in coverageDatasets)
                     { 
                         bool coverageFound = false;
@@ -96,11 +94,8 @@ namespace Kartverket.Register.Services
 
         private void AddCoverageDatasetsNotSet()
         {
-            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
-                                    select mun.Key).ToList();
-
-            var orgList = (from o in municipalityList
-                           join org in _context.Organizations on o equals org.number
+            var orgList = (from org in _context.Organizations
+                           where org.OrganizationType == Models.OrganizationType.Municipality
                            select new { org.systemId}).ToList();
 
             foreach(var org in orgList)

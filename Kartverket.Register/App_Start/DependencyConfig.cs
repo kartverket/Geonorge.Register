@@ -34,7 +34,6 @@ namespace Kartverket.Register
             builder.RegisterType<RegisterService>().As<IRegisterService>();
             builder.RegisterType<RegisterItemService>().As<IRegisterItemService>();
             builder.RegisterType<VersioningService>().As<IVersioningService>();
-            builder.RegisterType<MunicipalityService>().As<IMunicipalityService>();
             builder.RegisterType<DatasetService>().As<IDatasetService>();
             builder.RegisterType<AccessControlService>().As<IAccessControlService>();
             builder.RegisterType<DokReportService>().As<IDokReportService>();

@@ -10,13 +10,11 @@ namespace Kartverket.Register.Services.RegisterItem
     public class RegisterItemService : IRegisterItemService
     {
         private readonly RegisterDbContext _dbContext;
-        private IMunicipalityService _municipalityService;
         private IRegisterItemService _registerItemService;
 
         public RegisterItemService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
-            _municipalityService = new MunicipalityService();
         }
 
         public void SetNarrowerItems(List<Guid> narrowerList, CodelistValue codelistValue)
@@ -274,10 +272,8 @@ namespace Kartverket.Register.Services.RegisterItem
                 {
                     var uuid = dataset.Uuid;
                     var organization = (Organization) _dbContext.RegisterItems.Where(org => org.systemId == coverage.MunicipalityId).FirstOrDefault();
-                    var municipalityService = new MunicipalityService();
-                    var municipalityCode = municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organization.number);
                     CoverageService coverageService = new CoverageService(_dbContext);
-                    coverageService.SetCoverage(municipalityCode);
+                    coverageService.SetCoverage(organization.MunicipalityCode);
                     coverageFound = coverageService.GetCoverage(uuid);
                 }
                 catch { }
@@ -490,8 +486,11 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public Organization GetMunicipalOrganizationByNr(string municipalityNr)
         {
-            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(municipalityNr);
-            return GetOrganizationByOrganizationNr(organizationNr);
+            var queryResults = from o in _dbContext.Organizations
+                               where o.MunicipalityCode == municipalityNr
+                               select o;
+
+            return queryResults.FirstOrDefault();
         }
 
         public CodelistValue GetMunicipalByNr(string municipalNr)

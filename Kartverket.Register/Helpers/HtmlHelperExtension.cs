@@ -16,7 +16,6 @@ namespace Kartverket.Register.Helpers
         private static readonly RegisterDbContext db = new RegisterDbContext();
         private static IRegisterItemService _registeritemService = new RegisterItemService(db);
         private static IAccessControlService _accessControl = new AccessControlService();
-        private static IMunicipalityService _municipalityService = new MunicipalityService();
         private static IRegisterService _registerService = new RegisterService(db);
 
         public static string EnvironmentName(this HtmlHelper helper)
@@ -1064,8 +1063,7 @@ namespace Kartverket.Register.Helpers
 
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            string organizationNr = _municipalityService.LookupOrganizationNumberFromMunicipalityCode(selectedMunicipality.value);
-            Organization munizipality = _registerService.GetOrganizationByOrganizationNr(organizationNr);
+            Organization munizipality = _registerService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
 
             foreach (CoverageDataset coverage in item.Coverage)
             {

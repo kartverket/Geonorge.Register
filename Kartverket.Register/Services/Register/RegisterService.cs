@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Kartverket.Register.Services.Register
@@ -281,7 +282,7 @@ namespace Kartverket.Register.Services.Register
 
             if (item.dokDeliveryWmsStatusAutoUpdate)
             { 
-                string statusUrl = "https://status.geonorge.no/monitorApi/serviceDetail?uuid=";
+                string statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
                 statusUrl = statusUrl + item.UuidService;
                 using (var client = new HttpClient())
                 {
@@ -303,43 +304,24 @@ namespace Kartverket.Register.Services.Register
                             var hasLegend = false;
                             var hasCoverage = false;
 
-                            var details = data.details;
+                            if(data.connect.vurdering == "yes")
+                                resposeGetCapabilities = true;
 
-                            foreach(var detail in details)
-                            {
-                                if (detail[0].Value == "connect")
-                                {
-                                    if (detail[2].Value == "yes")
-                                        resposeGetCapabilities = true;
-                                }
-                                if (detail[0].Value == "cors")
-                                {
-                                    if (detail[2].Value == "yes")
-                                        supportCors = true;
-                                }
-                                if (detail[0].Value == "epsgSupported")
-                                {
-                                    //Todo check epsg code
-                                    if (detail[2].Value == "yes")
-                                        epsgSupport = true;
-                                }
-                                if (detail[0].Value == "hasGFI")
-                                {
-                                    if (detail[2].Value == "yes")
-                                        featuresSupport = true;
-                                }
-                                if (detail[0].Value == "hasLegend")
-                                {
-                                    if (detail[2].Value == "yes")
-                                        hasLegend = true;
-                                }
-                                if (detail[0].Value == "bbox")
-                                {
-                                    if (detail[2].Value == "yes")
-                                        hasCoverage = true;
-                                }
-                                
-                            }
+                            if (data.cors.vurdering == "yes")
+                                supportCors = true;
+
+                            if (data.epsgSupported.vurdering == "yes")
+                                epsgSupport = true; //Todo check epsg code
+
+                            if (data.hasGFI.vurdering == "yes")
+                                featuresSupport = true;
+
+                            if (data.hasLegend.vurdering == "yes")
+                                hasLegend = true;
+
+                            if (data.bbox.vurdering == "yes")
+                                hasCoverage = true;
+
                             //Grønn på WMS:
                             //Respons fra GetCapabilities
                             //Svartid innen 4 sekunder

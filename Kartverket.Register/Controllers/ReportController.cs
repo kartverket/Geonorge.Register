@@ -14,6 +14,14 @@ namespace Kartverket.Register.Controllers
             _dokReportService = dokReportService;
         }
 
+        /// <summary>
+        /// Return reports for DOK.
+        /// Supported Queries:
+        /// QueryName = "Antall DOK-datasett valgt og tillegg pr kommune".
+        /// QueryName = "Valgte DOK-datasett pr tema".
+        /// QueryName = "DOK-datasett dekning og valgt pr kommune".
+        /// Used in reportGenerator, still under construction.
+        /// </summary>
         public ReportResult Post(ReportQuery query)
         {
             Trace.WriteLine("QueryName: " + query.QueryName);

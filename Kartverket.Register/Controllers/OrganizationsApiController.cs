@@ -15,7 +15,9 @@ namespace Kartverket.Register.Controllers
         {
             _organizationService = organizationService;
         }
-
+        /// <summary>
+        /// Get organization by name
+        /// </summary>
         [Route("api/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByName(string name)
         {
@@ -29,6 +31,9 @@ namespace Kartverket.Register.Controllers
             return Ok(externalModel);
         }
 
+        /// <summary>
+        /// Get organization by number
+        /// </summary>
         [Route("api/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumber(string number)
         {
@@ -42,6 +47,9 @@ namespace Kartverket.Register.Controllers
             return Ok(externalModel);
         }
 
+        /// <summary>
+        /// Get list of municipalities
+        /// </summary>
         [Route("api/v2/organisasjoner/kommuner")]
         public IHttpActionResult GetOrganizationsV2()
         {
@@ -55,6 +63,9 @@ namespace Kartverket.Register.Controllers
             return Ok(apiModels);
         }
 
+        /// <summary>
+        /// Get organization by name
+        /// </summary>
         [Route("api/v2/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByNameV2(string name)
         {
@@ -67,6 +78,9 @@ namespace Kartverket.Register.Controllers
             return Ok(apiModel);
         }
 
+        /// <summary>
+        /// Get organization by number
+        /// </summary>
         [Route("api/v2/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumberV2(string number)
         {

@@ -713,6 +713,41 @@
             <param name="name"></param>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByName(System.String)">
+            <summary>
+            Get organization by name
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNumber(System.String)">
+            <summary>
+            Get organization by number
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationsV2">
+            <summary>
+            Get list of municipalities
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNameV2(System.String)">
+            <summary>
+            Get organization by name
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNumberV2(System.String)">
+            <summary>
+            Get organization by number
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Controllers.ReportController.Post(Kartverket.ReportApi.ReportQuery)">
+            <summary>
+            Return reports for DOK.
+            Supported Queries:
+            QueryName = "Antall DOK-datasett valgt og tillegg pr kommune".
+            QueryName = "Valgte DOK-datasett pr tema".
+            QueryName = "DOK-datasett dekning og valgt pr kommune".
+            Used in reportGenerator, still under construction.
+            </summary>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>
             The name of the facet field

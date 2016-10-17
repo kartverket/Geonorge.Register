@@ -2,6 +2,6 @@
   "name": "ASP.NET",
   "private": true,
   "dependencies": {
-    "kartverket-felleskomponenter": "5.5.1"
+    "kartverket-felleskomponenter": "5.5.3"
   }
 }

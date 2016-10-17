@@ -72,7 +72,7 @@ $(document).ready( function(){
   if (applicationEnvironment !== "") {
     downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
   }
-  $("#shopping-car-url").prop("href", downloadUrl);
+  $("#shopping-cart-url").prop("href", downloadUrl);
 
 
   // Login

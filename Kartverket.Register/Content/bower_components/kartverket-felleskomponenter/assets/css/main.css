@@ -3226,7 +3226,8 @@ header.main-header {
       line-height: inherit;
       margin-bottom: 4px;
       font-size: 12pt;
-      line-height: 14pt; }
+      line-height: 14pt;
+      width: 100%; }
       #tableView .search-results-table-heading > div > p a, .table-view .search-results-table-heading > div > p a {
         font-size: 12pt;
         line-height: 14pt;

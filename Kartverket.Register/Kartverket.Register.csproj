@@ -663,6 +663,10 @@
     <Compile Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.Designer.cs">
       <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610210611071_AddApplicationSchema.cs" />
+    <Compile Include="Migrations\201610210611071_AddApplicationSchema.Designer.cs">
+      <DependentUpon>201610210611071_AddApplicationSchema.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1460,6 +1464,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.resx">
       <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610210611071_AddApplicationSchema.resx">
+      <DependentUpon>201610210611071_AddApplicationSchema.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

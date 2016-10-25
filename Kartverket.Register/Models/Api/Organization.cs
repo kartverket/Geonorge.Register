@@ -20,6 +20,7 @@ namespace Kartverket.Register.Models.Api
             LogoUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Models.Organization.DataDirectory + input.logoFilename;
             LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Models.Organization.DataDirectory + input.largeLogo;
             ShortName = input.shortname;
+            Name = input.name;
         }
     }
 }

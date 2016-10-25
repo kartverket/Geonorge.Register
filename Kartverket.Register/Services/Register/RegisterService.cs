@@ -257,7 +257,7 @@ namespace Kartverket.Register.Services.Register
                     {
                         string statusvalue = status?.ToString();
 
-                        if (statusvalue == "Gyldig")
+                        if (statusvalue == "Gyldig" || statusvalue == "SOSI godkjent")
                             return "good";
                         else
                             return "useable";

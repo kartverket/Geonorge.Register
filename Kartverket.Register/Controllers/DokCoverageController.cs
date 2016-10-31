@@ -40,13 +40,13 @@ namespace Kartverket.Register.Controllers
 
         private readonly IRegisterService _registerService;
         private readonly IDatasetService _datasetService;
-        private readonly IMunicipalityService _municipalityService;
+        private readonly IOrganizationService _organizationService;
 
-        public DokCoverageController(IRegisterService registerService, IDatasetService datasetService, IMunicipalityService municipalityService)
+        public DokCoverageController(IRegisterService registerService, IDatasetService datasetService, IOrganizationService organizationService)
         {
             _registerService = registerService;
             _datasetService = datasetService;
-            _municipalityService = municipalityService;
+            _organizationService = organizationService;
         }
 
         public ActionResult Index(string fylke, string dataset)
@@ -107,11 +107,10 @@ namespace Kartverket.Register.Controllers
                 { 
                     var confirmedMunicipality = new CoverageConfirmedMunicipalityViewModel();
                     confirmedMunicipality.Name = coverage.Municipality.name;
-                    confirmedMunicipality.Number = _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(coverage.Municipality.number);
-
-                    MunicipalityCenterPoint centerPoint = _municipalityService.GetMunicipalityCenterPoint(confirmedMunicipality.Number);
-                    confirmedMunicipality.CenterCoordinateX = centerPoint.CoordinateX;
-                    confirmedMunicipality.CenterCoordinateY = centerPoint.CoordinateY;
+                    Organization org = _organizationService.GetOrganizationByNumber(coverage.Municipality.number);
+                    confirmedMunicipality.Number = org.MunicipalityCode;
+                    confirmedMunicipality.CenterCoordinateX = org.GeographicCenterX;
+                    confirmedMunicipality.CenterCoordinateY = org.GeographicCenterY;
 
                     confirmed.Add(confirmedMunicipality);
                 }

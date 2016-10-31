@@ -50,12 +50,8 @@ namespace Kartverket.Register.Services.Report
                                                  number = grouped.Key.number
                                              }).ToList();
 
-
-            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
-                                    select mun.Key).ToList();
-
-            var orgList = (from o in municipalityList
-                           join org in _dbContext.Organizations on o equals org.number
+            var orgList = (from org in _dbContext.Organizations
+                           where org.OrganizationType == Models.OrganizationType.Municipality
                            select new { org.name, org.number }).ToList();
 
             var coverageList = (from c in _dbContext.CoverageDatasets
@@ -79,16 +75,16 @@ namespace Kartverket.Register.Services.Report
                 {
 
                     var resultsNr = (from res in results
-                                     join munici in MunicipalityData.MunicipalityFromOrganizationNumberToCode on res.number equals munici.Key
-                                     select new { res.name, res.Count, res.number, munici.Value }).ToList();
+                                     join munici in _dbContext.Organizations on res.number equals munici.number
+                                     select new { res.name, res.Count, res.number, munici.MunicipalityCode }).ToList();
 
                     results = (from r in resultsNr
                                where (from c in areas
                                       select c)
-                                          .Contains(r.Value)
+                                          .Contains(r.MunicipalityCode)
                                  || (from c in areas
                                      select c)
-                                          .Contains(r.Value.Substring(0, 2))
+                                          .Contains(r.MunicipalityCode.Substring(0, 2))
 
                                select new { r.name, r.Count, r.number }).ToList();
 
@@ -139,7 +135,7 @@ namespace Kartverket.Register.Services.Report
             ReportResult reportResult = new ReportResult();
             reportResult.Data = new List<ReportResultData>();
 
-            var total = MunicipalityData.MunicipalityFromOrganizationNumberToCode.Count();
+            var total = _dbContext.Organizations.Where(m => m.OrganizationType == Models.OrganizationType.Municipality).Count();
 
             reportResult.TotalDataCount = total;
 
@@ -200,12 +196,8 @@ namespace Kartverket.Register.Services.Report
                            let datasetName = d.name
                            select new { c.Municipality.name, datasetName, c.Coverage, c.ConfirmedDok,c.Municipality.number }).Distinct().OrderBy(o=>o.name).ThenBy(o2=>o2.datasetName).ToList();
 
-
-            var municipalityList = (from mun in MunicipalityData.MunicipalityFromOrganizationNumberToCode
-                                    select mun.Key).ToList();
-
-            var orgList = (from o in municipalityList
-                           join org in _dbContext.Organizations on o equals org.number
+            var orgList = (from org in _dbContext.Organizations
+                           where org.OrganizationType == Models.OrganizationType.Municipality
                            select new { org.name, org.number }).ToList();
 
             var coverageList = (from c in _dbContext.CoverageDatasets
@@ -220,16 +212,16 @@ namespace Kartverket.Register.Services.Report
                 {
 
                     var resultsNr = (from res in results
-                                     join munici in MunicipalityData.MunicipalityFromOrganizationNumberToCode on res.number equals munici.Key
-                                     select new { res.name, res.datasetName, res.Coverage, res.ConfirmedDok, res.number, munici.Value }).ToList();
+                                     join munici in _dbContext.Organizations on res.number equals munici.number
+                                     select new { res.name, res.datasetName, res.Coverage, res.ConfirmedDok, res.number, munici.MunicipalityCode }).ToList();
 
                     results = (from r in resultsNr
                                where (from c in areas
                                       select c)
-                                          .Contains(r.Value)
+                                          .Contains(r.MunicipalityCode)
                                  || (from c in areas
                                      select c)
-                                          .Contains(r.Value.Substring(0, 2))
+                                          .Contains(r.MunicipalityCode.Substring(0, 2))
 
                                select new { r.name, r.datasetName, r.Coverage, r.ConfirmedDok, r.number }).ToList();
 

@@ -88,6 +88,9 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Godkjent")]
         public bool? Accepted { get; set; }
+
+        [Display(Name = "Applikasjonsskjema")]
+        public string ApplicationSchema { get; set; }
         //end RegisterItem
 
 

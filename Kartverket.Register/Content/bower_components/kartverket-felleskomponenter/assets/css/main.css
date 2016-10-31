@@ -1218,7 +1218,7 @@ iframe {
     -moz-box-shadow: 0 0 2.5px 2.5px rgba(128, 130, 133, 0.75);
     -webkit-box-shadow: 0 0 2.5px 2.5px rgba(128, 130, 133, 0.75);
     box-shadow: 0 0 2.5px 2.5px rgba(128, 130, 133, 0.75);
-}*/
+    }*/
 .navbar-nav {
   margin: 0;
   width: 100%; }
@@ -1365,7 +1365,7 @@ iframe {
     height: 34px;
     line-height: 35px;
     padding-left: 10px;
-    width: 160px; }
+    width: 190px; }
   .navbar-nav .open .dropdown-menu > li > ul > li > a {
     font-size: 14pt;
     padding: 8px 15px 15px 33px; }
@@ -1394,7 +1394,7 @@ iframe {
     line-height: 35px;
     padding-left: 10px;
     transition: all .35s ease-in;
-    width: 160px; }
+    width: 175px; }
   .navbar-nav-container {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
@@ -3226,7 +3226,8 @@ header.main-header {
       line-height: inherit;
       margin-bottom: 4px;
       font-size: 12pt;
-      line-height: 14pt; }
+      line-height: 14pt;
+      width: 100%; }
       #tableView .search-results-table-heading > div > p a, .table-view .search-results-table-heading > div > p a {
         font-size: 12pt;
         line-height: 14pt;

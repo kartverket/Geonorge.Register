@@ -76,6 +76,14 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ExpressiveAnnotations, Version=2.7.0.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExpressiveAnnotations.2.9.1\lib\net45\ExpressiveAnnotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExpressiveAnnotations.MvcUnobtrusive, Version=2.5.1.0, Culture=neutral, PublicKeyToken=d3e372f3c1e83cec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExpressiveAnnotations.2.9.1\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GeoNorgeAPI, Version=3.0.20.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GeoNorgeAPI.3.0.20.0\lib\net40\GeoNorgeAPI.dll</HintPath>
       <Private>True</Private>
@@ -655,6 +663,10 @@
     <Compile Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.Designer.cs">
       <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610210611071_AddApplicationSchema.cs" />
+    <Compile Include="Migrations\201610210611071_AddApplicationSchema.Designer.cs">
+      <DependentUpon>201610210611071_AddApplicationSchema.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -678,7 +690,6 @@
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
-    <Compile Include="Models\IOrganizationConverter.cs" />
     <Compile Include="Models\MunicipalityCenterPoint.cs" />
     <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -733,14 +744,11 @@
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
-    <Compile Include="Services\IMunicipalityService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
-    <Compile Include="Services\MunicipalityData.cs" />
-    <Compile Include="Services\MunicipalityService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
@@ -994,6 +1002,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\chosen.jquery.js" />
     <Content Include="Scripts\easyXDM.js" />
+    <Content Include="Scripts\expressive.annotations.validate.js" />
+    <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -1454,6 +1464,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609291055010_DeliveryStatusAutoUpdate.resx">
       <DependentUpon>201609291055010_DeliveryStatusAutoUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610210611071_AddApplicationSchema.resx">
+      <DependentUpon>201610210611071_AddApplicationSchema.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

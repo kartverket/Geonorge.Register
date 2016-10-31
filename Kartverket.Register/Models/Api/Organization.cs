@@ -2,7 +2,7 @@
 
 namespace Kartverket.Register.Models.Api
 {
-    public class Organization : IOrganizationConverter
+    public class Organization
     {
         public string Number { get; set; }
 
@@ -20,6 +20,7 @@ namespace Kartverket.Register.Models.Api
             LogoUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Models.Organization.DataDirectory + input.logoFilename;
             LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Models.Organization.DataDirectory + input.largeLogo;
             ShortName = input.shortname;
+            Name = input.name;
         }
     }
 }

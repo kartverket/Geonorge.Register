@@ -14,7 +14,7 @@ namespace Kartverket.Register.Services
         private RegisterDbContext db = new RegisterDbContext();
         private IRegisterItemService _registerItemService;
         private IRegisterService _registerService;
-        private IMunicipalityService _municipalityService;
+        private IOrganizationService _organizationService;
 
         public AccessControlService(ClaimsPrincipal claimsPrincipal)
         {
@@ -25,7 +25,7 @@ namespace Kartverket.Register.Services
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
-            _municipalityService = new MunicipalityService();
+            _organizationService = new OrganizationsService(db);
         }
 
         public bool Access(object model)
@@ -203,7 +203,8 @@ namespace Kartverket.Register.Services
                 return null;
             }
 
-            return _municipalityService.LookupMunicipalityCodeFromOrganizationNumber(organizationNumber);
+            var org = _organizationService.GetOrganizationByNumber(organizationNumber);
+            return org.MunicipalityCode;
         }
 
         public List<string> GetSecurityClaim(string type)

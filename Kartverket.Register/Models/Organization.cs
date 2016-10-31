@@ -8,6 +8,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using Resources;
+using ExpressiveAnnotations.Attributes;
 
 
 
@@ -59,18 +60,25 @@ namespace Kartverket.Register.Models
 
         // municipality specific attributes
         [Display(Name = "Kommunenummer")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Kommunenummer er påkrevd")]
         public string MunicipalityCode { get; set; }
         [Display(Name = "Geografisk senterpunkt - x")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - x er påkrevd")]
         public string GeographicCenterX { get; set; }
         [Display(Name = "Geografisk senterpunkt - y")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - y er påkrevd")]
         public string GeographicCenterY { get; set; }
         [Display(Name = "Geografisk utstrekning - nord")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - nord er påkrevd")]
         public string BoundingBoxNorth { get; set; }
         [Display(Name = "Geografisk utstrekning - sør")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - sør er påkrevd")]
         public string BoundingBoxSouth { get; set; }
         [Display(Name = "Geografisk utstrekning - øst")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - øst er påkrevd")]
         public string BoundingBoxEast { get; set; }
         [Display(Name = "Geografisk utstrekning - vest")]
+        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - vest er påkrevd")]
         public string BoundingBoxWest { get; set; }
 
 

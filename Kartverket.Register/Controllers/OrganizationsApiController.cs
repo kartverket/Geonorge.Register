@@ -2,6 +2,7 @@
 using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Controllers
 {
@@ -14,7 +15,9 @@ namespace Kartverket.Register.Controllers
         {
             _organizationService = organizationService;
         }
-
+        /// <summary>
+        /// Get organization by name
+        /// </summary>
         [Route("api/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByName(string name)
         {
@@ -28,6 +31,9 @@ namespace Kartverket.Register.Controllers
             return Ok(externalModel);
         }
 
+        /// <summary>
+        /// Get organization by number
+        /// </summary>
         [Route("api/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumber(string number)
         {
@@ -41,6 +47,25 @@ namespace Kartverket.Register.Controllers
             return Ok(externalModel);
         }
 
+        /// <summary>
+        /// Get list of municipalities
+        /// </summary>
+        [Route("api/v2/organisasjoner/kommuner")]
+        public IHttpActionResult GetOrganizationsV2()
+        {
+            List<Organization> organizations = _organizationService.GetMunicipalityOrganizations();
+
+            if (organizations == null)
+                return NotFound();
+
+            List<Models.Api.OrganizationV2> apiModels = Models.Api.OrganizationV2.Convert(organizations);
+
+            return Ok(apiModels);
+        }
+
+        /// <summary>
+        /// Get organization by name
+        /// </summary>
         [Route("api/v2/organisasjon/navn/{name}")]
         public IHttpActionResult GetOrganizationByNameV2(string name)
         {
@@ -49,11 +74,13 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            var externalModel = new Models.Api.OrganizationV2();
-            externalModel.Convert(organization);
-            return Ok(externalModel);
+            Models.Api.OrganizationV2 apiModel = Models.Api.OrganizationV2.Convert(organization);
+            return Ok(apiModel);
         }
 
+        /// <summary>
+        /// Get organization by number
+        /// </summary>
         [Route("api/v2/organisasjon/orgnr/{number}")]
         public IHttpActionResult GetOrganizationByNumberV2(string number)
         {
@@ -62,9 +89,9 @@ namespace Kartverket.Register.Controllers
             if (organization == null)
                 return NotFound();
 
-            var externalModel = new Models.Api.OrganizationV2();
-            externalModel.Convert(organization);
-            return Ok(externalModel);
+            Models.Api.OrganizationV2 apiModel = Models.Api.OrganizationV2.Convert(organization);
+
+            return Ok(apiModel);
         }
 
     }

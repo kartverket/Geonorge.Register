@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Kartverket.Register.Models;
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Services
 {
@@ -30,6 +31,16 @@ namespace Kartverket.Register.Services
 
             Organization organization = queryResults.FirstOrDefault();
             return organization;
+        }
+
+        public List<Organization> GetMunicipalityOrganizations()
+        {
+            var queryResults = from o in _dbContext.Organizations
+                               where o.OrganizationType == Models.OrganizationType.Municipality
+                               select o;
+
+            List<Organization> organizations = queryResults.ToList();
+            return organizations;
         }
     }
 }

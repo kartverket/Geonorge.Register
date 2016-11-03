@@ -26,7 +26,7 @@ namespace Kartverket.Register.Services.Report
                          where dd.DatasetType != "Kommunalt"
                          select dd.systemId).Distinct().Count();
 
-            reportResult.TotalDataCount = total;
+            reportResult.TotalDataCount = 0;
 
             var resultsSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
@@ -100,6 +100,7 @@ namespace Kartverket.Register.Services.Report
                 List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
 
                 reportResultData.Label = result.name.ToString();
+                reportResultData.TotalDataCount = total;
 
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 
@@ -137,7 +138,7 @@ namespace Kartverket.Register.Services.Report
 
             var total = _dbContext.Organizations.Where(m => m.OrganizationType == Models.OrganizationType.Municipality).Count();
 
-            reportResult.TotalDataCount = total;
+            reportResult.TotalDataCount = 0;
 
             var results = (from c in _dbContext.CoverageDatasets.DefaultIfEmpty()
                                    join d in _dbContext.Datasets on c.DatasetId equals d.systemId
@@ -157,6 +158,7 @@ namespace Kartverket.Register.Services.Report
                 List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
 
                 reportResultData.Label = result.theme.ToString();
+                reportResultData.TotalDataCount = total;
 
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 
@@ -237,6 +239,7 @@ namespace Kartverket.Register.Services.Report
                 List<ReportResultDataValue> reportResultDataValues = new List<ReportResultDataValue>();
 
                 reportResultData.Label = result.name.ToString();
+                reportResultData.TotalDataCount = total;
 
                 ReportResultDataValue reportResultDataValue = new ReportResultDataValue();
 

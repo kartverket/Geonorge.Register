@@ -576,7 +576,7 @@ namespace Kartverket.Register.Services.Register
             if (request.AcceptTypes.Contains("application/xml"))
             {
                 response.ContentType = "application/xml";
-                return "xml";
+                return "gml";
             }
             if (request.AcceptTypes.Contains("application/rdf+xml"))
             {

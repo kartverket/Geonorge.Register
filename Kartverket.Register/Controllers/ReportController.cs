@@ -17,10 +17,9 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Return reports for DOK.
         /// Supported Queries:
-        /// QueryName = "Antall DOK-datasett valgt og tillegg pr kommune".
-        /// QueryName = "Valgte DOK-datasett pr tema".
-        /// QueryName = "DOK-datasett dekning og valgt pr kommune".
-        /// Used in reportGenerator, still under construction.
+        /// QueryName = "register-DOK-selectedAndAdditional".
+        /// QueryName = "register-DOK-selectedTheme".
+        /// QueryName = "register-DOK-coverage".
         /// </summary>
         public ReportResult Post(ReportQuery query)
         {
@@ -28,11 +27,11 @@ namespace Kartverket.Register.Controllers
 
             ReportResult result = new ReportResult();
 
-            if (query.QueryName == "Antall DOK-datasett valgt og tillegg pr kommune")
+            if (query.QueryName == "register-DOK-selectedAndAdditional")
                 result = _dokReportService.GetSelectedAndAdditionalDatasets(query);
-            else if (query.QueryName == "Valgte DOK-datasett pr tema")
+            else if (query.QueryName == "register-DOK-selectedTheme")
                 result = _dokReportService.GetSelectedDatasetsByTheme(query);
-            else if (query.QueryName == "DOK-datasett dekning og valgt pr kommune")
+            else if (query.QueryName == "register-DOK-coverage")
                 result = _dokReportService.GetSelectedDatasetsCoverage(query);
 
 

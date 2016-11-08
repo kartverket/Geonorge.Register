@@ -149,7 +149,7 @@ namespace Kartverket.Register.Services.Report
                                        theme = grouped.Key.description,
                                        Count = grouped.Count(),
                                        name = grouped.Key.name
-                                   }).OrderBy(x => x.theme).ThenBy(y => y.name).ToList();
+                                   }).OrderByDescending(x => x.Count).ToList();
 
             foreach (var result in results)
             {

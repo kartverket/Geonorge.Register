@@ -72,7 +72,9 @@
 
 
         string html = "";
-        if (status != "notset")
+        if (status == "notset")
+            html = "<span class='" + symbolNotSet + "'></span>";
+        else
             html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
 
         return new HtmlString(html);

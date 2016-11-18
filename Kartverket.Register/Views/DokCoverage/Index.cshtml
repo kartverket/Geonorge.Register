@@ -108,7 +108,7 @@
             var iframe = document.createElement('iframe');
             document.getElementById('maplayer').appendChild(iframe);
             iframe.id = "iframe";
-            iframe.src= "@WebConfigurationManager.AppSettings["MapUrlDynamic"]/dynamisk.html#" + zoomLevel + "/" + xCenter +"/"+ yCenter +"/l/wms/[@WebConfigurationManager.AppSettings["OpenWmsUrl"]/skwms1/wms.gp_dek_oversikt?datasett=@Model.DatasetWmsLayerName]";
+            iframe.src= "@WebConfigurationManager.AppSettings["MapUrlDynamic"]/dynamisk-med-navigasjon.html#" + zoomLevel + "/" + xCenter +"/"+ yCenter +"/l/wms/[@WebConfigurationManager.AppSettings["OpenWmsUrl"]/skwms1/wms.gp_dek_oversikt?datasett=@Model.DatasetWmsLayerName]";
             iframe.frameBorder=0;
             iframe.height = "600";
             win = document.getElementById("iframe").contentWindow;

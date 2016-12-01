@@ -422,9 +422,17 @@ namespace Kartverket.Register.Services.Register
                         var qualitySpecifications = metadata.QualitySpecifications;
                         if(qualitySpecifications != null && qualitySpecifications.Count > 0)
                         {
-                            var qualitySpecification = qualitySpecifications[0];
-                            var result = qualitySpecification.Result;
-                            qualitySpecificationsResult = (bool)result;
+                            for(int q=0;q < qualitySpecifications.Count; q++)
+                            { 
+                                var qualitySpecification = qualitySpecifications[q];
+                                string title = qualitySpecification.Title.Value;
+                                if (title.StartsWith("SOSI-produktspesifikasjon"))
+                                { 
+                                    var result = qualitySpecification.Result;
+                                    qualitySpecificationsResult = (bool)result;
+                                    break;
+                                }
+                            }
                         }
 
                         var distributionFormats = metadata.DistributionFormats;

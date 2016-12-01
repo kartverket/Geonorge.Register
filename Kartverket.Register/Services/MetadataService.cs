@@ -140,23 +140,13 @@ namespace Kartverket.DOK.Service
 
                     metadata.datasetownerId = mapOrganizationNameToId(data.ContactOwner != null && data.ContactOwner.Organization != null ? data.ContactOwner.Organization.Value : "");
                     metadata.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
-                    var related = data.Related;
-                    if(related != null)
-                    {
-                        for (int r = 0; r < related.Count; r++)
-                        {
-                            var distributionDetails = related[r].DistributionDetails;
-                            if (distributionDetails != null)
-                            {
-                                if (distributionDetails.Protocol.Value == "OGC:WMS")
-                                {
-                                    metadata.WmsUrl = distributionDetails.URL.Value;
-                                    metadata.UuidService = related[r].Uuid.Value;
-                                    break;
-                                } 
-                            }
-                        }
-                    }
+
+                    if (data.ServiceUuid != null)
+                        metadata.UuidService = data.ServiceUuid;
+
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        metadata.WmsUrl = data.ServiceDistributionUrlForDataset;
+
                 }
 
                 if(data.DistributionDetails != null)

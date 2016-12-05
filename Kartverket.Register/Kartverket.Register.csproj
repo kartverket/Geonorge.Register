@@ -97,7 +97,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.ReportApi.5.6.82\lib\net452\Kartverket.ReportApi.dll</HintPath>
+      <HintPath>..\packages\Kartverket.ReportApi.6.0.119\lib\net452\Kartverket.ReportApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Kentor.AuthServices, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">

@@ -829,8 +829,11 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_logo.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\geonorge_testlogo.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\gml.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-disabled-added.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-gray.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-white-added.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\handlekurv.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\hengelaas-aapen-disabled.svg" />
@@ -847,6 +850,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-unavailable-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-unavailable.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-warning.svg" />

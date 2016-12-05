@@ -1769,11 +1769,6 @@ a {
 .control-text {
   padding-top: 7px; }
 
-.help-text {
-  margin: 5px;
-  padding: 10px;
-  border-radius: 4px; }
-
 aside ul li, .container-footer ul li {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg"); }
 
@@ -2015,15 +2010,31 @@ button.btn {
 .disabled .custom-icon.custom-icon-kartmarkoer-warning {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-warning-disabled.svg"); }
 
+.custom-icon.custom-icon-kartmarkoer-unavailable {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-unavailable.svg"); }
+
+.btn .custom-icon.custom-icon-kartmarkoer-unavailable {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-unavailable-white.svg"); }
+
 /* Handlekurv*/
 .custom-icon.custom-icon-handlekurv {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv.svg"); }
 
+.added .custom-icon.custom-icon-handlekurv {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-added.svg"); }
+
 .btn .custom-icon.custom-icon-handlekurv {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-white.svg"); }
 
+.btn.added .custom-icon.custom-icon-handlekurv {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-white-added.svg"); }
+
 .disabled .custom-icon.custom-icon-handlekurv {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-disabled.svg"); }
+
+.disabled.added .custom-icon.custom-icon-handlekurv,
+.btn.disabled.added .custom-icon.custom-icon-handlekurv {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-disabled-added.svg"); }
 
 /* Last ned */
 .custom-icon.custom-icon-lastned {
@@ -2390,13 +2401,26 @@ button.btn {
       background-position: 100% -36px; }
 
 /* Nedlastingskvittering */
-.download-list a.list-group-item {
-  color: #3867C8; }
+.download-list .list-group-item a {
+  color: #3867C8;
+  text-decoration: none; }
 
 .download-list .list-group-item span {
   padding-right: 10px;
-  border-right: 1px solid #ccc;
   margin-right: 5px; }
+  .download-list .list-group-item span.custom-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px; }
+  .download-list .list-group-item span.download-list-item-name {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14pt;
+    line-height: 16pt; }
+    .download-list .list-group-item span.download-list-item-name small {
+      display: block;
+      margin: 0;
+      line-height: 1; }
 
 .facet-sok-tittel {
   display: block;
@@ -2551,6 +2575,8 @@ textarea, textarea.form-control {
   background-size: 16px 16px;
   background-position: right 8px center;
   border-radius: 0; }
+  .custom-select .input-group-btn {
+    width: 0; }
 
 .custom-select:hover {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
@@ -2675,6 +2701,18 @@ textarea, textarea.form-control {
     font-family: inherit;
     font-size: 100%; }
 
+.help-text {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 4px; }
+  .help-text.bg-success {
+    border-left: 8px solid #26C045; }
+  .help-text.bg-info {
+    border-left: 8px solid #7da1c4; }
+  .help-text.form-element-help-text {
+    margin: 0px;
+    padding: 6px 10px; }
+
 .no-padding {
   padding: 0; }
 
@@ -2699,6 +2737,12 @@ textarea, textarea.form-control {
 .no-border-radius, .help-text, .panel, .panel-heading,
 .no-border-radius input, .help-text input, .panel input, .panel-heading input {
   border-radius: 0 !important; }
+
+.inline-block {
+  display: inline-block !important; }
+
+.auto-width {
+  width: auto !important; }
 
 .text-left {
   text-align: left !important; }
@@ -3028,16 +3072,17 @@ ul#thumbnailsCoverage {
     position: fixed; }
   #norgeskartmodal .modal-footer {
     position: fixed;
-    bottom: 0px;
+    bottom: 10px;
     width: auto;
-    right: 0;
-    background-color: rgba(220, 220, 220, 0.85);
-    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.7); }
+    right: 103px;
+    background-color: #DEDCD9;
+    border-top: none;
+    padding: 9.5pt; }
 
 #feedback-alert {
   display: none;
   position: fixed;
-  z-index: 2;
+  z-index: 15;
   bottom: 0px;
   width: 100%;
   left: 0px;
@@ -3094,9 +3139,6 @@ input[type="checkbox"].input-validation-error {
   border-radius: 4px 4px 0 0;
   border-style: solid; }
 
-.help-text.bg-success {
-  border-left: 8px solid #26C045; }
-
 .has-error.checkbox-inline label,
 .has-error.checkbox label,
 .has-error.radio-inline label, .has-error.radio,
@@ -3134,7 +3176,7 @@ input[type="checkbox"].input-validation-error {
     line-height: 39pt; }
 
 .loading-animation {
-  z-index: 10;
+  z-index: 15;
   position: fixed;
   background-repeat: no-repeat;
   background-position: 50% 15px;
@@ -3613,6 +3655,82 @@ a.status-icon-link:hover {
   position: absolute;
   top: -5px;
   color: transparent; }
+
+.custom-select .v-select .open-indicator {
+  display: none; }
+
+.custom-select .v-select .selected-tag {
+  background: #efeeed !important;
+  border: none;
+  border-radius: 0;
+  line-height: 18px;
+  box-shadow: none;
+  font-family: Open Sans,sans-serif;
+  font-size: 12pt;
+  color: #414042;
+  height: 25px;
+  padding: .2em 2em .3em .6em;
+  vertical-align: baseline;
+  position: relative;
+  margin: 3px 5px 3px 0;
+  cursor: default; }
+  .custom-select .v-select .selected-tag .close {
+    background: #7da1c4;
+    position: absolute;
+    top: 0;
+    line-height: 19pt;
+    color: #fff;
+    font-size: 10pt;
+    padding: 0 5px;
+    display: table !important;
+    opacity: 1;
+    right: 0;
+    height: 25px;
+    display: inline-block;
+    width: 23px;
+    transition: all .35s linear 0s; }
+    .custom-select .v-select .selected-tag .close:hover {
+      background-color: #fe5000; }
+    .custom-select .v-select .selected-tag .close span {
+      font-size: 18pt !important;
+      line-height: 18pt !important; }
+
+.custom-select .v-select .dropdown-toggle {
+  border: 1px solid #CFCFCF !important;
+  border-radius: 0;
+  padding: 0 8px; }
+
+.custom-select .v-select ul.dropdown-menu {
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+  padding-left: 16px;
+  overflow-x: hidden; }
+  .custom-select .v-select ul.dropdown-menu > li:before {
+    content: none; }
+  .custom-select .v-select ul.dropdown-menu > li.highlight > a, .custom-select .v-select ul.dropdown-menu > li:hover > a {
+    background: none;
+    text-decoration: underline !important; }
+  .custom-select .v-select ul.dropdown-menu > li.active, .custom-select .v-select ul.dropdown-menu > li.active > a {
+    background: none;
+    color: #968c83 !important; }
+  .custom-select .v-select ul.dropdown-menu > li > a {
+    color: inherit; }
+  .custom-select .v-select ul.dropdown-menu > a {
+    padding-left: 15px; }
+  .custom-select .v-select ul.dropdown-menu > li, .custom-select .v-select ul.dropdown-menu > a {
+    color: #3867C8;
+    font-weight: 400;
+    padding: 0;
+    margin-left: 0; }
+  .custom-select .v-select ul.dropdown-menu > li, .custom-select .v-select ul.dropdown-menu > li > a, .custom-select .v-select ul.dropdown-menu > li:hover, .custom-select .v-select ul.dropdown-menu > li:hover > a, .custom-select .v-select ul.dropdown-menu > li > a:hover {
+    font-size: 13pt !important;
+    line-height: 18pt !important; }
+    .custom-select .v-select ul.dropdown-menu > li .area-list-heading, .custom-select .v-select ul.dropdown-menu > li > a .area-list-heading, .custom-select .v-select ul.dropdown-menu > li:hover .area-list-heading, .custom-select .v-select ul.dropdown-menu > li:hover > a .area-list-heading, .custom-select .v-select ul.dropdown-menu > li > a:hover .area-list-heading {
+      color: #414041 !important;
+      font-weight: 600 !important;
+      text-transform: capitalize !important;
+      margin-bottom: 5px !important;
+      margin-top: 17px !important;
+      display: block; }
 
 html[data-useragent*='MSIE 10.0'] .chosen-input-group .input-group-btn {
   display: table-row; }

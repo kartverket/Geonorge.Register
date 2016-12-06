@@ -45,7 +45,7 @@
 </p>
 
 <div class="status-icons norgeskart-legend">
-    <p><span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet</p>
+    <p><span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet. <label for="showMarkers">Vis markører: </label> <input type="checkbox" id="showMarkers" name="showMarkers" checked="checked" onchange="ToggleMarkers();" /></p>
     <p><span class="custom-icon custom-icon-norgeskart-area"></span> Dekningsområde for dette datasettet</p>
 </div>
 
@@ -129,7 +129,7 @@
 
     function setMarker() {
         
-        if(counterInterVal <= 10) {
+        if(counterInterVal <= 4) {
             counterInterVal++;
             AddMarker();
         } else {
@@ -138,6 +138,18 @@
     }
     var myTimer = setInterval(setMarker, 1000);
 
+    function clearMarkers()
+    {     
+        postMessage({ "cmd":"clearMarkers"} );
+    }
 
+    function ToggleMarkers()
+    {  
+        if(!document.getElementById('showMarkers').checked)
+            clearMarkers();
+        else
+            AddMarker();
+    }
+    
 
 </script>

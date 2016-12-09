@@ -1027,3 +1027,9 @@ a.link-unstyled {
     text-decoration: none;
     color: #333;
 }
+
+
+/* Norgeskart legend */
+.norgeskart-legend .custom-checkbox label {
+    margin-left: 10px;
+}

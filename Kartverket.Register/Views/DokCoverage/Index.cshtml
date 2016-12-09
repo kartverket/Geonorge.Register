@@ -45,8 +45,15 @@
 </p>
 
 <div class="status-icons norgeskart-legend">
-    <p><span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet. <label for="showMarkers">Vis markører: </label> <input type="checkbox" id="showMarkers" name="showMarkers" checked="checked" onchange="ToggleMarkers();" /></p>
-    <p><span class="custom-icon custom-icon-norgeskart-area"></span> Dekningsområde for dette datasettet</p>
+    <div>
+        <span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet.
+        <div class="custom-checkbox inline-block">
+            <label for="showMarkers"><input type="checkbox" id="showMarkers" name="showMarkers" checked="checked" onchange="ToggleMarkers();" /> Vis markører</label>
+        </div>
+    </div>
+    <div>
+        <span class="custom-icon custom-icon-norgeskart-area"></span> Dekningsområde for dette datasettet
+    </div>
 </div>
 
 <div id="maplayer">
@@ -95,7 +102,7 @@
     xCenter = (BBWest + BBEast) /2;
     yCenter = (BBSouth + BBNorth) /2;
 
-    $.getJSON('@WebConfigurationManager.AppSettings["MapUrl"]/ws/trans.py?ost=' + xCenter + '&nord=' + yCenter + '&sosiKoordSys=84&resSosiKoordSys=23', function (result) 
+    $.getJSON('@WebConfigurationManager.AppSettings["MapUrl"]/ws/trans.py?ost=' + xCenter + '&nord=' + yCenter + '&sosiKoordSys=84&resSosiKoordSys=23', function (result)
     {
         if (result.errKode == 0) {
 
@@ -122,13 +129,13 @@
         @foreach (CoverageConfirmedMunicipalityViewModel municipality in Model.DatasetCoverageConfirmedCounties)
             {
                 @:postMessage({ "cmd":"addMarker","x":@municipality.CenterCoordinateX,"y":@municipality.CenterCoordinateY,"title":"@Html.Raw(municipality.Name)"} );
-            }
-        }
+                                    }
+    }
 
     var counterInterVal = 0;
 
     function setMarker() {
-        
+
         if(counterInterVal <= 4) {
             counterInterVal++;
             AddMarker();
@@ -139,17 +146,17 @@
     var myTimer = setInterval(setMarker, 1000);
 
     function clearMarkers()
-    {     
+    {
         postMessage({ "cmd":"clearMarkers"} );
     }
 
     function ToggleMarkers()
-    {  
+    {
         if(!document.getElementById('showMarkers').checked)
             clearMarkers();
         else
             AddMarker();
     }
-    
+
 
 </script>

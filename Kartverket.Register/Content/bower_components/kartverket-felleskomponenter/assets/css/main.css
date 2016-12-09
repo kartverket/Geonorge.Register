@@ -2016,7 +2016,40 @@ button.btn {
 .btn .custom-icon.custom-icon-kartmarkoer-unavailable {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-unavailable-white.svg"); }
 
-/* Handlekurv*/
+.disabled .custom-icon.custom-icon-kartmarkoer-unavailable {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/kartmarkoer-unavailable-disabled.svg"); }
+
+/* Checkboxes */
+.custom-icon.custom-icon-checkbox-checked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked.svg"); }
+
+.custom-icon.custom-icon-checkbox-unchecked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked.svg"); }
+
+.disabled.custom-icon.custom-icon-checkbox-checked,
+.disabled .custom-icon.custom-icon-checkbox-checked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-disabled.svg"); }
+
+.disabled.custom-icon.custom-icon-checkbox-unchecked,
+.disabled .custom-icon.custom-icon-checkbox-unchecked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-disabled.svg"); }
+
+/* Radio buttons */
+.custom-icon.custom-icon-radio-checked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked.svg"); }
+
+.custom-icon.custom-icon-radio-unchecked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked.svg"); }
+
+.disabled.custom-icon.custom-icon-radio-checked,
+.disabled .custom-icon.custom-icon-radio-checked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked-disabled.svg"); }
+
+.disabled.custom-icon.custom-icon-radio-unchecked,
+.disabled .custom-icon.custom-icon-radio-unchecked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked-disabled.svg"); }
+
+/* Handlekurv */
 .custom-icon.custom-icon-handlekurv {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv.svg"); }
 
@@ -2623,6 +2656,87 @@ textarea, textarea.form-control {
     -moz-hyphens: auto;
     -webkit-hyphens: auto;
     hyphens: auto; }
+
+.custom-checkbox input[type="checkbox"],
+input[type="checkbox"].custom-checkbox,
+.custom-checkbox input[type="checkbox"]:checked,
+input[type="checkbox"]:checked.custom-checkbox,
+.custom-radio input[type="radio"],
+input[type="radio"].custom-radio,
+.custom-radio input[type="radio"]:checked,
+input[type="radio"]:checked.custom-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  o-appearance: none;
+  ms-appearance: none;
+  outline: none;
+  border: none; }
+  .custom-checkbox input[type="checkbox"]:focus,
+  input[type="checkbox"].custom-checkbox:focus,
+  .custom-checkbox input[type="checkbox"]:checked:focus,
+  input[type="checkbox"]:checked.custom-checkbox:focus,
+  .custom-radio input[type="radio"]:focus,
+  input[type="radio"].custom-radio:focus,
+  .custom-radio input[type="radio"]:checked:focus,
+  input[type="radio"]:checked.custom-radio:focus {
+    outline: none;
+    border: none; }
+  .custom-checkbox input[type="checkbox"]:after,
+  input[type="checkbox"].custom-checkbox:after,
+  .custom-checkbox input[type="checkbox"]:checked:after,
+  input[type="checkbox"]:checked.custom-checkbox:after,
+  .custom-radio input[type="radio"]:after,
+  input[type="radio"].custom-radio:after,
+  .custom-radio input[type="radio"]:checked:after,
+  input[type="radio"]:checked.custom-radio:after {
+    display: inline-block;
+    width: 16px;
+    height: 19px;
+    vertical-align: middle; }
+
+.custom-checkbox input[type="checkbox"]:after,
+input[type="checkbox"].custom-checkbox:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked.svg"); }
+
+.custom-checkbox input[type="checkbox"]:checked:after,
+input[type="checkbox"]:checked.custom-checkbox:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked.svg"); }
+
+.custom-checkbox input[type="checkbox"]:disabled:after,
+input[type="checkbox"]:disabled.custom-checkbox:after,
+.custom-checkbox.disabled input[type="checkbox"]:after,
+input[type="checkbox"].custom-checkbox.disabled:after,
+.disabled input[type="checkbox"].custom-checkbox:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-disabled.svg"); }
+
+.custom-checkbox input[type="checkbox"]:checked:disabled:after,
+input[type="checkbox"]:checked:disabled.custom-checkbox:after,
+.custom-checkbox.disabled input[type="checkbox"]:checked:after,
+input[type="checkbox"]:checked.custom-checkbox.disabled:after,
+.disabled input[type="checkbox"]:checked.custom-checkbox:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-disabled.svg"); }
+
+.custom-radio input[type="radio"]:after,
+input[type="radio"].custom-radio:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked.svg"); }
+
+.custom-radio input[type="radio"]:checked:after,
+input[type="radio"]:checked.custom-radio:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked.svg"); }
+
+.custom-radio input[type="radio"]:disabled:after,
+input[type="radio"]:disabled.custom-radio:after,
+.custom-radio.disabled input[type="radio"]:after,
+input[type="radio"].custom-radio.disabled:after,
+.disabled input[type="radio"].custom-radio:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked-disabled.svg"); }
+
+.custom-radio input[type="radio"]:checked:disabled:after,
+input[type="radio"]:checked:disabled.custom-radio:after,
+.custom-radio.disabled input[type="radio"]:checked:after,
+input[type="radio"]:checked.custom-radio.disabled:after,
+.disabled input[type="radio"]:checked.custom-radio:after {
+  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked-disabled.svg"); }
 
 .help-page h1, .help-page .h1 {
   font-size: 24pt;

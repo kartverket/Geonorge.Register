@@ -50,23 +50,28 @@ namespace Kartverket.Register.Models
         {
             int result = 0;
 
-            var entityList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified);
-            foreach (var entity in entityList)
+            var entityList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
+            for (int c = 0; c < entityList.Count(); c++)
             {
-                var reg = entity.Entity as Register;
-                var regItem = entity.Entity as RegisterItem;
+                var entity = entityList[c];
+                if(entity.State != EntityState.Unchanged)
+                {
+                    var reg = entity.Entity as Register;
+                    var regItem = entity.Entity as RegisterItem;
 
-                if (reg != null)
-                {
-                    result = Save();
-                    new Task(() => { Index(reg.systemId); }).Start();
+                    if (reg != null)
+                    {
+                        result = Save();
+                        new Task(() => { Index(reg.systemId); }).Start();
+                    }
+                    else if (regItem != null)
+                    {
+                        result = Save();
+                        new Task(() => { Index(regItem.systemId); }).Start();
+                    }
+                    else { result = Save(); }
                 }
-                else if (regItem != null)
-                {
-                    result = Save();
-                    new Task(() => { Index(regItem.systemId); }).Start();
-                }
-                else { result = Save(); }
+
             }
 
             return result;

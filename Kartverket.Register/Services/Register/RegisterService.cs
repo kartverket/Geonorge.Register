@@ -196,6 +196,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
+                item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
                 item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item);
             }
             _dbContext.SaveChanges();
@@ -385,7 +386,6 @@ namespace Kartverket.Register.Services.Register
         {
  
             string statusValue = currentStatus;
-            string sosiStatus = "";
             bool qualitySpecificationsResult = false;
             bool sosiDistributionFormat = false;
             string distributionProtocol = "";
@@ -394,21 +394,6 @@ namespace Kartverket.Register.Services.Register
             {
                 try
                 {
-                    if (!string.IsNullOrEmpty(url))
-                    {
-                        System.Net.WebClient client = new System.Net.WebClient();
-                        client.Encoding = System.Text.Encoding.UTF8;
-
-                        var data = client.DownloadString(url + ".json");
-                        var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                        var status = response["status"];
-                        if (status != null)
-                        {
-                            sosiStatus = status?.ToString();
-                        }
-                    }
-
-
                     string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                     System.Net.WebClient c = new System.Net.WebClient();
                     c.Encoding = System.Text.Encoding.UTF8;
@@ -425,11 +410,10 @@ namespace Kartverket.Register.Services.Register
                             for(int q=0;q < qualitySpecifications.Count; q++)
                             { 
                                 var qualitySpecification = qualitySpecifications[q];
-                                string title = qualitySpecification.Title.Value;
-                                if (title.StartsWith("SOSI-produktspesifikasjon"))
-                                { 
-                                    var result = qualitySpecification.Result;
-                                    qualitySpecificationsResult = (bool)result;
+                                string explanation = qualitySpecification.explanation.Value;
+                                if (explanation.StartsWith("SOSI-filer"))
+                                {
+                                    qualitySpecificationsResult = true;
                                     break;
                                 }
                             }
@@ -453,14 +437,8 @@ namespace Kartverket.Register.Services.Register
 
                     }
 
-                    //Hvis metadata viser til SOSI - produktspesifikasjon som har status "godkjent" i registeret og metadata har verdien "true" under <gmd:pass> under konformitetsseksjonen skal SOSI - krav være grønn. 
-                    //Hvis ovennevnte er oppfylt, men produkstspsifikasjonen ikke er godkjent/ gyldig blir SOSI-krav gul
-                    //Hvis metadata har SOSI som format under distribution og protocol er "Egen nedlastingsside (WWW:DOWNLOAD-1.0-http--download)" eller GEONORGE:DOWNLOAD, skal SOSI-krav være gul
-
-                    if (sosiStatus == "SOSI godkjent" && qualitySpecificationsResult)
+                    if (qualitySpecificationsResult)
                         statusValue = "good";
-                    else if (sosiStatus == "SOSI godkjent" && !qualitySpecificationsResult)
-                        statusValue = "useable";
                     else if(sosiDistributionFormat && (distributionProtocol == "GEONORGE:DOWNLOAD" || distributionProtocol == "WWW:DOWNLOAD-1.0-http--download"))
                         statusValue = "useable";
                     else
@@ -477,7 +455,79 @@ namespace Kartverket.Register.Services.Register
 
         }
 
-           
+        public string GetGmlRequirements(string uuid, bool autoUpdate, string currentStatus)
+        {
+
+            string statusValue = currentStatus;
+            bool qualitySpecificationsResult = false;
+            bool gmlDistributionFormat = false;
+            string distributionProtocol = "";
+
+            if (autoUpdate)
+            {
+                try
+                {
+                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+
+                    var json = c.DownloadString(metadataUrl);
+
+                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+                    if (metadata != null)
+                    {
+                        var qualitySpecifications = metadata.QualitySpecifications;
+                        if (qualitySpecifications != null && qualitySpecifications.Count > 0)
+                        {
+                            for (int q = 0; q < qualitySpecifications.Count; q++)
+                            {
+                                var qualitySpecification = qualitySpecifications[q];
+                                string explanation = qualitySpecification.explanation.Value;
+                                if (explanation.StartsWith("GML-filer"))
+                                {
+                                    qualitySpecificationsResult = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        var distributionFormats = metadata.DistributionFormats;
+                        if (distributionFormats != null && distributionFormats.Count > 0)
+                        {
+                            foreach (var format in distributionFormats)
+                            {
+                                if (format.Name == "GML")
+                                    gmlDistributionFormat = true;
+                            }
+                        }
+
+                        var distributionDetails = metadata.DistributionDetails;
+                        if (distributionDetails != null && distributionDetails.Count > 0)
+                        {
+                            distributionProtocol = distributionDetails.Protocol;
+                        }
+
+                    }
+
+                    if (qualitySpecificationsResult)
+                        statusValue = "good";
+                    else if (gmlDistributionFormat)
+                        statusValue = "useable";
+                    else
+                        statusValue = "deficient";
+                }
+
+                catch (Exception ex)
+                {
+                    return "deficient";
+                }
+            }
+
+            return statusValue;
+
+        }
+
 
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {

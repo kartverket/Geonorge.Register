@@ -566,7 +566,7 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryGmlRequirementsStatusId = _registerService.GetGmlRequirements(inputDataset.Uuid, inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate, inputDataset.dokDeliveryGmlRequirementsStatusId);
             dataset.dokDeliveryGmlRequirementsStatusNote = inputDataset.dokDeliveryGmlRequirementsStatusNote;
             dataset.dokDeliveryGmlRequirementsStatusAutoUpdate = inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate;
-            dataset.dokDeliveryAtomFeedStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryAtomFeedStatusId) ? inputDataset.dokDeliveryAtomFeedStatusId : "notset";
+            dataset.dokDeliveryAtomFeedStatusId = _registerService.GetAtomFeedStatus(inputDataset.Uuid, inputDataset.dokDeliveryAtomFeedStatusAutoUpdate, inputDataset.dokDeliveryAtomFeedStatusId);
             dataset.dokDeliveryAtomFeedStatusNote = inputDataset.dokDeliveryAtomFeedStatusNote;
             dataset.dokDeliveryAtomFeedStatusAutoUpdate = inputDataset.dokDeliveryAtomFeedStatusAutoUpdate;
             dataset.SpecificUsage = inputDataset.SpecificUsage;

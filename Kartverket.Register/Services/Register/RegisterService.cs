@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Caching;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Xml;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -198,6 +200,8 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
                 item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item);
+                item.dokDeliveryAtomFeedStatusId = GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
+
             }
             _dbContext.SaveChanges();
         }
@@ -526,6 +530,74 @@ namespace Kartverket.Register.Services.Register
 
             return statusValue;
 
+        }
+
+        public string GetAtomFeedStatus(string uuid, bool autoUpdate, string currentStatus)
+        {
+            string statusValue = currentStatus;
+
+            if (autoUpdate)
+            {
+                try
+                {
+                    var atomfeed = AtomFeed(uuid);
+
+                    if (!string.IsNullOrEmpty(atomfeed))
+                        statusValue = "good";
+                    else
+                        statusValue = "deficient";
+                }
+
+                catch (Exception ex)
+                {
+                    return null;
+                }
+            }
+
+            return statusValue;
+
+        }
+
+        private System.Xml.XmlDocument AtomFeedDoc;
+        XmlNamespaceManager nsmgr;
+
+        public string AtomFeed(string uuid)
+        {
+            string atomFeed = "";
+            MemoryCache memoryCache = MemoryCache.Default;
+            AtomFeedDoc = memoryCache.Get("AtomFeedDoc") as System.Xml.XmlDocument;
+            if (AtomFeedDoc == null)
+                SetAtomFeed();
+
+            atomFeed = GetAtomFeed(uuid);
+
+            return atomFeed;
+        }
+
+        private string GetAtomFeed(string uuid)
+        {
+            nsmgr = new XmlNamespaceManager(AtomFeedDoc.NameTable);
+            nsmgr.AddNamespace("ns", "http://www.w3.org/2005/Atom");
+            nsmgr.AddNamespace("georss", "http://www.georss.org/georss");
+            nsmgr.AddNamespace("inspire_dls", "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0");
+
+            string feed = "";
+            XmlNode entry = AtomFeedDoc.SelectSingleNode("//ns:feed/ns:entry[inspire_dls:spatial_dataset_identifier_code='" + uuid + "']/ns:link", nsmgr);
+            if (entry != null)
+            {
+                feed = entry.InnerText;
+            }
+
+            return feed;
+        }
+
+        private void SetAtomFeed()
+        {
+            AtomFeedDoc = new XmlDocument();
+            AtomFeedDoc.Load("https://nedlasting.geonorge.no/geonorge/Tjenestefeed.xml");
+
+            MemoryCache memoryCache = MemoryCache.Default;
+            memoryCache.Add("AtomFeedDoc", AtomFeedDoc, new DateTimeOffset(DateTime.Now.AddDays(1)));
         }
 
 

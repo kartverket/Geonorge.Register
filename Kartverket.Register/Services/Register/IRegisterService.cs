@@ -35,5 +35,6 @@ namespace Kartverket.Register.Services.Register
         string GetDeliveryDistributionStatus(Dataset item);
         string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus);
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
+        string GetAtomFeedStatus(string uuid, bool autoUpdate, string currentStatus);
     }
 }

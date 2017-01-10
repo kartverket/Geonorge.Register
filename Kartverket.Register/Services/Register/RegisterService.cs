@@ -439,7 +439,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (qualitySpecificationsResult)
                         statusValue = "good";
-                    else if(sosiDistributionFormat && (distributionProtocol == "GEONORGE:DOWNLOAD" || distributionProtocol == "WWW:DOWNLOAD-1.0-http--download"))
+                    else if(sosiDistributionFormat)
                         statusValue = "useable";
                     else
                         statusValue = "deficient";

@@ -175,8 +175,8 @@
             @OrderByLink("", "dokDeliveryWfsStatus", "custom-icon custom-icon-wfs")
             @OrderByLink("", "dokDeliverySosiRequirementsStatus", "custom-icon custom-icon-sosi")
             @OrderByLink("", "dokDeliveryGmlRequirementsStatus", "custom-icon custom-icon-gml")
-            @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
             @OrderByLink("", "dokDeliveryAtomFeedStatus", "fa fa-rss-square")
+            @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
         </div>
         <div class="col-md-1 text-center">@OrderByLink("STATUS", "dokStatus")</div>
     </div>
@@ -206,8 +206,8 @@
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryWfsStatusId, item.restricted, "dokDeliveryWfsStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliverySosiRequirementsStatusId, false, "dokDeliverySosiRequirementsStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryGmlRequirementsStatusId, false, "dokDeliveryGmlRequirementsStatus")
-                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, false, "dokDeliveryDistributionStatus")
                 @GetDokDeliveryStatusSymbol(item.dokDeliveryAtomFeedStatusId, item.restricted, "dokDeliveryAtomFeedStatus")
+                @GetDokDeliveryStatusSymbol(item.dokDeliveryDistributionStatusId, false, "dokDeliveryDistributionStatus")
             </div>
             <div class="col-md-1 text-center">
                 @if (item.dokStatus != null)

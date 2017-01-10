@@ -410,7 +410,7 @@ namespace Kartverket.Register.Services.Register
                             for(int q=0;q < qualitySpecifications.Count; q++)
                             { 
                                 var qualitySpecification = qualitySpecifications[q];
-                                string explanation = qualitySpecification.explanation.Value;
+                                string explanation = qualitySpecification.Explanation.Value;
                                 if (explanation.StartsWith("SOSI-filer"))
                                 {
                                     qualitySpecificationsResult = true;
@@ -483,7 +483,7 @@ namespace Kartverket.Register.Services.Register
                             for (int q = 0; q < qualitySpecifications.Count; q++)
                             {
                                 var qualitySpecification = qualitySpecifications[q];
-                                string explanation = qualitySpecification.explanation.Value;
+                                string explanation = qualitySpecification.Explanation.Value;
                                 if (explanation.StartsWith("GML-filer"))
                                 {
                                     qualitySpecificationsResult = true;

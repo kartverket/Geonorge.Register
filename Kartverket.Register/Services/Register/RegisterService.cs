@@ -196,13 +196,12 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
                 item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
-                item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
                 item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item);
                 item.dokDeliveryAtomFeedStatusId = GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
                 item.dokDeliveryWfsStatusId = GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
-
+                item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
             }
             _dbContext.SaveChanges();
         }

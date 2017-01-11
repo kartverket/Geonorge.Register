@@ -560,9 +560,6 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliverySosiRequirementsStatusId = _registerService.GetSosiRequirements(inputDataset.Uuid, inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliverySosiStatusAutoUpdate, inputDataset.dokDeliverySosiRequirementsStatusId);
             dataset.dokDeliverySosiRequirementsStatusNote = inputDataset.dokDeliverySosiRequirementsStatusNote;
             dataset.dokDeliverySosiStatusAutoUpdate = inputDataset.dokDeliverySosiStatusAutoUpdate;
-            dataset.dokDeliveryDistributionStatusId = !string.IsNullOrEmpty(inputDataset.dokDeliveryDistributionStatusId) ? inputDataset.dokDeliveryDistributionStatusId : "notset";
-            dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
-            dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
             dataset.dokDeliveryGmlRequirementsStatusId = _registerService.GetGmlRequirements(inputDataset.Uuid, inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate, inputDataset.dokDeliveryGmlRequirementsStatusId);
             dataset.dokDeliveryGmlRequirementsStatusNote = inputDataset.dokDeliveryGmlRequirementsStatusNote;
             dataset.dokDeliveryGmlRequirementsStatusAutoUpdate = inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate;
@@ -573,6 +570,10 @@ namespace Kartverket.Register.Controllers
             dataset.restricted = inputDataset.restricted;
             dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
+            dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
+            dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
+            dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
+            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
             return dataset;
         }
 

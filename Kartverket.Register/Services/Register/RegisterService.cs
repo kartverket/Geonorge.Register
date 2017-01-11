@@ -201,6 +201,7 @@ namespace Kartverket.Register.Services.Register
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
                 item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item);
                 item.dokDeliveryAtomFeedStatusId = GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
+                item.dokDeliveryWfsStatusId = GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
 
             }
             _dbContext.SaveChanges();
@@ -545,12 +546,12 @@ namespace Kartverket.Register.Services.Register
                     if (!string.IsNullOrEmpty(atomfeed))
                         statusValue = "good";
                     else
-                        statusValue = "deficient";
+                        statusValue = "notset";
                 }
 
                 catch (Exception ex)
                 {
-                    return null;
+                    return "notset";
                 }
             }
 
@@ -598,6 +599,49 @@ namespace Kartverket.Register.Services.Register
 
             MemoryCache memoryCache = MemoryCache.Default;
             memoryCache.Add("AtomFeedDoc", AtomFeedDoc, new DateTimeOffset(DateTime.Now.AddDays(1)));
+        }
+
+        public string GetWfsStatus(string uuid, bool autoUpdate, string currentStatus)
+        {
+
+            string statusValue = currentStatus;
+
+            if (autoUpdate)
+            {
+                try
+                {
+                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+
+                    var json = c.DownloadString(metadataUrl);
+
+                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+                    if (metadata != null)
+                    {
+                        if (metadata.Related != null)
+                        {
+                            foreach (var service in metadata.Related)
+                            {
+                                if(service.DistributionDetails != null)
+                                {
+                                    if(service.DistributionDetails.Protocol == "OGC:WFS") 
+                                        return "useable";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return "notset";
+                }
+            }
+
+            return statusValue;
+
         }
 
 

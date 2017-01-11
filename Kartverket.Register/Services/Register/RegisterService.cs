@@ -371,15 +371,11 @@ namespace Kartverket.Register.Services.Register
 
             if (item.dokDeliveryDistributionStatusAutoUpdate)
             {
-                //Regler:
-                //Hvis enten WFS eller Atom - feed er grønn blir "Nedlastingsstatus" grønn
-                //HVis enten WFS eller Atom Feed er gul blir "Nedlastingsstatus" gul" 
-                //Hvis både WFS og Atom - feed er rød blir "Nedlastingsstatus" rød
                 if (item.dokDeliveryWfsStatusId == "good" || item.dokDeliveryAtomFeedStatusId == "good")
                     status = "good";
                 else if (item.dokDeliveryWfsStatusId == "useable" || item.dokDeliveryAtomFeedStatusId == "useable")
                     status = "useable";
-                else if (item.dokDeliveryWfsStatusId == "deficient" && item.dokDeliveryAtomFeedStatusId == "deficient")
+                else
                     status = "deficient";
             }
 

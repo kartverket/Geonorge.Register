@@ -550,6 +550,12 @@
             <param name="register">The name of the register</param>
             <param name="itemowner">The name of the organization</param>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokCoverageMapping">
+            <summary>
+            DokCoverageMapping
+            </summary>
+            <param name="name">DokCoverageMapping</param>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiSearchController.Get(Kartverket.Register.Models.Api.SearchParameters)">
             <summary>
             Register search

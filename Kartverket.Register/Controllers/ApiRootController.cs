@@ -233,6 +233,17 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// DokCoverageMapping
+        /// </summary>
+        /// <param name="name">DokCoverageMapping</param>
+        [Route("api/metadata/DokCoverageMapping")]
+        [HttpGet]
+        public IHttpActionResult DokCoverageMapping()
+        {
+            return Ok(DokCoverageWmsMapping.DatasetUuidToWmsLayerMapping);
+        }
+
 
 
         // **** HJELPEMETODER ****

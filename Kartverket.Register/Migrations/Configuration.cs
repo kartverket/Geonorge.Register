@@ -40,7 +40,7 @@ namespace Kartverket.Register.Migrations
             );
 
             context.DokDeliveryStatuses.AddOrUpdate(
-                new Models.DokDeliveryStatus { value = "deficient", description = "Mangelfull" },
+                new Models.DokDeliveryStatus { value = "deficient", description = "Ikke levert" },
                 new Models.DokDeliveryStatus { value = "useable", description = "Brukbar" },
                 new Models.DokDeliveryStatus { value = "good", description = "God" },
                 new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }

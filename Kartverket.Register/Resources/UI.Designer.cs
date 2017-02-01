@@ -214,7 +214,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mangelfull.
+        ///   Looks up a localized string similar to Ikke levert.
         /// </summary>
         public static string DOK_Delivery_Status_Deficient {
             get {

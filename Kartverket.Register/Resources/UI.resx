@@ -202,7 +202,7 @@
     <value>Status datasett</value>
   </data>
   <data name="DOK_Delivery_Status_Deficient" xml:space="preserve">
-    <value>Mangelfull</value>
+    <value>Ikke levert</value>
   </data>
   <data name="DOK_Delivery_Status_Good" xml:space="preserve">
     <value>God</value>

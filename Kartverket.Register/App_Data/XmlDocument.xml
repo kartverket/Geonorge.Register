@@ -994,7 +994,7 @@
         </member>
         <member name="P:Resources.UI.DOK_Delivery_Status_Deficient">
             <summary>
-              Looks up a localized string similar to Mangelfull.
+              Looks up a localized string similar to Ikke levert.
             </summary>
         </member>
         <member name="P:Resources.UI.DOK_Delivery_Status_Good">

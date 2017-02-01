@@ -71,6 +71,7 @@ namespace Kartverket.Register.Models.Api
         public string theme { get; set; }
         public string dokStatus { get; set; }
         public DateTime? dokStatusDateAccepted { get; set; }
+        public DateTime? Kandidatdato { get; set; }
 
         public string dokDeliveryMetadataStatus { get; set; }
         public string dokDeliveryProductSheetStatus { get; set; }
@@ -163,9 +164,10 @@ namespace Kartverket.Register.Models.Api
                 if (d.theme != null) theme = d.theme.description;
                 if (d.dokStatus != null) dokStatus = d.dokStatus.description;
                 if (d.dokStatusDateAccepted != null) dokStatusDateAccepted = d.dokStatusDateAccepted;
+                if (d.Kandidatdato != null) Kandidatdato = d.Kandidatdato;
                 if (d.DatasetType != null) DatasetType = d.DatasetType;
                 dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted :  d.dokDeliveryMetadataStatus.description;
-                dokDeliveryProductSheetStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
+                dokDeliveryProductSheetStatus = (d.restricted != null && d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
                 dokDeliveryPresentationRulesStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryPresentationRulesStatus.description;
 
                 dokDeliveryProductSpecificationStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSpecificationStatus.description;

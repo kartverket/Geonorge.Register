@@ -78,6 +78,8 @@ namespace Kartverket.Register.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dokStatusDateAccepted { get; set; }
 
+        public DateTime? Kandidatdato { get; set; } = new DateTime(DateTime.Now.Year, 1, 1);
+
         public string DatasetType { get; set; }
 
         public virtual List<CoverageDataset> Coverage { get; set; }

@@ -146,7 +146,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" )+ ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" )+ ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
             }
             else if (item.itemclass == "Organization")
             {
@@ -219,7 +219,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Oppdatert; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
+                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato; Oppdatert; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
                     + UI.DOK_Delivery_ProductSheet + ";" + UI.DOK_Delivery_PresentationRules + ";" + UI.DOK_Delivery_ProductSpesification + ";"
                     + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_SosiRequirements + ";"
                     + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_GmlRequirements + ";" + UI.DOK_Delivery_AtomFeed;

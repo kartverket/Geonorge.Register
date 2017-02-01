@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Resources;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Formatter
 {
@@ -130,6 +131,9 @@ namespace Kartverket.Register.Formatter
 
         private static void ConvertRegisterItemToCSV(StreamWriter streamWriter, Registeritem item)
         {
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
+            bool isAdmin = role == "nd.metadata_admin";
+
             item.description = RemoveBreaksFromDescription(item.description);
             string text = null;
             if (item.itemclass == "Document")
@@ -146,7 +150,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" )+ ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + (isAdmin ? ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" ) : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
             }
             else if (item.itemclass == "Organization")
             {
@@ -205,6 +209,9 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterItemHeading(string containedItemClass)
         {
+            string role = HtmlHelperExtensions.GetSecurityClaim("role");
+            bool isAdmin = role == "nd.metadata_admin";
+
             if (containedItemClass == "Document")
             {
                 return "Navn; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; Dokumentreferanse; ID";
@@ -219,7 +226,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato; Oppdatert; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
+                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato" + (isAdmin ? "; Oppdatert " : "") +"; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
                     + UI.DOK_Delivery_ProductSheet + ";" + UI.DOK_Delivery_PresentationRules + ";" + UI.DOK_Delivery_ProductSpesification + ";"
                     + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_SosiRequirements + ";"
                     + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_GmlRequirements + ";" + UI.DOK_Delivery_AtomFeed;

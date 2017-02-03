@@ -150,7 +150,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + (isAdmin ? ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" ) : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" ) + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") :"") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item);
             }
             else if (item.itemclass == "Organization")
             {

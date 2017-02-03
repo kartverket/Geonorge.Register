@@ -516,6 +516,7 @@ namespace Kartverket.Register.Controllers
             dataset.statusId = dataset.SetStatusId();
             dataset.dokStatusId = inputDataset.GetDokStatus();
             dataset.dokStatusDateAccepted = inputDataset.GetDokStatusDateAccepted();
+            dataset.Kandidatdato = inputDataset.Kandidatdato;
             dataset.versionNumber = dataset.GetVersionNr();
             dataset.name = inputDataset.GetName();
             dataset.seoname = RegisterUrls.MakeSeoFriendlyString(dataset.name);

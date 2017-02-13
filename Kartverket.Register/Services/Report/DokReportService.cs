@@ -16,8 +16,8 @@ namespace Kartverket.Register.Services.Report
 
         public ReportResult GetSelectedAndAdditionalDatasets(ReportQuery param)
         {
-
             ReportResult reportResult = new ReportResult();
+            
             reportResult.Data = new List<ReportResultData>();
 
             _dbContext.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
@@ -50,23 +50,26 @@ namespace Kartverket.Register.Services.Report
                                                  number = grouped.Key.number
                                              }).ToList();
 
-            var orgList = (from org in _dbContext.Organizations
-                           where org.OrganizationType == Models.OrganizationType.Municipality
-                           select new { org.name, org.number }).ToList();
 
-            var coverageList = (from c in _dbContext.CoverageDatasets
-                                select c.Municipality.name).ToList();
+            var resultsNotSelected = (from c in _dbContext.CoverageDatasets
+                                   join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
+                                   where c.ConfirmedDok == false && ds.DatasetType != "Kommunalt"
+                                   group c by new { c.Municipality.name, c.Municipality.number } into grouped
+                                   select new
+                                   {
+                                       name = grouped.Key.name,
+                                       Count = 0,
+                                       number = grouped.Key.number
+                                   })
+                                   .OrderByDescending(x => x.Count)
+                                   .ToList();
 
-            int Count = 0;
-            var resultsNotSelected = (
-                                  from mun in orgList
-                                  where !(from c in coverageList
-                                          select c)
-                                         .Contains(mun.name)
-                                  select new { mun.name, Count, mun.number }).ToList();
+                resultsNotSelected = (from cc in resultsNotSelected
+                                      where !resultsSelected.Any(s => s.number == cc.number)
+                                      select cc)
+                                     .ToList();
 
             var results = resultsSelected.Union(resultsNotSelected).Distinct();
-
 
             var areas = param.Parameters.Where(p => p.Name == "area").Select(a => a.Value).ToList();
             if (areas.Any())
@@ -93,7 +96,7 @@ namespace Kartverket.Register.Services.Report
             }
 
 
-            foreach (var result in results)
+            foreach (var result in results.OrderByDescending(s => s.Count).ThenBy(ss => ss.name))
             {
                 ReportResultData reportResultData = new ReportResultData();
 

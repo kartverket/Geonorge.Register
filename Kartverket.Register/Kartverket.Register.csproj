@@ -672,6 +672,10 @@
     <Compile Include="Migrations\201702011250539_DatasetKandidatdato.Designer.cs">
       <DependentUpon>201702011250539_DatasetKandidatdato.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702161304079_addDateConfirmedMunicipalDOK.cs" />
+    <Compile Include="Migrations\201702161304079_addDateConfirmedMunicipalDOK.Designer.cs">
+      <DependentUpon>201702161304079_addDateConfirmedMunicipalDOK.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1489,6 +1493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702011250539_DatasetKandidatdato.resx">
       <DependentUpon>201702011250539_DatasetKandidatdato.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702161304079_addDateConfirmedMunicipalDOK.resx">
+      <DependentUpon>201702161304079_addDateConfirmedMunicipalDOK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

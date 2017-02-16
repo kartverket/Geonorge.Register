@@ -9,8 +9,7 @@
 using System.ComponentModel.DataAnnotations;
 using Resources;
 using ExpressiveAnnotations.Attributes;
-
-
+using System;
 
 namespace Kartverket.Register.Models
 {
@@ -80,7 +79,8 @@ namespace Kartverket.Register.Models
         [Display(Name = "Geografisk utstrekning - vest")]
         [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - vest er påkrevd")]
         public string BoundingBoxWest { get; set; }
-
+        [Display(Name = "Dato bekreftet for registrering av kommunalt DOK")]
+        public DateTime DateConfirmedMunicipalDOK { get; set; }
 
         public virtual string GetOrganizationEditUrl()
         {

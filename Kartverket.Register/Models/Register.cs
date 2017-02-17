@@ -153,7 +153,8 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public string GetEditObjectUrl() {
+        public string GetEditObjectUrl()
+        {
             if (parentRegister == null)
             {
                 return "/rediger/" + seoname;
@@ -174,6 +175,87 @@ namespace Kartverket.Register.Models
             {
                 return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/slett";
             }
+        }
+
+        public bool HasParentRegister()
+        {
+            if (parentRegister != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsOrganization()
+        {
+            if (containedItemClass == "Organization")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsCodelistValue()
+        {
+            if (containedItemClass == "CodelistValue")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsDocument()
+        {
+            if (containedItemClass == "Document")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsDataset()
+        {
+            if (containedItemClass == "Dataset")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsEPSG()
+        {
+            if (containedItemClass == "EPSG")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsNameSpace()
+        {
+            if (containedItemClass == "NameSpace")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsServiceAlert()
+        {
+            if (containedItemClass == "ServiceAlert")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool containedItemClassIsRegister()
+        {
+            if (containedItemClass == "Register")
+            {
+                return true;
+            }
+            return false;
         }
 
         //end Register

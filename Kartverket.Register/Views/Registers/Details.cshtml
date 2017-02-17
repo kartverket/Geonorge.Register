@@ -26,13 +26,13 @@
     int pageSize = 50;
     int pageNumber = (page ?? 1);
 
-    if (Model.containedItemClass != "Register")
+    if (Model.containedItemClassIsRegister())
     {
-        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
+        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
     }
     else
     {
-        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
+        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
     }
 }
 @section Scripts {
@@ -59,8 +59,6 @@
 </section>
 
 <div class="row">
-  
-
         <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
             @if (Model.description != null)
             {
@@ -82,12 +80,12 @@
 
             <div class="search-result-navigation register-navigation">
                 <div class="col-md-4">
-                    @if (Model.containedItemClass != "Register")
+                    @if (Model.containedItemClassIsRegister())
                     {
-                        @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+                        @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
                     }
                     else {
-                        @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+                        @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
                     }
                 </div>
                 <div class="col-md-4">
@@ -99,47 +97,47 @@
             </div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            @if (Model.containedItemClass == "Organization")
+            @if (Model.containedItemClassIsOrganization())
             {
                 @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "CodelistValue")
+            @if (Model.containedItemClassIsCodelistValue())
             {
                 @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "Document")
+            @if (Model.containedItemClassIsDocument())
             {
                 @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize));
             }
-            @if (Model.containedItemClass == "Dataset")
+            @if (Model.containedItemClassIsDataset())
             {
                 @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "EPSG")
+            @if (Model.containedItemClassIsEPSG())
             {
                 @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "NameSpace")
+            @if (Model.containedItemClassIsNameSpace())
             {
                 @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "ServiceAlert")
+            @if (Model.containedItemClassIsServiceAlert())
             {
                 @Html.Partial("_serviceAlert", sortering.ToPagedList(pageNumber, pageSize))
             }
-            @if (Model.containedItemClass == "Register")
+            @if (Model.containedItemClassIsRegister())
             {
                 @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
         </div>
         <div class="clearfix"></div>
         <div class="col-sm-12 col-md-12 col-lg-12">
-            @if (Model.containedItemClass != "Register")
+            @if (Model.containedItemClassIsRegister())
             {
-                @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
             else {
-                @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
             }
         </div>
 
@@ -164,13 +162,13 @@
                         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
                     }
                 }
-                if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
+                @*if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
                 {
-                    @*<a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>*@
-                }
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
+                }*@
             }
 
-            @if (Model.parentRegister != null)
+            @if (Model.HasParentRegister())
             {
                 <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="@Model.parentRegister.GetObjectUrl()">Tilbake</a>
             }

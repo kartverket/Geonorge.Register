@@ -80,7 +80,7 @@ namespace Kartverket.Register.Models
         [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - vest er påkrevd")]
         public string BoundingBoxWest { get; set; }
         [Display(Name = "Dato bekreftet for registrering av kommunalt DOK")]
-        public DateTime DateConfirmedMunicipalDOK { get; set; }
+        public DateTime? DateConfirmedMunicipalDOK { get; set; }
 
         public virtual string GetOrganizationEditUrl()
         {

@@ -476,7 +476,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.search = filter.text;
             ViewBag.page = page;
             ViewBag.SortOrder = sorting != null ? sorting : "";
-            ViewBag.selectedMunicipality = filter.municipality;
+            ViewBag.selectedMunicipalityCode = filter.municipality;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.municipality = _registerItemService.GetMunicipalityList();
             ViewBag.register = register.name;

@@ -59,15 +59,6 @@ namespace Kartverket.Register.Helpers
             }
             return false;
         }
-        public static bool IsMunicipalUser()
-        {
-            return _accessControl.IsMunicipalUser();
-        }
-
-        public static CoverageDataset GetMunicipalCoverage(Dataset model)
-        {
-            return _registeritemService.GetMunicipalityCoverage(model);
-        }
 
         public static bool accessRegisterItem(RegisterItem item)
         {
@@ -402,7 +393,7 @@ namespace Kartverket.Register.Helpers
                 var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.DatasetType);
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
-            
+
             else if (sortingType == "description")
             {
                 sortedList = register.items.OrderBy(o => o.description).ToList();
@@ -901,13 +892,13 @@ namespace Kartverket.Register.Helpers
             List<Models.Register> registerList = new List<Models.Register>();
             Models.Register main = mainRegister(current);
             Models.Register parentRegister = current.parentRegister;
-            if(parentRegister!= null)
-            { 
+            if (parentRegister != null)
+            {
                 while (main != null && parentRegister != main)
                 {
-                   if(!registerList.Contains(parentRegister))
+                    if (!registerList.Contains(parentRegister))
                         registerList.Add(parentRegister);
-                   parentRegister = parentRegister.parentRegister;
+                    parentRegister = parentRegister.parentRegister;
                 }
             }
             registerList.Reverse();
@@ -941,7 +932,6 @@ namespace Kartverket.Register.Helpers
 
             return result;
         }
-
 
         public static string StatusBeskrivelse(Models.Register register)
         {
@@ -1005,28 +995,15 @@ namespace Kartverket.Register.Helpers
             return "Datasettet finnes fra før!";
         }
 
-
-        public static CodelistValue GetSelectedMunicipality(string selectedMunicipality)
+        public static CodelistValue GetSelectedMunicipality(string selectedMunicipalityCode)
         {
-            if (selectedMunicipality == null)
+            if (selectedMunicipalityCode == null)
             {
                 return _accessControl.GetMunicipality();
             }
             else
             {
-                return _registeritemService.GetMunicipalByNr(selectedMunicipality.ToString());
-            }
-        }
-
-        public static string selectedMunicipalName(CodelistValue selectedMunicipal)
-        {
-            if (selectedMunicipal != null)
-            {
-                return selectedMunicipal.name;
-            }
-            else
-            {
-                return "Velg kommune";
+                return _registeritemService.GetMunicipalByNr(selectedMunicipalityCode.ToString());
             }
         }
 
@@ -1053,7 +1030,7 @@ namespace Kartverket.Register.Helpers
 
         public static string GetNationalDokStatus(Dataset item)
         {
-            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            if (item.register.IsDokMunicipal())
             {
                 return " ";
             }
@@ -1064,12 +1041,14 @@ namespace Kartverket.Register.Helpers
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
             Organization munizipality = _registerService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
-
-            foreach (CoverageDataset coverage in item.Coverage)
+            if (munizipality != null)
             {
-                if (munizipality.systemId == coverage.MunicipalityId)
+                foreach (CoverageDataset coverage in item.Coverage)
                 {
-                    return coverage;
+                    if (munizipality.systemId == coverage.MunicipalityId)
+                    {
+                        return coverage;
+                    }
                 }
             }
             return null;
@@ -1113,7 +1092,7 @@ namespace Kartverket.Register.Helpers
 
         public static string GetNoteFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            if (item.register.IsDokMunicipal())
             {
                 return item.Notes;
             }
@@ -1126,33 +1105,6 @@ namespace Kartverket.Register.Helpers
                 }
                 else return null;
             }
-        }
-
-        public static CoverageDataset NewCoverage(Dataset dataset)
-        {
-            return new CoverageDataset()
-            {
-                dataset = dataset,
-                DatasetId = dataset.systemId,
-                Municipality = _registerService.GetOrganizationByUserName()
-            };
-        }
-
-        public static string IsWMSURL(string WmsUrl)
-        {
-            if (string.IsNullOrWhiteSpace(WmsUrl))
-            {
-                return "Nei";
-            }
-            else
-            {
-                return "Ja";
-            }
-        }
-
-        public static CoverageDataset GetCoverage(Dataset dataset)
-        {
-            return _registeritemService.GetMunicipalityCoverage(dataset);
         }
 
         public static bool SosiIsChecked(string statusId)
@@ -1169,6 +1121,44 @@ namespace Kartverket.Register.Helpers
         public static bool AccessEditDOKMunicipalBySelectedMunicipality(string selectedMunicipalityCode)
         {
             return _accessControl.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(selectedMunicipalityCode);
+        }
+
+        public static string GetSelectedMunicipalityName(CodelistValue selectedMunicipal)
+        {
+            if (selectedMunicipal != null)
+            {
+                return selectedMunicipal.name;
+            }
+            return "Velg kommune";
+        }
+
+        public static Organization GetMunicipalityAsOrganizaton(string municipalityCode)
+        {
+            if (!string.IsNullOrWhiteSpace(municipalityCode))
+            {
+                return _registeritemService.GetMunicipalOrganizationByNr(municipalityCode);
+            }
+            return null;
+        }
+
+        public static string GetDOKMunicipalConfirmationText(Organization municipality)
+        {
+            if (municipality != null)
+            {
+                string confirmed = "ikke ";
+                string lastDateConfirmedText = "";
+
+                if (municipality.DateConfirmedMunicipalDOK != null)
+                {
+                    if (municipality.DateConfirmedMunicipalDOK.Value.Year == DateTime.Now.Year)
+                    {
+                        confirmed = "";
+                        lastDateConfirmedText = " (" + municipality.DateConfirmedMunicipalDOK.Value.ToString("dd.mm.yyyy") + ")";
+                    }
+                }
+                return "Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText;
+            }
+            return "";
         }
     }
 }

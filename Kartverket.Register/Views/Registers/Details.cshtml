@@ -7,7 +7,8 @@
     Register mainRegister = HtmlHelperExtensions.mainRegister(Model);
     Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
-    CodelistValue selectedMunicipal = HtmlHelperExtensions.GetSelectedMunicipality(ViewBag.selectedMunicipality);
+    string municipalityCode = ViewBag.selectedMunicipalityCode;
+    Organization municipality = HtmlHelperExtensions.GetMunicipalityAsOrganizaton(municipalityCode); 
     }
 
 @section breadcrumb {
@@ -64,6 +65,10 @@
             {
                 <p>@Html.DisplayFor(model => model.description)</p>
             }
+            @if (Model.IsDokMunicipal())
+            {
+                <p>@HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality)</p>
+            }
             @if (Model.IsServiceAlertRegister())
             {
                 if (!Request.IsAuthenticated) { 
@@ -74,7 +79,6 @@
         </div>
 
         <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
-            @*<span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />*@
             <span class="small">Oppdatert: @Html.DisplayFor(model => model.modified)</span><br />
         </div>
 
@@ -149,12 +153,12 @@
                 {
                     if (Model.IsDokMunicipal())
                     {
-                        if (selectedMunicipal != null)
+                        if (municipalityCode != null)
                         {
-                            if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(selectedMunicipal.value))
+                            if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                             {
-                                <a href="/dok/kommunalt/@selectedMunicipal.value/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
-                                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(selectedMunicipal.value)">Legg til</a>
+                                <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
+                                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">Legg til</a>
                             }
                         }
                     }

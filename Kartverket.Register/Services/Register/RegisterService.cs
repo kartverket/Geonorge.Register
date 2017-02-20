@@ -340,9 +340,9 @@ namespace Kartverket.Register.Services.Register
                             //Støtter egenskapsspørringer
                             //Støtter tegnforklaring
                             //Oppgir dekningsområde
-                            if (resposeGetCapabilities && responseTime <= 4
+                            if ((resposeGetCapabilities && responseTime <= 4
                                 && supportCors && epsgSupport && featuresSupport
-                                && hasLegend && hasCoverage)
+                                && hasLegend && hasCoverage) || connectSoso)
                                 status = "good";
                             //Gul:
                             //Respons fra GetCapabilities

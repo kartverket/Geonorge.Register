@@ -261,6 +261,7 @@ namespace Kartverket.Register.Controllers
                     }
                     ViewBag.selectedMunicipality = municipality.name;
                     ViewBag.selectedMunicipalityCode = municipalityCode;
+                    ViewBag.statusList = _registerItemService.GetStatusSelectList(municipality);
                     return View(dokMunicipalList);
                 }
                 else {

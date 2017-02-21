@@ -247,7 +247,7 @@ namespace Kartverket.Register.Controllers
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
-                RegisterItem municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+                RegisterItem municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
                 Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
                 List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
 
@@ -261,7 +261,9 @@ namespace Kartverket.Register.Controllers
                     }
                     ViewBag.selectedMunicipality = municipality.name;
                     ViewBag.selectedMunicipalityCode = municipalityCode;
-                    ViewBag.statusList = _registerItemService.GetStatusSelectList(municipality);
+                    List<Status> statusDOKMunicipalList = CreateStatusDOKMunicipalList();
+
+                    ViewBag.statusDOKMunicipal = new SelectList(statusDOKMunicipalList, "value", "description", _registerItemService.GetDOKMunicipalStatus(municipality));
                     return View(dokMunicipalList);
                 }
                 else {
@@ -271,6 +273,8 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+        
+
 
         // POST: DOK-Municipal-Dataset
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -278,10 +282,18 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
-        public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode)
+        public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode, string statusDOKMunicipal)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
+                Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
+                if (municipality != null)
+                {
+                    municipality.StatusConfirmationMunicipalDOK = statusDOKMunicipal;
+                    municipality.DateConfirmedMunicipalDOK = DateTime.Now;
+                    _registerItemService.SaveEditedRegisterItem(municipality);
+                }
+
                 CoverageService coverage = new CoverageService(db);
                 coverage.SetCoverage(municipalityCode);
 
@@ -398,7 +410,7 @@ namespace Kartverket.Register.Controllers
 
         private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode, bool coverageFound)
         {
-            Organization municipality = _registerItemService.GetMunicipalOrganizationByNr(municipalityCode);
+            Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
             CoverageDataset coverage = new CoverageDataset
             {
                 CoverageId = Guid.NewGuid(),
@@ -523,6 +535,24 @@ namespace Kartverket.Register.Controllers
                     ViewBag.DokOrderBy = "_desc";
                 }
             }
+        }
+
+        /// <summary>
+        /// Creates a list of statuses for DOK Municipal register. 
+        /// </summary>
+        /// <returns></returns>
+        private static List<Status> CreateStatusDOKMunicipalList()
+        {
+            List<Status> statusDOKMunicipal = new List<Status>();
+            Status s1 = new Status();
+            s1.value = "draft";
+            s1.description = "I prosess";
+            Status s2 = new Status();
+            s2.value = "valid";
+            s2.description = "Utført";
+            statusDOKMunicipal.Add(s1);
+            statusDOKMunicipal.Add(s2);
+            return statusDOKMunicipal;
         }
     }
 }

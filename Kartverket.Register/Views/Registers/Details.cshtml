@@ -67,7 +67,8 @@
                 @Html.DisplayFor(model => model.description)
                 @if (Model.IsDokMunicipal())
                 {
-                    @HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality)
+                    <br />
+                    @Html.Raw(HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality));
                 }
             </p>
         }

@@ -47,12 +47,7 @@
                 <label>Kommunal bekreftelse:</label>
                 <div class="no-padding-bottom">
                     <div class="custom-select">
-                        @*@Html.DropDownList("statusList", null, htmlAttributes: new { @class = "form-control" })*@
-                        <select class = "form-control" value="sett status">
-                            <option selected>Ikke satt</option>
-                            <option value="done">Utført</option>
-                            <option value="inProcess">I prosess</option>
-                        </select>
+                        @Html.DropDownList("statusDOKMunicipal", null, "-- sett status --", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -69,7 +64,7 @@
                     <th style="width:5%"><span data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Coverage_Municipality">DEKNING</span></th>
                     <th style="width:15%"><span data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Kommentar">Merknad</span></th>
                     <th style="width:5%">Slett</th>
-                </tr>
+                </tr> 
             </thead>
             <tbody>
                 @for (int i = 0; i < Model.Count; i++)

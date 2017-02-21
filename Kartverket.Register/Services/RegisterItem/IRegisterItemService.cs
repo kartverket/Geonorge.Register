@@ -36,13 +36,19 @@ namespace Kartverket.Register.Services.RegisterItem
         SelectList GetStatusSelectList(Models.RegisterItem registerItem);
         SelectList GetBroaderItems(Guid? broaderItemId);
         CoverageDataset NewCoverage(Models.RegisterItem registerItem);
-        Organization GetMunicipalOrganizationByNr(string municipalityNr);
+        Organization GetMunicipalityOrganizationByNr(string municipalityNr);
         List<CodelistValue> GetMunicipalityList();
         CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDatasetOwnerId = null);
         void SaveNewCoverage(CoverageDataset coverage);
         void DeleteCoverage(CoverageDataset coverage);
         void Save();
-        CodelistValue GetMunicipalByNr(string municipalNr);
+        CodelistValue GetMunicipalityByNr(string municipalNr);
         Models.RegisterItem GetRegisterItemBySystemId(Guid systemId);
+        /// <summary>
+        /// Returns the confirmation status of municipal dataset
+        /// </summary>
+        /// <param name="municipality"></param>
+        /// <returns></returns>
+        string GetDOKMunicipalStatus(Models.RegisterItem municipality);
     }
 }

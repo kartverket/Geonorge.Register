@@ -134,7 +134,7 @@ namespace Kartverket.Register.Controllers
                 CreateDokMunicipalViewModel model = new CreateDokMunicipalViewModel();
                 model.Register = _registerService.GetDokMunicipalRegister();
                 model.MunicipalityCode = municipality;
-                model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(municipality);
+                model.DatasetOwner = _registerItemService.GetMunicipalityOrganizationByNr(municipality);
 
                 if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(model.MunicipalityCode))
                 {
@@ -162,7 +162,7 @@ namespace Kartverket.Register.Controllers
             {
                 ViewBag.SearchString = searchString;
 
-                model.DatasetOwner = _registerItemService.GetMunicipalOrganizationByNr(model.MunicipalityCode);
+                model.DatasetOwner = _registerItemService.GetMunicipalityOrganizationByNr(model.MunicipalityCode);
 
                 if (model.SelectedList != null)
                 {

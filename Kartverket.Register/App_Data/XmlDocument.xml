@@ -744,6 +744,12 @@
             Get organization by number
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDOKMunicipalList">
+            <summary>
+            Creates a list of statuses for DOK Municipal register. 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ReportController.Post(Kartverket.ReportApi.ReportQuery)">
             <summary>
             Return reports for DOK.
@@ -890,6 +896,20 @@
             Gets Url to current object
             </summary>
             <returns>Url</returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.IAccessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(System.String)">
+            <summary>
+            Checks if the user has access to create or edit DOK Municipal for selected municipality
+            </summary>
+            <param name="municipalityCode">Selected municipality code</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.RegisterItem.IRegisterItemService.GetDOKMunicipalStatus(Kartverket.Register.Models.RegisterItem)">
+            <summary>
+            Returns the confirmation status of municipal dataset
+            </summary>
+            <param name="municipality"></param>
+            <returns></returns>
         </member>
         <member name="T:Resources.UI">
             <summary>

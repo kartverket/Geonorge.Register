@@ -278,7 +278,7 @@ namespace Kartverket.Register.Controllers
             if (filter != null && !string.IsNullOrEmpty(filter.municipality))
             {
                 Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
-                Models.Organization org = regItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                Models.Organization org = regItemService.GetMunicipalityOrganizationByNr(filter.municipality);
                 if (org != null)
                 {
                     selectedDOKMunicipality = org.name;

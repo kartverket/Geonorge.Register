@@ -80,7 +80,7 @@ namespace Kartverket.Register.Services.Register
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
                     AddNationalDatasets(registerItems);
-                    Models.RegisterItem municipal = _registerItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                    Models.RegisterItem municipal = _registerItemService.GetMunicipalityOrganizationByNr(filter.municipality);
 
                     if (municipal != null)
                     {

@@ -5,6 +5,7 @@ using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -1003,7 +1004,7 @@ namespace Kartverket.Register.Helpers
             }
             else
             {
-                return _registeritemService.GetMunicipalByNr(selectedMunicipalityCode.ToString());
+                return _registeritemService.GetMunicipalityByNr(selectedMunicipalityCode.ToString());
             }
         }
 
@@ -1136,7 +1137,7 @@ namespace Kartverket.Register.Helpers
         {
             if (!string.IsNullOrWhiteSpace(municipalityCode))
             {
-                return _registeritemService.GetMunicipalOrganizationByNr(municipalityCode);
+                return _registeritemService.GetMunicipalityOrganizationByNr(municipalityCode);
             }
             return null;
         }
@@ -1147,18 +1148,35 @@ namespace Kartverket.Register.Helpers
             {
                 string confirmed = "ikke ";
                 string lastDateConfirmedText = "";
+                string status = "danger";
+                string text = "Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText;
 
-                if (municipality.DateConfirmedMunicipalDOK != null)
+                if (municipality.StatusConfirmationMunicipalDOK == "draft")
                 {
-                    if (municipality.DateConfirmedMunicipalDOK.Value.Year == DateTime.Now.Year)
-                    {
-                        confirmed = "";
-                        lastDateConfirmedText = " (" + municipality.DateConfirmedMunicipalDOK.Value.ToString("dd.mm.yyyy") + ")";
-                    }
+                    status = "warning";
+                    lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
+                    text = "Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText;
                 }
-                return "Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText;
+                else if (municipality.StatusConfirmationMunicipalDOK == "valid")
+                {
+                    status = "success";
+                    confirmed = "";
+                    lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
+                }
+
+                return "<label class='label-" + status + " label auto-width'>" + text + "</label>";
             }
             return "";
+        }
+
+        private static string GetlastDayConfirmed(Organization municipality, string lastDateConfirmedText)
+        {
+            if (municipality.DateConfirmedMunicipalDOK != null)
+            {
+                lastDateConfirmedText = " (" + municipality.DateConfirmedMunicipalDOK.Value.ToString("dd.MM.yyyy") + ")";
+            }
+
+            return lastDateConfirmedText;
         }
     }
 }

@@ -484,7 +484,7 @@ namespace Kartverket.Register.Services.RegisterItem
             _dbContext.SaveChanges();
         }
 
-        public Organization GetMunicipalOrganizationByNr(string municipalityNr)
+        public Organization GetMunicipalityOrganizationByNr(string municipalityNr)
         {
             var queryResults = from o in _dbContext.Organizations
                                where o.MunicipalityCode == municipalityNr
@@ -493,7 +493,7 @@ namespace Kartverket.Register.Services.RegisterItem
             return queryResults.FirstOrDefault();
         }
 
-        public CodelistValue GetMunicipalByNr(string municipalNr)
+        public CodelistValue GetMunicipalityByNr(string municipalNr)
         {
             var queryResult = from c in _dbContext.CodelistValues
                               where c.value == municipalNr
@@ -588,6 +588,15 @@ namespace Kartverket.Register.Services.RegisterItem
             var queryResult = from c in _dbContext.RegisterItems
                               where c.systemId == systemId
                               select c;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        public string GetDOKMunicipalStatus(Models.RegisterItem municipality)
+        {
+            var queryResult = from c in _dbContext.Organizations
+                              where c.systemId == municipality.systemId
+                              select c.StatusConfirmationMunicipalDOK;
 
             return queryResult.FirstOrDefault();
         }

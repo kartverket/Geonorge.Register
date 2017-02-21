@@ -12,6 +12,11 @@ namespace Kartverket.Register.Services
         bool IsMunicipalUser();
         Organization MunicipalUserOrganization();
         CodelistValue GetMunicipality();
+        /// <summary>
+        /// Checks if the user has access to create or edit DOK Municipal for selected municipality
+        /// </summary>
+        /// <param name="municipalityCode">Selected municipality code</param>
+        /// <returns>bool</returns>
         bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode);
         bool IsOwner(string owner, string user);
     }

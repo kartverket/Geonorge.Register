@@ -184,7 +184,7 @@ namespace Kartverket.Register.Models.Api
                 if (filter != null && !string.IsNullOrEmpty(filter.municipality))
                 {
                     Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
-                    Models.Organization org = regItemService.GetMunicipalOrganizationByNr(filter.municipality);
+                    Models.Organization org = regItemService.GetMunicipalityOrganizationByNr(filter.municipality);
                     if (org != null)
                     {
                         var coverage = d.Coverage.Where(c => c.DatasetId == d.systemId && c.MunicipalityId == org.systemId).FirstOrDefault();

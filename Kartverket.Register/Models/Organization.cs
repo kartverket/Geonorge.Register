@@ -81,6 +81,7 @@ namespace Kartverket.Register.Models
         public string BoundingBoxWest { get; set; }
         [Display(Name = "Dato bekreftet for registrering av kommunalt DOK")]
         public DateTime? DateConfirmedMunicipalDOK { get; set; }
+        public string StatusConfirmationMunicipalDOK { get; set; }
 
         public virtual string GetOrganizationEditUrl()
         {

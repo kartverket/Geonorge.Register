@@ -292,6 +292,7 @@ namespace Kartverket.Register.Controllers
                     municipality.StatusConfirmationMunicipalDOK = statusDOKMunicipal;
                     municipality.DateConfirmedMunicipalDOK = DateTime.Now;
                     _registerItemService.SaveEditedRegisterItem(municipality);
+                    
                 }
 
                 CoverageService coverage = new CoverageService(db);

@@ -1149,13 +1149,12 @@ namespace Kartverket.Register.Helpers
                 string confirmed = "ikke ";
                 string lastDateConfirmedText = "";
                 string status = "danger";
-                string text = "Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText;
 
                 if (municipality.StatusConfirmationMunicipalDOK == "draft")
                 {
                     status = "warning";
                     lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
-                    text = "Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText;
+                    return "<label class='label-" + status + " label auto-width'>Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {
@@ -1164,7 +1163,7 @@ namespace Kartverket.Register.Helpers
                     lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
                 }
 
-                return "<label class='label-" + status + " label auto-width'>" + text + "</label>";
+                return "<label class='label-" + status + " label auto-width'>Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
             }
             return "";
         }

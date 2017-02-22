@@ -127,9 +127,22 @@ namespace Kartverket.Register.Models
         {
             if (StatusConfirmationMunicipalDOK != statusDOKMunicipal)
             {
-                StatusConfirmationMunicipalDOK = statusDOKMunicipal;
-                DateConfirmedMunicipalDOK = DateTime.Now;
+                SetStatus(statusDOKMunicipal);
+            }
+            else if (DateConfirmedMunicipalDOK != null)
+            {
+                if (DateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year)
+                {
+                    SetStatus(statusDOKMunicipal);
+                }
             };
+
+        }
+
+        private void SetStatus(string statusDOKMunicipal)
+        {
+            StatusConfirmationMunicipalDOK = statusDOKMunicipal;
+            DateConfirmedMunicipalDOK = DateTime.Now;
         }
     }
 

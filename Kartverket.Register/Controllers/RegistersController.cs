@@ -62,11 +62,16 @@ namespace Kartverket.Register.Controllers
             sorting = DefaultSortingServiceAlertRegister(sorting, register);
             if (register != null)
             {
-                if (register.name == "Det offentlige kartgrunnlaget - Kommunalt" && string.IsNullOrEmpty(filter.municipality))
+                if (register.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
                 {
                     CodelistValue municipality = _accessControlService.GetMunicipality();
-                    if (municipality != null) return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
+                    if (municipality != null)
+                    {
+                        ViewBagOrganizationMunizipality(municipality.value);
+                        return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
+                    }
                 }
+                ViewBagOrganizationMunizipality(filter.municipality);
                 register = RegisterItems(register, filter, page);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, register);
                 return View(register);
@@ -75,6 +80,11 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
+        }
+
+        private void ViewBagOrganizationMunizipality(string municipalityCode)
+        {
+            ViewBag.organizationMunicipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
         }
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
@@ -273,7 +283,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        
+
 
 
         // POST: DOK-Municipal-Dataset
@@ -292,7 +302,7 @@ namespace Kartverket.Register.Controllers
                     municipality.StatusConfirmationMunicipalDOK = statusDOKMunicipal;
                     municipality.DateConfirmedMunicipalDOK = DateTime.Now;
                     _registerItemService.SaveEditedRegisterItem(municipality);
-                    
+
                 }
 
                 CoverageService coverage = new CoverageService(db);
@@ -439,7 +449,8 @@ namespace Kartverket.Register.Controllers
                 Dataset dataset = db.Datasets.Find(registerItem.systemId);
                 return dataset.datasetowner.name;
             }
-            else if (registerItem.register.containedItemClass == "ServiceAlert") {
+            else if (registerItem.register.containedItemClass == "ServiceAlert")
+            {
                 ServiceAlert serviceAlert = db.ServiceAlerts.Find(registerItem.systemId);
                 return serviceAlert.Owner;
             }

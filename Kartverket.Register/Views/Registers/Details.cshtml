@@ -8,7 +8,7 @@
     Register parent = Model.parentRegister;
     string parentRegister = HtmlHelperExtensions.HasParent(Model);
     string municipalityCode = ViewBag.selectedMunicipalityCode;
-    Organization municipality = HtmlHelperExtensions.GetMunicipalityAsOrganizaton(municipalityCode);
+    Organization municipality = ViewBag.organizationMunicipality;
 }
 
 @section breadcrumb {
@@ -170,10 +170,6 @@
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
                 }
             }
-            @*if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
-                {
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
-                }*@
         }
 
         @if (Model.HasParentRegister())

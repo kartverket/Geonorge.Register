@@ -486,11 +486,14 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public Organization GetMunicipalityOrganizationByNr(string municipalityNr)
         {
+            if (!string.IsNullOrWhiteSpace(municipalityNr))
+            {
             var queryResults = from o in _dbContext.Organizations
                                where o.MunicipalityCode == municipalityNr
                                select o;
-
             return queryResults.FirstOrDefault();
+            }
+            return null;
         }
 
         public CodelistValue GetMunicipalityByNr(string municipalNr)

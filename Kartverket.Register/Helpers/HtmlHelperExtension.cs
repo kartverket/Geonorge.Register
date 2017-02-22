@@ -1133,14 +1133,6 @@ namespace Kartverket.Register.Helpers
             return "Velg kommune";
         }
 
-        public static Organization GetMunicipalityAsOrganizaton(string municipalityCode)
-        {
-            if (!string.IsNullOrWhiteSpace(municipalityCode))
-            {
-                return _registeritemService.GetMunicipalityOrganizationByNr(municipalityCode);
-            }
-            return null;
-        }
 
         public static string GetDOKMunicipalConfirmationText(Organization municipality)
         {

@@ -257,7 +257,7 @@ namespace Kartverket.Register.Controllers
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
-                RegisterItem municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
+                Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
                 Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
                 List<RegisterItem> municipalDatasets = _registerService.GetDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
 
@@ -273,7 +273,7 @@ namespace Kartverket.Register.Controllers
                     ViewBag.selectedMunicipalityCode = municipalityCode;
                     List<Status> statusDOKMunicipalList = CreateStatusDOKMunicipalList();
 
-                    ViewBag.statusDOKMunicipal = new SelectList(statusDOKMunicipalList, "value", "description", _registerItemService.GetDOKMunicipalStatus(municipality));
+                    ViewBag.statusDOKMunicipal = new SelectList(statusDOKMunicipalList, "value", "description", DOKmunicipalStatus(municipality));
                     return View(dokMunicipalList);
                 }
                 else {
@@ -283,6 +283,27 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+        private string DOKmunicipalStatus(Organization municipality)
+        {
+            if (municipality.DateConfirmedMunicipalDOK != null)
+            {
+                if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
+                {
+                    return null;
+                }
+                return municipality.StatusConfirmationMunicipalDOK;
+            }
+            return null;
+        }
+
+        private static bool lastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmedMunicipalDOK)
+        {
+            if (dateConfirmedMunicipalDOK != null)
+            {
+                return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
+            }
+            return false;
+        }
 
 
 

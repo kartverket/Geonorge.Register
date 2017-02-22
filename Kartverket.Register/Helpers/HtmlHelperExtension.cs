@@ -1165,7 +1165,11 @@ namespace Kartverket.Register.Helpers
 
         private static bool lastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmedMunicipalDOK)
         {
-            return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
+            if (dateConfirmedMunicipalDOK != null)
+            {
+                return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
+            }
+            return false;
         }
 
         private static string GetlastDayConfirmed(Organization municipality)

@@ -299,10 +299,8 @@ namespace Kartverket.Register.Controllers
                 Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
                 if (municipality != null)
                 {
-                    municipality.StatusConfirmationMunicipalDOK = statusDOKMunicipal;
-                    municipality.DateConfirmedMunicipalDOK = DateTime.Now;
+                    municipality.UpdateDOKMunicipalStatus(statusDOKMunicipal);
                     _registerItemService.SaveEditedRegisterItem(municipality);
-
                 }
 
                 CoverageService coverage = new CoverageService(db);

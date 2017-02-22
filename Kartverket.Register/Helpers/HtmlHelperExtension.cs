@@ -1141,18 +1141,21 @@ namespace Kartverket.Register.Helpers
                 string confirmed = "ikke ";
                 string lastDateConfirmedText = "";
                 string status = "danger";
-
-                if (municipality.StatusConfirmationMunicipalDOK == "draft")
+                if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
+                {
+                    lastDateConfirmedText = GetlastDayConfirmed(municipality);
+                }
+                else if (municipality.StatusConfirmationMunicipalDOK == "draft")
                 {
                     status = "warning";
-                    lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
+                    lastDateConfirmedText = GetlastDayConfirmed(municipality);
                     return "<label class='label-" + status + " label auto-width'>Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {
                     status = "success";
                     confirmed = "";
-                    lastDateConfirmedText = GetlastDayConfirmed(municipality, lastDateConfirmedText);
+                    lastDateConfirmedText = GetlastDayConfirmed(municipality);
                 }
 
                 return "<label class='label-" + status + " label auto-width'>Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
@@ -1160,14 +1163,19 @@ namespace Kartverket.Register.Helpers
             return "";
         }
 
-        private static string GetlastDayConfirmed(Organization municipality, string lastDateConfirmedText)
+        private static bool lastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmedMunicipalDOK)
+        {
+            return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
+        }
+
+        private static string GetlastDayConfirmed(Organization municipality)
         {
             if (municipality.DateConfirmedMunicipalDOK != null)
             {
-                lastDateConfirmedText = " (" + municipality.DateConfirmedMunicipalDOK.Value.ToString("dd.MM.yyyy") + ")";
+                return " (" + municipality.DateConfirmedMunicipalDOK.Value.ToString("dd.MM.yyyy") + ")";
             }
 
-            return lastDateConfirmedText;
+            return null;
         }
     }
 }

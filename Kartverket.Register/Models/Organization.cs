@@ -123,6 +123,14 @@ namespace Kartverket.Register.Models
 	               && !string.IsNullOrEmpty(BoundingBoxWest);
 	    }
 
+        internal void UpdateDOKMunicipalStatus(string statusDOKMunicipal)
+        {
+            if (StatusConfirmationMunicipalDOK != statusDOKMunicipal)
+            {
+                StatusConfirmationMunicipalDOK = statusDOKMunicipal;
+                DateConfirmedMunicipalDOK = DateTime.Now;
+            };
+        }
     }
 
     public static class OrganizationType

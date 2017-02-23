@@ -309,9 +309,13 @@ namespace Kartverket.Register.Services.Register
                             var featuresSupport = false;
                             var hasLegend = false;
                             var hasCoverage = false;
+                            var connectSoso = false;
 
                             if(data.connect.vurdering == "yes")
                                 resposeGetCapabilities = true;
+
+                            if (data.connect.vurdering == "soso")
+                                connectSoso = true;
 
                             if (data.cors.vurdering == "yes")
                                 supportCors = true;
@@ -336,9 +340,9 @@ namespace Kartverket.Register.Services.Register
                             //Støtter egenskapsspørringer
                             //Støtter tegnforklaring
                             //Oppgir dekningsområde
-                            if (resposeGetCapabilities && responseTime <= 4
+                            if ((resposeGetCapabilities && responseTime <= 4
                                 && supportCors && epsgSupport && featuresSupport
-                                && hasLegend && hasCoverage)
+                                && hasLegend && hasCoverage) || connectSoso)
                                 status = "good";
                             //Gul:
                             //Respons fra GetCapabilities
@@ -347,8 +351,8 @@ namespace Kartverket.Register.Services.Register
                             //EPSG: 25833, 25835 eller 32633
                             //Støtter tegnforklaring
                             //Oppgir dekningsområde
-                            else if (resposeGetCapabilities && responseTime <= 10
-                                && supportCors && epsgSupport && hasLegend && hasCoverage)
+                            else if ((resposeGetCapabilities && responseTime <= 10
+                                && supportCors && epsgSupport && hasLegend && hasCoverage) || connectSoso)
                                 status = "useable";
                             //Rød:
                             //Feiler på en av testene til gul

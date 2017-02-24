@@ -161,6 +161,7 @@
                         {
                             if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                             {
+                            <a href="/dok/kommunalt/@municipalityCode/registrer-egenhetsvurdering" class="btn btn-default btn-space pull-right">Registrer egnethet</a>
                             <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
                             <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">Legg til</a>
                         }

@@ -680,6 +680,10 @@
     <Compile Include="Migrations\201702201309528_AddStatusConfirmationMunicipalDOK.Designer.cs">
       <DependentUpon>201702201309528_AddStatusConfirmationMunicipalDOK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702240803598_AddDokSuitabilityAssessmentAttributes.cs" />
+    <Compile Include="Migrations\201702240803598_AddDokSuitabilityAssessmentAttributes.Designer.cs">
+      <DependentUpon>201702240803598_AddDokSuitabilityAssessmentAttributes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1503,6 +1507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702201309528_AddStatusConfirmationMunicipalDOK.resx">
       <DependentUpon>201702201309528_AddStatusConfirmationMunicipalDOK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702240803598_AddDokSuitabilityAssessmentAttributes.resx">
+      <DependentUpon>201702240803598_AddDokSuitabilityAssessmentAttributes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

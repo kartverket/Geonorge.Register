@@ -299,10 +299,10 @@ namespace Kartverket.Register.Models
             return datasetthumbnail;
         }
 
-        public bool GetCoverageConfirmedByUser(Guid datasetOwnerId) {
+        public bool GetCoverageConfirmedByUser(Guid municipalityId) {
             foreach (CoverageDataset coverage in Coverage)
             {
-                if (coverage.MunicipalityId == datasetOwnerId)
+                if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.ConfirmedDok;
                 }
@@ -310,11 +310,11 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        public bool GetCoverageByUser(Guid datasetOwnerId)
+        public bool GetCoverageByUser(Guid municipalityId)
         {
             foreach (CoverageDataset coverage in Coverage)
             {
-                if (coverage.MunicipalityId == datasetOwnerId)
+                if (coverage.MunicipalityId == municipalityId)
                 {
                     return coverage.Coverage;
                 }
@@ -322,13 +322,13 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        public string GetCoverageNoteByUser(Guid datasetownerId)
+        public string GetCoverageNoteByUser(Guid municipalityId)
         {
             if (IsNationalDataset())
             {
                 foreach (CoverageDataset coverage in Coverage)
                 {
-                    if (coverage.MunicipalityId == datasetownerId)
+                    if (coverage.MunicipalityId == municipalityId)
                     {
                         return coverage.Note;
                     }
@@ -338,6 +338,101 @@ namespace Kartverket.Register.Models
             else {
                 return Notes;
             }
+        }
+
+        public bool GetCoverageRegionalPlaneByUser(Guid municipalityId) {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.RegionalPlan;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageMunicipalSocialPlanByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.MunicipalSocialPlan;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageMunicipalLandUseElementPlanByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.MunicipalLandUseElementPlan;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageZoningPlanAreaByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ZoningPlanArea;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageZoningPlanDetailsByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.ZoningPlanDetails;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageBuildingMatterByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.BuildingMatter;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoveragePartitionOffByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.PartitionOff;
+                }
+            }
+            return false;
+        }
+
+        public bool GetCoverageEenvironmentalImpactAssessmentByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.MunicipalSocialPlan;
+                }
+            }
+            return false;
         }
 
         public CoverageDataset GetCoverageByOwner(Guid owner)

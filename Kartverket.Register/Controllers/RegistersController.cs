@@ -82,10 +82,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-        private void ViewBagOrganizationMunizipality(string municipalityCode)
-        {
-            ViewBag.organizationMunicipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
-        }
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
@@ -370,6 +366,64 @@ namespace Kartverket.Register.Controllers
         }
 
 
+        // GET: Edit DOK-Municipal-Suitability Assessment
+        [Authorize]
+        [Route("dok/kommunalt/{municipalityCode}/registrer-egenhetsvurdering")]
+        public ActionResult EditDokSuitabilityAssessment(string municipalityCode)
+        {
+            if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
+            {
+                Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
+                Models.Register dokMunicipalRegister = _registerService.GetDokMunicipalRegister();
+                List<RegisterItem> datasets = _registerService.GetConfirmdDatasetBySelectedMunicipality(dokMunicipalRegister, municipality);
+
+                if (municipality != null)
+                {
+                    List<DokMunicipalSuitabilityAssessmentRow> datasetsAsSuitabilityAssesmentRows = new List<DokMunicipalSuitabilityAssessmentRow>();
+                    foreach (Dataset dataset in datasets)
+                    {
+                        DokMunicipalSuitabilityAssessmentRow row = new DokMunicipalSuitabilityAssessmentRow(dataset, municipality);
+                        datasetsAsSuitabilityAssesmentRows.Add(row);
+                    }
+
+                    return View(datasetsAsSuitabilityAssesmentRows);
+                }
+                else {
+                    return HttpNotFound();
+                }
+            }
+            return HttpNotFound();
+        }
+
+
+        // POST: DOK-Municipal-Dataset
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [Route("dok/kommunalt/{municipalityCode}/registrer-egenhetsvurdering")]
+        [Authorize]
+        public ActionResult EditDokSuitabilityAssessment(List<DokMunicipalSuitabilityAssessmentRow> datasetsAsSuitabilityAssesmentRows, string municipalityCode)
+        {
+            if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
+            {
+                CoverageService coverage = new CoverageService(db);
+                coverage.SetCoverage(municipalityCode);
+
+                foreach (DokMunicipalSuitabilityAssessmentRow item in datasetsAsSuitabilityAssesmentRows)
+                {
+                    Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
+                    originalDataset.modified = DateTime.Now;
+                    CoverageDataset originalCoverage = originalDataset.GetCoverageByOwner(item.MunicipalityId);
+                    originalCoverage.UpdateCoverageDataset(item);
+                }
+
+                db.SaveChanges();
+                return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
+            }
+            return HttpNotFound();
+        }
+
+
         // GET: Registers/Delete/5
         [Authorize]
         [Route("slett/{registername}")]
@@ -436,6 +490,11 @@ namespace Kartverket.Register.Controllers
             ViewBag.ownerId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
             ViewBag.parentRegisterId = new SelectList(db.Registers.Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
             ViewBag.containedItemClass = new SelectList(db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
+        }
+
+        private void ViewBagOrganizationMunizipality(string municipalityCode)
+        {
+            ViewBag.organizationMunicipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
         }
 
         private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode, bool coverageFound)

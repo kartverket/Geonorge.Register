@@ -720,6 +720,7 @@
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
+    <Compile Include="Models\ViewModels\DokMunicipalSuitabilityAssessmentRow.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalRow.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\Api\Item.cs" />
@@ -1195,6 +1196,7 @@
     <Content Include="settings.config" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
+    <Content Include="Views\Registers\EditDokSuitabilityAssessment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

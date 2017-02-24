@@ -37,5 +37,6 @@ namespace Kartverket.Register.Services.Register
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
         string GetAtomFeedStatus(string uuid, bool autoUpdate, string currentStatus);
         string GetWfsStatus(string uuid, bool autoUpdate, string currentStatus);
+        List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality);
     }
 }

@@ -1197,6 +1197,8 @@
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokSuitabilityAssessment.cshtml" />
+    <Content Include="Views\Registers\EditDokMunicipalTest.cshtml" />
+    <Content Include="Views\Registers\EditDokMunicipalTest - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

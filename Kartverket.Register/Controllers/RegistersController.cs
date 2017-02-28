@@ -249,7 +249,7 @@ namespace Kartverket.Register.Controllers
         // GET: Edit DOK-Municipal-Dataset
         [Authorize]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
-        public ActionResult EditDokMunicipal(string municipalityCode)
+        public ActionResult EditDokMunicipalTest(string municipalityCode)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
@@ -309,7 +309,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
-        public ActionResult EditDokMunicipal(List<DokMunicipalRow> dokMunicipalList, string municipalityCode, string statusDOKMunicipal)
+        public ActionResult EditDokMunicipalTest(List<DokMunicipalRow> dokMunicipalList, string municipalityCode, string statusDOKMunicipal)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
@@ -352,7 +352,6 @@ namespace Kartverket.Register.Controllers
                         }
                         else
                         {
-
                             db.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET ConfirmedDok = @p0 , Coverage = @p1 , Note = @p2 WHERE CoverageId=@p3", item.Confirmed, coverageFound, item.Note, originalCoverage.CoverageId);
                         }
                     }

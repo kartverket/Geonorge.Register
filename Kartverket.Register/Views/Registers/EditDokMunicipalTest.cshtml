@@ -1,0 +1,181 @@
+﻿@using Kartverket.Register.Models.ViewModels
+@using Resources
+@model List<DokMunicipalRow>
+
+@{
+    string selectedMunicipal = ViewBag.selectedMunicipality;
+}
+
+@section breadcrumb {
+    <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
+    <li>Rediger liste</li>
+}
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("table").tablesorter({
+                headers: {
+                    5: { usNumberFormat: true },
+                    7: { sorter: false },
+                    8: { sorter: false }
+                }
+            });
+        });
+
+        function cbChecked(id) {
+            var className = "cb" + id;
+            var element = document.getElementsByClassName(className);
+            var checked = element.item(0).checked;
+
+            if (checked) {
+                document.getElementById(id).innerHTML = '1';
+            } else {
+                document.getElementById(id).innerHTML = '0';
+            }
+        }
+    </script>
+}
+
+@using (Html.BeginForm("EditDokMunicipalTest", "Registers", FormMethod.Post))
+{
+    <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
+    <div class="clearfix"></div>
+    <div class="row">
+        <div class="col-md-8">
+            <h2>@selectedMunicipal</h2>
+        </div>
+        <div class="col-md-4" style="margin-top: 25px;">
+            <label>Kommunal bekreftelse:</label>
+            <div class="no-padding-bottom">
+                <div class="custom-select">
+                    @Html.DropDownList("statusDOKMunicipal", null, "-- sett status --", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
+                <li class="tab active pull-right"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">Egnethetsvurdering</a></li>
+                <li class="tab pull-right"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">Dekning</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
+                <thead>
+                    <tr>
+                        <th colspan="2"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:rgb(234, 234, 234)">
+                    @for (int i = 0; i < Model.Count; i++)
+                {
+                        <tr style="height:111px;">
+                            @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
+                            @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
+                            @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
+
+                            <td title="Datasett: @Model[i].Name">
+                                @Model[i].Name
+                                @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                            </td>
+                            <td><a href="#" class="badge help-text-toggle">i</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-8 ">
+            <div class="tab-content">
+                <div class="tab-pane active" style="margin-top:0px" id="coverage">
+                    <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th><span data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft</span></th>
+                                <th><span data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Coverage_Municipality">DEKNING</span></th>
+                                <th><span data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Kommentar">Merknad</span></th>
+                                <th>Slett</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr style="height:111px;">
+                                    <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
+                                        @if (Model[i].Confirmed)
+                                        {
+                                            <span id="@i" class="hidden">1</span>
+                                        }
+                                        else {
+                                            <span id="@i" class="hidden">0</span>
+                                        }
+                                        @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
+                                    </td>
+                                    <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
+                                        @if (Model[i].Coverage)
+                                        {
+                                            <span>JA</span>
+                                        }
+                                        else
+                                        {
+                                            <span>NEI</span>
+                                        }
+                                    </td>
+                                    <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
+                                        @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
+                                    </td>
+                                    <td id="cbDelete">
+                                        @if (Model[i].IsMunicipalDataset())
+                                        {
+                                            @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane" style="margin-top:0px" id="suitability">
+                    <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Egnethet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.Count; i++)
+                            {
+                                <tr>
+                                    <td style="height:111px" ;>
+                                        <select name="suitability" multiple class="chosen-select form-control" id="multiple-label-example" size="3">
+                                            <option selected="selected">Regionplan</option>
+                                            <option selected="selected">Byggesak</option>
+                                            <option selected="selected">Fradeling</option>
+                                            <option selected="selected">KU og ROS for pbl-planer</option>
+                                            <option selected="selected">Reguleringsplan - område</option>
+                                            <option selected="selected">Reguleringsplan - detalj</option>
+                                            <option selected="selected">kommuneplanens arealdel</option>
+                                            <option selected="selected">kommuneplanens samfunnsdel</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+        </div>
+        <div class="col-sm-10 text-right">
+            <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
+            <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
+        </div>
+    </div>
+}

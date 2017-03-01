@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Kartverket.Register.Models.ViewModels
 {
-    public class DokMunicipalRow
+    public class DokMunicipalEdit
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -19,8 +19,16 @@ namespace Kartverket.Register.Models.ViewModels
         public string Note { get; set; }
         public bool Delete { get; set; }
         public Guid MunicipalityId { get; set; }
+        public bool RegionalPlan { get; set; }
+        public bool MunicipalSocialPlan { get; set; }
+        public bool MunicipalLandUseElementPlan { get; set; }
+        public bool ZoningPlanArea { get; set; }
+        public bool ZoningPlanDetails { get; set; }
+        public bool BuildingMatter { get; set; }
+        public bool PartitionOff { get; set; }
+        public bool EnvironmentalImpactAssessment { get; set; }
 
-        public DokMunicipalRow(Dataset dataset, RegisterItem municipality)
+        public DokMunicipalEdit(Dataset dataset, RegisterItem municipality)
         {
             Id = dataset.systemId;
             Name = dataset.name;
@@ -37,9 +45,17 @@ namespace Kartverket.Register.Models.ViewModels
             Coverage = dataset.GetCoverageByUser(municipality.systemId);
             Note = dataset.GetCoverageNoteByUser(municipality.systemId);
             Delete = false;
+            RegionalPlan = dataset.GetCoverageRegionalPlaneByUser(municipality.systemId);
+            MunicipalSocialPlan = dataset.GetCoverageMunicipalSocialPlanByUser(municipality.systemId);
+            MunicipalLandUseElementPlan = dataset.GetCoverageMunicipalLandUseElementPlanByUser(municipality.systemId);
+            ZoningPlanArea = dataset.GetCoverageZoningPlanAreaByUser(municipality.systemId);
+            ZoningPlanDetails = dataset.GetCoverageZoningPlanDetailsByUser(municipality.systemId);
+            BuildingMatter = dataset.GetCoverageBuildingMatterByUser(municipality.systemId);
+            PartitionOff = dataset.GetCoveragePartitionOffByUser(municipality.systemId);
+            EnvironmentalImpactAssessment = dataset.GetCoverageEenvironmentalImpactAssessmentByUser(municipality.systemId);
         }
 
-        public DokMunicipalRow() {
+        public DokMunicipalEdit() {
 
         }
 

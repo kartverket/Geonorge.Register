@@ -192,19 +192,19 @@
                     </div>
 
 
-                    <table id="myTable" class="tablesorter table-responsive table text-center" style="width:100%">
+                    <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
                         <thead>
                             <tr>
                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                <th colspan="2"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TOODO">Region-plan</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Kommune-planens samfunns-del</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Kommune-planens areal-del</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Regulerings-plan-område</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Regulerings-plan–detalj</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Byggesak</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">Fradeling</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" data-placement="bottom" title="TODO">KU og ROS for pbl-planer</span></th>
+                                <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TOODO">Region-plan</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Kommune-planens samfunns-del</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Kommune-planens areal-del</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Regulerings-plan-område</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Regulerings-plan–detalj</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Byggesak</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">Fradeling</span></th>
+                                <th class="text-center"><span data-toggle="tooltip" title="TODO">KU og ROS for pbl-planer</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -216,46 +216,54 @@
                                         @Model[i].Name
                                         @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
                                     </td>
-                                    <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle">i</a></td>
-                                    <td>
+                                    <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="Regionplan">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="Byggesak">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="Fradeling">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
+                                    </td>
+                                </tr>
+                                <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                    <td colspan="3" style="padding:0px">
+                                        <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
+                                            <b>Etat:</b> @Model[i].Owner <br />
+                                            <b>DOK status:</b> @Model[i].NationalDokStatus
+                                        </label>
                                     </td>
                                 </tr>
                             }

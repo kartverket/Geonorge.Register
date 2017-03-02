@@ -249,7 +249,7 @@ namespace Kartverket.Register.Controllers
         // GET: Edit DOK-Municipal-Dataset
         [Authorize]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
-        public ActionResult EditDokMunicipalTest(string municipalityCode)
+        public ActionResult EditDokMunicipal(string municipalityCode)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
@@ -259,10 +259,10 @@ namespace Kartverket.Register.Controllers
 
                 if (municipality != null)
                 {
-                    List<DokMunicipalRow> dokMunicipalList = new List<DokMunicipalRow>();
+                    List<DokMunicipalEdit> dokMunicipalList = new List<DokMunicipalEdit>();
                     foreach (Dataset dataset in municipalDatasets)
                     {
-                        DokMunicipalRow row = new DokMunicipalRow(dataset, municipality);
+                        DokMunicipalEdit row = new DokMunicipalEdit(dataset, municipality);
                         dokMunicipalList.Add(row);
                     }
                     ViewBag.selectedMunicipality = municipality.name;
@@ -309,7 +309,7 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
         [Authorize]
-        public ActionResult EditDokMunicipalTest(List<DokMunicipalRow> dokMunicipalList, string municipalityCode, string statusDOKMunicipal)
+        public ActionResult EditDokMunicipal(List<DokMunicipalEdit> dokMunicipalList, string municipalityCode, string statusDOKMunicipal)
         {
             if (_accessControlService.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(municipalityCode))
             {
@@ -323,7 +323,7 @@ namespace Kartverket.Register.Controllers
                 CoverageService coverage = new CoverageService(db);
                 coverage.SetCoverage(municipalityCode);
 
-                foreach (DokMunicipalRow item in dokMunicipalList)
+                foreach (DokMunicipalEdit item in dokMunicipalList)
                 {
                     Dataset originalDataset = (Dataset)_registerItemService.GetRegisterItemBySystemId(item.Id);
                     originalDataset.modified = DateTime.Now;
@@ -496,7 +496,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.organizationMunicipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
         }
 
-        private CoverageDataset CreateNewCoverage(DokMunicipalRow item, Dataset originalDataset, string municipalityCode, bool coverageFound)
+        private CoverageDataset CreateNewCoverage(DokMunicipalEdit item, Dataset originalDataset, string municipalityCode, bool coverageFound)
         {
             Organization municipality = _registerItemService.GetMunicipalityOrganizationByNr(municipalityCode);
             CoverageDataset coverage = new CoverageDataset

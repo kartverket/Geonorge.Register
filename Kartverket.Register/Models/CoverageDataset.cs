@@ -53,7 +53,7 @@ namespace Kartverket.Register.Models
         public bool EenvironmentalImpactAssessment { get; set; }
 
         public void UpdateCoverageDataset(DokMunicipalSuitabilityAssessmentRow item)
-        {
+        { 
             RegionalPlan = item.RegionalPlan;
             MunicipalSocialPlan = item.MunicipalSocialPlan;
             MunicipalLandUseElementPlan = item.MunicipalLandUseElementPlan;

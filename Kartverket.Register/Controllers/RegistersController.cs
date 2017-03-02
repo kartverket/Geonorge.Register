@@ -46,6 +46,7 @@ namespace Kartverket.Register.Controllers
             return View(db.Registers.OrderBy(r => r.name).ToList());
         }
 
+
         // GET: Registers/Details/5
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
@@ -206,7 +207,6 @@ namespace Kartverket.Register.Controllers
 
         }
 
-
         // POST: Registers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -246,6 +246,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
+
         // GET: Edit DOK-Municipal-Dataset
         [Authorize]
         [Route("dok/kommunalt/{municipalityCode}/rediger")]
@@ -259,18 +260,18 @@ namespace Kartverket.Register.Controllers
 
                 if (municipality != null)
                 {
-                    List<DokMunicipalEdit> dokMunicipalList = new List<DokMunicipalEdit>();
+                    List<DokMunicipalEdit> dokMunicipalEditList = new List<DokMunicipalEdit>();
                     foreach (Dataset dataset in municipalDatasets)
                     {
                         DokMunicipalEdit row = new DokMunicipalEdit(dataset, municipality);
-                        dokMunicipalList.Add(row);
+                        dokMunicipalEditList.Add(row);
                     }
                     ViewBag.selectedMunicipality = municipality.name;
                     ViewBag.selectedMunicipalityCode = municipalityCode;
                     List<Status> statusDOKMunicipalList = CreateStatusDOKMunicipalList();
 
                     ViewBag.statusDOKMunicipal = new SelectList(statusDOKMunicipalList, "value", "description", DOKmunicipalStatus(municipality));
-                    return View(dokMunicipalList);
+                    return View(dokMunicipalEditList);
                 }
                 else {
                     return HttpNotFound();
@@ -278,29 +279,6 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound();
         }
-
-        private string DOKmunicipalStatus(Organization municipality)
-        {
-            if (municipality.DateConfirmedMunicipalDOK != null)
-            {
-                if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
-                {
-                    return null;
-                }
-                return municipality.StatusConfirmationMunicipalDOK;
-            }
-            return null;
-        }
-
-        private static bool lastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmedMunicipalDOK)
-        {
-            if (dateConfirmedMunicipalDOK != null)
-            {
-                return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
-            }
-            return false;
-        }
-
 
 
         // POST: DOK-Municipal-Dataset
@@ -352,7 +330,31 @@ namespace Kartverket.Register.Controllers
                         }
                         else
                         {
-                            db.Database.ExecuteSqlCommand("UPDATE CoverageDatasets SET ConfirmedDok = @p0 , Coverage = @p1 , Note = @p2 WHERE CoverageId=@p3", item.Confirmed, coverageFound, item.Note, originalCoverage.CoverageId);
+                            db.Database.ExecuteSqlCommand(
+                                "UPDATE CoverageDatasets SET ConfirmedDok = @p0 , " +
+                                "Coverage = @p1, " +
+                                "Note = @p2, " +
+                                "RegionalPlan = @p3, " +
+                                "MunicipalSocialPlan = @p4, " +
+                                "MunicipalLandUseElementPlan = @p5, " +
+                                "ZoningPlanArea = @p6, " +
+                                "ZoningPlanDetails = @p7, " +
+                                "BuildingMatter = @p8, " +
+                                "PartitionOff = @p9, " +
+                                "EenvironmentalImpactAssessment = @p10 " +
+                                "WHERE CoverageId = @p11",
+                                item.Confirmed, 
+                                coverageFound, 
+                                item.Note, 
+                                item.RegionalPlan,
+                                item.MunicipalSocialPlan,
+                                item.MunicipalLandUseElementPlan,
+                                item.ZoningPlanArea,
+                                item.ZoningPlanDetails,
+                                item.BuildingMatter,
+                                item.PartitionOff,
+                                item.EnvironmentalImpactAssessment,
+                                originalCoverage.CoverageId);                                                                                  
                         }
                     }
                 }
@@ -436,6 +438,7 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound();
         }
+
 
         // POST: Registers/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -642,6 +645,28 @@ namespace Kartverket.Register.Controllers
             statusDOKMunicipal.Add(s1);
             statusDOKMunicipal.Add(s2);
             return statusDOKMunicipal;
+        }
+
+        private string DOKmunicipalStatus(Organization municipality)
+        {
+            if (municipality.DateConfirmedMunicipalDOK != null)
+            {
+                if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
+                {
+                    return null;
+                }
+                return municipality.StatusConfirmationMunicipalDOK;
+            }
+            return null;
+        }
+
+        private static bool lastDateConfirmedIsNotFromThisYear(DateTime? dateConfirmedMunicipalDOK)
+        {
+            if (dateConfirmedMunicipalDOK != null)
+            {
+                return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
+            }
+            return false;
         }
     }
 }

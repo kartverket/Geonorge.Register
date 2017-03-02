@@ -41,7 +41,7 @@
                 $("#suitabitityHelpText").toggle(500);
             });
         });
-        
+
         function changeText(element) {
             if (element.innerText == "Vis veiledning om registrering") {
                 element.innerHTML = "Skjul tekst";
@@ -55,7 +55,7 @@
             var className = ".infoTxtDataset-" + id;
             $(className).toggle(200);
         }
-   </script>
+    </script>
 
 }
 
@@ -133,7 +133,9 @@
                                         else {
                                             <span id="@i" class="hidden">0</span>
                                         }
-                                        @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte" })
+                                        <span class="custom-checkbox">
+                                            @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte" })
+                                        </span>
                                     </td>
                                     <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
                                         @if (Model[i].Coverage)
@@ -159,7 +161,7 @@
 
                                 <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                     <td colspan="3" style="padding:0px">
-                                        <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4" >
+                                        <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
                                             <b>Etat:</b> @Model[i].Owner <br />
                                             <b>DOK status:</b> @Model[i].NationalDokStatus
                                         </label>
@@ -218,42 +220,42 @@
                                     </td>
                                     <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Regionplan">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Byggesak">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="Fradeling">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>
                                     <td class="text-center">
-                                        <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                         </span>
                                     </td>

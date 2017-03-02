@@ -1187,7 +1187,6 @@
     <Content Include="Views\Shared\_municipalDataset.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
-    <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\Datasets\CreateMunicipalDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerSubRegisters.cshtml" />
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
@@ -1196,9 +1195,7 @@
     <Content Include="settings.config" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
-    <Content Include="Views\Registers\EditDokSuitabilityAssessment.cshtml" />
-    <Content Include="Views\Registers\EditDokMunicipalTest.cshtml" />
-    <Content Include="Views\Registers\EditDokMunicipalTest - Copy.cshtml" />
+    <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

@@ -35,12 +35,13 @@
         }
 
         $(document).ready(function () {
+            $(".infoTxt").hide()
             $("#suitabitityHelpText").hide()
             $("#suitabitityHelpTextBtn").click(function () {
-                $("#suitabitityHelpText").toggle(500);              
+                $("#suitabitityHelpText").toggle(500);
             });
         });
-
+        
         function changeText(element) {
             if (element.innerText == "Vis veiledning om registrering") {
                 element.innerHTML = "Skjul tekst";
@@ -50,7 +51,11 @@
             }
         }
 
-    </script>
+        function InfoText(id) {
+            var className = ".infoTxtDataset-" + id;
+            $(className).toggle(200);
+        }
+   </script>
 
 }
 
@@ -76,8 +81,8 @@
     <div class="row">
         <div class="col-md-12">
             <ul class="nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-                <li class="tab pull-right"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">Egnethetsvurdering</a></li>
-                <li class="tab active pull-right"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">Bekrefte DOK</a></li>
+                <li class="tab pull-right" data-loading-message="Laster Egnethetsvurdering"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">Egnethetsvurdering</a></li>
+                <li class="tab active pull-right" data-loading-message="Laster Bekrefte DOK"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">Bekrefte DOK</a></li>
             </ul>
         </div>
     </div>
@@ -116,7 +121,10 @@
                                         @Model[i].Name
                                         @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
                                     </td>
-                                    <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle">i</a></td>
+
+                                    <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
+
+
                                     <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                         @if (Model[i].Confirmed)
                                         {
@@ -148,6 +156,15 @@
                                     </td>
 
                                 </tr>
+
+                                <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                    <td colspan="3" style="padding:0px">
+                                        <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4" >
+                                            <b>Etat:</b> @Model[i].Owner <br />
+                                            <b>DOK status:</b> @Model[i].NationalDokStatus
+                                        </label>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -157,7 +174,7 @@
                 <div class="tab-pane" style="margin-top:0px" id="suitability">
                     <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
                     <div id="suitabitityHelpText">
-                        <b>Kommunalt forslag til bruk ut fra egnethet</b><br/>
+                        <b>Kommunalt forslag til bruk ut fra egnethet</b><br />
                         Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
                         Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
                         Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:

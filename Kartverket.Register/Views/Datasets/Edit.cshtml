@@ -458,17 +458,10 @@
                             <label>Regionplan</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("RegionalPlan",null, htmlAttributes: new { @class = "form-control"})
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.RegionalPlanNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -479,17 +472,10 @@
                             <label>kommuneplanens samfunnsdel</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                           @Html.DropDownList("MunicipalSocialPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.MunicipalSocialPlanNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -499,17 +485,10 @@
                             <label>kommuneplanens arealdel</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                           @Html.DropDownList("MunicipalLandUseElementPlan", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.MunicipalLandUseElementPlanNote, 2, 10, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -520,17 +499,10 @@
                             <label>Reguleringsplan område</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("ZoningPlanArea", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.ZoningPlanAreaNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -541,17 +513,10 @@
                             <label>Reguleringsplan detalj</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("ZoningPlanDetails", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.ZoningPlanDetailsNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -562,17 +527,10 @@
                             <label>Byggesak</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("BuildingMatter", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.BuildingMatterNote, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -583,17 +541,10 @@
                             <label>Fradeling</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("PartitionOff", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.PartitionOffNote, 2, 10, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>
@@ -603,17 +554,10 @@
                             <label>KU og ROS for pbl-planer</label>
                         </div>
                         <div class="col-md-1 text-center">
-                            <select>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
+                            @Html.DropDownList("EenvironmentalImpactAssessment", null, htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.Notes, 2, 10, new { @style = "min-height:0px" })
+                            @Html.TextAreaFor(model => model.EenvironmentalImpactAssessmentNote, 2, 10, new { @style = "min-height:0px" })
                         </div>
                     </div>
                 </div>

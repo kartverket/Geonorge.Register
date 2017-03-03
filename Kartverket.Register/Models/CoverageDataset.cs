@@ -52,16 +52,5 @@ namespace Kartverket.Register.Models
         [Display(Name = "KU og ROS for pbl-planer")]
         public bool EenvironmentalImpactAssessment { get; set; }
 
-        public void UpdateCoverageDataset(DokMunicipalSuitabilityAssessmentRow item)
-        { 
-            RegionalPlan = item.RegionalPlan;
-            MunicipalSocialPlan = item.MunicipalSocialPlan;
-            MunicipalLandUseElementPlan = item.MunicipalLandUseElementPlan;
-            ZoningPlanArea = item.ZoningPlanArea;
-            ZoningPlanDetails = item.ZoningPlanDetails;
-            BuildingMatter = item.BuildingMatter;
-            PartitionOff = item.PartitionOff;
-            EenvironmentalImpactAssessment = item.EnvironmentalImpactAssessment;
-        }
     }
 }

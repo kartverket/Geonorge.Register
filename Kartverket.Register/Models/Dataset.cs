@@ -10,6 +10,8 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Collections;
+using System.Web.Mvc;
 
 namespace Kartverket.Register.Models
 {
@@ -162,6 +164,40 @@ namespace Kartverket.Register.Models
 
         [Display(Name = "Tjeneste Uuid:")]
         public string UuidService { get; set; }
+
+        // DOK Suitability Rating
+
+        [Display(Name = "Regionplan")]
+        public int? RegionalPlan { get; set; }
+        public string RegionalPlanNote { get; set; }
+
+        [Display(Name = "kommuneplanens samfunnsdel")]
+        public int? MunicipalSocialPlan { get; set; }
+        public string MunicipalSocialPlanNote { get; set; }
+
+        [Display(Name = "kommuneplanens arealdel")]
+        public int? MunicipalLandUseElementPlan { get; set; }
+        public string MunicipalLandUseElementPlanNote { get; set; }
+
+        [Display(Name = "Reguleringsplan område")]
+        public int? ZoningPlanArea { get; set; }
+        public string ZoningPlanAreaNote { get; set; }
+
+        [Display(Name = "Reguleringsplan detalj")]
+        public int? ZoningPlanDetails { get; set; }
+        public string ZoningPlanDetailsNote { get; set; }
+
+        [Display(Name = "Byggesak")]
+        public int? BuildingMatter { get; set; }
+        public string BuildingMatterNote { get; set; }
+
+        [Display(Name = "Fradeling")]
+        public int? PartitionOff { get; set; }
+        public string PartitionOffNote { get; set; }
+
+        [Display(Name = "KU og ROS for pbl-planer")]
+        public int? EenvironmentalImpactAssessment { get; set; }
+        public string EenvironmentalImpactAssessmentNote { get; set; }
 
 
         public virtual string GetDatasetUrl()
@@ -445,6 +481,19 @@ namespace Kartverket.Register.Models
                 }
             }
             return null;
+        }
+
+        internal IEnumerable SuitabilityScale()
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem { Selected = true, Text = "0", Value = "0"},
+                new SelectListItem { Selected = false, Text = "1", Value = "1"},
+                new SelectListItem { Selected = false, Text = "2", Value = "2"},
+                new SelectListItem { Selected = false, Text = "3", Value = "3"},
+                new SelectListItem { Selected = false, Text = "4", Value = "4"},
+                new SelectListItem { Selected = false, Text = "5", Value = "5"},
+            };
         }
     }//end Dataset
 

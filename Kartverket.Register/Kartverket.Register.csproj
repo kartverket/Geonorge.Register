@@ -684,6 +684,10 @@
     <Compile Include="Migrations\201702240803598_AddDokSuitabilityAssessmentAttributes.Designer.cs">
       <DependentUpon>201702240803598_AddDokSuitabilityAssessmentAttributes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703031026190_AddSuitabilityAssessmentAttributesForDatasets.cs" />
+    <Compile Include="Migrations\201703031026190_AddSuitabilityAssessmentAttributesForDatasets.Designer.cs">
+      <DependentUpon>201703031026190_AddSuitabilityAssessmentAttributesForDatasets.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1511,6 +1515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702240803598_AddDokSuitabilityAssessmentAttributes.resx">
       <DependentUpon>201702240803598_AddDokSuitabilityAssessmentAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703031026190_AddSuitabilityAssessmentAttributesForDatasets.resx">
+      <DependentUpon>201703031026190_AddSuitabilityAssessmentAttributesForDatasets.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

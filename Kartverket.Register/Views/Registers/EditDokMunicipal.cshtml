@@ -223,43 +223,43 @@
                                         </td>
                                         <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentRegionalPlan) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentMunicipalSocialPlan) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalSocialPlan">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentMunicipalLandUseElementPlan) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalLandUseElementPlan">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentZoningPlanArea) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanArea">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentZoningPlanDetails) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanDetails">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentBuildingMatter) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentBuildingMatter">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentPartitionOff) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentPartitionOff">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
-                                            <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @style = "background-color:" + HtmlHelperExtensions.GetBackgroundColor(Model[i].NationalAssessmentEnvironmentalImpactAssessment) })
+                                            <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentEnvironmentalImpactAssessment">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
                                     </tr>

@@ -33,24 +33,24 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "jquery": "^2.2.1",
+    "jquery": "^3.1.1",
     "bootstrap": "^3.3.6",
     "jquery-ui": "^1.11.4",
     "components-font-awesome": "^4.5.0",
     "chosen": "^1.5.1",
-    "angular-bootstrap": "^1.2.4",
+    "angular-bootstrap": "^2.5.0",
     "js-cookie": "^2.1.0",
     "openSans": "https://google-fonts.azurewebsites.net/googleFonts/openSans?family=Open+Sans:400,400italic,600,700",
     "raleway": "https://google-fonts.azurewebsites.net/googleFonts/Raleway?family=Raleway:400,100,300,500,600,700"
   },
-  "version": "6.1.0",
-  "_release": "6.1.0",
+  "version": "6.5.2",
+  "_release": "6.5.2",
   "_resolution": {
     "type": "version",
-    "tag": "v6.1.0",
-    "commit": "1ac5763c9154c1ece5e1547a2e476b7c713d80d1"
+    "tag": "v6.5.2",
+    "commit": "293228d598c049127074cb5594427fb2c73cc095"
   },
   "_source": "https://github.com/kartverket/felleskomponenter.git",
-  "_target": "6.1.0",
+  "_target": "6.5.2",
   "_originalSource": "kartverket-felleskomponenter"
 }

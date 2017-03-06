@@ -48,7 +48,7 @@
     <div>
         <span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet.
         <div class="custom-checkbox inline-block">
-            <label for="showMarkers"><input type="checkbox" id="showMarkers" name="showMarkers" checked="checked" onchange="ToggleMarkers();" /> Vis markører</label>
+            <label for="showMarkers"><input type="checkbox" id="showMarkers" name="showMarkers" onchange="ToggleMarkers();" /> Vis markører</label>
         </div>
     </div>
     <div>
@@ -143,7 +143,6 @@
             clearInterval(myTimer);
         }
     }
-    var myTimer = setInterval(setMarker, 1000);
 
     function clearMarkers()
     {

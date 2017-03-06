@@ -760,34 +760,34 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UI.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\AccessControlService.cs" />
-    <Compile Include="Services\CoverageService.cs" />
-    <Compile Include="Services\DatasetService.cs" />
-    <Compile Include="Services\DokCoverageWmsMapping.cs" />
-    <Compile Include="Services\IDatasetService.cs" />
-    <Compile Include="Services\IndexDocumentCreator.cs" />
-    <Compile Include="Services\Indexer.cs" />
-    <Compile Include="Services\IAccessControlService.cs" />
-    <Compile Include="Services\IOrganizationService.cs" />
-    <Compile Include="Services\MetadataService.cs" />
-    <Compile Include="Services\OrganizationsService.cs" />
-    <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
-    <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
-    <Compile Include="Services\RegisterIndexer.cs" />
-    <Compile Include="Services\Report\DokReportService.cs" />
-    <Compile Include="Services\Report\IDokReportService.cs" />
-    <Compile Include="Services\SchemaSynchronizer.cs" />
-    <Compile Include="Services\Search\ISearchIndexService.cs" />
-    <Compile Include="Services\Search\ISearchService.cs" />
-    <Compile Include="Services\Search\SearchIndexService.cs" />
-    <Compile Include="Services\Search\SearchService.cs" />
-    <Compile Include="Services\Register\IRegisterService.cs" />
-    <Compile Include="Services\Register\RegisterService.cs" />
-    <Compile Include="Services\SolrIndexDocumentCreator.cs" />
-    <Compile Include="Services\SolrIndexer.cs" />
-    <Compile Include="Services\SolrRegisterIndexer.cs" />
-    <Compile Include="Services\Versioning\IVersioningService.cs" />
-    <Compile Include="Services\Versioning\VersioningService.cs" />
+    <Compile Include="Scripts\Services\AccessControlService.cs" />
+    <Compile Include="Scripts\Services\CoverageService.cs" />
+    <Compile Include="Scripts\Services\DatasetService.cs" />
+    <Compile Include="Scripts\Services\DokCoverageWmsMapping.cs" />
+    <Compile Include="Scripts\Services\IDatasetService.cs" />
+    <Compile Include="Scripts\Services\IndexDocumentCreator.cs" />
+    <Compile Include="Scripts\Services\Indexer.cs" />
+    <Compile Include="Scripts\Services\IAccessControlService.cs" />
+    <Compile Include="Scripts\Services\IOrganizationService.cs" />
+    <Compile Include="Scripts\Services\MetadataService.cs" />
+    <Compile Include="Scripts\Services\OrganizationsService.cs" />
+    <Compile Include="Scripts\Services\RegisterItem\IRegisterItemService.cs" />
+    <Compile Include="Scripts\Services\RegisterItem\RegisterItemService.cs" />
+    <Compile Include="Scripts\Services\RegisterIndexer.cs" />
+    <Compile Include="Scripts\Services\Report\DokReportService.cs" />
+    <Compile Include="Scripts\Services\Report\IDokReportService.cs" />
+    <Compile Include="Scripts\Services\SchemaSynchronizer.cs" />
+    <Compile Include="Scripts\Services\Search\ISearchIndexService.cs" />
+    <Compile Include="Scripts\Services\Search\ISearchService.cs" />
+    <Compile Include="Scripts\Services\Search\SearchIndexService.cs" />
+    <Compile Include="Scripts\Services\Search\SearchService.cs" />
+    <Compile Include="Scripts\Services\Register\IRegisterService.cs" />
+    <Compile Include="Scripts\Services\Register\RegisterService.cs" />
+    <Compile Include="Scripts\Services\SolrIndexDocumentCreator.cs" />
+    <Compile Include="Scripts\Services\SolrIndexer.cs" />
+    <Compile Include="Scripts\Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Scripts\Services\Versioning\IVersioningService.cs" />
+    <Compile Include="Scripts\Services\Versioning\VersioningService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml">

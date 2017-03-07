@@ -1,7 +1,6 @@
 ﻿@using Kartverket.Register.Models.ViewModels
 @using Resources
 @model List<DokMunicipalEdit>
-@using Kartverket.Register.Helpers
 
 @{
     string selectedMunicipal = ViewBag.selectedMunicipality;
@@ -14,11 +13,23 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            $("table").tablesorter({
+            $(".tableSuitability").tablesorter({
                 headers: {
-                    5: { usNumberFormat: true },
+                    2: { sorter: false },
+                    3: { sorter: false },
+                    4: { sorter: false },
+                    5: { sorter: false },
+                    6: { sorter: false },
                     7: { sorter: false },
-                    8: { sorter: false }
+                    8: { sorter: false },
+                    9: { sorter: false }
+                }
+            });
+
+            $(".tableCoverage").tablesorter({
+                headers: {
+                    4: { sorter: false },
+                    5: { sorter: false }
                 }
             });
         });
@@ -94,13 +105,13 @@
 
                 @* COVERAGE*@
                 <div class="tab-pane active" style="margin-top:0px" id="coverage">
-                    <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
+                    <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                         <thead>
-                            <tr>
+                            <tr >
                                 <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
                                 <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
-                                <th class="text-center"><span data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</span></th>
-                                <th class="text-center"><span data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">DEKNING</span></th>
+                                <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
+                                <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">Dekning</a></th>
                                 <th><span data-toggle="tooltip" class="link-unstyled" title="@UI.DOK_Kommentar">Merknad</span></th>
                                 <th class="text-center">Slett</th>
                             </tr>
@@ -117,7 +128,9 @@
                                     @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
                                     @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
 
-                                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
+                                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup
+                                    
+                                    </td>
                                     <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
                                         @Model[i].Name
                                         @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
@@ -134,7 +147,7 @@
                                         else {
                                             <span id="@i" class="hidden">0</span>
                                         }
-                                        <span class="custom-checkbox">
+                                        <span class="custom-checkbox custom-checkbox-default">
                                             @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte" })
                                         </span>
                                     </td>
@@ -157,16 +170,18 @@
                                             @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
                                         }
                                     </td>
-
                                 </tr>
 
                                 <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                    <td class="hidden">@Model[i].Themegroup</td>
+                                    <td class="hidden">@Model[i].Name</td>
                                     <td colspan="3" style="padding:0px">
                                         <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
                                             <b>Etat:</b> @Model[i].Owner <br />
                                             <b>DOK status:</b> @Model[i].NationalDokStatus
                                         </label>
                                     </td>
+                                    <td class="hidden">2</td>
                                 </tr>
                             }
                         </tbody>
@@ -195,7 +210,7 @@
                     </div>
 
 
-                    <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
+                    <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                         <thead>
                             <tr>
                                 <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
@@ -262,14 +277,45 @@
                                                 @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
                                             </span>
                                         </td>
+
+                                        <td>
+                                            <div class="container">           
+                                                <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal" role="textbox">
+                                                    <div class="modal-dialog">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" data-keyboard="true" class="close" data-dismiss="modal">&times;</button>
+                                                                <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
+                                                                <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 3, 10, new { @style = "min-height:0px" })
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Lagre</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+
                                     </tr>
                                     <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                        <td class="hidden">@Model[i].Themegroup</td>
+                                        <td class="hidden name">@Model[i].Name</td>
                                         <td colspan="3" style="padding:0px">
                                             <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
                                                 <b>Etat:</b> @Model[i].Owner <br />
                                                 <b>DOK status:</b> @Model[i].NationalDokStatus
                                             </label>
                                         </td>
+                                        <td class="hidden">3</td>
                                     </tr>
                                 }
                             }

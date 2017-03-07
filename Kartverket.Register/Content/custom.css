@@ -1033,3 +1033,14 @@ a.link-unstyled {
 .norgeskart-legend .custom-checkbox label {
     margin-left: 10px;
 }
+
+/* Modal */
+.modal {
+    padding-top: 250px;
+}
+
+.modal-dialog {
+    margin: auto;
+    width: 700px;
+}
+

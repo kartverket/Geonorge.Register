@@ -107,7 +107,7 @@
                 <div class="tab-pane active" style="margin-top:0px" id="coverage">
                     <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                         <thead>
-                            <tr >
+                            <tr>
                                 <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
                                 <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
                                 <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
@@ -128,8 +128,9 @@
                                     @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
                                     @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
 
-                                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup
-                                    
+                                    <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">
+                                        @Model[i].Themegroup
+
                                     </td>
                                     <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
                                         @Model[i].Name
@@ -174,14 +175,14 @@
 
                                 <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                     <td class="hidden">@Model[i].Themegroup</td>
-                                    <td class="hidden">@Model[i].Name</td>
+                                    <td class="hidden">@Model[i].Name hidden</td>
                                     <td colspan="3" style="padding:0px">
                                         <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
-                                            <b>Etat:</b> @Model[i].Owner <br />
+                                            <b>Etat:</b> @Model[i].Owner<br />
                                             <b>DOK status:</b> @Model[i].NationalDokStatus
                                         </label>
                                     </td>
-                                    <td class="hidden">2</td>
+                                    <td class="hidden">3</td>
                                 </tr>
                             }
                         </tbody>
@@ -239,7 +240,7 @@
                                         <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
                                         <td class="text-center">
                                             <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
@@ -254,17 +255,17 @@
                                         </td>
                                         <td class="text-center">
                                             <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanArea">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
                                             <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanDetails">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
                                             <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentBuildingMatter">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
                                         <td class="text-center">
@@ -274,12 +275,12 @@
                                         </td>
                                         <td class="text-center">
                                             <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentEnvironmentalImpactAssessment">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + ""})
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
                                             </span>
                                         </td>
 
                                         <td>
-                                            <div class="container">           
+                                            <div class="container">
                                                 <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal" role="textbox">
@@ -308,10 +309,10 @@
                                     </tr>
                                     <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                         <td class="hidden">@Model[i].Themegroup</td>
-                                        <td class="hidden name">@Model[i].Name</td>
+                                        <td class="hidden">@Model[i].Name hidden</td>
                                         <td colspan="3" style="padding:0px">
                                             <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
-                                                <b>Etat:</b> @Model[i].Owner <br />
+                                                <b>Etat:</b> @Model[i].Owner<br />
                                                 <b>DOK status:</b> @Model[i].NationalDokStatus
                                             </label>
                                         </td>

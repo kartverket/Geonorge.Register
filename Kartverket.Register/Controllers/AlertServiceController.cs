@@ -12,6 +12,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Models.Api;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
+using Kartverket.Register.App_Start;
 
 namespace Kartverket.Register.Controllers
 {
@@ -32,6 +33,7 @@ namespace Kartverket.Register.Controllers
         /// Add service alert
         /// </summary>
         // POST: api/ApiServiceAlerts
+        [System.Web.Http.Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [ResponseType(typeof(AlertService))]
         public IHttpActionResult PostServiceAlert(AlertService alertService)
         {

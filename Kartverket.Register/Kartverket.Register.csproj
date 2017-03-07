@@ -252,6 +252,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\ApiSearchController.cs" />
+    <Compile Include="Controllers\AlertServiceController.cs" />
     <Compile Include="Controllers\CodelistValuesController.cs" />
     <Compile Include="Controllers\DatasetsController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
@@ -704,6 +705,7 @@
     <Compile Include="Models\Api\Registeritem.cs" />
     <Compile Include="Models\Api\SearchParameters.cs" />
     <Compile Include="Models\Api\SearchResult.cs" />
+    <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\Dimension.cs" />

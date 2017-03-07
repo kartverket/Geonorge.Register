@@ -51,10 +51,16 @@ namespace Kartverket.Register.Areas.HelpPage
             s2.Results = new List<Register.Models.Api.RegisterData>();
             s2.Results.Add(r);
 
+            Kartverket.Register.Models.Api.AlertService sa = new Kartverket.Register.Models.Api.AlertService();
+            sa.AlertType = "Endret datainnhold";
+            sa.Note = "Beskrivende tekst";
+            sa.ServiceUuid = "232eee00-951b-4ed8-8d0d-81fbb6f3a160";
+
             config.SetSampleObjects(new Dictionary<Type, object>
             {
                 {typeof(string), "sample string"},
-                {typeof(Kartverket.Register.Models.Api.SearchResult), s2}
+                {typeof(Kartverket.Register.Models.Api.SearchResult), s2},
+                {typeof(Kartverket.Register.Models.Api.AlertService), sa}
             });
 
             // Extend the following to provide factories for types not handled automatically (those lacking parameterless

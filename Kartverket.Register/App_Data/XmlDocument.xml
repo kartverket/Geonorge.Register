@@ -764,13 +764,6 @@
             QueryName = "register-DOK-coverage".
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Helpers.HtmlHelperExtensions.GetBackgroundColor(System.Int32)">
-            <summary>
-            Returns a color based on a number from 1-5 to describe National suitability assessment on a municipal Dataset
-            </summary>
-            <param name="nr"></param>
-            <returns></returns>
-        </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>
             The name of the facet field

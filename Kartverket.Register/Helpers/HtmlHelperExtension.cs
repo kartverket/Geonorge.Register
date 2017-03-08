@@ -1182,21 +1182,12 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        /// <summary>
-        /// Returns a color based on a number from 1-5 to describe National suitability assessment on a municipal Dataset
-        /// </summary>
-        /// <param name="nr"></param>
-        /// <returns></returns>
-        public static string GetBackgroundColor(int nr)
-        {
-            string color = "";
-            if (nr == 0) color = "";
-            else if (nr == 1) color = "#EF4539";
-            else if (nr == 2) color = "#EF9A39";
-            else if (nr == 3) color = "#FAE50D";
-            else if (nr == 4) color = "#BEFA0D";
-            else if (nr == 5) color = "#26C045";
-            return color;
+        public static int cbChecked(bool checkboxChecked) {
+            if (checkboxChecked)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }

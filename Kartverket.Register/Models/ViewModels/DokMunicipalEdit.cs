@@ -28,6 +28,7 @@ namespace Kartverket.Register.Models.ViewModels
         public bool BuildingMatter { get; set; }
         public bool PartitionOff { get; set; }
         public bool EnvironmentalImpactAssessment { get; set; }
+        public string SuitabilityAssessmentText { get; set; }
 
         public int NationalAssessmentRegionalPlan { get; set; }
         public int NationalAssessmentMunicipalSocialPlan { get; set; }
@@ -63,6 +64,7 @@ namespace Kartverket.Register.Models.ViewModels
             BuildingMatter = dataset.GetCoverageBuildingMatterByUser(municipality.systemId);
             PartitionOff = dataset.GetCoveragePartitionOffByUser(municipality.systemId);
             EnvironmentalImpactAssessment = dataset.GetCoverageEenvironmentalImpactAssessmentByUser(municipality.systemId);
+            SuitabilityAssessmentText = dataset.GetCoverageSuitabilityAssessmentTextByUser(municipality.systemId);
             NationalAssessmentRegionalPlan = dataset.RegionalPlan.GetValueOrDefault();
             NationalAssessmentMunicipalSocialPlan = dataset.MunicipalSocialPlan.GetValueOrDefault();
             NationalAssessmentMunicipalLandUseElementPlan = dataset.MunicipalLandUseElementPlan.GetValueOrDefault();

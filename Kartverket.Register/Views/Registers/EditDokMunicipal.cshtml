@@ -294,9 +294,9 @@
 
                                             <td>
                                                 <div class="container">
-                                                    <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
+                                                    <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
                                                     <!-- Modal -->
-                                                    <div class="modal fade" id="myModal" role="textbox">
+                                                    <div class="modal fade" id="myModal-@i" role="textbox">
                                                         <div class="modal-dialog">
                                                             <!-- Modal content-->
                                                             <div class="modal-content">
@@ -306,7 +306,7 @@
                                                                     <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 3, 10, new { @style = "min-height:0px" })
+                                                                    @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px" })
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Lagre</button>

@@ -341,8 +341,9 @@ namespace Kartverket.Register.Controllers
                                 "ZoningPlanDetails = @p7, " +
                                 "BuildingMatter = @p8, " +
                                 "PartitionOff = @p9, " +
-                                "EenvironmentalImpactAssessment = @p10 " +
-                                "WHERE CoverageId = @p11",
+                                "EenvironmentalImpactAssessment = @p10, " +
+                                "SuitabilityAssessmentText = @p11 " +
+                                "WHERE CoverageId = @p12",
                                 item.Confirmed, 
                                 coverageFound, 
                                 item.Note, 
@@ -354,6 +355,7 @@ namespace Kartverket.Register.Controllers
                                 item.BuildingMatter,
                                 item.PartitionOff,
                                 item.EnvironmentalImpactAssessment,
+                                item.SuitabilityAssessmentText,
                                 originalCoverage.CoverageId);                                                                                  
                         }
                     }

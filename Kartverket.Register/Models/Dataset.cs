@@ -465,10 +465,22 @@ namespace Kartverket.Register.Models
             {
                 if (coverage.MunicipalityId == municipalityId)
                 {
-                    return coverage.MunicipalSocialPlan;
+                    return coverage.EenvironmentalImpactAssessment;
                 }
             }
             return false;
+        }
+
+        public string GetCoverageSuitabilityAssessmentTextByUser(Guid municipalityId)
+        {
+            foreach (CoverageDataset coverage in Coverage)
+            {
+                if (coverage.MunicipalityId == municipalityId)
+                {
+                    return coverage.suitabilityAssessmentText;
+                }
+            }
+            return null;
         }
 
         public CoverageDataset GetCoverageByOwner(Guid owner)
@@ -482,6 +494,8 @@ namespace Kartverket.Register.Models
             }
             return null;
         }
+
+        
 
         internal IEnumerable SuitabilityScale()
         {

@@ -52,5 +52,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "KU og ROS for pbl-planer")]
         public bool EenvironmentalImpactAssessment { get; set; }
 
+        public string suitabilityAssessmentText { get; set; }
+
     }
 }

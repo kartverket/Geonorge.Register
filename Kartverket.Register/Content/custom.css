@@ -1044,3 +1044,14 @@ a.link-unstyled {
     width: 700px;
 }
 
+
+/**/
+.superImportantCheckbox input::after {
+    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-default.svg) !important;
+
+}
+
+.superImportantCheckbox input:checked::after {
+    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-default.svg) !important;
+
+}

@@ -24,6 +24,16 @@
                         5: { sorter: false }
                     }
                 });
+
+                $("#cbBackgroundColor").click(function () {
+                    if (document.getElementById("cbBackgroundColor").checked) {
+                        $("table .custom-checkbox").addClass("superImportantCheckbox");
+                    }
+                    else {
+                        $("table .custom-checkbox").removeClass("superImportantCheckbox");
+                    }
+                });
+
             });
 
             function cbConfirmdChecked(id) {
@@ -196,25 +206,33 @@
 
                     @* SUITABILITY *@
                     <div class="tab-pane" style="margin-top:0px" id="suitability">
-                        <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
-                        <div id="suitabitityHelpText">
-                            <b>Kommunalt forslag til bruk ut fra egnethet</b><br />
-                            Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
-                            Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
-                            Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
-                            <ul>
-                                <li>Regionplanlegging</li>
-                                <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
-                                <li>Prosesser knyttet til kommuneplanens arealdel</li>
-                                <li>Reguleringsplanlegging – områderegulering</li>
-                                <li>Reguleringsplanlegging - detaljregulering</li>
-                                <li>Byggesak</li>
-                                <li>Fradeling</li>
-                                <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
-                            </ul>
-                            Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet.
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
+                                <div id="suitabitityHelpText">
+                                    <b>Kommunalt forslag til bruk ut fra egnethet</b><br />
+                                    Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
+                                    Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+                                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
+                                    <ul>
+                                        <li>Regionplanlegging</li>
+                                        <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
+                                        <li>Prosesser knyttet til kommuneplanens arealdel</li>
+                                        <li>Reguleringsplanlegging – områderegulering</li>
+                                        <li>Reguleringsplanlegging - detaljregulering</li>
+                                        <li>Byggesak</li>
+                                        <li>Fradeling</li>
+                                        <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
+                                    </ul>
+                                    Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet.
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="custom-checkbox custom-checkbox-default pull-right">
+                                    <label>Bakgrunnsfarge </label><input id="cbBackgroundColor" type="checkbox" value="">
+                                </span>
+                            </div>
                         </div>
-
 
                         <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                             <thead>
@@ -229,6 +247,7 @@
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Bygge-sak</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Fra-deling</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">KU og ROS for pbl-planer</span></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

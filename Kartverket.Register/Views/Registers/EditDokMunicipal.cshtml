@@ -221,7 +221,7 @@
                                 <tr>
                                     <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
                                     <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
-                                    <th class="text-center"><span data-toggle="tooltip" title="TOODO">Region-plan</span></th>
+                                    <th class="text-center"><span data-toggle="tooltip" title="TODO">Region-plan</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Kommune-planens samfunns-del</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Kommune-planens areal-del</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Regulerings-plan-område</span></th>
@@ -229,6 +229,7 @@
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Byggesak</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">Fradeling</span></th>
                                     <th class="text-center"><span data-toggle="tooltip" title="TODO">KU og ROS for pbl-planer</span></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -293,29 +294,26 @@
                                             </td>
 
                                             <td>
-                                                <div class="container">
-                                                    <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="myModal-@i" role="textbox">
-                                                        <div class="modal-dialog">
-                                                            <!-- Modal content-->
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <button type="button" data-keyboard="true" class="close" data-dismiss="modal">&times;</button>
-                                                                    <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
-                                                                    <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px" })
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Lagre</button>
-                                                                </div>
+                                                <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; vertical-align: -webkit-baseline-middle"></span>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal-@i" role="textbox">
+                                                    <div class="modal-dialog">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" data-keyboard="true" class="close" data-dismiss="modal">&times;</button>
+                                                                <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
+                                                                <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
                                                             </div>
-
+                                                            <div class="modal-body">
+                                                                @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px" })
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Lagre</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
 
+                                                    </div>
                                                 </div>
                                             </td>
 

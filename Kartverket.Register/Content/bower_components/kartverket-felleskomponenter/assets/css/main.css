@@ -2708,90 +2708,60 @@ input[type="radio"]:checked.custom-radio {
     height: 19px;
     vertical-align: middle; }
 
-.custom-checkbox input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox:after {
-  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked.svg"); }
+.custom-checkbox input[type="checkbox"],
+input[type="checkbox"].custom-checkbox {
+  display: none; }
+  .custom-checkbox input[type="checkbox"]:after,
+  input[type="checkbox"].custom-checkbox:after {
+    content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked.svg"); }
 
-.custom-checkbox input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox:after {
-  content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked.svg"); }
+.custom-checkbox input[type="checkbox"]:checked,
+input[type="checkbox"]:checked.custom-checkbox {
+  display: none; }
+  .custom-checkbox input[type="checkbox"]:checked:after,
+  input[type="checkbox"]:checked.custom-checkbox:after {
+    content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked.svg"); }
 
 /* Default checkbox */
-.custom-checkbox.custom-checkbox-default input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-0 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-default:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-0:after {
+.custom-checkbox.custom-checkbox-0 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-default.svg"); }
 
-.custom-checkbox.custom-checkbox-default input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-0 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-default:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-0:after {
+.custom-checkbox.custom-checkbox-0 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-default.svg"); }
 
 /* Red checkbox */
-.custom-checkbox.custom-checkbox-red input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-1 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-red:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-1:after {
+.custom-checkbox.custom-checkbox-1 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-red.svg"); }
 
-.custom-checkbox.custom-checkbox-red input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-1 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-red:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-1:after {
+.custom-checkbox.custom-checkbox-1 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-red.svg"); }
 
 /* Orange checkbox */
-.custom-checkbox.custom-checkbox-orange input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-2 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-orange:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-2:after {
+custom-checkbox.custom-checkbox-2 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-orange.svg"); }
 
-.custom-checkbox.custom-checkbox-orange input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-2 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-orange:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-2:after {
+.custom-checkbox.custom-checkbox-2 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-orange.svg"); }
 
 /* Yellow checkbox */
-.custom-checkbox.custom-checkbox-yellow input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-3 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-yellow:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-3:after {
+.custom-checkbox.custom-checkbox-3 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-yellow.svg"); }
 
-.custom-checkbox.custom-checkbox-yellow input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-3 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-yellow:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-3:after {
+.custom-checkbox.custom-checkbox-3 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-yellow.svg"); }
 
 /* Lime checkbox */
-.custom-checkbox.custom-checkbox-lime input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-4 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-lime:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-4:after {
+.custom-checkbox.custom-checkbox-4 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-lime.svg"); }
 
-.custom-checkbox.custom-checkbox-lime input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-4 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-lime:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-4:after {
+.custom-checkbox.custom-checkbox-4 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-lime.svg"); }
 
 /* Green checkbox */
-.custom-checkbox.custom-checkbox-green input[type="checkbox"]:after,
-.custom-checkbox.custom-checkbox-5 input[type="checkbox"]:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-green:after,
-input[type="checkbox"].custom-checkbox.custom-checkbox-5:after {
+.custom-checkbox.custom-checkbox-5 input[type="checkbox"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-green.svg"); }
 
-.custom-checkbox.custom-checkbox-green input[type="checkbox"]:checked:after,
-.custom-checkbox.custom-checkbox-5 input[type="checkbox"]:checked:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-green:after,
-input[type="checkbox"]:checked.custom-checkbox.custom-checkbox-5:after {
+.custom-checkbox.custom-checkbox-5 input[type="checkbox"]:checked + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-green.svg"); }
 
 .custom-checkbox input[type="checkbox"]:disabled:after,

@@ -163,8 +163,9 @@
 
                                         <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                             <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
-                                            <span class="custom-checkbox custom-checkbox-default">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte" })
+                                            <span class="custom-checkbox custom-checkbox-0">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id="dokMunicipalList[" + i + "].Confirmed" })
+                                                <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>
                                         </td>
                                         <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
@@ -229,8 +230,9 @@
                             </div>
                             <div class="col-md-4">
                                 <span class="custom-checkbox custom-checkbox-default pull-right">
-                                    <label>Bakgrunnsfarge </label><input id="cbBackgroundColor" type="checkbox" checked>
+                                    <input id="cbBackgroundColor" type="checkbox" checked>
                                     <label for="cbBackgroundColor" class="checkbox-icon"></label>
+                                    <label for="cbBackgroundColor">Bakgrunnsfarge </label>
                                 </span>
                             </div>
                         </div>

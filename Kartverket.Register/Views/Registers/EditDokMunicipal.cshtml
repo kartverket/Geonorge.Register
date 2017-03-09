@@ -317,7 +317,7 @@
                                             <td class="text-center">
                                                 <span id="environmentalImpactAssessment-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].EnvironmentalImpactAssessment)</span>
                                                 <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentEnvironmentalImpactAssessment">
-                                                    @Html.CheckBox("dokMunicipalList[" + i + "].EenvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].EnvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
                                                     <label for="dokMunicipalList[@i].EenvironmentalImpactAssessment" class="checkbox-icon"></label>
                                                 </span>
                                             </td>

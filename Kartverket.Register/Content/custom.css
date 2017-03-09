@@ -1046,12 +1046,11 @@ a.link-unstyled {
 
 
 /**/
-.superImportantCheckbox input::after {
+.superImportantCheckbox .checkbox-icon::after{
     content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-default.svg) !important;
 
 }
 
-.superImportantCheckbox input:checked::after {
+.superImportantCheckbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon::after{
     content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-default.svg) !important;
-
 }

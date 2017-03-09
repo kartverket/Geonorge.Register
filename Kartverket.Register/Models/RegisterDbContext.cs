@@ -66,6 +66,7 @@ namespace Kartverket.Register.Models
                     }
                     else if (regItem != null)
                     {
+                        regItem.register.modified = System.DateTime.Now;
                         result = Save();
                         new Task(() => { Index(regItem.systemId); }).Start();
                     }

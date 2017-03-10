@@ -15,15 +15,20 @@
         <script>
             $(document).ready(function () {
 
-                $(".tableSuitability").tablesorter({
+                $('.tablesorter-childRow td').hide();
+                $(".tableSuitability")
+                    .tablesorter({
+                        theme: 'blue',
+                        cssChildRow: "tablesorter-childRow"
+                    })
+                
+                $('.tablesorter').delegate('.toggle', 'click', function () {
+                   
+                    $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
+                    
+                    return false;
                 });
 
-                $(".tableCoverage").tablesorter({
-                    headers: {
-                        4: { sorter: false },
-                        5: { sorter: false }
-                    }
-                });
 
                 $("#cbBackgroundColor").click(function () {
                     if (document.getElementById("cbBackgroundColor").checked) {
@@ -35,6 +40,7 @@
                 });
 
             });
+
 
             function cbConfirmdChecked(id) {
                 var className = "cb" + id;
@@ -61,7 +67,7 @@
             }
 
             $(document).ready(function () {
-                $(".infoTxt").hide()
+                //$(".infoTxt").hide()
                 $("#suitabitityHelpText").hide()
                 $("#suitabitityHelpTextBtn").click(function () {
                     $("#suitabitityHelpText").toggle(500);
@@ -77,15 +83,10 @@
                 }
             }
 
-            function InfoText(id) {
-                var className = ".infoTxtDataset-" + id;
-                $(className).toggle(200);
-            }
-
-
-            $(document).on("click", "#myTable th", function () {
-                $("#myTable").$(".tableSuitability").tablesorter();
-            })
+            //function InfoText(id) {
+            //    var className = ".infoTxtDataset-" + id;
+            //    $(className).toggle(200);
+            //}
 
 
         </script>
@@ -129,8 +130,8 @@
                         <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
+                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">Dekning</a></th>
                                     <th><span data-toggle="tooltip" class="link-unstyled" title="@UI.DOK_Kommentar">Merknad</span></th>
@@ -140,7 +141,7 @@
                             <tbody>
                                 @for (int i = 0; i < Model.Count; i++)
                                 {
-                                    <tr>
+                                    <tr class="mother">
                                         @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
                                         @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
                                         @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
@@ -160,11 +161,10 @@
 
                                         <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
 
-
                                         <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                             <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
                                             <span class="custom-checkbox custom-checkbox-0">
-                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id="dokMunicipalList[" + i + "].Confirmed" })
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id = "dokMunicipalList[" + i + "].Confirmed" })
                                                 <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>
                                         </td>
@@ -189,7 +189,7 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                    <tr class="infoTxtDataset-@i infoTxt tablesorter-childRow" style="background-color:#F4F4F4">
                                         <td class="hidden">@Model[i].Themegroup</td>
                                         <td class="hidden">@Model[i].Name hidden</td>
                                         <td colspan="3" style="padding:0px">
@@ -240,7 +240,7 @@
                         <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
                                     <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Regionplanlegging">Region- plan</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens samfunnsdel">Kommune-planens samfunns- del</a></th>
@@ -258,25 +258,25 @@
                                 {
                                     if (Model[i].Confirmed)
                                     {
-                                        <tr>
+                                        <tr class="mother">
                                             <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
                                             <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
                                                 @Model[i].Name
                                                 @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
                                             </td>
-                                            <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
+                                            <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
                                             <td class="text-center">
                                                 <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan)</span>
                                                 <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
-                                                    @Html.CheckBox("dokMunicipalList[" + i +"].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @id= "dokMunicipalList[" + i + "].RegionalPlan" })
-                                                    <label for="dokMunicipalList[@i].RegionalPlan"class="checkbox-icon"></label>
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
+                                                    <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon"></label>
                                                 </span>
                                             </td>
                                             <td class="text-center">
                                                 <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan)</span>
                                                 <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalSocialPlan">
                                                     @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
-                                                    <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon"></label>                                            
+                                                    <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon"></label>
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -345,18 +345,14 @@
                                                     </div>
                                                 </div>
                                             </td>
-
                                         </tr>
-                                        <tr class="infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
-                                            <td class="hidden">@Model[i].Themegroup</td>
-                                            <td class="hidden">@Model[i].Name hidden</td>
+                                        <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                             <td colspan="3" style="padding:0px">
                                                 <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
                                                     <b>Etat:</b> @Model[i].Owner<br />
                                                     <b>DOK status:</b> @Model[i].NationalDokStatus
                                                 </label>
                                             </td>
-                                            <td class="hidden">3</td>
                                         </tr>
                                     }
                                 }

@@ -21,11 +21,11 @@
                         theme: 'blue',
                         cssChildRow: "tablesorter-childRow"
                     })
-                
+
                 $('.tablesorter').delegate('.toggle', 'click', function () {
-                   
+
                     $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
-                    
+
                     return false;
                 });
 
@@ -67,12 +67,25 @@
             }
 
             $(document).ready(function () {
-                //$(".infoTxt").hide()
                 $("#suitabitityHelpText").hide()
                 $("#suitabitityHelpTextBtn").click(function () {
                     $("#suitabitityHelpText").toggle(500);
                 });
             });
+
+            function changeBtnColor(id) {
+                var button = "#modalBtn-" + id
+                var textArea = "#txtArea-" + id;
+                console.log($(textArea).val());
+                if ($(textArea).val().length > 0) {
+                    $(button).css({ "color": "#FE5000" });
+                }
+                else {
+                    $(button).css({ "color": "#337AB7" });
+                }
+            }
+
+
 
             function changeText(element) {
                 if (element.innerText == "Vis veiledning om registrering") {
@@ -82,12 +95,6 @@
                     element.innerHTML = "Vis veiledning om registrering";
                 }
             }
-
-            //function InfoText(id) {
-            //    var className = ".infoTxtDataset-" + id;
-            //    $(className).toggle(200);
-            //}
-
 
         </script>
 
@@ -159,7 +166,7 @@
                                             @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
                                         </td>
 
-                                        <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge help-text-toggle" onclick="InfoText('@i')">i</a></td>
+                                        <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
 
                                         <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
                                             <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
@@ -189,16 +196,13 @@
                                         </td>
                                     </tr>
 
-                                    <tr class="infoTxtDataset-@i infoTxt tablesorter-childRow" style="background-color:#F4F4F4">
-                                        <td class="hidden">@Model[i].Themegroup</td>
-                                        <td class="hidden">@Model[i].Name hidden</td>
+                                    <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                         <td colspan="3" style="padding:0px">
                                             <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
                                                 <b>Etat:</b> @Model[i].Owner<br />
                                                 <b>DOK status:</b> @Model[i].NationalDokStatus
                                             </label>
                                         </td>
-                                        <td class="hidden">3</td>
                                     </tr>
                                 }
                             </tbody>
@@ -323,22 +327,22 @@
                                             </td>
 
                                             <td>
-                                                <span type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; vertical-align: middle"></span>
+                                                <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; color:#337ab7; vertical-align: middle"></span>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal-@i" role="textbox">
                                                     <div class="modal-dialog">
                                                         <!-- Modal content-->
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <button type="button" data-keyboard="true" class="close" data-dismiss="modal">&times;</button>
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                 <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
                                                                 <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
                                                             </div>
                                                             <div class="modal-body">
-                                                                @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px" })
+                                                                @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Lagre</button>
+                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">Lagre</button>
                                                             </div>
                                                         </div>
 

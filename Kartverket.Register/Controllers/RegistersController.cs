@@ -55,9 +55,11 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
-
+            if (Request.UrlReferrer != null)
+            {
             if (Request.UrlReferrer.Host != null && (Request.UrlReferrer.Host != Request.Url.Host))
                 removeSessionSearchParams();
+            }
 
             DokOrderBy(sorting);
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);

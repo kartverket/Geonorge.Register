@@ -4,6 +4,7 @@ using Newtonsoft.Json.Serialization;
 using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using WebApi.BasicAuth;
 
 namespace Kartverket.Register
 {
@@ -40,6 +41,8 @@ namespace Kartverket.Register
             //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new DefaultContractResolver();
             config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
             //config.Formatters.XmlFormatter.UseXmlSerializer = true;
+
+            config.EnableBasicAuth();
 
         }
     }

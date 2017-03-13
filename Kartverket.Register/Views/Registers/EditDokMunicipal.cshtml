@@ -1,44 +1,110 @@
 ﻿@using Kartverket.Register.Models.ViewModels
 @using Resources
-@model List<DokMunicipalRow>
+@model List<DokMunicipalEdit>
+    ﻿@using Kartverket.Register.Helpers
 
-@{
-    string selectedMunicipal = ViewBag.selectedMunicipality;
-}
+    @{
+        string selectedMunicipal = ViewBag.selectedMunicipality;
+    }
 
-@section breadcrumb {
-    <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
-    <li>Rediger liste</li>
-}
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("table").tablesorter({
-                headers: {
-                    5: { usNumberFormat: true },
-                    7: { sorter: false },
-                    8: { sorter: false }
-                }
+    @section breadcrumb {
+        <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
+        <li>Rediger liste</li>
+    }
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+
+                $('.tablesorter-childRow td').hide();
+                $(".tableSuitability")
+                    .tablesorter({
+                        theme: 'blue',
+                        cssChildRow: "tablesorter-childRow"
+                    })
+
+                $('.tablesorter').delegate('.toggle', 'click', function () {
+
+                    $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();
+
+                    return false;
+                });
+
+
+                $("#cbBackgroundColor").click(function () {
+                    if (document.getElementById("cbBackgroundColor").checked) {
+                        $("table .custom-checkbox").removeClass("superImportantCheckbox");
+                    }
+                    else {
+                        $("table .custom-checkbox").addClass("superImportantCheckbox");
+                    }
+                });
+
             });
-        });
 
-        function cbChecked(id) {
-            var className = "cb" + id;
-            var element = document.getElementsByClassName(className);
-            var checked = element.item(0).checked;
 
-            if (checked) {
-                document.getElementById(id).innerHTML = '1';
-            } else {
-                document.getElementById(id).innerHTML = '0';
+            function cbConfirmdChecked(id) {
+                var className = "cb" + id;
+                var element = document.getElementsByClassName(className);
+                var checked = element.item(0).checked;
+
+                if (checked) {
+                    document.getElementById(id).innerHTML = '1';
+                } else {
+                    document.getElementById(id).innerHTML = '0';
+                }
             }
-        }
-    </script>
-}
-@using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
-{
-    <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
-    <div class="clearfix"></div>
+
+            function cbChecked(type, id) {
+                var className = "cb-" + type + "-" + id;
+                var element = document.getElementsByClassName(className);
+                var checked = element.item(0).checked;
+
+                if (checked) {
+                    document.getElementById(type + "-" + id).innerHTML = '1';
+                } else {
+                    document.getElementById(type + "-" + id).innerHTML = '0';
+                }
+            }
+
+            $(document).ready(function () {
+                $("#suitabitityHelpText").hide()
+                $("#suitabitityHelpTextBtn").click(function () {
+                    $("#suitabitityHelpText").toggle(500);
+                });
+            });
+
+            function changeBtnColor(id) {
+                var button = "#modalBtn-" + id
+                var textArea = "#txtArea-" + id;
+                console.log($(textArea).val());
+                if ($(textArea).val().length > 0) {
+                    $(button).css({ "color": "#FE5000" });
+                }
+                else {
+                    $(button).css({ "color": "#337AB7" });
+                }
+            }
+
+
+
+            function changeText(element) {
+                if (element.innerText == "Vis veiledning om registrering") {
+                    element.innerHTML = "Skjul tekst";
+                }
+                else {
+                    element.innerHTML = "Vis veiledning om registrering";
+                }
+            }
+
+        </script>
+
+    }
+
+    @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
+    {
+        <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
+        <div class="clearfix"></div>
+
         <div class="row">
             <div class="col-md-8">
                 <h2>@selectedMunicipal</h2>
@@ -52,80 +118,257 @@
                 </div>
             </div>
         </div>
-        <table id="myTable" class="tablesorter table-responsive table" style="width:100%">
-            <thead>
-                <tr>
-                    <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                    <th style="width:15%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Tittel">Tittel</a></th>
-                    <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Eier">Eier</a></th>
-                    <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Nasjonal_Status">DOK-status</a></th>
-                    <th style="width:10%"><a href="#" data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Nasjonalt_Kommunalt">Regions-type</a></th>
-                    <th style="width:5%"><span data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Bekreftet_Kommune">Bekreft</span></th>
-                    <th style="width:5%"><span data-toggle="tooltip" data-placement="bottom" title="@UI.DOK_Coverage_Municipality">DEKNING</span></th>
-                    <th style="width:15%"><span data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@UI.DOK_Kommentar">Merknad</span></th>
-                    <th style="width:5%">Slett</th>
-                </tr> 
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Count; i++)
-                {
-                    <tr>
-                        @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
-                        @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
-                        @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
 
-                        <td title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
-                        <td title="Datasett: @Model[i].Name">
-                            @Model[i].Name
-                            @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Datasett eier: @Model[i].Owner">
-                            @Model[i].Owner
-                            @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Nasjonal Dok-status: @Model[i].NationalDokStatus">
-                            @Model[i].NationalDokStatus
-                            @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
-                        </td>
-                        <td title="Datasett type: @Model[i].Type">
-                            <span title="Datasett type: @Model[i].Type" class="label label-@Model[i].Type">@Model[i].Type</span>
-                            @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
-                        </td>
-                        <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
-                            @if (Model[i].Confirmed)
-                            {
-                                <span id="@i" class="hidden">1</span>
-                            }
-                            else {
-                                <span id="@i" class="hidden">0</span>
-                            }
-                            @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbChecked(" + i + ")", @class = "cb" + i + "" })
-                        </td>
-                        <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
-                            @if (Model[i].Coverage)
-                            {
-                                <span>JA</span>
-                            }
-                            else
-                            {
-                                <span>NEI</span>
-                            }
-                        </td>
-                        <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
-                            @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 2, 10, new { @style = "min-height:0px" })
-                        </td>
-                        <td id="cbDelete">
-                            @if (Model[i].IsMunicipalDataset())
-                            {
-                                @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
+                    <li class="tab pull-right" data-loading-message="Laster Egnethetsvurdering"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">Egnethetsvurdering</a></li>
+                    <li class="tab active pull-right" data-loading-message="Laster Bekrefte DOK"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">Bekrefte DOK</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tab-content">
+
+                    @* COVERAGE*@
+                    <div class="tab-pane active" style="margin-top:0px" id="coverage">
+                        <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">Dekning</a></th>
+                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@UI.DOK_Kommentar">Merknad</span></th>
+                                    <th class="text-center">Slett</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    <tr class="mother">
+                                        @Html.Hidden("dokMunicipalList[" + i + "].Id", Model[i].Id, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].OwnerId", Model[i].OwnerId, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].MunicipalityId", Model[i].MunicipalityId, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].Owner", Model[i].Owner, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].Type", Model[i].Type, new { @readonly = "readonly" })
+                                        @Html.Hidden("dokMunicipalList[" + i + "].NationalDokStatus", Model[i].NationalDokStatus, new { @readonly = "readonly" })
+
+                                        <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">
+                                            @Model[i].Themegroup
+
+                                        </td>
+                                        <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
+                                            @Model[i].Name
+                                            @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                                        </td>
+
+                                        <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
+
+                                        <td style="text-align: center" title="Hak av de data som en bekreftelse på data som skal være kommunes DOK">
+                                            <span id="@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].Confirmed)</span>
+                                            <span class="custom-checkbox custom-checkbox-0">
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].Confirmed", Model[i].Confirmed, new { @readonly = "readonly", @onclick = "cbConfirmdChecked(" + i + ")", @class = "cb" + i + "", @datatoggle = "tooltip", dataplacement = "bottom", title = "Bekrefte", @id = "dokMunicipalList[" + i + "].Confirmed" })
+                                                <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
+                                            @if (Model[i].Coverage)
+                                            {
+                                                <span>JA</span>
+                                            }
+                                            else
+                                            {
+                                                <span>NEI</span>
+                                            }
+                                        </td>
+                                        <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
+                                            @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 1, 10, new { @style = "min-height:0px" })
+                                        </td>
+                                        <td id="cbDelete">
+                                            @if (Model[i].IsMunicipalDataset())
+                                            {
+                                                @Html.CheckBox("dokMunicipalList[" + i + "].Delete", Model[i].Delete)<label></label>
+                                            }
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                        <td colspan="3" style="padding:0px">
+                                            <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
+                                                <b>Etat:</b> @Model[i].Owner<br />
+                                                <b>DOK status:</b> @Model[i].NationalDokStatus
+                                            </label>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @* SUITABILITY *@
+                    <div class="tab-pane" style="margin-top:0px" id="suitability">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
+                                <div id="suitabitityHelpText">
+                                    <b>Kommunalt forslag til bruk ut fra egnethet</b><br />
+                                    Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
+                                    Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+                                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
+                                    <ul>
+                                        <li>Regionplanlegging</li>
+                                        <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
+                                        <li>Prosesser knyttet til kommuneplanens arealdel</li>
+                                        <li>Reguleringsplanlegging – områderegulering</li>
+                                        <li>Reguleringsplanlegging - detaljregulering</li>
+                                        <li>Byggesak</li>
+                                        <li>Fradeling</li>
+                                        <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
+                                    </ul>
+                                    Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet.
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="custom-checkbox custom-checkbox-default pull-right">
+                                    <input id="cbBackgroundColor" type="checkbox" checked>
+                                    <label for="cbBackgroundColor" class="checkbox-icon"></label>
+                                    <label for="cbBackgroundColor">Bakgrunnsfarge </label>
+                                </span>
+                            </div>
+                        </div>
+
+                        <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Regionplanlegging">Region- plan</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens samfunnsdel">Kommune-planens samfunns- del</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens arealdel">Kommune-planens areal- del</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Reguleringsplanlegging – områderegulering">Regulerings- plan- område</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Reguleringsplanlegging - detaljregulering">Regulerings- plan- detalj</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Byggesak">Bygge- sak</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="Fradeling">Fra- deling</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="KU - konsekvensutredninger i forbindelse med arealplaner">KU og ROS for pbl- planer</a></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < Model.Count; i++)
+                                {
+                                    if (Model[i].Confirmed)
+                                    {
+                                        <tr class="mother">
+                                            <td style="background-color:rgb(234, 234, 234)" title="Temagruppe for @Model[i].Name: @Model[i].Themegroup">@Model[i].Themegroup</td>
+                                            <td style="background-color:rgb(234, 234, 234)" title="Datasett: @Model[i].Name">
+                                                @Model[i].Name
+                                                @Html.Hidden("dokMunicipalList[" + i + "].Name", Model[i].Name, new { @readonly = "readonly" })
+                                            </td>
+                                            <td style="background-color:rgb(234, 234, 234)"><a href="#" class="badge toggle" onclick="InfoText('@i')" style="background-color: #337ab7">i</a></td>
+                                            <td class="text-center">
+                                                <span id="regionalPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].RegionalPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Regionplan" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentRegionalPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].RegionalPlan", Model[i].RegionalPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].RegionalPlan" })
+                                                    <label for="dokMunicipalList[@i].RegionalPlan" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="municipalSocialPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalSocialPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens samfunnsdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalSocialPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalSocialPlan", Model[i].MunicipalSocialPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalSocialPlan" })
+                                                    <label for="dokMunicipalList[@i].MunicipalSocialPlan" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="municipalLandUseElementPlan-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].MunicipalLandUseElementPlan)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="kommuneplanens arealdel" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentMunicipalLandUseElementPlan">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].MunicipalLandUseElementPlan", Model[i].MunicipalLandUseElementPlan, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].MunicipalLandUseElementPlan" })
+                                                    <label for="dokMunicipalList[@i].MunicipalLandUseElementPlan" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="zoningPlanArea-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanArea)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan område" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanArea">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanArea", Model[i].ZoningPlanArea, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ZoningPlanArea" })
+                                                    <label for="dokMunicipalList[@i].ZoningPlanArea" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="zoningPlanDetails-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].ZoningPlanDetails)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Reguleringsplan detalj" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentZoningPlanDetails">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].ZoningPlanDetails", Model[i].ZoningPlanDetails, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].ZoningPlanDetails" })
+                                                    <label for="dokMunicipalList[@i].ZoningPlanDetails" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="buildingMatter-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].BuildingMatter)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Byggesak" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentBuildingMatter">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].BuildingMatter", Model[i].BuildingMatter, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].BuildingMatter" })
+                                                    <label for="dokMunicipalList[@i].BuildingMatter" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="partitionOff-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].PartitionOff)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="Fradeling" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentPartitionOff">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].PartitionOff", Model[i].PartitionOff, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].PartitionOff" })
+                                                    <label for="dokMunicipalList[@i].PartitionOff" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <span id="environmentalImpactAssessment-@i" class="hidden">@HtmlHelperExtensions.cbChecked(Model[i].EnvironmentalImpactAssessment)</span>
+                                                <span data-toggle="tooltip" data-placement="bottom" title="KU og ROS for pbl-planer" class="custom-checkbox custom-checkbox-@Model[i].NationalAssessmentEnvironmentalImpactAssessment">
+                                                    @Html.CheckBox("dokMunicipalList[" + i + "].EnvironmentalImpactAssessment", Model[i].EnvironmentalImpactAssessment, new { @readonly = "readonly", @id = "dokMunicipalList[" + i + "].EenvironmentalImpactAssessment" })
+                                                    <label for="dokMunicipalList[@i].EenvironmentalImpactAssessment" class="checkbox-icon"></label>
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle"></span>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="myModal-@i" role="textbox">
+                                                    <div class="modal-dialog">
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
+                                                                <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">Lagre</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
+                                            <td colspan="3" style="padding:0px">
+                                                <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
+                                                    <b>Etat:</b> @Model[i].Owner<br />
+                                                    <b>DOK status:</b> @Model[i].NationalDokStatus
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
                 <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
             </div>
             <div class="col-sm-10 text-right">
@@ -133,4 +376,4 @@
                 <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
             </div>
         </div>
-}
+    }

@@ -79,7 +79,7 @@ namespace Kartverket.Register.Services.Register
             {
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
-                    AddNationalDatasets(registerItems);
+                    GetNationalDatasets(registerItems);
                     Models.RegisterItem municipal = _registerItemService.GetMunicipalityOrganizationByNr(filter.municipality);
 
                     if (municipal != null)
@@ -89,7 +89,7 @@ namespace Kartverket.Register.Services.Register
                 }
                 else if (access.IsMunicipalUser())
                 {
-                    AddNationalDatasets(registerItems);
+                    GetNationalDatasets(registerItems);
                     GetMunicipalDatasetsByUser(register, registerItems);
                 }
 
@@ -136,7 +136,7 @@ namespace Kartverket.Register.Services.Register
         public List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipal)
         {
             List<Models.RegisterItem> datasets = new List<Models.RegisterItem>();
-            AddNationalDatasets(datasets);
+            GetNationalDatasets(datasets);
 
             //Gå gjennom alle datasett i registeret
             foreach (Dataset item in register.items)
@@ -154,12 +154,27 @@ namespace Kartverket.Register.Services.Register
             return datasets.OrderBy(n => n.name).ToList();
         }
 
-        private void AddNationalDatasets(List<Models.RegisterItem> registerItems)
+        private void GetNationalDatasets(List<Models.RegisterItem> registerItems)
         {
             Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
             foreach (Models.RegisterItem item in DOK.items)
             {
                 registerItems.Add(item);
+            }
+        }
+
+        private void GetNationalDatasetsConfirmdByMunicipality(List<Models.RegisterItem> registerItems, Organization municipality)
+        {
+            Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
+            foreach (Dataset dataset in DOK.items)
+            {
+                foreach (CoverageDataset coverage in dataset.Coverage)
+                {
+                    if (coverage.Municipality. systemId == municipality.systemId)
+                    {
+                        registerItems.Add(dataset);
+                    }
+                }
             }
         }
 
@@ -643,7 +658,6 @@ namespace Kartverket.Register.Services.Register
 
         }
 
-
         private void FilterOrganisasjonDocument(Models.Register register, FilterParameters filter, List<Models.RegisterItem> filterRegisterItems)
         {
             foreach (Document item in register.items)
@@ -951,6 +965,27 @@ namespace Kartverket.Register.Services.Register
                               where r.name == "Det offentlige kartgrunnlaget - Kommunalt"
                               select r;
             return queryResult.FirstOrDefault();
+        }
+
+        public List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality)
+        {
+            List<Models.RegisterItem> datasets = new List<Models.RegisterItem>();
+            GetNationalDatasetsConfirmdByMunicipality(datasets, municipality);
+
+            //Gå gjennom alle datasett i registeret
+            foreach (Dataset item in dokMunicipalRegister.items)
+            {
+                //Gå gjennom dekningslisten for datasettet
+                foreach (CoverageDataset coverage in item.Coverage)
+                {
+                    //Er det registrert dekning av datasett for valgt kommune...
+                    if (coverage.Municipality.systemId == municipality.systemId)
+                    {
+                        datasets.Add(item);
+                    }
+                }
+            }
+            return datasets;
         }
     }
 }

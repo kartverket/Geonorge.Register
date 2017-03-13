@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Models
 {
@@ -32,5 +33,26 @@ namespace Kartverket.Register.Models
         [Display(Name = "DOK-status")]
         public string CoverageDOKStatusId { get; set; }
         public virtual DokStatus CoverageDOKStatus { get; set; }
+
+        // DOK Suitability Rating
+        [Display(Name = "Regionplan")]
+        public bool RegionalPlan { get; set; }
+        [Display(Name = "kommuneplanens samfunnsdel")]
+        public bool MunicipalSocialPlan { get; set; }
+        [Display(Name = "kommuneplanens arealdel")]
+        public bool MunicipalLandUseElementPlan { get; set; }
+        [Display(Name = "Reguleringsplan område")]
+        public bool ZoningPlanArea { get; set; }
+        [Display(Name = "Reguleringsplan detalj")]
+        public bool ZoningPlanDetails { get; set; }
+        [Display(Name = "Byggesak")]
+        public bool BuildingMatter { get; set; }
+        [Display(Name = "Fradeling")]
+        public bool PartitionOff { get; set; }
+        [Display(Name = "KU og ROS for pbl-planer")]
+        public bool EenvironmentalImpactAssessment { get; set; }
+
+        public string suitabilityAssessmentText { get; set; }
+
     }
 }

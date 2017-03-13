@@ -123,6 +123,7 @@ namespace Kartverket.Register.Controllers
             return View(dataset);
         }
 
+
         // GET: Datasets/Create
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{municipality}/ny")]
@@ -147,6 +148,7 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound("Finner ikke kommunenr.");
         }
+
 
         // POST: Datasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -222,6 +224,7 @@ namespace Kartverket.Register.Controllers
             }
         }
 
+
         // GET: Datasets/Edit/5
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
@@ -269,6 +272,7 @@ namespace Kartverket.Register.Controllers
                     Viewbags(model);
                     return View(model);
                 }
+
                 if (originalDataset.IsNationalDataset())
                 {
                     if (_accessControlService.IsAdmin())
@@ -461,6 +465,15 @@ namespace Kartverket.Register.Controllers
             ViewBag.submitterId = _registerItemService.GetSubmitterSelectList(dataset.submitterId);
             ViewBag.datasetownerId = _registerItemService.GetOwnerSelectList(dataset.datasetownerId);
             ViewBag.ThemeGroupId = _registerItemService.GetThemeGroupSelectList(dataset.ThemeGroupId);
+
+            ViewBag.RegionalPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.RegionalPlan);
+            ViewBag.MunicipalSocialPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.MunicipalSocialPlan);
+            ViewBag.MunicipalLandUseElementPlan = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.MunicipalLandUseElementPlan);
+            ViewBag.ZoningPlanArea = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ZoningPlanArea);
+            ViewBag.ZoningPlanDetails = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.ZoningPlanDetails);
+            ViewBag.BuildingMatter = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.BuildingMatter);
+            ViewBag.PartitionOff = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.PartitionOff);
+            ViewBag.EenvironmentalImpactAssessment = new SelectList(dataset.SuitabilityScale(), "Value", "Text", dataset.EenvironmentalImpactAssessment);
         }
 
         private ActionResult EditDataset(Dataset dataset, string registername, string parentRegister, string registerowner, Dataset originalDataset, CoverageDataset coverage = null)
@@ -575,6 +588,23 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
             dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
             dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
+
+            dataset.RegionalPlan = inputDataset.RegionalPlan;
+            dataset.RegionalPlanNote = inputDataset.RegionalPlanNote;
+            dataset.MunicipalSocialPlan = inputDataset.MunicipalSocialPlan;
+            dataset.MunicipalSocialPlanNote = inputDataset.MunicipalSocialPlanNote;
+            dataset.MunicipalLandUseElementPlan = inputDataset.MunicipalLandUseElementPlan;
+            dataset.MunicipalLandUseElementPlanNote = inputDataset.MunicipalLandUseElementPlanNote;
+            dataset.ZoningPlanArea = inputDataset.ZoningPlanArea;
+            dataset.ZoningPlanAreaNote = inputDataset.ZoningPlanAreaNote;
+            dataset.ZoningPlanDetails = inputDataset.ZoningPlanDetails;
+            dataset.ZoningPlanDetailsNote = inputDataset.ZoningPlanDetailsNote;
+            dataset.BuildingMatter = inputDataset.BuildingMatter;
+            dataset.BuildingMatterNote = inputDataset.BuildingMatterNote;
+            dataset.PartitionOff = inputDataset.PartitionOff;
+            dataset.PartitionOffNote = inputDataset.PartitionOffNote;
+            dataset.EenvironmentalImpactAssessment = inputDataset.EenvironmentalImpactAssessment;
+            dataset.EenvironmentalImpactAssessmentNote = inputDataset.EenvironmentalImpactAssessmentNote;
             return dataset;
         }
 

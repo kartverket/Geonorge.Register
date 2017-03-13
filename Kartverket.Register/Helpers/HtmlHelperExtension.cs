@@ -1041,12 +1041,12 @@ namespace Kartverket.Register.Helpers
 
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            Organization munizipality = _registerService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
-            if (munizipality != null)
+            Organization municipality = _registerService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
+            if (municipality != null)
             {
                 foreach (CoverageDataset coverage in item.Coverage)
                 {
-                    if (munizipality.systemId == coverage.MunicipalityId)
+                    if (municipality.systemId == coverage.MunicipalityId)
                     {
                         return coverage;
                     }
@@ -1180,6 +1180,14 @@ namespace Kartverket.Register.Helpers
             }
 
             return null;
+        }
+
+        public static int cbChecked(bool checkboxChecked) {
+            if (checkboxChecked)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }

@@ -1033,3 +1033,24 @@ a.link-unstyled {
 .norgeskart-legend .custom-checkbox label {
     margin-left: 10px;
 }
+
+/* Modal */
+.modal {
+    padding-top: 250px;
+}
+
+.modal-dialog {
+    margin: auto;
+    width: 700px;
+}
+
+
+/**/
+.superImportantCheckbox .checkbox-icon::after{
+    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-default.svg) !important;
+
+}
+
+.superImportantCheckbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon::after{
+    content: url(/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-default.svg) !important;
+}

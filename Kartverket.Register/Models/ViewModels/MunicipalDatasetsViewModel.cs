@@ -8,9 +8,9 @@ namespace Kartverket.Register.Models.ViewModels
     public class MunicipalDatasetsViewModel
     {
         public MunicipalDatasetsViewModel() {
-            DokMunicipalDatasets = new List<DokMunicipalRow>();
+            DokMunicipalDatasets = new List<DokMunicipalEdit>();
         }
 
-        public List<DokMunicipalRow> DokMunicipalDatasets { get; set; }
+        public List<DokMunicipalEdit> DokMunicipalDatasets { get; set; }
     }
 }

@@ -40,6 +40,25 @@ namespace Kartverket.DOK.Service
                 dataset.submitterId = originalDataset.submitterId;
                 dataset.submitter = originalDataset.submitter;
                 dataset.DatasetType = originalDataset.DatasetType;
+
+                dataset.RegionalPlan = originalDataset.RegionalPlan;
+                dataset.RegionalPlanNote = originalDataset.RegionalPlanNote;
+                dataset.MunicipalSocialPlan = originalDataset.MunicipalSocialPlan;
+                dataset.MunicipalSocialPlanNote = originalDataset.MunicipalSocialPlanNote;
+                dataset.MunicipalLandUseElementPlan = originalDataset.MunicipalLandUseElementPlan;
+                dataset.MunicipalLandUseElementPlanNote = originalDataset.MunicipalLandUseElementPlanNote;
+                dataset.ZoningPlanArea = originalDataset.ZoningPlanArea;
+                dataset.ZoningPlanAreaNote = originalDataset.ZoningPlanAreaNote;
+                dataset.ZoningPlanDetails = originalDataset.ZoningPlanDetails;
+                dataset.ZoningPlanDetailsNote = originalDataset.ZoningPlanDetailsNote;
+                dataset.BuildingMatter = originalDataset.BuildingMatter;
+                dataset.BuildingMatterNote = originalDataset.BuildingMatterNote;
+                dataset.PartitionOff = originalDataset.PartitionOff;
+                dataset.PartitionOffNote = originalDataset.PartitionOffNote;
+                dataset.EenvironmentalImpactAssessment = originalDataset.EenvironmentalImpactAssessment;
+                dataset.EenvironmentalImpactAssessmentNote = originalDataset.EenvironmentalImpactAssessmentNote;
+
+
                 if (dontUpdateDescription) dataset.description = originalDataset.description;
 
                 dataset.restricted = metadata.restricted;

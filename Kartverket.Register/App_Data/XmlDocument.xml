@@ -561,6 +561,11 @@
             Register search
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.AlertServiceController.PostServiceAlert(Kartverket.Register.Models.Api.AlertService)">
+            <summary>
+            Add service alert
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.DocumentsController.NameIsValid(Kartverket.Register.Models.Document)">
             <summary>
             Validate item name. Item name must be unique in a register. 
@@ -882,6 +887,31 @@
         <member name="P:Kartverket.Register.Models.Api.SearchResult.Facets">
             <summary>
             Result grouped by facets
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertService.AlertType">
+            <summary>
+            Hva har skjedd? "Endret datainnhold", "Ny tjeneste" etc.
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertService.ServiceUuid">
+            <summary>
+            Uuid til tjenesten
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertService.Note">
+            <summary>
+            Beskrivelse av hva varselet gjelder
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertService.AlertDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til dagens dato. Format: YYYY-MM-DD, f.eks. "2017-03-15".
+            </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.Api.AlertService.EffectiveDate">
+            <summary>
+            Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
         </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">

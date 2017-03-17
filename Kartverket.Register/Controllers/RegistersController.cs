@@ -367,6 +367,8 @@ namespace Kartverket.Register.Controllers
                     }
                 }
 
+                db.Database.ExecuteSqlCommand("update Registers set modified = GETDATE() where systemid='E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8'");
+
                 db.SaveChanges();
 
                 return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);

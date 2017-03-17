@@ -1947,6 +1947,17 @@ button.btn {
   height: 25px;
   display: inline-block;
   vertical-align: middle; }
+  .custom-icon .custom-icon-overlay {
+    background-color: #fe5000;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    font-size: 10px;
+    display: inline-block;
+    text-align: center;
+    color: #FFF;
+    margin-left: 12px;
+    margin-top: 11px; }
 
 .custom-icon-sm {
   background-repeat: no-repeat;

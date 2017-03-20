@@ -299,10 +299,47 @@ namespace Kartverket.Register.Services.Register
 
         public string GetDokDeliveryServiceStatus(Dataset item)
         {
+            bool hasServiceUrl = false;
+
             string status = (!string.IsNullOrEmpty(item.dokDeliveryWmsStatusId) ? item.dokDeliveryWmsStatusId : "notset");
 
             if (item.dokDeliveryWmsStatusAutoUpdate)
-            { 
+            {
+                try
+                { 
+                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + item.Uuid;
+                    System.Net.WebClient c = new System.Net.WebClient();
+                    c.Encoding = System.Text.Encoding.UTF8;
+
+                    var json = c.DownloadString(metadataUrl);
+
+                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+                    if (metadata != null)
+                    {
+    
+                        if (metadata.Related != null)
+                        {
+                            foreach (var service in metadata.Related)
+                            {
+                                if (service.DistributionDetails != null)
+                                {
+                                    if (service.DistributionDetails.Protocol.Value == "OGC:WMS")
+                                        hasServiceUrl = true;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+
+                }
+
+
+
                 string statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
                 statusUrl = statusUrl + item.UuidService;
                 using (var client = new HttpClient())
@@ -347,6 +384,8 @@ namespace Kartverket.Register.Services.Register
                             if (data.bbox.vurdering == "yes")
                                 hasCoverage = true;
 
+                            if(!hasServiceUrl)
+                                status = "deficient";
                             //Grønn på WMS:
                             //Respons fra GetCapabilities
                             //Svartid innen 4 sekunder
@@ -355,7 +394,7 @@ namespace Kartverket.Register.Services.Register
                             //Støtter egenskapsspørringer
                             //Støtter tegnforklaring
                             //Oppgir dekningsområde
-                            if ((resposeGetCapabilities && responseTime <= 4
+                            else if ((resposeGetCapabilities && responseTime <= 4
                                 && supportCors && epsgSupport && featuresSupport
                                 && hasLegend && hasCoverage) || connectSoso)
                                 status = "good";
@@ -388,15 +427,44 @@ namespace Kartverket.Register.Services.Register
         {
             string status = item.dokDeliveryDistributionStatusId;
 
-            if (item.dokDeliveryDistributionStatusAutoUpdate)
+            try
             {
-                if (item.dokDeliveryWfsStatusId == "good" || item.dokDeliveryAtomFeedStatusId == "good")
-                    status = "good";
-                else if (item.dokDeliveryWfsStatusId == "useable" || item.dokDeliveryAtomFeedStatusId == "useable")
-                    status = "useable";
-                else
-                    status = "deficient";
+                string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + item.Uuid;
+                System.Net.WebClient c = new System.Net.WebClient();
+                c.Encoding = System.Text.Encoding.UTF8;
+
+                var json = c.DownloadString(metadataUrl);
+
+                dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
+
+                bool hasDistributionUrl = false;
+
+                if (metadata != null)
+                {
+                    var distribution = metadata.DistributionDetails;
+                    if (distribution != null && !string.IsNullOrEmpty(distribution.URL.Value))
+                    {
+                        hasDistributionUrl = true;
+                    }
+
+                }
+
+                if (item.dokDeliveryDistributionStatusAutoUpdate)
+                {
+                    if (item.dokDeliveryWfsStatusId == "good" || item.dokDeliveryAtomFeedStatusId == "good")
+                        status = "good";
+                    else if (item.dokDeliveryWfsStatusId == "useable" || item.dokDeliveryAtomFeedStatusId == "useable" || hasDistributionUrl)
+                        status = "useable";
+                    else
+                        status = "deficient";
+                }
             }
+
+            catch (Exception ex)
+            {
+                return "deficient";
+            }
+
 
             return status;
         }

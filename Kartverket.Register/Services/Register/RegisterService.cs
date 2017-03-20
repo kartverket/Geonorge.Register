@@ -442,9 +442,12 @@ namespace Kartverket.Register.Services.Register
                 if (metadata != null)
                 {
                     var distribution = metadata.DistributionDetails;
-                    if (distribution != null && !string.IsNullOrEmpty(distribution.URL.Value))
+                    if (distribution != null && distribution.Protocol != null && distribution.URL != null)
                     {
-                        hasDistributionUrl = true;
+                        if(Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute) 
+                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download" 
+                            || distribution.Protocol.Value == "GEONORGE:FILEDOWNLOAD" || distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
+                            hasDistributionUrl = true;
                     }
 
                 }

@@ -406,7 +406,7 @@ namespace Kartverket.Register.Services.Register
                             //Støtter tegnforklaring
                             //Oppgir dekningsområde
                             else if ((resposeGetCapabilities && responseTime <= 10
-                                && supportCors && epsgSupport && hasLegend && hasCoverage) || connectSoso)
+                                && epsgSupport && hasLegend && hasCoverage) || connectSoso)
                                 status = "useable";
                             //Rød:
                             //Feiler på en av testene til gul

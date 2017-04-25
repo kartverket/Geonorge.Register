@@ -55,11 +55,7 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
-            if (Request.UrlReferrer != null)
-            {
-            if (Request.UrlReferrer.Host != null && (Request.UrlReferrer.Host != Request.Url.Host))
-                removeSessionSearchParams();
-            }
+            CheckReferrer();
 
             DokOrderBy(sorting);
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
@@ -88,7 +84,6 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
         }
-
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
@@ -619,6 +614,28 @@ namespace Kartverket.Register.Controllers
                 return dateConfirmedMunicipalDOK.Value.Year != DateTime.Now.Year;
             }
             return false;
+        }
+
+        private void CheckReferrer()
+        {
+            if (Request.UrlReferrer != null)
+            {
+                string registerNameReferer = "";
+                var pathReferer = Request.UrlReferrer.AbsolutePath;
+                if (pathReferer.Contains("/"))
+                    registerNameReferer = pathReferer.Split('/')[2].ToString();
+
+                string registerNameCurrent = "";
+                var pathCurrent = Request.Url.AbsolutePath;
+                if (pathCurrent.Contains("/"))
+                    registerNameCurrent = pathCurrent.Split('/')[2].ToString();
+
+                if (Request.UrlReferrer.Host != null && (Request.UrlReferrer.Host != Request.Url.Host))
+                    removeSessionSearchParams();
+
+                if (!registerNameReferer.StartsWith("search") && registerNameReferer != registerNameCurrent)
+                    removeSessionSearchParams();
+            }
         }
     }
 }

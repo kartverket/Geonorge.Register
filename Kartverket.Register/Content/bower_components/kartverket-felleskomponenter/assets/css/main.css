@@ -1973,6 +1973,10 @@ button.btn {
   margin-right: 5px !important;
   margin-left: 5px !important; }
 
+.custom-icon-l {
+  width: 100px;
+  height: 100px; }
+
 .custom-icon-xl {
   width: 150px;
   height: 150px; }

@@ -23,7 +23,11 @@
                     thumb = item.thumbnail;
                 }
             }
-            @if (item.documentUrl.Contains("ikke angitt"))
+            @if (item.documentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(item.ApplicationSchema))
+            {
+                <div class="glyphicon glyphicon-file" style="font-size:150px"></div>
+            }
+            else if (item.documentUrl.Contains("ikke angitt"))
             {
                 <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
             }
@@ -58,6 +62,12 @@
                 </a><br />
             }
 
+            @if (!string.IsNullOrEmpty(item.ApplicationSchema))
+            {
+                <a href="@Html.DisplayFor(modelItem => item.ApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
+                    <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
+                </a><br />
+            }
 
             @if (Request.IsAuthenticated)
             {

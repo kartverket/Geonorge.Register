@@ -1957,7 +1957,11 @@ button.btn {
     text-align: center;
     color: #FFF;
     margin-left: 12px;
-    margin-top: 11px; }
+    margin-top: 11px;
+    line-height: 14px; }
+
+.btn .custom-icon .custom-icon-overlay {
+  margin-top: 8px; }
 
 .custom-icon-sm {
   background-repeat: no-repeat;
@@ -1968,6 +1972,14 @@ button.btn {
   vertical-align: middle;
   margin-right: 5px !important;
   margin-left: 5px !important; }
+
+.custom-icon-xl {
+  width: 150px;
+  height: 150px; }
+
+.custom-icon-full {
+  width: 100%;
+  height: auto; }
 
 .status-icons .custom-icon, .status-icons .fa, .status-icons .glyphicon {
   width: 18px !important;
@@ -1988,6 +2000,20 @@ button.btn {
 
 .disabled .custom-icon {
   cursor: not-allowed; }
+
+.expand-arrow {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-right.svg");
+  width: 11px;
+  height: 12px;
+  padding: 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: 50%;
+  display: inline-block;
+  margin-right: 2px;
+  margin-bottom: 2px; }
+  .expand-arrow.active {
+    background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arrow-down.svg"); }
 
 /* Info */
 .custom-icon.custom-icon-info {
@@ -2194,6 +2220,23 @@ button.btn {
 
 .custom-icon.custom-icon-norgeskart-area {
   background-color: #779cfd; }
+
+/* Validation */
+.custom-icon.custom-icon-checked {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checked.svg"); }
+
+.custom-icon.custom-icon-warning {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/warning.svg"); }
+
+.custom-icon.custom-icon-danger {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/danger.svg"); }
+
+/* File icons */
+.custom-icon.custom-icon-file-xml {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/file-xml.svg"); }
+
+.disabled .custom-icon.custom-icon-file-xml, .disabled.custom-icon.custom-icon-file-xml {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/file-xml-disabled.svg"); }
 
 .download-form p {
   margin-bottom: 0; }
@@ -2947,6 +2990,12 @@ input[type="radio"]:checked.custom-radio.disabled:after,
     border-left: 8px solid #36c545; }
   .help-text.bg-info {
     border-left: 8px solid #7da1c4; }
+  .help-text.bg-primary {
+    border-left: 8px solid #fe5000; }
+  .help-text.bg-warning {
+    border-left: 8px solid #FED633; }
+  .help-text.bg-danger {
+    border-left: 8px solid #EE432a; }
   .help-text.form-element-help-text {
     margin: 0px;
     padding: 6px 10px; }
@@ -3103,10 +3152,13 @@ h1 .label {
     background-color: #7da1c4;
     transition: all 0.35s linear 0s;
     color: #FFF;
-    border-bottom: none;
+    border-bottom: 1px solid transparent;
+    background-clip: padding-box;
     border-radius: 0;
     font-size: 13px;
     margin-bottom: 0; }
+    .nav-tabs > li > a:hover {
+      border-color: transparent; }
     .nav-tabs > li > a.btn {
       border: none;
       font-size: 12pt;

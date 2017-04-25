@@ -867,12 +867,16 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked-red.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked-yellow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\danger.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dekningskart.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\external_link_3867c8_12px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\external_link_ffffff_12px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\file-xml-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\file-xml.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-checked-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-checked.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\format-disabled.svg" />
@@ -939,6 +943,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\sosi.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\warning.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\unlock.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.js" />

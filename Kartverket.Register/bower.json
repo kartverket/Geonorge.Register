@@ -2,7 +2,7 @@
   "name": "ASP.NET",
   "private": true,
   "dependencies": {
-    "kartverket-felleskomponenter": "6.6.1",
+    "kartverket-felleskomponenter": "6.8.0",
     "tablesorter": "*"
   }
 }

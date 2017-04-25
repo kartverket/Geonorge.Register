@@ -623,12 +623,21 @@ namespace Kartverket.Register.Controllers
                 string registerNameReferer = "";
                 var pathReferer = Request.UrlReferrer.AbsolutePath;
                 if (pathReferer.Contains("/"))
-                    registerNameReferer = pathReferer.Split('/')[2].ToString();
+                {
+                    var registerNameRefererObject = pathReferer.Split('/');
+                    if(registerNameRefererObject.Count() > 2)
+                        registerNameReferer = registerNameRefererObject[2].ToString();
+                }
+                    
 
                 string registerNameCurrent = "";
                 var pathCurrent = Request.Url.AbsolutePath;
                 if (pathCurrent.Contains("/"))
-                    registerNameCurrent = pathCurrent.Split('/')[2].ToString();
+                {
+                    var registerNameCurrentObject = pathCurrent.Split('/');
+                    if (registerNameCurrentObject.Count() > 2)
+                        registerNameCurrent = registerNameCurrentObject[2].ToString();
+                }
 
                 if (Request.UrlReferrer.Host != null && (Request.UrlReferrer.Host != Request.Url.Host))
                     removeSessionSearchParams();

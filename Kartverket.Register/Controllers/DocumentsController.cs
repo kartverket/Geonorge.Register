@@ -806,7 +806,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (currentDocument != null)
                     {
-                        int max = db.Documents.Where(v => v.versioningId == currentDocument.versioningId)
+                        versionNumber = db.Documents.Where(v => v.versioningId == currentDocument.versioningId)
                        .Select(n => n.versionNumber).Max() + 1;
                     }
                     else { 

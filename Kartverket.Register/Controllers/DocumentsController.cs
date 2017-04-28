@@ -438,7 +438,7 @@ namespace Kartverket.Register.Controllers
             document.approvalReference = inputDocument.approvalReference;
             document.ApplicationSchema = inputDocument.ApplicationSchema;
             document.versionName = inputDocument.versionName;
-            document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument);
+            document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument, inputDocument);
             document.registerId = GetRegisterId(inputDocument, document);
             document.Accepted = inputDocument.Accepted;
             string url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
@@ -794,7 +794,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        private int GetVersionNr(int versionNumber, Document originalDocument)
+        private int GetVersionNr(int versionNumber, Document originalDocument, Document currentDocument)
         {
             if (originalDocument == null)
             {
@@ -804,7 +804,14 @@ namespace Kartverket.Register.Controllers
                 }
                 else
                 {
+                    if (currentDocument != null)
+                    {
+                        int max = db.Documents.Where(v => v.versioningId == currentDocument.versioningId)
+                       .Select(n => n.versionNumber).Max() + 1;
+                    }
+                    else { 
                     versionNumber++;
+                    }
                 }
             }
             return versionNumber;

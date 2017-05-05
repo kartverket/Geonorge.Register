@@ -437,6 +437,7 @@ namespace Kartverket.Register.Controllers
             document.approvalDocument = inputDocument.approvalDocument;
             document.approvalReference = inputDocument.approvalReference;
             document.ApplicationSchema = inputDocument.ApplicationSchema;
+            document.GMLApplicationSchema = inputDocument.GMLApplicationSchema;
             document.versionName = inputDocument.versionName;
             document.versionNumber = GetVersionNr(inputDocument.versionNumber, originalDocument, inputDocument);
             document.registerId = GetRegisterId(inputDocument, document);

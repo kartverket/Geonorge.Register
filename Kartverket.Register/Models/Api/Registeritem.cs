@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models.Api
         public DateTime dateSubmitted { get; set; }
         public DateTime dateAccepted { get; set; }
         public string ApplicationSchema { get; set; }
+        public string GMLApplicationSchema { get; set; }
 
         // Organization
         public string number { get; set; }
@@ -154,6 +155,7 @@ namespace Kartverket.Register.Models.Api
                 if (d.documentowner != null) owner = d.documentowner.name;
                 documentreference = d.documentUrl;
                 ApplicationSchema = d.ApplicationSchema;
+                GMLApplicationSchema = d.GMLApplicationSchema;
             }
 
             else if (item is Dataset)

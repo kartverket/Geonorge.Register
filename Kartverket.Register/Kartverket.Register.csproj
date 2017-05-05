@@ -698,6 +698,10 @@
     <Compile Include="Migrations\201703080701207_AddSuitabilityAssessmentText.Designer.cs">
       <DependentUpon>201703080701207_AddSuitabilityAssessmentText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705051302510_AddGMLApplicationSchema.cs" />
+    <Compile Include="Migrations\201705051302510_AddGMLApplicationSchema.Designer.cs">
+      <DependentUpon>201705051302510_AddGMLApplicationSchema.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1620,6 +1624,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703080701207_AddSuitabilityAssessmentText.resx">
       <DependentUpon>201703080701207_AddSuitabilityAssessmentText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705051302510_AddGMLApplicationSchema.resx">
+      <DependentUpon>201705051302510_AddGMLApplicationSchema.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

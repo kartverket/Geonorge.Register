@@ -204,7 +204,7 @@
                     <div class="form-group" id="approvalApplicationSchema">
                         @Html.LabelFor(model => model.ApplicationSchema, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.ApplicationSchema, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.ApplicationSchema, new { htmlAttributes = new { @class = "form-control", @onchange= "GetGMLApplicationSchema();" } })
                             @Html.ValidationMessageFor(model => model.ApplicationSchema, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -262,4 +262,13 @@
         <a href="@Model.GetObjectUrl()">Tilbake</a>
     </div>
 </form>
+<script>
+    function GetGMLApplicationSchema()
+    {
+        $.getJSON($("#ApplicationSchema").val(), function(result){
+            console.log(result);
+            $("#GMLApplicationSchema").val(result.pakke.targetNamespace + '/' + result.pakke.xsdDocument)
+        });
+    }
+</script>
 

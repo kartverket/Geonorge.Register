@@ -8,6 +8,7 @@ namespace Kartverket.Register
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("register/kartografi/");
             
             routes.MapRoute("DisplayDataset", "datasett/{id}/{name}",
                 new { controller = "DisplayDataset", action = "Display", name = UrlParameter.Optional },

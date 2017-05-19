@@ -14,7 +14,7 @@ namespace Kartverket.Register
                 new { id = @"^\d+$" }
             );
 
-            routes.MapRoute("Kartografi", "register/kartografi", new { url = "kartografi/{controller}/{action}/{SystemId}", controller = "Files", action = "Index", SystemId = UrlParameter.Optional });
+            routes.MapRoute("Kartografi", "register/kartografi", new { url = "/kartografi/{controller}/{action}/{SystemId}", controller = "Files", action = "Index", SystemId = UrlParameter.Optional });
 
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
 

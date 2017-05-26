@@ -1065,6 +1065,8 @@
     <Content Include="Scripts\expressive.annotations.validate.js" />
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
+    <Content Include="authentication.default.config" />
+    <Content Include="authentication.config" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\702ZOKiLJc3WVjuplzInF5uFdDttMLvmWuJdhhgs.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.eot" />
@@ -1094,8 +1096,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
-    <Content Include="authentication.default.config" />
-    <Content Include="authentication.config" />
     <Content Include="Content\bower_components\tablesorter\.bower.json" />
     <Content Include="Content\bower_components\tablesorter\bower.json" />
     <Content Include="Content\bower_components\tablesorter\changelog" />

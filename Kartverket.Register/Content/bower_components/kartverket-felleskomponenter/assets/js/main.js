@@ -3,11 +3,11 @@ var applicationVersionNumber = (applicationVersionNumber === undefined) ? "" : a
 var supportsLogin = false;
 var authenticationData = (authenticationData === undefined) ? {} : authenticationData;
 if (authenticationData !== {}) {
-  supportsLogin = (authenticationData.supportsLogin === undefined) ? false : authenticationData.supportsLogin;
-  authenticationData.isAuthenticated = (authenticationData.isAuthenticated === undefined) ? false : authenticationData.isAuthenticated;
-  authenticationData.urlActionSignIn = (authenticationData.urlActionSignIn === undefined) ? "" : authenticationData.urlActionSignIn;
-  authenticationData.urlActionSignOut = (authenticationData.urlActionSignOut === undefined) ? "" : authenticationData.urlActionSignOut;
-  authenticationData.userName = (authenticationData.userName === undefined) ? "" : authenticationData.userName;
+    supportsLogin = (authenticationData.supportsLogin === undefined) ? false : authenticationData.supportsLogin;
+    authenticationData.isAuthenticated = (authenticationData.isAuthenticated === undefined) ? false : authenticationData.isAuthenticated;
+    authenticationData.urlActionSignIn = (authenticationData.urlActionSignIn === undefined) ? "" : authenticationData.urlActionSignIn;
+    authenticationData.urlActionSignOut = (authenticationData.urlActionSignOut === undefined) ? "" : authenticationData.urlActionSignOut;
+    authenticationData.userName = (authenticationData.userName === undefined) ? "" : authenticationData.userName;
 }
 
 
@@ -15,99 +15,103 @@ var geonorgeUrl = (applicationEnvironment === "") ? "https://www.geonorge.no/" :
 
 
 /* Loading animation */
-function showLoadingAnimation(loadingMessage){
-  $("#loading-animation").html(loadingMessage);
-  $("#loading-animation").show();
-}
-function hideLoadingAnimation(){
-  $("#loading-animation").html('');
-  $("#loading-animation").hide();
+function showLoadingAnimation(loadingMessage) {
+    $("#loading-animation").html(loadingMessage);
+    $("#loading-animation").show();
 }
 
-function notOpeningInNewTab(event){
-  if ( event.ctrlKey || event.shiftKey || event.metaKey || (event.button && event.button == 1)){
-    return false;
-  }else{
-    return true;
-  }
+function hideLoadingAnimation() {
+    $("#loading-animation").html('');
+    $("#loading-animation").hide();
 }
 
-function addDefaultLoadingAnimation(element){
-  element.addClass('show-loading-animation');
-  element.data('loading-message', 'Henter innhold');
+function notOpeningInNewTab(event) {
+    if (event.ctrlKey || event.shiftKey || event.metaKey || (event.button && event.button == 1)) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function addDefaultLoadingAnimation(element) {
+    element.addClass('show-loading-animation');
+    element.data('loading-message', 'Henter innhold');
 }
 
 showLoadingAnimation('Laster innhold');
 /* ----------------------------- */
 
 
-$(document).ready( function(){
+$(document).ready(function() {
 
-  // Loading animation
-  hideLoadingAnimation();
+    // Loading animation
+    hideLoadingAnimation();
 
-  $(document).on("click", ".show-loading-animation", function (event){
-    if (notOpeningInNewTab(event)){
-      var loadingMessage = $(this).data('loading-message') !== undefined ? $(this).data('loading-message') : '';
-      showLoadingAnimation(loadingMessage);
+    $(document).on("click", ".show-loading-animation", function(event) {
+        if (notOpeningInNewTab(event)) {
+            var loadingMessage = $(this).data('loading-message') !== undefined ? $(this).data('loading-message') : '';
+            showLoadingAnimation(loadingMessage);
+        }
+    });
+
+
+    // Geonorge logo
+    if ($("#geonorge-logo").length) {
+        $("#geonorge-logo a").prop("href", geonorgeUrl);
+        $("#geonorge-logo a img").prop("src", "/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/geonorge_" + applicationEnvironment + "logo.svg");
     }
-  });
 
 
-  // Geonorge logo
-  if ($("#geonorge-logo").length){ 
-    $("#geonorge-logo a").prop("href", geonorgeUrl);
-    $("#geonorge-logo a img").prop("src", "/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/geonorge_" + applicationEnvironment + "logo.svg");
-  }
+    //Version number
+    if ($("#applicationVersionNumber").length && applicationVersionNumber !== "") {
+        $("#applicationVersionNumber").html("Versjon " + applicationVersionNumber);
+    }
 
 
-  //Version number
-  if ($("#applicationVersionNumber").length && applicationVersionNumber !== ""){
-    $("#applicationVersionNumber").html("Versjon " + applicationVersionNumber);
-  }
+    // Shopping cart
+    var downloadUrl = "https://kartkatalog.geonorge.no/Download";
+    if (applicationEnvironment !== "") {
+        downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
+    }
+    $("#shopping-cart-url").prop("href", downloadUrl);
 
 
-  // Shopping cart
-  var downloadUrl = "https://kartkatalog.geonorge.no/Download";
-  if (applicationEnvironment !== "") {
-    downloadUrl = "https://kartkatalog." + applicationEnvironment + ".geonorge.no/Download";
-  }
-  $("#shopping-cart-url").prop("href", downloadUrl);
-
-
-  // Login
-  if (supportsLogin && $("#container-login").length){
-    $("#container-login").append("<ul></ul>");
-    $("#container-login ul").append("<li><a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a></li>");
-    if (authenticationData.isAuthenticated){
-     $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignOut + "' class='geonorge-aut' title='Logg ut " + authenticationData.userName + "'> Logg ut</a></li>");
-   }else{
-     $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignIn + "' class='geonorge-aut'> Logg inn</a></li>");
-   }
- }
+    // Login
+    if (supportsLogin && $("#container-login").length) {
+        $("#container-login").append("<ul></ul>");
+        $("#container-login ul").append("<li><a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a></li>");
+        if (authenticationData.isAuthenticated) {
+            $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignOut + "' class='geonorge-aut' title='Logg ut " + authenticationData.userName + "'> Logg ut</a></li>");
+        } else {
+            $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignIn + "' class='geonorge-aut'> Logg inn</a></li>");
+        }
+    }
 });
 
-$(window).load(function () {
-  var options = {
-    disable_search_threshold: 10,
-    search_contains: true
-  };
-  $(".chosen-select").chosen(options);
-  $("[data-toggle='tooltip']").tooltip();
-  $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
-  $("li[data-toggle='tooltip']").mouseleave(function () {
-    $(".ui-helper-hidden-accessible").remove();
-  });
+$(window).load(function() {
+    var options = {
+        disable_search_threshold: 10,
+        search_contains: true
+    };
+    $(".chosen-select").chosen(options);
+    $("[data-toggle='tooltip']").tooltip({
+        trigger: 'hover'
+    });
+    $("li.has-error[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+30" });
+    $("li[data-toggle='tooltip']").mouseleave(function() {
+        $(".ui-helper-hidden-accessible").remove();
+    });
 
-  $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
-  $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function () {
-    $(".ui-helper-hidden-accessible").remove();
-  });
+    $(".ui-tooltip-element[data-toggle='tooltip']").tooltip("option", "position", { my: "center", at: "center bottom+25" });
+    $(".ui-tooltip-element[data-toggle='tooltip']").mouseleave(function() {
+        $(".ui-helper-hidden-accessible").remove();
+    });
 
     // Get useragent
     var doc = document.documentElement;
     doc.setAttribute('data-useragent', navigator.userAgent);
-  });
+});
+
 angular.module('geonorge', ['ui.bootstrap']);
 
 angular.module('geonorge').config(["$sceDelegateProvider", function ($sceDelegateProvider) {
@@ -789,135 +793,177 @@ function updateShoppingCartCookie() {
 }
 
 
-$(window).load(function () {
+$(window).load(function() {
     updateShoppingCart();
 });
+
 /* Content toggle */
 function updateToggleLinks(element) {
-	$(element).each(function () {
-		$(this).toggleClass('show-content');
-	});
+    $(element).each(function() {
+        $(this).toggleClass('show-content');
+    });
 }
-$("document").ready( function(){
+$("document").ready(function() {
 
-	updateToggleLinks($('.toggle-content'));
+    updateToggleLinks($('.toggle-content'));
 
-	$(".toggle-content").click(function () {
-		var toggleClass = $(this).data('content-toggle');
-		updateToggleLinks($(this));
-		$("." + toggleClass).toggle();
-	});
-	
+    $(".toggle-content").click(function() {
+        var toggleClass = $(this).data('content-toggle');
+        updateToggleLinks($(this));
+        $("." + toggleClass).toggle();
+    });
+
 });
 
 
 /* Tabs */
-function activateTab(tab){
-	$(".link-tabs").ready(function () {
-		tabLink = $(".link-tabs li a[data-tab='" + tab + "']");
-		$(".link-tabs li.active").removeClass('active');
-		tabLink.parent('li').addClass('active');
-	});
+function activateTab(tab) {
+    $(".link-tabs").ready(function() {
+        tabLink = $(".link-tabs li a[data-tab='" + tab + "']");
+        $(".link-tabs li.active").removeClass('active');
+        tabLink.parent('li').addClass('active');
+    });
 }
 
-$(".link-tabs").ready(function () {
-	$(".link-tabs li a").click(function (event){
-		event.preventDefault();
-		activateTab($(this).data('tab'));
-		$("#tab-content").css('opacity', '.15');
-		window.location.href = $(this).prop('href');
-	});
+$(".link-tabs").ready(function() {
+    $(".link-tabs li a").click(function(event) {
+        event.preventDefault();
+        activateTab($(this).data('tab'));
+        $("#tab-content").css('opacity', '.15');
+        window.location.href = $(this).prop('href');
+    });
 });
 
 
 /* Help texts */
-$("document").ready( function(){
-	$("a.help-text-toggle").click(function (event) {
-		event.preventDefault();
-		var toggleButton = $(this);
-		var helpTextId = $(this).data("help-text-id");
-		$("#" + helpTextId).toggle();
-		if ($("#" + helpTextId).hasClass('active')) {
-			$("#" + helpTextId).removeClass('active');
-			toggleButton.removeClass('active');
-		} else {
-			$("#" + helpTextId).addClass('active');
-			toggleButton.addClass('active');
-		}
-	});
+$("document").ready(function() {
+    $("a.help-text-toggle").click(function(event) {
+        event.preventDefault();
+        var toggleButton = $(this);
+        var helpTextId = $(this).data("help-text-id");
+        $("#" + helpTextId).toggle();
+        if ($("#" + helpTextId).hasClass('active')) {
+            $("#" + helpTextId).removeClass('active');
+            toggleButton.removeClass('active');
+        } else {
+            $("#" + helpTextId).addClass('active');
+            toggleButton.addClass('active');
+        }
+    });
 });
 
 
 /* Dynamic "add to cart" buttons*/
 function updateAllCartButtons(storedOrderItems) {
-	$('.add-to-cart-btn').each(function () {
-		var uuid = $(this).attr('itemuuid');
-		if ($.inArray(uuid, storedOrderItems) > -1) {
-			$(this).addClass('added');
-			$(this).attr('title', 'Allerede lagt til i kurv');
-			$(this).children('.button-text').text(' Lagt i kurv');
-		}
-	});
+    $('.add-to-cart-btn').each(function() {
+        var uuid = $(this).attr('itemuuid');
+        if ($.inArray(uuid, storedOrderItems) > -1) {
+            $(this).addClass('added');
+            $(this).attr('title', 'Allerede lagt til i kurv');
+            $(this).children('.button-text').text(' Lagt i kurv');
+        }
+    });
 }
 
 function updateCartButton(element, storedOrderItems) {
-	var uuid = $(element).attr('itemuuid');
-	if ($.inArray(uuid, storedOrderItems) > -1) {
-		$('.add-to-cart-btn[itemuuid="' + uuid + '"]').each(function () {
-			var itemname = $(this).attr('itemname') !== undefined ? ' ' + $(this).attr('itemname') + ' ' : '';
-			$(this).addClass('added');
-			$(this).attr('data-original-title', 'Fjern' + itemname + 'fra kurv');
-			$(this).children('.button-text').text(' Fjern fra kurv');
-		});
-	} else {
-		$('.add-to-cart-btn[itemuuid="' + uuid + '"]').each(function () {
-			var itemname = $(this).attr('itemname') !== undefined ? ' ' + $(this).attr('itemname') + ' ' : '';
-			$(this).removeClass('added');
-			$(this).attr('data-original-title', 'Legg til' + itemname + 'i kurv');
-			$(this).children('.button-text').text(' Legg i kurv');
-		});
-	}
+    var uuid = $(element).attr('itemuuid');
+    if ($.inArray(uuid, storedOrderItems) > -1) {
+        $('.add-to-cart-btn[itemuuid="' + uuid + '"]').each(function() {
+            var itemname = $(this).attr('itemname') !== undefined ? ' ' + $(this).attr('itemname') + ' ' : '';
+            $(this).addClass('added');
+            $(this).attr('data-original-title', 'Fjern' + itemname + 'fra kurv');
+            $(this).children('.button-text').text(' Fjern fra kurv');
+        });
+    } else {
+        $('.add-to-cart-btn[itemuuid="' + uuid + '"]').each(function() {
+            var itemname = $(this).attr('itemname') !== undefined ? ' ' + $(this).attr('itemname') + ' ' : '';
+            $(this).removeClass('added');
+            $(this).attr('data-original-title', 'Legg til' + itemname + 'i kurv');
+            $(this).children('.button-text').text(' Legg i kurv');
+        });
+    }
 }
 
 
 /* Check if href is the same as current url */
 function notCurrentUrl(url) {
-	if (url == window.location.href || url == window.location.pathname) {
-		return true;
-	} else if (url == window.location.href + "/" || url == window.location.pathname + "/") {
-		return true;
-	}
+    if (url == window.location.href || url == window.location.pathname) {
+        return true;
+    } else if (url == window.location.href + "/" || url == window.location.pathname + "/") {
+        return true;
+    }
 }
 
 
 /* Loading animation for pagination */
 
-$("document").ready( function(){
-	$("ul.pagination a, ul.breadcrumbs a").each(function (){
-		if (!$(this).closest('li').hasClass('active')){
-			addDefaultLoadingAnimation($(this));
-		}
-	});
+$("document").ready(function() {
+    $("ul.pagination a, ul.breadcrumbs a").each(function() {
+        if (!$(this).closest('li').hasClass('active')) {
+            addDefaultLoadingAnimation($(this));
+        }
+    });
 });
 
 
 /* Remove loading animation from links same as current url */
-$("document").ready( function(){
-	$("body").on("click", "a", function () {
-		if (notCurrentUrl($(this).attr("href"))) {
-			$(this).removeClass("show-loading-animation");
-		}
-	});
+$("document").ready(function() {
+    $("body").on("click", "a", function() {
+        if (notCurrentUrl($(this).attr("href"))) {
+            $(this).removeClass("show-loading-animation");
+        }
+    });
 });
 
 
 /* Breadcrumbs */
-function disableLastBreadcrumb(){
-	if($("ul.breadcrumbs li").last().has('a').length){
-		var lastBreadcrumbText = ($("ul.breadcrumbs li").last().text());
-		$("ul.breadcrumbs li").last().html(lastBreadcrumbText);
-	}
+function disableLastBreadcrumb() {
+    if ($("ul.breadcrumbs li").last().has('a').length) {
+        var lastBreadcrumbText = ($("ul.breadcrumbs li").last().text());
+        $("ul.breadcrumbs li").last().html(lastBreadcrumbText);
+    }
 }
-$("document").ready( function(){
-	disableLastBreadcrumb();
+$("document").ready(function() {
+    disableLastBreadcrumb();
+});
+
+
+/* Alerts */
+function showAlert(message, colorClass) {
+    $('#feedback-alert').attr('class', 'alert alert-dismissible alert-' + colorClass);
+    $('#feedback-alert .message').html($('#feedback-alert .message').html() + message + "<br/>");
+    $('#feedback-alert').show();
+}
+
+function clearAlertMessage() {
+    $('#feedback-alert .message').html("");
+}
+
+function hideAlert() {
+    $('#feedback-alert').hide();
+}
+
+$(document).on('focus', '.custom-select-list-input', function() {
+    var customSelectListElement = $(this).closest('.custom-select-list');
+    var dropdownElement = customSelectListElement.find('.custom-select-list-dropdown');
+    dropdownElement.addClass('active');
+    dropdownElement.removeClass('transparent');
+});
+
+$(document).on('blur', '.custom-select-list-input', function() {
+    var inputElement = this;
+    var customSelectListElement = $(this).closest('.custom-select-list');
+    var dropdownElement = customSelectListElement.find('.custom-select-list-dropdown');
+    dropdownElement.addClass("transparent");
+    setTimeout(function() {
+        if (inputElement !== document.activeElement) {
+            dropdownElement.removeClass("active");
+            dropdownElement.removeClass("transparent");
+        }
+    }, 1000);
+});
+
+
+$(document).on('click', '.custom-select-list-input-container', function() {
+    $(this).find('.custom-select-list-input').focus();
 });

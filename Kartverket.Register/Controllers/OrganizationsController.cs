@@ -248,6 +248,9 @@ namespace Kartverket.Register.Controllers
                     originalOrganization.name = org.name;
                     originalOrganization.seoname = RegisterUrls.MakeSeoFriendlyString(org.name);
                 }
+
+                originalOrganization.shortname = org.shortname;
+
                 if (org.submitterId != null)
                 {
                     originalOrganization.submitterId = org.submitterId;

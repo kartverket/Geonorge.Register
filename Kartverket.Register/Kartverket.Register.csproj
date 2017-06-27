@@ -702,6 +702,10 @@
     <Compile Include="Migrations\201705051302510_AddGMLApplicationSchema.Designer.cs">
       <DependentUpon>201705051302510_AddGMLApplicationSchema.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706270833269_AddCartographyFile.cs" />
+    <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
+      <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1548,6 +1552,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705051302510_AddGMLApplicationSchema.resx">
       <DependentUpon>201705051302510_AddGMLApplicationSchema.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
+      <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

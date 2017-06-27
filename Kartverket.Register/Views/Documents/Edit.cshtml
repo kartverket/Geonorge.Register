@@ -1,5 +1,6 @@
 ﻿@model Kartverket.Register.Models.Document
 ﻿@using Kartverket.Register.Helpers
+@using System.Web.Configuration
 
 @{
     ViewBag.Title = "Rediger " + Model.name;
@@ -183,8 +184,18 @@
                         <b>Men</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) Utgått</span>
                     </div>
                 </div>
-                if (Model.register.name == "Produktspesifikasjoner")
+                if (Model.register.name == "Tegneregler")
                 {
+                <div class="form-group" id="approvalCartographyFile">
+                    @Html.LabelFor(model => model.CartographyFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <select id="CartographyFile" name="CartographyFile" class="form-control" onchange="CheckOfficial(this.value);"></select>
+                        @Html.ValidationMessageFor(model => model.CartographyFile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                }
+                    if (Model.register.name == "Produktspesifikasjoner")
+                    {
                     <div class="form-group" id="sosiinfo">
                         @Html.Label("SOSI godkjent", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -270,5 +281,59 @@
             $("#GMLApplicationSchema").val(result.pakke.targetNamespace + '/' + result.pakke.xsdDocument)
         });
     }
+
+    var selectedCartograhyUrl = '@Model.CartographyFile';
+
+    var cartographyFiles;
+
+    function GetCartographyFiles()
+    {
+        $.getJSON("@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]api/kartografi", function(result){
+
+            cartographyFiles = result;
+
+            $('#CartographyFile').append(new Option("Vennligst velg", "" ));
+
+            $.each(cartographyFiles, function(i, obj) {
+                var dataText = obj.DatasetName + ': ' + obj.Name;
+                var dataValue = obj.FileUrl;
+                var selected = false;
+                if(dataValue == selectedCartograhyUrl)
+                    selected = true;
+                $('#CartographyFile').append(new Option(dataText, dataValue, false, selected ));
+            });
+
+        });
+    }
+
+    function CheckOfficial(value)
+    {
+        console.log(value);
+        selectedCartograhyUrl = value;
+
+        var checkedFile = false;
+
+        $.each(cartographyFiles, function(i, obj) {
+
+            if(obj.FileUrl == selectedCartograhyUrl)
+            {
+                if(obj.OfficialStatus){  
+                    console.log("Official")
+                    $('#not-accepted').prop('checked', false);
+                    $('#accepted').prop('checked', true);
+                    checkedFile = true;
+                }
+            }
+            
+        });
+
+        if(!checkedFile){
+            console.log("not official");
+            $('#accepted').prop('checked', false);
+            $('#not-accepted').prop('checked', true);
+        }
+    }
+
+    GetCartographyFiles();
 </script>
 

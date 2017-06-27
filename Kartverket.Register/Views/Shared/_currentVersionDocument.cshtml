@@ -76,6 +76,13 @@
                 </a><br />
             }
 
+            @if (!string.IsNullOrEmpty(item.CartographyFile))
+            {
+                <a href="@Html.DisplayFor(modelItem => item.CartographyFile)" class="btn" title="Vis kartografi-fil for @item.name" target="_blank">
+                    <span class="custom-icon custom-icon-eksternlink"> </span> Vis kartografi-fil
+                </a><br />
+            }
+
             @if (Request.IsAuthenticated)
             {
                 if (HtmlHelperExtensions.accessRegisterItem(item))

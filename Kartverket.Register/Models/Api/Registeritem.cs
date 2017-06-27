@@ -26,6 +26,7 @@ namespace Kartverket.Register.Models.Api
         public DateTime dateAccepted { get; set; }
         public string ApplicationSchema { get; set; }
         public string GMLApplicationSchema { get; set; }
+        public string CartographyFile { get; set; }
 
         // Organization
         public string number { get; set; }
@@ -156,6 +157,7 @@ namespace Kartverket.Register.Models.Api
                 documentreference = d.documentUrl;
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;
+                CartographyFile = d.CartographyFile;
             }
 
             else if (item is Dataset)

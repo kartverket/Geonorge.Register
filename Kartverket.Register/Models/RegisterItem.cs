@@ -95,6 +95,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "GML-applikasjonsskjema")]
         public string GMLApplicationSchema { get; set; }
 
+        [Display(Name = "Kartografi-fil")]
+        public string CartographyFile { get; set; }
+
         //end RegisterItem
 
 

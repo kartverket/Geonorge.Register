@@ -2605,32 +2605,36 @@ input[type="submit"].btn {
     border: none;
     background: transparent; }
 
-.custom-select-list .custom-select-list-dropdown {
-  display: none;
-  position: absolute;
+.custom-select-list .custom-select-list-dropdown-container.active .custom-select-list-dropdown {
+  display: block;
   z-index: 2;
-  background: #FFF;
-  width: -moz-calc(100% - 30px);
-  width: -webkit-calc(100% - 30px);
-  width: calc(100% - 30px);
-  -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 0 0 4px 4px;
-  background-clip: padding-box; }
-  .custom-select-list .custom-select-list-dropdown.active {
+  height: 0;
+  position: relative;
+  overflow: visible; }
+
+.custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown {
+  display: none;
+  line-height: 24pt;
+  font-size: 14pt; }
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown.active {
     display: block; }
-  .custom-select-list .custom-select-list-dropdown.transparent {
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown.transparent {
     opacity: 0; }
-  .custom-select-list .custom-select-list-dropdown .custom-select-list-dropdown-content {
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-dropdown-content {
     overflow: auto;
     max-height: 340px;
-    padding-left: 16px; }
-  .custom-select-list .custom-select-list-dropdown .custom-select-list-option-group-name {
+    padding-left: 16px;
+    background: #FFF;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15); }
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-option-group-name {
     font-weight: 600;
     text-transform: capitalize; }
-  .custom-select-list .custom-select-list-dropdown .custom-select-list-options {
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options {
     font-size: 13pt !important;
     line-height: 18pt !important;
     color: #3867C8;
@@ -2638,20 +2642,22 @@ input[type="submit"].btn {
     padding: 0;
     margin-left: 0;
     list-style: none; }
-    .custom-select-list .custom-select-list-dropdown .custom-select-list-options li:hover {
-      cursor: pointer;
-      text-decoration: underline; }
-    .custom-select-list .custom-select-list-dropdown .custom-select-list-options li:before {
-      content: none; }
-    .custom-select-list .custom-select-list-dropdown .custom-select-list-options li.is-selected {
-      color: #CFCFCF; }
-      .custom-select-list .custom-select-list-dropdown .custom-select-list-options li.is-selected:hover {
-        cursor: default;
-        text-decoration: none; }
-  .custom-select-list .custom-select-list-dropdown .custom-select-list-dropdown-additional-options {
+    .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options li {
+      margin-left: 20px; }
+      .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options li:hover {
+        cursor: pointer;
+        text-decoration: underline; }
+      .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options li:before {
+        content: none; }
+      .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options li.is-selected {
+        color: #CFCFCF; }
+        .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-options li.is-selected:hover {
+          cursor: default;
+          text-decoration: none; }
+  .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-dropdown-additional-options {
     background: #ddd;
     width: 100%; }
-    .custom-select-list .custom-select-list-dropdown .custom-select-list-dropdown-additional-options .btn {
+    .custom-select-list .custom-select-list-dropdown-container .custom-select-list-dropdown .custom-select-list-dropdown-additional-options .btn {
       margin-bottom: 0;
       display: block; }
 
@@ -2749,8 +2755,7 @@ input[type="submit"].btn {
     display: inline-block;
     vertical-align: top;
     margin-right: 6px;
-    padding-right: 6px;
-    border-right: 1px solid #eaebeb; }
+    padding-right: 6px; }
     #orderlist .orderline .orderline-field-counter .custom-icon-danger,
     #responseList .orderline .orderline-field-counter .custom-icon-danger {
       margin-top: 5px;
@@ -2758,6 +2763,10 @@ input[type="submit"].btn {
     #orderlist .orderline .orderline-field-counter .custom-icon-warning,
     #responseList .orderline .orderline-field-counter .custom-icon-warning {
       margin-top: 3px;
+      cursor: pointer; }
+    #orderlist .orderline .orderline-field-counter .custom-icon-info,
+    #responseList .orderline .orderline-field-counter .custom-icon-info {
+      margin-top: 5px;
       cursor: pointer; }
     #orderlist .orderline .orderline-field-counter .custom-icon-checked,
     #responseList .orderline .orderline-field-counter .custom-icon-checked {
@@ -3077,38 +3086,55 @@ input[type="radio"]:checked.custom-radio {
     outline: none;
     border: none; }
   .custom-checkbox input[type="checkbox"] + .checkbox-icon,
-  .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon,
+  .custom-checkbox input[type="checkbox"] + .radio-icon,
+  .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   input[type="checkbox"].custom-checkbox + .checkbox-icon,
-  input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon,
+  input[type="checkbox"].custom-checkbox + .radio-icon,
+  input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   .custom-checkbox input[type="checkbox"]:checked + .checkbox-icon,
-  .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon,
+  .custom-checkbox input[type="checkbox"]:checked + .radio-icon,
+  .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   input[type="checkbox"]:checked.custom-checkbox + .checkbox-icon,
-  input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon,
+  input[type="checkbox"]:checked.custom-checkbox + .radio-icon,
+  input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   .custom-radio input[type="radio"] + .checkbox-icon,
-  .custom-radio input[type="radio"] + input[type="hidden"] + .checkbox-icon,
+  .custom-radio input[type="radio"] + .radio-icon,
+  .custom-radio input[type="radio"] + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   input[type="radio"].custom-radio + .checkbox-icon,
-  input[type="radio"].custom-radio + input[type="hidden"] + .checkbox-icon,
+  input[type="radio"].custom-radio + .radio-icon,
+  input[type="radio"].custom-radio + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   .custom-radio input[type="radio"]:checked + .checkbox-icon,
-  .custom-radio input[type="radio"]:checked + input[type="hidden"] + .checkbox-icon,
+  .custom-radio input[type="radio"]:checked + .radio-icon,
+  .custom-radio input[type="radio"]:checked + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon,
   input[type="radio"]:checked.custom-radio + .checkbox-icon,
-  input[type="radio"]:checked.custom-radio + input[type="hidden"] + .checkbox-icon {
-    cursor: pointer; }
+  input[type="radio"]:checked.custom-radio + .radio-icon,
+  input[type="radio"]:checked.custom-radio + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon {
+    cursor: pointer;
+    line-height: 12pt; }
     .custom-checkbox input[type="checkbox"] + .checkbox-icon:after,
-    .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon:after,
+    .custom-checkbox input[type="checkbox"] + .radio-icon:after,
+    .custom-checkbox input[type="checkbox"] + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     input[type="checkbox"].custom-checkbox + .checkbox-icon:after,
-    input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon:after,
+    input[type="checkbox"].custom-checkbox + .radio-icon:after,
+    input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     .custom-checkbox input[type="checkbox"]:checked + .checkbox-icon:after,
-    .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon:after,
+    .custom-checkbox input[type="checkbox"]:checked + .radio-icon:after,
+    .custom-checkbox input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     input[type="checkbox"]:checked.custom-checkbox + .checkbox-icon:after,
-    input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon:after,
+    input[type="checkbox"]:checked.custom-checkbox + .radio-icon:after,
+    input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     .custom-radio input[type="radio"] + .checkbox-icon:after,
-    .custom-radio input[type="radio"] + input[type="hidden"] + .checkbox-icon:after,
+    .custom-radio input[type="radio"] + .radio-icon:after,
+    .custom-radio input[type="radio"] + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     input[type="radio"].custom-radio + .checkbox-icon:after,
-    input[type="radio"].custom-radio + input[type="hidden"] + .checkbox-icon:after,
+    input[type="radio"].custom-radio + .radio-icon:after,
+    input[type="radio"].custom-radio + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     .custom-radio input[type="radio"]:checked + .checkbox-icon:after,
-    .custom-radio input[type="radio"]:checked + input[type="hidden"] + .checkbox-icon:after,
+    .custom-radio input[type="radio"]:checked + .radio-icon:after,
+    .custom-radio input[type="radio"]:checked + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after,
     input[type="radio"]:checked.custom-radio + .checkbox-icon:after,
-    input[type="radio"]:checked.custom-radio + input[type="hidden"] + .checkbox-icon:after {
+    input[type="radio"]:checked.custom-radio + .radio-icon:after,
+    input[type="radio"]:checked.custom-radio + input[type="hidden"] + .checkbox-icon + input[type="hidden"] + .radio-icon:after {
       display: inline-block;
       width: 16px;
       height: 19px;
@@ -3186,51 +3212,83 @@ input[type="checkbox"]:checked.custom-checkbox {
 .custom-checkbox.custom-checkbox-5 input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-green.svg"); }
 
-.custom-checkbox input[type="checkbox"]:disabled .checkbox-icon:after,
+.custom-checkbox input[type="checkbox"]:disabled + .checkbox-icon:after,
 .custom-checkbox input[type="checkbox"]:disabled + input[type="hidden"] + .checkbox-icon:after,
-input[type="checkbox"]:disabled.custom-checkbox .checkbox-icon:after,
+input[type="checkbox"]:disabled.custom-checkbox + .checkbox-icon:after,
 input[type="checkbox"]:disabled.custom-checkbox + input[type="hidden"] + .checkbox-icon:after,
-.custom-checkbox.disabled input[type="checkbox"] .checkbox-icon:after,
+.custom-checkbox.disabled input[type="checkbox"] + .checkbox-icon:after,
 .custom-checkbox.disabled input[type="checkbox"] + input[type="hidden"] + .checkbox-icon:after,
-input[type="checkbox"].custom-checkbox.disabled .checkbox-icon:after,
+input[type="checkbox"].custom-checkbox.disabled + .checkbox-icon:after,
 input[type="checkbox"].custom-checkbox.disabled + input[type="hidden"] + .checkbox-icon:after,
-.disabled input[type="checkbox"].custom-checkbox .checkbox-icon:after,
+.disabled input[type="checkbox"].custom-checkbox + .checkbox-icon:after,
 .disabled input[type="checkbox"].custom-checkbox + input[type="hidden"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-unchecked-disabled.svg"); }
 
-.custom-checkbox input[type="checkbox"]:checked:disabled .checkbox-icon:after,
+.custom-checkbox input[type="checkbox"]:checked:disabled + .checkbox-icon:after,
 .custom-checkbox input[type="checkbox"]:checked:disabled + input[type="hidden"] + .checkbox-icon:after,
-input[type="checkbox"]:checked:disabled.custom-checkbox .checkbox-icon:after,
+input[type="checkbox"]:checked:disabled.custom-checkbox + .checkbox-icon:after,
 input[type="checkbox"]:checked:disabled.custom-checkbox + input[type="hidden"] + .checkbox-icon:after,
-.custom-checkbox.disabled input[type="checkbox"]:checked .checkbox-icon:after,
+.custom-checkbox.disabled input[type="checkbox"]:checked + .checkbox-icon:after,
 .custom-checkbox.disabled input[type="checkbox"]:checked + input[type="hidden"] + .checkbox-icon:after,
-input[type="checkbox"]:checked.custom-checkbox.disabled .checkbox-icon:after,
+input[type="checkbox"]:checked.custom-checkbox.disabled + .checkbox-icon:after,
 input[type="checkbox"]:checked.custom-checkbox.disabled + input[type="hidden"] + .checkbox-icon:after,
-.disabled input[type="checkbox"]:checked.custom-checkbox .checkbox-icon:after,
+.disabled input[type="checkbox"]:checked.custom-checkbox + .checkbox-icon:after,
 .disabled input[type="checkbox"]:checked.custom-checkbox + input[type="hidden"] + .checkbox-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/checkbox-checked-disabled.svg"); }
 
-.custom-radio input[type="radio"]:after,
-input[type="radio"].custom-radio:after {
+.custom-radio input[type="radio"] + .radio-icon:after,
+.custom-radio input[type="radio"] + input[type="hidden"] + .radio-icon:after,
+input[type="radio"].custom-radio + .radio-icon:after,
+input[type="radio"].custom-radio + input[type="hidden"] + .radio-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked.svg"); }
 
-.custom-radio input[type="radio"]:checked:after,
-input[type="radio"]:checked.custom-radio:after {
+.custom-radio input[type="radio"]:checked + .radio-icon:after,
+.custom-radio input[type="radio"]:checked + input[type="hidden"] + .radio-icon:after,
+input[type="radio"]:checked.custom-radio + .radio-icon:after,
+input[type="radio"]:checked.custom-radio + input[type="hidden"] + .radio-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked.svg"); }
 
-.custom-radio input[type="radio"]:disabled:after,
-input[type="radio"]:disabled.custom-radio:after,
-.custom-radio.disabled input[type="radio"]:after,
-input[type="radio"].custom-radio.disabled:after,
-.disabled input[type="radio"].custom-radio:after {
+.custom-radio input[type="radio"]:disabled + .radio-icon:after,
+.custom-radio input[type="radio"]:disabled + input[type="hidden"] + .radio-icon:after,
+input[type="radio"]:disabled.custom-radio + .radio-icon:after,
+input[type="radio"]:disabled.custom-radio + input[type="hidden"] + .radio-icon:after,
+.custom-radio.disabled input[type="radio"] + .radio-icon:after,
+.custom-radio.disabled input[type="radio"] + input[type="hidden"] + .radio-icon:after,
+input[type="radio"].custom-radio.disabled + .radio-icon:after,
+input[type="radio"].custom-radio.disabled + input[type="hidden"] + .radio-icon:after,
+.disabled input[type="radio"].custom-radio + .radio-icon:after,
+.disabled input[type="radio"].custom-radio + input[type="hidden"] + .radio-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-unchecked-disabled.svg") !important; }
 
-.custom-radio input[type="radio"]:checked:disabled:after,
-input[type="radio"]:checked:disabled.custom-radio:after,
-.custom-radio.disabled input[type="radio"]:checked:after,
-input[type="radio"]:checked.custom-radio.disabled:after,
-.disabled input[type="radio"]:checked.custom-radio:after {
+.custom-radio input[type="radio"]:checked:disabled + .radio-icon:after,
+.custom-radio input[type="radio"]:checked:disabled + input[type="hidden"] + .radio-icon:after,
+input[type="radio"]:checked:disabled.custom-radio + .radio-icon:after,
+input[type="radio"]:checked:disabled.custom-radio + input[type="hidden"] + .radio-icon:after,
+.custom-radio.disabled input[type="radio"]:checked + .radio-icon:after,
+.custom-radio.disabled input[type="radio"]:checked + input[type="hidden"] + .radio-icon:after,
+input[type="radio"]:checked.custom-radio.disabled + .radio-icon:after,
+input[type="radio"]:checked.custom-radio.disabled + input[type="hidden"] + .radio-icon:after,
+.disabled input[type="radio"]:checked.custom-radio + .radio-icon:after,
+.disabled input[type="radio"]:checked.custom-radio + input[type="hidden"] + .radio-icon:after {
   content: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/radio-checked-disabled.svg") !important; }
+
+/* 'Save as'-dropdown */
+.save-as-menu label {
+  display: block;
+  font-weight: normal;
+  margin-bottom: 0; }
+
+.save-as-menu .save-as-dropdown {
+  padding-left: 0;
+  display: inline-block; }
+  .save-as-menu .save-as-dropdown .custom-select {
+    width: 218px; }
+
+.save-as-menu .save-as-buttons {
+  padding-left: 5px;
+  text-align: right;
+  display: inline-block;
+  vertical-align: top; }
 
 .help-page h1,
 .help-page .h1 {
@@ -3885,20 +3943,6 @@ header.main-header {
     position: relative;
     bottom: -5px;
     line-height: 25pt; }
-  .search-result-navigation .save-as-menu label {
-    display: block;
-    font-weight: normal;
-    margin-bottom: 0; }
-  .search-result-navigation .save-as-menu .save-as-dropdown {
-    padding-left: 0;
-    display: inline-block; }
-    .search-result-navigation .save-as-menu .save-as-dropdown .custom-select {
-      width: 218px; }
-  .search-result-navigation .save-as-menu .save-as-buttons {
-    padding-left: 5px;
-    text-align: right;
-    display: inline-block;
-    vertical-align: top; }
 
 @media (max-width: 991px) {
   .search-result-navigation .custom-select {
@@ -4374,11 +4418,11 @@ a.status-icon-link:hover {
 
 .ui-datepicker .ui-datepicker-next-hover {
   right: 2px;
-  top: 2px; }
+  top: 0; }
 
 .ui-datepicker .ui-datepicker-prev-hover {
   left: 2px;
-  top: 2px; }
+  top: 0; }
 
 .ui-corner-all .ui-icon.ui-icon-circle-triangle-e,
 .ui-corner-all .ui-icon.ui-icon-circle-triangle-w {

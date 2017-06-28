@@ -44,7 +44,7 @@ namespace Kartverket.Register.Services
             {"c3da3591-cded-4584-a4b1-bc61b7d1f4f2", "jbv_banenettverk"},
             {"47234f63-a9d1-43c7-b91c-db90c92d5008", "jbv_stoysoner_jernbane"},
             {"31edb985-138e-46a7-a910-a0c1cd9baf4c", "korallrev"},
-            {"041f1e6e-bdbc-4091-b48f-8a5990f3cc5b", "kv_adm_abas"},
+            {"041f1e6e-bdbc-4091-b48f-8a5990f3cc5b", "kv_adminomr_kommune"},
             {"e106adf4-c9d8-4fce-a9b5-7886a4126d23", "kv_adm_norges_maritime_grenser"},
             {"dddbb667-1303-4ac5-8640-7ec04c0e3918", "kv_dtm_10"},
             {"e25d0104-0858-4d06-bba8-d154514c11d2", "kv_dtm_50"},

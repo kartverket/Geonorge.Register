@@ -11,6 +11,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Report;
 using Kartverket.Register.Services.Versioning;
+using Kartverket.Register.Services.Notify;
 
 namespace Kartverket.Register
 {
@@ -37,6 +38,9 @@ namespace Kartverket.Register
             builder.RegisterType<DatasetService>().As<IDatasetService>();
             builder.RegisterType<AccessControlService>().As<IAccessControlService>();
             builder.RegisterType<DokReportService>().As<IDokReportService>();
+
+            builder.RegisterType<NotificationService>().As<INotificationService>();
+            builder.RegisterType<EmailService>().As<IEmailService>();
 
             var container = builder.Build();
 

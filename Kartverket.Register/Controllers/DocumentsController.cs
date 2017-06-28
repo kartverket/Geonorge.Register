@@ -13,6 +13,7 @@ using Kartverket.Register.Services;
 using GhostscriptSharp.Settings;
 using System.Drawing;
 using GhostscriptSharp;
+using Kartverket.Register.Services.Notify;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -31,12 +32,14 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private INotificationService _notificationService;
 
-        public DocumentsController()
+        public DocumentsController(INotificationService notificationService)
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _notificationService = notificationService;
         }
 
 
@@ -450,18 +453,26 @@ namespace Kartverket.Register.Controllers
             document.submitterId = GetSubmitterId(inputDocument.submitterId);
             document.versioningId = GetVersioningId(document, inputDocument.versioningId);
 
+            bool sendNotification = false;
+
             if (originalDocument == null)
             {
                 document.dateSubmitted = DateTime.Now;
                 document.statusId = "Submitted";
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
+                if(!_accessControlService.IsAdmin())
+                    sendNotification = true;
             }
             else {
                 ApprovalProcess(document, retired, inputDocument, sosi);
                 db.Entry(document).State = EntityState.Modified;
             }
             db.SaveChanges();
+            if (sendNotification)
+                _notificationService.SendSubmittedNotification(document);
+
+
             return document;
         }
 

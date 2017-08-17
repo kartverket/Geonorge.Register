@@ -706,6 +706,10 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708170934203_AddInspireDatasetTable.cs" />
+    <Compile Include="Migrations\201708170934203_AddInspireDatasetTable.Designer.cs">
+      <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -725,6 +729,8 @@
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
+    <Compile Include="Models\InspireDataset.cs" />
+    <Compile Include="Models\DatasetNy.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />
@@ -735,6 +741,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
+    <Compile Include="Models\RegisterItemNy.cs" />
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
@@ -1561,6 +1568,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708170934203_AddInspireDatasetTable.resx">
+      <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

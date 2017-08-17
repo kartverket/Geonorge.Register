@@ -219,6 +219,7 @@ namespace Kartverket.Register.Models.Api
                 BoundingBoxEast = organization.BoundingBoxEast;
                 BoundingBoxSouth = organization.BoundingBoxSouth;
                 BoundingBoxWest = organization.BoundingBoxWest;
+                ShortName = organization.shortname;
             }
             else if (item is ServiceAlert)
             {

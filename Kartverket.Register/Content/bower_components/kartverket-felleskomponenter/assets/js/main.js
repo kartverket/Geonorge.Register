@@ -13,6 +13,16 @@ if (authenticationData !== {}) {
 
 var geonorgeUrl = (applicationEnvironment === "") ? "https://www.geonorge.no/" : "https://www.test.geonorge.no/";
 
+// Check if string contains parameters
+function containsParameters(string) {
+    return string.length && string.indexOf("?") > -1 ? true : false;
+}
+
+// Check active URL contains parameters
+function urlContainsParameters() {
+    return containsParameters(window.location.search);
+}
+
 
 /* Loading animation */
 function showLoadingAnimation(loadingMessage) {
@@ -112,6 +122,65 @@ $(window).load(function() {
     doc.setAttribute('data-useragent', navigator.userAgent);
 });
 
+function setMainSearchUrl(urlSlug, environment){
+    environmentIsSet = false;
+    var environmentSlug = '';
+    if (typeof environment !== 'undefined'){
+        if (environment == 'dev' || environment == 'test' || environment == 'prod'){
+            environmentIsSet = true;
+            environmentSlug = environment == 'prod' ? '' : '.' + environment;
+        }else{
+            console.error("incorrect value for environment. Use 'dev', 'test' or 'prod'");
+        }
+    }
+    if (environmentIsSet){
+        searchOptionsArray[environment].url = "//kartkatalog" + environmentSlug + ".geonorge.no/" + urlSlug;
+    }else{
+        searchOptionsArray.dev.url = "//kartkatalog.dev.geonorge.no/" + urlSlug;
+        searchOptionsArray.test.url = "//kartkatalog.test.geonorge.no/" + urlSlug;
+        searchOptionsArray.prod.url = "//kartkatalog.geonorge.no/" + urlSlug;
+    }
+}
+
+function setMainSearchApiUrl(urlSlug, environment){
+    environmentIsSet = false;
+    var environmentSlug = '';
+    if (typeof environment !== 'undefined'){
+        if (environment == 'dev' || environment == 'test' || environment == 'prod'){
+            environmentIsSet = true;
+            environmentSlug = environment == 'prod' ? '' : '.' + environment;
+        }else{
+            console.error("incorrect value for environment. Use 'dev', 'test' or 'prod'");
+        }
+    }
+    if (environmentIsSet){
+        searchOptionsArray[environment].api = "//kartkatalog" + environmentSlug + ".geonorge.no/api/" + urlSlug;
+    }else{
+        searchOptionsArray.dev.api = "//kartkatalog.dev.geonorge.no/api/" + urlSlug;
+        searchOptionsArray.test.api = "//kartkatalog.test.geonorge.no/api/" + urlSlug;
+        searchOptionsArray.prod.api = "//kartkatalog.geonorge.no/api/" + urlSlug;
+    }
+}
+
+function setMainSearchPlaceholder(placeholder, environment) { 
+    environmentIsSet = false; 
+    var environmentSlug = ''; 
+    if (typeof environment !== 'undefined') { 
+        if (environment == 'dev' || environment == 'test' || environment == 'prod') { 
+            environmentIsSet = true; 
+        } else { 
+            console.error("incorrect value for environment. Use 'dev', 'test' or 'prod'"); 
+        } 
+    } 
+    if (environmentIsSet) { 
+        searchOptionsArray[environment].searchPlaceholder = placeholder; 
+    } else { 
+        searchOptionsArray.dev.searchPlaceholder = placeholder; 
+        searchOptionsArray.test.searchPlaceholder = placeholder; 
+        searchOptionsArray.prod.searchPlaceholder = placeholder; 
+    } 
+} 
+
 angular.module('geonorge', ['ui.bootstrap']);
 
 angular.module('geonorge').config(["$sceDelegateProvider", function ($sceDelegateProvider) {
@@ -122,6 +191,7 @@ var searchOptionsArray =
     "dev" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.dev.geonorge.no",
@@ -135,6 +205,7 @@ var searchOptionsArray =
     "test" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.test.geonorge.no",
@@ -148,6 +219,7 @@ var searchOptionsArray =
     "prod" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.geonorge.no",
@@ -199,8 +271,8 @@ var baseurl_local = searchOption.baseUrl;
     }
 
     function performSearch(query, filters, limit, section) {
-
-      var menuService = encodeURI(searchOption.api + '?limit=5&facets[1]name=type&facets[1]value=dataset' + '&text=' + query);
+      var parameterSeparator = containsParameters(searchOption.api) ? "&" : "?";
+      var menuService = encodeURI(searchOption.api + parameterSeparator + 'limit=5&facets[1]name=type&facets[1]value=dataset' + '&text=' + query);
       var request = $http({
         method: 'GET',
         url: menuService,
@@ -212,9 +284,10 @@ var baseurl_local = searchOption.baseUrl;
       });
 
       function getSearchParameters(facetValue, query){
+        var parameterSeparator = containsParameters(searchOption.api) ? "&" : "?";
         var facetParameters = 'facets[1]name=type&facets[1]value=' + facetValue;
         var queryParameters = 'text=' + query;
-        return '?limit=5&' + facetParameters + '&' + queryParameters;
+        return parameterSeparator + 'limit=5&' + facetParameters + '&' + queryParameters;
       }
 
       var menuService1 = encodeURI(searchOption.api + getSearchParameters('servicelayer', query));
@@ -250,7 +323,18 @@ var baseurl_local = searchOption.baseUrl;
         data: {}
       });
 
-      return $q.all([request3, request, request2, request1]);
+      var menuService4 = encodeURI(searchOption.api + getSearchParameters('software', query));
+      var request4 = $http({
+        method: 'GET',
+        url: menuService4,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'accept': '*/*'
+        },
+        data: {}
+      });
+
+      return $q.all([request3, request, request2, request1, request4]);
     }
 
   }]).controller('searchTopController', [
@@ -493,7 +577,7 @@ var baseurl_local = searchOption.baseUrl;
                       for (var x = 0; x < list.length; x++) {
                         var item = {};
                         var curr = list[x];
-                        if (curr.data.Results.length === 0) continue;
+                        if (curr.data == null || curr.data.Results.length === 0) continue;
                         item.type = curr.Section;
 
                         item.title = curr.SectionName;
@@ -530,6 +614,8 @@ var baseurl_local = searchOption.baseUrl;
                       return "Tjenester";
                       case "dimensionGroup":
                       return "Datapakker";
+                      case "software":
+                      return "Applikasjon";
                       default:
                     }
                   }

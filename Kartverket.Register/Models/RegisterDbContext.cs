@@ -95,5 +95,7 @@ namespace Kartverket.Register.Models
         {
             return base.SaveChanges();
         }
+
+        public System.Data.Entity.DbSet<Kartverket.Register.Models.DeliveryStatus> DeliveryStatus { get; set; }
     }
 }

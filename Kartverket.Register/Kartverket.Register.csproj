@@ -265,6 +265,7 @@
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -1254,6 +1255,11 @@
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
+    <Content Include="Views\InspireDatasets\Create.cshtml" />
+    <Content Include="Views\InspireDatasets\Delete.cshtml" />
+    <Content Include="Views\InspireDatasets\Details.cshtml" />
+    <Content Include="Views\InspireDatasets\Edit.cshtml" />
+    <Content Include="Views\InspireDatasets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

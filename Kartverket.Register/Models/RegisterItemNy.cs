@@ -18,13 +18,13 @@ namespace Kartverket.Register.Models
         public string Description { get; set; }
 
         [ForeignKey("Submitter")]
-        [Display(Name = "Innsender:")]
         public Guid SubmitterId { get; set; }
+        [Display(Name = "Innsender:")]
         public virtual Organization Submitter { get; set; }
 
         [ForeignKey("Owner")]
-        [Display(Name = "Eier:")]
         public Guid OwnerId { get; set; }
+        [Display(Name = "Eier:")]
         public virtual Organization Owner { get; set; }
 
         [Display(Name = "Dato innsendt:")]
@@ -36,14 +36,14 @@ namespace Kartverket.Register.Models
         public DateTime Modified { get; set; }
 
         [ForeignKey("Status")]
+        public string StatusId { get; set; }
         [Display(Name = "Status:")]
-        public string statusId { get; set; }
         public virtual Status Status { get; set; }
 
-        [Display(Name = "Register:")]
-        public virtual Register Register { get; set; }
         [ForeignKey("Register")]
         public Guid RegisterId { get; set; }
+        [Display(Name = "Register:")]
+        public virtual Register Register { get; set; }
 
     }
 }//end namespace Datamodell

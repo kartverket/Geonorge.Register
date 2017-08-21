@@ -41,14 +41,13 @@ namespace Kartverket.Register.Models
         [Display(Name = "WMS url:")]
         public string WmsUrl { get; set; }
 
-        [Display(Name = "Tema:")]
-        [ForeignKey("theme")]
+        [ForeignKey("Theme")]
         public string ThemeGroupId { get; set; }
-
-        public virtual DOKTheme theme { get; set; }
+        [Display(Name = "Tema:")]
+        public virtual DOKTheme Theme { get; set; }
 
         [Display(Name = "Miniatyrbilde:")]
-        public string datasetthumbnail { get; set; }
+        public string DatasetThumbnail { get; set; }
 
         [ForeignKey("DokStatus")]
         [Display(Name = "DOK-status:")]

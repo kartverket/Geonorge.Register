@@ -710,6 +710,18 @@
     <Compile Include="Migrations\201708170934203_AddInspireDatasetTable.Designer.cs">
       <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs" />
+    <Compile Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.Designer.cs">
+      <DependentUpon>201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708211157165_UpdateInspireDataset.cs" />
+    <Compile Include="Migrations\201708211157165_UpdateInspireDataset.Designer.cs">
+      <DependentUpon>201708211157165_UpdateInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.cs" />
+    <Compile Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.Designer.cs">
+      <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -729,6 +741,7 @@
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
+    <Compile Include="Models\DeliveryStatus.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetNy.cs" />
     <Compile Include="Models\Dimension.cs" />
@@ -1571,6 +1584,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708170934203_AddInspireDatasetTable.resx">
       <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.resx">
+      <DependentUpon>201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708211157165_UpdateInspireDataset.resx">
+      <DependentUpon>201708211157165_UpdateInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.resx">
+      <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
@@ -8,76 +9,67 @@ namespace Kartverket.Register.Models
         //Inspire delivery statuses
 
         //Metadata
-        [ForeignKey("InspireDeliveryMetadataStatus")]
+        [ForeignKey("InspireDeliveryMetadata")]
+        [Required]
+        public Guid InspireDeliveryMetadataId { get; set; }
         [Display(Name = "Metadata:")]
-        public string InspireDeliveryMetadataStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryMetadataStatus { get; set; }
-        public string InspireDeliveryMetadataStatusNote { get; set; }
-        public bool InspireDeliveryMetadataStatusAutoUpdate { get; set; } = true;
+        public virtual DeliveryStatus InspireDeliveryMetadata { get; set; }
 
         //Metadat service
-        [ForeignKey("InspireDeliveryMetadataServiceStatus")]
+        [ForeignKey("InspireDeliveryMetadataService")]
+        [Required]
+        public Guid InspireDeliveryMetadataServiceId { get; set; }
         [Display(Name = "Metadatatjeneste:")]
-        public string InspireDeliveryMetadataServiceStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryMetadataServiceStatus { get; set; }
-        public string InspireDeliveryMetadataServiceStatusNote { get; set; }
-        public bool InspireDeliveryMetadataServiceStatusAutoUpdate { get; set; } = true;
+        public virtual DeliveryStatus InspireDeliveryMetadataService { get; set; }
 
         //Distribution
-        [ForeignKey("InspireDeliveryDistributionStatus")]
+        [ForeignKey("InspireDeliveryDistribution")]
+        [Required]
+        public Guid InspireDeliveryDistributionId { get; set; }
         [Display(Name = "Deling av data:")]
-        public string InspireDeliveryDistributionStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryDistributionStatus { get; set; }
-        public string InspireDeliveryDistributionStatusNote { get; set; }
-        public bool InspireDeliveryDistributionStatusAutoUpdate { get; set; } = true;
+        public virtual DeliveryStatus InspireDeliveryDistribution { get; set; }
 
         //View service (Visningstjeneste)
-        [ForeignKey("InspireDeliveryWmsStatus")]
+        [ForeignKey("InspireDeliveryWms")]
+        [Required]
+        public Guid InspireDeliveryWmsId { get; set; }
         [Display(Name = "WMS:")]
-        public string InspireDeliveryWmsStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryWmsStatus { get; set; }
-        public string InspireDeliveryWmsStatusNote { get; set; }
-        public bool InspireDeliveryWmsStatusAutoUpdate { get; set; } = true;
+        public virtual DeliveryStatus InspireDeliveryWms { get; set; }
 
         //WFS
-        [ForeignKey("InspireDeliveryWfsStatus")]
+        [ForeignKey("InspireDeliveryWfs")]
+        [Required]
+        public Guid InspireDeliveryWfsId { get; set; }
         [Display(Name = "Nedlastingstjeneste WFS:")]
-        public string InspireDeliveryWfsStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryWfsStatus { get; set; }
-        public string InspireDeliveryWfsStatusNote { get; set; }
-        public bool InspireDeliveryWfsStatusAutoUpdate { get; set; } = true;
+        public virtual DeliveryStatus InspireDeliveryWfs { get; set; }
 
         //Atom-feed
-        [ForeignKey("InspireDeliveryAtomFeedStatus")]
+        [ForeignKey("InspireDeliveryAtomFeed")]
+        [Required]
+        public Guid InspireDeliveryAtomFeedId { get; set; }
         [Display(Name = "Nedlastingstjeneste Atom-feed:")]
-        public string InspireDeliveryAtomFeedStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryAtomFeedStatus { get; set; }
-        public string InspireDeliveryAtomFeedStatusNote { get; set; }
-        public bool InspireDeliveryAtomFeedStatusAutoUpdate { get; set; } = true;
+        public DeliveryStatus InspireDeliveryAtomFeed { get; set; }
 
         //Atom or WFS
-        [ForeignKey("InspireDeliveryWfsOrAtomStatus")]
+        [ForeignKey("InspireDeliveryWfsOrAtom")]
+        [Required]
+        public Guid InspireDeliveryWfsOrAtomId { get; set; }
         [Display(Name = "Nedlastingstjeneste WFS eller Atom-feed:")]
-        public string InspireDeliveryWfsOrAtomStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryWfsOrAtomStatus { get; set; }
-        public string InspireDeliveryWfsOrAtomStatusNote { get; set; }
-        public bool InspireDeliveryWfsOrAtomStatusAutoUpdate { get; set; } = true;
+        public DeliveryStatus InspireDeliveryWfsOrAtom { get; set; }
 
         //Harmonized data
-        [ForeignKey("InspireDeliveryHarmonizedDataStatus")]
+        [ForeignKey("InspireDeliveryHarmonizedData")]
+        [Required]
+        public Guid InspireDeliveryHarmonizedDataId { get; set; }
         [Display(Name = "Harmoniserte data:")]
-        public string InspireDeliveryHarmonizedDataStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliveryHarmonizedDataStatus { get; set; }
-        public string InspireDeliveryHarmonizedDataStatusNote { get; set; }
-        public bool InspireDeliveryHarmonizedDataStatusAutoUpdate { get; set; } = true;
+        public DeliveryStatus InspireDeliveryHarmonizedData { get; set; }
 
         //Spatial data service
-        [ForeignKey("InspireDeliverySpatialDataServiceStatus")]
+        [ForeignKey("InspireDeliverySpatialDataService")]
+        [Required]
+        public Guid InspireDeliverySpatialDataServiceId { get; set; }
         [Display(Name = "Spatial data service:")]
-        public string InspireDeliverySpatialDataServiceStatusId { get; set; }
-        public virtual DokDeliveryStatus InspireDeliverySpatialDataServiceStatus { get; set; }
-        public string InspireDeliverySpatialDataServiceStatusNote { get; set; }
-        public bool InspireDeliverySpatialDataServiceStatusAutoUpdate { get; set; } = true;
+        public DeliveryStatus InspireDeliverySpatialDataService { get; set; }
     }
 
 }//end namespace Datamodell

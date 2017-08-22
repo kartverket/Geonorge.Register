@@ -706,6 +706,10 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708211153546_AddRegisterTranslation.cs" />
+    <Compile Include="Migrations\201708211153546_AddRegisterTranslation.Designer.cs">
+      <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -738,6 +742,10 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Translations\Culture.cs" />
+    <Compile Include="Models\Translations\RegisterTranslation.cs" />
+    <Compile Include="Models\Translations\Translation.cs" />
+    <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
@@ -1561,6 +1569,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708211153546_AddRegisterTranslation.resx">
+      <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

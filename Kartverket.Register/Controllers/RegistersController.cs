@@ -13,6 +13,7 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Controllers
 {
@@ -202,10 +203,22 @@ namespace Kartverket.Register.Controllers
             if (IsAdmin())
             {
                 Viewbags(register);
+                register.Translations = AddMissingTranslations(register.Translations);
                 return View(register);
             }
             return HttpNotFound();
 
+        }
+
+        private TranslationCollection<RegisterTranslation> AddMissingTranslations(TranslationCollection<RegisterTranslation> translations)
+        {
+            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
+            {
+                if(!translations.HasCulture(language.Key))
+                    translations.Add(new RegisterTranslation { CultureName = language.Key });
+            }
+
+            return translations;
         }
 
         // POST: Registers/Edit/5
@@ -234,6 +247,8 @@ namespace Kartverket.Register.Controllers
                     originalRegister.seoname = RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
+                    originalRegister.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+                    originalRegister.Translations = register.Translations;
 
                     db.Entry(originalRegister).State = EntityState.Modified;
                     db.SaveChanges();

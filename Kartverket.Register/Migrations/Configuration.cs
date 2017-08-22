@@ -4,6 +4,7 @@ namespace Kartverket.Register.Migrations
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Migrations;
+    using System.Data.Entity.ModelConfiguration;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<RegisterDbContext>
@@ -12,6 +13,16 @@ namespace Kartverket.Register.Migrations
         {
             AutomaticMigrationsEnabled = false;
             AutomaticMigrationDataLossAllowed = false;
+
+        }
+
+        internal class RegisterConfiguration : EntityTypeConfiguration<Register>
+        {
+
+            public RegisterConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterId);
+            }
 
         }
 

@@ -3,6 +3,7 @@ using Kartverket.Register.Services;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using static Kartverket.Register.Migrations.Configuration;
 
 namespace Kartverket.Register.Models
 {
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Models
 
             modelBuilder.Entity<DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
             modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
+            modelBuilder.Configurations.Add(new RegisterConfiguration());
         }
 
         public override int SaveChanges()

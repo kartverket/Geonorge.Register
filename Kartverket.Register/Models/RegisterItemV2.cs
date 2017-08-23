@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kartverket.Register.Models
 {
-    public abstract class RegisterItemNy
+    public abstract class RegisterItemV2
     {
         [Key]
         public Guid SystemId { get; set; }

@@ -755,7 +755,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
-    <Compile Include="Models\RegisterItemNy.cs" />
+    <Compile Include="Models\RegisterItemV2.cs" />
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />

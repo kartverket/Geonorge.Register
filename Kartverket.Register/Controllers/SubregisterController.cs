@@ -15,6 +15,7 @@ using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.Search;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
@@ -26,11 +27,13 @@ namespace Kartverket.Register.Controllers
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IRegisterService _registerService;
         private ISearchService _searchService;
+        private ITranslationService _translationService;
 
-        public SubregisterController()
+        public SubregisterController(ITranslationService translationService)
         {
             _registerService = new RegisterService(db);
             _searchService = new SearchService(db);
+            _translationService = translationService;
         }
 
         // GET: Subregister
@@ -179,6 +182,7 @@ namespace Kartverket.Register.Controllers
             Models.Register register = db.Registers.Find(systId);
 
             Viewbags(register);
+            register.Translations = _translationService.AddMissingTranslations(register.Translations);
             if (register == null)
             {
                 return HttpNotFound();
@@ -237,7 +241,8 @@ namespace Kartverket.Register.Controllers
                         originalRegister.dateAccepted = null;
                     }
                 }
-
+                originalRegister.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+                originalRegister.Translations = register.Translations;
                 db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(register);

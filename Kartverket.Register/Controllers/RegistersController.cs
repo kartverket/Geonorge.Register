@@ -14,6 +14,7 @@ using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
 using Kartverket.Register.Models.Translations;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,16 +28,18 @@ namespace Kartverket.Register.Controllers
         private ISearchService _searchService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController()
+        public RegistersController(ITranslationService translationService)
         {
             _registerItemService = new RegisterItemService(db);
             _searchService = new SearchService(db);
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _translationService = translationService;
         }
 
         // GET: Registers
@@ -203,22 +206,11 @@ namespace Kartverket.Register.Controllers
             if (IsAdmin())
             {
                 Viewbags(register);
-                register.Translations = AddMissingTranslations(register.Translations);
+                register.Translations = _translationService.AddMissingTranslations(register.Translations);
                 return View(register);
             }
             return HttpNotFound();
 
-        }
-
-        private TranslationCollection<RegisterTranslation> AddMissingTranslations(TranslationCollection<RegisterTranslation> translations)
-        {
-            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
-            {
-                if(!translations.HasCulture(language.Key))
-                    translations.Add(new RegisterTranslation { CultureName = language.Key });
-            }
-
-            return translations;
         }
 
         // POST: Registers/Edit/5
@@ -248,8 +240,7 @@ namespace Kartverket.Register.Controllers
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
                     originalRegister.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-                    originalRegister.Translations = register.Translations;
-
+                    originalRegister.Translations = register.Translations; 
                     db.Entry(originalRegister).State = EntityState.Modified;
                     db.SaveChanges();
                     Viewbags(register);
@@ -261,6 +252,8 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound();
         }
+
+
 
 
         // GET: Edit DOK-Municipal-Dataset

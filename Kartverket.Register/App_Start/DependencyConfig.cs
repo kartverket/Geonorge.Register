@@ -12,6 +12,7 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Report;
 using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Services.Notify;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register
 {
@@ -41,6 +42,7 @@ namespace Kartverket.Register
 
             builder.RegisterType<NotificationService>().As<INotificationService>();
             builder.RegisterType<EmailService>().As<IEmailService>();
+            builder.RegisterType<TranslationService>().As<ITranslationService>();
 
             var container = builder.Build();
 

@@ -817,6 +817,8 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\Translation\ITranslationService.cs" />
+    <Compile Include="Services\Translation\TranslationService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
     <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>

@@ -744,7 +744,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DeliveryStatus.cs" />
     <Compile Include="Models\InspireDataset.cs" />
-    <Compile Include="Models\DatasetNy.cs" />
+    <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kartverket.Register.Models
 {
-    public class InspireDataset : DatasetNy
+    public class InspireDataset : DatasetV2
     {
         //Inspire delivery statuses
 

@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
     {
         public Register()
         {
+            this.RegisterItems = new HashSet<RegisterItemV2>();
             this.items = new HashSet<RegisterItem>();
             this.subregisters = new HashSet<Register>();
             this.replaces = new HashSet<Version>();
@@ -54,6 +55,7 @@ namespace Kartverket.Register.Models
         public string containedItemClass { get; set; }
 
         public virtual ICollection<RegisterItem> items { get; set; }
+        public virtual ICollection<RegisterItemV2> RegisterItems { get; set; }
         [ForeignKey("parentRegister")]
         public Guid? parentRegisterId { get; set; }
         public virtual Register parentRegister { get; set; }

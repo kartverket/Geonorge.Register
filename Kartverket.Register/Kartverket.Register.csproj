@@ -723,6 +723,10 @@
     <Compile Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.Designer.cs">
       <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708231107141_AddRegisterItemV2Collection.cs" />
+    <Compile Include="Migrations\201708231107141_AddRegisterItemV2Collection.Designer.cs">
+      <DependentUpon>201708231107141_AddRegisterItemV2Collection.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1599,6 +1603,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.resx">
       <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708231107141_AddRegisterItemV2Collection.resx">
+      <DependentUpon>201708231107141_AddRegisterItemV2Collection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

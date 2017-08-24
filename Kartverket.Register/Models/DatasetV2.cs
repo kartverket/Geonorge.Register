@@ -6,8 +6,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Kartverket.Register.Models
 {
-    public class DatasetV2 : RegisterItemV2
+    public abstract class DatasetV2 : RegisterItemV2
     {
+
         [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
 

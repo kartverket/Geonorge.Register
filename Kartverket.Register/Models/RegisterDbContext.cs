@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using Kartverket.Register.Services;
 using System.Data.Entity;
 using System.Linq;
@@ -45,6 +47,16 @@ namespace Kartverket.Register.Models
 
             modelBuilder.Entity<DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
             modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
+
+            modelBuilder.Entity<InspireDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("InspireDatasets");
+            });
+
+            modelBuilder.Entity<RegisterItemV2>()
+                .Property(p => p.SystemId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
         }
 
         public override int SaveChanges()

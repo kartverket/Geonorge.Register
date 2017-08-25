@@ -43,6 +43,19 @@
             </div>
         </div>
 
+        @for (int t = 0; t < Model.Translations.Count; t++)
+        {
+            @Html.HiddenFor(m => Model.Translations[t].CultureName)
+            @Html.HiddenFor(m => Model.Translations[t].RegisterItemId)
+            <div class="form-group">
+                @Html.LabelFor(m => Model.Translations[t].name, Html.DisplayNameFor(m => m.name) + " " + Model.Translations[t].CultureName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => Model.Translations[t].name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => Model.Translations[t].name)
+                </div>
+            </div>
+        }
+
         <div class="form-group">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

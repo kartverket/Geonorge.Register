@@ -11,5 +11,6 @@ namespace Kartverket.Register.Services.Translation
     public interface ITranslationService
     {
         TranslationCollection<RegisterTranslation> AddMissingTranslations(TranslationCollection<RegisterTranslation> translations);
+        TranslationCollection<CodelistValueTranslation> AddMissingTranslations(TranslationCollection<CodelistValueTranslation> translations);
     }
 }

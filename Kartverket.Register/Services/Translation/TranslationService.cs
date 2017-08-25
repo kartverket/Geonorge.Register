@@ -25,5 +25,16 @@ namespace Kartverket.Register.Services.Translation
 
             return translations;
         }
+
+        public TranslationCollection<CodelistValueTranslation> AddMissingTranslations(TranslationCollection<CodelistValueTranslation> translations)
+        {
+            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
+            {
+                if (!translations.HasCulture(language.Key))
+                    translations.Add(new CodelistValueTranslation { CultureName = language.Key });
+            }
+
+            return translations;
+        }
     }
 }

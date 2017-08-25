@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using static Kartverket.Register.Migrations.Configuration;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
 {
@@ -38,6 +39,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
+        public virtual DbSet<CodelistValueTranslation> CodelistValueTranslations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -46,6 +48,7 @@ namespace Kartverket.Register.Models
             modelBuilder.Entity<DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
             modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
             modelBuilder.Configurations.Add(new RegisterConfiguration());
+            modelBuilder.Configurations.Add(new CodelistValueConfiguration());
         }
 
         public override int SaveChanges()

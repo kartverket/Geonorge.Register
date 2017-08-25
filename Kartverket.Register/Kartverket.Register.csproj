@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -710,6 +711,10 @@
     <Compile Include="Migrations\201708211153546_AddRegisterTranslation.Designer.cs">
       <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708241351233_AddCodelistValueTranslation.cs" />
+    <Compile Include="Migrations\201708241351233_AddCodelistValueTranslation.Designer.cs">
+      <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -742,6 +747,7 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
@@ -1574,6 +1580,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708211153546_AddRegisterTranslation.resx">
       <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708241351233_AddCodelistValueTranslation.resx">
+      <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -12,24 +12,28 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class CodelistValuesController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService)
+        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService, ITranslationService translationService, RegisterDbContext dbContext)
         {
             _registerItemService = registerItemService;
             _registerService = registerService;
             _accessControlService = accessControlService;
+            _translationService = translationService;
+            db = dbContext;
         }
 
 
@@ -162,6 +166,7 @@ namespace Kartverket.Register.Controllers
                 if (_accessControlService.Access(codelistValue))
                 {
                     Viewbags(codelistValue);
+                    codelistValue.Translations = _translationService.AddMissingTranslations(codelistValue.Translations);
                     return View(codelistValue);
                 }
                 return HttpNotFound("Ingen tilgang");
@@ -436,6 +441,9 @@ namespace Kartverket.Register.Controllers
             {
                 SetBroaderItem(broader, originalCodelistValue);
             }
+
+            originalCodelistValue.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+            originalCodelistValue.Translations = codelistValue.Translations;
         }
 
         private void SetBroaderItem(Guid? broader, CodelistValue originalCodelistValue)

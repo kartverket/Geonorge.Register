@@ -442,8 +442,7 @@ namespace Kartverket.Register.Controllers
                 SetBroaderItem(broader, originalCodelistValue);
             }
 
-            originalCodelistValue.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-            originalCodelistValue.Translations = codelistValue.Translations;
+            _translationService.UpdateTranslations(codelistValue, originalCodelistValue);
         }
 
         private void SetBroaderItem(Guid? broader, CodelistValue originalCodelistValue)

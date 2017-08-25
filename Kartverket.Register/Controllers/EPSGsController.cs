@@ -246,8 +246,7 @@ namespace Kartverket.Register.Controllers
                     }
                     originalEPSG.statusId = ePSG.statusId;
                 }
-                originalEPSG.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-                originalEPSG.Translations = ePSG.Translations;
+                _translationService.UpdateTranslations(ePSG, originalEPSG);
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();

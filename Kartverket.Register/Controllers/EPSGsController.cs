@@ -10,25 +10,29 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
 using System.Web;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class EPSGsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
-        public EPSGsController()
+        public EPSGsController(ITranslationService translationService, RegisterDbContext dbContext)
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _translationService = translationService;
+            db = dbContext;
         }
 
 
@@ -176,6 +180,7 @@ namespace Kartverket.Register.Controllers
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name.ToLower() == user.ToLower()))
             {
                 Viewbags(ePSG);
+                ePSG.Translations = _translationService.AddMissingTranslations(ePSG.Translations);
                 return View(ePSG);
             }
             return HttpNotFound("Ingen tilgang");
@@ -241,7 +246,8 @@ namespace Kartverket.Register.Controllers
                     }
                     originalEPSG.statusId = ePSG.statusId;
                 }
-
+                originalEPSG.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
+                originalEPSG.Translations = ePSG.Translations;
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();

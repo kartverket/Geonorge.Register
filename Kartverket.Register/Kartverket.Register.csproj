@@ -715,6 +715,10 @@
     <Compile Include="Migrations\201708241351233_AddCodelistValueTranslation.Designer.cs">
       <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708251018237_AddEpsgTranslation.cs" />
+    <Compile Include="Migrations\201708251018237_AddEpsgTranslation.Designer.cs">
+      <DependentUpon>201708251018237_AddEpsgTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -749,6 +753,7 @@
     <Compile Include="Models\DokStatus.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
+    <Compile Include="Models\Translations\EPSGTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
@@ -1583,6 +1588,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708241351233_AddCodelistValueTranslation.resx">
       <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708251018237_AddEpsgTranslation.resx">
+      <DependentUpon>201708251018237_AddEpsgTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

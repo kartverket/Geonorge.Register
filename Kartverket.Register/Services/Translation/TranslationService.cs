@@ -36,5 +36,16 @@ namespace Kartverket.Register.Services.Translation
 
             return translations;
         }
+
+        public TranslationCollection<EPSGTranslation> AddMissingTranslations(TranslationCollection<EPSGTranslation> translations)
+        {
+            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
+            {
+                if (!translations.HasCulture(language.Key))
+                    translations.Add(new EPSGTranslation { CultureName = language.Key });
+            }
+
+            return translations;
+        }
     }
 }

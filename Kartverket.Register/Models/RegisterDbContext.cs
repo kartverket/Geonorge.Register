@@ -49,6 +49,7 @@ namespace Kartverket.Register.Models
             modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
             modelBuilder.Configurations.Add(new RegisterConfiguration());
             modelBuilder.Configurations.Add(new CodelistValueConfiguration());
+            modelBuilder.Configurations.Add(new EPSGConfiguration());
         }
 
         public override int SaveChanges()

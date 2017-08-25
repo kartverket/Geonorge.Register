@@ -12,5 +12,6 @@ namespace Kartverket.Register.Services.Translation
     {
         TranslationCollection<RegisterTranslation> AddMissingTranslations(TranslationCollection<RegisterTranslation> translations);
         TranslationCollection<CodelistValueTranslation> AddMissingTranslations(TranslationCollection<CodelistValueTranslation> translations);
+        TranslationCollection<EPSGTranslation> AddMissingTranslations(TranslationCollection<EPSGTranslation> translations);
     }
 }

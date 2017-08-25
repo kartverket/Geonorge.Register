@@ -9,8 +9,6 @@ namespace Kartverket.Register.Models.Translations
     {
         public Guid RegisterItemId { get; set; }
 
-        public string name { get; set; }
-
         public CodelistValueTranslation()
         {
             Id = Guid.NewGuid();

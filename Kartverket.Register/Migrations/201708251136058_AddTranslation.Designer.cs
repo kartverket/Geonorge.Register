@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddCodelistValueTranslation : IMigrationMetadata
+    public sealed partial class AddTranslation : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCodelistValueTranslation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddTranslation));
         
         string IMigrationMetadata.Id
         {
-            get { return "201708241351233_AddCodelistValueTranslation"; }
+            get { return "201708251136058_AddTranslation"; }
         }
         
         string IMigrationMetadata.Source

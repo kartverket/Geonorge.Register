@@ -707,17 +707,9 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708211153546_AddRegisterTranslation.cs" />
-    <Compile Include="Migrations\201708211153546_AddRegisterTranslation.Designer.cs">
-      <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708241351233_AddCodelistValueTranslation.cs" />
-    <Compile Include="Migrations\201708241351233_AddCodelistValueTranslation.Designer.cs">
-      <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708251018237_AddEpsgTranslation.cs" />
-    <Compile Include="Migrations\201708251018237_AddEpsgTranslation.Designer.cs">
-      <DependentUpon>201708251018237_AddEpsgTranslation.cs</DependentUpon>
+    <Compile Include="Migrations\201708251136058_AddTranslation.cs" />
+    <Compile Include="Migrations\201708251136058_AddTranslation.Designer.cs">
+      <DependentUpon>201708251136058_AddTranslation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1583,14 +1575,8 @@
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211153546_AddRegisterTranslation.resx">
-      <DependentUpon>201708211153546_AddRegisterTranslation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708241351233_AddCodelistValueTranslation.resx">
-      <DependentUpon>201708241351233_AddCodelistValueTranslation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708251018237_AddEpsgTranslation.resx">
-      <DependentUpon>201708251018237_AddEpsgTranslation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708251136058_AddTranslation.resx">
+      <DependentUpon>201708251136058_AddTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

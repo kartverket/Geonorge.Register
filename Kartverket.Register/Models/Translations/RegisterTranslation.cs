@@ -10,9 +10,6 @@ namespace Kartverket.Register.Models.Translations
 
         public Guid RegisterId { get; set; }
 
-        public string name { get; set; }
-        public string description { get; set; }
-
         public RegisterTranslation()
         {
             Id = Guid.NewGuid();

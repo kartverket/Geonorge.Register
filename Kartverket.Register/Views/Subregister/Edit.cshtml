@@ -48,7 +48,6 @@
         @for (int t = 0; t < Model.Translations.Count; t++)
         {
             @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            @Html.HiddenFor(m => Model.Translations[t].RegisterId)
             <div class="form-group">
                 @Html.LabelFor(m => Model.Translations[t].name, Html.DisplayNameFor(m => m.name) + " " + Model.Translations[t].CultureName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -69,7 +68,6 @@
         @for (int t = 0; t < Model.Translations.Count; t++)
         {
             @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            @Html.HiddenFor(m => Model.Translations[t].RegisterId)
             <div class="form-group">
                 @Html.LabelFor(m => Model.Translations[t].description, Html.DisplayNameFor(m => m.description) + " " + Model.Translations[t].CultureName, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">

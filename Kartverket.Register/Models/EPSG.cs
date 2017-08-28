@@ -59,6 +59,11 @@ namespace Kartverket.Register.Models
         public string dimensionId { get; set; }
         public virtual TranslationCollection<EPSGTranslation> Translations { get; set; }
 
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
 
         public virtual string GetEPSGEditUrl()
         {

@@ -22,15 +22,16 @@ namespace Kartverket.Register.Controllers
     [HandleError]
     public class SubregisterController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IRegisterService _registerService;
         private ISearchService _searchService;
         private ITranslationService _translationService;
 
-        public SubregisterController(ITranslationService translationService)
+        public SubregisterController(ITranslationService translationService, RegisterDbContext dbContex)
         {
+            db = dbContex;
             _registerService = new RegisterService(db);
             _searchService = new SearchService(db);
             _translationService = translationService;
@@ -182,12 +183,11 @@ namespace Kartverket.Register.Controllers
             Models.Register register = db.Registers.Find(systId);
 
             Viewbags(register);
-            register.Translations = _translationService.AddMissingTranslations(register.Translations);
             if (register == null)
             {
                 return HttpNotFound();
             }
-
+            register.AddMissingTranslations();
             if (role == "nd.metadata_admin")
             {
                 return View(register);
@@ -241,8 +241,7 @@ namespace Kartverket.Register.Controllers
                         originalRegister.dateAccepted = null;
                     }
                 }
-                originalRegister.Translations.ToList().ForEach(x => db.Entry(x).State = EntityState.Deleted);
-                originalRegister.Translations = register.Translations;
+                _translationService.UpdateTranslations(register, originalRegister);
                 db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(register);

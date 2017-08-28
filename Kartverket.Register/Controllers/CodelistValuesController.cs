@@ -166,7 +166,7 @@ namespace Kartverket.Register.Controllers
                 if (_accessControlService.Access(codelistValue))
                 {
                     Viewbags(codelistValue);
-                    codelistValue.Translations = _translationService.AddMissingTranslations(codelistValue.Translations);
+                    codelistValue.AddMissingTranslations();
                     return View(codelistValue);
                 }
                 return HttpNotFound("Ingen tilgang");

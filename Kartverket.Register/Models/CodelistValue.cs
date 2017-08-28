@@ -34,6 +34,11 @@ namespace Kartverket.Register.Models
 
         public virtual TranslationCollection<CodelistValueTranslation> Translations { get; set; }
 
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
 
         public virtual string GetCodelistValueEditUrl()
         {

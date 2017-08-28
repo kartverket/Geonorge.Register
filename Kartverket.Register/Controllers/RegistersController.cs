@@ -207,7 +207,6 @@ namespace Kartverket.Register.Controllers
             if (IsAdmin())
             {
                 Viewbags(register);
-                register.Translations = _translationService.AddMissingTranslations(register.Translations);
                 return View(register);
             }
             return HttpNotFound();

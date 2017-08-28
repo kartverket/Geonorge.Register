@@ -15,55 +15,22 @@ namespace Kartverket.Register.Services.Translation
         {
             _dbContext = dbContext;
         }
-        public TranslationCollection<RegisterTranslation> AddMissingTranslations(TranslationCollection<RegisterTranslation> translations)
-        {
-            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
-            {
-                if (!translations.HasCulture(language.Key))
-                    translations.Add(new RegisterTranslation { CultureName = language.Key });
-            }
-
-            return translations;
-        }
-
-        public TranslationCollection<CodelistValueTranslation> AddMissingTranslations(TranslationCollection<CodelistValueTranslation> translations)
-        {
-            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
-            {
-                if (!translations.HasCulture(language.Key))
-                    translations.Add(new CodelistValueTranslation { CultureName = language.Key });
-            }
-
-            return translations;
-        }
-
-        public TranslationCollection<EPSGTranslation> AddMissingTranslations(TranslationCollection<EPSGTranslation> translations)
-        {
-            foreach (var language in Kartverket.Register.Models.Translations.Culture.Languages)
-            {
-                if (!translations.HasCulture(language.Key))
-                    translations.Add(new EPSGTranslation { CultureName = language.Key });
-            }
-
-            return translations;
-        }
-
 
         public void UpdateTranslations(Models.Register register, Models.Register originalRegister)
         {
-            originalRegister.Translations.ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
+            originalRegister.Translations.Where(t => t.RegisterId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
             originalRegister.Translations = register.Translations;
         }
 
         public void UpdateTranslations(CodelistValue register, CodelistValue originalRegister)
         {
-            originalRegister.Translations.ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
+            originalRegister.Translations.Where(t => t.RegisterItemId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
             originalRegister.Translations = register.Translations;
         }
 
         public void UpdateTranslations(EPSG register, EPSG originalRegister)
         {
-            originalRegister.Translations.ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
+            originalRegister.Translations.Where(t => t.RegisterItemId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
             originalRegister.Translations = register.Translations;
         }
     }

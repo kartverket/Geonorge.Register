@@ -939,7 +939,9 @@ namespace Kartverket.Register.Services.Register
                                    r.parentRegister == null
                                    select r;
 
-                return queryResults.FirstOrDefault();
+                var result = queryResults.FirstOrDefault();
+                result.AddMissingTranslations();
+                return result;
             }
             else
             {
@@ -948,7 +950,9 @@ namespace Kartverket.Register.Services.Register
                                    r.parentRegister.seoname == parentRegisterName
                                    select r;
 
-                return queryResults.FirstOrDefault();
+                var result = queryResults.FirstOrDefault();
+                result.AddMissingTranslations();
+                return result;
             }
             throw new NotImplementedException();
         }

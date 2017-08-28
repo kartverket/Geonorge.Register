@@ -73,24 +73,9 @@ namespace Kartverket.Register.Models
 
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
 
-        public string GetNameLocale(string cultureName)
+        public void AddMissingTranslations()
         {
-            return Translations[cultureName].name;
-        }
-
-        public void SetNameLocale(string name, string cultureName)
-        {
-            Translations[cultureName].name = name;
-        }
-
-        public string GetDescriptionLocale(string cultureName)
-        {
-            return Translations[cultureName].description;
-        }
-
-        public void SetDescriptionLocale(string description, string cultureName)
-        {
-            Translations[cultureName].description = description;
+            Translations.AddMissingTranslations();
         }
 
         /// <summary>

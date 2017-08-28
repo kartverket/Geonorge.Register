@@ -176,11 +176,10 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name.ToLower() == user.ToLower()))
             {
+                ePSG.AddMissingTranslations();
                 Viewbags(ePSG);
-                ePSG.Translations = _translationService.AddMissingTranslations(ePSG.Translations);
                 return View(ePSG);
             }
             return HttpNotFound("Ingen tilgang");

@@ -52,13 +52,17 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("DokStatus")]
         [Display(Name = "DOK-status:")]
-        public string DokStatusId { get; set; }
-
+        public string DokStatusId { get; set; } = "Proposal";
         public virtual DokStatus DokStatus { get; set; }
 
         [Display(Name = "DOK-status godkjent:")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DokStatusDateAccepted { get; set; }
+
+        public string GetThemeGroupDescription()
+        {
+            return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";
+        }
     }
 
 }//end namespace Datamodell

@@ -70,6 +70,31 @@ namespace Kartverket.Register.Models
         public Guid InspireDeliverySpatialDataServiceId { get; set; }
         [Display(Name = "Spatial data service:")]
         public DeliveryStatus InspireDeliverySpatialDataService { get; set; }
+
+        public string LogoSrc()
+        {
+            if (Owner != null) return "~/data/organizations/" + Owner.logoFilename;
+            return "";
+        }
+
+        public string GetDescriptionAsSubstring()
+        {
+            if(!string.IsNullOrWhiteSpace(Description))
+            {
+                if (Description.Length < 80)
+                {
+                    return Description.Substring(0, Description.Length);
+                }
+                else
+                {
+                    return Description.Substring(0, 80) + "...";
+                }
+            }
+            else
+            {
+                return "";
+            }
+        }
     }
 
 }//end namespace Datamodell

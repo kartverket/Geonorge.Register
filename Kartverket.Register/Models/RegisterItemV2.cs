@@ -23,6 +23,7 @@ namespace Kartverket.Register.Models
         public virtual Organization Submitter { get; set; }
 
         [ForeignKey("Owner")]
+        [Required]
         public Guid OwnerId { get; set; }
         [Display(Name = "Eier:")]
         public virtual Organization Owner { get; set; }
@@ -45,5 +46,14 @@ namespace Kartverket.Register.Models
         [Display(Name = "Register:")]
         public virtual Register Register { get; set; }
 
+        public string DetailPageUrl()
+        {
+            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
+        }
+
+        public string ItemsByOwnerUrl()
+        {
+            return Register.GetObjectUrl() + "/" + Owner.seoname;
+        }
     }
 }//end namespace Datamodell

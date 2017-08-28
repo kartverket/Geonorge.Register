@@ -1246,7 +1246,7 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_SharedMenu.cshtml" />
     <Content Include="Views\DokCoverage\Index.cshtml" />
-    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="Views\Shared\_inspireDataset.cshtml" />
     <Content Include="Views\Shared\_municipalDataset.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
@@ -1264,6 +1264,7 @@
     <Content Include="Views\InspireDatasets\Details.cshtml" />
     <Content Include="Views\InspireDatasets\Edit.cshtml" />
     <Content Include="Views\InspireDatasets\Index.cshtml" />
+    <Content Include="Views\Shared\_nationalDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

@@ -49,6 +49,7 @@ namespace Kartverket.Register.Models
             modelBuilder.Configurations.Add(new RegisterTranslationConfiguration());
             modelBuilder.Configurations.Add(new CodelistValueTranslationConfiguration());
             modelBuilder.Configurations.Add(new EPSGTranslationConfiguration());
+            modelBuilder.Configurations.Add(new OrganizationTranslationConfiguration());
         }
 
         public override int SaveChanges()

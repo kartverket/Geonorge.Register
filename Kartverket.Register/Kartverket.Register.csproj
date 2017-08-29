@@ -711,6 +711,10 @@
     <Compile Include="Migrations\201708290626034_AddTranslation.Designer.cs">
       <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.cs" />
+    <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.Designer.cs">
+      <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -746,6 +750,7 @@
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
     <Compile Include="Models\Translations\EPSGTranslation.cs" />
+    <Compile Include="Models\Translations\OrganizationTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
@@ -1577,6 +1582,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290626034_AddTranslation.resx">
       <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
+      <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

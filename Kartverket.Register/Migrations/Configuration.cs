@@ -16,30 +16,30 @@ namespace Kartverket.Register.Migrations
 
         }
 
-        internal class RegisterConfiguration : EntityTypeConfiguration<Register>
+        internal class RegisterTranslationConfiguration : EntityTypeConfiguration<Register>
         {
 
-            public RegisterConfiguration()
+            public RegisterTranslationConfiguration()
             {
                 HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterId);
             }
 
         }
 
-        internal class CodelistValueConfiguration : EntityTypeConfiguration<CodelistValue>
+        internal class CodelistValueTranslationConfiguration : EntityTypeConfiguration<CodelistValue>
         {
 
-            public CodelistValueConfiguration()
+            public CodelistValueTranslationConfiguration()
             {
                 HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
             }
 
         }
 
-        internal class EPSGConfiguration : EntityTypeConfiguration<EPSG>
+        internal class EPSGTranslationConfiguration : EntityTypeConfiguration<EPSG>
         {
 
-            public EPSGConfiguration()
+            public EPSGTranslationConfiguration()
             {
                 HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
             }

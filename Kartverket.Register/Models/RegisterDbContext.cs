@@ -39,7 +39,6 @@ namespace Kartverket.Register.Models
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
-        public virtual DbSet<CodelistValueTranslation> CodelistValueTranslations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -47,9 +46,9 @@ namespace Kartverket.Register.Models
 
             modelBuilder.Entity<DOK.Models.DokDataset>().HasRequired(d => d.ThemeGroup).WithMany().WillCascadeOnDelete(true);
             modelBuilder.Entity<Dataset>().HasMany(n => n.Coverage).WithOptional().WillCascadeOnDelete();
-            modelBuilder.Configurations.Add(new RegisterConfiguration());
-            modelBuilder.Configurations.Add(new CodelistValueConfiguration());
-            modelBuilder.Configurations.Add(new EPSGConfiguration());
+            modelBuilder.Configurations.Add(new RegisterTranslationConfiguration());
+            modelBuilder.Configurations.Add(new CodelistValueTranslationConfiguration());
+            modelBuilder.Configurations.Add(new EPSGTranslationConfiguration());
         }
 
         public override int SaveChanges()

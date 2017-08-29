@@ -13,8 +13,8 @@ namespace Kartverket.Register.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         RegisterId = c.Guid(nullable: false),
-                        name = c.String(),
-                        description = c.String(),
+                        Name = c.String(),
+                        Description = c.String(),
                         CultureName = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -27,9 +27,9 @@ namespace Kartverket.Register.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         RegisterItemId = c.Guid(nullable: false),
-                        inspireRequirementDescription = c.String(),
-                        name = c.String(),
-                        description = c.String(),
+                        InspireRequirementDescription = c.String(),
+                        Name = c.String(),
+                        Description = c.String(),
                         CultureName = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -42,8 +42,8 @@ namespace Kartverket.Register.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         RegisterItemId = c.Guid(nullable: false),
-                        name = c.String(),
-                        description = c.String(),
+                        Name = c.String(),
+                        Description = c.String(),
                         CultureName = c.String(),
                     })
                 .PrimaryKey(t => t.Id)

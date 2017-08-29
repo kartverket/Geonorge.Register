@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201708251136058_AddTranslation"; }
+            get { return "201708290626034_AddTranslation"; }
         }
         
         string IMigrationMetadata.Source

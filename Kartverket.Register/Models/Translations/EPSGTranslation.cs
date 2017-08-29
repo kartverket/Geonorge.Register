@@ -11,7 +11,7 @@ namespace Kartverket.Register.Models.Translations
     {
         public Guid RegisterItemId { get; set; }
         [Display(Name = "inspireRequirementDescription_Engelsk", ResourceType = typeof(UI))]
-        public string inspireRequirementDescription { get; set; }
+        public string InspireRequirementDescription { get; set; }
 
         public EPSGTranslation()
         {

@@ -707,9 +707,9 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708251136058_AddTranslation.cs" />
-    <Compile Include="Migrations\201708251136058_AddTranslation.Designer.cs">
-      <DependentUpon>201708251136058_AddTranslation.cs</DependentUpon>
+    <Compile Include="Migrations\201708290626034_AddTranslation.cs" />
+    <Compile Include="Migrations\201708290626034_AddTranslation.Designer.cs">
+      <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1575,8 +1575,8 @@
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708251136058_AddTranslation.resx">
-      <DependentUpon>201708251136058_AddTranslation.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708290626034_AddTranslation.resx">
+      <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

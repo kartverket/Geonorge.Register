@@ -28,11 +28,11 @@ namespace Kartverket.Register.Controllers
 
         public EPSGsController(ITranslationService translationService, RegisterDbContext dbContext)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
             _translationService = translationService;
-            db = dbContext;
         }
 
 
@@ -43,6 +43,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             EPSG ePSg = new EPSG();
+            ePSg.AddMissingTranslations();
             ePSg.register = _registerService.GetRegister(parentRegister, registername);
             if (ePSg.register != null)
             {

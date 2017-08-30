@@ -93,6 +93,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
+            codeListValue.AddMissingTranslations();
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
             if (codeListValue.register != null)
             {

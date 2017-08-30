@@ -15,6 +15,12 @@ using Kartverket.Register.Models.Translations;
 namespace Kartverket.Register.Models
 {
 	public class Organization : RegisterItem {
+
+        public Organization()
+        {
+            this.Translations = new TranslationCollection<OrganizationTranslation>();
+        }
+
         // logos will be stored in this directory
         public const string DataDirectory = "organizations/";
 

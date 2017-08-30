@@ -77,6 +77,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             Models.Register nyttRegister = new Models.Register();
+            nyttRegister.AddMissingTranslations();
             Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             nyttRegister.parentRegister = register;
 

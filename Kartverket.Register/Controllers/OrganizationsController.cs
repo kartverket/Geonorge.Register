@@ -108,6 +108,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Organization organisasjon = new Organization();
+            organisasjon.AddMissingTranslations();
             organisasjon.register = _registerService.GetRegister(parentRegister, registername);
             if (organisasjon.register != null)
             {

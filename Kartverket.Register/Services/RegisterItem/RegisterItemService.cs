@@ -412,7 +412,6 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public void SaveNewRegisterItem(Models.RegisterItem item)
         {
-            _dbContext.Entry(item).State = EntityState.Modified;
             _dbContext.RegisterItems.Add(item);
             _dbContext.SaveChanges();
         }

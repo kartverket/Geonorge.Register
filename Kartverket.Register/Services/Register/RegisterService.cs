@@ -867,6 +867,8 @@ namespace Kartverket.Register.Services.Register
                                select r;
 
             Models.Register register = queryResults.FirstOrDefault();
+            if (register != null)
+                register.AddMissingTranslations();
             return register;
         }
 

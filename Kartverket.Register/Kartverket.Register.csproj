@@ -1101,7 +1101,6 @@
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
     <Content Include="authentication.default.config" />
-    <Content Include="authentication.config" />
     <Content Include="Content\bower_components\tablesorter\.bower.json" />
     <Content Include="Content\bower_components\tablesorter\bower.json" />
     <Content Include="Content\bower_components\tablesorter\changelog" />
@@ -1141,6 +1140,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <Content Include="authentication.config" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -1257,7 +1257,6 @@
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
-    <Content Include="settings.config" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
@@ -1267,6 +1266,7 @@
     <Content Include="Views\InspireDatasets\Edit.cshtml" />
     <Content Include="Views\InspireDatasets\Index.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="settings.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

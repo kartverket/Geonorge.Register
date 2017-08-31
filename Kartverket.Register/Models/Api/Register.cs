@@ -51,13 +51,13 @@ namespace Kartverket.Register.Models.Api
         }
         private string GetDescriptionLocale(Models.Register item, string cultureName)
         {
-            var name = item.Translations[cultureName].Description;
-            if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0, 2)].Description;
-            if (string.IsNullOrEmpty(name))
-                name = item.name;
+            var description = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.description;
 
-            return name;
+            return description;
         }
     }
 }

@@ -23,6 +23,7 @@
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -707,25 +708,9 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708170934203_AddInspireDatasetTable.cs" />
-    <Compile Include="Migrations\201708170934203_AddInspireDatasetTable.Designer.cs">
-      <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs" />
-    <Compile Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.Designer.cs">
-      <DependentUpon>201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708211157165_UpdateInspireDataset.cs" />
-    <Compile Include="Migrations\201708211157165_UpdateInspireDataset.Designer.cs">
-      <DependentUpon>201708211157165_UpdateInspireDataset.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.cs" />
-    <Compile Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.Designer.cs">
-      <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708231107141_AddRegisterItemV2Collection.cs" />
-    <Compile Include="Migrations\201708231107141_AddRegisterItemV2Collection.Designer.cs">
-      <DependentUpon>201708231107141_AddRegisterItemV2Collection.cs</DependentUpon>
+    <Compile Include="Migrations\201708310747486_AddInspireDataset.cs" />
+    <Compile Include="Migrations\201708310747486_AddInspireDataset.Designer.cs">
+      <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1593,20 +1578,8 @@
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708170934203_AddInspireDatasetTable.resx">
-      <DependentUpon>201708170934203_AddInspireDatasetTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.resx">
-      <DependentUpon>201708211141358_RenameRegisterItemNyDatasetNyAndInspireDataset.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211157165_UpdateInspireDataset.resx">
-      <DependentUpon>201708211157165_UpdateInspireDataset.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708211207573_RenamePropertiesInInspireDataset.resx">
-      <DependentUpon>201708211207573_RenamePropertiesInInspireDataset.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708231107141_AddRegisterItemV2Collection.resx">
-      <DependentUpon>201708231107141_AddRegisterItemV2Collection.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201708310747486_AddInspireDataset.resx">
+      <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

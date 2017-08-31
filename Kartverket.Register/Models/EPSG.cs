@@ -12,13 +12,15 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
-
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
 {
 	public class EPSG : RegisterItem {
-
+        public EPSG()
+        {
+            this.Translations = new TranslationCollection<EPSGTranslation>();
+        }
         [Display(Name = "EPSG:")]
         public string epsgcode { get; set; }
         [Display(Name = "SOSI referansesystem:")]
@@ -55,6 +57,13 @@ namespace Kartverket.Register.Models
         [ForeignKey("dimensionId")]
         public virtual Dimension dimension { get; set; }
         public string dimensionId { get; set; }
+        public virtual TranslationCollection<EPSGTranslation> Translations { get; set; }
+
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
 
         public virtual string GetEPSGEditUrl()
         {

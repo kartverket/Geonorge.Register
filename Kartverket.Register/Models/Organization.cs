@@ -10,10 +10,17 @@ using System.ComponentModel.DataAnnotations;
 using Resources;
 using ExpressiveAnnotations.Attributes;
 using System;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
 {
 	public class Organization : RegisterItem {
+
+        public Organization()
+        {
+            this.Translations = new TranslationCollection<OrganizationTranslation>();
+        }
+
         // logos will be stored in this directory
         public const string DataDirectory = "organizations/";
 
@@ -82,6 +89,12 @@ namespace Kartverket.Register.Models
         [Display(Name = "Dato bekreftet for registrering av kommunalt DOK")]
         public DateTime? DateConfirmedMunicipalDOK { get; set; }
         public string StatusConfirmationMunicipalDOK { get; set; }
+        public virtual TranslationCollection<OrganizationTranslation> Translations { get; set; }
+
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
 
         public virtual string GetOrganizationEditUrl()
         {

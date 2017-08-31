@@ -204,7 +204,7 @@ namespace Kartverket.Register.Services
             }
 
             var org = _organizationService.GetOrganizationByNumber(organizationNumber);
-            return org.MunicipalityCode;
+            return org != null ? org.MunicipalityCode : null;
         }
 
         public List<string> GetSecurityClaim(string type)

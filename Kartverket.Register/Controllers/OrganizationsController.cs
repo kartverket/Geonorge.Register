@@ -10,6 +10,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
@@ -22,13 +23,15 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
         private readonly IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
-        public OrganizationsController(RegisterDbContext dbContext, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
+        public OrganizationsController(RegisterDbContext dbContext, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, ITranslationService translationService)
         {
             _dbContext = dbContext;
             _registerService = registerService;
             _registerItemService = registerItemService;
             _accessControlService = accessControlService;
+            _translationService = translationService;
         }
 
         [Authorize]
@@ -105,6 +108,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Organization organisasjon = new Organization();
+            organisasjon.AddMissingTranslations();
             organisasjon.register = _registerService.GetRegister(parentRegister, registername);
             if (organisasjon.register != null)
             {
@@ -192,6 +196,7 @@ namespace Kartverket.Register.Controllers
             }
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && org.register.accessId == 2 && org.submitter.name.ToLower() == user.ToLower()))
             {
+                org.AddMissingTranslations();
                 ViewbagsOrganization(org, register);
                 return View(org);
             }
@@ -332,6 +337,7 @@ namespace Kartverket.Register.Controllers
                 }
 
                 originalOrganization.modified = DateTime.Now;
+                _translationService.UpdateTranslations(org, originalOrganization);
                 _dbContext.Entry(originalOrganization).State = EntityState.Modified;
                 _dbContext.SaveChanges();
                 ViewbagsOrganization(org, register);

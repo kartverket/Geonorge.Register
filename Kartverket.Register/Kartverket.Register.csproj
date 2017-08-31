@@ -708,6 +708,14 @@
     <Compile Include="Migrations\201706270833269_AddCartographyFile.Designer.cs">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708290626034_AddTranslation.cs" />
+    <Compile Include="Migrations\201708290626034_AddTranslation.Designer.cs">
+      <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.cs" />
+    <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.Designer.cs">
+      <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201708310747486_AddInspireDataset.cs" />
     <Compile Include="Migrations\201708310747486_AddInspireDataset.Designer.cs">
       <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>
@@ -748,6 +756,13 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
+    <Compile Include="Models\Translations\Culture.cs" />
+    <Compile Include="Models\Translations\EPSGTranslation.cs" />
+    <Compile Include="Models\Translations\OrganizationTranslation.cs" />
+    <Compile Include="Models\Translations\RegisterTranslation.cs" />
+    <Compile Include="Models\Translations\Translation.cs" />
+    <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
@@ -819,6 +834,8 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\Translation\ITranslationService.cs" />
+    <Compile Include="Services\Translation\TranslationService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
     <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
@@ -1577,6 +1594,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706270833269_AddCartographyFile.resx">
       <DependentUpon>201706270833269_AddCartographyFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708290626034_AddTranslation.resx">
+      <DependentUpon>201708290626034_AddTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
+      <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708310747486_AddInspireDataset.resx">
       <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>

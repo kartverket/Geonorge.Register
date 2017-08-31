@@ -13,29 +13,34 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
+using Kartverket.Register.Models.Translations;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class RegistersController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private IVersioningService _versioningService;
         private IRegisterService _registerService;
         private ISearchService _searchService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController()
+        public RegistersController(ITranslationService translationService, RegisterDbContext dbContext)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _searchService = new SearchService(db);
             _versioningService = new VersioningService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _translationService = translationService;
         }
 
         // GET: Registers
@@ -234,7 +239,7 @@ namespace Kartverket.Register.Controllers
                     originalRegister.seoname = RegisterUrls.MakeSeoFriendlyString(originalRegister.name);
                     originalRegister.modified = DateTime.Now;
                     if (register.statusId != null) originalRegister = _registerService.SetStatus(register, originalRegister);
-
+                    _translationService.UpdateTranslations(register, originalRegister);
                     db.Entry(originalRegister).State = EntityState.Modified;
                     db.SaveChanges();
                     Viewbags(register);
@@ -246,6 +251,8 @@ namespace Kartverket.Register.Controllers
             }
             return HttpNotFound();
         }
+
+
 
 
         // GET: Edit DOK-Municipal-Dataset

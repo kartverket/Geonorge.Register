@@ -170,6 +170,10 @@
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
                 }
             }
+            if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
+            }
         }
 
         @if (Model.HasParentRegister())

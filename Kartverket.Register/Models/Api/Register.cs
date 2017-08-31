@@ -9,7 +9,7 @@ namespace Kartverket.Register.Models.Api
     {
         public string id { get; set; }
         public string label { get; set; }
-
+        public string lang { get; set; } = "no";
         public string contentsummary { get; set; }
         public string owner { get; set; }
         public string manager { get; set; }
@@ -22,11 +22,12 @@ namespace Kartverket.Register.Models.Api
         public string targetNamespace { get; set; }
         public string SelectedDOKMunicipality { get; set; }
 
-        public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null) 
+        public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = "nb-NO") 
         {
             id = baseUrl + item.GetObjectUrl();
-            label = item.name;
-            contentsummary = item.description;
+            label = GetNameLocale(item, cultureName);
+            lang = cultureName.Substring(0, 2);
+            contentsummary = GetDescriptionLocale(item, cultureName);
             lastUpdated = item.modified;
             targetNamespace = item.targetNamespace;
             containedItemClass = item.containedItemClass;
@@ -36,6 +37,27 @@ namespace Kartverket.Register.Models.Api
             containedSubRegisters = new List<Register>();
             SelectedDOKMunicipality = selectedDOKMunicipality;
             uuid = item.systemId;
+        }
+
+        private string GetNameLocale(Models.Register item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0,2)].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+        private string GetDescriptionLocale(Models.Register item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
         }
     }
 }

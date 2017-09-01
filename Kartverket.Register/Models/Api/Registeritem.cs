@@ -139,9 +139,27 @@ namespace Kartverket.Register.Models.Api
                 epsgcode = d.epsgcode;
                 sosiReferencesystem = d.sosiReferencesystem;
                 documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
-                inspireRequirement = d.inspireRequirement.description;
-                nationalRequirement = d.nationalRequirement.description;
-                nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
+                if (d.inspireRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        inspireRequirement = d.inspireRequirement.description;
+                    else
+                        inspireRequirement = d.inspireRequirement.value;
+                }
+                if (d.nationalRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        nationalRequirement = d.nationalRequirement.description;
+                    else
+                        nationalRequirement = d.nationalRequirement.value;
+                }
+                if (d.nationalSeasRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        nationalSeasRequirement = d.nationalSeasRequirement.description;
+                    else
+                        nationalSeasRequirement = d.nationalSeasRequirement.value;
+                }
                 horizontalReferenceSystem = d.horizontalReferenceSystem;
                 verticalReferenceSystem = d.verticalReferenceSystem;
                 dimension = d.dimension != null ? d.dimension.description : "";

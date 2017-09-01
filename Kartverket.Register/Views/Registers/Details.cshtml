@@ -133,6 +133,10 @@
             {
             @Html.Partial("_serviceAlert", sortering.ToPagedList(pageNumber, pageSize))
         }
+        @if (Model.ContainedItemClassIsInspireDataset())
+            {
+            @Html.Partial("_inspireDataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        }
         @if (Model.containedItemClassIsRegister())
             {
             @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
@@ -174,6 +178,10 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">Rediger</a>
             }
+        }
+        @if (Model.name == "Inspire statusregister")
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">Legg til</a>
         }
 
         @if (Model.HasParentRegister())

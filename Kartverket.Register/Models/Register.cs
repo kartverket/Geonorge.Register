@@ -269,6 +269,14 @@ namespace Kartverket.Register.Models
             return false;
         }
 
+        public bool ContainedItemClassIsInspireDataset() {
+            if (containedItemClass == "InspireDataset")
+            {
+                return true;
+            }
+            return false;
+        }
+
         //end Register
 
     }//end namespace Datamodell

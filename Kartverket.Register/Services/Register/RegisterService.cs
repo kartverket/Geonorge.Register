@@ -1064,5 +1064,9 @@ namespace Kartverket.Register.Services.Register
             }
             return datasets;
         }
+
+        public Guid GetOrganizationIdByUserName() {
+            return GetOrganizationByUserName().systemId;
+        }
     }
 }

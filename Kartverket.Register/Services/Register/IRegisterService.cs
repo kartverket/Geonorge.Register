@@ -24,6 +24,7 @@ namespace Kartverket.Register.Services.Register
         bool RegisterHasChildren(string parentname, string registername);
         bool validationName(Object model);
         Organization GetOrganizationByUserName();
+        Guid GetOrganizationIdByUserName();
         Organization GetOrganizationByOrganizationNr(string number);
         Organization GetOrganizationByMunicipalityCode(string municipalityCode);
         List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipality);

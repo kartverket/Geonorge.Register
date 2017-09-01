@@ -39,6 +39,7 @@ namespace Kartverket.Register
             builder.RegisterType<DatasetService>().As<IDatasetService>();
             builder.RegisterType<AccessControlService>().As<IAccessControlService>();
             builder.RegisterType<DokReportService>().As<IDokReportService>();
+            builder.RegisterType<InspireDatasetService>().As<IInspireDatasetService>();
 
             builder.RegisterType<NotificationService>().As<INotificationService>();
             builder.RegisterType<EmailService>().As<IEmailService>();

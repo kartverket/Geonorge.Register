@@ -7,12 +7,18 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Controllers
 {
     public class InspireDatasetsController : Controller
     {
         private RegisterDbContext db = new RegisterDbContext();
+        private IInspireDatasetService _inspireDatasetService;
+
+        public InspireDatasetsController(IInspireDatasetService inspireDatasetService) {
+            _inspireDatasetService = inspireDatasetService;
+        }
 
         // GET: InspireDatasets
         public ActionResult Index()
@@ -37,18 +43,21 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: InspireDatasets/Create
-        public ActionResult Create()
+        //[Authorize]
+        [Route("inspire/{registername}/ny")]
+        [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
+        public ActionResult Create(string registername, string parentregister, string registerowner)
         {
             ViewBag.DokStatusId = new SelectList(db.DokStatuses, "value", "description");
-            ViewBag.InspireDeliveryAtomFeedId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryDistributionId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryHarmonizedDataId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryMetadataId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryMetadataServiceId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliverySpatialDataServiceId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryWfsId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryWfsOrAtomId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
-            ViewBag.InspireDeliveryWmsId = new SelectList(db.DeliveryStatus, "DeliveryStatusId", "StatusId");
+            ViewBag.InspireDeliveryAtomFeedId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryDistributionId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryHarmonizedDataId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryMetadataId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryMetadataServiceId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliverySpatialDataServiceId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryWfsId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryWfsOrAtomId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
+            ViewBag.InspireDeliveryWmsId = new SelectList(db.DokDeliveryStatuses, "value", "description", "sett status");
             ViewBag.OwnerId = new SelectList(db.RegisterItems, "systemId", "name");
             ViewBag.RegisterId = new SelectList(db.Registers, "systemId", "name");
             ViewBag.StatusId = new SelectList(db.Statuses, "value", "description");
@@ -61,8 +70,10 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Route("inspire/{registername}/ny")]
+        [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SystemId,InspireDeliveryMetadataId,InspireDeliveryMetadataServiceId,InspireDeliveryDistributionId,InspireDeliveryWmsId,InspireDeliveryWfsId,InspireDeliveryAtomFeedId,InspireDeliveryWfsOrAtomId,InspireDeliveryHarmonizedDataId,InspireDeliverySpatialDataServiceId,Uuid,Notes,SpecificUsage,ProductSheetUrl,PresentationRulesUrl,ProductSpecificationUrl,MetadataUrl,DistributionFormat,DistributionUrl,DistributionArea,WmsUrl,ThemeGroupId,DatasetThumbnail,DokStatusId,DokStatusDateAccepted,Name,Seoname,Description,SubmitterId,OwnerId,DateSubmitted,Modified,StatusId,RegisterId")] InspireDataset inspireDataset)
+        public ActionResult Create(InspireDataset inspireDataset, string parentregister, string registerowner, string registername)
         {
             if (ModelState.IsValid)
             {

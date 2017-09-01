@@ -1,18 +1,6 @@
 ﻿@model Kartverket.Register.Models.InspireDataset
 
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Create</title>
-</head>
-<body>
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm("Create", "InspireDatasets", FormMethod.Post, new { enctype = "multipart/form-data" })) 
     {
         @Html.AntiForgeryToken()
         
@@ -21,7 +9,7 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryMetadataId, "InspireDeliveryMetadataId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryMetadataId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryMetadataId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryMetadataId, "", new { @class = "text-danger" })
@@ -29,7 +17,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryMetadataServiceId, "InspireDeliveryMetadataServiceId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryMetadataServiceId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryMetadataServiceId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryMetadataServiceId, "", new { @class = "text-danger" })
@@ -37,7 +25,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryDistributionId, "InspireDeliveryDistributionId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryDistributionId,htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryDistributionId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryDistributionId, "", new { @class = "text-danger" })
@@ -45,7 +33,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWmsId, "InspireDeliveryWmsId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWmsId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryWmsId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryWmsId, "", new { @class = "text-danger" })
@@ -53,7 +41,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWfsId, "InspireDeliveryWfsId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWfsId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryWfsId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryWfsId, "", new { @class = "text-danger" })
@@ -61,7 +49,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryAtomFeedId, "InspireDeliveryAtomFeedId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryAtomFeedId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryAtomFeedId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryAtomFeedId, "", new { @class = "text-danger" })
@@ -69,7 +57,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWfsOrAtomId, "InspireDeliveryWfsOrAtomId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWfsOrAtomId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryWfsOrAtomId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryWfsOrAtomId, "", new { @class = "text-danger" })
@@ -77,7 +65,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryHarmonizedDataId, "InspireDeliveryHarmonizedDataId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryHarmonizedDataId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliveryHarmonizedDataId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliveryHarmonizedDataId, "", new { @class = "text-danger" })
@@ -85,7 +73,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliverySpatialDataServiceId, "InspireDeliverySpatialDataServiceId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliverySpatialDataServiceId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("InspireDeliverySpatialDataServiceId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.InspireDeliverySpatialDataServiceId, "", new { @class = "text-danger" })
@@ -181,7 +169,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.ThemeGroupId, "ThemeGroupId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ThemeGroupId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("ThemeGroupId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.ThemeGroupId, "", new { @class = "text-danger" })
@@ -197,7 +185,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.DokStatusId, "DokStatusId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.DokStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("DokStatusId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.DokStatusId, "", new { @class = "text-danger" })
@@ -237,7 +225,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.SubmitterId, "SubmitterId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.SubmitterId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("SubmitterId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.SubmitterId, "", new { @class = "text-danger" })
@@ -245,7 +233,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.OwnerId, "OwnerId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
@@ -269,7 +257,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.StatusId, "StatusId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.StatusId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
@@ -277,7 +265,7 @@
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.RegisterId, "RegisterId", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.RegisterId, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("RegisterId", null, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.RegisterId, "", new { @class = "text-danger" })
@@ -295,5 +283,3 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
-</body>
-</html>

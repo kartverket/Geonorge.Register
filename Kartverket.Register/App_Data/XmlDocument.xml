@@ -764,6 +764,18 @@
             QueryName = "register-DOK-coverage".
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.IsRighToLeft">
+            <summary>
+            Returns true if the language is a right-to-left language. Otherwise, false.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetDefaultCulture">
+            <summary>
+            Returns default culture name which is the first name decalared (e.g. en-US)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>
             The name of the facet field

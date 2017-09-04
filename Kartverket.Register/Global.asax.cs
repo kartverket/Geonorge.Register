@@ -11,6 +11,8 @@ using System.Web;
 using SolrNet;
 using System.Web.Configuration;
 using System.Net.Http.Formatting;
+using System.Globalization;
+using System.Threading;
 
 namespace Kartverket.Register
 {
@@ -59,6 +61,17 @@ namespace Kartverket.Register
             Exception ex = Server.GetLastError().GetBaseException();
 
             Log.Error("App_Error", ex);
+        }
+
+        protected void Application_BeginRequest()
+        {
+            var cookie = Context.Request.Cookies["_culture"];
+            if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
+            {
+                var culture = new CultureInfo(cookie.Value);
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+            }
         }
     }
 }

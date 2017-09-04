@@ -12,24 +12,28 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class CodelistValuesController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService)
+        public CodelistValuesController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService, ITranslationService translationService, RegisterDbContext dbContext)
         {
             _registerItemService = registerItemService;
             _registerService = registerService;
             _accessControlService = accessControlService;
+            _translationService = translationService;
+            db = dbContext;
         }
 
 
@@ -89,6 +93,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             CodelistValue codeListValue = new CodelistValue();
+            codeListValue.AddMissingTranslations();
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
             if (codeListValue.register != null)
             {
@@ -162,6 +167,7 @@ namespace Kartverket.Register.Controllers
                 if (_accessControlService.Access(codelistValue))
                 {
                     Viewbags(codelistValue);
+                    codelistValue.AddMissingTranslations();
                     return View(codelistValue);
                 }
                 return HttpNotFound("Ingen tilgang");
@@ -436,6 +442,8 @@ namespace Kartverket.Register.Controllers
             {
                 SetBroaderItem(broader, originalCodelistValue);
             }
+
+            _translationService.UpdateTranslations(codelistValue, originalCodelistValue);
         }
 
         private void SetBroaderItem(Guid? broader, CodelistValue originalCodelistValue)

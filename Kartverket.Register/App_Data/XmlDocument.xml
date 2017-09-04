@@ -962,6 +962,11 @@
               Looks up a localized string similar to Geonorge Register.
             </summary>
         </member>
+        <member name="P:Resources.UI.Beskrivelse_Engelsk">
+            <summary>
+              Looks up a localized string similar to Beskrivelse engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.UI.CreateNew">
             <summary>
               Looks up a localized string similar to Foreslå ny organisasjon.
@@ -1115,6 +1120,16 @@
         <member name="P:Resources.UI.Edit">
             <summary>
               Looks up a localized string similar to Rediger.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.inspireRequirementDescription_Engelsk">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.UI.Navn_Engelsk">
+            <summary>
+              Looks up a localized string similar to Navn engelsk.
             </summary>
         </member>
         <member name="P:Resources.UI.Organization">

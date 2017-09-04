@@ -10,25 +10,29 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
 using System.Web;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class EPSGsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private ITranslationService _translationService;
 
-        public EPSGsController()
+        public EPSGsController(ITranslationService translationService, RegisterDbContext dbContext)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _translationService = translationService;
         }
 
 
@@ -39,6 +43,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             EPSG ePSg = new EPSG();
+            ePSg.AddMissingTranslations();
             ePSg.register = _registerService.GetRegister(parentRegister, registername);
             if (ePSg.register != null)
             {
@@ -172,9 +177,9 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-
             if (role == "nd.metadata_admin" || ((role == "nd.metadata" || role == "nd.metadata_editor") && ePSG.register.accessId == 2 && ePSG.submitter.name.ToLower() == user.ToLower()))
             {
+                ePSG.AddMissingTranslations();
                 Viewbags(ePSG);
                 return View(ePSG);
             }
@@ -241,7 +246,7 @@ namespace Kartverket.Register.Controllers
                     }
                     originalEPSG.statusId = ePSG.statusId;
                 }
-
+                _translationService.UpdateTranslations(ePSG, originalEPSG);
                 originalEPSG.modified = DateTime.Now;
                 db.Entry(originalEPSG).State = EntityState.Modified;
                 db.SaveChanges();

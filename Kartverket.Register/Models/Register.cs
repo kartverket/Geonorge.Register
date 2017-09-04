@@ -13,8 +13,8 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-
-
+using Kartverket.Register.Models.Translations;
+using System.Globalization;
 
 namespace Kartverket.Register.Models
 {
@@ -25,6 +25,7 @@ namespace Kartverket.Register.Models
             this.items = new HashSet<RegisterItem>();
             this.subregisters = new HashSet<Register>();
             this.replaces = new HashSet<Version>();
+            this.Translations = new TranslationCollection<RegisterTranslation>();
         }
         [Key]
         public Guid systemId { get; set; }
@@ -69,6 +70,13 @@ namespace Kartverket.Register.Models
         [ForeignKey("access")]
         public int? accessId { get; set; }
         public virtual accessType access { get; set; }
+
+        public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
+
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
 
         /// <summary>
         /// Gets Url to current object

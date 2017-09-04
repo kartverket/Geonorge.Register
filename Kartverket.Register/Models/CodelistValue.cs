@@ -12,15 +12,15 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
 {
 	public class CodelistValue : RegisterItem {
         public CodelistValue() 
         {
-            this.narrowerItems = new HashSet<CodelistValue>();            
+            this.narrowerItems = new HashSet<CodelistValue>();
+            this.Translations = new TranslationCollection<CodelistValueTranslation>();
         }
         public const string DataDirectory = "codelistImport/";
         [Display(Name = "Kodeverdi")]        
@@ -31,6 +31,14 @@ namespace Kartverket.Register.Models
         public virtual RegisterItem broaderItem { get; set; }
 
         public virtual ICollection<CodelistValue> narrowerItems { get; set; }
+
+        public virtual TranslationCollection<CodelistValueTranslation> Translations { get; set; }
+
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
 
         public virtual string GetCodelistValueEditUrl()
         {

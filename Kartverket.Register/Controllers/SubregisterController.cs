@@ -15,22 +15,26 @@ using Kartverket.Register.Services.Versioning;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.Search;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class SubregisterController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private IRegisterService _registerService;
         private ISearchService _searchService;
+        private ITranslationService _translationService;
 
-        public SubregisterController()
+        public SubregisterController(ITranslationService translationService, RegisterDbContext dbContex)
         {
+            db = dbContex;
             _registerService = new RegisterService(db);
             _searchService = new SearchService(db);
+            _translationService = translationService;
         }
 
         // GET: Subregister
@@ -73,6 +77,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentregister)
         {
             Models.Register nyttRegister = new Models.Register();
+            nyttRegister.AddMissingTranslations();
             Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
             nyttRegister.parentRegister = register;
 
@@ -183,7 +188,7 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-
+            register.AddMissingTranslations();
             if (role == "nd.metadata_admin")
             {
                 return View(register);
@@ -237,7 +242,7 @@ namespace Kartverket.Register.Controllers
                         originalRegister.dateAccepted = null;
                     }
                 }
-
+                _translationService.UpdateTranslations(register, originalRegister);
                 db.Entry(originalRegister).State = EntityState.Modified;
                 db.SaveChanges();
                 Viewbags(register);

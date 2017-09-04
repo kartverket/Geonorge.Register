@@ -228,4 +228,13 @@
   <data name="DOK_Delivery_Status_NotSet" xml:space="preserve">
     <value>Leveransestatus er ikke satt</value>
   </data>
+  <data name="Beskrivelse_Engelsk" xml:space="preserve">
+    <value>Beskrivelse engelsk</value>
+  </data>
+  <data name="inspireRequirementDescription_Engelsk" xml:space="preserve">
+    <value>Beskrivelse av krav engelsk</value>
+  </data>
+  <data name="Navn_Engelsk" xml:space="preserve">
+    <value>Navn engelsk</value>
+  </data>
 </root>

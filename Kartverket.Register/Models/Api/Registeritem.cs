@@ -12,6 +12,7 @@ namespace Kartverket.Register.Models.Api
         // RegisterItem
         public string id { get; set; }
         public string label { get; set; }
+        public string lang { get; set; } = "no";
         public string itemclass { get; set; }
         public Guid uuid { get; set; }
         public string status { get; set; }
@@ -103,17 +104,23 @@ namespace Kartverket.Register.Models.Api
         public string Note { get; set; }
         public string ServiceUuid { get; set; }
 
-        public Registeritem(Models.RegisterItem item, string baseUrl, FilterParameters filter = null)
+        public Registeritem(Models.RegisterItem item, string baseUrl, FilterParameters filter = null, string language = "nb-NO")
         {
             this.versions = new HashSet<Registeritem>();
             this.narrower = new HashSet<string>();
 
             id = baseUrl + item.GetObjectUrl();
             label = item.name;
+            lang = language.Substring(0,2);
             lastUpdated = item.modified;
             itemclass = item.register.containedItemClass;
             if (item.submitter != null) owner = item.submitter.name;
-            if (item.status != null) status = item.status.description;
+            if (item.status != null) {
+                if (lang == "no" || lang == "nb")
+                    status = item.status.description;
+                else
+                    status = item.status.value;
+            }
             if (item.description != null) description = item.description;
             if (item.versionName != null) versionName = item.description;
             versionNumber = item.versionNumber;
@@ -127,12 +134,32 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "EPSG";
                 var d = (EPSG)item;
+                label = GetNameLocale(d, language);
+                if (d.description != null) description = GetDescriptionLocale(d, language);
                 epsgcode = d.epsgcode;
                 sosiReferencesystem = d.sosiReferencesystem;
                 documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
-                inspireRequirement = d.inspireRequirement.description;
-                nationalRequirement = d.nationalRequirement.description;
-                nationalSeasRequirement = d.nationalSeasRequirement != null ? d.nationalSeasRequirement.description : "";
+                if (d.inspireRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        inspireRequirement = d.inspireRequirement.description;
+                    else
+                        inspireRequirement = d.inspireRequirement.value;
+                }
+                if (d.nationalRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        nationalRequirement = d.nationalRequirement.description;
+                    else
+                        nationalRequirement = d.nationalRequirement.value;
+                }
+                if (d.nationalSeasRequirement != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        nationalSeasRequirement = d.nationalSeasRequirement.description;
+                    else
+                        nationalSeasRequirement = d.nationalSeasRequirement.value;
+                }
                 horizontalReferenceSystem = d.horizontalReferenceSystem;
                 verticalReferenceSystem = d.verticalReferenceSystem;
                 dimension = d.dimension != null ? d.dimension.description : "";
@@ -141,6 +168,8 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "CodelistValue";
                 var c = (CodelistValue)item;
+                label = GetNameLocale(c, language);
+                if (c.description != null) description = GetDescriptionLocale(c, language);
                 codevalue = c.value;
                 if (c.broaderItemId != null)
                     broader = baseUrl + c.broaderItem.GetObjectUrl();
@@ -211,6 +240,8 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "Organization";
                 Models.Organization organization = (Models.Organization)item;
+                label = GetNameLocale(organization, language);
+                if (organization.description != null) description = GetDescriptionLocale(organization, language);
                 number = organization.number;
                 MunicipalityCode = organization.MunicipalityCode;
                 GeographicCenterX = organization.GeographicCenterX;
@@ -234,6 +265,90 @@ namespace Kartverket.Register.Models.Api
                 Note = s.Note;
                 ServiceUuid = s.ServiceUuid;
             }
+        }
+
+        private string GetNameLocale(Models.Register item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0,2)].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+
+        private string GetNameLocale(Models.EPSG item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+
+        private string GetNameLocale(Models.CodelistValue item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+
+        private string GetNameLocale(Models.Organization item, string cultureName)
+        {
+            var name = item.Translations[cultureName].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+        private string GetDescriptionLocale(Models.Register item, string cultureName)
+        {
+            var description = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.description;
+
+            return description;
+        }
+        private string GetDescriptionLocale(Models.EPSG item, string cultureName)
+        {
+            var description = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.name;
+
+            return description;
+        }
+        private string GetDescriptionLocale(Models.CodelistValue item, string cultureName)
+        {
+            var description = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.name;
+
+            return description;
+        }
+        private string GetDescriptionLocale(Models.Organization item, string cultureName)
+        {
+            var description = item.Translations[cultureName].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.name;
+
+            return description;
         }
     }
 }

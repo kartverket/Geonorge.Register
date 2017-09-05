@@ -25,6 +25,7 @@ namespace Kartverket.Register.Controllers
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
+        private string language = "nb-NO";
 
         public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService)
         {
@@ -41,6 +42,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisters()
         {
+            SetLanguage(Request);
             var list = new List<Models.Api.Register>();
             List<Models.Register> registers = _registerService.GetRegisters();
             foreach (Models.Register register in registers)
@@ -60,6 +62,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterByName(string registerName, [FromUri] FilterParameters filter = null)
         {
+            SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
             if(filter != null || registerName == "det-offentlige-kartgrunnlaget-kommunalt")
             {
@@ -92,6 +95,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetSubregisterByName(string parentregister, string register)
         {
+            SetLanguage(Request);
             var it = _registerService.GetSubregisterByName(parentregister, register);
             return Ok(ConvertRegisterAndNextLevel(it));
         }
@@ -106,6 +110,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterBySystemId(string systemid)
         {
+            SetLanguage(Request);
             var it = _registerService.GetRegisterBySystemId(Guid.Parse(systemid));
             return Ok(ConvertRegisterAndNextLevel(it));
         }
@@ -124,6 +129,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
         {
+            SetLanguage(Request);
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(null, register, item);
             return Ok(currentVersion);
         }
@@ -140,6 +146,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemByVersionNr(string register, string item, int version)
         {
+            SetLanguage(Request);
             var registerItem = _registerItemService.GetRegisterItem(null, register, item, version);
             return Ok(ConvertRegisterItem(registerItem.register, registerItem));
         }
@@ -156,6 +163,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetSubregisterItemByName(string parentregister, string register, string item)
         {
+            SetLanguage(Request);
             Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(parentregister, register, item);
             return Ok(currentVersion);
         }
@@ -211,6 +219,7 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
+            SetLanguage(Request);
             List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
             List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
 
@@ -284,7 +293,7 @@ namespace Kartverket.Register.Controllers
                     selectedDOKMunicipality = org.name;
                 }
             }
-            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality);
+            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality, language);
             return tmp;
         }
 
@@ -331,7 +340,7 @@ namespace Kartverket.Register.Controllers
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Models.Api.Registeritem(item,registerId, filter);
+            var tmp = new Models.Api.Registeritem(item,registerId, filter, language);
             return tmp;
         }
 
@@ -418,6 +427,15 @@ namespace Kartverket.Register.Controllers
             }
             versions.OrderBy(o => o.status);
             return versions;
+        }
+
+        private void SetLanguage(HttpRequestMessage request)
+        {
+            IEnumerable<string> headerValues;
+            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            {
+                language = headerValues.FirstOrDefault();
+            }
         }
     }
 }

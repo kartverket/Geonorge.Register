@@ -1217,5 +1217,90 @@
               Looks up a localized string similar to Navn engelsk.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Register_Content">
+            <summary>
+              Looks up a localized string similar to Innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_DOKCoverageContent">
+            <summary>
+              Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_Heading">
+            <summary>
+              Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_Kartografi">
+            <summary>
+              Looks up a localized string similar to Kartografi.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_KartografiContent">
+            <summary>
+              Looks up a localized string similar to Registeret inneholder datasett som har registrert digital kartografi.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_LoadingMessage">
+            <summary>
+              Looks up a localized string similar to Henter register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_Name">
+            <summary>
+              Looks up a localized string similar to Navn.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_NotSet">
+            <summary>
+              Looks up a localized string similar to Ikke angitt.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_Objektregisteret">
+            <summary>
+              Looks up a localized string similar to Objektregisteret.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_ObjektregisteretContent">
+            <summary>
+              Looks up a localized string similar to Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_Owner">
+            <summary>
+              Looks up a localized string similar to Eier.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Register_SymbolContent">
+            <summary>
+              Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_AllRegisters">
+            <summary>
+              Looks up a localized string similar to Alle registre.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Button">
+            <summary>
+              Looks up a localized string similar to Søk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Heading">
+            <summary>
+              Looks up a localized string similar to Søk i register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_LoadingMessage">
+            <summary>
+              Looks up a localized string similar to Henter søkeresultater.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Placeholder">
+            <summary>
+              Looks up a localized string similar to Søk etter registerdata.
+            </summary>
+        </member>
     </members>
 </doc>

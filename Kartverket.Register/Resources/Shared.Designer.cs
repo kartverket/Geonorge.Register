@@ -113,5 +113,158 @@ namespace Resources {
                 return ResourceManager.GetString("Navn_Engelsk", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Innhold.
+        /// </summary>
+        public static string Register_Content {
+            get {
+                return ResourceManager.GetString("Register_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
+        /// </summary>
+        public static string Register_DOKCoverageContent {
+            get {
+                return ResourceManager.GetString("Register_DOKCoverageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrene.
+        /// </summary>
+        public static string Register_Heading {
+            get {
+                return ResourceManager.GetString("Register_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kartografi.
+        /// </summary>
+        public static string Register_Kartografi {
+            get {
+                return ResourceManager.GetString("Register_Kartografi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registeret inneholder datasett som har registrert digital kartografi.
+        /// </summary>
+        public static string Register_KartografiContent {
+            get {
+                return ResourceManager.GetString("Register_KartografiContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Henter register.
+        /// </summary>
+        public static string Register_LoadingMessage {
+            get {
+                return ResourceManager.GetString("Register_LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navn.
+        /// </summary>
+        public static string Register_Name {
+            get {
+                return ResourceManager.GetString("Register_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ikke angitt.
+        /// </summary>
+        public static string Register_NotSet {
+            get {
+                return ResourceManager.GetString("Register_NotSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Objektregisteret.
+        /// </summary>
+        public static string Register_Objektregisteret {
+            get {
+                return ResourceManager.GetString("Register_Objektregisteret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes..
+        /// </summary>
+        public static string Register_ObjektregisteretContent {
+            get {
+                return ResourceManager.GetString("Register_ObjektregisteretContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eier.
+        /// </summary>
+        public static string Register_Owner {
+            get {
+                return ResourceManager.GetString("Register_Owner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
+        /// </summary>
+        public static string Register_SymbolContent {
+            get {
+                return ResourceManager.GetString("Register_SymbolContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alle registre.
+        /// </summary>
+        public static string Search_AllRegisters {
+            get {
+                return ResourceManager.GetString("Search_AllRegisters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Søk.
+        /// </summary>
+        public static string Search_Button {
+            get {
+                return ResourceManager.GetString("Search_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Søk i register.
+        /// </summary>
+        public static string Search_Heading {
+            get {
+                return ResourceManager.GetString("Search_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Henter søkeresultater.
+        /// </summary>
+        public static string Search_LoadingMessage {
+            get {
+                return ResourceManager.GetString("Search_LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Søk etter registerdata.
+        /// </summary>
+        public static string Search_Placeholder {
+            get {
+                return ResourceManager.GetString("Search_Placeholder", resourceCulture);
+            }
+        }
     }
 }

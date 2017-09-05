@@ -135,4 +135,55 @@
   <data name="Navn_Engelsk" xml:space="preserve">
     <value>Name English</value>
   </data>
+  <data name="Register_Content" xml:space="preserve">
+    <value>Content</value>
+  </data>
+  <data name="Register_DOKCoverageContent" xml:space="preserve">
+    <value>The coverage map shows which data sets in the public map of the map are covered by the various municipalities.</value>
+  </data>
+  <data name="Register_Heading" xml:space="preserve">
+    <value>Registers</value>
+  </data>
+  <data name="Register_Kartografi" xml:space="preserve">
+    <value>Cartography</value>
+  </data>
+  <data name="Register_KartografiContent" xml:space="preserve">
+    <value>The registry contains data sets that have registered digital cartography</value>
+  </data>
+  <data name="Register_LoadingMessage" xml:space="preserve">
+    <value>Retrieves register</value>
+  </data>
+  <data name="Register_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Register_NotSet" xml:space="preserve">
+    <value>Not set</value>
+  </data>
+  <data name="Register_Objektregisteret" xml:space="preserve">
+    <value>Object registry</value>
+  </data>
+  <data name="Register_ObjektregisteretContent" xml:space="preserve">
+    <value>Contains a collection of central object catalogs from SOSI, Inspire and from parties in Norway digitally. There are data specifications that are useful in the production of datasets, or as documentation of how the content and structure of a dataset should be interpreted.</value>
+  </data>
+  <data name="Register_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="Register_SymbolContent" xml:space="preserve">
+    <value>This registry contains symbols used for styling digital cartography and for use in the graphics industry.</value>
+  </data>
+  <data name="Search_AllRegisters" xml:space="preserve">
+    <value>All registers</value>
+  </data>
+  <data name="Search_Button" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search_Heading" xml:space="preserve">
+    <value>Search register</value>
+  </data>
+  <data name="Search_LoadingMessage" xml:space="preserve">
+    <value>Retrieving search results</value>
+  </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>Search for registerdata</value>
+  </data>
 </root>

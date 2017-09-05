@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                Registrene
+                @Shared.Register_Heading
             </h1>
         </div>
         <div class="col-sm-12">
@@ -23,24 +23,21 @@
         <table class="table table-responsive">
             <tr>
                 <th>
-                    Navn
+                    @Shared.Register_Name
                 </th>
                 <th>
-                    Innhold
+                    @Shared.Register_Content
                 </th>
                 <th>
-                    Eier
+                    @Shared.Register_Owner
                 </th>
-                @*<th>
-                        Status
-                    </th>*@
             </tr>
             <tr>
                 <td>
-                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="Henter register" class="show-loading-animation">Objektregisteret</a></p>
+                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@Shared.Register_Objektregisteret</a></p>
                 </td>
                 <td>
-                    Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.
+                    @Shared.Register_ObjektregisteretContent
                 </td>
                 <td>
 
@@ -49,30 +46,30 @@
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/kartografi" data-loading-message="Henter register" class="show-loading-animation">Kartografi</a></p>
+                    <p><a href="/register/kartografi" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@Shared.Register_Kartografi</a></p>
                 </td>
                 <td>
-                    Registeret inneholder datasett som har registrert digital kartografi
+                    @Shared.Register_KartografiContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/symbol" data-loading-message="Henter register" class="show-loading-animation">Symbol</a></p>
+                    <p><a href="/register/symbol" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">Symbol</a></p>
                 </td>
                 <td>
-                    Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.
+                    @Shared.Register_SymbolContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="Henter register" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
+                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
                 </td>
                 <td>
-                    Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.
+                    @Shared.Register_SymbolContent
                 </td>
                 <td>Kartverket</td>
             </tr>
@@ -82,7 +79,7 @@
                 {
                     <tr>
                         <td>
-                            <p><a href="/register/@item.seoname" data-loading-message="Henter register" class="show-loading-animation">@item.name</a></p>
+                            <p><a href="/register/@item.seoname" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@item.name</a></p>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.description)
@@ -91,7 +88,7 @@
                         <td title="Eier: @item.owner.name">
                             @if (item.owner == null)
                             {
-                                <span>Ikke angitt</span>
+                                <span>@Shared.Register_NotSet</span>
                             }
                             else
                             {

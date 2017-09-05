@@ -135,4 +135,55 @@
   <data name="Navn_Engelsk" xml:space="preserve">
     <value>Navn engelsk</value>
   </data>
+  <data name="Register_Content" xml:space="preserve">
+    <value>Innhold</value>
+  </data>
+  <data name="Register_DOKCoverageContent" xml:space="preserve">
+    <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>
+  </data>
+  <data name="Register_Heading" xml:space="preserve">
+    <value>Registrene</value>
+  </data>
+  <data name="Register_Kartografi" xml:space="preserve">
+    <value>Kartografi</value>
+  </data>
+  <data name="Register_KartografiContent" xml:space="preserve">
+    <value>Registeret inneholder datasett som har registrert digital kartografi</value>
+  </data>
+  <data name="Register_LoadingMessage" xml:space="preserve">
+    <value>Henter register</value>
+  </data>
+  <data name="Register_Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="Register_NotSet" xml:space="preserve">
+    <value>Ikke angitt</value>
+  </data>
+  <data name="Register_Objektregisteret" xml:space="preserve">
+    <value>Objektregisteret</value>
+  </data>
+  <data name="Register_ObjektregisteretContent" xml:space="preserve">
+    <value>Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.</value>
+  </data>
+  <data name="Register_Owner" xml:space="preserve">
+    <value>Eier</value>
+  </data>
+  <data name="Register_SymbolContent" xml:space="preserve">
+    <value>Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.</value>
+  </data>
+  <data name="Search_AllRegisters" xml:space="preserve">
+    <value>Alle registre</value>
+  </data>
+  <data name="Search_Button" xml:space="preserve">
+    <value>Søk</value>
+  </data>
+  <data name="Search_Heading" xml:space="preserve">
+    <value>Søk i register</value>
+  </data>
+  <data name="Search_LoadingMessage" xml:space="preserve">
+    <value>Henter søkeresultater</value>
+  </data>
+  <data name="Search_Placeholder" xml:space="preserve">
+    <value>Søk etter registerdata</value>
+  </data>
 </root>

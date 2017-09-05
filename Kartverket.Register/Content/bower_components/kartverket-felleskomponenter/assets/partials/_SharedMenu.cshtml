@@ -37,7 +37,7 @@
                 <div class="col-xs-11 col-md-7 col-md-offset-2 search">
                     <div class="row">
                         <div class="col-xs-12 input-group searchbar">
-                            <input autocomplete="off" data-ng-focus="setFocus($event)" data-ng-blur="" data-ng-keyup="autocomplete($event)" data-ng-keydown="preventDefault($event)" data-ng-model="$root.searchQuery" id="txtSearch" type="text" class="form-control search-main ng-valid ng-dirty ng-valid-parse ng-touched" placeholder="S&#248;k etter kartdata">
+                            <input autocomplete="off" data-ng-focus="setFocus($event)" data-ng-blur="" data-ng-keyup="autocomplete($event)" data-ng-keydown="preventDefault($event)" data-ng-model="$root.searchQuery" id="txtSearch" type="text" class="form-control search-main ng-valid ng-dirty ng-valid-parse ng-touched" ng-attr-placeholder="{{(selectedSearch.searchPlaceholder)}}">
                             <div class="input-group-addon">
                                 <div class="autocomplete-loader ng-cloak" ng-cloak ng-show="ajaxCallActive">
                                     <div class="loader"></div>

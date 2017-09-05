@@ -162,6 +162,25 @@ function setMainSearchApiUrl(urlSlug, environment){
     }
 }
 
+function setMainSearchPlaceholder(placeholder, environment) { 
+    environmentIsSet = false; 
+    var environmentSlug = ''; 
+    if (typeof environment !== 'undefined') { 
+        if (environment == 'dev' || environment == 'test' || environment == 'prod') { 
+            environmentIsSet = true; 
+        } else { 
+            console.error("incorrect value for environment. Use 'dev', 'test' or 'prod'"); 
+        } 
+    } 
+    if (environmentIsSet) { 
+        searchOptionsArray[environment].searchPlaceholder = placeholder; 
+    } else { 
+        searchOptionsArray.dev.searchPlaceholder = placeholder; 
+        searchOptionsArray.test.searchPlaceholder = placeholder; 
+        searchOptionsArray.prod.searchPlaceholder = placeholder; 
+    } 
+} 
+
 angular.module('geonorge', ['ui.bootstrap']);
 
 angular.module('geonorge').config(["$sceDelegateProvider", function ($sceDelegateProvider) {
@@ -172,6 +191,7 @@ var searchOptionsArray =
     "dev" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.dev.geonorge.no",
@@ -185,6 +205,7 @@ var searchOptionsArray =
     "test" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.test.geonorge.no",
@@ -198,6 +219,7 @@ var searchOptionsArray =
     "prod" : {
         text: "Kartkatalogen",
 	    searchTitle: "Kartkatalogen",
+	    searchPlaceholder: "S\u00F8k etter kartdata",
 	    buttonCss: "edgesKartkatalogen",
 	    listCss: "left-edge-kartkatalogen",
 	    baseUrl: "//kartkatalog.geonorge.no",
@@ -301,7 +323,18 @@ var baseurl_local = searchOption.baseUrl;
         data: {}
       });
 
-      return $q.all([request3, request, request2, request1]);
+      var menuService4 = encodeURI(searchOption.api + getSearchParameters('software', query));
+      var request4 = $http({
+        method: 'GET',
+        url: menuService4,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+          'accept': '*/*'
+        },
+        data: {}
+      });
+
+      return $q.all([request3, request, request2, request1, request4]);
     }
 
   }]).controller('searchTopController', [
@@ -581,6 +614,8 @@ var baseurl_local = searchOption.baseUrl;
                       return "Tjenester";
                       case "dimensionGroup":
                       return "Datapakker";
+                      case "software":
+                      return "Applikasjon";
                       default:
                     }
                   }

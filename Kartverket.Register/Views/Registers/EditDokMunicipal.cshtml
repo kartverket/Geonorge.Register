@@ -22,6 +22,12 @@
                         cssChildRow: "tablesorter-childRow"
                     })
 
+                $(".tableCoverage")
+                    .tablesorter({
+                        theme: 'blue',
+                        cssChildRow: "tablesorter-childRow"
+                    })
+
                 $('.tablesorter').delegate('.toggle', 'click', function () {
 
                     $(this).closest('tr').nextUntil('tr:not(.tablesorter-childRow)').find('td').toggle();

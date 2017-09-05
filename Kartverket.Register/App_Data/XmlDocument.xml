@@ -769,6 +769,11 @@
             Returns true if the language is a right-to-left language. Otherwise, false.
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.IsNorwegian">
+            <summary>
+            Returns true if current language is norwegian. Otherwise, false.
+            </summary>
+        </member>
         <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
         <member name="M:Kartverket.Register.Helpers.CultureHelper.GetDefaultCulture">
             <summary>

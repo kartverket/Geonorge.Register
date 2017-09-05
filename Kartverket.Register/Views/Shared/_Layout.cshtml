@@ -98,7 +98,15 @@
         </div>
 
     </div>
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.cshtml")
+    @if (CultureHelper.IsNorwegian())
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.min.cshtml");
+    }
+    else
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
+    }
+
 
     @RenderSection("scripts", false)
     <script>

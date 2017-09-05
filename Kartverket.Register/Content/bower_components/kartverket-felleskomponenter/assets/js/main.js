@@ -814,6 +814,33 @@ function addShoppingCartTooltip(elementsCount) {
     element.tooltip();
 }
 
+function removeSingleItemFromArray(array, undesirableItem) {
+    var index = array.indexOf(undesirableItem);
+    if (index >= 0) {
+        array.splice(index, 1);
+    }
+    return array;
+}
+
+function removeFromArray(array, undesirableItems) {
+    var multiple = Array.isArray(undesirableItems);
+    if (multiple) {
+        undesirableItems.forEach(function (undesirableItem) {
+            array = removeSingleItemFromArray(array, undesirableItem);
+        });
+    } else {
+        array = removeSingleItemFromArray(array, undesirableItems);
+    }
+}
+
+function removeBrokenOrderItems() {
+    var orderItems = JSON.parse(localStorage.getItem("orderItems"));
+    if (orderItems !== null){
+        removeFromArray(orderItems, [null, undefined, "null", {}, ""]);
+        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+    }
+}
+
 function updateShoppingCart() {
     var shoppingCartElement = $('#orderitem-count');
     var orderItems = "";
@@ -822,16 +849,22 @@ function updateShoppingCart() {
     var cookieValue = 0;
     var cookieDomain = ".geonorge.no";
 
-    if (localStorage.getItem("orderItems") !== null && localStorage.getItem("orderItems") != "[]") {
+    if (localStorage.getItem("orderItems") !== null) {
         orderItems = localStorage.getItem("orderItems");
     }
-
+    
     if (orderItems !== "") {
-        shoppingCartElement.css("display", "block");
         orderItemsObj = JSON.parse(orderItems);
         cookieValue = orderItemsObj.length;
-        shoppingCartElement.html(cookieValue);
-        addShoppingCartTooltip(cookieValue);
+        if (cookieValue > 0) {
+            shoppingCartElement.css("display", "block");
+            shoppingCartElement.html(cookieValue);
+            addShoppingCartTooltip(cookieValue);
+        } else {
+            shoppingCartElement.css("display", "none");
+            addShoppingCartTooltip(0);
+        }
+        
     } else if (Cookies.get(cookieName) !== undefined && Cookies.get(cookieName) !== 0 && Cookies.get(cookieName) !== "0") {
         cookieValue = Cookies.get(cookieName);
         shoppingCartElement.css("display", "block");
@@ -864,7 +897,8 @@ function updateShoppingCartCookie() {
 }
 
 
-$(window).load(function() {
+$(window).load(function () {
+    removeBrokenOrderItems();
     updateShoppingCart();
 });
 
@@ -1023,6 +1057,22 @@ function getParameterByName(name) {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+// Remove URL parameters from string
+function removeParameterByName(name, urlParameters) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "([^&#]*)"),
+  results = regex.exec(urlParameters);
+  urlParameters = urlParameters.replace(results[0], "");
+  return urlParameters;
+}
+
+// Remove URL parameters from url field
+function removeParameterByNameFromUrl(name) {
+  var urlParameters = location.search.toLowerCase();
+  urlParameters = removeParameterByName(name, urlParameters);
+  var newRelativeUrl = location.pathname + urlParameters;
+  window.history.replaceState({ path: newRelativeUrl }, null, newRelativeUrl);
+}
 $(document).on('focus', '.custom-select-list-input', function() {
   var customSelectListElement = $(this).closest('.custom-select-list');
   var dropdownElement = customSelectListElement.find('.custom-select-list-dropdown-container');

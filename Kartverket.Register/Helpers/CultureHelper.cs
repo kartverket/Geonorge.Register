@@ -26,6 +26,16 @@ namespace Kartverket.Register.Helpers
 
         }
         /// <summary>
+        /// Returns true if current language is norwegian. Otherwise, false.
+        /// </summary>
+        public static bool IsNorwegian()
+        {
+            var culture = GetCurrentCulture();
+
+            return culture == "no" || culture == "nb-NO" || culture == "nn-NO";
+
+        }
+        /// <summary>
         /// Returns a valid culture name based on "name" parameter. If "name" is not valid, it returns the default culture "en-US"
         /// </summary>
         /// <param name="name" />Culture's name (e.g. en-US)</param>

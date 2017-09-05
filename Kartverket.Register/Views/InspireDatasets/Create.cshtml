@@ -1,4 +1,4 @@
-﻿@model Kartverket.Register.Models.InspireDataset
+﻿@model Kartverket.Register.Models.ViewModels.InspireDatasetViewModel
 
     @using (Html.BeginForm("Create", "InspireDatasets", FormMethod.Post, new { enctype = "multipart/form-data" })) 
     {
@@ -9,74 +9,65 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryMetadataId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryMetadataStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryMetadataId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryMetadataId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryMetadataStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryMetadataServiceId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryMetadataServiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryMetadataServiceId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryMetadataServiceId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryMetadataServiceStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryDistributionId,htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryDistributionStatus,htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryDistributionId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryDistributionId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryDistributionStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWmsId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWmsStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryWmsId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryWmsId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryWmsStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWfsId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWfsStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryWfsId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryWfsId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryWfsStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryAtomFeedId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryAtomFeedStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryAtomFeedId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryAtomFeedId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryAtomFeedStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryWfsOrAtomId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryWfsOrAtomStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryWfsOrAtomId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryWfsOrAtomId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryWfsOrAtomStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliveryHarmonizedDataId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliveryHarmonizedDataStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliveryHarmonizedDataId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliveryHarmonizedDataId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliveryHarmonizedDataStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
             <div class="form-group">
-                @Html.LabelFor(model => model.InspireDeliverySpatialDataServiceId, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.InspireDeliverySpatialDataServiceStatus, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("InspireDeliverySpatialDataServiceId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.InspireDeliverySpatialDataServiceId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("InspireDeliverySpatialDataServiceStatus", null, htmlAttributes: new { @class = "form-control" })
                 </div>
             </div>
     
@@ -207,68 +198,13 @@
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Seoname, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Seoname, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Seoname, "", new { @class = "text-danger" })
-                </div>
-            </div>
+   
     
             <div class="form-group">
                 @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.SubmitterId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("SubmitterId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.SubmitterId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.OwnerId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("OwnerId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.OwnerId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.DateSubmitted, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DateSubmitted, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DateSubmitted, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Modified, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Modified, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Modified, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.StatusId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("StatusId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.StatusId, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.RegisterId, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("RegisterId", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.RegisterId, "", new { @class = "text-danger" })
                 </div>
             </div>
     

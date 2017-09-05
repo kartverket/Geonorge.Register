@@ -13,7 +13,7 @@ namespace Kartverket.Register.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201708310747486_AddInspireDataset"; }
+            get { return "201709050928505_AddInspireDataset"; }
         }
         
         string IMigrationMetadata.Source

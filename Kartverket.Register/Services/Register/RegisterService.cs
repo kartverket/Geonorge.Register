@@ -956,7 +956,30 @@ namespace Kartverket.Register.Services.Register
                 result.AddMissingTranslations();
                 return result;
             }
-            throw new NotImplementedException();
+        }
+
+        public Guid GetRegisterId(string parentRegisterName, string registerName)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegisterName))
+            {
+                var queryResults = from r in _dbContext.Registers
+                    where r.seoname == registerName &&
+                          r.parentRegister == null
+                    select r.systemId;
+
+                var result = queryResults.FirstOrDefault();
+                return result;
+            }
+            else
+            {
+                var queryResults = from r in _dbContext.Registers
+                    where r.seoname == registerName &&
+                          r.parentRegister.seoname == parentRegisterName
+                    select r.systemId;
+
+                var result = queryResults.FirstOrDefault();
+                return result;
+            }
         }
 
         public Models.Register SetStatus(Models.Register register, Models.Register originalRegister)
@@ -1065,8 +1088,19 @@ namespace Kartverket.Register.Services.Register
             return datasets;
         }
 
-        public Guid GetOrganizationIdByUserName() {
-            return GetOrganizationByUserName().systemId;
+        public Guid GetOrganizationIdByUserName()
+        {
+            var user = GetOrganizationByUserName();
+            return user?.systemId ?? GetOrganizationKartverket();
+        }
+
+        private Guid GetOrganizationKartverket()
+        {
+            var queryResults = from o in _dbContext.Organizations
+                where o.name == "Kartverket"
+                select o.systemId;
+
+            return queryResults.FirstOrDefault();
         }
     }
 }

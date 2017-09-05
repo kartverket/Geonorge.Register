@@ -87,7 +87,6 @@ namespace Kartverket.Register.Migrations
                 new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }
             );
 
-
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },
                 new accessType { accessLevel = 2, description = "Editor can create, edit or delete their owne items" },

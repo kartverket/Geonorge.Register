@@ -9,21 +9,22 @@ namespace Kartverket.Register.Models
         [Key]
         public Guid SystemId { get; set; }
 
+        [Required]
         [Display(Name = "Navn:")]
         public string Name { get; set; }
 
+        [Required]
         public string Seoname { get; set; }
 
         [Display(Name = "Beskrivelse:")]
         public string Description { get; set; }
 
-        [ForeignKey("Submitter")]
+        [ForeignKey("Submitter"), Required]
         public Guid SubmitterId { get; set; }
         [Display(Name = "Innsender:")]
         public virtual Organization Submitter { get; set; }
 
-        [ForeignKey("Owner")]
-        [Required]
+        [ForeignKey("Owner"), Required]
         public Guid OwnerId { get; set; }
         [Display(Name = "Eier:")]
         public virtual Organization Owner { get; set; }
@@ -36,15 +37,19 @@ namespace Kartverket.Register.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Modified { get; set; }
 
-        [ForeignKey("Status")]
-        public string StatusId { get; set; }
+        [ForeignKey("Status"), Required]
+        public string StatusId { get; set; } = "Submitted";
         [Display(Name = "Status:")]
         public virtual Status Status { get; set; }
 
-        [ForeignKey("Register")]
+        [ForeignKey("Register"), Required]
         public Guid RegisterId { get; set; }
         [Display(Name = "Register:")]
         public virtual Register Register { get; set; }
+
+        protected RegisterItemV2() {
+            SystemId = Guid.NewGuid();
+        }
 
         public string DetailPageUrl()
         {
@@ -55,5 +60,7 @@ namespace Kartverket.Register.Models
         {
             return Register.GetObjectUrl() + "/" + Owner.seoname;
         }
+
+        
     }
 }//end namespace Datamodell

@@ -1,10 +1,9 @@
-﻿using Kartverket.Register.Models;
-using System.Collections.Generic;
+﻿using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services
 {
     public interface IInspireDatasetService
     {
-        void CreateNewInspireDataset(InspireDataset inspireDataset, string parentregister, string registername);
+        void CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername);
     }
 }

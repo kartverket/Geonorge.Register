@@ -716,9 +716,9 @@
     <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.Designer.cs">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201708310747486_AddInspireDataset.cs" />
-    <Compile Include="Migrations\201708310747486_AddInspireDataset.Designer.cs">
-      <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.cs" />
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.Designer.cs">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -739,7 +739,7 @@
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
-    <Compile Include="Models\DeliveryStatus.cs" />
+    <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
@@ -766,6 +766,8 @@
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
+    <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalEdit.cs" />
@@ -791,6 +793,7 @@
     <Compile Include="Models\Version.cs" />
     <Compile Include="Models\ViewModels\MetadataItemViewModel.cs" />
     <Compile Include="Models\ViewModels\MunicipalDatasetsViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemV2VeiwModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />
@@ -809,10 +812,12 @@
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
+    <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IInspireDatasetService.cs" />
+    <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1603,8 +1608,8 @@
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708310747486_AddInspireDataset.resx">
-      <DependentUpon>201708310747486_AddInspireDataset.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709050928505_AddInspireDataset.resx">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

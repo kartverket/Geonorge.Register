@@ -8,15 +8,15 @@ namespace Kartverket.Register.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.DeliveryStatus",
+                "dbo.DatasetDeliveries",
                 c => new
                     {
-                        DeliveryStatusId = c.Guid(nullable: false),
+                        DatasetDeliveryId = c.Guid(nullable: false),
                         StatusId = c.String(maxLength: 128),
                         Note = c.String(),
                         AutoUpdate = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.DeliveryStatusId)
+                .PrimaryKey(t => t.DatasetDeliveryId)
                 .ForeignKey("dbo.DokDeliveryStatus", t => t.StatusId)
                 .Index(t => t.StatusId);
             
@@ -25,14 +25,14 @@ namespace Kartverket.Register.Migrations
                 c => new
                     {
                         SystemId = c.Guid(nullable: false),
-                        Name = c.String(),
-                        Seoname = c.String(),
+                        Name = c.String(nullable: false),
+                        Seoname = c.String(nullable: false),
                         Description = c.String(),
                         SubmitterId = c.Guid(nullable: false),
                         OwnerId = c.Guid(nullable: false),
                         DateSubmitted = c.DateTime(nullable: false),
                         Modified = c.DateTime(nullable: false),
-                        StatusId = c.String(maxLength: 128),
+                        StatusId = c.String(nullable: false, maxLength: 128),
                         RegisterId = c.Guid(nullable: false),
                         Uuid = c.String(),
                         Notes = c.String(),
@@ -60,21 +60,21 @@ namespace Kartverket.Register.Migrations
                         InspireDeliverySpatialDataServiceId = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.SystemId)
-                .ForeignKey("dbo.RegisterItems", t => t.SubmitterId, cascadeDelete: false)
-                .ForeignKey("dbo.RegisterItems", t => t.OwnerId, cascadeDelete: false)
+                .ForeignKey("dbo.RegisterItems", t => t.SubmitterId)
+                .ForeignKey("dbo.RegisterItems", t => t.OwnerId)
                 .ForeignKey("dbo.Status", t => t.StatusId)
                 .ForeignKey("dbo.Registers", t => t.RegisterId, cascadeDelete: true)
                 .ForeignKey("dbo.DOKThemes", t => t.ThemeGroupId)
                 .ForeignKey("dbo.DokStatus", t => t.DokStatusId)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryMetadataId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryMetadataServiceId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryDistributionId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryWmsId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryWfsId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryAtomFeedId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryWfsOrAtomId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliveryHarmonizedDataId, cascadeDelete: false)
-                .ForeignKey("dbo.DeliveryStatus", t => t.InspireDeliverySpatialDataServiceId, cascadeDelete: false)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryMetadataId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryMetadataServiceId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryDistributionId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryWmsId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryWfsId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryAtomFeedId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryWfsOrAtomId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliveryHarmonizedDataId)
+                .ForeignKey("dbo.DatasetDeliveries", t => t.InspireDeliverySpatialDataServiceId)
                 .Index(t => t.SubmitterId)
                 .Index(t => t.OwnerId)
                 .Index(t => t.StatusId)
@@ -95,22 +95,22 @@ namespace Kartverket.Register.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliverySpatialDataServiceId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryHarmonizedDataId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWfsOrAtomId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryAtomFeedId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWfsId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWmsId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryDistributionId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryMetadataServiceId", "dbo.DeliveryStatus");
-            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryMetadataId", "dbo.DeliveryStatus");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliverySpatialDataServiceId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryHarmonizedDataId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWfsOrAtomId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryAtomFeedId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWfsId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryWmsId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryDistributionId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryMetadataServiceId", "dbo.DatasetDeliveries");
+            DropForeignKey("dbo.InspireDatasets", "InspireDeliveryMetadataId", "dbo.DatasetDeliveries");
             DropForeignKey("dbo.InspireDatasets", "DokStatusId", "dbo.DokStatus");
             DropForeignKey("dbo.InspireDatasets", "ThemeGroupId", "dbo.DOKThemes");
             DropForeignKey("dbo.InspireDatasets", "RegisterId", "dbo.Registers");
             DropForeignKey("dbo.InspireDatasets", "StatusId", "dbo.Status");
             DropForeignKey("dbo.InspireDatasets", "OwnerId", "dbo.RegisterItems");
             DropForeignKey("dbo.InspireDatasets", "SubmitterId", "dbo.RegisterItems");
-            DropForeignKey("dbo.DeliveryStatus", "StatusId", "dbo.DokDeliveryStatus");
+            DropForeignKey("dbo.DatasetDeliveries", "StatusId", "dbo.DokDeliveryStatus");
             DropIndex("dbo.InspireDatasets", new[] { "InspireDeliverySpatialDataServiceId" });
             DropIndex("dbo.InspireDatasets", new[] { "InspireDeliveryHarmonizedDataId" });
             DropIndex("dbo.InspireDatasets", new[] { "InspireDeliveryWfsOrAtomId" });
@@ -126,9 +126,9 @@ namespace Kartverket.Register.Migrations
             DropIndex("dbo.InspireDatasets", new[] { "StatusId" });
             DropIndex("dbo.InspireDatasets", new[] { "OwnerId" });
             DropIndex("dbo.InspireDatasets", new[] { "SubmitterId" });
-            DropIndex("dbo.DeliveryStatus", new[] { "StatusId" });
+            DropIndex("dbo.DatasetDeliveries", new[] { "StatusId" });
             DropTable("dbo.InspireDatasets");
-            DropTable("dbo.DeliveryStatus");
+            DropTable("dbo.DatasetDeliveries");
         }
     }
 }

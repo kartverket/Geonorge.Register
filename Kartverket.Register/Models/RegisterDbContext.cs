@@ -42,6 +42,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
+        public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -113,7 +114,5 @@ namespace Kartverket.Register.Models
         {
             return base.SaveChanges();
         }
-
-        public System.Data.Entity.DbSet<Kartverket.Register.Models.DeliveryStatus> DeliveryStatus { get; set; }
     }
 }

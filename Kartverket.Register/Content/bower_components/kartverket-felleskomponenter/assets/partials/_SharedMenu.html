@@ -25,9 +25,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-2 navbar-right">
-                <div class="container-login" id="container-login">
-                </div>
+            <div class="navbar-right">
+                <div id="container-user-menu" class="container-user-menu"></div>
             </div>
         </div>
     </div>
@@ -87,26 +86,26 @@
                                         <li>
                                             <ul data-ng-repeat="it in item.SubMenuItem">
                                                 <li data-ng-class="item.length === 1 ? 'col-sm-12' :
-                                    item.length === 2 ? 'col-sm-6' :
-                                    item.length === 3 ? 'col-sm-4' : 'col-sm-4'">
+                                                item.length === 2 ? 'col-sm-6' :
+                                                item.length === 3 ? 'col-sm-4' : 'col-sm-4'">
 
-                                                    <a class="col-xs-12 show-loading-animation" data-loading-message="Henter innhold" href="{{it.Url}}">{{it.Name}}</a>
-                                                    <ul class="col-xs-12" ng-if="it.HasChildren">
-                                                        <li data-ng-repeat="i in it.SubMenuItem">
-                                                            <a class="col-xs-12 show-loading-animation" data-loading-message="Henter innhold" href="{{i.Url}}">{{i.Name}}</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                                                <a class="col-xs-12 show-loading-animation" data-loading-message="Henter innhold" href="{{it.Url}}">{{it.Name}}</a>
+                                                <ul class="col-xs-12" ng-if="it.HasChildren">
+                                                    <li data-ng-repeat="i in it.SubMenuItem">
+                                                        <a class="col-xs-12 show-loading-animation" data-loading-message="Henter innhold" href="{{i.Url}}">{{i.Name}}</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-            </div>
+                </div>
+            </nav>
         </div>
     </div>
+</div>
 </div>
 <div class="menu-separator"></div>

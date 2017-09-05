@@ -199,17 +199,17 @@ namespace Kartverket.Register.Models.Api
                 if (d.dokStatusDateAccepted != null) dokStatusDateAccepted = d.dokStatusDateAccepted;
                 if (d.Kandidatdato != null) Kandidatdato = d.Kandidatdato;
                 if (d.DatasetType != null) DatasetType = d.DatasetType;
-                dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted :  d.dokDeliveryMetadataStatus.description;
-                dokDeliveryProductSheetStatus = (d.restricted != null && d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
-                dokDeliveryPresentationRulesStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryPresentationRulesStatus.description;
+                dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted :  d.dokDeliveryMetadataStatus.description;
+                dokDeliveryProductSheetStatus = (d.restricted != null && d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
+                dokDeliveryPresentationRulesStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryPresentationRulesStatus.description;
 
-                dokDeliveryProductSpecificationStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryProductSpecificationStatus.description;
-                dokDeliveryWmsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWmsStatus.description;
-                dokDeliveryWfsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryWfsStatus.description;
-                dokDeliverySosiRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliverySosiRequirementsStatus.description;
-                dokDeliveryDistributionStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryDistributionStatus.description;
-                dokDeliveryGmlRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryGmlRequirementsStatus.description;
-                dokDeliveryAtomFeedStatus = (d.restricted.HasValue && d.restricted == true) ? UI.DOK_Delivery_Restricted : d.dokDeliveryAtomFeedStatus.description;
+                dokDeliveryProductSpecificationStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryProductSpecificationStatus.description;
+                dokDeliveryWmsStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryWmsStatus.description;
+                dokDeliveryWfsStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryWfsStatus.description;
+                dokDeliverySosiRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliverySosiRequirementsStatus.description;
+                dokDeliveryDistributionStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryDistributionStatus.description;
+                dokDeliveryGmlRequirementsStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryGmlRequirementsStatus.description;
+                dokDeliveryAtomFeedStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryAtomFeedStatus.description;
 
                 MetadataUrl = d.MetadataUrl;
                 ConfirmedDok = "NEI";

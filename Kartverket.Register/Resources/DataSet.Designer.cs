@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UI {
+    public class DataSet {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UI() {
+        internal DataSet() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.UI", typeof(UI).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.DataSet", typeof(DataSet).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,51 +57,6 @@ namespace Resources {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Geonorge Register.
-        /// </summary>
-        public static string AppPageTitle {
-            get {
-                return ResourceManager.GetString("AppPageTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beskrivelse engelsk.
-        /// </summary>
-        public static string Beskrivelse_Engelsk {
-            get {
-                return ResourceManager.GetString("Beskrivelse_Engelsk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Foreslå ny organisasjon.
-        /// </summary>
-        public static string CreateNew {
-            get {
-                return ResourceManager.GetString("CreateNew", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Slett.
-        /// </summary>
-        public static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vis.
-        /// </summary>
-        public static string Details {
-            get {
-                return ResourceManager.GetString("Details", resourceCulture);
             }
         }
         
@@ -345,78 +300,6 @@ namespace Resources {
         public static string DOK_Tittel {
             get {
                 return ResourceManager.GetString("DOK_Tittel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rediger.
-        /// </summary>
-        public static string Edit {
-            get {
-                return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Beskrivelse av krav engelsk.
-        /// </summary>
-        public static string inspireRequirementDescription_Engelsk {
-            get {
-                return ResourceManager.GetString("inspireRequirementDescription_Engelsk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Navn engelsk.
-        /// </summary>
-        public static string Navn_Engelsk {
-            get {
-                return ResourceManager.GetString("Navn_Engelsk", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Organisasjon.
-        /// </summary>
-        public static string Organization {
-            get {
-                return ResourceManager.GetString("Organization", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Liten logo.
-        /// </summary>
-        public static string Organization_Logo {
-            get {
-                return ResourceManager.GetString("Organization_Logo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Organisasjonsnavn.
-        /// </summary>
-        public static string Organization_Name {
-            get {
-                return ResourceManager.GetString("Organization_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Organisasjonsnummer.
-        /// </summary>
-        public static string Organization_Number {
-            get {
-                return ResourceManager.GetString("Organization_Number", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Organisasjoner.
-        /// </summary>
-        public static string Organizations {
-            get {
-                return ResourceManager.GetString("Organizations", resourceCulture);
             }
         }
     }

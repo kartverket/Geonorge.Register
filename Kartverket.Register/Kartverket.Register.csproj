@@ -791,15 +791,45 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\UI.en.Designer.cs">
-      <DependentUpon>UI.en.resx</DependentUpon>
+    <Compile Include="Resources\DataSet.Designer.cs">
+      <DependentUpon>DataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\UI.Designer.cs">
+    <Compile Include="Resources\EPSGs.Designer.cs">
+      <DependentUpon>EPSGs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UI.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\DataSet.en1.Designer.cs">
+      <DependentUpon>DataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Organizations.Designer.cs">
+      <DependentUpon>Organizations.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\EPSGs.en.Designer.cs">
+      <DependentUpon>EPSGs.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Organizations.en.Designer.cs">
+      <DependentUpon>Organizations.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Shared.en.Designer.cs">
+      <DependentUpon>Shared.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Shared.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Shared.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccessControlService.cs" />
     <Compile Include="Services\CoverageService.cs" />
@@ -1592,15 +1622,51 @@
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UI.en.resx">
+    <EmbeddedResource Include="Resources\DataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UI.en.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UI.resx">
+    <EmbeddedResource Include="Resources\DataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UI.Designer.cs</LastGenOutput>
+      <LastGenOutput>DataSet.en1.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EPSGs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EPSGs.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EPSGs.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EPSGs.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Organizations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Organizations.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Organizations.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Organizations.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shared.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shared.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>

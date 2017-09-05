@@ -137,11 +137,11 @@
                         <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">Dekning</a></th>
-                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@UI.DOK_Kommentar">Merknad</span></th>
+                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">Bekreft</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">Dekning</a></th>
+                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">Merknad</span></th>
                                     <th class="text-center">Slett</th>
                                 </tr>
                             </thead>
@@ -175,7 +175,7 @@
                                                 <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>
                                         </td>
-                                        <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
+                                        <td style="text-align: center" title="@DataSet.DOK_Coverage_Municipality">
                                             @if (Model[i].Coverage)
                                             {
                                                 <span>JA</span>
@@ -244,8 +244,8 @@
                         <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
+                                    <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Regionplanlegging">Region- plan</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens samfunnsdel">Kommune-planens samfunns- del</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens arealdel">Kommune-planens areal- del</a></th>

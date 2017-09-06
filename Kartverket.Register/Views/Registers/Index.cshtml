@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Shared.Register_Heading
+                @Shared.Heading
             </h1>
         </div>
         <div class="col-sm-12">
@@ -23,21 +23,21 @@
         <table class="table table-responsive">
             <tr>
                 <th>
-                    @Shared.Register_Name
+                    @Registers.Name
                 </th>
                 <th>
-                    @Shared.Register_Content
+                    @Registers.Content
                 </th>
                 <th>
-                    @Shared.Register_Owner
+                    @Registers.Owner
                 </th>
             </tr>
             <tr>
                 <td>
-                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@Shared.Register_Objektregisteret</a></p>
+                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Objektregisteret</a></p>
                 </td>
                 <td>
-                    @Shared.Register_ObjektregisteretContent
+                    @Registers.ObjektregisteretContent
                 </td>
                 <td>
 
@@ -46,30 +46,30 @@
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/kartografi" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@Shared.Register_Kartografi</a></p>
+                    <p><a href="/register/kartografi" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Kartografi</a></p>
                 </td>
                 <td>
-                    @Shared.Register_KartografiContent
+                    @Registers.KartografiContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/symbol" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">Symbol</a></p>
+                    <p><a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Symbol</a></p>
                 </td>
                 <td>
-                    @Shared.Register_SymbolContent
+                    @Registers.SymbolContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
+                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
                 </td>
                 <td>
-                    @Shared.Register_SymbolContent
+                    @Registers.SymbolContent
                 </td>
                 <td>Kartverket</td>
             </tr>
@@ -79,7 +79,7 @@
                 {
                     <tr>
                         <td>
-                            <p><a href="/register/@item.seoname" data-loading-message="@Shared.Register_LoadingMessage" class="show-loading-animation">@item.name</a></p>
+                            <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.name</a></p>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.description)
@@ -88,7 +88,7 @@
                         <td title="Eier: @item.owner.name">
                             @if (item.owner == null)
                             {
-                                <span>@Shared.Register_NotSet</span>
+                                <span>@Registers.NotSet</span>
                             }
                             else
                             {

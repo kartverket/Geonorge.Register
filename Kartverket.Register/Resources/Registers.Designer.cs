@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Shared {
+    public class Registers {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Shared() {
+        internal Registers() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.Shared", typeof(Shared).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.Registers", typeof(Registers).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,110 +61,101 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Geonorge Register.
+        ///   Looks up a localized string similar to Innhold.
         /// </summary>
-        public static string AppPageTitle {
+        public static string Content {
             get {
-                return ResourceManager.GetString("AppPageTitle", resourceCulture);
+                return ResourceManager.GetString("Content", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beskrivelse engelsk.
+        ///   Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
         /// </summary>
-        public static string Beskrivelse_Engelsk {
+        public static string DOKCoverageContent {
             get {
-                return ResourceManager.GetString("Beskrivelse_Engelsk", resourceCulture);
+                return ResourceManager.GetString("DOKCoverageContent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slett.
+        ///   Looks up a localized string similar to Kartografi.
         /// </summary>
-        public static string Delete {
+        public static string Kartografi {
             get {
-                return ResourceManager.GetString("Delete", resourceCulture);
+                return ResourceManager.GetString("Kartografi", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vis.
+        ///   Looks up a localized string similar to Registeret inneholder datasett som har registrert digital kartografi.
         /// </summary>
-        public static string Details {
+        public static string KartografiContent {
             get {
-                return ResourceManager.GetString("Details", resourceCulture);
+                return ResourceManager.GetString("KartografiContent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rediger.
+        ///   Looks up a localized string similar to Henter register.
         /// </summary>
-        public static string Edit {
+        public static string LoadingMessage {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
+                return ResourceManager.GetString("LoadingMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrene.
+        ///   Looks up a localized string similar to Navn.
         /// </summary>
-        public static string Heading {
+        public static string Name {
             get {
-                return ResourceManager.GetString("Heading", resourceCulture);
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Navn engelsk.
+        ///   Looks up a localized string similar to Ikke angitt.
         /// </summary>
-        public static string Navn_Engelsk {
+        public static string NotSet {
             get {
-                return ResourceManager.GetString("Navn_Engelsk", resourceCulture);
+                return ResourceManager.GetString("NotSet", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alle registre.
+        ///   Looks up a localized string similar to Objektregisteret.
         /// </summary>
-        public static string Search_AllRegisters {
+        public static string Objektregisteret {
             get {
-                return ResourceManager.GetString("Search_AllRegisters", resourceCulture);
+                return ResourceManager.GetString("Objektregisteret", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Søk.
+        ///   Looks up a localized string similar to Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes..
         /// </summary>
-        public static string Search_Button {
+        public static string ObjektregisteretContent {
             get {
-                return ResourceManager.GetString("Search_Button", resourceCulture);
+                return ResourceManager.GetString("ObjektregisteretContent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Søk i register.
+        ///   Looks up a localized string similar to Eier.
         /// </summary>
-        public static string Search_Heading {
+        public static string Owner {
             get {
-                return ResourceManager.GetString("Search_Heading", resourceCulture);
+                return ResourceManager.GetString("Owner", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Henter søkeresultater.
+        ///   Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
         /// </summary>
-        public static string Search_LoadingMessage {
+        public static string SymbolContent {
             get {
-                return ResourceManager.GetString("Search_LoadingMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Søk etter registerdata.
-        /// </summary>
-        public static string Search_Placeholder {
-            get {
-                return ResourceManager.GetString("Search_Placeholder", resourceCulture);
+                return ResourceManager.GetString("SymbolContent", resourceCulture);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿@using Kartverket.Register.Helpers
-@model IEnumerable<Kartverket.Register.Models.Register>
+@model Kartverket.Register.Models.ViewModels.RegisterViewModel
 
 @{
     ViewBag.Title = "Registrene";
@@ -73,26 +73,26 @@
                 </td>
                 <td>Kartverket</td>
             </tr>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
-                if (item.parentRegisterId == null)
+                if (string.IsNullOrEmpty(item.ParentRegisterId))
                 {
                     <tr>
                         <td>
-                            <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.name</a></p>
+                            <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a></p>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.description)
+                            @Html.DisplayFor(modelItem => item.Description)
                         </td>
 
-                        <td title="Eier: @item.owner.name">
-                            @if (item.owner == null)
+                        <td title="Eier: @item.Owner">
+                            @if (string.IsNullOrEmpty(item.Owner))
                             {
                                 <span>@Registers.NotSet</span>
                             }
                             else
                             {
-                                @Html.DisplayFor(modelItem => item.owner.name)
+                                @Html.DisplayFor(modelItem => item.Owner)
                             }
                         </td>
 

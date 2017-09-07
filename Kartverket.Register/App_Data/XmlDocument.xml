@@ -1192,9 +1192,24 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.Registers.AccessLabel">
+            <summary>
+              Looks up a localized string similar to Tilgang til registeret.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.AccessText">
+            <summary>
+              Looks up a localized string similar to Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Content">
             <summary>
               Looks up a localized string similar to Innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Description">
+            <summary>
+              Looks up a localized string similar to Beskrivelse.
             </summary>
         </member>
         <member name="P:Resources.Registers.DOKCoverageContent">
@@ -1263,9 +1278,19 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Add">
+            <summary>
+              Looks up a localized string similar to Legg til.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.AppPageTitle">
             <summary>
               Looks up a localized string similar to Geonorge Register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Back">
+            <summary>
+              Looks up a localized string similar to Tilbake.
             </summary>
         </member>
         <member name="P:Resources.Shared.Beskrivelse_Engelsk">
@@ -1296,6 +1321,11 @@
         <member name="P:Resources.Shared.Navn_Engelsk">
             <summary>
               Looks up a localized string similar to Navn engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Save">
+            <summary>
+              Looks up a localized string similar to Lagre.
             </summary>
         </member>
         <member name="P:Resources.Shared.Search_AllRegisters">

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessLabel" xml:space="preserve">
+    <value>Tilgang til registeret</value>
+  </data>
+  <data name="AccessText" xml:space="preserve">
+    <value>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang</value>
+  </data>
   <data name="Content" xml:space="preserve">
     <value>Innhold</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beskrivelse</value>
   </data>
   <data name="DOKCoverageContent" xml:space="preserve">
     <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>

@@ -9,7 +9,7 @@
 
     @section breadcrumb {
         <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
-        <li>Rediger liste</li>
+        <li>@Shared.Edit liste</li>
     }
     @section Scripts {
         <script>
@@ -108,7 +108,7 @@
 
     @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
     {
-        <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
+        <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
         <div class="clearfix"></div>
 
         <div class="row">
@@ -148,7 +148,7 @@
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">Bekreft</a></th>
                                     <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">Dekning</a></th>
                                     <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">Merknad</span></th>
-                                    <th class="text-center">Slett</th>
+                                    <th class="text-center">@Shared.Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -348,7 +348,7 @@
                                                                 @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">Lagre</button>
+                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">@Shared.Save</button>
                                                             </div>
                                                         </div>
 
@@ -375,11 +375,11 @@
 
         <div class="row">
             <div class="col-md-2">
-                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">@Shared.Back</a>
             </div>
             <div class="col-sm-10 text-right">
                 <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
-                <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
+                <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
             </div>
         </div>
     }

@@ -52,7 +52,7 @@
                         {
                             if (Model.statusId != "Retired" && Model.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
+                                <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="@Shared.Edit @Model.name">Rediger</a>
                             }
                             <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">Slett</a>
                         }

@@ -122,11 +122,11 @@
             <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
             @if (Model.parentRegister.parentRegister != null)
             {
-                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">@Shared.Back</a>
             }
             else
             {
-                <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
+                <a href="/register/@Model.parentRegister.seoname/">@Shared.Back</a>
             }
         </div>
     </div>

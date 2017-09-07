@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccessLabel" xml:space="preserve">
+    <value>Access to the registry</value>
+  </data>
+  <data name="AccessText" xml:space="preserve">
+    <value>Applies to access to suggest, change and delete own registry entries. Admin always has full access</value>
+  </data>
   <data name="Content" xml:space="preserve">
     <value>Content</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
   </data>
   <data name="DOKCoverageContent" xml:space="preserve">
     <value>The coverage map shows which data sets in the public map of the map are covered by the various municipalities.</value>

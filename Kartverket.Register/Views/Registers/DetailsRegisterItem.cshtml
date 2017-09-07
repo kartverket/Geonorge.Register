@@ -292,13 +292,13 @@
             {
                 if (HtmlHelperExtensions.AccessEdit(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         }
 
-        <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
+        <a class="hidden-print" href="@Model.register.GetObjectUrl()">@Shared.Back</a>
 
     </div>
 </div>

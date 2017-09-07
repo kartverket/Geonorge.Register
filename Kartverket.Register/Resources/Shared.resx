@@ -153,4 +153,13 @@
   <data name="Heading" xml:space="preserve">
     <value>Registrene</value>
   </data>
+  <data name="Add" xml:space="preserve">
+    <value>Legg til</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Tilbake</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Lagre</value>
+  </data>
 </root>

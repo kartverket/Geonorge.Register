@@ -73,7 +73,7 @@
                     <tr>
                         <td width="90%" id="title-@Model.SearchResult[i].Uuid" class="@( itemSelected  ? "text-muted" : "" )">@Model.SearchResult[i].Title</td>
                         <td width="10%" class="text-center">
-                            <input type="submit" value="Legg til" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
+                            <input type="submit" value="@Shared.Add" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
                         </td>
                     </tr>
                 }
@@ -118,13 +118,13 @@
 </div>
 <div class="row">
     <div class="col-lg-2">
-        <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
+        <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">@Shared.Back</a>
     </div>
     <div class="col-lg-10 text-right">
     @if (Model.SelectedList != null)
     {
         <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">Avbryt</a>
-        <input type="submit" value="Lagre" class="btn btn-primary" onclick="$('#save').attr('value', 'True');" />
+        <input type="submit" value="@Shared.Save" class="btn btn-primary" onclick="$('#save').attr('value', 'True');" />
     }
     </div>
 </div>

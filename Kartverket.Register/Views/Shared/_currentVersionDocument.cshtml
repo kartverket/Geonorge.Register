@@ -101,9 +101,9 @@
                         {
                             if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">Rediger</a>
+                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">@Shared.Edit</a>
                             }
-                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">Slett</a>
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">@Shared.Delete</a>
                         }
                     }
                 }

@@ -85,7 +85,7 @@
                             @Html.DisplayFor(modelItem => item.Description)
                         </td>
 
-                        <td title="Eier: @item.Owner">
+                        <td title="@Registers.Owner: @item.Owner">
                             @if (string.IsNullOrEmpty(item.Owner))
                             {
                                 <span>@Registers.NotSet</span>

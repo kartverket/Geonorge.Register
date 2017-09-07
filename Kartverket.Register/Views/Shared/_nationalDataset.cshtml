@@ -164,7 +164,7 @@
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata">
         <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
-        <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
+        <div class="col-md-2">@OrderByLink(Registers.Owner, "datasetOwner")</div>
         <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
             @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
@@ -245,7 +245,7 @@
                     </div>
 
                     <a class="beskrivelse-print visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                        <p>Eier: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
+                        <p>@Registers.Owner: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
                     </a>
 
                     <br class="hidden-print" />

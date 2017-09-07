@@ -1109,6 +1109,27 @@
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
             </summary>
         </member>
+        <member name="T:Resources.CodelistValues">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.CodeValue">
+            <summary>
+              Looks up a localized string similar to Kodeverdi.
+            </summary>
+        </member>
         <member name="T:Resources.EPSGs">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -1306,6 +1327,11 @@
         <member name="P:Resources.Shared.Details">
             <summary>
               Looks up a localized string similar to Vis.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Download">
+            <summary>
+              Looks up a localized string similar to Last ned.
             </summary>
         </member>
         <member name="P:Resources.Shared.Edit">

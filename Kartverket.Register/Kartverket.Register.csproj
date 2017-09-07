@@ -796,6 +796,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\CodelistValues.Designer.cs">
+      <DependentUpon>CodelistValues.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\EPSGs.Designer.cs">
       <DependentUpon>EPSGs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -803,6 +808,11 @@
     </Compile>
     <Compile Include="Resources\DataSet.en1.Designer.cs">
       <DependentUpon>DataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CodelistValues.en.Designer.cs">
+      <DependentUpon>CodelistValues.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1645,6 +1655,18 @@
     <EmbeddedResource Include="Resources\DataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DataSet.en1.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodelistValues.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodelistValues.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodelistValues.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodelistValues.en.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>

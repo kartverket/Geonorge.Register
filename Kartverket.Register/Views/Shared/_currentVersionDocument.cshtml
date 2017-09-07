@@ -52,13 +52,13 @@
             @if (item.documentUrl.Contains("ikke angitt"))
             {
                 <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
             else
             {
                 <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
 

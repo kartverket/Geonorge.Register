@@ -13,6 +13,7 @@ using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -23,7 +24,7 @@ namespace Kartverket.Register.Models
             this.Translations = new TranslationCollection<CodelistValueTranslation>();
         }
         public const string DataDirectory = "codelistImport/";
-        [Display(Name = "Kodeverdi")]        
+        [Display(Name = "CodeValue", ResourceType = typeof(CodelistValues))]
         public string value { get; set; }
 
         [ForeignKey("broaderItem")]

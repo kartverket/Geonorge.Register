@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////
 
 using Kartverket.Register.Helpers;
+using Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,10 +22,10 @@ namespace Kartverket.Register.Models
         public Guid systemId { get; set; }
         //public virtual ICollection<Version> replaces { get; set; }
 
-        [Display(Name = "Navn:")]
+        [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string name { get; set; }
 
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string description { get; set; }
 
         [ForeignKey("submitter")]

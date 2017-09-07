@@ -100,7 +100,7 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.owner, "Eier", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.owner, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
@@ -121,8 +121,8 @@
             <div class="form-group">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    @Html.LabelFor(model => model.accessId, "Tilgang til registeret")
-                    <br /><small>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang </small> <br /><br />
+                    @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                    <br /><small>@Registers.AccessText </small> <br /><br />
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5">

@@ -63,9 +63,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Beskrivelse av krav engelsk.
         /// </summary>
-        public static string inspireRequirementDescription_Engelsk1 {
+        public static string InspireRequirementDescription_Engelsk {
             get {
-                return ResourceManager.GetString("inspireRequirementDescription_Engelsk1", resourceCulture);
+                return ResourceManager.GetString("InspireRequirementDescription_Engelsk", resourceCulture);
             }
         }
     }

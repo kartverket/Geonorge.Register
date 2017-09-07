@@ -1125,7 +1125,7 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:Resources.EPSGs.inspireRequirementDescription_Engelsk1">
+        <member name="P:Resources.EPSGs.InspireRequirementDescription_Engelsk">
             <summary>
               Looks up a localized string similar to Beskrivelse av krav engelsk.
             </summary>

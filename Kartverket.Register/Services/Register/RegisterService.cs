@@ -244,7 +244,7 @@ namespace Kartverket.Register.Services.Register
                     }
                 }
 
-                return "deficient";
+                return "useable";
 
             }
             catch (Exception ex)

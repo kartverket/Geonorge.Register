@@ -93,7 +93,7 @@
             @if (owner != null)
             {
                 <div class="row">
-                    <div class="col-md-3">Eier:</div><div class="col-md-9"> @owner</div>
+                    <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @owner</div>
                 </div>
             }
             @if (dataset.DatasetType != null)
@@ -210,12 +210,12 @@
                 { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
 
                 @if (Model.register.containedItemClass == "NameSpace")
-                { <span>Eier: @Model.submitter.name</span><br>}
+                { <span>@Registers.Owner: @Model.submitter.name</span><br>}
                 else
                 {<span>Innsender: @Model.submitter.name</span><br>}
 
                 @if (owner != null)
-                { <span>Eier: @owner</span><br />}
+                { <span>@Registers.Owner: @owner</span><br />}
 
                 <span>Versjons ID @Model.versionNumber</span><br>
                 @if (Model.versionName != null)
@@ -292,13 +292,13 @@
             {
                 if (HtmlHelperExtensions.AccessEdit(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         }
 
-        <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
+        <a class="hidden-print" href="@Model.register.GetObjectUrl()">@Shared.Back</a>
 
     </div>
 </div>

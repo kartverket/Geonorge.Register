@@ -9,7 +9,7 @@ namespace Kartverket.Register.Models.Translations
     {
         public static readonly Dictionary<string, string> Languages = new Dictionary<string, string>()
         {
-            {"en-GB", "English - United Kingdom"}
+            {"en", "English"}
         };
     }
 }

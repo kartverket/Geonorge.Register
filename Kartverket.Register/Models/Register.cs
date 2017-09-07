@@ -15,6 +15,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
 using System.Globalization;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -33,13 +34,14 @@ namespace Kartverket.Register.Models
         public virtual ICollection<Version> replaces { get; set; }
         [ForeignKey("owner")]
         public Guid? ownerId { get; set; }
+        [Display(Name = "Owner", ResourceType = typeof(Registers))]
         public virtual Organization owner { get; set; }
         [ForeignKey("manager")]
         public Guid? managerId { get; set; }
         public virtual Organization manager { get; set; }
-        [DisplayName("Navn")]
+        [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string name { get; set; }
-        [Display(Name = "Beskrivelse")]
+        [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string description { get; set; }
         [ForeignKey("status")]
         public string statusId { get; set; }

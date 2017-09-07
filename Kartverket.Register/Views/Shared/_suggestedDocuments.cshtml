@@ -15,7 +15,7 @@
                     Tittel
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Eier
+                    @Registers.Owner
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Utgave
@@ -34,7 +34,7 @@
                     <td>
                         <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
                     </td>
-                    <td title="Eier: @item.documentowner.name">
+                    <td title="@Registers.Owner: @item.documentowner.name">
                         @Html.DisplayFor(modelItem => item.documentowner.name)
                     </td>
                     <td title="Utgave: @item.versionName">

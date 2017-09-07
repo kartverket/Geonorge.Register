@@ -17,29 +17,29 @@
         if (restricted.HasValue && restricted.Value == true && type != "metadata")
         {
             statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
-            title = UI.DOK_Delivery_Restricted;
+            title = DataSet.DOK_Delivery_Restricted;
         }
         else if (!string.IsNullOrEmpty(status))
         {
             if (status == "notset")
             {
                 statusSymbol = symbolNotSet;
-                title = UI.DOK_Delivery_Status_NotSet;
+                title = DataSet.DOK_Delivery_Status_NotSet;
             }
             else if (status == "deficient")
             {
                 statusSymbol = symbolDeficient;
-                title = UI.DOK_Delivery_Status_Deficient;
+                title = DataSet.DOK_Delivery_Status_Deficient;
             }
             else if (status == "useable")
             {
                 statusSymbol = symbolUseable;
-                title = UI.DOK_Delivery_Status_Useable;
+                title = DataSet.DOK_Delivery_Status_Useable;
             }
             else if (status == "good")
             {
                 statusSymbol = symbolGood;
-                title = UI.DOK_Delivery_Status_Good;
+                title = DataSet.DOK_Delivery_Status_Good;
             }
         }
 
@@ -47,25 +47,25 @@
 
 
         if (type.Contains("metadata"))
-            label = UI.DOK_Delivery_Metadata;
+            label = DataSet.DOK_Delivery_Metadata;
         else if (type.Contains("dokDeliveryProductSheetStatus"))
-            label = UI.DOK_Delivery_ProductSheet;
+            label = DataSet.DOK_Delivery_ProductSheet;
         else if (type.Contains("dokDeliveryPresentationRulesStatus"))
-            label = UI.DOK_Delivery_PresentationRules;
+            label = DataSet.DOK_Delivery_PresentationRules;
         else if (type.Contains("dokDeliveryProductSpecificationStatus"))
-            label = UI.DOK_Delivery_ProductSpesification;
+            label = DataSet.DOK_Delivery_ProductSpesification;
         else if (type.Contains("dokDeliveryWmsStatus"))
-            label = UI.DOK_Delivery_Wms;
+            label = DataSet.DOK_Delivery_Wms;
         else if (type.Contains("dokDeliveryWfsStatus"))
-            label = UI.DOK_Delivery_Wfs;
+            label = DataSet.DOK_Delivery_Wfs;
         else if (type.Contains("dokDeliverySosiRequirementsStatus"))
-            label = UI.DOK_Delivery_SosiRequirements;
+            label = DataSet.DOK_Delivery_SosiRequirements;
         else if (type.Contains("dokDeliveryDistributionStatus"))
-            label = UI.DOK_Delivery_Distribution;
+            label = DataSet.DOK_Delivery_Distribution;
         else if (type.Contains("dokDeliveryGmlRequirementsStatus"))
-            label = UI.DOK_Delivery_GmlRequirements;
+            label = DataSet.DOK_Delivery_GmlRequirements;
         else if (type.Contains("dokDeliveryAtomFeedStatus"))
-            label = UI.DOK_Delivery_AtomFeed;
+            label = DataSet.DOK_Delivery_AtomFeed;
 
         if (!string.IsNullOrEmpty(label))
             title = label + ": " + title;
@@ -94,13 +94,13 @@
         if (sortingSelected == defaultSort)
         {
             sortingClass = "sorted-asc";
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
             sortingParam = defaultSort + "_desc";
         }
         else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
         {
             sortingClass = "sorted-desc";
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
             sortingParam = defaultSort;
         }
         else
@@ -117,33 +117,33 @@
         var text = Request.QueryString["text"];
 
         if (sortingParam.Contains("title"))
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
         else if (sortingParam.Contains("datasetOwner"))
-            sortTitle = UI.DOK_Delivery_Owner;
+            sortTitle = DataSet.DOK_Delivery_Owner;
         else if (sortingParam.Contains("theme"))
-            sortTitle = UI.DOK_Delivery_Theme;
+            sortTitle = DataSet.DOK_Delivery_Theme;
         else if (sortingParam.Contains("dokDeliveryMetadataStatus"))
-            sortTitle = UI.DOK_Delivery_Metadata;
+            sortTitle = DataSet.DOK_Delivery_Metadata;
         else if (sortingParam.Contains("dokDeliveryProductSheetStatus"))
-            sortTitle = UI.DOK_Delivery_ProductSheet;
+            sortTitle = DataSet.DOK_Delivery_ProductSheet;
         else if (sortingParam.Contains("dokDeliveryPresentationRulesStatus"))
-            sortTitle = UI.DOK_Delivery_PresentationRules;
+            sortTitle = DataSet.DOK_Delivery_PresentationRules;
         else if (sortingParam.Contains("dokDeliveryProductSpecificationStatus"))
-            sortTitle = UI.DOK_Delivery_ProductSpesification;
+            sortTitle = DataSet.DOK_Delivery_ProductSpesification;
         else if (sortingParam.Contains("dokDeliveryWmsStatus"))
-            sortTitle = UI.DOK_Delivery_Wms;
+            sortTitle = DataSet.DOK_Delivery_Wms;
         else if (sortingParam.Contains("dokDeliveryWfsStatus"))
-            sortTitle = UI.DOK_Delivery_Wfs;
+            sortTitle = DataSet.DOK_Delivery_Wfs;
         else if (sortingParam.Contains("dokDeliverySosiRequirementsStatus"))
-            sortTitle = UI.DOK_Delivery_SosiRequirements;
+            sortTitle = DataSet.DOK_Delivery_SosiRequirements;
         else if (sortingParam.Contains("dokDeliveryDistributionStatus"))
-            sortTitle = UI.DOK_Delivery_Distribution;
+            sortTitle = DataSet.DOK_Delivery_Distribution;
         else if (sortingParam.Contains("dokDeliveryGmlRequirementsStatus"))
-            sortTitle = UI.DOK_Delivery_GmlRequirements;
+            sortTitle = DataSet.DOK_Delivery_GmlRequirements;
         else if (sortingParam.Contains("dokDeliveryAtomFeedStatus"))
-            sortTitle = UI.DOK_Delivery_AtomFeed;
+            sortTitle = DataSet.DOK_Delivery_AtomFeed;
         else if (sortingParam.Contains("dokStatus"))
-            sortTitle = UI.DOK_Delivery_Status;
+            sortTitle = DataSet.DOK_Delivery_Status;
 
 
         var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
@@ -241,7 +241,7 @@
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
                     <a href="@item.DetailPageUrl()">
-                        <img src="@item.DatasetThumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.Name" />
+                        <img src="@item.DatasetThumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.Name"/>
                     </a>
                 </div>
                 <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
@@ -262,7 +262,7 @@
                         <p>Eier: @Html.DisplayFor(modelItem => item.Owner.name)</p>
                     </a>
 
-                    <br class="hidden-print" />
+                    <br class="hidden-print"/>
                     <div class="hidden-print">
                         <p>
                             @item.GetDescriptionAsSubstring();
@@ -272,8 +272,8 @@
                     <p class="visible-print">@item.Description</p>
                 </div>
                 <div class="col-information col-xs-8 col-sm-5 col-md-5 col-lg-5">
-                    <ul style="list-style-type:none;">
-                        @if (item.DokStatusId!= null)
+                    <ul style="list-style-type: none;">
+                        @if (item.DokStatusId != null)
                         {
                             <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.DokStatus.description <i class="statusIcon-@item.DokStatusId"></i></li>
                         }
@@ -299,6 +299,6 @@
                 </div>
             </div>
         </div>
-        <hr />
+        <hr/>
     }
 </div>

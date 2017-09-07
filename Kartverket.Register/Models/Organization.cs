@@ -24,10 +24,10 @@ namespace Kartverket.Register.Models
         // logos will be stored in this directory
         public const string DataDirectory = "organizations/";
 
-        [Display(Name = "Organization_Number", ResourceType = typeof(UI))]
+        [Display(Name = "Organization_Number", ResourceType = typeof(Organizations))]
         public string number { get; set; }
 
-        [Display(Name = "Organization_Logo", ResourceType = typeof(UI))]
+        [Display(Name = "Organization_Logo", ResourceType = typeof(Organizations))]
         public string logoFilename { get; set; }
 
         [Display(Name = "Stor logo")]

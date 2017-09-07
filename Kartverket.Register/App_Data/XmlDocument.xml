@@ -764,6 +764,23 @@
             QueryName = "register-DOK-coverage".
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.IsRighToLeft">
+            <summary>
+            Returns true if the language is a right-to-left language. Otherwise, false.
+            </summary>
+        </member>
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.IsNorwegian">
+            <summary>
+            Returns true if current language is norwegian. Otherwise, false.
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Kartverket.Register.Helpers.CultureHelper.GetImplementedCulture(System.String)" -->
+        <member name="M:Kartverket.Register.Helpers.CultureHelper.GetDefaultCulture">
+            <summary>
+            Returns default culture name which is the first name decalared (e.g. en-US)
+            </summary>
+            <returns></returns>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>
             The name of the facet field
@@ -941,220 +958,425 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
-        <member name="T:Resources.UI">
+        <member name="T:Resources.DataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
-        <member name="P:Resources.UI.ResourceManager">
+        <member name="P:Resources.DataSet.ResourceManager">
             <summary>
               Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
-        <member name="P:Resources.UI.Culture">
+        <member name="P:Resources.DataSet.Culture">
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
-        <member name="P:Resources.UI.AppPageTitle">
-            <summary>
-              Looks up a localized string similar to Geonorge Register.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.Beskrivelse_Engelsk">
-            <summary>
-              Looks up a localized string similar to Beskrivelse engelsk.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.CreateNew">
-            <summary>
-              Looks up a localized string similar to Foreslå ny organisasjon.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.Delete">
-            <summary>
-              Looks up a localized string similar to Slett.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.Details">
-            <summary>
-              Looks up a localized string similar to Vis.
-            </summary>
-        </member>
-        <member name="P:Resources.UI.DOK_Bekreftet_Kommune">
+        <member name="P:Resources.DataSet.DOK_Bekreftet_Kommune">
             <summary>
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Coverage_Municipality">
+        <member name="P:Resources.DataSet.DOK_Coverage_Municipality">
             <summary>
               Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_AtomFeed">
+        <member name="P:Resources.DataSet.DOK_Delivery_AtomFeed">
             <summary>
               Looks up a localized string similar to Atom-feed status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Distribution">
+        <member name="P:Resources.DataSet.DOK_Delivery_Distribution">
             <summary>
               Looks up a localized string similar to Nedlastning status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_GmlRequirements">
+        <member name="P:Resources.DataSet.DOK_Delivery_GmlRequirements">
             <summary>
               Looks up a localized string similar to GML-krav status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Metadata">
+        <member name="P:Resources.DataSet.DOK_Delivery_Metadata">
             <summary>
               Looks up a localized string similar to Metadata status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Owner">
+        <member name="P:Resources.DataSet.DOK_Delivery_Owner">
             <summary>
               Looks up a localized string similar to Eier.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_PresentationRules">
+        <member name="P:Resources.DataSet.DOK_Delivery_PresentationRules">
             <summary>
               Looks up a localized string similar to Tegneregler status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_ProductSheet">
+        <member name="P:Resources.DataSet.DOK_Delivery_ProductSheet">
             <summary>
               Looks up a localized string similar to Produktark status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_ProductSpesification">
+        <member name="P:Resources.DataSet.DOK_Delivery_ProductSpesification">
             <summary>
               Looks up a localized string similar to Produktspesifikasjoner status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Restricted">
+        <member name="P:Resources.DataSet.DOK_Delivery_Restricted">
             <summary>
               Looks up a localized string similar to Skjermede data - kontakt dataeier for tilgangsforespørsel.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_SosiRequirements">
+        <member name="P:Resources.DataSet.DOK_Delivery_SosiRequirements">
             <summary>
               Looks up a localized string similar to SOSI-krav status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Status">
+        <member name="P:Resources.DataSet.DOK_Delivery_Status">
             <summary>
               Looks up a localized string similar to Status datasett.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Status_Deficient">
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_Deficient">
             <summary>
               Looks up a localized string similar to Ikke levert.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Status_Good">
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_Good">
             <summary>
               Looks up a localized string similar to God.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Status_NotSet">
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_NotSet">
             <summary>
               Looks up a localized string similar to Leveransestatus er ikke satt.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Status_Useable">
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_Useable">
             <summary>
               Looks up a localized string similar to Brukbar.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Theme">
+        <member name="P:Resources.DataSet.DOK_Delivery_Theme">
             <summary>
               Looks up a localized string similar to Temagruppe.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Title">
+        <member name="P:Resources.DataSet.DOK_Delivery_Title">
             <summary>
               Looks up a localized string similar to Tittel.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Wfs">
+        <member name="P:Resources.DataSet.DOK_Delivery_Wfs">
             <summary>
               Looks up a localized string similar to Wfs status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Delivery_Wms">
+        <member name="P:Resources.DataSet.DOK_Delivery_Wms">
             <summary>
               Looks up a localized string similar to Wms status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Eier">
+        <member name="P:Resources.DataSet.DOK_Eier">
             <summary>
               Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Kommentar">
+        <member name="P:Resources.DataSet.DOK_Kommentar">
             <summary>
               Looks up a localized string similar to Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Nasjonal_Status">
+        <member name="P:Resources.DataSet.DOK_Nasjonal_Status">
             <summary>
               Looks up a localized string similar to Datasettet sin status.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Nasjonalt_Kommunalt">
+        <member name="P:Resources.DataSet.DOK_Nasjonalt_Kommunalt">
             <summary>
               Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Temagruppe">
+        <member name="P:Resources.DataSet.DOK_Temagruppe">
             <summary>
               Looks up a localized string similar to Datasett overordnet kategorisering.
             </summary>
         </member>
-        <member name="P:Resources.UI.DOK_Tittel">
+        <member name="P:Resources.DataSet.DOK_Tittel">
             <summary>
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
             </summary>
         </member>
-        <member name="P:Resources.UI.Edit">
+        <member name="T:Resources.CodelistValues">
             <summary>
-              Looks up a localized string similar to Rediger.
+              A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
-        <member name="P:Resources.UI.inspireRequirementDescription_Engelsk">
+        <member name="P:Resources.CodelistValues.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.CodeValue">
+            <summary>
+              Looks up a localized string similar to Kodeverdi.
+            </summary>
+        </member>
+        <member name="T:Resources.EPSGs">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.InspireRequirementDescription_Engelsk">
             <summary>
               Looks up a localized string similar to Beskrivelse av krav engelsk.
             </summary>
         </member>
-        <member name="P:Resources.UI.Navn_Engelsk">
+        <member name="T:Resources.Organizations">
             <summary>
-              Looks up a localized string similar to Navn engelsk.
+              A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
-        <member name="P:Resources.UI.Organization">
+        <member name="P:Resources.Organizations.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.CreateNew">
+            <summary>
+              Looks up a localized string similar to Foreslå ny organisasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Organization">
             <summary>
               Looks up a localized string similar to Organisasjon.
             </summary>
         </member>
-        <member name="P:Resources.UI.Organization_Logo">
+        <member name="P:Resources.Organizations.Organization_Logo">
             <summary>
               Looks up a localized string similar to Liten logo.
             </summary>
         </member>
-        <member name="P:Resources.UI.Organization_Name">
+        <member name="P:Resources.Organizations.Organization_Name">
             <summary>
               Looks up a localized string similar to Organisasjonsnavn.
             </summary>
         </member>
-        <member name="P:Resources.UI.Organization_Number">
+        <member name="P:Resources.Organizations.Organization_Number">
             <summary>
               Looks up a localized string similar to Organisasjonsnummer.
             </summary>
         </member>
-        <member name="P:Resources.UI.Organizations">
+        <member name="P:Resources.Organizations.Organization_s">
             <summary>
               Looks up a localized string similar to Organisasjoner.
+            </summary>
+        </member>
+        <member name="T:Resources.Registers">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.AccessLabel">
+            <summary>
+              Looks up a localized string similar to Tilgang til registeret.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.AccessText">
+            <summary>
+              Looks up a localized string similar to Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Content">
+            <summary>
+              Looks up a localized string similar to Innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Description">
+            <summary>
+              Looks up a localized string similar to Beskrivelse.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.DOKCoverageContent">
+            <summary>
+              Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Kartografi">
+            <summary>
+              Looks up a localized string similar to Kartografi.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.KartografiContent">
+            <summary>
+              Looks up a localized string similar to Registeret inneholder datasett som har registrert digital kartografi.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.LoadingMessage">
+            <summary>
+              Looks up a localized string similar to Henter register.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Name">
+            <summary>
+              Looks up a localized string similar to Navn.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.NotSet">
+            <summary>
+              Looks up a localized string similar to Ikke angitt.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Objektregisteret">
+            <summary>
+              Looks up a localized string similar to Objektregisteret.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.ObjektregisteretContent">
+            <summary>
+              Looks up a localized string similar to Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes..
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Owner">
+            <summary>
+              Looks up a localized string similar to Eier.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.SymbolContent">
+            <summary>
+              Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
+            </summary>
+        </member>
+        <member name="T:Resources.Shared">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Add">
+            <summary>
+              Looks up a localized string similar to Legg til.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.AppPageTitle">
+            <summary>
+              Looks up a localized string similar to Geonorge Register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Back">
+            <summary>
+              Looks up a localized string similar to Tilbake.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Beskrivelse_Engelsk">
+            <summary>
+              Looks up a localized string similar to Beskrivelse engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Delete">
+            <summary>
+              Looks up a localized string similar to Slett.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Details">
+            <summary>
+              Looks up a localized string similar to Vis.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Download">
+            <summary>
+              Looks up a localized string similar to Last ned.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Edit">
+            <summary>
+              Looks up a localized string similar to Rediger.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Heading">
+            <summary>
+              Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Navn_Engelsk">
+            <summary>
+              Looks up a localized string similar to Navn engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Save">
+            <summary>
+              Looks up a localized string similar to Lagre.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_AllRegisters">
+            <summary>
+              Looks up a localized string similar to Alle registre.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Button">
+            <summary>
+              Looks up a localized string similar to Søk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Heading">
+            <summary>
+              Looks up a localized string similar to Søk i register.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_LoadingMessage">
+            <summary>
+              Looks up a localized string similar to Henter søkeresultater.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Search_Placeholder">
+            <summary>
+              Looks up a localized string similar to Søk etter registerdata.
             </summary>
         </member>
     </members>

@@ -25,13 +25,13 @@
             @if (Model.documentUrl.Contains("ikke angitt"))
             {
                 <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @Model.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
             else
             {
                 <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn" title="Last ned dokument for @Model.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
             @if (Request.IsAuthenticated)
@@ -52,7 +52,7 @@
                         {
                             if (Model.statusId != "Retired" && Model.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">Rediger</a>
+                                <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="@Shared.Edit @Model.name">Rediger</a>
                             }
                             <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">Slett</a>
                         }
@@ -69,7 +69,7 @@
             }
             @if (Model.approvalReference != null)
             {
-                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => Model.approvalReference)">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => Model.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
 
         </div>

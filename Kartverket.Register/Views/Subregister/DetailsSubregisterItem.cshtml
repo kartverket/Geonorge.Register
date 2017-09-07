@@ -60,7 +60,7 @@
             }
             @if (@documentOwner != null)
             {
-                <span>Eier: @documentOwner </span><br />
+                <span>@Registers.Owner: @documentOwner </span><br />
             }
 
         </div>
@@ -99,15 +99,15 @@
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <hr />
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">Tilbake</a>
+            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Shared.Back</a>
 
             @if (Request.IsAuthenticated)
             {
 
                 if (HtmlHelperExtensions.accessRegisterItem(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">@Shared.Delete</a>
                 }
             }
         </div>

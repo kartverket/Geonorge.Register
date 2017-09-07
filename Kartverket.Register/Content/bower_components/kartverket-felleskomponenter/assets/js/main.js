@@ -1,13 +1,23 @@
 var applicationEnvironment = (applicationEnvironment === undefined) ? "" : applicationEnvironment;
 var applicationVersionNumber = (applicationVersionNumber === undefined) ? "" : applicationVersionNumber;
 var supportsLogin = false;
+var supportsMultiCulture = false;
+
 var authenticationData = (authenticationData === undefined) ? {} : authenticationData;
 if (authenticationData !== {}) {
     supportsLogin = (authenticationData.supportsLogin === undefined) ? false : authenticationData.supportsLogin;
-    authenticationData.isAuthenticated = (authenticationData.isAuthenticated === undefined) ? false : authenticationData.isAuthenticated;
-    authenticationData.urlActionSignIn = (authenticationData.urlActionSignIn === undefined) ? "" : authenticationData.urlActionSignIn;
-    authenticationData.urlActionSignOut = (authenticationData.urlActionSignOut === undefined) ? "" : authenticationData.urlActionSignOut;
-    authenticationData.userName = (authenticationData.userName === undefined) ? "" : authenticationData.userName;
+    authenticationData.isAuthenticated = authenticationData.isAuthenticated === undefined ? false : authenticationData.isAuthenticated;
+    authenticationData.urlActionSignIn = authenticationData.urlActionSignIn === undefined ? "" : authenticationData.urlActionSignIn;
+    authenticationData.urlActionSignOut = authenticationData.urlActionSignOut === undefined ? "" : authenticationData.urlActionSignOut;
+    authenticationData.userName = authenticationData.userName === undefined ? "" : authenticationData.userName;
+}
+
+var cultureData = (cultureData === undefined) ? {} : cultureData;
+if (cultureData !== {}) {
+    supportsMultiCulture = cultureData.supportsMultiCulture === undefined ? false : cultureData.supportsMultiCulture;
+    cultureData.urlSetCulture = cultureData.urlSetCulture === undefined ? "" : cultureData.urlSetCulture;
+    cultureData.urlSetCultureNorwegian = cultureData.urlSetCultureNorwegian === undefined ? "" : cultureData.urlSetCultureNorwegian;
+    cultureData.currentCulture = cultureData.currentCulture === undefined ? "" : cultureData.currentCulture;
 }
 
 
@@ -86,16 +96,26 @@ $(document).ready(function() {
     $("#shopping-cart-url").prop("href", downloadUrl);
 
 
-    // Login
-    if (supportsLogin && $("#container-login").length) {
-        $("#container-login").append("<ul></ul>");
-        $("#container-login ul").append("<li><a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a></li>");
-        if (authenticationData.isAuthenticated) {
-            $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignOut + "' class='geonorge-aut' title='Logg ut " + authenticationData.userName + "'> Logg ut</a></li>");
+    // MultiCulture
+    if (supportsMultiCulture && $("#container-user-menu").length) {
+        if (cultureData.currentCulture == "nb-NO" || cultureData.currentCulture == "nn-NO" || cultureData.currentCulture == "no") {
+            $("#container-user-menu").append("<a href='" + cultureData.urlSetCulture + "' class='geonorge-culture' title='English'> English</a>");
         } else {
-            $("#container-login ul").append("<li id='login'><a href='" + authenticationData.urlActionSignIn + "' class='geonorge-aut'> Logg inn</a></li>");
+            $("#container-user-menu").append("<a href='" + cultureData.urlSetCultureNorwegian + "' class='geonorge-culture'> Norsk</a>");
         }
     }
+
+    // Login
+    if (supportsLogin && $("#container-user-menu").length) {
+        $("#container-user-menu").append("<a href='" + geonorgeUrl + "kartdata/oppslagsverk/Brukernavn-og-passord/'>Ny bruker</a>");
+        if (authenticationData.isAuthenticated) {
+            $("#container-user-menu").append("<a href='" + authenticationData.urlActionSignOut + "' title='Logg ut " + authenticationData.userName + "'> Logg ut</a>");
+        } else {
+            $("#container-user-menu").append("<a href='" + authenticationData.urlActionSignIn + "'> Logg inn</a>");
+        }
+    }
+
+
 });
 
 $(window).load(function() {
@@ -814,6 +834,33 @@ function addShoppingCartTooltip(elementsCount) {
     element.tooltip();
 }
 
+function removeSingleItemFromArray(array, undesirableItem) {
+    var index = array.indexOf(undesirableItem);
+    if (index >= 0) {
+        array.splice(index, 1);
+    }
+    return array;
+}
+
+function removeFromArray(array, undesirableItems) {
+    var multiple = Array.isArray(undesirableItems);
+    if (multiple) {
+        undesirableItems.forEach(function (undesirableItem) {
+            array = removeSingleItemFromArray(array, undesirableItem);
+        });
+    } else {
+        array = removeSingleItemFromArray(array, undesirableItems);
+    }
+}
+
+function removeBrokenOrderItems() {
+    var orderItems = JSON.parse(localStorage.getItem("orderItems"));
+    if (orderItems !== null){
+        removeFromArray(orderItems, [null, undefined, "null", {}, ""]);
+        localStorage.setItem('orderItems', JSON.stringify(orderItems));
+    }
+}
+
 function updateShoppingCart() {
     var shoppingCartElement = $('#orderitem-count');
     var orderItems = "";
@@ -822,16 +869,22 @@ function updateShoppingCart() {
     var cookieValue = 0;
     var cookieDomain = ".geonorge.no";
 
-    if (localStorage.getItem("orderItems") !== null && localStorage.getItem("orderItems") != "[]") {
+    if (localStorage.getItem("orderItems") !== null) {
         orderItems = localStorage.getItem("orderItems");
     }
-
+    
     if (orderItems !== "") {
-        shoppingCartElement.css("display", "block");
         orderItemsObj = JSON.parse(orderItems);
         cookieValue = orderItemsObj.length;
-        shoppingCartElement.html(cookieValue);
-        addShoppingCartTooltip(cookieValue);
+        if (cookieValue > 0) {
+            shoppingCartElement.css("display", "block");
+            shoppingCartElement.html(cookieValue);
+            addShoppingCartTooltip(cookieValue);
+        } else {
+            shoppingCartElement.css("display", "none");
+            addShoppingCartTooltip(0);
+        }
+        
     } else if (Cookies.get(cookieName) !== undefined && Cookies.get(cookieName) !== 0 && Cookies.get(cookieName) !== "0") {
         cookieValue = Cookies.get(cookieName);
         shoppingCartElement.css("display", "block");
@@ -864,7 +917,8 @@ function updateShoppingCartCookie() {
 }
 
 
-$(window).load(function() {
+$(window).load(function () {
+    removeBrokenOrderItems();
     updateShoppingCart();
 });
 
@@ -1023,6 +1077,22 @@ function getParameterByName(name) {
   return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+// Remove URL parameters from string
+function removeParameterByName(name, urlParameters) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "([^&#]*)"),
+  results = regex.exec(urlParameters);
+  urlParameters = urlParameters.replace(results[0], "");
+  return urlParameters;
+}
+
+// Remove URL parameters from url field
+function removeParameterByNameFromUrl(name) {
+  var urlParameters = location.search.toLowerCase();
+  urlParameters = removeParameterByName(name, urlParameters);
+  var newRelativeUrl = location.pathname + urlParameters;
+  window.history.replaceState({ path: newRelativeUrl }, null, newRelativeUrl);
+}
 $(document).on('focus', '.custom-select-list-input', function() {
   var customSelectListElement = $(this).closest('.custom-select-list');
   var dropdownElement = customSelectListElement.find('.custom-select-list-dropdown-container');

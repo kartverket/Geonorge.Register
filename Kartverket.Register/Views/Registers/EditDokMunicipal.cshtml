@@ -9,7 +9,7 @@
 
     @section breadcrumb {
         <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
-        <li>Rediger liste</li>
+        <li>@Shared.Edit liste</li>
     }
     @section Scripts {
         <script>
@@ -108,7 +108,7 @@
 
     @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
     {
-        <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
+        <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
         <div class="clearfix"></div>
 
         <div class="row">
@@ -143,12 +143,12 @@
                         <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Bekreftet_Kommune">Bekreft</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@UI.DOK_Coverage_Municipality">Dekning</a></th>
-                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@UI.DOK_Kommentar">Merknad</span></th>
-                                    <th class="text-center">Slett</th>
+                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">Bekreft</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">Dekning</a></th>
+                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">Merknad</span></th>
+                                    <th class="text-center">@Shared.Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,7 +181,7 @@
                                                 <label for="dokMunicipalList[@i].Confirmed" class="checkbox-icon"></label>
                                             </span>
                                         </td>
-                                        <td style="text-align: center" title="@UI.DOK_Coverage_Municipality">
+                                        <td style="text-align: center" title="@DataSet.DOK_Coverage_Municipality">
                                             @if (Model[i].Coverage)
                                             {
                                                 <span>JA</span>
@@ -250,8 +250,8 @@
                         <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th><a href="#" data-toggle="tooltip" title="@UI.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@UI.DOK_Tittel">Tittel</a></th>
+                                    <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
+                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Regionplanlegging">Region- plan</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens samfunnsdel">Kommune-planens samfunns- del</a></th>
                                     <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens arealdel">Kommune-planens areal- del</a></th>
@@ -348,7 +348,7 @@
                                                                 @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">Lagre</button>
+                                                                <button id="saveSuitabilityText" type="button" class="btn btn-default" data-dismiss="modal" onclick="changeBtnColor(@i)">@Shared.Save</button>
                                                             </div>
                                                         </div>
 
@@ -375,11 +375,11 @@
 
         <div class="row">
             <div class="col-md-2">
-                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Tilbake</a>
+                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">@Shared.Back</a>
             </div>
             <div class="col-sm-10 text-right">
                 <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
-                <input type="submit" value="Lagre" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
+                <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
             </div>
         </div>
     }

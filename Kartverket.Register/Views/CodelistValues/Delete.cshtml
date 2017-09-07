@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Slett " + Model.name;
+    ViewBag.Title = Shared.Delete + " " + Model.name;
 }
 
 @section breadcrumb {
@@ -12,7 +12,7 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
     <li><a href="@Model.GetObjectUrl()">@Model.name</a></li>
-    <li>Slett</li>
+    <li>@Shared.Delete</li>
 }
 
 <section class="heading">
@@ -34,8 +34,8 @@
 {
 
     <div class="form-actions no-color">
-        <input type="submit" value="Slett" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">Tilbake</a>
+        <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 }
 

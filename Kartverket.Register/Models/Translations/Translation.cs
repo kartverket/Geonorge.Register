@@ -11,9 +11,9 @@ namespace Kartverket.Register.Models.Translations
     {
 
         public Guid Id { get; set; }
-        [Display(Name = "Navn_Engelsk", ResourceType = typeof(UI))]
+        [Display(Name = "Navn_Engelsk", ResourceType = typeof(Shared))]
         public string Name { get; set; }
-        [Display(Name = "Beskrivelse_Engelsk", ResourceType = typeof(UI))]
+        [Display(Name = "Beskrivelse_Engelsk", ResourceType = typeof(Shared))]
         public string Description { get; set; }
         public string CultureName { get; set; }
 

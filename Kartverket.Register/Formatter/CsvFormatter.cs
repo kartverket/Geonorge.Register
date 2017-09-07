@@ -226,10 +226,10 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato" + (isAdmin ? "; Oppdatert " : "") +"; Versjons Id; Beskrivelse; ID" + ";" + UI.DOK_Delivery_Metadata + ";"
-                    + UI.DOK_Delivery_ProductSheet + ";" + UI.DOK_Delivery_PresentationRules + ";" + UI.DOK_Delivery_ProductSpesification + ";"
-                    + UI.DOK_Delivery_Wms + ";" + UI.DOK_Delivery_Wfs + ";" + UI.DOK_Delivery_SosiRequirements + ";"
-                    + UI.DOK_Delivery_Distribution + ";" + UI.DOK_Delivery_GmlRequirements + ";" + UI.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";Url til kartkatalog";
+                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato" + (isAdmin ? "; Oppdatert " : "") +"; Versjons Id; Beskrivelse; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
+                    + DataSet.DOK_Delivery_ProductSheet + ";" + DataSet.DOK_Delivery_PresentationRules + ";" + DataSet.DOK_Delivery_ProductSpesification + ";"
+                    + DataSet.DOK_Delivery_Wms + ";" + DataSet.DOK_Delivery_Wfs + ";" + DataSet.DOK_Delivery_SosiRequirements + ";"
+                    + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";Url til kartkatalog";
             }
             else if (containedItemClass == "Organization")
             {

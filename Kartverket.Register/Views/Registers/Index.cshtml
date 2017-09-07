@@ -1,5 +1,5 @@
 ﻿@using Kartverket.Register.Helpers
-@model IEnumerable<Kartverket.Register.Models.Register>
+@model Kartverket.Register.Models.ViewModels.RegisterViewModel
 
 @{
     ViewBag.Title = "Registrene";
@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                Registrene
+                @Shared.Heading
             </h1>
         </div>
         <div class="col-sm-12">
@@ -23,24 +23,21 @@
         <table class="table table-responsive">
             <tr>
                 <th>
-                    Navn
+                    @Registers.Name
                 </th>
                 <th>
-                    Innhold
+                    @Registers.Content
                 </th>
                 <th>
-                    Eier
+                    @Registers.Owner
                 </th>
-                @*<th>
-                        Status
-                    </th>*@
             </tr>
             <tr>
                 <td>
-                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="Henter register" class="show-loading-animation">Objektregisteret</a></p>
+                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Objektregisteret</a></p>
                 </td>
                 <td>
-                    Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.
+                    @Registers.ObjektregisteretContent
                 </td>
                 <td>
 
@@ -49,53 +46,53 @@
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/kartografi" data-loading-message="Henter register" class="show-loading-animation">Kartografi</a></p>
+                    <p><a href="/register/kartografi" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Kartografi</a></p>
                 </td>
                 <td>
-                    Registeret inneholder datasett som har registrert digital kartografi
+                    @Registers.KartografiContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/symbol" data-loading-message="Henter register" class="show-loading-animation">Symbol</a></p>
+                    <p><a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Symbol</a></p>
                 </td>
                 <td>
-                    Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.
+                    @Registers.SymbolContent
                 </td>
                 <td></td>
 
             </tr>
             <tr>
                 <td>
-                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="Henter register" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
+                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
                 </td>
                 <td>
-                    Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.
+                    @Registers.SymbolContent
                 </td>
                 <td>Kartverket</td>
             </tr>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Items)
             {
-                if (item.parentRegisterId == null)
+                if (string.IsNullOrEmpty(item.ParentRegisterId))
                 {
                     <tr>
                         <td>
-                            <p><a href="/register/@item.seoname" data-loading-message="Henter register" class="show-loading-animation">@item.name</a></p>
+                            <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a></p>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.description)
+                            @Html.DisplayFor(modelItem => item.Description)
                         </td>
 
-                        <td title="Eier: @item.owner.name">
-                            @if (item.owner == null)
+                        <td title="@Registers.Owner: @item.Owner">
+                            @if (string.IsNullOrEmpty(item.Owner))
                             {
-                                <span>Ikke angitt</span>
+                                <span>@Registers.NotSet</span>
                             }
                             else
                             {
-                                @Html.DisplayFor(modelItem => item.owner.name)
+                                @Html.DisplayFor(modelItem => item.Owner)
                             }
                         </td>
 

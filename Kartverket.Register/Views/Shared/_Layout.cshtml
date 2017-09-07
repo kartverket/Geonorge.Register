@@ -17,7 +17,7 @@
         {
             <text> - </text>
         }
-        @Resources.UI.AppPageTitle
+        @Resources.Shared.AppPageTitle
     </title>
     <!-- Stylesheets -->
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
@@ -40,6 +40,14 @@
                 }
             }
         }
+
+        var cultureData = {
+            supportsMultiCulture: true,
+            urlSetCulture: '/SetCulture/en',
+            urlSetCultureNorwegian: '/SetCulture/no',
+            currentCulture: '@CultureHelper.GetCurrentCulture()'
+        };
+
     </script>
     @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts")
     @Scripts.Render("~/Scripts/local-scripts")
@@ -72,7 +80,7 @@
         <div class="container container-breadcrumbs" id="navTabCont">
             <ul class="breadcrumbs col-md-12">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
-                <li><a href="/">Registrene</a></li>
+                <li><a href="/">@Shared.Heading</a></li>
                 @RenderSection("breadcrumb", false)
             </ul>
         </div>
@@ -98,7 +106,15 @@
         </div>
 
     </div>
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.cshtml")
+    @if (CultureHelper.IsNorwegian())
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.min.cshtml");
+    }
+    else
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
+    }
+
 
     @RenderSection("scripts", false)
     <script>

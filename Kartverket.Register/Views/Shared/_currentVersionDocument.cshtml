@@ -52,13 +52,13 @@
             @if (item.documentUrl.Contains("ikke angitt"))
             {
                 <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
             else
             {
                 <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>Last ned
+                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }
 
@@ -101,9 +101,9 @@
                         {
                             if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">Rediger</a>
+                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">@Shared.Edit</a>
                             }
-                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">Slett</a>
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">@Shared.Delete</a>
                         }
                     }
                 }
@@ -139,7 +139,7 @@
             }
             @if (item.approvalReference != null)
             {
-                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">Vis <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
             @if (item.dateAccepted != null)
             {

@@ -8,7 +8,7 @@
             <p><b>Siste varsel: </b>@Html.DisplayFor(model => model.AlertDate)</p>
             <p><b>Ikrafttredelse: </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
             <p><b>Varselet gjelder:</b> @Model.Note</p>
-            <p><b>Tjenestebeskrivelse: </b> <a href="@Model.ServiceMetadataUrl" title="Beskrivelse av @Model.name">Vis</a></p>
+            <p><b>Tjenestebeskrivelse: </b> <a href="@Model.ServiceMetadataUrl" title="Beskrivelse av @Model.name">@Shared.Details</a></p>
         </div>
     </div>
 </div>

@@ -6,6 +6,7 @@ using System.Web.Configuration;
 using Kartverket.Register.Helpers;
 using System;
 using System.Collections.Generic;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.DOK.Service
 {
@@ -13,7 +14,7 @@ namespace Kartverket.DOK.Service
     {
         public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
-            Dataset metadata = FetchMetadataFromKartkatalogen(uuid);
+            Dataset metadata = FetchDatasetFromKartkatalogen(uuid);
             if (metadata != null)
             {
                 dataset.Uuid = uuid;
@@ -131,7 +132,7 @@ namespace Kartverket.DOK.Service
             return metadata != null ? new SimpleMetadata(metadata) : null;
         }
 
-        public Dataset FetchMetadataFromKartkatalogen(string uuid)
+        public Dataset FetchDatasetFromKartkatalogen(string uuid)
         {
             Dataset metadata = new Dataset();
 
@@ -202,6 +203,67 @@ namespace Kartverket.DOK.Service
             }
 
             return metadata;
+        }
+
+        public InspireDataset FetchInspireDatasetFromKartkatalogen(string uuid)
+        {
+            var inspireDataset = new InspireDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient {Encoding = System.Text.Encoding.UTF8};
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    inspireDataset.Name = data.Title;
+                    inspireDataset.Description = data.Abstract;
+                    inspireDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    inspireDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    inspireDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    inspireDataset.SpecificUsage = data.SpecificUsage;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        inspireDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    inspireDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "");
+                    inspireDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) inspireDataset.Uuid = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        inspireDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        inspireDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        inspireDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            inspireDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return inspireDataset;
         }
 
         public SearchResultsType SearchMetadata(string searchString)
@@ -278,6 +340,22 @@ namespace Kartverket.DOK.Service
             db.Dispose();
 
             return "updated";
+        }
+
+        public List<MetadataItemViewModel> SearchMetadataFromKartkatalogen(string searchString)
+        {
+            var searchResult = SearchMetadata(searchString);
+            var result = new List<MetadataItemViewModel>();
+
+            if (searchResult != null && searchResult.numberOfRecordsMatched != "0")
+            {
+                result.AddRange(searchResult.Items.Select(t => new MetadataItemViewModel
+                {
+                    Uuid = ((www.opengis.net.DCMIRecordType) (t)).Items[0].Text[0],
+                    Title = ((www.opengis.net.DCMIRecordType) (t)).Items[2].Text[0]
+                }));
+            }
+            return result;
         }
     }
 }

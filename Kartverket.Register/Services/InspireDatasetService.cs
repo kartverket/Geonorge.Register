@@ -11,16 +11,17 @@ namespace Kartverket.Register.Services
         private readonly RegisterDbContext _dbContext;
         private readonly IRegisterService _registerService;
         private readonly IDatasetDeliveryService _datasetDeliveryService;
-
+        private readonly IDatasetService _datasetService;
 
         public InspireDatasetService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerService = new RegisterService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
+            _datasetService = new DatasetService(_dbContext);
         }
 
-        
+
         public void CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
         {
             var inspireDataset = new InspireDataset();
@@ -57,9 +58,17 @@ namespace Kartverket.Register.Services
             inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryWfsOrAtomStatus, inspireDatasetViewModel.InspireDeliveryWfsOrAtomNote, true);
             inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus, inspireDatasetViewModel.InspireDeliveryHarmonizedDataNote, true);
             inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus, inspireDatasetViewModel.InspireDeliverySpatialDataServiceNote, true);
+            
 
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
+        }
+
+        public InspireDatasetViewModel NewInspireDataset(string parentRegister, string register)
+        {
+            var model = new InspireDatasetViewModel {Register = _registerService.GetRegister(parentRegister, register)};
+
+            return model;
         }
     }
 }

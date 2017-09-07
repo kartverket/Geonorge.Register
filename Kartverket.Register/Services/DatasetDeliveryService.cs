@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Models;
 using System;
+using System.Web.Mvc;
 
 namespace Kartverket.Register.Services
 {
@@ -19,6 +20,11 @@ namespace Kartverket.Register.Services
             _dbContext.DatasetDeliveries.Add(datasetDelivery);
             _dbContext.SaveChanges();
             return datasetDelivery.DatasetDeliveryId;
+        }
+
+        public SelectList GetDokDeliveryStatusesAsSelectlist(string statusId)
+        {
+            return new SelectList(_dbContext.DokDeliveryStatuses, "value", "description", statusId);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Kartverket.DOK.Service;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
@@ -13,9 +14,11 @@ namespace Kartverket.Register.Controllers
     {
         private readonly RegisterDbContext _db = new RegisterDbContext();
         private readonly IInspireDatasetService _inspireDatasetService;
+        private readonly MetadataService _metadataService;
 
         public InspireDatasetsController(IInspireDatasetService inspireDatasetService) {
             _inspireDatasetService = inspireDatasetService;
+            _metadataService = new MetadataService();
         }
 
         // GET: InspireDatasets
@@ -44,24 +47,11 @@ namespace Kartverket.Register.Controllers
         //[Authorize]
         [Route("inspire/{registername}/ny")]
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
-        public ActionResult Create(string registername, string parentregister, string registerowner)
+        public ActionResult Create(string registername, string parentregister)
         {
-            ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description");
-            ViewBag.InspireDeliveryAtomFeedStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", null);
-            ViewBag.InspireDeliveryDistributionStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryHarmonizedDataStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryMetadataStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryMetadataServiceStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliverySpatialDataServiceStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryWfsStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryWfsOrAtomStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.InspireDeliveryWmsStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description");
-            ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name");
-            ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name");
-            ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description");
-            ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name");
-            ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description");
-            return View();
+            InspireDatasetViewModel model = _inspireDatasetService.NewInspireDataset(parentregister, registername);
+
+            return View(model);
         }
 
         // POST: InspireDatasets/Create
@@ -70,30 +60,21 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("inspire/{registername}/ny")]
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
+        public ActionResult Create(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername, string metadataUuid)
         {
-            if (ModelState.IsValid)
+            if (inspireDatasetViewModel.SearchString != null)
+            {
+                inspireDatasetViewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(inspireDatasetViewModel.SearchString);
+            }
+            else if (metadataUuid != null)
+            {
+                inspireDatasetViewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
+            }
+            else if (ModelState.IsValid)
             {
                 _inspireDatasetService.CreateNewInspireDataset(inspireDatasetViewModel, parentregister, registername);
                 return RedirectToAction("Details");
             }
-
-            ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description", inspireDatasetViewModel.DokStatusId);
-            ViewBag.InspireDeliveryAtomFeedStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryAtomFeedStatus);
-            ViewBag.InspireDeliveryDistributionStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryDistributionStatus);
-            ViewBag.InspireDeliveryHarmonizedDataStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus);
-            ViewBag.InspireDeliveryMetadataStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryMetadataStatus);
-            ViewBag.InspireDeliveryMetadataServiceStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryMetadataServiceStatus);
-            ViewBag.InspireDeliverySpatialDataServiceStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus);
-            ViewBag.InspireDeliveryWfsStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryWfsStatus);
-            ViewBag.InspireDeliveryWfsOrAtomStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryWfsOrAtomStatus);
-            ViewBag.InspireDeliveryWmsStatus = new SelectList(_db.DokDeliveryStatuses, "value", "description", inspireDatasetViewModel.InspireDeliveryWmsStatus);
-            ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDatasetViewModel.OwnerId);
-            ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name", inspireDatasetViewModel.RegisterId);
-            ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description", inspireDatasetViewModel.StatusId);
-            ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDatasetViewModel.SubmitterId);
-            ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description", inspireDatasetViewModel.ThemeGroupId);
             return View(inspireDatasetViewModel);
         }
 
@@ -109,21 +90,6 @@ namespace Kartverket.Register.Controllers
             {
                 return HttpNotFound();
             }
-            //ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description", inspireDataset.DokStatusId);
-            //ViewBag.InspireDeliveryAtomFeedId = new SelectList(_db.DokDeliveryStatuses, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryAtomFeedId);
-            //ViewBag.InspireDeliveryDistributionId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryDistributionId);
-            //ViewBag.InspireDeliveryHarmonizedDataId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryHarmonizedDataId);
-            //ViewBag.InspireDeliveryMetadataId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryMetadataId);
-            //ViewBag.InspireDeliveryMetadataServiceId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryMetadataServiceId);
-            //ViewBag.InspireDeliverySpatialDataServiceId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliverySpatialDataServiceId);
-            //ViewBag.InspireDeliveryWfsId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWfsId);
-            //ViewBag.InspireDeliveryWfsOrAtomId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWfsOrAtomId);
-            //ViewBag.InspireDeliveryWmsId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWmsId);
-            //ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDataset.OwnerId);
-            //ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name", inspireDataset.RegisterId);
-            //ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description", inspireDataset.StatusId);
-            //ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDataset.SubmitterId);
-            //ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description", inspireDataset.ThemeGroupId);
             return View(inspireDataset);
         }
 
@@ -140,21 +106,6 @@ namespace Kartverket.Register.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description", inspireDataset.DokStatusId);
-            //ViewBag.InspireDeliveryAtomFeedId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryAtomFeedId);
-            //ViewBag.InspireDeliveryDistributionId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryDistributionId);
-            //ViewBag.InspireDeliveryHarmonizedDataId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryHarmonizedDataId);
-            //ViewBag.InspireDeliveryMetadataId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryMetadataId);
-            //ViewBag.InspireDeliveryMetadataServiceId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryMetadataServiceId);
-            //ViewBag.InspireDeliverySpatialDataServiceId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliverySpatialDataServiceId);
-            //ViewBag.InspireDeliveryWfsId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWfsId);
-            //ViewBag.InspireDeliveryWfsOrAtomId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWfsOrAtomId);
-            //ViewBag.InspireDeliveryWmsId = new SelectList(_db.DeliveryStatus, "DeliveryStatusId", "StatusId", inspireDataset.InspireDeliveryWmsId);
-            //ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDataset.OwnerId);
-            //ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name", inspireDataset.RegisterId);
-            //ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description", inspireDataset.StatusId);
-            //ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name", inspireDataset.SubmitterId);
-            //ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description", inspireDataset.ThemeGroupId);
             return View(inspireDataset);
         }
 

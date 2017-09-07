@@ -68,15 +68,9 @@ namespace Kartverket.Register.Models
                 {
                     return Description.Substring(0, Description.Length);
                 }
-                else
-                {
-                    return Description.Substring(0, 80) + "...";
-                }
+                return Description.Substring(0, 80) + "...";
             }
-            else
-            {
-                return "";
-            }
+            return "";
         }
     }
 

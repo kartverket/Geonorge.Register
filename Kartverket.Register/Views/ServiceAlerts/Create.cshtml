@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        @Html.Hidden("ServiceType", "Ikke angitt")
+        @Html.Hidden("ServiceType", Registers.NotSet)
 
         <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.AlertType, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        @Html.Hidden("Owner", "Ikke angitt")
+        @Html.Hidden("Owner", Registers.NotSet)
 
         <div class="form-group required has-feedback">
             @Html.LabelFor(model => model.AlertDate, htmlAttributes: new { @class = "control-label col-md-2" })

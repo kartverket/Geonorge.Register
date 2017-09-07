@@ -106,6 +106,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to treff.
+        /// </summary>
+        public static string Hits {
+            get {
+                return ResourceManager.GetString("Hits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viser.
+        /// </summary>
+        public static string HitsDisplay {
+            get {
+                return ResourceManager.GetString("HitsDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to av.
+        /// </summary>
+        public static string HitsOf {
+            get {
+                return ResourceManager.GetString("HitsOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kartografi.
         /// </summary>
         public static string Kartografi {
@@ -183,6 +210,15 @@ namespace Resources {
         public static string SymbolContent {
             get {
                 return ResourceManager.GetString("SymbolContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oppdatert.
+        /// </summary>
+        public static string Updated {
+            get {
+                return ResourceManager.GetString("Updated", resourceCulture);
             }
         }
     }

@@ -113,7 +113,7 @@
 
             @if (item.status == null)
             {
-                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>Ikke angitt</p>
+                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@Registers.NotSet</p>
             }
             else
             {
@@ -131,7 +131,7 @@
             }
             @if (item.modified != null)
             {
-                <p>Endret: @Html.DisplayFor(modelItem => item.modified)</p>
+                <p>@Registers.Updated: @Html.DisplayFor(modelItem => item.modified)</p>
             }
             @if (item.approvalDocument != null)
             {

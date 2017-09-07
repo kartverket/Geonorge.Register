@@ -162,7 +162,13 @@
   <data name="Save" xml:space="preserve">
     <value>Lagre</value>
   </data>
+  <data name="DisplayTypeSelect" xml:space="preserve">
+    <value>Velg visningsform</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Last ned</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Lagre som</value>
   </data>
 </root>

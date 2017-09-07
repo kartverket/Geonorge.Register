@@ -132,6 +132,15 @@
   <data name="DOKCoverageContent" xml:space="preserve">
     <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>
   </data>
+  <data name="Hits" xml:space="preserve">
+    <value>treff</value>
+  </data>
+  <data name="HitsDisplay" xml:space="preserve">
+    <value>Viser</value>
+  </data>
+  <data name="HitsOf" xml:space="preserve">
+    <value>av</value>
+  </data>
   <data name="Kartografi" xml:space="preserve">
     <value>Kartografi</value>
   </data>
@@ -158,5 +167,8 @@
   </data>
   <data name="SymbolContent" xml:space="preserve">
     <value>Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Oppdatert</value>
   </data>
 </root>

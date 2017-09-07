@@ -7,7 +7,7 @@
 
                     @if (Model.description == null)
                     {
-                        <p title="Innhold er ikke angitt for @Model.name."><span>Tjeneste: </span>Ikke angitt</p>
+                        <p title="Innhold er ikke angitt for @Model.name."><span>Tjeneste: </span>@Registers.NotSet</p>
                     }
                     else
                     {
@@ -16,7 +16,7 @@
 
                     @if (Model.serviceUrl == null)
                     {
-                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>Ikke angitt</p>
+                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>@Registers.NotSet</p>
                     }
                     else
                     {

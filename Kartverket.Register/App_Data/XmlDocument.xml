@@ -1238,6 +1238,21 @@
               Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
             </summary>
         </member>
+        <member name="P:Resources.Registers.Hits">
+            <summary>
+              Looks up a localized string similar to treff.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.HitsDisplay">
+            <summary>
+              Looks up a localized string similar to Viser.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.HitsOf">
+            <summary>
+              Looks up a localized string similar to av.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Kartografi">
             <summary>
               Looks up a localized string similar to Kartografi.
@@ -1281,6 +1296,11 @@
         <member name="P:Resources.Registers.SymbolContent">
             <summary>
               Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Updated">
+            <summary>
+              Looks up a localized string similar to Oppdatert.
             </summary>
         </member>
         <member name="T:Resources.Shared">
@@ -1329,6 +1349,11 @@
               Looks up a localized string similar to Vis.
             </summary>
         </member>
+        <member name="P:Resources.Shared.DisplayTypeSelect">
+            <summary>
+              Looks up a localized string similar to Velg visningsform.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Download">
             <summary>
               Looks up a localized string similar to Last ned.
@@ -1352,6 +1377,11 @@
         <member name="P:Resources.Shared.Save">
             <summary>
               Looks up a localized string similar to Lagre.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.SaveAs">
+            <summary>
+              Looks up a localized string similar to Lagre som.
             </summary>
         </member>
         <member name="P:Resources.Shared.Search_AllRegisters">

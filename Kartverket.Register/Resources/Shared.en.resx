@@ -159,10 +159,16 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="DisplayTypeSelect" xml:space="preserve">
+    <value>Select display layout</value>
+  </data>
   <data name="Download" xml:space="preserve">
     <value>Download</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save As</value>
   </data>
 </root>

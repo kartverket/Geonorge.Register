@@ -205,6 +205,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foreslå.
+        /// </summary>
+        public static string Propose {
+            get {
+                return ResourceManager.GetString("Propose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Innsender.
+        /// </summary>
+        public static string Submitter {
+            get {
+                return ResourceManager.GetString("Submitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
         /// </summary>
         public static string SymbolContent {

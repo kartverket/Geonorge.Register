@@ -88,7 +88,7 @@
                 <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
             </div>
             <div class="row">
-                <div class="col-md-3">Innsender:</div><div class="col-md-9"> @Model.submitter.name</div>
+                <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.submitter.name</div>
             </div>
             @if (owner != null)
             {
@@ -212,7 +212,7 @@
                 @if (Model.register.containedItemClass == "NameSpace")
                 { <span>@Registers.Owner: @Model.submitter.name</span><br>}
                 else
-                {<span>Innsender: @Model.submitter.name</span><br>}
+                {<span>@Registers.Submitter: @Model.submitter.name</span><br>}
 
                 @if (owner != null)
                 { <span>@Registers.Owner: @owner</span><br />}

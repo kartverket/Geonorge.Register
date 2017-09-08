@@ -119,7 +119,7 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+            <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
             @if (Model.parentRegister.parentRegister != null)
             {
                 <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">@Shared.Back</a>

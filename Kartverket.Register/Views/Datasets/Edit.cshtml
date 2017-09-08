@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.submitterId, "Innsender:", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })

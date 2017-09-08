@@ -52,11 +52,11 @@
             }
             @if (Model.submitter == null)
             {
-                <span>Innsender: @Registers.NotSet</span><br />
+                <span>@Registers.Submitter: @Registers.NotSet</span><br />
             }
             else
             {
-                <span>Innsender: @Html.DisplayFor(model => model.submitter.name)</span><br />
+                <span>@Registers.Submitter: @Html.DisplayFor(model => model.submitter.name)</span><br />
             }
             @if (@documentOwner != null)
             {

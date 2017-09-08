@@ -171,4 +171,10 @@
   <data name="Updated" xml:space="preserve">
     <value>Oppdatert</value>
   </data>
+  <data name="Submitter" xml:space="preserve">
+    <value>Innsender</value>
+  </data>
+  <data name="Propose" xml:space="preserve">
+    <value>Foreslå</value>
+  </data>
 </root>

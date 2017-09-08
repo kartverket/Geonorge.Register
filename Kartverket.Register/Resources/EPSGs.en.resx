@@ -117,7 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Dimension" xml:space="preserve">
+    <value>Dimension</value>
+  </data>
+  <data name="ExternalReference" xml:space="preserve">
+    <value>External references</value>
+  </data>
+  <data name="HorizontalReferenceSystem" xml:space="preserve">
+    <value>Horizontal Reference System</value>
+  </data>
+  <data name="InspireRequirement" xml:space="preserve">
+    <value>Inspire requirements</value>
+  </data>
+  <data name="InspireRequirementDescription" xml:space="preserve">
+    <value>Description of requirements</value>
+  </data>
   <data name="InspireRequirementDescription_Engelsk" xml:space="preserve">
     <value>Description of requirements English</value>
+  </data>
+  <data name="NationalRequirement" xml:space="preserve">
+    <value>National requirements</value>
+  </data>
+  <data name="NationalRequirementDescription" xml:space="preserve">
+    <value>Description of requirements</value>
+  </data>
+  <data name="NationalSeasRequirement" xml:space="preserve">
+    <value>National requirements for marine areas</value>
+  </data>
+  <data name="NationalSeasRequirementDescription" xml:space="preserve">
+    <value>Description of requirements</value>
+  </data>
+  <data name="SosiReferencesystem" xml:space="preserve">
+    <value>SOSI reference system</value>
+  </data>
+  <data name="VerticalReferenceSystem" xml:space="preserve">
+    <value>Vertical reference system</value>
   </data>
 </root>

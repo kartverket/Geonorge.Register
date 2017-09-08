@@ -1146,9 +1146,64 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.Dimension">
+            <summary>
+              Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.ExternalReference">
+            <summary>
+              Looks up a localized string similar to Ekstern referanser.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.HorizontalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Horisontalt referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.InspireRequirement">
+            <summary>
+              Looks up a localized string similar to Inspirekrav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.InspireRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.InspireRequirementDescription_Engelsk">
             <summary>
               Looks up a localized string similar to Beskrivelse av krav engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalRequirement">
+            <summary>
+              Looks up a localized string similar to Nasjonalt krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalSeasRequirement">
+            <summary>
+              Looks up a localized string similar to Nasjonalt krav for havområder.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalSeasRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.SosiReferencesystem">
+            <summary>
+              Looks up a localized string similar to SOSI referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.VerticalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Vertikalt referansesystem.
             </summary>
         </member>
         <member name="T:Resources.Organizations">
@@ -1291,6 +1346,16 @@
         <member name="P:Resources.Registers.Owner">
             <summary>
               Looks up a localized string similar to Eier.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Propose">
+            <summary>
+              Looks up a localized string similar to Foreslå.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Submitter">
+            <summary>
+              Looks up a localized string similar to Innsender.
             </summary>
         </member>
         <member name="P:Resources.Registers.SymbolContent">

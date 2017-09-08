@@ -54,7 +54,7 @@
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-information">
             @if (Model.inspireRequirement == null)
             {
-                <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>Ikke angitt</p>
+                <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>@Registers.NotSet</p>
             }
             else
             {
@@ -63,7 +63,7 @@
 
             @if (Model.nationalRequirement == null)
             {
-                <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>Ikke angitt</p>
+                <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>@Registers.NotSet</p>
             }
             else
             {
@@ -72,7 +72,7 @@
 
             @if (Model.nationalSeasRequirement == null)
             {
-                <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>Ikke angitt</p>
+                <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>@Registers.NotSet</p>
             }
             else
             {
@@ -85,7 +85,7 @@
             }
             else
             {
-                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span><a href="@Model.externalReference">Vis<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
         </div>
     </div>

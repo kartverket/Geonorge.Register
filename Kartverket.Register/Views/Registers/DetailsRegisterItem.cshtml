@@ -85,7 +85,7 @@
                 <div class="col-md-3">Kandidatdato:</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.Kandidatdato)</div>
             </div>
             <div class="row">
-                <div class="col-md-3">Endret:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
+                <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
             </div>
             <div class="row">
                 <div class="col-md-3">Innsender:</div><div class="col-md-9"> @Model.submitter.name</div>
@@ -224,7 +224,7 @@
             </div>
             <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
                 @*<span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>*@
-                <span class="small">Endret: @Html.DisplayFor(model => model.modified)</span>
+                <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.modified)</span>
                 @if (Model.register.containedItemClass != "Dataset")
                 {
                     if (Model.dateAccepted != null)

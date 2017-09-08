@@ -20,7 +20,7 @@
                 <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-descripton">
                     @if (item.description == null)
                     {
-                        <p title="Innhold er ikke angitt for @item.name."><span>Tjeneste: </span>Ikke angitt</p>
+                        <p title="Innhold er ikke angitt for @item.name."><span>Tjeneste: </span>@Registers.NotSet</p>
                     }
                     else
                     {
@@ -31,7 +31,7 @@
                 <div class="col-actions col-xs-6 col-sm-6 col-md-2 col-lg-2">
                     @if (item.serviceUrl == null)
                     {
-                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>Ikke angitt</p>
+                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>@Registers.NotSet</p>
                     }
                     else
                     {

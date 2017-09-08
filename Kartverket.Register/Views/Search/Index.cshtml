@@ -16,7 +16,7 @@
 
 @helper DisplayPagination()
 {
-    <p class="text-right">Viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</p>
+    <p class="text-right">@Registers.HitsDisplay @Model.ShowingFromAndTo() @Registers.HitsOf @Model.NumFound @Registers.Hits.</p>
     <nav class="text-right">
         <ul class="pagination">
             @if (Model.IsPreviousButtonActive())

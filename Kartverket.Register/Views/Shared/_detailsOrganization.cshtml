@@ -14,7 +14,7 @@
             }
             else
             {
-                <span>Avtaledokument: Ikke angitt</span>
+                <span>Avtaledokument: @Registers.NotSet</span>
             }
 
             <span class="pull-right" title="Avtaledokumentet ble godkjent @Model.agreementYear">Godkjent år: @Html.DisplayFor(m => m.agreementYear)</span>
@@ -29,7 +29,7 @@
                 }
                 else
                 {
-                    <span>Prisskjema/Kalkulator: Ikke angitt</span>
+                    <span>Prisskjema/Kalkulator: @Registers.NotSet</span>
                 }
             </p>
         }
@@ -49,7 +49,7 @@
             }
             else
             {
-                <span>Ikke angitt</span>
+                <span>@Registers.NotSet</span>
             }
         </p>
 
@@ -66,8 +66,8 @@
                 }
                 else
                 {
-                    <text>Ikke angitt</text>
-                }
+                    <text>@Registers.NotSet</text>
+}
             </p>
 
             <p>Geografisk utstrekning:
@@ -82,8 +82,8 @@
                 }
                 else
                 {
-                    <text>Ikke angitt</text>
-                }
+                    <text>@Registers.NotSet</text>
+}
             </p>
         }
 

@@ -132,6 +132,15 @@
   <data name="DOKCoverageContent" xml:space="preserve">
     <value>The coverage map shows which data sets in the public map of the map are covered by the various municipalities.</value>
   </data>
+  <data name="Hits" xml:space="preserve">
+    <value>hits</value>
+  </data>
+  <data name="HitsDisplay" xml:space="preserve">
+    <value>Showing</value>
+  </data>
+  <data name="HitsOf" xml:space="preserve">
+    <value>of</value>
+  </data>
   <data name="Kartografi" xml:space="preserve">
     <value>Cartography</value>
   </data>
@@ -158,5 +167,8 @@
   </data>
   <data name="SymbolContent" xml:space="preserve">
     <value>This registry contains symbols used for styling digital cartography and for use in the graphics industry.</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Updated</value>
   </data>
 </root>

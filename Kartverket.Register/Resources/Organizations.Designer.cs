@@ -61,11 +61,227 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Administrasjon.
+        /// </summary>
+        public static string Administration {
+            get {
+                return ResourceManager.GetString("Administration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avtaledokument.
+        /// </summary>
+        public static string AgreementDocumentUrl {
+            get {
+                return ResourceManager.GetString("AgreementDocumentUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Avtale godkjent år.
+        /// </summary>
+        public static string AgreementYear {
+            get {
+                return ResourceManager.GetString("AgreementYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - øst.
+        /// </summary>
+        public static string BoundingBoxEast {
+            get {
+                return ResourceManager.GetString("BoundingBoxEast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - nord.
+        /// </summary>
+        public static string BoundingBoxNorth {
+            get {
+                return ResourceManager.GetString("BoundingBoxNorth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - sør.
+        /// </summary>
+        public static string BoundingBoxSouth {
+            get {
+                return ResourceManager.GetString("BoundingBoxSouth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - vest.
+        /// </summary>
+        public static string BoundingBoxWest {
+            get {
+                return ResourceManager.GetString("BoundingBoxWest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontaktperson.
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontaktperson.
+        /// </summary>
+        public static string ContactName {
+            get {
+                return ResourceManager.GetString("ContactName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå ny organisasjon.
         /// </summary>
         public static string CreateNew {
             get {
                 return ResourceManager.GetString("CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato bekreftet for registrering av kommunalt DOK.
+        /// </summary>
+        public static string DateConfirmedMunicipalDOK {
+            get {
+                return ResourceManager.GetString("DateConfirmedMunicipalDOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dokumenter.
+        /// </summary>
+        public static string Documents {
+            get {
+                return ResourceManager.GetString("Documents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Øst.
+        /// </summary>
+        public static string East {
+            get {
+                return ResourceManager.GetString("East", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-postadresse.
+        /// </summary>
+        public static string EmailAddress {
+            get {
+                return ResourceManager.GetString("EmailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk senterpunkt.
+        /// </summary>
+        public static string GeographicCenterPoint {
+            get {
+                return ResourceManager.GetString("GeographicCenterPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk senterpunkt - x.
+        /// </summary>
+        public static string GeographicCenterX {
+            get {
+                return ResourceManager.GetString("GeographicCenterX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk senterpunkt - y.
+        /// </summary>
+        public static string GeographicCenterY {
+            get {
+                return ResourceManager.GetString("GeographicCenterY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning.
+        /// </summary>
+        public static string GeographicExtent {
+            get {
+                return ResourceManager.GetString("GeographicExtent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stor logo.
+        /// </summary>
+        public static string LargeLogo {
+            get {
+                return ResourceManager.GetString("LargeLogo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Norge digitaltmedlem.
+        /// </summary>
+        public static string Member {
+            get {
+                return ResourceManager.GetString("Member", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunenummer.
+        /// </summary>
+        public static string MunicipalityCode {
+            get {
+                return ResourceManager.GetString("MunicipalityCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821..
+        /// </summary>
+        public static string MunicipalityHelp {
+            get {
+                return ResourceManager.GetString("MunicipalityHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommuneinformasjon.
+        /// </summary>
+        public static string MunicipalityInformation {
+            get {
+                return ResourceManager.GetString("MunicipalityInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nei.
+        /// </summary>
+        public static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nord.
+        /// </summary>
+        public static string North {
+            get {
+                return ResourceManager.GetString("North", resourceCulture);
             }
         }
         
@@ -111,6 +327,78 @@ namespace Resources {
         public static string Organization_s {
             get {
                 return ResourceManager.GetString("Organization_s", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Organisasjonstype.
+        /// </summary>
+        public static string OrganizationType {
+            get {
+                return ResourceManager.GetString("OrganizationType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommune.
+        /// </summary>
+        public static string OrganizationTypeMunicipality {
+            get {
+                return ResourceManager.GetString("OrganizationTypeMunicipality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordinær.
+        /// </summary>
+        public static string OrganizationTypeRegular {
+            get {
+                return ResourceManager.GetString("OrganizationTypeRegular", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prisskjema/Kalkulator.
+        /// </summary>
+        public static string PriceFormDocument {
+            get {
+                return ResourceManager.GetString("PriceFormDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kortnavn.
+        /// </summary>
+        public static string Shortname {
+            get {
+                return ResourceManager.GetString("Shortname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sør.
+        /// </summary>
+        public static string South {
+            get {
+                return ResourceManager.GetString("South", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vest.
+        /// </summary>
+        public static string West {
+            get {
+                return ResourceManager.GetString("West", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ja.
+        /// </summary>
+        public static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

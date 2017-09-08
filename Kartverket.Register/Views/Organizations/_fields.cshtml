@@ -58,7 +58,7 @@
     }
 
     <hr />
-    <h3>Kontaktperson</h3>
+    <h3>@Organizations.Contact</h3>
     <div class="form-group">
         @Html.LabelFor(model => model.contact, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -79,17 +79,17 @@
         @Html.LabelFor(model => model.member, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="col-md-1">
-                @Html.RadioButtonFor(m => m.member, "true") Ja
+                @Html.RadioButtonFor(m => m.member, "true") @Organizations.Yes
             </div>
             <div class="col-md-1">
-                @Html.RadioButtonFor(m => m.member, "false") Nei
+                @Html.RadioButtonFor(m => m.member, "false") @Organizations.No
             </div>
             @Html.ValidationMessageFor(model => model.member, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <hr />
-    <h3>Dokumenter</h3>
+    <h3>@Organizations.Documents</h3>
 
     <div class="form-group">
         @Html.LabelFor(model => model.agreementDocumentUrl, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -150,16 +150,16 @@
     </div>
 
     <hr />
-    <h3>Organisasjonstype</h3>
+    <h3>@Organizations.OrganizationType</h3>
 
     <div class="form-group">
         @Html.LabelFor(model => model.OrganizationType, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="col-md-2">
-                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Regular) Ordinær
+                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Regular) @Organizations.OrganizationTypeRegular
             </div>
             <div class="col-md-2">
-                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Municipality) Kommune
+                @Html.RadioButtonFor(m => m.OrganizationType, OrganizationType.Municipality) @Organizations.OrganizationTypeMunicipality
             </div>
             @Html.ValidationMessageFor(model => model.OrganizationType, "", new { @class = "text-danger" })
         </div>
@@ -167,11 +167,11 @@
 
     <div id="municipality-attributes" style="display: none;">
         <hr />
-        <h3>Kommuneinformasjon</h3>
+        <h3>@Organizations.MunicipalityInformation</h3>
 
         <div class="form-group">
             <p class="help-text bg-success" id="help-text-municipality-code" style="display: none;">
-                Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821.
+                @Organizations.MunicipalityHelp
             </p>
             @Html.LabelFor(model => model.MunicipalityCode, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">

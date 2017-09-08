@@ -142,11 +142,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generell informasjon.
+        /// </summary>
+        public static string GeneralInformation {
+            get {
+                return ResourceManager.GetString("GeneralInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registrene.
         /// </summary>
         public static string Heading {
             get {
                 return ResourceManager.GetString("Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Liste.
+        /// </summary>
+        public static string LayoutList {
+            get {
+                return ResourceManager.GetString("LayoutList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tabell.
+        /// </summary>
+        public static string LayoutTable {
+            get {
+                return ResourceManager.GetString("LayoutTable", resourceCulture);
             }
         }
         

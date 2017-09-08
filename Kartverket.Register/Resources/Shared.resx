@@ -171,4 +171,13 @@
   <data name="SaveAs" xml:space="preserve">
     <value>Lagre som</value>
   </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>Generell informasjon</value>
+  </data>
+  <data name="LayoutList" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="LayoutTable" xml:space="preserve">
+    <value>Tabell</value>
+  </data>
 </root>

@@ -1222,9 +1222,129 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.Administration">
+            <summary>
+              Looks up a localized string similar to Administrasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.AgreementDocumentUrl">
+            <summary>
+              Looks up a localized string similar to Avtaledokument.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.AgreementYear">
+            <summary>
+              Looks up a localized string similar to Avtale godkjent år.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxEast">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - øst.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxNorth">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - nord.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxSouth">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - sør.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxWest">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - vest.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Contact">
+            <summary>
+              Looks up a localized string similar to Kontaktperson.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.ContactName">
+            <summary>
+              Looks up a localized string similar to Kontaktperson.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.CreateNew">
             <summary>
               Looks up a localized string similar to Foreslå ny organisasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.DateConfirmedMunicipalDOK">
+            <summary>
+              Looks up a localized string similar to Dato bekreftet for registrering av kommunalt DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Documents">
+            <summary>
+              Looks up a localized string similar to Dokumenter.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.East">
+            <summary>
+              Looks up a localized string similar to Øst.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.EmailAddress">
+            <summary>
+              Looks up a localized string similar to E-postadresse.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterPoint">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterX">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - x.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterY">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - y.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicExtent">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.LargeLogo">
+            <summary>
+              Looks up a localized string similar to Stor logo.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Member">
+            <summary>
+              Looks up a localized string similar to Norge digitaltmedlem.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityCode">
+            <summary>
+              Looks up a localized string similar to Kommunenummer.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityHelp">
+            <summary>
+              Looks up a localized string similar to Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821..
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityInformation">
+            <summary>
+              Looks up a localized string similar to Kommuneinformasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.No">
+            <summary>
+              Looks up a localized string similar to Nei.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.North">
+            <summary>
+              Looks up a localized string similar to Nord.
             </summary>
         </member>
         <member name="P:Resources.Organizations.Organization">
@@ -1250,6 +1370,46 @@
         <member name="P:Resources.Organizations.Organization_s">
             <summary>
               Looks up a localized string similar to Organisasjoner.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationType">
+            <summary>
+              Looks up a localized string similar to Organisasjonstype.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeMunicipality">
+            <summary>
+              Looks up a localized string similar to Kommune.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeRegular">
+            <summary>
+              Looks up a localized string similar to Ordinær.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.PriceFormDocument">
+            <summary>
+              Looks up a localized string similar to Prisskjema/Kalkulator.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Shortname">
+            <summary>
+              Looks up a localized string similar to Kortnavn.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.South">
+            <summary>
+              Looks up a localized string similar to Sør.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.West">
+            <summary>
+              Looks up a localized string similar to Vest.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Yes">
+            <summary>
+              Looks up a localized string similar to Ja.
             </summary>
         </member>
         <member name="T:Resources.Registers">
@@ -1429,9 +1589,24 @@
               Looks up a localized string similar to Rediger.
             </summary>
         </member>
+        <member name="P:Resources.Shared.GeneralInformation">
+            <summary>
+              Looks up a localized string similar to Generell informasjon.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Heading">
             <summary>
               Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.LayoutList">
+            <summary>
+              Looks up a localized string similar to Liste.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.LayoutTable">
+            <summary>
+              Looks up a localized string similar to Tabell.
             </summary>
         </member>
         <member name="P:Resources.Shared.Navn_Engelsk">

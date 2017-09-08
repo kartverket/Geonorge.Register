@@ -286,7 +286,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Datasett overordnet kategorisering.
+        ///   Looks up a localized string similar to Temagruppe.
         /// </summary>
         public static string DOK_Temagruppe {
             get {

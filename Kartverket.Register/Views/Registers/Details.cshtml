@@ -178,10 +178,10 @@
 
         @if (Model.HasParentRegister())
             {
-            <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="@Model.parentRegister.GetObjectUrl()">@Shared.Back</a>
+            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.parentRegister.GetObjectUrl()">@Shared.Back</a>
         }
         else {
-            <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="/">@Shared.Back</a>
+            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="/">@Shared.Back</a>
         }
     </div>
 </div>

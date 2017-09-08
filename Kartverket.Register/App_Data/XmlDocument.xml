@@ -1101,7 +1101,7 @@
         </member>
         <member name="P:Resources.DataSet.DOK_Temagruppe">
             <summary>
-              Looks up a localized string similar to Datasett overordnet kategorisering.
+              Looks up a localized string similar to Temagruppe.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Tittel">

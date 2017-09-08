@@ -193,7 +193,7 @@
     <value>Data set its status</value>
   </data>
   <data name="DOK_Temagruppe" xml:space="preserve">
-    <value>Data set overall categorization</value>
+    <value>Theme group</value>
   </data>
   <data name="DOK_Tittel" xml:space="preserve">
     <value>Official Title (Name) of Data Set</value>

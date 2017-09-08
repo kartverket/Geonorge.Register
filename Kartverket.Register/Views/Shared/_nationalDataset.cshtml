@@ -163,9 +163,9 @@
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata">
-        <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
+        <div class="col-md-3 col-sm-2">@OrderByLink(Shared.Title, "name")</div>
         <div class="col-md-2">@OrderByLink(Registers.Owner, "datasetOwner")</div>
-        <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
+        <div class="col-md-2">@OrderByLink(DataSet.DOK_Temagruppe, "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
             @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
             @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-produktark")
@@ -184,8 +184,8 @@
     @foreach (Dataset item in Model)
     {
         <div class="row result-row metadata">
-            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.name </a></div>
-            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.name </a></div>
+            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
             <div class="col-md-2">
                 @if (item.ThemeGroupId != null)
                 {

@@ -193,7 +193,7 @@
     <value>Datasettet sin status</value>
   </data>
   <data name="DOK_Temagruppe" xml:space="preserve">
-    <value>Datasett overordnet kategorisering</value>
+    <value>Temagruppe</value>
   </data>
   <data name="DOK_Tittel" xml:space="preserve">
     <value>Offisiell tittel (navn) på datasett</value>

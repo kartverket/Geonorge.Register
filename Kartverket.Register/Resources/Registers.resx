@@ -177,4 +177,7 @@
   <data name="Propose" xml:space="preserve">
     <value>Foreslå</value>
   </data>
+  <data name="ContainedItemClass" xml:space="preserve">
+    <value>Lovlig innhold</value>
+  </data>
 </root>

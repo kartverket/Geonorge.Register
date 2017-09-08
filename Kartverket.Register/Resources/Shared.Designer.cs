@@ -248,5 +248,14 @@ namespace Resources {
                 return ResourceManager.GetString("Search_Placeholder", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tittel.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
     }
 }

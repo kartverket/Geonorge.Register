@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lovlig innhold.
+        /// </summary>
+        public static string ContainedItemClass {
+            get {
+                return ResourceManager.GetString("ContainedItemClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innhold.
         /// </summary>
         public static string Content {

@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Vertikalt.
+        /// </summary>
+        public static string Horizontal {
+            get {
+                return ResourceManager.GetString("Horizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Horisontalt referansesystem.
         /// </summary>
         public static string HorizontalReferenceSystem {
@@ -151,11 +160,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Referanser.
+        /// </summary>
+        public static string References {
+            get {
+                return ResourceManager.GetString("References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SOSI referansesystem.
         /// </summary>
         public static string SosiReferencesystem {
             get {
                 return ResourceManager.GetString("SosiReferencesystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horisontalt.
+        /// </summary>
+        public static string Vertical {
+            get {
+                return ResourceManager.GetString("Vertical", resourceCulture);
             }
         }
         

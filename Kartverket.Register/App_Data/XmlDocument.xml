@@ -1156,6 +1156,11 @@
               Looks up a localized string similar to Ekstern referanser.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.Horizontal">
+            <summary>
+              Looks up a localized string similar to Vertikalt.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.HorizontalReferenceSystem">
             <summary>
               Looks up a localized string similar to Horisontalt referansesystem.
@@ -1196,9 +1201,19 @@
               Looks up a localized string similar to Beskrivelse av krav.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.References">
+            <summary>
+              Looks up a localized string similar to Referanser.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.SosiReferencesystem">
             <summary>
               Looks up a localized string similar to SOSI referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.Vertical">
+            <summary>
+              Looks up a localized string similar to Horisontalt.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.VerticalReferenceSystem">
@@ -1438,6 +1453,11 @@
               Looks up a localized string similar to Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang.
             </summary>
         </member>
+        <member name="P:Resources.Registers.ContainedItemClass">
+            <summary>
+              Looks up a localized string similar to Lovlig innhold.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Content">
             <summary>
               Looks up a localized string similar to Innhold.
@@ -1647,6 +1667,11 @@
         <member name="P:Resources.Shared.Search_Placeholder">
             <summary>
               Looks up a localized string similar to Søk etter registerdata.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Title">
+            <summary>
+              Looks up a localized string similar to Tittel.
             </summary>
         </member>
     </members>

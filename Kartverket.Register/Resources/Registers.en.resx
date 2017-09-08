@@ -177,4 +177,7 @@
   <data name="Propose" xml:space="preserve">
     <value>Propose</value>
   </data>
+  <data name="ContainedItemClass" xml:space="preserve">
+    <value>Legal content</value>
+  </data>
 </root>

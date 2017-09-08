@@ -1312,6 +1312,7 @@
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
+    <Content Include="Views\Shared\_Resources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

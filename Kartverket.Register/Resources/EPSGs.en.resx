@@ -123,6 +123,9 @@
   <data name="ExternalReference" xml:space="preserve">
     <value>External references</value>
   </data>
+  <data name="Horizontal" xml:space="preserve">
+    <value>Horizontal</value>
+  </data>
   <data name="HorizontalReferenceSystem" xml:space="preserve">
     <value>Horizontal Reference System</value>
   </data>
@@ -147,8 +150,14 @@
   <data name="NationalSeasRequirementDescription" xml:space="preserve">
     <value>Description of requirements</value>
   </data>
+  <data name="References" xml:space="preserve">
+    <value>References</value>
+  </data>
   <data name="SosiReferencesystem" xml:space="preserve">
     <value>SOSI reference system</value>
+  </data>
+  <data name="Vertical" xml:space="preserve">
+    <value>Vertical</value>
   </data>
   <data name="VerticalReferenceSystem" xml:space="preserve">
     <value>Vertical reference system</value>

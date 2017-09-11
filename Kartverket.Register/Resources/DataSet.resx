@@ -246,4 +246,16 @@
   <data name="ServiceUuid" xml:space="preserve">
     <value>Tjeneste uuid</value>
   </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Velg kommune</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>Kommunen har {0} bekreftet at registrering er sluttført for året</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>Kommunen jobber med å sluttføre registreringen for året</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>ikke</value>
+  </data>
 </root>

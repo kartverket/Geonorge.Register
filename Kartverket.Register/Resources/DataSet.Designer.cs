@@ -331,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Velg kommune.
+        /// </summary>
+        public static string DOK_Nasjonalt {
+            get {
+                return ResourceManager.GetString("DOK_Nasjonalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
         /// </summary>
         public static string DOK_Nasjonalt_Kommunalt {
@@ -435,6 +444,33 @@ namespace Resources {
         public static string DOK_Tittel {
             get {
                 return ResourceManager.GetString("DOK_Tittel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
+        /// </summary>
+        public static string MunicipalDOKConfirmedInfoPlaceholder {
+            get {
+                return ResourceManager.GetString("MunicipalDOKConfirmedInfoPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunen jobber med å sluttføre registreringen for året.
+        /// </summary>
+        public static string MunicipalDOKStatusDraft {
+            get {
+                return ResourceManager.GetString("MunicipalDOKStatusDraft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ikke.
+        /// </summary>
+        public static string NotConfirmedMunicipalDOK {
+            get {
+                return ResourceManager.GetString("NotConfirmedMunicipalDOK", resourceCulture);
             }
         }
         

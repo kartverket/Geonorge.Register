@@ -183,4 +183,7 @@
   <data name="VersionNumber" xml:space="preserve">
     <value>Version number</value>
   </data>
+  <data name="EditList" xml:space="preserve">
+    <value>Edit list</value>
+  </data>
 </root>

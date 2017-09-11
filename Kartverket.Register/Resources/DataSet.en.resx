@@ -246,4 +246,16 @@
   <data name="ServiceUuid" xml:space="preserve">
     <value>Serice uuid</value>
   </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Select municipality</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>The municipality has {0} confirmed that registration has been completed for the year</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>The municipality is working to complete the registration for the year</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>not</value>
+  </data>
 </root>

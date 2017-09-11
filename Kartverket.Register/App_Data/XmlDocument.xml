@@ -1180,6 +1180,11 @@
               Looks up a localized string similar to Datasettet sin status.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Nasjonalt">
+            <summary>
+              Looks up a localized string similar to Velg kommune.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Nasjonalt_Kommunalt">
             <summary>
               Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
@@ -1238,6 +1243,21 @@
         <member name="P:Resources.DataSet.DOK_Tittel">
             <summary>
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.MunicipalDOKConfirmedInfoPlaceholder">
+            <summary>
+              Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.MunicipalDOKStatusDraft">
+            <summary>
+              Looks up a localized string similar to Kommunen jobber med å sluttføre registreringen for året.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.NotConfirmedMunicipalDOK">
+            <summary>
+              Looks up a localized string similar to ikke.
             </summary>
         </member>
         <member name="P:Resources.DataSet.ServiceUuid">
@@ -1607,6 +1627,11 @@
         <member name="P:Resources.Registers.DOKCoverageContent">
             <summary>
               Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.EditList">
+            <summary>
+              Looks up a localized string similar to Rediger liste.
             </summary>
         </member>
         <member name="P:Resources.Registers.Hits">

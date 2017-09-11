@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rediger liste.
+        /// </summary>
+        public static string EditList {
+            get {
+                return ResourceManager.GetString("EditList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to treff.
         /// </summary>
         public static string Hits {

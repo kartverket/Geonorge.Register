@@ -248,5 +248,14 @@ namespace Resources {
                 return ResourceManager.GetString("Updated", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versjons ID.
+        /// </summary>
+        public static string VersionNumber {
+            get {
+                return ResourceManager.GetString("VersionNumber", resourceCulture);
+            }
+        }
     }
 }

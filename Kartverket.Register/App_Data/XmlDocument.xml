@@ -984,6 +984,16 @@
               Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Datasetthumbnail">
+            <summary>
+              Looks up a localized string similar to Miniatyrbilde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DatasetType">
+            <summary>
+              Looks up a localized string similar to Type datasett.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Delivery_AtomFeed">
             <summary>
               Looks up a localized string similar to Atom-feed status.
@@ -1079,9 +1089,29 @@
               Looks up a localized string similar to Wms status.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Distribusjonsformat">
+            <summary>
+              Looks up a localized string similar to Distribusjonsformat.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DistributionArea">
+            <summary>
+              Looks up a localized string similar to Distribusjonsområde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DistributionUrl">
+            <summary>
+              Looks up a localized string similar to Distribusjon url.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Eier">
             <summary>
               Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_Kandidatdato">
+            <summary>
+              Looks up a localized string similar to Kandidatdato.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Kommentar">
@@ -1099,6 +1129,51 @@
               Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Note">
+            <summary>
+              Looks up a localized string similar to Merknad.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_PresentationRulesStatus">
+            <summary>
+              Looks up a localized string similar to Kartografidokumentasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_PresentationRulesUrl">
+            <summary>
+              Looks up a localized string similar to Presentasjonsregler url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSheetStatus">
+            <summary>
+              Looks up a localized string similar to Produktark.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSheetUrl">
+            <summary>
+              Looks up a localized string similar to Produktark url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSpecificationStatus">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSpecificationUrl">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjon url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_SpecificUsage">
+            <summary>
+              Looks up a localized string similar to Bruksområde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_StatusDateAccepted">
+            <summary>
+              Looks up a localized string similar to DOK-status godkjent.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Temagruppe">
             <summary>
               Looks up a localized string similar to Temagruppe.
@@ -1107,6 +1182,11 @@
         <member name="P:Resources.DataSet.DOK_Tittel">
             <summary>
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.ServiceUuid">
+            <summary>
+              Looks up a localized string similar to Tjeneste uuid.
             </summary>
         </member>
         <member name="T:Resources.CodelistValues">
@@ -1546,6 +1626,11 @@
         <member name="P:Resources.Registers.Updated">
             <summary>
               Looks up a localized string similar to Oppdatert.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.VersionNumber">
+            <summary>
+              Looks up a localized string similar to Versjons ID.
             </summary>
         </member>
         <member name="T:Resources.Shared">

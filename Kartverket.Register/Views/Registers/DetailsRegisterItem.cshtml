@@ -59,12 +59,12 @@
         <div>
             <p> @Model.description</p>
             @if (!string.IsNullOrEmpty(dataset.SpecificUsage)) { 
-            <h3>Bruksområde</h3>
+            <h3>@Html.DisplayNameFor(model => dataset.SpecificUsage)</h3>
             <p> @dataset.SpecificUsage</p>
             }
             <h3>DOK-status</h3>
             <div class="row">
-                <div class="col-md-3">Versjons ID </div><div class="col-md-9">@Model.versionNumber</div>
+                <div class="col-md-3">@Html.DisplayNameFor(m => m.versionNumber) </div><div class="col-md-9">@Model.versionNumber</div>
             </div>
             @if (Model.versionName != null)
             {
@@ -79,10 +79,10 @@
                 </div>
             }
             <div class="row">
-                <div class="col-md-3">DOK-Godkjent:</div><div class="col-md-9"> @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</div>
             </div>
             <div class="row">
-                <div class="col-md-3">Kandidatdato:</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.Kandidatdato)</div>
+                <div class="col-md-3">@Html.DisplayNameFor(model => dataset.Kandidatdato):</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.Kandidatdato)</div>
             </div>
             <div class="row">
                 <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
@@ -99,13 +99,13 @@
             @if (dataset.DatasetType != null)
             {
                 <div class="row">
-                    <div class="col-md-3">Type datasett:</div><div class="col-md-9"> @dataset.DatasetType</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.DatasetType):</div><div class="col-md-9"> @dataset.DatasetType</div>
                 </div>
             }
             @if (dataset.theme != null)
             {
                 <div class="row">
-                    <div class="col-md-3">Temagruppe:</div><div class="col-md-9"> @dataset.theme.description</div>
+                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.ThemeGroupId):</div><div class="col-md-9"> @dataset.theme.description</div>
                 </div>
             }
 
@@ -217,7 +217,7 @@
                 @if (owner != null)
                 { <span>@Registers.Owner: @owner</span><br />}
 
-                <span>Versjons ID @Model.versionNumber</span><br>
+                <span>@Html.DisplayNameFor(m => m.versionNumber) @Model.versionNumber</span><br>
                 @if (Model.versionName != null)
                 {<span>Utgave: @Model.versionName</span><br />}
 

@@ -180,4 +180,7 @@
   <data name="ContainedItemClass" xml:space="preserve">
     <value>Lovlig innhold</value>
   </data>
+  <data name="VersionNumber" xml:space="preserve">
+    <value>Versjons ID</value>
+  </data>
 </root>

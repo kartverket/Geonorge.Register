@@ -79,6 +79,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miniatyrbilde.
+        /// </summary>
+        public static string DOK_Datasetthumbnail {
+            get {
+                return ResourceManager.GetString("DOK_Datasetthumbnail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type datasett.
+        /// </summary>
+        public static string DOK_DatasetType {
+            get {
+                return ResourceManager.GetString("DOK_DatasetType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atom-feed status.
         /// </summary>
         public static string DOK_Delivery_AtomFeed {
@@ -250,11 +268,47 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Distribusjonsformat.
+        /// </summary>
+        public static string DOK_Distribusjonsformat {
+            get {
+                return ResourceManager.GetString("DOK_Distribusjonsformat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribusjonsområde.
+        /// </summary>
+        public static string DOK_DistributionArea {
+            get {
+                return ResourceManager.GetString("DOK_DistributionArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Distribusjon url.
+        /// </summary>
+        public static string DOK_DistributionUrl {
+            get {
+                return ResourceManager.GetString("DOK_DistributionUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
         /// </summary>
         public static string DOK_Eier {
             get {
                 return ResourceManager.GetString("DOK_Eier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kandidatdato.
+        /// </summary>
+        public static string DOK_Kandidatdato {
+            get {
+                return ResourceManager.GetString("DOK_Kandidatdato", resourceCulture);
             }
         }
         
@@ -286,6 +340,87 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Merknad.
+        /// </summary>
+        public static string DOK_Note {
+            get {
+                return ResourceManager.GetString("DOK_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kartografidokumentasjon.
+        /// </summary>
+        public static string DOK_PresentationRulesStatus {
+            get {
+                return ResourceManager.GetString("DOK_PresentationRulesStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Presentasjonsregler url.
+        /// </summary>
+        public static string DOK_PresentationRulesUrl {
+            get {
+                return ResourceManager.GetString("DOK_PresentationRulesUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktark.
+        /// </summary>
+        public static string DOK_ProductSheetStatus {
+            get {
+                return ResourceManager.GetString("DOK_ProductSheetStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktark url.
+        /// </summary>
+        public static string DOK_ProductSheetUrl {
+            get {
+                return ResourceManager.GetString("DOK_ProductSheetUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktspesifikasjon.
+        /// </summary>
+        public static string DOK_ProductSpecificationStatus {
+            get {
+                return ResourceManager.GetString("DOK_ProductSpecificationStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktspesifikasjon url.
+        /// </summary>
+        public static string DOK_ProductSpecificationUrl {
+            get {
+                return ResourceManager.GetString("DOK_ProductSpecificationUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bruksområde.
+        /// </summary>
+        public static string DOK_SpecificUsage {
+            get {
+                return ResourceManager.GetString("DOK_SpecificUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DOK-status godkjent.
+        /// </summary>
+        public static string DOK_StatusDateAccepted {
+            get {
+                return ResourceManager.GetString("DOK_StatusDateAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temagruppe.
         /// </summary>
         public static string DOK_Temagruppe {
@@ -300,6 +435,15 @@ namespace Resources {
         public static string DOK_Tittel {
             get {
                 return ResourceManager.GetString("DOK_Tittel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste uuid.
+        /// </summary>
+        public static string ServiceUuid {
+            get {
+                return ResourceManager.GetString("ServiceUuid", resourceCulture);
             }
         }
     }

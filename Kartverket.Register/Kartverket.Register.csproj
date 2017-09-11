@@ -791,6 +791,16 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\DokCoverage.Designer.cs">
+      <DependentUpon>DokCoverage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DokCoverage.en.Designer.cs">
+      <DependentUpon>DokCoverage.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\DataSet.Designer.cs">
       <DependentUpon>DataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1646,6 +1656,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

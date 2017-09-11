@@ -958,6 +958,62 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
+        <member name="T:Resources.DokCoverage">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.AreaForDataset">
+            <summary>
+              Looks up a localized string similar to Dekningsområde for dette datasettet.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Confirmed">
+            <summary>
+              Looks up a localized string similar to Kommunen har bekreftet dette datasettet.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.DatasetSelection">
+            <summary>
+              Looks up a localized string similar to Velg datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.DokDatasetSelection">
+            <summary>
+              Looks up a localized string similar to Velg DOK-datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ShowMarker">
+            <summary>
+              Looks up a localized string similar to Vis markører.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Title">
+            <summary>
+              Looks up a localized string similar to Dekningskart for DOK-datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ZoomLevelSelection">
+            <summary>
+              Looks up a localized string similar to Velg zoom-nivå.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ZoomLevelSelectionEntireCountry">
+            <summary>
+              Looks up a localized string similar to Hele landet.
+            </summary>
+        </member>
         <member name="T:Resources.DataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

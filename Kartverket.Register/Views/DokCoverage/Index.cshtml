@@ -100,11 +100,11 @@
     var BBSouth = @Model.StateBoundingBox.South;
     var BBNorth = @Model.StateBoundingBox.North;
     xCenter = (BBWest + BBEast) /2;
-    yCenter = (BBSouth + BBNorth) /2;
+    yCenter = (BBSouth + BBNorth) / 2;
 
-    $.getJSON('@WebConfigurationManager.AppSettings["MapUrl"]/ws/trans.py?ost=' + xCenter + '&nord=' + yCenter + '&sosiKoordSys=84&resSosiKoordSys=23', function (result)
+    $.getJSON('@WebConfigurationManager.AppSettings["GeonorgeWebserviceUrl"]/transApi?ost=' + xCenter + '&nord=' + yCenter + '&fra=84&til=23', function (result)
     {
-        if (result.errKode == 0) {
+        if (result.melding == "Ok") {
 
             xCenter = Math.floor(result.ost);
             yCenter = Math.floor(result.nord);

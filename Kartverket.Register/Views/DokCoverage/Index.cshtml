@@ -104,7 +104,7 @@
 
     $.getJSON('@WebConfigurationManager.AppSettings["GeonorgeWebserviceUrl"]/transApi?ost=' + xCenter + '&nord=' + yCenter + '&fra=84&til=23', function (result)
     {
-        if (result.melding == "Ok") {
+        if (result.kode == 0) {
 
             xCenter = Math.floor(result.ost);
             yCenter = Math.floor(result.nord);

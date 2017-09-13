@@ -1,7 +1,9 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Resources;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1133,7 +1135,7 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return "Velg kommune";
+            return DataSet.DOK_Nasjonalt;
         }
 
 
@@ -1141,7 +1143,7 @@ namespace Kartverket.Register.Helpers
         {
             if (municipality != null)
             {
-                string confirmed = "ikke ";
+                string confirmed = DataSet.NotConfirmedMunicipalDOK;
                 string lastDateConfirmedText = "";
                 string status = "danger";
                 if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
@@ -1152,7 +1154,7 @@ namespace Kartverket.Register.Helpers
                 {
                     status = "warning";
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
-                    return "<label class='label-" + status + " label auto-width'>Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                    return "<label class='label-" + status + " label auto-width'>"+ DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {
@@ -1161,7 +1163,7 @@ namespace Kartverket.Register.Helpers
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
                 }
 
-                return "<label class='label-" + status + " label auto-width'>Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                return "<label class='label-" + status + " label auto-width'>" + Resource.MunicipalDOKConfirmedInfo(confirmed) + " "  + DateTime.Now.Year + lastDateConfirmedText + "</label>";
             }
             return "";
         }

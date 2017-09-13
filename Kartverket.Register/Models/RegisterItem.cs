@@ -29,7 +29,7 @@ namespace Kartverket.Register.Models
         public string description { get; set; }
 
         [ForeignKey("submitter")]
-        [Display(Name = "Innsender:")]
+        [Display(Name = "Submitter", ResourceType = typeof(Registers))]
         public Guid submitterId { get; set; }
         public virtual Organization submitter { get; set; }
 
@@ -72,7 +72,7 @@ namespace Kartverket.Register.Models
         public Guid versioningId { get; set; }
         public virtual Version versioning { get; set; }
 
-        [Display(Name = "Versjons ID:")]
+        [Display(Name = "VersionNumber", ResourceType = typeof(Registers))]
         public int versionNumber { get; set; }
 
         [Display(Name = "Utgave:")]

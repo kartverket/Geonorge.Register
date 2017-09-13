@@ -1,8 +1,8 @@
 ﻿@Shared.DisplayTypeSelect:
 <div class="custom-select">
     <select onchange="changeLayout(this)" class="form-control" id="layoutSelectList">
-        <option id="layout-tabell" title="Tabellvisning">Tabell</option>
+        <option id="layout-tabell" title="Tabellvisning">@Shared.LayoutTable</option>
         @if(Model.Register.name != "Det offentlige kartgrunnlaget - Kommunalt")
-        { <option id="layout-liste" title="Listevisning">Liste</option>}
+        { <option id="layout-liste" title="Listevisning">@Shared.LayoutList</option>}
     </select>
 </div>

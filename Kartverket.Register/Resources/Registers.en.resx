@@ -171,4 +171,19 @@
   <data name="Updated" xml:space="preserve">
     <value>Updated</value>
   </data>
+  <data name="Submitter" xml:space="preserve">
+    <value>Submitter</value>
+  </data>
+  <data name="Propose" xml:space="preserve">
+    <value>Propose</value>
+  </data>
+  <data name="ContainedItemClass" xml:space="preserve">
+    <value>Legal content</value>
+  </data>
+  <data name="VersionNumber" xml:space="preserve">
+    <value>Version number</value>
+  </data>
+  <data name="EditList" xml:space="preserve">
+    <value>Edit list</value>
+  </data>
 </root>

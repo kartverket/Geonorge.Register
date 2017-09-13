@@ -135,4 +135,100 @@
   <data name="CreateNew" xml:space="preserve">
     <value>Foreslå ny organisasjon</value>
   </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administrasjon</value>
+  </data>
+  <data name="AgreementDocumentUrl" xml:space="preserve">
+    <value>Avtaledokument</value>
+  </data>
+  <data name="AgreementYear" xml:space="preserve">
+    <value>Avtale godkjent år</value>
+  </data>
+  <data name="BoundingBoxEast" xml:space="preserve">
+    <value>Geografisk utstrekning - øst</value>
+  </data>
+  <data name="BoundingBoxNorth" xml:space="preserve">
+    <value>Geografisk utstrekning - nord</value>
+  </data>
+  <data name="BoundingBoxSouth" xml:space="preserve">
+    <value>Geografisk utstrekning - sør</value>
+  </data>
+  <data name="BoundingBoxWest" xml:space="preserve">
+    <value>Geografisk utstrekning - vest</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Kontaktperson</value>
+  </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>Kontaktperson</value>
+  </data>
+  <data name="DateConfirmedMunicipalDOK" xml:space="preserve">
+    <value>Dato bekreftet for registrering av kommunalt DOK</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Dokumenter</value>
+  </data>
+  <data name="East" xml:space="preserve">
+    <value>Øst</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>E-postadresse</value>
+  </data>
+  <data name="GeographicCenterPoint" xml:space="preserve">
+    <value>Geografisk senterpunkt</value>
+  </data>
+  <data name="GeographicCenterX" xml:space="preserve">
+    <value>Geografisk senterpunkt - x</value>
+  </data>
+  <data name="GeographicCenterY" xml:space="preserve">
+    <value>Geografisk senterpunkt - y</value>
+  </data>
+  <data name="GeographicExtent" xml:space="preserve">
+    <value>Geografisk utstrekning</value>
+  </data>
+  <data name="LargeLogo" xml:space="preserve">
+    <value>Stor logo</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Norge digitaltmedlem</value>
+  </data>
+  <data name="MunicipalityCode" xml:space="preserve">
+    <value>Kommunenummer</value>
+  </data>
+  <data name="MunicipalityHelp" xml:space="preserve">
+    <value>Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821.</value>
+  </data>
+  <data name="MunicipalityInformation" xml:space="preserve">
+    <value>Kommuneinformasjon</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nei</value>
+  </data>
+  <data name="North" xml:space="preserve">
+    <value>Nord</value>
+  </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Organisasjonstype</value>
+  </data>
+  <data name="OrganizationTypeMunicipality" xml:space="preserve">
+    <value>Kommune</value>
+  </data>
+  <data name="OrganizationTypeRegular" xml:space="preserve">
+    <value>Ordinær</value>
+  </data>
+  <data name="PriceFormDocument" xml:space="preserve">
+    <value>Prisskjema/Kalkulator</value>
+  </data>
+  <data name="Shortname" xml:space="preserve">
+    <value>Kortnavn</value>
+  </data>
+  <data name="South" xml:space="preserve">
+    <value>Sør</value>
+  </data>
+  <data name="West" xml:space="preserve">
+    <value>Vest</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
 </root>

@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lovlig innhold.
+        /// </summary>
+        public static string ContainedItemClass {
+            get {
+                return ResourceManager.GetString("ContainedItemClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innhold.
         /// </summary>
         public static string Content {
@@ -102,6 +111,15 @@ namespace Resources {
         public static string DOKCoverageContent {
             get {
                 return ResourceManager.GetString("DOKCoverageContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rediger liste.
+        /// </summary>
+        public static string EditList {
+            get {
+                return ResourceManager.GetString("EditList", resourceCulture);
             }
         }
         
@@ -205,6 +223,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foreslå.
+        /// </summary>
+        public static string Propose {
+            get {
+                return ResourceManager.GetString("Propose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Innsender.
+        /// </summary>
+        public static string Submitter {
+            get {
+                return ResourceManager.GetString("Submitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
         /// </summary>
         public static string SymbolContent {
@@ -219,6 +255,15 @@ namespace Resources {
         public static string Updated {
             get {
                 return ResourceManager.GetString("Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Versjons ID.
+        /// </summary>
+        public static string VersionNumber {
+            get {
+                return ResourceManager.GetString("VersionNumber", resourceCulture);
             }
         }
     }

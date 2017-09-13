@@ -162,7 +162,7 @@
                         {
                             if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                             {
-                            <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">Rediger liste</a>
+                            <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
                             <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
                         }
                     }
@@ -183,10 +183,10 @@
 
         @if (Model.Register.HasParentRegister())
             {
-            <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="@Model.Register.parentRegister.GetObjectUrl()">@Shared.Back</a>
+            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.parentRegister.GetObjectUrl()">@Shared.Back</a>
         }
         else {
-            <a class="hidden-print show-loading-animation" data-loading-message="Henter innhold" href="/">@Shared.Back</a>
+            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="/">@Shared.Back</a>
         }
     </div>
 </div>

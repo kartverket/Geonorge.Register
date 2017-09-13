@@ -804,6 +804,16 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\DokCoverage.Designer.cs">
+      <DependentUpon>DokCoverage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DokCoverage.en.Designer.cs">
+      <DependentUpon>DokCoverage.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\DataSet.Designer.cs">
       <DependentUpon>DataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -854,6 +864,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Resource.cs" />
     <Compile Include="Resources\Shared.en.Designer.cs">
       <DependentUpon>Shared.en.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1335,6 +1346,7 @@
     <Content Include="Views\InspireDatasets\Index.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
     <Content Include="settings.config" />
+    <Content Include="Views\Shared\_Resources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1668,6 +1680,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709050928505_AddInspireDataset.resx">
       <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>

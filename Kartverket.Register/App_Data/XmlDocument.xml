@@ -958,6 +958,62 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
+        <member name="T:Resources.DokCoverage">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.AreaForDataset">
+            <summary>
+              Looks up a localized string similar to Dekningsområde for dette datasettet.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Confirmed">
+            <summary>
+              Looks up a localized string similar to Kommunen har bekreftet dette datasettet.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.DatasetSelection">
+            <summary>
+              Looks up a localized string similar to Velg datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.DokDatasetSelection">
+            <summary>
+              Looks up a localized string similar to Velg DOK-datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ShowMarker">
+            <summary>
+              Looks up a localized string similar to Vis markører.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.Title">
+            <summary>
+              Looks up a localized string similar to Dekningskart for DOK-datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ZoomLevelSelection">
+            <summary>
+              Looks up a localized string similar to Velg zoom-nivå.
+            </summary>
+        </member>
+        <member name="P:Resources.DokCoverage.ZoomLevelSelectionEntireCountry">
+            <summary>
+              Looks up a localized string similar to Hele landet.
+            </summary>
+        </member>
         <member name="T:Resources.DataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -1002,6 +1058,16 @@
         <member name="P:Resources.DataSet.DOK_Coverage_Municipality">
             <summary>
               Looks up a localized string similar to Dekning viser om datasettet faktisk finnes i kommunen.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_Datasetthumbnail">
+            <summary>
+              Looks up a localized string similar to Miniatyrbilde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DatasetType">
+            <summary>
+              Looks up a localized string similar to Type datasett.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Delivery_AtomFeed">
@@ -1099,9 +1165,29 @@
               Looks up a localized string similar to Wms status.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Distribusjonsformat">
+            <summary>
+              Looks up a localized string similar to Distribusjonsformat.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DistributionArea">
+            <summary>
+              Looks up a localized string similar to Distribusjonsområde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_DistributionUrl">
+            <summary>
+              Looks up a localized string similar to Distribusjon url.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Eier">
             <summary>
               Looks up a localized string similar to Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_Kandidatdato">
+            <summary>
+              Looks up a localized string similar to Kandidatdato.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Kommentar">
@@ -1114,19 +1200,89 @@
               Looks up a localized string similar to Datasettet sin status.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Nasjonalt">
+            <summary>
+              Looks up a localized string similar to Velg kommune.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Nasjonalt_Kommunalt">
             <summary>
               Looks up a localized string similar to Viser om datasettet er nasjonalt eller kommunalt.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Note">
+            <summary>
+              Looks up a localized string similar to Merknad.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_PresentationRulesStatus">
+            <summary>
+              Looks up a localized string similar to Kartografidokumentasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_PresentationRulesUrl">
+            <summary>
+              Looks up a localized string similar to Presentasjonsregler url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSheetStatus">
+            <summary>
+              Looks up a localized string similar to Produktark.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSheetUrl">
+            <summary>
+              Looks up a localized string similar to Produktark url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSpecificationStatus">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_ProductSpecificationUrl">
+            <summary>
+              Looks up a localized string similar to Produktspesifikasjon url.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_SpecificUsage">
+            <summary>
+              Looks up a localized string similar to Bruksområde.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_StatusDateAccepted">
+            <summary>
+              Looks up a localized string similar to DOK-status godkjent.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Temagruppe">
             <summary>
-              Looks up a localized string similar to Datasett overordnet kategorisering.
+              Looks up a localized string similar to Temagruppe.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Tittel">
             <summary>
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.MunicipalDOKConfirmedInfoPlaceholder">
+            <summary>
+              Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.MunicipalDOKStatusDraft">
+            <summary>
+              Looks up a localized string similar to Kommunen jobber med å sluttføre registreringen for året.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.NotConfirmedMunicipalDOK">
+            <summary>
+              Looks up a localized string similar to ikke.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.ServiceUuid">
+            <summary>
+              Looks up a localized string similar to Tjeneste uuid.
             </summary>
         </member>
         <member name="T:Resources.CodelistValues">
@@ -1166,9 +1322,79 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.Dimension">
+            <summary>
+              Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.ExternalReference">
+            <summary>
+              Looks up a localized string similar to Ekstern referanser.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.Horizontal">
+            <summary>
+              Looks up a localized string similar to Vertikalt.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.HorizontalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Horisontalt referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.InspireRequirement">
+            <summary>
+              Looks up a localized string similar to Inspirekrav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.InspireRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.InspireRequirementDescription_Engelsk">
             <summary>
               Looks up a localized string similar to Beskrivelse av krav engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalRequirement">
+            <summary>
+              Looks up a localized string similar to Nasjonalt krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalSeasRequirement">
+            <summary>
+              Looks up a localized string similar to Nasjonalt krav for havområder.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.NationalSeasRequirementDescription">
+            <summary>
+              Looks up a localized string similar to Beskrivelse av krav.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.References">
+            <summary>
+              Looks up a localized string similar to Referanser.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.SosiReferencesystem">
+            <summary>
+              Looks up a localized string similar to SOSI referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.Vertical">
+            <summary>
+              Looks up a localized string similar to Horisontalt.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.VerticalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Vertikalt referansesystem.
             </summary>
         </member>
         <member name="T:Resources.Organizations">
@@ -1187,9 +1413,129 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.Administration">
+            <summary>
+              Looks up a localized string similar to Administrasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.AgreementDocumentUrl">
+            <summary>
+              Looks up a localized string similar to Avtaledokument.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.AgreementYear">
+            <summary>
+              Looks up a localized string similar to Avtale godkjent år.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxEast">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - øst.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxNorth">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - nord.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxSouth">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - sør.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxWest">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - vest.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Contact">
+            <summary>
+              Looks up a localized string similar to Kontaktperson.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.ContactName">
+            <summary>
+              Looks up a localized string similar to Kontaktperson.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.CreateNew">
             <summary>
               Looks up a localized string similar to Foreslå ny organisasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.DateConfirmedMunicipalDOK">
+            <summary>
+              Looks up a localized string similar to Dato bekreftet for registrering av kommunalt DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Documents">
+            <summary>
+              Looks up a localized string similar to Dokumenter.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.East">
+            <summary>
+              Looks up a localized string similar to Øst.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.EmailAddress">
+            <summary>
+              Looks up a localized string similar to E-postadresse.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterPoint">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterX">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - x.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterY">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - y.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicExtent">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.LargeLogo">
+            <summary>
+              Looks up a localized string similar to Stor logo.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Member">
+            <summary>
+              Looks up a localized string similar to Norge digitaltmedlem.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityCode">
+            <summary>
+              Looks up a localized string similar to Kommunenummer.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityHelp">
+            <summary>
+              Looks up a localized string similar to Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821..
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.MunicipalityInformation">
+            <summary>
+              Looks up a localized string similar to Kommuneinformasjon.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.No">
+            <summary>
+              Looks up a localized string similar to Nei.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.North">
+            <summary>
+              Looks up a localized string similar to Nord.
             </summary>
         </member>
         <member name="P:Resources.Organizations.Organization">
@@ -1215,6 +1561,46 @@
         <member name="P:Resources.Organizations.Organization_s">
             <summary>
               Looks up a localized string similar to Organisasjoner.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationType">
+            <summary>
+              Looks up a localized string similar to Organisasjonstype.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeMunicipality">
+            <summary>
+              Looks up a localized string similar to Kommune.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.OrganizationTypeRegular">
+            <summary>
+              Looks up a localized string similar to Ordinær.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.PriceFormDocument">
+            <summary>
+              Looks up a localized string similar to Prisskjema/Kalkulator.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Shortname">
+            <summary>
+              Looks up a localized string similar to Kortnavn.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.South">
+            <summary>
+              Looks up a localized string similar to Sør.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.West">
+            <summary>
+              Looks up a localized string similar to Vest.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.Yes">
+            <summary>
+              Looks up a localized string similar to Ja.
             </summary>
         </member>
         <member name="T:Resources.Registers">
@@ -1243,6 +1629,11 @@
               Looks up a localized string similar to Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang.
             </summary>
         </member>
+        <member name="P:Resources.Registers.ContainedItemClass">
+            <summary>
+              Looks up a localized string similar to Lovlig innhold.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Content">
             <summary>
               Looks up a localized string similar to Innhold.
@@ -1256,6 +1647,11 @@
         <member name="P:Resources.Registers.DOKCoverageContent">
             <summary>
               Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.EditList">
+            <summary>
+              Looks up a localized string similar to Rediger liste.
             </summary>
         </member>
         <member name="P:Resources.Registers.Hits">
@@ -1313,6 +1709,16 @@
               Looks up a localized string similar to Eier.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Propose">
+            <summary>
+              Looks up a localized string similar to Foreslå.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Submitter">
+            <summary>
+              Looks up a localized string similar to Innsender.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.SymbolContent">
             <summary>
               Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
@@ -1321,6 +1727,11 @@
         <member name="P:Resources.Registers.Updated">
             <summary>
               Looks up a localized string similar to Oppdatert.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.VersionNumber">
+            <summary>
+              Looks up a localized string similar to Versjons ID.
             </summary>
         </member>
         <member name="T:Resources.Shared">
@@ -1384,9 +1795,24 @@
               Looks up a localized string similar to Rediger.
             </summary>
         </member>
+        <member name="P:Resources.Shared.GeneralInformation">
+            <summary>
+              Looks up a localized string similar to Generell informasjon.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Heading">
             <summary>
               Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.LayoutList">
+            <summary>
+              Looks up a localized string similar to Liste.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.LayoutTable">
+            <summary>
+              Looks up a localized string similar to Tabell.
             </summary>
         </member>
         <member name="P:Resources.Shared.Navn_Engelsk">
@@ -1427,6 +1853,11 @@
         <member name="P:Resources.Shared.Search_Placeholder">
             <summary>
               Looks up a localized string similar to Søk etter registerdata.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Title">
+            <summary>
+              Looks up a localized string similar to Tittel.
             </summary>
         </member>
     </members>

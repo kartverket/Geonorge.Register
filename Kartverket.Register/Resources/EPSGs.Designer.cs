@@ -61,11 +61,137 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dimensjon.
+        /// </summary>
+        public static string Dimension {
+            get {
+                return ResourceManager.GetString("Dimension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekstern referanser.
+        /// </summary>
+        public static string ExternalReference {
+            get {
+                return ResourceManager.GetString("ExternalReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertikalt.
+        /// </summary>
+        public static string Horizontal {
+            get {
+                return ResourceManager.GetString("Horizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horisontalt referansesystem.
+        /// </summary>
+        public static string HorizontalReferenceSystem {
+            get {
+                return ResourceManager.GetString("HorizontalReferenceSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspirekrav.
+        /// </summary>
+        public static string InspireRequirement {
+            get {
+                return ResourceManager.GetString("InspireRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse av krav.
+        /// </summary>
+        public static string InspireRequirementDescription {
+            get {
+                return ResourceManager.GetString("InspireRequirementDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beskrivelse av krav engelsk.
         /// </summary>
         public static string InspireRequirementDescription_Engelsk {
             get {
                 return ResourceManager.GetString("InspireRequirementDescription_Engelsk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nasjonalt krav.
+        /// </summary>
+        public static string NationalRequirement {
+            get {
+                return ResourceManager.GetString("NationalRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse av krav.
+        /// </summary>
+        public static string NationalRequirementDescription {
+            get {
+                return ResourceManager.GetString("NationalRequirementDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nasjonalt krav for havområder.
+        /// </summary>
+        public static string NationalSeasRequirement {
+            get {
+                return ResourceManager.GetString("NationalSeasRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beskrivelse av krav.
+        /// </summary>
+        public static string NationalSeasRequirementDescription {
+            get {
+                return ResourceManager.GetString("NationalSeasRequirementDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referanser.
+        /// </summary>
+        public static string References {
+            get {
+                return ResourceManager.GetString("References", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOSI referansesystem.
+        /// </summary>
+        public static string SosiReferencesystem {
+            get {
+                return ResourceManager.GetString("SosiReferencesystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horisontalt.
+        /// </summary>
+        public static string Vertical {
+            get {
+                return ResourceManager.GetString("Vertical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertikalt referansesystem.
+        /// </summary>
+        public static string VerticalReferenceSystem {
+            get {
+                return ResourceManager.GetString("VerticalReferenceSystem", resourceCulture);
             }
         }
     }

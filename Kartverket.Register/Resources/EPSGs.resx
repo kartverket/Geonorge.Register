@@ -117,7 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Dimension" xml:space="preserve">
+    <value>Dimensjon</value>
+  </data>
+  <data name="ExternalReference" xml:space="preserve">
+    <value>Ekstern referanser</value>
+  </data>
+  <data name="Horizontal" xml:space="preserve">
+    <value>Vertikalt</value>
+  </data>
+  <data name="HorizontalReferenceSystem" xml:space="preserve">
+    <value>Horisontalt referansesystem</value>
+  </data>
+  <data name="InspireRequirement" xml:space="preserve">
+    <value>Inspirekrav</value>
+  </data>
+  <data name="InspireRequirementDescription" xml:space="preserve">
+    <value>Beskrivelse av krav</value>
+  </data>
   <data name="InspireRequirementDescription_Engelsk" xml:space="preserve">
     <value>Beskrivelse av krav engelsk</value>
+  </data>
+  <data name="NationalRequirement" xml:space="preserve">
+    <value>Nasjonalt krav</value>
+  </data>
+  <data name="NationalRequirementDescription" xml:space="preserve">
+    <value>Beskrivelse av krav</value>
+  </data>
+  <data name="NationalSeasRequirement" xml:space="preserve">
+    <value>Nasjonalt krav for havområder</value>
+  </data>
+  <data name="NationalSeasRequirementDescription" xml:space="preserve">
+    <value>Beskrivelse av krav</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>Referanser</value>
+  </data>
+  <data name="SosiReferencesystem" xml:space="preserve">
+    <value>SOSI referansesystem</value>
+  </data>
+  <data name="Vertical" xml:space="preserve">
+    <value>Horisontalt</value>
+  </data>
+  <data name="VerticalReferenceSystem" xml:space="preserve">
+    <value>Vertikalt referansesystem</value>
   </data>
 </root>

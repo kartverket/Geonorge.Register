@@ -117,73 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessLabel" xml:space="preserve">
-    <value>Tilgang til registeret</value>
+  <data name="AreaForDataset" xml:space="preserve">
+    <value>Coverage area of this dataset</value>
   </data>
-  <data name="AccessText" xml:space="preserve">
-    <value>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang</value>
+  <data name="Confirmed" xml:space="preserve">
+    <value>The municipality has confirmed this data set</value>
   </data>
-  <data name="Content" xml:space="preserve">
-    <value>Innhold</value>
+  <data name="DatasetSelection" xml:space="preserve">
+    <value>Select dataset</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Beskrivelse</value>
+  <data name="DokDatasetSelection" xml:space="preserve">
+    <value>Select DOK dataset</value>
   </data>
-  <data name="DOKCoverageContent" xml:space="preserve">
-    <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>
+  <data name="ShowMarker" xml:space="preserve">
+    <value>Show cursors</value>
   </data>
-  <data name="Hits" xml:space="preserve">
-    <value>treff</value>
+  <data name="Title" xml:space="preserve">
+    <value>Coverage map for DOK dataset</value>
   </data>
-  <data name="HitsDisplay" xml:space="preserve">
-    <value>Viser</value>
+  <data name="ZoomLevelSelection" xml:space="preserve">
+    <value>Select zoom level</value>
   </data>
-  <data name="HitsOf" xml:space="preserve">
-    <value>av</value>
-  </data>
-  <data name="Kartografi" xml:space="preserve">
-    <value>Kartografi</value>
-  </data>
-  <data name="KartografiContent" xml:space="preserve">
-    <value>Registeret inneholder datasett som har registrert digital kartografi</value>
-  </data>
-  <data name="LoadingMessage" xml:space="preserve">
-    <value>Henter register</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Navn</value>
-  </data>
-  <data name="NotSet" xml:space="preserve">
-    <value>Ikke angitt</value>
-  </data>
-  <data name="Objektregisteret" xml:space="preserve">
-    <value>Objektregisteret</value>
-  </data>
-  <data name="ObjektregisteretContent" xml:space="preserve">
-    <value>Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.</value>
-  </data>
-  <data name="Owner" xml:space="preserve">
-    <value>Eier</value>
-  </data>
-  <data name="SymbolContent" xml:space="preserve">
-    <value>Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.</value>
-  </data>
-  <data name="Updated" xml:space="preserve">
-    <value>Oppdatert</value>
-  </data>
-  <data name="Submitter" xml:space="preserve">
-    <value>Innsender</value>
-  </data>
-  <data name="Propose" xml:space="preserve">
-    <value>Foreslå</value>
-  </data>
-  <data name="ContainedItemClass" xml:space="preserve">
-    <value>Lovlig innhold</value>
-  </data>
-  <data name="VersionNumber" xml:space="preserve">
-    <value>Versjons ID</value>
-  </data>
-  <data name="EditList" xml:space="preserve">
-    <value>Rediger liste</value>
+  <data name="ZoomLevelSelectionEntireCountry" xml:space="preserve">
+    <value>Entire country</value>
   </data>
 </root>

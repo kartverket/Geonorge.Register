@@ -193,10 +193,70 @@
     <value>Datasettet sin status</value>
   </data>
   <data name="DOK_Temagruppe" xml:space="preserve">
-    <value>Datasett overordnet kategorisering</value>
+    <value>Temagruppe</value>
   </data>
   <data name="DOK_Tittel" xml:space="preserve">
     <value>Offisiell tittel (navn) på datasett</value>
+  </data>
+  <data name="DOK_Datasetthumbnail" xml:space="preserve">
+    <value>Miniatyrbilde</value>
+  </data>
+  <data name="DOK_DatasetType" xml:space="preserve">
+    <value>Type datasett</value>
+  </data>
+  <data name="DOK_Distribusjonsformat" xml:space="preserve">
+    <value>Distribusjonsformat</value>
+  </data>
+  <data name="DOK_DistributionArea" xml:space="preserve">
+    <value>Distribusjonsområde</value>
+  </data>
+  <data name="DOK_DistributionUrl" xml:space="preserve">
+    <value>Distribusjon url</value>
+  </data>
+  <data name="DOK_Kandidatdato" xml:space="preserve">
+    <value>Kandidatdato</value>
+  </data>
+  <data name="DOK_Note" xml:space="preserve">
+    <value>Merknad</value>
+  </data>
+  <data name="DOK_PresentationRulesStatus" xml:space="preserve">
+    <value>Kartografidokumentasjon</value>
+  </data>
+  <data name="DOK_PresentationRulesUrl" xml:space="preserve">
+    <value>Presentasjonsregler url</value>
+  </data>
+  <data name="DOK_ProductSheetStatus" xml:space="preserve">
+    <value>Produktark</value>
+  </data>
+  <data name="DOK_ProductSheetUrl" xml:space="preserve">
+    <value>Produktark url</value>
+  </data>
+  <data name="DOK_ProductSpecificationStatus" xml:space="preserve">
+    <value>Produktspesifikasjon</value>
+  </data>
+  <data name="DOK_ProductSpecificationUrl" xml:space="preserve">
+    <value>Produktspesifikasjon url</value>
+  </data>
+  <data name="DOK_SpecificUsage" xml:space="preserve">
+    <value>Bruksområde</value>
+  </data>
+  <data name="DOK_StatusDateAccepted" xml:space="preserve">
+    <value>DOK-status godkjent</value>
+  </data>
+  <data name="ServiceUuid" xml:space="preserve">
+    <value>Tjeneste uuid</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Velg kommune</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>Kommunen har {0} bekreftet at registrering er sluttført for året</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>Kommunen jobber med å sluttføre registreringen for året</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>ikke</value>
   </data>
   <data name="Delivery_Harmonized" xml:space="preserve">
     <value>Harmoniserte data status</value>

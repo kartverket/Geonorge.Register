@@ -135,4 +135,100 @@
   <data name="CreateNew" xml:space="preserve">
     <value>Suggest a new organization</value>
   </data>
+  <data name="AgreementDocumentUrl" xml:space="preserve">
+    <value>Agreement approved year</value>
+  </data>
+  <data name="AgreementYear" xml:space="preserve">
+    <value>Agreement approved year</value>
+  </data>
+  <data name="BoundingBoxEast" xml:space="preserve">
+    <value>Geographical extent - East</value>
+  </data>
+  <data name="BoundingBoxNorth" xml:space="preserve">
+    <value>Geographical extent - North</value>
+  </data>
+  <data name="BoundingBoxSouth" xml:space="preserve">
+    <value>Geographical extent - South</value>
+  </data>
+  <data name="BoundingBoxWest" xml:space="preserve">
+    <value>Geographical extent - West</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="DateConfirmedMunicipalDOK" xml:space="preserve">
+    <value>Date confirmed for registration of municipal DOK</value>
+  </data>
+  <data name="EmailAddress" xml:space="preserve">
+    <value>E-mail address</value>
+  </data>
+  <data name="GeographicCenterX" xml:space="preserve">
+    <value>Geographic Center Point - x</value>
+  </data>
+  <data name="GeographicCenterY" xml:space="preserve">
+    <value>Geographic Center Point - y</value>
+  </data>
+  <data name="LargeLogo" xml:space="preserve">
+    <value>Large logo</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Norway digital member</value>
+  </data>
+  <data name="MunicipalityCode" xml:space="preserve">
+    <value>Municipality number</value>
+  </data>
+  <data name="OrganizationType" xml:space="preserve">
+    <value>Organization type</value>
+  </data>
+  <data name="PriceFormDocument" xml:space="preserve">
+    <value>Price form / Calculator</value>
+  </data>
+  <data name="Shortname" xml:space="preserve">
+    <value>Short name</value>
+  </data>
+  <data name="Administration" xml:space="preserve">
+    <value>Administrasjon</value>
+  </data>
+  <data name="ContactName" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documents</value>
+  </data>
+  <data name="East" xml:space="preserve">
+    <value>East</value>
+  </data>
+  <data name="GeographicCenterPoint" xml:space="preserve">
+    <value>Geographic center point</value>
+  </data>
+  <data name="GeographicExtent" xml:space="preserve">
+    <value>Geographical extent</value>
+  </data>
+  <data name="MunicipalityHelp" xml:space="preserve">
+    <value>The municipality number must be four numbers including a possible 0 as the first number. For example, Bø i Telemark has the municipality number 0821.</value>
+  </data>
+  <data name="MunicipalityInformation" xml:space="preserve">
+    <value>Municipality information</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="North" xml:space="preserve">
+    <value>North</value>
+  </data>
+  <data name="OrganizationTypeMunicipality" xml:space="preserve">
+    <value>Municipality</value>
+  </data>
+  <data name="OrganizationTypeRegular" xml:space="preserve">
+    <value>Regular</value>
+  </data>
+  <data name="South" xml:space="preserve">
+    <value>South</value>
+  </data>
+  <data name="West" xml:space="preserve">
+    <value>Vest</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>

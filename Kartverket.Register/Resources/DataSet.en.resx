@@ -193,9 +193,69 @@
     <value>Data set its status</value>
   </data>
   <data name="DOK_Temagruppe" xml:space="preserve">
-    <value>Data set overall categorization</value>
+    <value>Theme group</value>
   </data>
   <data name="DOK_Tittel" xml:space="preserve">
     <value>Official Title (Name) of Data Set</value>
+  </data>
+  <data name="DOK_Datasetthumbnail" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="DOK_DatasetType" xml:space="preserve">
+    <value>Dataset type</value>
+  </data>
+  <data name="DOK_Distribusjonsformat" xml:space="preserve">
+    <value>Distribution format</value>
+  </data>
+  <data name="DOK_DistributionArea" xml:space="preserve">
+    <value>Distribution area</value>
+  </data>
+  <data name="DOK_DistributionUrl" xml:space="preserve">
+    <value>Distribution url</value>
+  </data>
+  <data name="DOK_Kandidatdato" xml:space="preserve">
+    <value>Candidate date</value>
+  </data>
+  <data name="DOK_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="DOK_PresentationRulesStatus" xml:space="preserve">
+    <value>Cartography rules</value>
+  </data>
+  <data name="DOK_PresentationRulesUrl" xml:space="preserve">
+    <value>Presentation rules url</value>
+  </data>
+  <data name="DOK_ProductSheetStatus" xml:space="preserve">
+    <value>Product sheet</value>
+  </data>
+  <data name="DOK_ProductSheetUrl" xml:space="preserve">
+    <value>Product sheet url</value>
+  </data>
+  <data name="DOK_ProductSpecificationStatus" xml:space="preserve">
+    <value>Product spesification</value>
+  </data>
+  <data name="DOK_ProductSpecificationUrl" xml:space="preserve">
+    <value>Product specification url</value>
+  </data>
+  <data name="DOK_SpecificUsage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="DOK_StatusDateAccepted" xml:space="preserve">
+    <value>DOK-status date approved</value>
+  </data>
+  <data name="ServiceUuid" xml:space="preserve">
+    <value>Serice uuid</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Select municipality</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>The municipality has {0} confirmed that registration has been completed for the year</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>The municipality is working to complete the registration for the year</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>not</value>
   </data>
 </root>

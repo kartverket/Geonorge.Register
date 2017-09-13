@@ -13,6 +13,7 @@ using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Kartverket.Register.Models.Translations;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -23,39 +24,40 @@ namespace Kartverket.Register.Models
         }
         [Display(Name = "EPSG:")]
         public string epsgcode { get; set; }
-        [Display(Name = "SOSI referansesystem:")]
+        [Display(Name = "SosiReferencesystem", ResourceType = typeof(EPSGs))]
         public string sosiReferencesystem { get; set; }
-        [Display(Name = "Ekstern referanser:")]
+        [Display(Name = "ExternalReference", ResourceType = typeof(EPSGs))]
         public string externalReference { get; set; }
         [ForeignKey("inspireRequirement")]
-        [Display(Name = "Inspirekrav:")]
+        [Display(Name = "InspireRequirement", ResourceType = typeof(EPSGs))]
         public string inspireRequirementId { get; set; }
-        [Display(Name = "Inspirekrav:")]
+        [Display(Name = "InspireRequirement", ResourceType = typeof(EPSGs))]
         public virtual Requirement inspireRequirement { get; set; }
-        [Display(Name = "Beskrivelse av krav:")]
+        [Display(Name = "InspireRequirementDescription", ResourceType = typeof(EPSGs))]
         public string inspireRequirementDescription { get; set; }
         [ForeignKey("nationalRequirement")]
-        [Display(Name = "Nasjonalt krav:")]
+        [Display(Name = "NationalRequirement", ResourceType = typeof(EPSGs))]
         public string nationalRequirementId { get; set; }
-        [Display(Name = "Nasjonalt krav:")]
+        [Display(Name = "NationalRequirement", ResourceType = typeof(EPSGs))]
         public virtual Requirement nationalRequirement { get; set; }
-        [Display(Name = "Beskrivelse av krav:")]
+        [Display(Name = "NationalRequirementDescription", ResourceType = typeof(EPSGs))]
         public string nationalRequirementDescription { get; set; }
         [ForeignKey("nationalSeasRequirement")]
-        [Display(Name = "Nasjonalt krav for havområder:")]
+        [Display(Name = "NationalSeasRequirement", ResourceType = typeof(EPSGs))]
         public string nationalSeasRequirementId { get; set; }
-        [Display(Name = "Nasjonalt krav for havområder:")]
+        [Display(Name = "NationalSeasRequirement", ResourceType = typeof(EPSGs))]
         public virtual Requirement nationalSeasRequirement { get; set; }
-        [Display(Name = "Beskrivelse av krav:")]
+        [Display(Name = "NationalSeasRequirementDescription", ResourceType = typeof(EPSGs))]
         public string nationalSeasRequirementDescription { get; set; }
 
-        [Display(Name = "Vertikalt referansesystem:")]
+        [Display(Name = "VerticalReferenceSystem", ResourceType = typeof(EPSGs))]
         public string verticalReferenceSystem { get; set; }
-        [Display(Name = "Horisontalt referansesystem:")]
+        [Display(Name = "HorizontalReferenceSystem", ResourceType = typeof(EPSGs))]
         public string horizontalReferenceSystem { get; set; }
-        [Display(Name = "Dimensjon:")]
+        [Display(Name = "Dimension", ResourceType = typeof(EPSGs))]
         [ForeignKey("dimensionId")]
         public virtual Dimension dimension { get; set; }
+        [Display(Name = "Dimension", ResourceType = typeof(EPSGs))]
         public string dimensionId { get; set; }
         public virtual TranslationCollection<EPSGTranslation> Translations { get; set; }
 

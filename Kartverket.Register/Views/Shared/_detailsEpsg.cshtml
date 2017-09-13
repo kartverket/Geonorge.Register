@@ -16,29 +16,29 @@
 
             @if (Model.sosiReferencesystem == null)
             {
-                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span> - </p>
             }
             else
             {
-                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
+                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
             }
 
             @if (Model.verticalReferenceSystem == null)
             {
-                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span> - </p>
             }
             else
             {
-                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
+                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
             }
 
             @if (Model.horizontalReferenceSystem == null)
             {
-                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span> - </p>
             }
             else
             {
-                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
+                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
             }
 
             @if (Model.dimensionId == null)
@@ -47,45 +47,45 @@
             }
             else
             {
-                <p title="Dimensjon: @Model.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
+                <p title="Dimensjon: @Model.dimension.description"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
             }
 
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-information">
             @if (Model.inspireRequirement == null)
             {
-                <p title="Inspire krav: ikke angitt"><span>Inspire krav: </span>@Registers.NotSet</p>
+                <p title="Inspire krav: ikke angitt"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Inspire krav: @Model.inspireRequirement.description"><span>Inspire krav: </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
+                <p title="Inspire krav: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
             }
 
             @if (Model.nationalRequirement == null)
             {
-                <p title="Nasjonalt krav: ikke angitt"><span>Nasjonalt krav: </span>@Registers.NotSet</p>
+                <p title="Nasjonalt krav: ikke angitt"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Nasjonalt krav: @Model.nationalRequirement.description"><span>Nasjonalt krav: </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
+                <p title="Nasjonalt krav: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
             }
 
             @if (Model.nationalSeasRequirement == null)
             {
-                <p title="Nasjonalt krav for havområde: ikke angitt"><span>Nasjonalt krav for havområder: </span>@Registers.NotSet</p>
+                <p title="Nasjonalt krav for havområde: ikke angitt"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Nasjonalt krav for havområde: @Model.nationalSeasRequirement.description"><span>Nasjonalt krav for havområder: </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
+                <p title="Nasjonalt krav for havområde: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
             }
 
             @if (Model.externalReference == null)
             {
-                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span> - </p>
+                <p title="Vis ekstern referanse for @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span> - </p>
             }
             else
             {
-                <p title="Vis ekstern referanse for @Model.name"><span>Ekstern referanse: </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p title="Vis ekstern referanse for @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
         </div>
     </div>

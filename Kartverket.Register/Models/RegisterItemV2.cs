@@ -50,17 +50,6 @@ namespace Kartverket.Register.Models
         protected RegisterItemV2() {
             SystemId = Guid.NewGuid();
         }
-
-        public string DetailPageUrl()
-        {
-            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
-        }
-
-        public string ItemsByOwnerUrl()
-        {
-            return Register.GetObjectUrl() + "/" + Owner.seoname;
-        }
-
         
     }
 }//end namespace Datamodell

@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace Kartverket.Register.Models.ViewModels
 {
-    public class DatasetViewModel : RegisterItemV2VeiwModel
+    public class DatasetViewModel : RegisterItemV2ViewModel
     {
         [Display(Name = "Uuid")]
         public string Uuid { get; set; }
@@ -69,13 +69,26 @@ namespace Kartverket.Register.Models.ViewModels
             ProductSpecificationUrl = dataset.ProductSpecificationUrl;
             SpecificUsage = dataset.SpecificUsage;
             DatasetThumbnail = dataset.DatasetThumbnail;
-
+            DokStatusId = dataset.DokStatusId;
+            DokStatus = dataset.DokStatus;
             ThemeGroupId = dataset.ThemeGroupId;
+            Theme = dataset.Theme;
             Uuid = dataset.Uuid;
             WmsUrl = dataset.WmsUrl;
             DistributionUrl = dataset.DistributionUrl;
             DistributionArea = dataset.DistributionArea;
             DistributionFormat = dataset.DistributionFormat;
+        }
+
+        public string GetThemeGroupDescription()
+        {
+            return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";
+        }
+
+        public string LogoSrc()
+        {
+            if (Owner != null) return "~/data/organizations/" + Owner.logoFilename;
+            return "";
         }
     }
 }

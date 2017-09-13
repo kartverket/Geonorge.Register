@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Models
 {
@@ -36,42 +38,22 @@ namespace Kartverket.Register.Models
         //Atom-feed
         [ForeignKey("InspireDeliveryAtomFeed"), Required, Display(Name = "Nedlastingstjeneste Atom-feed:")]
         public Guid InspireDeliveryAtomFeedId { get; set; }
-        public DatasetDelivery InspireDeliveryAtomFeed { get; set; }
+        public virtual DatasetDelivery InspireDeliveryAtomFeed { get; set; }
 
         //Atom or WFS
         [ForeignKey("InspireDeliveryWfsOrAtom"), Required, Display(Name = "Nedlastingstjeneste WFS eller Atom-feed:")]
         public Guid InspireDeliveryWfsOrAtomId { get; set; }
-        public DatasetDelivery InspireDeliveryWfsOrAtom { get; set; }
+        public virtual DatasetDelivery InspireDeliveryWfsOrAtom { get; set; }
 
         //Harmonized data
         [ForeignKey("InspireDeliveryHarmonizedData"), Required, Display(Name = "Harmoniserte data:")]
         public Guid InspireDeliveryHarmonizedDataId { get; set; }
-        public DatasetDelivery InspireDeliveryHarmonizedData { get; set; }
+        public virtual DatasetDelivery InspireDeliveryHarmonizedData { get; set; }
 
         //Spatial data service
         [ForeignKey("InspireDeliverySpatialDataService"), Required, Display(Name = "Spatial data service:")]
         public Guid InspireDeliverySpatialDataServiceId { get; set; }
-        public DatasetDelivery InspireDeliverySpatialDataService { get; set; }
-
-
-        public string LogoSrc()
-        {
-            if (Owner != null) return "~/data/organizations/" + Owner.logoFilename;
-            return "";
-        }
-
-        public string GetDescriptionAsSubstring()
-        {
-            if(!string.IsNullOrWhiteSpace(Description))
-            {
-                if (Description.Length < 80)
-                {
-                    return Description.Substring(0, Description.Length);
-                }
-                return Description.Substring(0, 80) + "...";
-            }
-            return "";
-        }
+        public virtual DatasetDelivery InspireDeliverySpatialDataService { get; set; }
     }
 
 }//end namespace Datamodell

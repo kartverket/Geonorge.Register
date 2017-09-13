@@ -50,8 +50,37 @@ namespace Kartverket.Register.Models.ViewModels
         public string InspireDeliverySpatialDataServiceNote { get; set; }
         public SelectList InspireDeliverySpatialDataServiceStatusSelectList { get; set; }
 
+        public InspireDatasetViewModel(InspireDataset item)
+        {
+            Update(item);
+        }
+
+        public InspireDatasetViewModel()
+        {
+        }
+
+
         public void Update(InspireDataset inspireDataset)
         {
+            if (inspireDataset.InspireDeliveryMetadata != null)
+                InspireDeliveryMetadataStatus = inspireDataset.InspireDeliveryMetadata.StatusId;
+            if (inspireDataset.InspireDeliveryMetadataService != null)
+                InspireDeliveryMetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.StatusId;
+            if (inspireDataset.InspireDeliveryDistribution != null)
+                InspireDeliveryDistributionStatus = inspireDataset.InspireDeliveryDistribution.StatusId;
+            if (inspireDataset.InspireDeliveryWms != null)
+                InspireDeliveryWmsStatus = inspireDataset.InspireDeliveryWms.StatusId;
+            if (inspireDataset.InspireDeliveryWfs != null)
+                InspireDeliveryWfsStatus = inspireDataset.InspireDeliveryWfs.StatusId;
+            if (inspireDataset.InspireDeliveryAtomFeed != null)
+                InspireDeliveryAtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.StatusId;
+            if (inspireDataset.InspireDeliveryWfsOrAtom != null)
+                InspireDeliveryWfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.StatusId;
+            if (inspireDataset.InspireDeliveryHarmonizedData != null)
+                InspireDeliveryHarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.StatusId;
+            if (inspireDataset.InspireDeliverySpatialDataService != null)
+                InspireDeliverySpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.StatusId;
+
             UpdateDataset(inspireDataset);
         }
 

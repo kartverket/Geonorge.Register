@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
@@ -20,13 +19,7 @@ namespace Kartverket.Register.Controllers
             _inspireDatasetService = inspireDatasetService;
             _metadataService = new MetadataService();
         }
-
-        // GET: InspireDatasets
-        public ActionResult Index()
-        {
-            var inspireDatasets = _db.InspireDatasets.Include(i => i.DokStatus).Include(i => i.InspireDeliveryAtomFeed).Include(i => i.InspireDeliveryDistribution).Include(i => i.InspireDeliveryHarmonizedData).Include(i => i.InspireDeliveryMetadata).Include(i => i.InspireDeliveryMetadataService).Include(i => i.InspireDeliverySpatialDataService).Include(i => i.InspireDeliveryWfs).Include(i => i.InspireDeliveryWfsOrAtom).Include(i => i.InspireDeliveryWms).Include(i => i.Owner).Include(i => i.Register).Include(i => i.Status).Include(i => i.Submitter).Include(i => i.Theme);
-            return View(inspireDatasets.ToList());
-        }
+        
 
         // GET: InspireDatasets/Details/5
         public ActionResult Details(Guid? id)
@@ -60,22 +53,22 @@ namespace Kartverket.Register.Controllers
         [HttpPost]
         [Route("inspire/{registername}/ny")]
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
-        public ActionResult Create(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername, string metadataUuid)
+        public ActionResult Create(InspireDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
-            if (inspireDatasetViewModel.SearchString != null)
+            if (viewModel.SearchString != null)
             {
-                inspireDatasetViewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(inspireDatasetViewModel.SearchString);
+                viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
             }
             else if (metadataUuid != null)
             {
-                inspireDatasetViewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
+                viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
             }
             else if (ModelState.IsValid)
             {
-                _inspireDatasetService.CreateNewInspireDataset(inspireDatasetViewModel, parentregister, registername);
+                _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
                 return RedirectToAction("Details");
             }
-            return View(inspireDatasetViewModel);
+            return View(viewModel);
         }
 
         // GET: InspireDatasets/Edit/5
@@ -104,7 +97,7 @@ namespace Kartverket.Register.Controllers
             {
                 _db.Entry(inspireDataset).State = EntityState.Modified;
                 _db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             return View(inspireDataset);
         }
@@ -132,7 +125,7 @@ namespace Kartverket.Register.Controllers
             var inspireDataset = _db.InspireDatasets.Find(id);
             _db.InspireDatasets.Remove(inspireDataset ?? throw new InvalidOperationException());
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details");
         }
 
         protected override void Dispose(bool disposing)

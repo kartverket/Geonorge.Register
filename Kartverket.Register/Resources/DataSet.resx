@@ -198,4 +198,16 @@
   <data name="DOK_Tittel" xml:space="preserve">
     <value>Offisiell tittel (navn) på datasett</value>
   </data>
+  <data name="Delivery_Harmonized" xml:space="preserve">
+    <value>Harmoniserte data status</value>
+  </data>
+  <data name="Delivery_MetadataService" xml:space="preserve">
+    <value>Metadatatjeneste status</value>
+  </data>
+  <data name="Delivery_Spatial_Data_Service" xml:space="preserve">
+    <value>Sparial data service status</value>
+  </data>
+  <data name="Delivery_Wfs_Or_Atom" xml:space="preserve">
+    <value>WFS eller Atom status</value>
+  </data>
 </root>

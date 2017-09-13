@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Models;
 using System;
+using System.Linq;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;

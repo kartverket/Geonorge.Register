@@ -83,17 +83,16 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
-            CheckReferrer();
 
+            CheckReferrer();
             DokOrderBy(sorting);
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            Models.Register register = _registerService.GetRegister(parentRegister, registername);
-            sorting = DefaultSortingServiceAlertRegister(sorting, register);
-            if (register != null)
+            var viewModel = new RegisterV2ViewModel(_registerService.GetRegister(parentRegister, registername));
+            if (viewModel.Register != null)
             {
-                if (register.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
+                if (viewModel.Register.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
                 {
                     CodelistValue municipality = _accessControlService.GetMunicipality();
                     if (municipality != null)
@@ -103,15 +102,16 @@ namespace Kartverket.Register.Controllers
                     }
                 }
                 ViewBagOrganizationMunizipality(filter.municipality);
-                register = RegisterItems(register, filter, page);
-                ViewbagsRegisterDetails(owner, sorting, page, filter, register);
-                return View(register);
+                viewModel.Register = RegisterItems(viewModel.Register, filter, page);
+                ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel.Register);
+                return View(viewModel);
             }
             else
             {
                 return HttpNotFound();
             }
         }
+
 
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]

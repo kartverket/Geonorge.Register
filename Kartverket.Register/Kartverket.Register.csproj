@@ -794,7 +794,8 @@
     <Compile Include="Models\Version.cs" />
     <Compile Include="Models\ViewModels\MetadataItemViewModel.cs" />
     <Compile Include="Models\ViewModels\MunicipalDatasetsViewModel.cs" />
-    <Compile Include="Models\ViewModels\RegisterItemV2VeiwModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemV2ViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterV2ViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />

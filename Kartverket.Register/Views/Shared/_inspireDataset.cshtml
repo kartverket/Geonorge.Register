@@ -1,230 +1,44 @@
-﻿@model PagedList.IPagedList<RegisterItemV2>
-@using Kartverket.Register.Models
+﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
 
-@functions {
-    public IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null)
-    {
-
-        string symbolDeficient = "custom-icon custom-icon-smile-red";
-        string symbolUseable = "custom-icon custom-icon-smile-yellow";
-        string symbolGood = "custom-icon custom-icon-smile-green";
-        string symbolNotSet = "custom-icon";
-
-        string statusSymbol = symbolUseable;
-        string title = "";
-
-        if (restricted.HasValue && restricted.Value == true && type != "metadata")
-        {
-            statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
-            title = DataSet.DOK_Delivery_Restricted;
-        }
-        else if (!string.IsNullOrEmpty(status))
-        {
-            if (status == "notset")
-            {
-                statusSymbol = symbolNotSet;
-                title = DataSet.DOK_Delivery_Status_NotSet;
-            }
-            else if (status == "deficient")
-            {
-                statusSymbol = symbolDeficient;
-                title = DataSet.DOK_Delivery_Status_Deficient;
-            }
-            else if (status == "useable")
-            {
-                statusSymbol = symbolUseable;
-                title = DataSet.DOK_Delivery_Status_Useable;
-            }
-            else if (status == "good")
-            {
-                statusSymbol = symbolGood;
-                title = DataSet.DOK_Delivery_Status_Good;
-            }
-        }
-
-        string label = "";
-
-
-        if (type.Contains("metadata"))
-            label = DataSet.DOK_Delivery_Metadata;
-        else if (type.Contains("dokDeliveryProductSheetStatus"))
-            label = DataSet.DOK_Delivery_ProductSheet;
-        else if (type.Contains("dokDeliveryPresentationRulesStatus"))
-            label = DataSet.DOK_Delivery_PresentationRules;
-        else if (type.Contains("dokDeliveryProductSpecificationStatus"))
-            label = DataSet.DOK_Delivery_ProductSpesification;
-        else if (type.Contains("dokDeliveryWmsStatus"))
-            label = DataSet.DOK_Delivery_Wms;
-        else if (type.Contains("dokDeliveryWfsStatus"))
-            label = DataSet.DOK_Delivery_Wfs;
-        else if (type.Contains("dokDeliverySosiRequirementsStatus"))
-            label = DataSet.DOK_Delivery_SosiRequirements;
-        else if (type.Contains("dokDeliveryDistributionStatus"))
-            label = DataSet.DOK_Delivery_Distribution;
-        else if (type.Contains("dokDeliveryGmlRequirementsStatus"))
-            label = DataSet.DOK_Delivery_GmlRequirements;
-        else if (type.Contains("dokDeliveryAtomFeedStatus"))
-            label = DataSet.DOK_Delivery_AtomFeed;
-
-        if (!string.IsNullOrEmpty(label))
-            title = label + ": " + title;
-
-
-        string html = "";
-        if (status == "notset")
-            html = "<span class='" + symbolNotSet + "'></span>";
-        else
-            html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
-
-        return new HtmlString(html);
-    }
-
-    public IHtmlString OrderByLink(string tittel, string defaultSort, string statusIcon = null)
-    {
-
-        string sortingClass = "";
-        string sortTitle = "";
-        string sortingParam = "";
-        string sortingSelected = Request.QueryString["sorting"];
-
-        if (sortingSelected == null)
-            sortingSelected = "name";
-
-        if (sortingSelected == defaultSort)
-        {
-            sortingClass = "sorted-asc";
-            sortTitle = DataSet.DOK_Delivery_Title;
-            sortingParam = defaultSort + "_desc";
-        }
-        else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
-        {
-            sortingClass = "sorted-desc";
-            sortTitle = DataSet.DOK_Delivery_Title;
-            sortingParam = defaultSort;
-        }
-        else
-        {
-            sortingClass = "";
-            sortTitle = "";
-            sortingParam = defaultSort;
-        }
-
-        if (sortingParam.IndexOf("Requirement") > -1)
-        {
-            sortTitle = "Sortert etter logisk rekkefølge";
-        }
-        var text = Request.QueryString["text"];
-
-        if (sortingParam.Contains("title"))
-            sortTitle = DataSet.DOK_Delivery_Title;
-        else if (sortingParam.Contains("datasetOwner"))
-            sortTitle = DataSet.DOK_Delivery_Owner;
-        else if (sortingParam.Contains("theme"))
-            sortTitle = DataSet.DOK_Delivery_Theme;
-        else if (sortingParam.Contains("dokDeliveryMetadataStatus"))
-            sortTitle = DataSet.DOK_Delivery_Metadata;
-        else if (sortingParam.Contains("dokDeliveryProductSheetStatus"))
-            sortTitle = DataSet.DOK_Delivery_ProductSheet;
-        else if (sortingParam.Contains("dokDeliveryPresentationRulesStatus"))
-            sortTitle = DataSet.DOK_Delivery_PresentationRules;
-        else if (sortingParam.Contains("dokDeliveryProductSpecificationStatus"))
-            sortTitle = DataSet.DOK_Delivery_ProductSpesification;
-        else if (sortingParam.Contains("dokDeliveryWmsStatus"))
-            sortTitle = DataSet.DOK_Delivery_Wms;
-        else if (sortingParam.Contains("dokDeliveryWfsStatus"))
-            sortTitle = DataSet.DOK_Delivery_Wfs;
-        else if (sortingParam.Contains("dokDeliverySosiRequirementsStatus"))
-            sortTitle = DataSet.DOK_Delivery_SosiRequirements;
-        else if (sortingParam.Contains("dokDeliveryDistributionStatus"))
-            sortTitle = DataSet.DOK_Delivery_Distribution;
-        else if (sortingParam.Contains("dokDeliveryGmlRequirementsStatus"))
-            sortTitle = DataSet.DOK_Delivery_GmlRequirements;
-        else if (sortingParam.Contains("dokDeliveryAtomFeedStatus"))
-            sortTitle = DataSet.DOK_Delivery_AtomFeed;
-        else if (sortingParam.Contains("dokStatus"))
-            sortTitle = DataSet.DOK_Delivery_Status;
-
-
-        var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
-
-        if (text != null)
-            linkSort = linkSort + "&text=" + text;
-
-        if (!string.IsNullOrEmpty(statusIcon))
-            tittel = "<span class='" + statusIcon + "'></span>";
-
-        linkSort = linkSort + "'>" + tittel + "</a>";
-
-        return new HtmlString(linkSort);
-    }
-
-}
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata">
-        <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
-        <div class="col-md-2">@OrderByLink("Eier", "Owner")</div>
-        <div class="col-md-2">@OrderByLink("Temagruppe", "Theme") </div>
+        <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Eier", "owner")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Temagruppe", "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
-            @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
-            @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-produktark")
-            @OrderByLink("", "dokDeliveryPresentationRulesStatus", "glyphicon glyphicon-picture")
-            @OrderByLink("", "dokDeliveryProductSpecificationStatus", "glyphicon glyphicon-list-alt")
-            @OrderByLink("", "dokDeliveryWmsStatus", "glyphicon glyphicon-globe")
-            @OrderByLink("", "dokDeliveryWfsStatus", "custom-icon custom-icon-wfs")
-            @OrderByLink("", "dokDeliverySosiRequirementsStatus", "custom-icon custom-icon-sosi")
-            @OrderByLink("", "dokDeliveryGmlRequirementsStatus", "custom-icon custom-icon-gml")
-            @OrderByLink("", "dokDeliveryAtomFeedStatus", "fa fa-rss-square")
-            @OrderByLink("", "dokDeliveryDistributionStatus", "custom-icon custom-icon-lastned")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadata")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadataservice")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "distribution")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wms")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfs")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "atom")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsOrAtom")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizedData")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialDataService")
         </div>
-        <div class="col-md-1 text-center">@OrderByLink("STATUS", "dokStatus")</div>
+        <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokStatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
-    @foreach (InspireDataset item in Model)
+   
+    @foreach (InspireDatasetViewModel item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.Name </a></div>
             <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
             <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
             <div class="col-md-4 col-sm-5 status-icons">
-                @if (item.InspireDeliveryMetadata != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadata.StatusId, false, "metadata")
-                }
-                @if (item.InspireDeliveryMetadataService != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataService.StatusId, false, "metadataservice")
-                }
-
-                @if (item.InspireDeliveryDistribution != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryDistribution.StatusId, false, "distribution")
-                }
-                @if (item.InspireDeliveryWms != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryWms.StatusId, false, "wms")
-                }
-                @if (item.InspireDeliveryWfs != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryWfs.StatusId, false, "wfs")
-                }
-                @if (item.InspireDeliveryAtomFeed != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryAtomFeed.StatusId, false, "atom")
-                }
-                @if (item.InspireDeliveryWfsOrAtom != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryWfsOrAtom.StatusId, false, "wfsOrAtom")
-                }
-                @if (item.InspireDeliveryHarmonizedData != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliveryHarmonizedData.StatusId, false, "harmonizedData")
-                }
-                @if (item.InspireDeliverySpatialDataService != null)
-                {
-                    @GetDokDeliveryStatusSymbol(item.InspireDeliverySpatialDataService.StatusId, false, "spatialDataService")
-                }
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataStatus, false, "metadata")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataServiceStatus, false, "metadataservice")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryDistributionStatus, false, "distribution")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWmsStatus, false, "wms")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWfsStatus, false, "wfs")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryAtomFeedStatus, false, "atom")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWfsOrAtomStatus, false, "wfsOrAtom")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryHarmonizedDataStatus, false, "harmonizedData")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliverySpatialDataServiceStatus, false, "spatialDataService")
             </div>
             <div class="col-md-1 text-center">
                 <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
@@ -235,7 +49,7 @@
     }
 </div>
 <div id="listView">
-    @foreach (InspireDataset item in Model)
+    @foreach (InspireDatasetViewModel item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">

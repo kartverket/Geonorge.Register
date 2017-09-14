@@ -123,7 +123,7 @@
             <p><span>@Html.DisplayNameFor(i => item.versionNumber) : </span>@item.versionNumber</p>
             @if (!string.IsNullOrWhiteSpace(item.versionName))
             {
-                <p><span>Utgave: </span>@item.versionName</p>
+                <p><span>@Registers.VersionName: </span>@item.versionName</p>
             }            
             @if (item.dateSubmitted != null)
             {
@@ -135,27 +135,27 @@
             }
             @if (item.approvalDocument != null)
             {
-                <p>Godkjenningsdokument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
+                <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
             }
             @if (item.approvalReference != null)
             {
-                <p>Godkjenningsreferanse: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
             @if (item.dateAccepted != null)
             {
-                <p>Godkjent: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+                <p>@Registers.Accepted: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
             }                    
             @if (item.dateSuperseded != null)
             {
-                <p>Erstattet: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
+                <p>@Registers.Superseded: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
             }
             @if (item.DateRetired != null)
             {
-                <p>Utgått: @Html.DisplayFor(modelItem => item.DateRetired)</p>
+                <p>@Registers.Retired: @Html.DisplayFor(modelItem => item.DateRetired)</p>
             }            
             @if (item.dateNotAccepted != null)
             {
-                <p>Utkast: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
+                <p>@Registers.Draft: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
             }        
             
         </div>

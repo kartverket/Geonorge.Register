@@ -81,13 +81,13 @@ namespace Kartverket.Register.Models
         [Display(Name = "Dokument url:")]
         public string documentUrl { get; set; }
 
-        [Display(Name = "Godkjenningstekst:")]
+        [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]
         public string approvalDocument { get; set; }
 
-        [Display(Name = "Godkjenningsreferanse:")]
+        [Display(Name = "ApprovalReference", ResourceType = typeof(Registers))]
         public string approvalReference { get; set; }
 
-        [Display(Name = "Godkjent")]
+        [Display(Name = "Accepted", ResourceType = typeof(Registers))]
         public bool? Accepted { get; set; }
 
         [Display(Name = "UML-modell")]

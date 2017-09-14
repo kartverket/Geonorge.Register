@@ -1040,11 +1040,6 @@
               Looks up a localized string similar to Slett datasett.
             </summary>
         </member>
-        <member name="P:Resources.DataSet.DeleteDatasetConfirm">
-            <summary>
-              Looks up a localized string similar to Er du sikker på at du vil slette.
-            </summary>
-        </member>
         <member name="P:Resources.DataSet.DisplayKartkatalogen">
             <summary>
               Looks up a localized string similar to Vis i kartkatalogen.
@@ -1058,6 +1053,16 @@
         <member name="P:Resources.DataSet.DOK_Bekreftet_Kommune">
             <summary>
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_Confirmed">
+            <summary>
+              Looks up a localized string similar to Bekreftet.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.DOK_Coverage">
+            <summary>
+              Looks up a localized string similar to Dekning.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DOK_Coverage_Municipality">
@@ -1215,6 +1220,11 @@
               Looks up a localized string similar to Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_MunicipalityNote">
+            <summary>
+              Looks up a localized string similar to Kommunens merknad.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Nasjonal_Status">
             <summary>
               Looks up a localized string similar to Datasettet sin status.
@@ -1340,6 +1350,11 @@
               Looks up a localized string similar to Produktinformasjon.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.RegionType">
+            <summary>
+              Looks up a localized string similar to Regions-type.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.ServiceUuid">
             <summary>
               Looks up a localized string similar to Tjeneste uuid.
@@ -1395,6 +1410,11 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.DeleteEpsg">
+            <summary>
+              Looks up a localized string similar to Slett EPSG kode.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.Dimension">
@@ -1460,6 +1480,11 @@
         <member name="P:Resources.EPSGs.SosiReferencesystem">
             <summary>
               Looks up a localized string similar to SOSI referansesystem.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.SuggestNewEpsgCode">
+            <summary>
+              Looks up a localized string similar to Foreslå ny EPSG-kode.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.Vertical">
@@ -1694,6 +1719,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Accepted">
+            <summary>
+              Looks up a localized string similar to Godkjent.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.AccessLabel">
             <summary>
               Looks up a localized string similar to Tilgang til registeret.
@@ -1704,6 +1734,16 @@
               Looks up a localized string similar to Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang.
             </summary>
         </member>
+        <member name="P:Resources.Registers.ApprovalDocument">
+            <summary>
+              Looks up a localized string similar to Godkjenningstekst.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.ApprovalReference">
+            <summary>
+              Looks up a localized string similar to Godkjenningsreferanse.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.ContainedItemClass">
             <summary>
               Looks up a localized string similar to Lovlig innhold.
@@ -1712,6 +1752,11 @@
         <member name="P:Resources.Registers.Content">
             <summary>
               Looks up a localized string similar to Innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Current">
+            <summary>
+              Looks up a localized string similar to Gjeldende.
             </summary>
         </member>
         <member name="P:Resources.Registers.DateAccepted">
@@ -1734,6 +1779,11 @@
               Looks up a localized string similar to Dato erstattet.
             </summary>
         </member>
+        <member name="P:Resources.Registers.DeleteConfirm">
+            <summary>
+              Looks up a localized string similar to Er du sikker på at du vil slette.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Description">
             <summary>
               Looks up a localized string similar to Beskrivelse.
@@ -1744,9 +1794,19 @@
               Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
             </summary>
         </member>
+        <member name="P:Resources.Registers.Draft">
+            <summary>
+              Looks up a localized string similar to Utkast.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.EditList">
             <summary>
               Looks up a localized string similar to Rediger liste.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Historical">
+            <summary>
+              Looks up a localized string similar to Historiske.
             </summary>
         </member>
         <member name="P:Resources.Registers.Hits">
@@ -1804,14 +1864,29 @@
               Looks up a localized string similar to Eier.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Proposal">
+            <summary>
+              Looks up a localized string similar to Forslag.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Propose">
             <summary>
               Looks up a localized string similar to Foreslå.
             </summary>
         </member>
+        <member name="P:Resources.Registers.Retired">
+            <summary>
+              Looks up a localized string similar to Utgått.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Submitter">
             <summary>
               Looks up a localized string similar to Innsender.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Superseded">
+            <summary>
+              Looks up a localized string similar to Erstattet.
             </summary>
         </member>
         <member name="P:Resources.Registers.SymbolContent">

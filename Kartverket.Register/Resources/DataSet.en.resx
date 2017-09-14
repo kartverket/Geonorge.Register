@@ -273,17 +273,23 @@
   <data name="DeleteDataset" xml:space="preserve">
     <value>Delete dataset</value>
   </data>
-  <data name="DeleteDatasetConfirm" xml:space="preserve">
-    <value>Are you sure you want to delete</value>
-  </data>
   <data name="DisplayKartkatalogen" xml:space="preserve">
     <value>Display in catalog</value>
   </data>
   <data name="DOK_AssessmentPoint" xml:space="preserve">
     <value>Assessment point</value>
   </data>
+  <data name="DOK_Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="DOK_Coverage" xml:space="preserve">
+    <value>Coverage</value>
+  </data>
   <data name="DOK_GeneralLink" xml:space="preserve">
     <value>General</value>
+  </data>
+  <data name="DOK_MunicipalityNote" xml:space="preserve">
+    <value>Municipality note</value>
   </data>
   <data name="DOK_Owner" xml:space="preserve">
     <value>Dataset owner</value>
@@ -308,6 +314,9 @@
   </data>
   <data name="ProductInformation" xml:space="preserve">
     <value>Product information</value>
+  </data>
+  <data name="RegionType" xml:space="preserve">
+    <value>Region type</value>
   </data>
   <data name="SuggestNewDataset" xml:space="preserve">
     <value>Suggest new dataset</value>

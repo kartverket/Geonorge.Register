@@ -79,15 +79,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Er du sikker på at du vil slette.
-        /// </summary>
-        public static string DeleteDatasetConfirm {
-            get {
-                return ResourceManager.GetString("DeleteDatasetConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Vis i kartkatalogen.
         /// </summary>
         public static string DisplayKartkatalogen {
@@ -111,6 +102,24 @@ namespace Resources {
         public static string DOK_Bekreftet_Kommune {
             get {
                 return ResourceManager.GetString("DOK_Bekreftet_Kommune", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bekreftet.
+        /// </summary>
+        public static string DOK_Confirmed {
+            get {
+                return ResourceManager.GetString("DOK_Confirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dekning.
+        /// </summary>
+        public static string DOK_Coverage {
+            get {
+                return ResourceManager.GetString("DOK_Coverage", resourceCulture);
             }
         }
         
@@ -394,6 +403,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommunens merknad.
+        /// </summary>
+        public static string DOK_MunicipalityNote {
+            get {
+                return ResourceManager.GetString("DOK_MunicipalityNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Datasettet sin status.
         /// </summary>
         public static string DOK_Nasjonal_Status {
@@ -615,6 +633,15 @@ namespace Resources {
         public static string ProductInformation {
             get {
                 return ResourceManager.GetString("ProductInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regions-type.
+        /// </summary>
+        public static string RegionType {
+            get {
+                return ResourceManager.GetString("RegionType", resourceCulture);
             }
         }
         

@@ -270,17 +270,23 @@
   <data name="DeleteDataset" xml:space="preserve">
     <value>Slett datasett</value>
   </data>
-  <data name="DeleteDatasetConfirm" xml:space="preserve">
-    <value>Er du sikker på at du vil slette</value>
-  </data>
   <data name="DisplayKartkatalogen" xml:space="preserve">
     <value>Vis i kartkatalogen</value>
   </data>
   <data name="DOK_AssessmentPoint" xml:space="preserve">
     <value>Vurderingspunkt</value>
   </data>
+  <data name="DOK_Confirmed" xml:space="preserve">
+    <value>Bekreftet</value>
+  </data>
+  <data name="DOK_Coverage" xml:space="preserve">
+    <value>Dekning</value>
+  </data>
   <data name="DOK_GeneralLink" xml:space="preserve">
     <value>Generelt</value>
+  </data>
+  <data name="DOK_MunicipalityNote" xml:space="preserve">
+    <value>Kommunens merknad</value>
   </data>
   <data name="DOK_Owner" xml:space="preserve">
     <value>Datasett eier</value>
@@ -305,6 +311,9 @@
   </data>
   <data name="ProductInformation" xml:space="preserve">
     <value>Produktinformasjon</value>
+  </data>
+  <data name="RegionType" xml:space="preserve">
+    <value>Regions-type</value>
   </data>
   <data name="SuggestNewDataset" xml:space="preserve">
     <value>Foreslå nytt dataset</value>

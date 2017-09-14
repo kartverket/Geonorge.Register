@@ -46,19 +46,19 @@ namespace Kartverket.Register.Models
         public string statusId { get; set; }
         public virtual Status status { get; set; }
 
-        [Display(Name = "Dato godkjent:")]
+        [Display(Name = "DateAccepted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
-        [Display(Name = "Dato Utkast:")]
+        [Display(Name = "DateNotAccepted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateNotAccepted { get; set; }
 
-        [Display(Name = "Dato erstattet:")]
+        [Display(Name = "DateSuperseded", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateSuperseded { get; set; }
 
-        [Display(Name = "Dato utgått:")]
+        [Display(Name = "DateRetired", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateRetired { get; set; }
 
@@ -75,7 +75,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "VersionNumber", ResourceType = typeof(Registers))]
         public int versionNumber { get; set; }
 
-        [Display(Name = "Utgave:")]
+        [Display(Name = "VersionName", ResourceType = typeof(Registers))]
         public string versionName { get; set; }
 
         [Display(Name = "Dokument url:")]

@@ -186,4 +186,19 @@
   <data name="EditList" xml:space="preserve">
     <value>Edit list</value>
   </data>
+  <data name="DateAccepted" xml:space="preserve">
+    <value>Date accepted</value>
+  </data>
+  <data name="DateNotAccepted" xml:space="preserve">
+    <value>Date draft</value>
+  </data>
+  <data name="DateRetired" xml:space="preserve">
+    <value>Date retired</value>
+  </data>
+  <data name="DateSuperseded" xml:space="preserve">
+    <value>Date superseded</value>
+  </data>
+  <data name="VersionName" xml:space="preserve">
+    <value>Version name</value>
+  </data>
 </root>

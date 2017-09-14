@@ -113,14 +113,14 @@
                 <span class="separator-lg"></span>
             </div>
 
-            <h3>Leveransestatus</h3>
+            <h3>@DataSet.DOK_DeliveryStatusHeading</h3>
             <div class="row">
-                <div class="col-md-12"><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">Vurderingskriterier</a></div>
+                <div class="col-md-12"><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></div>
             </div>
             <p></p>
             <div class="register dataset search-results-table-heading">
                 <div class="row">
-                    <div class="col-md-3">VURDERINGSPUNKT</div><div class="col-md-2">STATUSVERDI</div><div class="col-md-7">KOMMENTAR</div>
+                    <div class="col-md-3">@DataSet.DOK_AssessmentPoint.ToUpper()</div><div class="col-md-2">@DataSet.DOK_StatusValueHeader.ToUpper()</div><div class="col-md-7">@DataSet.Comment.ToUpper()</div>
                 </div>
                 <div class="menu-separator search-results-table-heading"></div>
                 <div class="row">
@@ -195,8 +195,8 @@
 
             @if (!string.IsNullOrWhiteSpace(dataset.MetadataUrl))
             {
-                <h3>Produktinformasjon</h3>
-                <p><a href="@dataset.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> Vis i kartkatalogen</a></p>
+                <h3>@DataSet.ProductInformation</h3>
+                <p><a href="@dataset.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
             }
         </div>
     }
@@ -219,7 +219,7 @@
 
                 <span>@Html.DisplayNameFor(m => m.versionNumber) @Model.versionNumber</span><br>
                 @if (Model.versionName != null)
-                {<span>Utgave: @Model.versionName</span><br />}
+                {<span>@Html.DisplayNameFor(model => model.versionName): @Model.versionName</span><br />}
 
             </div>
             <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
@@ -229,19 +229,19 @@
                 {
                     if (Model.dateAccepted != null)
                     {
-                        <span class="small">Godkjent: @Html.DisplayFor(modelItem => Model.dateAccepted)</span>
+                        <span class="small">@Html.DisplayNameFor(model => model.dateAccepted): @Html.DisplayFor(modelItem => Model.dateAccepted)</span>
                     }
                     if (Model.dateSuperseded != null)
                     {
-                        <br /><span class="small">Erstattet: @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
+                        <br /><span class="small">@Html.DisplayNameFor(model => model.dateSuperseded): @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
                     }
                     if (Model.DateRetired != null)
                     {
-                        <br /><span class="small">Utgått: @Html.DisplayFor(modelItem => Model.DateRetired)</span>
+                        <br /><span class="small">@Html.DisplayNameFor(model => model.DateRetired): @Html.DisplayFor(modelItem => Model.DateRetired)</span>
                     }
                     if (Model.dateNotAccepted != null)
                     {
-                        <br /><span class="small">Utkast: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
+                        <br /><span class="small">@Html.DisplayNameFor(model => model.dateNotAccepted): @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
                     }
                 }
             </div>

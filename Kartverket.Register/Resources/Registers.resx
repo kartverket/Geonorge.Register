@@ -186,4 +186,19 @@
   <data name="EditList" xml:space="preserve">
     <value>Rediger liste</value>
   </data>
+  <data name="DateAccepted" xml:space="preserve">
+    <value>Dato godkjent</value>
+  </data>
+  <data name="DateNotAccepted" xml:space="preserve">
+    <value>Dato utkast</value>
+  </data>
+  <data name="DateRetired" xml:space="preserve">
+    <value>Dato utgått</value>
+  </data>
+  <data name="DateSuperseded" xml:space="preserve">
+    <value>Dato erstattet</value>
+  </data>
+  <data name="VersionName" xml:space="preserve">
+    <value>Utgave</value>
+  </data>
 </root>

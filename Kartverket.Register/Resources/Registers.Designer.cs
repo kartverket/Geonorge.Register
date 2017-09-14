@@ -97,6 +97,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dato godkjent.
+        /// </summary>
+        public static string DateAccepted {
+            get {
+                return ResourceManager.GetString("DateAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato utkast.
+        /// </summary>
+        public static string DateNotAccepted {
+            get {
+                return ResourceManager.GetString("DateNotAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato utgått.
+        /// </summary>
+        public static string DateRetired {
+            get {
+                return ResourceManager.GetString("DateRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato erstattet.
+        /// </summary>
+        public static string DateSuperseded {
+            get {
+                return ResourceManager.GetString("DateSuperseded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beskrivelse.
         /// </summary>
         public static string Description {
@@ -255,6 +291,15 @@ namespace Resources {
         public static string Updated {
             get {
                 return ResourceManager.GetString("Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utgave.
+        /// </summary>
+        public static string VersionName {
+            get {
+                return ResourceManager.GetString("VersionName", resourceCulture);
             }
         }
         

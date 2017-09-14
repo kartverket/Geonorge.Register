@@ -258,4 +258,25 @@
   <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
     <value>ikke</value>
   </data>
+  <data name="DOK_DeliveryStatusHeading" xml:space="preserve">
+    <value>Leveransestatus</value>
+  </data>
+  <data name="DOK_EvaluationCriteria" xml:space="preserve">
+    <value>Vurderingskriterier</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="DisplayKartkatalogen" xml:space="preserve">
+    <value>Vis i kartkatalogen</value>
+  </data>
+  <data name="DOK_AssessmentPoint" xml:space="preserve">
+    <value>Vurderingspunkt</value>
+  </data>
+  <data name="DOK_StatusValueHeader" xml:space="preserve">
+    <value>Statusverdi</value>
+  </data>
+  <data name="ProductInformation" xml:space="preserve">
+    <value>Produktinformasjon</value>
+  </data>
 </root>

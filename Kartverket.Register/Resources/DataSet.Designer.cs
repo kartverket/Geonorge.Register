@@ -61,6 +61,33 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommentar.
+        /// </summary>
+        public static string Comment {
+            get {
+                return ResourceManager.GetString("Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vis i kartkatalogen.
+        /// </summary>
+        public static string DisplayKartkatalogen {
+            get {
+                return ResourceManager.GetString("DisplayKartkatalogen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vurderingspunkt.
+        /// </summary>
+        public static string DOK_AssessmentPoint {
+            get {
+                return ResourceManager.GetString("DOK_AssessmentPoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
         /// </summary>
         public static string DOK_Bekreftet_Kommune {
@@ -268,6 +295,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Leveransestatus.
+        /// </summary>
+        public static string DOK_DeliveryStatusHeading {
+            get {
+                return ResourceManager.GetString("DOK_DeliveryStatusHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Distribusjonsformat.
         /// </summary>
         public static string DOK_Distribusjonsformat {
@@ -300,6 +336,15 @@ namespace Resources {
         public static string DOK_Eier {
             get {
                 return ResourceManager.GetString("DOK_Eier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vurderingskriterier.
+        /// </summary>
+        public static string DOK_EvaluationCriteria {
+            get {
+                return ResourceManager.GetString("DOK_EvaluationCriteria", resourceCulture);
             }
         }
         
@@ -430,6 +475,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Statusverdi.
+        /// </summary>
+        public static string DOK_StatusValueHeader {
+            get {
+                return ResourceManager.GetString("DOK_StatusValueHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temagruppe.
         /// </summary>
         public static string DOK_Temagruppe {
@@ -471,6 +525,15 @@ namespace Resources {
         public static string NotConfirmedMunicipalDOK {
             get {
                 return ResourceManager.GetString("NotConfirmedMunicipalDOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Produktinformasjon.
+        /// </summary>
+        public static string ProductInformation {
+            get {
+                return ResourceManager.GetString("ProductInformation", resourceCulture);
             }
         }
         

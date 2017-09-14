@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Slett EPSG kode
+                @EPSGs.DeleteEpsg
             </h2>
         </div>
         <div class="col-sm-12">
@@ -29,7 +29,7 @@
     </div>
 </section>
 
-<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<h4>@Registers.DeleteConfirm <b>@Model.name</b>?</h4>
 <hr />
 
     @using (Html.BeginForm())

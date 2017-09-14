@@ -228,8 +228,8 @@ namespace Kartverket.Register.Services.Register
             string statusValue = currentStatus;
 
             if (autoUpdate)
-            { 
-
+            {
+                statusValue = "deficient";
             try
             {
                 if (!string.IsNullOrEmpty(url))

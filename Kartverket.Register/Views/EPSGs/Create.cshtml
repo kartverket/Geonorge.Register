@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå ny EPSG-kode";
+    ViewBag.Title = EPSGs.SuggestNewEpsgCode;
 }
 
 @section breadcrumb {
@@ -12,13 +12,13 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>Ny</li>
+    <li>@EPSGs.SuggestNewEpsgCode</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Ny EPSG kode
+                @EPSGs.SuggestNewEpsgCode
             </h2>
         </div>
         <div class="col-sm-12">

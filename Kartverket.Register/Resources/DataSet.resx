@@ -258,6 +258,72 @@
   <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
     <value>ikke</value>
   </data>
+  <data name="DOK_DeliveryStatusHeading" xml:space="preserve">
+    <value>Leveransestatus</value>
+  </data>
+  <data name="DOK_EvaluationCriteria" xml:space="preserve">
+    <value>Vurderingskriterier</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="DeleteDataset" xml:space="preserve">
+    <value>Slett datasett</value>
+  </data>
+  <data name="DisplayKartkatalogen" xml:space="preserve">
+    <value>Vis i kartkatalogen</value>
+  </data>
+  <data name="DOK_AssessmentPoint" xml:space="preserve">
+    <value>Vurderingspunkt</value>
+  </data>
+  <data name="DOK_Confirmed" xml:space="preserve">
+    <value>Bekreftet</value>
+  </data>
+  <data name="DOK_Coverage" xml:space="preserve">
+    <value>Dekning</value>
+  </data>
+  <data name="DOK_GeneralLink" xml:space="preserve">
+    <value>Generelt</value>
+  </data>
+  <data name="DOK_MunicipalityNote" xml:space="preserve">
+    <value>Kommunens merknad</value>
+  </data>
+  <data name="DOK_Owner" xml:space="preserve">
+    <value>Datasett eier</value>
+  </data>
+  <data name="DOK_StatusValueHeader" xml:space="preserve">
+    <value>Statusverdi</value>
+  </data>
+  <data name="DOK_SuitabilityRating" xml:space="preserve">
+    <value>Egnethetsvurdering</value>
+  </data>
+  <data name="GetInfoKartkatalog" xml:space="preserve">
+    <value>Hent informasjon fra kartkatalogen</value>
+  </data>
+  <data name="GoTo" xml:space="preserve">
+    <value>Gå til</value>
+  </data>
+  <data name="ListOfDatasets" xml:space="preserve">
+    <value>Treffliste over datasett</value>
+  </data>
+  <data name="MetadataEditor" xml:space="preserve">
+    <value>metadataeditoren</value>
+  </data>
+  <data name="ProductInformation" xml:space="preserve">
+    <value>Produktinformasjon</value>
+  </data>
+  <data name="RegionType" xml:space="preserve">
+    <value>Regions-type</value>
+  </data>
+  <data name="SuggestNewDataset" xml:space="preserve">
+    <value>Foreslå nytt dataset</value>
+  </data>
+  <data name="ToEditMetadata" xml:space="preserve">
+    <value>for å redigere metadata</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>oppdater</value>
+  </data>
   <data name="Delivery_Harmonized" xml:space="preserve">
     <value>Harmoniserte data status</value>
   </data>

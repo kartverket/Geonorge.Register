@@ -39,7 +39,7 @@
     $(".search-result-navigation").prepend(htmlBlock);
 
     $(document).on('change', '#municipality', function () {
-        showLoadingAnimation('Henter kommunedata');
+        showLoadingAnimation('@Registers.LoadingMessage');
     });
 </script>
 @if (selectedMunicipality != null)
@@ -60,15 +60,15 @@
                     @Html.ActionLink("DOK-status", "Details", new { sorting = "dokStatus" + ViewBag.DokOrderBy, municipality = selectedMunicipality.value }, new { data_toggle = "tooltip", data_placement = "bottom", data_loading_message = "Sorterer innhold", title = DataSet.DOK_Nasjonal_Status, @class = "tablesorter-header-inner show-loading-animation" })
                 </th>
                 <th style="width:10%" class="tablesorter-header @(ViewBag.SortOrder.Contains("type") ?  (ViewBag.SortOrder == "type_desc" ? "tablesorter-headerDesc" : "tablesorter-headerAsc") : "" )">
-                    @Html.ActionLink("Regions-type", "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipality.value }, new { data_toggle = "tooltip", data_placement = "bottom", data_loading_message = "Sorterer innhold", title = DataSet.DOK_Nasjonalt_Kommunalt, @class = "tablesorter-header-inner show-loading-animation" })
+                    @Html.ActionLink(DataSet.RegionType, "Details", new { sorting = "type" + ViewBag.DokOrderBy, municipality = selectedMunicipality.value }, new { data_toggle = "tooltip", data_placement = "bottom", data_loading_message = "Sorterer innhold", title = DataSet.DOK_Nasjonalt_Kommunalt, @class = "tablesorter-header-inner show-loading-animation" })
                 </th>
                 <th style="width:10%">
-                    <span href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@DataSet.DOK_Bekreftet_Kommune">Bekreft</span>
+                    <span href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@DataSet.DOK_Bekreftet_Kommune">@DataSet.DOK_Confirmed</span>
                 </th>
                 <th style="width:10%">
-                    <span href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@DataSet.DOK_Coverage_Municipality">Dekning</span>
+                    <span href="#" data-toggle="tooltip" class="link-unstyled" data-placement="bottom" title="@DataSet.DOK_Coverage_Municipality">@DataSet.DOK_Coverage</span>
                 </th>
-                <th style="width:20%"><span href="#" class="link-unstyled" data-toggle="tooltip" data-placement="bottom" title="@DataSet.DOK_Kommentar">Kommunes merknad</span></th>
+                <th style="width:20%"><span href="#" class="link-unstyled" data-toggle="tooltip" data-placement="bottom" title="@DataSet.DOK_Kommentar">@DataSet.DOK_MunicipalityNote</span></th>
             </tr>
         </thead>
         <tbody>

@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slett EPSG kode.
+        /// </summary>
+        public static string DeleteEpsg {
+            get {
+                return ResourceManager.GetString("DeleteEpsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dimensjon.
         /// </summary>
         public static string Dimension {
@@ -174,6 +183,15 @@ namespace Resources {
         public static string SosiReferencesystem {
             get {
                 return ResourceManager.GetString("SosiReferencesystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå ny EPSG-kode.
+        /// </summary>
+        public static string SuggestNewEpsgCode {
+            get {
+                return ResourceManager.GetString("SuggestNewEpsgCode", resourceCulture);
             }
         }
         

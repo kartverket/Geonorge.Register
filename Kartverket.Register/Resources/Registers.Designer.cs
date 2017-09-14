@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Godkjent.
+        /// </summary>
+        public static string Accepted {
+            get {
+                return ResourceManager.GetString("Accepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tilgang til registeret.
         /// </summary>
         public static string AccessLabel {
@@ -75,6 +84,24 @@ namespace Resources {
         public static string AccessText {
             get {
                 return ResourceManager.GetString("AccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Godkjenningstekst.
+        /// </summary>
+        public static string ApprovalDocument {
+            get {
+                return ResourceManager.GetString("ApprovalDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Godkjenningsreferanse.
+        /// </summary>
+        public static string ApprovalReference {
+            get {
+                return ResourceManager.GetString("ApprovalReference", resourceCulture);
             }
         }
         
@@ -97,6 +124,60 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gjeldende.
+        /// </summary>
+        public static string Current {
+            get {
+                return ResourceManager.GetString("Current", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato godkjent.
+        /// </summary>
+        public static string DateAccepted {
+            get {
+                return ResourceManager.GetString("DateAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato utkast.
+        /// </summary>
+        public static string DateNotAccepted {
+            get {
+                return ResourceManager.GetString("DateNotAccepted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato utgått.
+        /// </summary>
+        public static string DateRetired {
+            get {
+                return ResourceManager.GetString("DateRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato erstattet.
+        /// </summary>
+        public static string DateSuperseded {
+            get {
+                return ResourceManager.GetString("DateSuperseded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Er du sikker på at du vil slette.
+        /// </summary>
+        public static string DeleteConfirm {
+            get {
+                return ResourceManager.GetString("DeleteConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Beskrivelse.
         /// </summary>
         public static string Description {
@@ -115,11 +196,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Utkast.
+        /// </summary>
+        public static string Draft {
+            get {
+                return ResourceManager.GetString("Draft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rediger liste.
         /// </summary>
         public static string EditList {
             get {
                 return ResourceManager.GetString("EditList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Historiske.
+        /// </summary>
+        public static string Historical {
+            get {
+                return ResourceManager.GetString("Historical", resourceCulture);
             }
         }
         
@@ -223,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forslag.
+        /// </summary>
+        public static string Proposal {
+            get {
+                return ResourceManager.GetString("Proposal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå.
         /// </summary>
         public static string Propose {
@@ -232,11 +340,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Utgått.
+        /// </summary>
+        public static string Retired {
+            get {
+                return ResourceManager.GetString("Retired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innsender.
         /// </summary>
         public static string Submitter {
             get {
                 return ResourceManager.GetString("Submitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erstattet.
+        /// </summary>
+        public static string Superseded {
+            get {
+                return ResourceManager.GetString("Superseded", resourceCulture);
             }
         }
         
@@ -255,6 +381,15 @@ namespace Resources {
         public static string Updated {
             get {
                 return ResourceManager.GetString("Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utgave.
+        /// </summary>
+        public static string VersionName {
+            get {
+                return ResourceManager.GetString("VersionName", resourceCulture);
             }
         }
         

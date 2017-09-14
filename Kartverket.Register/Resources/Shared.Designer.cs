@@ -187,6 +187,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingen treff.
+        /// </summary>
+        public static string NoHits {
+            get {
+                return ResourceManager.GetString("NoHits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lagre.
         /// </summary>
         public static string Save {
@@ -246,6 +255,15 @@ namespace Resources {
         public static string Search_Placeholder {
             get {
                 return ResourceManager.GetString("Search_Placeholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
             }
         }
         

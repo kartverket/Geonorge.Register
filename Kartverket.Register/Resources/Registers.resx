@@ -186,4 +186,49 @@
   <data name="EditList" xml:space="preserve">
     <value>Rediger liste</value>
   </data>
+  <data name="DateAccepted" xml:space="preserve">
+    <value>Dato godkjent</value>
+  </data>
+  <data name="DateNotAccepted" xml:space="preserve">
+    <value>Dato utkast</value>
+  </data>
+  <data name="DateRetired" xml:space="preserve">
+    <value>Dato utgått</value>
+  </data>
+  <data name="DateSuperseded" xml:space="preserve">
+    <value>Dato erstattet</value>
+  </data>
+  <data name="VersionName" xml:space="preserve">
+    <value>Utgave</value>
+  </data>
+  <data name="Accepted" xml:space="preserve">
+    <value>Godkjent</value>
+  </data>
+  <data name="ApprovalDocument" xml:space="preserve">
+    <value>Godkjenningstekst</value>
+  </data>
+  <data name="ApprovalReference" xml:space="preserve">
+    <value>Godkjenningsreferanse</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Gjeldende</value>
+  </data>
+  <data name="DeleteConfirm" xml:space="preserve">
+    <value>Er du sikker på at du vil slette</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Utkast</value>
+  </data>
+  <data name="Historical" xml:space="preserve">
+    <value>Historiske</value>
+  </data>
+  <data name="Proposal" xml:space="preserve">
+    <value>Forslag</value>
+  </data>
+  <data name="Retired" xml:space="preserve">
+    <value>Utgått</value>
+  </data>
+  <data name="Superseded" xml:space="preserve">
+    <value>Erstattet</value>
+  </data>
 </root>

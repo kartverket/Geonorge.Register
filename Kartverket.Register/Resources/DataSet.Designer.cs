@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slett datasett.
+        /// </summary>
+        public static string DeleteDataset {
+            get {
+                return ResourceManager.GetString("DeleteDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Er du sikker på at du vil slette.
+        /// </summary>
+        public static string DeleteDatasetConfirm {
+            get {
+                return ResourceManager.GetString("DeleteDatasetConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vis i kartkatalogen.
         /// </summary>
         public static string DisplayKartkatalogen {
@@ -349,6 +367,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generelt.
+        /// </summary>
+        public static string DOK_GeneralLink {
+            get {
+                return ResourceManager.GetString("DOK_GeneralLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kandidatdato.
         /// </summary>
         public static string DOK_Kandidatdato {
@@ -399,6 +426,15 @@ namespace Resources {
         public static string DOK_Note {
             get {
                 return ResourceManager.GetString("DOK_Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasett eier.
+        /// </summary>
+        public static string DOK_Owner {
+            get {
+                return ResourceManager.GetString("DOK_Owner", resourceCulture);
             }
         }
         
@@ -484,6 +520,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Egnethetsvurdering.
+        /// </summary>
+        public static string DOK_SuitabilityRating {
+            get {
+                return ResourceManager.GetString("DOK_SuitabilityRating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temagruppe.
         /// </summary>
         public static string DOK_Temagruppe {
@@ -498,6 +543,42 @@ namespace Resources {
         public static string DOK_Tittel {
             get {
                 return ResourceManager.GetString("DOK_Tittel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hent informasjon fra kartkatalogen.
+        /// </summary>
+        public static string GetInfoKartkatalog {
+            get {
+                return ResourceManager.GetString("GetInfoKartkatalog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gå til.
+        /// </summary>
+        public static string GoTo {
+            get {
+                return ResourceManager.GetString("GoTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Treffliste over datasett.
+        /// </summary>
+        public static string ListOfDatasets {
+            get {
+                return ResourceManager.GetString("ListOfDatasets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to metadataeditoren.
+        /// </summary>
+        public static string MetadataEditor {
+            get {
+                return ResourceManager.GetString("MetadataEditor", resourceCulture);
             }
         }
         
@@ -543,6 +624,33 @@ namespace Resources {
         public static string ServiceUuid {
             get {
                 return ResourceManager.GetString("ServiceUuid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt dataset.
+        /// </summary>
+        public static string SuggestNewDataset {
+            get {
+                return ResourceManager.GetString("SuggestNewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for å redigere metadata.
+        /// </summary>
+        public static string ToEditMetadata {
+            get {
+                return ResourceManager.GetString("ToEditMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to oppdater.
+        /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
     }

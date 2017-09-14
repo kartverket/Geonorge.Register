@@ -264,8 +264,17 @@
   <data name="DOK_EvaluationCriteria" xml:space="preserve">
     <value>Evaluation criteria</value>
   </data>
+  <data name="AutoUpdatelabel" xml:space="preserve">
+    <value>Auto-&lt;br /&gt;oppdater</value>
+  </data>
   <data name="Comment" xml:space="preserve">
     <value>Comment</value>
+  </data>
+  <data name="DeleteDataset" xml:space="preserve">
+    <value>Delete dataset</value>
+  </data>
+  <data name="DeleteDatasetConfirm" xml:space="preserve">
+    <value>Are you sure you want to delete</value>
   </data>
   <data name="DisplayKartkatalogen" xml:space="preserve">
     <value>Display in catalog</value>
@@ -273,10 +282,40 @@
   <data name="DOK_AssessmentPoint" xml:space="preserve">
     <value>Assessment point</value>
   </data>
+  <data name="DOK_GeneralLink" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="DOK_Owner" xml:space="preserve">
+    <value>Dataset owner</value>
+  </data>
   <data name="DOK_StatusValueHeader" xml:space="preserve">
     <value>Status value</value>
   </data>
+  <data name="DOK_SuitabilityRating" xml:space="preserve">
+    <value>Suitability Rating</value>
+  </data>
+  <data name="GetInfoKartkatalog" xml:space="preserve">
+    <value>Get information from the map directory</value>
+  </data>
+  <data name="GoTo" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="ListOfDatasets" xml:space="preserve">
+    <value>List of data sets</value>
+  </data>
+  <data name="MetadataEditor" xml:space="preserve">
+    <value>metadata editor</value>
+  </data>
   <data name="ProductInformation" xml:space="preserve">
     <value>Product information</value>
+  </data>
+  <data name="SuggestNewDataset" xml:space="preserve">
+    <value>Suggest new dataset</value>
+  </data>
+  <data name="ToEditMetadata" xml:space="preserve">
+    <value>to edit metadata</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>update</value>
   </data>
 </root>

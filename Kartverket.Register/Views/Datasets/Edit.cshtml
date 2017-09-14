@@ -75,14 +75,14 @@
     @Html.HiddenFor(model => model.registerId)
     @Html.HiddenFor(model => model.restricted)
     <ul class="nav nav-tabs" style="clear:both">
-        <li class="active"><a href="#general" id="generallink" data-toggle="tab">Generelt</a></li>
-        <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">Statusverdier</a></li>
-        <li><a href="#suitability" id="suitabilitylink" data-toggle="tab">Egnethetsvurdering</a></li>
+        <li class="active"><a href="#general" id="generallink" data-toggle="tab">@DataSet.DOK_GeneralLink</a></li>
+        <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">@DataSet.DOK_StatusValueHeader</a></li>
+        <li><a href="#suitability" id="suitabilitylink" data-toggle="tab">@DataSet.DOK_SuitabilityRating</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="general">
             <div class="form-horizontal">
-                <p>Gå til <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">metadataeditoren</a> for å redigere metadata.</p>
+                <p>@DataSet.GoTo <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">@DataSet.MetadataEditor</a> @DataSet.ToEditMetadata.</p>
                 <div class="form-group">
                     @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.datasetownerId, "Datasetteier:", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.datasetownerId, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.DisplayFor(model => model.datasetowner.name)
                         @Html.DropDownList("datasetownerId", null, htmlAttributes: new { @class = "form-control hidden" })
@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ThemeGroupId, "Nasjonal temainndeling:", new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.EditorFor(model => model.ThemeGroupId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
@@ -265,10 +265,10 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-offset-5 col-md-6">
-                            <label>Kommentar</label>
+                            <label>@DataSet.Comment</label>
                         </div>
                         <div class="col-md-1">
-                            <label>Auto-<br />oppdater</label>
+                            <label>Auto-<br />@DataSet.Update</label>
                         </div>
                     </div>
                 </div>

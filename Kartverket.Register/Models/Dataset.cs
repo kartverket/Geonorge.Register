@@ -31,6 +31,7 @@ namespace Kartverket.Register.Models
 
         [Required(ErrorMessage = "Dette feltet er påkrevd")]
         [ForeignKey("datasetowner")]
+        [Display(Name = "DOK_Owner", ResourceType = typeof(DataSet))]
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
 

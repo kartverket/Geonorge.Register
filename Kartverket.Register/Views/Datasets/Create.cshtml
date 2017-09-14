@@ -3,7 +3,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt datasett";
+    ViewBag.Title = DataSet.SuggestNewDataset;
 }
 @section breadcrumb {
     @foreach (var register in HtmlHelperExtensions.registers(Model.register))
@@ -11,14 +11,14 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
-    <li>Nytt</li>
+    <li>@DataSet.SuggestNewDataset</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt datasett
+                @DataSet.SuggestNewDataset
             </h2>
         </div>
         <div class="col-sm-12">
@@ -31,26 +31,26 @@
     <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading">
-                Hent informasjon fra kartkatalogen
+                @DataSet.GetInfoKartkatalog
             </div>
             <div class="panel-body">
                 @using (Html.BeginForm("Create", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "suggestDataset" }))
                 {
                     <input type="hidden" id="metadataUuid" name="metadataUuid" value="@ViewBag.uuId" />
                     <div class="form-group col-sm-12" style="margin:20px 0px">
-                        <label for="searchString" class="control-label col-md-2">Søk:</label>
+                        <label for="searchString" class="control-label col-md-2">@Shared.Search_Button:</label>
                         <div class="col-md-8">
                             <input type="text" id="searchString" name="searchString" value="@ViewBag.SearchString" />
                         </div>
                         <div class="col-md-2">
-                            <input type="submit" value="Søk" class="btn btn-primary" style="margin-bottom:0px" />
+                            <input type="submit" value="@Shared.Search_Button" class="btn btn-primary" style="margin-bottom:0px" />
                         </div>
                     </div>
                 }
 
                 @if (ViewBag.SearchResultList != null)
                 {
-                    <h4>Treffliste over datasett</h4>
+                    <h4>@DataSet.ListOfDatasets</h4>
                     if (ViewBag.SearchResultList.Count > 0)
                     {
                         <div class="search-results table-view">
@@ -61,7 +61,7 @@
                                         @metadata.Title
                                     </div>
                                     <div class="col-sm-1">
-                                        <input type="button" value="Velg" class="btn" name="metadataUuid" id="metadataUuid" onclick="$(this).selectMetadata('@metadata.Uuid');" />
+                                        <input type="button" value="@Shared.Select" class="btn" name="metadataUuid" id="metadataUuid" onclick="$(this).selectMetadata('@metadata.Uuid');" />
                                     </div>
                                 </div>
                                 <hr>
@@ -69,7 +69,7 @@
                         </div>
                     }
                     else {
-                        <p>Ingen treff...</p>
+                        <p>@Shared.NoHits...</p>
                     }
                 }
             </div>

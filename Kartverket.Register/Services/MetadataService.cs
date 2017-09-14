@@ -223,6 +223,7 @@ namespace Kartverket.DOK.Service
                     inspireDataset.ProductSheetUrl = data.ProductSheetUrl;
                     inspireDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
                     inspireDataset.SpecificUsage = data.SpecificUsage;
+                    inspireDataset.Uuid = data.Uuid;
                     var thumbnails = data.Thumbnails;
                     if (thumbnails != null && thumbnails.Count > 0)
                     {

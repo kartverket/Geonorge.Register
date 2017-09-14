@@ -59,6 +59,8 @@ namespace Kartverket.Register.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DokStatusDateAccepted { get; set; }
 
+        public string UuidService { get; set; }
+
         public string GetThemeGroupDescription()
         {
             return !string.IsNullOrWhiteSpace(Theme?.description) ? Theme.description : "Ikke angitt";

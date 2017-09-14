@@ -11,7 +11,7 @@ namespace Kartverket.Register.Models.ViewModels
         public SelectList InspireDeliveryMetadataStatusSelectList { get; set; }
 
         [Display(Name = "Metadatatjeneste:")]
-        public string InspireDeliveryMetadataServiceStatus { get; set; }
+        public string InspireDeliveryMetadataServiceStatus { get; set; } = "good";
         public string InspireDeliveryMetadataServiceNote { get; set; }
         public SelectList InspireDeliveryMetadataServiceStatusSelectList { get; set; }
 

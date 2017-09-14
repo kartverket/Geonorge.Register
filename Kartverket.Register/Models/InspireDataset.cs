@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using Kartverket.Register.Helpers;
-using Kartverket.Register.Models.ViewModels;
+
 
 namespace Kartverket.Register.Models
 {

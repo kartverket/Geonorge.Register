@@ -721,6 +721,10 @@
     <Compile Include="Migrations\201709050928505_AddInspireDataset.Designer.cs">
       <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.cs" />
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.Designer.cs">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1178,14 +1182,7 @@
     <Content Include="Scripts\expressive.annotations.validate.min.js" />
     <Content Include="Scripts\geonorge-register.js" />
     <Content Include="authentication.default.config" />
-    <Content Include="Content\bower_components\tablesorter\bower.json" />
-    <Content Include="Content\bower_components\tablesorter\changelog" />
-    <Content Include="Content\bower_components\tablesorter\LICENSE" />
-    <Content Include="Content\bower_components\tablesorter\package.json" />
-    <Content Include="Content\bower_components\tablesorter\README.md" />
-    <Content Include="Content\bower_components\tablesorter\themes\blue\blue.zip" />
-    <Content Include="Content\bower_components\tablesorter\themes\green\green.zip" />
-    <Content Include="Content\bower_components\tablesorter\.bower.json" />
+    <Content Include="authentication.config" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\702ZOKiLJc3WVjuplzInF5uFdDttMLvmWuJdhhgs.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.eot" />
@@ -1219,7 +1216,14 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
-    <Content Include="authentication.config" />
+    <Content Include="Content\bower_components\tablesorter\.bower.json" />
+    <Content Include="Content\bower_components\tablesorter\bower.json" />
+    <Content Include="Content\bower_components\tablesorter\changelog" />
+    <Content Include="Content\bower_components\tablesorter\LICENSE" />
+    <Content Include="Content\bower_components\tablesorter\package.json" />
+    <Content Include="Content\bower_components\tablesorter\README.md" />
+    <Content Include="Content\bower_components\tablesorter\themes\blue\blue.zip" />
+    <Content Include="Content\bower_components\tablesorter\themes\green\green.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -1680,6 +1684,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.resx">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DokCoverage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

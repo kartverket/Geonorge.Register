@@ -958,6 +958,102 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
+        <member name="T:Resources.ServiceAlerts">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.AlertDate">
+            <summary>
+              Looks up a localized string similar to Varslingsdato.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.AlertDateErrorMessage">
+            <summary>
+              Looks up a localized string similar to Varslingsdato er påkrevd.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.AlertType">
+            <summary>
+              Looks up a localized string similar to Type varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.AlertTypeErrorMessage">
+            <summary>
+              Looks up a localized string similar to Valg av type varsel er påkrevd.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.EffectiveDate">
+            <summary>
+              Looks up a localized string similar to Ikrafttredelsesdato.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.EffectiveDateErrorMessage">
+            <summary>
+              Looks up a localized string similar to Ikrafttredelsesdato er påkrevd.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.LastAlert">
+            <summary>
+              Looks up a localized string similar to Siste varsel.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.Note">
+            <summary>
+              Looks up a localized string similar to Varselet gjelder.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.NoteErrorMessage">
+            <summary>
+              Looks up a localized string similar to Det er påkrevd å skrive hva varselet gjelder.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.Service">
+            <summary>
+              Looks up a localized string similar to Tjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.ServiceDesription">
+            <summary>
+              Looks up a localized string similar to Tjenestebeskrivelse.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.ServiceName">
+            <summary>
+              Looks up a localized string similar to Tjenestenavn.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.ServiceType">
+            <summary>
+              Looks up a localized string similar to Tjenestetype.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.ServiceTypeErrorMessage">
+            <summary>
+              Looks up a localized string similar to Valg av tjeneste er påkrevd.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.SubscribeServiceAlert">
+            <summary>
+              Looks up a localized string similar to Abonnere på tjenestevarsler.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.Title">
+            <summary>
+              Looks up a localized string similar to Foreslå nytt tjenestevarsel.
+            </summary>
+        </member>
         <member name="T:Resources.DokCoverage">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -1942,6 +2038,11 @@
         <member name="P:Resources.Registers.Propose">
             <summary>
               Looks up a localized string similar to Foreslå.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Publish">
+            <summary>
+              Looks up a localized string similar to Publiser.
             </summary>
         </member>
         <member name="P:Resources.Registers.Retired">

@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt tjenestevarsel";
+    ViewBag.Title = ServiceAlerts.Title;
 }
 
 @section scripts
@@ -30,13 +30,13 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>Ny</li>
+    <li>@ServiceAlerts.Title</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt tjenestevarsel
+                @ServiceAlerts.Title
             </h2>
         </div>
         <div class="col-sm-12">
@@ -53,7 +53,7 @@
         @Html.Hidden("name", "navn")
 
         <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.ServiceUuid, "Tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ServiceUuid, ServiceAlerts.Service, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
@@ -162,7 +162,7 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Publiser" class="btn btn-default pull-right" />
+            <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />
             <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
         </div>
     </div>

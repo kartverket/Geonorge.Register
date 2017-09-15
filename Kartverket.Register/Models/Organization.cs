@@ -44,7 +44,7 @@ namespace Kartverket.Register.Models
         public bool? member { get; set; }
 
         [Display(Name = "AgreementYear", ResourceType = typeof(Organizations))]
-        [Range(1000,9999, ErrorMessage = "Skriv inn et årstall yyyy")] 
+        [Range(1000,9999, ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "AgreementYearErrorMessage")]
         public int? agreementYear { get; set; }
 
         [Display(Name = "AgreementDocumentUrl", ResourceType = typeof(Organizations))]
@@ -69,22 +69,22 @@ namespace Kartverket.Register.Models
         [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "MunicipalityCodeRequired")]
         public string MunicipalityCode { get; set; }
         [Display(Name = "GeographicCenterX", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - x er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "GeographicCenterXErrorMessage")]
         public string GeographicCenterX { get; set; }
         [Display(Name = "GeographicCenterY", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - y er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "GeographicCenterYErrorMessage")]
         public string GeographicCenterY { get; set; }
         [Display(Name = "BoundingBoxNorth", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - nord er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxNorthErrorMessage")]
         public string BoundingBoxNorth { get; set; }
         [Display(Name = "BoundingBoxSouth", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - sør er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxSouthErrorMessage")]
         public string BoundingBoxSouth { get; set; }
         [Display(Name = "BoundingBoxEast", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - øst er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxEastErrorMessage")]
         public string BoundingBoxEast { get; set; }
         [Display(Name = "BoundingBoxWest", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - vest er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxWestErrorMessage")]
         public string BoundingBoxWest { get; set; }
         [Display(Name = "DateConfirmedMunicipalDOK", ResourceType = typeof(Organizations))]
         public DateTime? DateConfirmedMunicipalDOK { get; set; }

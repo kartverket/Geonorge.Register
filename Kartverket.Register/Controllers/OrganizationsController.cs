@@ -11,6 +11,7 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.Translation;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -509,7 +510,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsDataset.Count() > 0)
             {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
         }
 

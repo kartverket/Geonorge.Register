@@ -237,4 +237,13 @@
   <data name="SuggestNewRegisterIn" xml:space="preserve">
     <value>Suggest a new register in</value>
   </data>
+  <data name="ContainedItemClassErrorMessage" xml:space="preserve">
+    <value>Legitimate content for the registry must be added</value>
+  </data>
+  <data name="ErrorMessageDelete" xml:space="preserve">
+    <value>The registry can not be deleted because it contains items that need to be deleted first!</value>
+  </data>
+  <data name="ErrorMessageValidationName" xml:space="preserve">
+    <value>The name already exists!</value>
+  </data>
 </root>

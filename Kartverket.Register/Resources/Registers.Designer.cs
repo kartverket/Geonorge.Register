@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Det må settes lovlig innhold for registeret.
+        /// </summary>
+        public static string ContainedItemClassErrorMessage {
+            get {
+                return ResourceManager.GetString("ContainedItemClassErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innhold.
         /// </summary>
         public static string Content {
@@ -210,6 +219,24 @@ namespace Resources {
         public static string EditList {
             get {
                 return ResourceManager.GetString("EditList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!.
+        /// </summary>
+        public static string ErrorMessageDelete {
+            get {
+                return ResourceManager.GetString("ErrorMessageDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navnet finnes fra før!.
+        /// </summary>
+        public static string ErrorMessageValidationName {
+            get {
+                return ResourceManager.GetString("ErrorMessageValidationName", resourceCulture);
             }
         }
         

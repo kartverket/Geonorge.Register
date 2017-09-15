@@ -120,4 +120,7 @@
   <data name="CodeValue" xml:space="preserve">
     <value>Kodeverdi</value>
   </data>
+  <data name="ErrorMessagefile" xml:space="preserve">
+    <value>Filen har feil innhold!</value>
+  </data>
 </root>

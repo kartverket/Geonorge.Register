@@ -1250,6 +1250,11 @@
               Looks up a localized string similar to Datasett eier.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_OwnerRequired">
+            <summary>
+              Looks up a localized string similar to Dette feltet er påkrevd.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_PresentationRulesStatus">
             <summary>
               Looks up a localized string similar to Kartografidokumentasjon.
@@ -1308,6 +1313,11 @@
         <member name="P:Resources.DataSet.DOK_Tittel">
             <summary>
               Looks up a localized string similar to Offisiell tittel (navn) på datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.ErrorMessageValidationDataset">
+            <summary>
+              Looks up a localized string similar to Datasettet finnes fra før!.
             </summary>
         </member>
         <member name="P:Resources.DataSet.GetInfoKartkatalog">
@@ -1394,6 +1404,11 @@
         <member name="P:Resources.CodelistValues.CodeValue">
             <summary>
               Looks up a localized string similar to Kodeverdi.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ErrorMessagefile">
+            <summary>
+              Looks up a localized string similar to Filen har feil innhold!.
             </summary>
         </member>
         <member name="T:Resources.EPSGs">
@@ -1528,9 +1543,19 @@
               Looks up a localized string similar to Avtale godkjent år.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.AgreementYearErrorMessge">
+            <summary>
+              Looks up a localized string similar to Skriv inn et årstall yyyy.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.BoundingBoxEast">
             <summary>
               Looks up a localized string similar to Geografisk utstrekning - øst.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxEastErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - øst er påkrevd.
             </summary>
         </member>
         <member name="P:Resources.Organizations.BoundingBoxNorth">
@@ -1538,14 +1563,29 @@
               Looks up a localized string similar to Geografisk utstrekning - nord.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.BoundingBoxNorthErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - nord er påkrevd.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.BoundingBoxSouth">
             <summary>
               Looks up a localized string similar to Geografisk utstrekning - sør.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.BoundingBoxSouthErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - sør er påkrevd.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.BoundingBoxWest">
             <summary>
               Looks up a localized string similar to Geografisk utstrekning - vest.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.BoundingBoxWestErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk utstrekning - vest er påkrevd.
             </summary>
         </member>
         <member name="P:Resources.Organizations.Contact">
@@ -1593,9 +1633,19 @@
               Looks up a localized string similar to Geografisk senterpunkt - x.
             </summary>
         </member>
+        <member name="P:Resources.Organizations.GeographicCenterXErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - x er påkrevd.
+            </summary>
+        </member>
         <member name="P:Resources.Organizations.GeographicCenterY">
             <summary>
               Looks up a localized string similar to Geografisk senterpunkt - y.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.GeographicCenterYErrorMessage">
+            <summary>
+              Looks up a localized string similar to Geografisk senterpunkt - y er påkrevd.
             </summary>
         </member>
         <member name="P:Resources.Organizations.GeographicExtent">
@@ -1754,6 +1804,11 @@
               Looks up a localized string similar to Lovlig innhold.
             </summary>
         </member>
+        <member name="P:Resources.Registers.ContainedItemClassErrorMessage">
+            <summary>
+              Looks up a localized string similar to Det må settes lovlig innhold for registeret.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Content">
             <summary>
               Looks up a localized string similar to Innhold.
@@ -1807,6 +1862,16 @@
         <member name="P:Resources.Registers.EditList">
             <summary>
               Looks up a localized string similar to Rediger liste.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.ErrorMessageDelete">
+            <summary>
+              Looks up a localized string similar to Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.ErrorMessageValidationName">
+            <summary>
+              Looks up a localized string similar to Navnet finnes fra før!.
             </summary>
         </member>
         <member name="P:Resources.Registers.Historical">

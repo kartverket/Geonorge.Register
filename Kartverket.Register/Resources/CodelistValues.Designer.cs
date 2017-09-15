@@ -68,5 +68,14 @@ namespace Resources {
                 return ResourceManager.GetString("CodeValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filen har feil innhold!.
+        /// </summary>
+        public static string ErrorMessagefile {
+            get {
+                return ResourceManager.GetString("ErrorMessagefile", resourceCulture);
+            }
+        }
     }
 }

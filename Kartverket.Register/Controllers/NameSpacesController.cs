@@ -10,6 +10,7 @@ using Kartverket.Register.Models;
 using System.Text.RegularExpressions;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -336,7 +337,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsDataset.Count() > 0)
             {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
         }
     }

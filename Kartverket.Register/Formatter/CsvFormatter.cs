@@ -233,7 +233,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "Organization")
             {
-                return "Navn; Nummer; Kommunenummer; GeografiskSenterpunktX; GeografiskSenterpunktY; BoundingBoxNord; BoundingBoxVest; BoundingBoxSør; BoundingBoxØst";
+                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";"+ Organizations.MunicipalityCode + ";"+ Organizations.GeographicCenterX +";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";"+ Organizations.BoundingBoxSouth +";" + Organizations.BoundingBoxWest+ ";" + Organizations.BoundingBoxEast;
             }
             else if (containedItemClass == "NameSpace")
             {
@@ -249,7 +249,7 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterHeading()
         {
-            return "Id ;Navn; Beskrivelse; Eier; Oppdatert";
+            return "Id ;"+ Registers.Name +";"+ Registers.Description+";" + Registers.Owner + ";" + Registers.Updated;
         }
 
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)

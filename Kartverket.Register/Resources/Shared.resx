@@ -189,4 +189,7 @@
   <data name="Select" xml:space="preserve">
     <value>Velg</value>
   </data>
+  <data name="ValidationSummary" xml:space="preserve">
+    <value>Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler</value>
+  </data>
 </root>

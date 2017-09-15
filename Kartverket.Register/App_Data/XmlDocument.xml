@@ -958,6 +958,52 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
+        <member name="T:Resources.Namespace">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.Content">
+            <summary>
+              Looks up a localized string similar to Innhold.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.Etat">
+            <summary>
+              Looks up a localized string similar to Etat.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.NamespaceName">
+            <summary>
+              Looks up a localized string similar to Navnerom.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.Service">
+            <summary>
+              Looks up a localized string similar to Tjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.ServiceUrl">
+            <summary>
+              Looks up a localized string similar to URL til tjeneste.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.Title">
+            <summary>
+              Looks up a localized string similar to Foreslå nytt navnerom.
+            </summary>
+        </member>
         <member name="T:Resources.ServiceAlerts">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -2224,6 +2270,11 @@
         <member name="P:Resources.Shared.Title">
             <summary>
               Looks up a localized string similar to Tittel.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.ValidationSummary">
+            <summary>
+              Looks up a localized string similar to Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler.
             </summary>
         </member>
     </members>

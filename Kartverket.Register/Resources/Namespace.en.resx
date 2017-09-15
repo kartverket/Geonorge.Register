@@ -117,79 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppPageTitle" xml:space="preserve">
-    <value>Geonorge Register</value>
+  <data name="Content" xml:space="preserve">
+    <value>Content</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="Etat" xml:space="preserve">
+    <value>Agency</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Show</value>
+  <data name="NamespaceName" xml:space="preserve">
+    <value>Namespace</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+  <data name="Service" xml:space="preserve">
+    <value>Service</value>
   </data>
-  <data name="Beskrivelse_Engelsk" xml:space="preserve">
-    <value>Description engelsk</value>
-  </data>
-  <data name="Navn_Engelsk" xml:space="preserve">
-    <value>Name English</value>
-  </data>
-  <data name="Search_AllRegisters" xml:space="preserve">
-    <value>All registers</value>
-  </data>
-  <data name="Search_Button" xml:space="preserve">
-    <value>Search</value>
-  </data>
-  <data name="Search_Heading" xml:space="preserve">
-    <value>Search register</value>
-  </data>
-  <data name="Search_LoadingMessage" xml:space="preserve">
-    <value>Retrieving search results</value>
-  </data>
-  <data name="Search_Placeholder" xml:space="preserve">
-    <value>Search for registerdata</value>
-  </data>
-  <data name="Heading" xml:space="preserve">
-    <value>Registers</value>
-  </data>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="Back" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="DisplayTypeSelect" xml:space="preserve">
-    <value>Select display layout</value>
-  </data>
-  <data name="Download" xml:space="preserve">
-    <value>Download</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SaveAs" xml:space="preserve">
-    <value>Save As</value>
-  </data>
-  <data name="LayoutList" xml:space="preserve">
-    <value>List</value>
-  </data>
-  <data name="LayoutTable" xml:space="preserve">
-    <value>Table</value>
-  </data>
-  <data name="GeneralInformation" xml:space="preserve">
-    <value>Generel Informasjon</value>
+  <data name="ServiceUrl" xml:space="preserve">
+    <value>Service Url</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="NoHits" xml:space="preserve">
-    <value>No hits</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="ValidationSummary" xml:space="preserve">
-    <value>The form is incorrectly filled in. Please correct the following errors:</value>
+    <value>Suggest a new namespace</value>
   </data>
 </root>

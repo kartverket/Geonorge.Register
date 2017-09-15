@@ -49,7 +49,7 @@
 {
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(false, "Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler:", new { @class = "alert alert-danger" })
+        @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
 
         <div class="form-group required has-feedback">

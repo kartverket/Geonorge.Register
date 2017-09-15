@@ -231,4 +231,10 @@
   <data name="VersionName" xml:space="preserve">
     <value>Version name</value>
   </data>
+  <data name="SuggestNewRegister" xml:space="preserve">
+    <value>Suggest a new register</value>
+  </data>
+  <data name="SuggestNewRegisterIn" xml:space="preserve">
+    <value>Suggest a new register in</value>
+  </data>
 </root>

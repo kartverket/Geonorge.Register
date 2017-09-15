@@ -231,4 +231,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="MunicipalityCodeRequired" xml:space="preserve">
+    <value>Kommunenummer er påkrevd</value>
+  </data>
 </root>

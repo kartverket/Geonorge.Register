@@ -53,7 +53,7 @@ namespace Kartverket.Register.Models
         public DateTime? dateAccepted { get; set; }
 
         [Required(ErrorMessage = "Det må settes lovlig innhold for registeret")]
-        [Display(Name = "Lovlig innhold")]
+        [Display(Name = "ContainedItemClass", ResourceType = typeof(Registers))]     
         public string containedItemClass { get; set; }
 
         public virtual ICollection<RegisterItem> items { get; set; }

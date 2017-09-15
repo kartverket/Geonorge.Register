@@ -250,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommunenummer er påkrevd.
+        /// </summary>
+        public static string MunicipalityCodeRequired {
+            get {
+                return ResourceManager.GetString("MunicipalityCodeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kommunenummeret skal være fire tall inkludert en eventuell 0 som første tall. For eksempel Bø i Telemark har kommunenummer 0821..
         /// </summary>
         public static string MunicipalityHelp {

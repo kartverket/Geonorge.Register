@@ -231,4 +231,10 @@
   <data name="Superseded" xml:space="preserve">
     <value>Erstattet</value>
   </data>
+  <data name="SuggestNewRegister" xml:space="preserve">
+    <value>Foreslå nytt register</value>
+  </data>
+  <data name="SuggestNewRegisterIn" xml:space="preserve">
+    <value>Foreslå nytt register i</value>
+  </data>
 </root>

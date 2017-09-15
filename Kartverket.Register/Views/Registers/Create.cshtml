@@ -1,18 +1,18 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = "Foreslå nytt register";
+    ViewBag.Title = Registers.SuggestNewRegister;
 }
 
 @section breadcrumb {
-    <li>Ny</li>
+    <li>@Registers.SuggestNewRegister</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt register
+                @Registers.SuggestNewRegister
             </h2>
         </div>
         <div class="col-sm-12">

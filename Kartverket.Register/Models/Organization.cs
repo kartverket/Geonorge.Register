@@ -66,7 +66,7 @@ namespace Kartverket.Register.Models
 
         // municipality specific attributes
         [Display(Name = "MunicipalityCode", ResourceType = typeof(Organizations))]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Kommunenummer er påkrevd")]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "MunicipalityCodeRequired")]
         public string MunicipalityCode { get; set; }
         [Display(Name = "GeographicCenterX", ResourceType = typeof(Organizations))]
         [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - x er påkrevd")]

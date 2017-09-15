@@ -358,6 +358,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt register.
+        /// </summary>
+        public static string SuggestNewRegister {
+            get {
+                return ResourceManager.GetString("SuggestNewRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt register i.
+        /// </summary>
+        public static string SuggestNewRegisterIn {
+            get {
+                return ResourceManager.GetString("SuggestNewRegisterIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Erstattet.
         /// </summary>
         public static string Superseded {

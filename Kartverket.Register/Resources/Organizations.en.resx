@@ -231,4 +231,7 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="MunicipalityCodeRequired" xml:space="preserve">
+    <value>Municipality code is required</value>
+  </data>
 </root>

@@ -170,18 +170,18 @@
             {
                 @Html.HiddenFor(model => model.documentownerId)
                 <br />
-                <h3>Dokumentgodkjenning</h3>
+                <h3>@Documents.DocumentApproval</h3>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Accepted, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-1">
-                        @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) Ja
+                        @Html.RadioButtonFor(m => m.Accepted, "true", htmlAttributes: new { @onclick = "enable()", @id = "accepted" }) @Documents.Yes
                     </div>
                     <div class="col-md-1">
-                        @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) Nei
+                        @Html.RadioButtonFor(m => m.Accepted, "false", htmlAttributes: new { @onclick = "disable()", @id = "not-accepted" }) @Documents.No
                     </div>
                     <div class="col-md-2" id="cbRetired">
-                        <b>Men</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) Utgått</span>
+                        <b>@Documents.But</b><span class="pull-right">@Html.CheckBox("retired", false, new { htmlAttributes = new { @class = "pull-right" } }) @Documents.Expired</span>
                     </div>
                 </div>
                 if (Model.register.name == "Tegneregler")

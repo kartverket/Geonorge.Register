@@ -1,20 +1,20 @@
 ﻿@model Kartverket.Register.Models.Document
 
 @{
-    ViewBag.Title = "Foreslå ny versjon av " + Model.name;
+    ViewBag.Title = Registers.SuggestNewVersionOf + " " + Model.name;
 }
 
 @section breadcrumb {
     <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
     <li><a href="@Model.GetObjectUrl()">@Model.name</a></li>
-    <li>Ny versjon</li>
+    <li>@Registers.NewVersion</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Ny versjon av @Model.name
+                @Registers.SuggestNewVersionOf @Model.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="documentfile">Dokument-fil:</label>
+            <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
             <div class="col-md-10">
                 <input type="file" name="documentfile" />
             </div>
@@ -74,7 +74,7 @@
             <div class="col-md-10">
                 <input type="file" name="thumbnail" />
                 @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
-                Hvis ikke noe er valgt genereres forsiden av dokumentet som thumbnail
+                @Documents.ThumbnailInfo
             </div>
         </div>
     </div>

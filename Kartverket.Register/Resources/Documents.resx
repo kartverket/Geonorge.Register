@@ -117,142 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessLabel" xml:space="preserve">
-    <value>Access to the registry</value>
+  <data name="But" xml:space="preserve">
+    <value>Men</value>
   </data>
-  <data name="AccessText" xml:space="preserve">
-    <value>Applies to access to suggest, change and delete own registry entries. Admin always has full access</value>
+  <data name="DeleteDocument" xml:space="preserve">
+    <value>Slett dokument</value>
   </data>
-  <data name="Content" xml:space="preserve">
-    <value>Content</value>
+  <data name="DocumentApproval" xml:space="preserve">
+    <value>Dokumentgodkjenning</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
+  <data name="DocumentFile" xml:space="preserve">
+    <value>Dokument-fil</value>
   </data>
-  <data name="DOKCoverageContent" xml:space="preserve">
-    <value>The coverage map shows which data sets in the public map of the map are covered by the various municipalities.</value>
+  <data name="DocumentOwner" xml:space="preserve">
+    <value>Dokumenteier</value>
   </data>
-  <data name="Hits" xml:space="preserve">
-    <value>hits</value>
+  <data name="Expired" xml:space="preserve">
+    <value>Utgått</value>
   </data>
-  <data name="HitsDisplay" xml:space="preserve">
-    <value>Showing</value>
+  <data name="No" xml:space="preserve">
+    <value>Nei</value>
   </data>
-  <data name="HitsOf" xml:space="preserve">
-    <value>of</value>
+  <data name="Thumbnail" xml:space="preserve">
+    <value>Miniatyrbilde</value>
   </data>
-  <data name="Kartografi" xml:space="preserve">
-    <value>Cartography</value>
+  <data name="ThumbnailInfo" xml:space="preserve">
+    <value>Hvis ikke noe er valgt genereres forsiden av dokumentet som thumbnail</value>
   </data>
-  <data name="KartografiContent" xml:space="preserve">
-    <value>The registry contains data sets that have registered digital cartography</value>
+  <data name="TitleCreate" xml:space="preserve">
+    <value>Foreslå nytt dokument</value>
   </data>
-  <data name="LoadingMessage" xml:space="preserve">
-    <value>Retrieves register</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="NotSet" xml:space="preserve">
-    <value>Not set</value>
-  </data>
-  <data name="Objektregisteret" xml:space="preserve">
-    <value>Object registry</value>
-  </data>
-  <data name="ObjektregisteretContent" xml:space="preserve">
-    <value>Contains a collection of central object catalogs from SOSI, Inspire and from parties in Norway digitally. There are data specifications that are useful in the production of datasets, or as documentation of how the content and structure of a dataset should be interpreted.</value>
-  </data>
-  <data name="Owner" xml:space="preserve">
-    <value>Owner</value>
-  </data>
-  <data name="SymbolContent" xml:space="preserve">
-    <value>This registry contains symbols used for styling digital cartography and for use in the graphics industry.</value>
-  </data>
-  <data name="Updated" xml:space="preserve">
-    <value>Updated</value>
-  </data>
-  <data name="Submitter" xml:space="preserve">
-    <value>Submitter</value>
-  </data>
-  <data name="Propose" xml:space="preserve">
-    <value>Propose</value>
-  </data>
-  <data name="ContainedItemClass" xml:space="preserve">
-    <value>Legal content</value>
-  </data>
-  <data name="VersionNumber" xml:space="preserve">
-    <value>Version number</value>
-  </data>
-  <data name="EditList" xml:space="preserve">
-    <value>Edit list</value>
-  </data>
-  <data name="Accepted" xml:space="preserve">
-    <value>Accepted</value>
-  </data>
-  <data name="ApprovalDocument" xml:space="preserve">
-    <value>Appoval text</value>
-  </data>
-  <data name="ApprovalReference" xml:space="preserve">
-    <value>Approval reference</value>
-  </data>
-  <data name="Current" xml:space="preserve">
-    <value>Current</value>
-  </data>
-  <data name="DateAccepted" xml:space="preserve">
-    <value>Date accepted</value>
-  </data>
-  <data name="DateNotAccepted" xml:space="preserve">
-    <value>Date draft</value>
-  </data>
-  <data name="DateRetired" xml:space="preserve">
-    <value>Date retired</value>
-  </data>
-  <data name="DateSuperseded" xml:space="preserve">
-    <value>Date superseded</value>
-  </data>
-  <data name="DeleteConfirm" xml:space="preserve">
-    <value>Are you sure you want to delete</value>
-  </data>
-  <data name="Draft" xml:space="preserve">
-    <value>Draft</value>
-  </data>
-  <data name="Historical" xml:space="preserve">
-    <value>Historical</value>
-  </data>
-  <data name="Proposal" xml:space="preserve">
-    <value>Proposal</value>
-  </data>
-  <data name="Retired" xml:space="preserve">
-    <value>Retired</value>
-  </data>
-  <data name="Superseded" xml:space="preserve">
-    <value>Superseded</value>
-  </data>
-  <data name="VersionName" xml:space="preserve">
-    <value>Version name</value>
-  </data>
-  <data name="SuggestNewRegister" xml:space="preserve">
-    <value>Suggest a new register</value>
-  </data>
-  <data name="SuggestNewRegisterIn" xml:space="preserve">
-    <value>Suggest a new register in</value>
-  </data>
-  <data name="ContainedItemClassErrorMessage" xml:space="preserve">
-    <value>Legitimate content for the registry must be added</value>
-  </data>
-  <data name="ErrorMessageDelete" xml:space="preserve">
-    <value>The registry can not be deleted because it contains items that need to be deleted first!</value>
-  </data>
-  <data name="ErrorMessageValidationName" xml:space="preserve">
-    <value>The name already exists!</value>
-  </data>
-  <data name="Publish" xml:space="preserve">
-    <value>Publish</value>
-  </data>
-  <data name="NewVersion" xml:space="preserve">
-    <value>New version</value>
-  </data>
-  <data name="SuggestNewVersionOf" xml:space="preserve">
-    <value>Suggest new version of</value>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

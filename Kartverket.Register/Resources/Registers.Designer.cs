@@ -313,6 +313,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ny versjon.
+        /// </summary>
+        public static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ikke angitt.
         /// </summary>
         public static string NotSet {
@@ -408,6 +417,15 @@ namespace Resources {
         public static string SuggestNewRegisterIn {
             get {
                 return ResourceManager.GetString("SuggestNewRegisterIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå ny versjon av.
+        /// </summary>
+        public static string SuggestNewVersionOf {
+            get {
+                return ResourceManager.GetString("SuggestNewVersionOf", resourceCulture);
             }
         }
         

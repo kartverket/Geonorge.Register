@@ -249,4 +249,10 @@
   <data name="Publish" xml:space="preserve">
     <value>Publiser</value>
   </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>Ny versjon</value>
+  </data>
+  <data name="SuggestNewVersionOf" xml:space="preserve">
+    <value>Foreslå ny versjon av</value>
+  </data>
 </root>

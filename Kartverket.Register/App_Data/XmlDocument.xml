@@ -1657,7 +1657,7 @@
         </member>
         <member name="P:Resources.EPSGs.Horizontal">
             <summary>
-              Looks up a localized string similar to Vertikalt.
+              Looks up a localized string similar to Horisontalt.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.HorizontalReferenceSystem">
@@ -1717,7 +1717,7 @@
         </member>
         <member name="P:Resources.EPSGs.Vertical">
             <summary>
-              Looks up a localized string similar to Horisontalt.
+              Looks up a localized string similar to Vertikalt.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.VerticalReferenceSystem">
@@ -2060,6 +2060,11 @@
         <member name="P:Resources.Registers.Description">
             <summary>
               Looks up a localized string similar to Beskrivelse.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.DocumentUrl">
+            <summary>
+              Looks up a localized string similar to Dokument url.
             </summary>
         </member>
         <member name="P:Resources.Registers.DOKCoverageContent">

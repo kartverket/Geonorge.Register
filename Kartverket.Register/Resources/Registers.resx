@@ -255,4 +255,7 @@
   <data name="SuggestNewVersionOf" xml:space="preserve">
     <value>Foreslå ny versjon av</value>
   </data>
+  <data name="DocumentUrl" xml:space="preserve">
+    <value>Dokument url</value>
+  </data>
 </root>

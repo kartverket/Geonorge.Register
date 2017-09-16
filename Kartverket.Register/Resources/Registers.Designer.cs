@@ -196,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dokument url.
+        /// </summary>
+        public static string DocumentUrl {
+            get {
+                return ResourceManager.GetString("DocumentUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
         /// </summary>
         public static string DOKCoverageContent {

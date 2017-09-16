@@ -78,7 +78,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "VersionName", ResourceType = typeof(Registers))]
         public string versionName { get; set; }
 
-        [Display(Name = "Dokument url:")]
+        [Display(Name = "DocumentUrl", ResourceType = typeof(Registers))]
         public string documentUrl { get; set; }
 
         [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]

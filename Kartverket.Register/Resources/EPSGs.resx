@@ -127,7 +127,7 @@
     <value>Ekstern referanser</value>
   </data>
   <data name="Horizontal" xml:space="preserve">
-    <value>Vertikalt</value>
+    <value>Horisontalt</value>
   </data>
   <data name="HorizontalReferenceSystem" xml:space="preserve">
     <value>Horisontalt referansesystem</value>
@@ -163,7 +163,7 @@
     <value>Foreslå ny EPSG-kode</value>
   </data>
   <data name="Vertical" xml:space="preserve">
-    <value>Horisontalt</value>
+    <value>Vertikalt</value>
   </data>
   <data name="VerticalReferenceSystem" xml:space="preserve">
     <value>Vertikalt referansesystem</value>

@@ -162,7 +162,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "ServiceAlert")
             {
-                text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + item.Note + ";" + item.MetadataUrl + ";";
+                text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + RemoveBreaksFromDescription(item.Note) + ";" + item.MetadataUrl;
             }
 
             streamWriter.WriteLine(text);
@@ -214,22 +214,22 @@ namespace Kartverket.Register.Formatter
 
             if (containedItemClass == "Document")
             {
-                return "Navn; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; Dokumentreferanse; ID";
+                return Registers.Name + ";"+ Documents.DocumentOwner + "; Status;" + Registers.Updated +";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + "; ID";
             }
             else if (containedItemClass == "CodelistValue")
             {
-                return "Navn; Kode; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; ID";
+                return Registers.Name + ";" + CodelistValues.CodeValue + ";"+ Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
             }
             else if (containedItemClass == "EPSG")
             {
-                return "Tittel; EPSG; SOSI; Vertikalt; Horisontalt; Dimensjon; Eier; Status; Oppdatert; Versjons Id; Beskrivelse; ID";
+                return Registers.Name + "; EPSG; SOSI;" + EPSGs.Vertical + ";"+ EPSGs.Horizontal + ";" + EPSGs.Dimension + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Temagruppe; Navn; Eier; DOK-status; DOK-status dato godkjent; Kandidatdato" + (isAdmin ? "; Oppdatert " : "") +"; Versjons Id; Beskrivelse; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
+                return DataSet.DOK_Delivery_Theme + ";"+ Registers.Name + ";"+ Registers.Owner + "; DOK-status;"+ DataSet.DOK_StatusDateAccepted +";" + DataSet.DOK_Kandidatdato  + (isAdmin ? ";" + Registers.Updated  : "") +";" + Registers.VersionNumber + ";" + Registers.Description + "; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
                     + DataSet.DOK_Delivery_ProductSheet + ";" + DataSet.DOK_Delivery_PresentationRules + ";" + DataSet.DOK_Delivery_ProductSpesification + ";"
                     + DataSet.DOK_Delivery_Wms + ";" + DataSet.DOK_Delivery_Wfs + ";" + DataSet.DOK_Delivery_SosiRequirements + ";"
-                    + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";Url til kartkatalog";
+                    + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";" + DataSet.DisplayKartkatalogen;
             }
             else if (containedItemClass == "Organization")
             {
@@ -237,11 +237,11 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "NameSpace")
             {
-                return "Navn; Etat; Innhold; Tjeneste";
+                return Registers.Name + ";" + Namespace.Etat+ ";" + Namespace.Content + ";" + Namespace.Service;
             }
             else if (containedItemClass == "ServiceAlert")
             {
-                return "Siste varsel; Ikrafttredelse; Tjeneste; Tjenestetype; Tjenestevarsel; Eier; Varselet gjelder; Url til tjeneste detaljside ";
+                return ServiceAlerts.LastAlert + ";"+ ServiceAlerts.EffectiveDate +";" + ServiceAlerts.Service + ";" + ServiceAlerts.ServiceType +";" + ServiceAlerts.AlertType + ";" + Registers.Owner + ";" + ServiceAlerts.Note + ";" + ServiceAlerts.ServiceDesription;
             }
 
             return null;
@@ -255,7 +255,7 @@ namespace Kartverket.Register.Formatter
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
         {
             string heading = "Det offentlige kartgrunnlaget - " + register.SelectedDOKMunicipality + ", " + DateTime.Today.ToString("d") + "\r\n";
-            heading = heading + "Temagruppe;Tittel;Eier;DOK-status;Oppdatert;Versjons Id;Beskrivelse;Regions-type;Bekreftet;Dekning;Merknad;Url til kartkatalog";
+            heading = heading + DataSet.DOK_Delivery_Theme+ ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + Registers.Updated + ";"+ Registers.VersionNumber + ";" + Registers.Description + ";" + DataSet.RegionType + ";"+ DataSet.DOK_Confirmed +";" + DataSet.DOK_Coverage + ";" +DataSet.DOK_Note + ";" + DataSet.DisplayKartkatalogen;
             return heading;
         }
 

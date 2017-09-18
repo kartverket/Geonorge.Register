@@ -1074,6 +1074,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.html" />
@@ -1192,6 +1194,14 @@
     <Content Include="Scripts\geonorge-register.js" />
     <Content Include="authentication.default.config" />
     <Content Include="authentication.config" />
+    <Content Include="Content\bower_components\tablesorter\.bower.json" />
+    <Content Include="Content\bower_components\tablesorter\bower.json" />
+    <Content Include="Content\bower_components\tablesorter\changelog" />
+    <Content Include="Content\bower_components\tablesorter\LICENSE" />
+    <Content Include="Content\bower_components\tablesorter\package.json" />
+    <Content Include="Content\bower_components\tablesorter\README.md" />
+    <Content Include="Content\bower_components\tablesorter\themes\blue\blue.zip" />
+    <Content Include="Content\bower_components\tablesorter\themes\green\green.zip" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\702ZOKiLJc3WVjuplzInF5uFdDttMLvmWuJdhhgs.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.eot" />
@@ -1215,6 +1225,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\tzj9b56b8RgXW8FAriS3USBnSvpkopQaUR-2r7iU.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\Y3_3JNqUVRAQQRNVteQ.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\_ySUJH_bn48VBG8sNSonF5uFdDttMLvmWuJdhhgs.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.cshtml" />
@@ -1225,14 +1237,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
-    <Content Include="Content\bower_components\tablesorter\.bower.json" />
-    <Content Include="Content\bower_components\tablesorter\bower.json" />
-    <Content Include="Content\bower_components\tablesorter\changelog" />
-    <Content Include="Content\bower_components\tablesorter\LICENSE" />
-    <Content Include="Content\bower_components\tablesorter\package.json" />
-    <Content Include="Content\bower_components\tablesorter\README.md" />
-    <Content Include="Content\bower_components\tablesorter\themes\blue\blue.zip" />
-    <Content Include="Content\bower_components\tablesorter\themes\green\green.zip" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />
@@ -1303,7 +1307,6 @@
     <Content Include="Views\Shared\_detailsDocuments.cshtml" />
     <Content Include="Views\Shared\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
-    <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Datasets\Create.cshtml" />
     <Content Include="Views\Datasets\Delete.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />

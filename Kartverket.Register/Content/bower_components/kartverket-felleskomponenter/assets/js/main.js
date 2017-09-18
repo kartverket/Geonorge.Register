@@ -20,8 +20,12 @@ if (cultureData !== {}) {
     cultureData.currentCulture = cultureData.currentCulture === undefined ? "" : cultureData.currentCulture;
 }
 
+function environmentIsProduction() {
+    var productionEnvironment = "";
+    return applicationEnvironment === productionEnvironment;
+}
 
-var geonorgeUrl = (applicationEnvironment === "") ? "https://www.geonorge.no/" : "https://www.test.geonorge.no/";
+var geonorgeUrl = environmentIsProduction() ? "https://www.geonorge.no/" : "https://www.test.geonorge.no/";
 
 // Check if string contains parameters
 function containsParameters(string) {
@@ -853,10 +857,20 @@ function removeFromArray(array, undesirableItems) {
     }
 }
 
+function orderItemHasMetadata(orderItemUuid){
+    var orderItemHasMetadata = localStorage.getItem(orderItemUuid + ".metadata") !== null ? true : false;
+    return orderItemHasMetadata;
+}
+
 function removeBrokenOrderItems() {
     var orderItems = JSON.parse(localStorage.getItem("orderItems"));
     if (orderItems !== null){
         removeFromArray(orderItems, [null, undefined, "null", {}, ""]);
+        orderItems.forEach(function (orderItem) {
+            if (!orderItemHasMetadata(orderItem)) {
+                removeSingleItemFromArray(orderItems, orderItem);
+            }
+        });
         localStorage.setItem('orderItems', JSON.stringify(orderItems));
     }
 }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
+using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Controllers
 {
@@ -14,10 +16,14 @@ namespace Kartverket.Register.Controllers
         private readonly RegisterDbContext _db = new RegisterDbContext();
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly MetadataService _metadataService;
+        private IAccessControlService _accessControlService;
+        private readonly IRegisterService _registerService;
 
-        public InspireDatasetsController(IInspireDatasetService inspireDatasetService) {
+        public InspireDatasetsController(IInspireDatasetService inspireDatasetService, IAccessControlService accessControllService, IRegisterService registerService) {
             _inspireDatasetService = inspireDatasetService;
+            _accessControlService = accessControllService;
             _metadataService = new MetadataService();
+            _registerService = registerService;
         }
         
 
@@ -37,38 +43,45 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: InspireDatasets/Create
-        //[Authorize]
+        [Authorize]
         [Route("inspire/{registername}/ny")]
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
-            InspireDatasetViewModel model = _inspireDatasetService.NewInspireDataset(parentregister, registername);
-
-            return View(model);
+            var model = _inspireDatasetService.NewInspireDataset(parentregister, registername);
+            if (_accessControlService.Access(model.Register))
+                return View(model);
+            throw new HttpException(401, "Access Denied");
         }
 
         // POST: InspireDatasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [Route("inspire/{registername}/ny")]
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(InspireDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
-            if (viewModel.SearchString != null)
-            {
-                viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+            viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
+            if (_accessControlService.Access(viewModel.Register)) { 
+                if (viewModel.SearchString != null)
+                {
+                    viewModel.SearchResultList =
+                        _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+                }
+                else if (metadataUuid != null)
+                {
+                    viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
+                }
+                else if (ModelState.IsValid)
+                {
+                    _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
+                    return RedirectToAction("Details");
+                }
+                return View(viewModel);
             }
-            else if (metadataUuid != null)
-            {
-                viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
-            }
-            else if (ModelState.IsValid)
-            {
-                _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
-                return RedirectToAction("Details");
-            }
-            return View(viewModel);
+            throw new HttpException(401, "Access Denied");
         }
 
         // GET: InspireDatasets/Edit/5

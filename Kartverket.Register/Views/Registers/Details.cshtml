@@ -167,7 +167,8 @@
                         }
                     }
                 }
-                else {
+                else
+                {
                     <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetObjectCreateUrl()">@Shared.Add</a>
                 }
             }
@@ -175,10 +176,6 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetEditObjectUrl()">@Shared.Edit</a>
             }
-        }
-        @if (Model.Register.name == "Inspire statusregister")
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetObjectCreateUrl()">Legg til</a>
         }
 
         @if (Model.Register.HasParentRegister())

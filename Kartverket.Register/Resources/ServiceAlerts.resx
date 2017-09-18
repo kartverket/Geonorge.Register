@@ -123,6 +123,9 @@
   <data name="AlertDateErrorMessage" xml:space="preserve">
     <value>Varslingsdato er påkrevd</value>
   </data>
+  <data name="AlertDateValidationMessage" xml:space="preserve">
+    <value>Varslingsdato bør ikke settes bakover i tid</value>
+  </data>
   <data name="AlertType" xml:space="preserve">
     <value>Type varsel</value>
   </data>
@@ -134,6 +137,23 @@
   </data>
   <data name="EffectiveDateErrorMessage" xml:space="preserve">
     <value>Ikrafttredelsesdato er påkrevd</value>
+  </data>
+  <data name="HelpTextAlertdate" xml:space="preserve">
+    <value>Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.</value>
+  </data>
+  <data name="HelpTextAlerttype" xml:space="preserve">
+    <value>Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href="mailto:post@norgedigitalt.no"&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".</value>
+  </data>
+  <data name="HelpTextEffectivedate" xml:space="preserve">
+    <value>Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.</value>
+  </data>
+  <data name="HelpTextNote" xml:space="preserve">
+    <value>Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
+I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre i tjenesten.</value>
+  </data>
+  <data name="HelpTextServiceuuid" xml:space="preserve">
+    <value>Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker.</value>
   </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Siste varsel</value>

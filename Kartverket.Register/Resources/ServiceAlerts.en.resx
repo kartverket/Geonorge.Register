@@ -123,6 +123,9 @@
   <data name="AlertDateErrorMessage" xml:space="preserve">
     <value>Alert date is required</value>
   </data>
+  <data name="AlertDateValidationMessage" xml:space="preserve">
+    <value>Notice date should not be set back in time</value>
+  </data>
   <data name="AlertType" xml:space="preserve">
     <value>Alert type</value>
   </data>
@@ -134,6 +137,23 @@
   </data>
   <data name="EffectiveDateErrorMessage" xml:space="preserve">
     <value>Effective date is required</value>
+  </data>
+  <data name="HelpTextAlertdate" xml:space="preserve">
+    <value>Here you choose the date the notice is registered in Geonorge. The system proposes today's date. When you press the "Publish" button, the notification will be immediately available to anyone who follows service notifications, regardless of the date you selected in this field.</value>
+  </data>
+  <data name="HelpTextAlerttype" xml:space="preserve">
+    <value>Select a type of alert from the drop-down list. If you can not find an appropriate type of alert, please email &lt;a href="mailto:post@norgedigitalt.no"&gt; post@norgedigitalt.no &lt;/a&gt; and promote your wish for new types of alerts. But keep in mind that for users who receive the notifications, the alert type must be as specific and precise as possible, while it may be confusing with too many different types of notification. Often it is good enough with a warning type that covers a slightly larger subject. Therefore, try to use the suggested alert types and give an in-depth explanation in the field of "The alert message".</value>
+  </data>
+  <data name="HelpTextEffectivedate" xml:space="preserve">
+    <value>Here you choose the date when the service will be changed. In Norway digitally there is 3 months notification time for changing or removing services. The system therefore proposes a date 3 months ahead of time for this field.</value>
+  </data>
+  <data name="HelpTextNote" xml:space="preserve">
+    <value>Here you enter what specific changes will be made to the service that this notification includes. If the notification concerns the change of a URL, you should specify what the new URL will be.
+If the notification concerns a change in data quality or data structure, you should state what these changes mean so that users / developers can update their clients in line with the changes.
+In all cases, it is also advisable to state the reason for the changes, as users are often more understandable for changes if they receive information about why it is necessary to change the service.</value>
+  </data>
+  <data name="HelpTextServiceuuid" xml:space="preserve">
+    <value>Select a service from the drop-down list. You can only select a service that is already registered in Geonorge. If the service you wish to enter a new notice for not found in the drop down list, you must register the service in Geonorge via the metadata editor and your BAAT user.</value>
   </data>
   <data name="LastAlert" xml:space="preserve">
     <value>Last alert</value>

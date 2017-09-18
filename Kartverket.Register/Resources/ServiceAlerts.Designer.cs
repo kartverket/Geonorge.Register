@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Varslingsdato bør ikke settes bakover i tid.
+        /// </summary>
+        public static string AlertDateValidationMessage {
+            get {
+                return ResourceManager.GetString("AlertDateValidationMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type varsel.
         /// </summary>
         public static string AlertType {
@@ -111,6 +120,53 @@ namespace Resources {
         public static string EffectiveDateErrorMessage {
             get {
                 return ResourceManager.GetString("EffectiveDateErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet..
+        /// </summary>
+        public static string HelpTextAlertdate {
+            get {
+                return ResourceManager.GetString("HelpTextAlertdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href=&quot;mailto:post@norgedigitalt.no&quot;&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltype [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpTextAlerttype {
+            get {
+                return ResourceManager.GetString("HelpTextAlerttype", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet..
+        /// </summary>
+        public static string HelpTextEffectivedate {
+            get {
+                return ResourceManager.GetString("HelpTextEffectivedate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+        ///Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
+        ///I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HelpTextNote {
+            get {
+                return ResourceManager.GetString("HelpTextNote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker..
+        /// </summary>
+        public static string HelpTextServiceuuid {
+            get {
+                return ResourceManager.GetString("HelpTextServiceuuid", resourceCulture);
             }
         }
         

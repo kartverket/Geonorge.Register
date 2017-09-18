@@ -29,7 +29,7 @@ namespace Kartverket.Register.Models
         [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
 
-        [Required(ErrorMessage = "Dette feltet er påkrevd")]
+        [Required(ErrorMessageResourceType = typeof(DataSet), ErrorMessageResourceName = "DOK_OwnerRequired")]
         [ForeignKey("datasetowner")]
         [Display(Name = "DOK_Owner", ResourceType = typeof(DataSet))]
         public Guid datasetownerId { get; set; }

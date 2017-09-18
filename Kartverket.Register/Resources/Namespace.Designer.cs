@@ -22,14 +22,14 @@ namespace Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CodelistValues {
+    public class Namespace {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CodelistValues() {
+        internal Namespace() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.CodelistValues", typeof(CodelistValues).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Kartverket.Register.Resources.Namespace", typeof(Namespace).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,56 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kodeverdi.
+        ///   Looks up a localized string similar to Innhold.
         /// </summary>
-        public static string CodeValue {
+        public static string Content {
             get {
-                return ResourceManager.GetString("CodeValue", resourceCulture);
+                return ResourceManager.GetString("Content", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filen har feil innhold!.
+        ///   Looks up a localized string similar to Etat.
         /// </summary>
-        public static string ErrorMessagefile {
+        public static string Etat {
             get {
-                return ResourceManager.GetString("ErrorMessagefile", resourceCulture);
+                return ResourceManager.GetString("Etat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navnerom.
+        /// </summary>
+        public static string NamespaceName {
+            get {
+                return ResourceManager.GetString("NamespaceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tjeneste.
+        /// </summary>
+        public static string Service {
+            get {
+                return ResourceManager.GetString("Service", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL til tjeneste.
+        /// </summary>
+        public static string ServiceUrl {
+            get {
+                return ResourceManager.GetString("ServiceUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt navnerom.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

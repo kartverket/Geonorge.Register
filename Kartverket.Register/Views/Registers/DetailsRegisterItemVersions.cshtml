@@ -85,7 +85,7 @@
             {
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">@Registers.SuggestNewVersionOf @Model.currentVersion.name</a>
                 }
             }
         }

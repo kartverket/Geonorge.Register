@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ namespace Kartverket.Register.Models
 {
     public class NameSpace : RegisterItem 
     {
-        [Display(Name = "URL til tjeneste")]
+        [Display(Name = "ServiceUrl", ResourceType = typeof(Namespace))]
         public string serviceUrl { get; set; }
 
         public virtual string GetNameSpaceEditUrl()

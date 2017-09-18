@@ -3,7 +3,7 @@ using Kartverket.Register.Resources;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
-using Resources;
+using translation = Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -992,12 +992,12 @@ namespace Kartverket.Register.Helpers
 
         public static string ErrorMessageValidationName()
         {
-            return "Navnet finnes fra før!";
+            return translation.Registers.ErrorMessageValidationName;
         }
 
         public static string ErrorMessageValidationDataset()
         {
-            return "Datasettet finnes fra før!";
+            return translation.DataSet.ErrorMessageValidationDataset;
         }
 
         public static CodelistValue GetSelectedMunicipality(string selectedMunicipalityCode)
@@ -1135,7 +1135,7 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return DataSet.DOK_Nasjonalt;
+            return translation.DataSet.DOK_Nasjonalt;
         }
 
 
@@ -1143,7 +1143,7 @@ namespace Kartverket.Register.Helpers
         {
             if (municipality != null)
             {
-                string confirmed = DataSet.NotConfirmedMunicipalDOK;
+                string confirmed = translation.DataSet.NotConfirmedMunicipalDOK;
                 string lastDateConfirmedText = "";
                 string status = "danger";
                 if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
@@ -1154,7 +1154,7 @@ namespace Kartverket.Register.Helpers
                 {
                     status = "warning";
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
-                    return "<label class='label-" + status + " label auto-width'>"+ DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                    return "<label class='label-" + status + " label auto-width'>"+ translation.DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {

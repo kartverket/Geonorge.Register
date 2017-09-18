@@ -13,6 +13,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Translation;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -71,7 +72,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
                 {
-                    ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
+                    ModelState.AddModelError("ErrorMessagefile", CodelistValues.ErrorMessagefile);
                     ViewbagImport(register);
                     return View();
                 }

@@ -231,4 +231,31 @@
   <data name="VersionName" xml:space="preserve">
     <value>Version name</value>
   </data>
+  <data name="SuggestNewRegister" xml:space="preserve">
+    <value>Suggest a new register</value>
+  </data>
+  <data name="SuggestNewRegisterIn" xml:space="preserve">
+    <value>Suggest a new register in</value>
+  </data>
+  <data name="ContainedItemClassErrorMessage" xml:space="preserve">
+    <value>Legitimate content for the registry must be added</value>
+  </data>
+  <data name="ErrorMessageDelete" xml:space="preserve">
+    <value>The registry can not be deleted because it contains items that need to be deleted first!</value>
+  </data>
+  <data name="ErrorMessageValidationName" xml:space="preserve">
+    <value>The name already exists!</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>New version</value>
+  </data>
+  <data name="SuggestNewVersionOf" xml:space="preserve">
+    <value>Suggest new version of</value>
+  </data>
+  <data name="DocumentUrl" xml:space="preserve">
+    <value>Document url</value>
+  </data>
 </root>

@@ -120,4 +120,7 @@
   <data name="CodeValue" xml:space="preserve">
     <value>Code value</value>
   </data>
+  <data name="ErrorMessagefile" xml:space="preserve">
+    <value>The file has the wrong content!</value>
+  </data>
 </root>

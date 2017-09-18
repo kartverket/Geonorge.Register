@@ -189,4 +189,7 @@
   <data name="Select" xml:space="preserve">
     <value>Select</value>
   </data>
+  <data name="ValidationSummary" xml:space="preserve">
+    <value>The form is incorrectly filled in. Please correct the following errors:</value>
+  </data>
 </root>

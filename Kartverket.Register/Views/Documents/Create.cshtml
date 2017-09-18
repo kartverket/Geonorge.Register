@@ -3,7 +3,7 @@
 @using System.Web.Configuration
 
 @{
-    ViewBag.Title = "Foreslå nytt dokument";
+    ViewBag.Title = Documents.TitleCreate;
 }
 
 @section breadcrumb {
@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt dokument
+                @Documents.TitleCreate
             </h2>
         </div>
         <div class="col-sm-12">
@@ -76,7 +76,7 @@
         }
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="documentfile">Dokument-fil:</label>
+            <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
             <div class="col-md-10">
                 <input type="file" name="documentfile" id="documentfile" />
             </div>
@@ -87,7 +87,7 @@
             <div class="col-md-10">
                 <input type="file" name="thumbnail" />
                 @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
-                Hvis ikke noe er valgt genereres forsiden av dokumentet som thumbnail
+                @Documents.ThumbnailInfo
             </div>
         </div>
     </div>

@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Services.Translation;
 using System.Web;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -188,7 +189,7 @@ namespace Kartverket.Register.Controllers
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
                 if (ModelState.IsValid)
                 {
@@ -246,7 +247,7 @@ namespace Kartverket.Register.Controllers
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
                 Models.Register originalRegister = _registerService.GetRegister(null, registername);
 
                 if (ModelState.IsValid)
@@ -429,7 +430,7 @@ namespace Kartverket.Register.Controllers
 
                 if (_registerService.RegisterHasChildren(null, registername))
                 {
-                    ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
+                    ModelState.AddModelError("ErrorMessageDelete", Registers.ErrorMessageDelete);
                     return View(register);
                 }
                 else

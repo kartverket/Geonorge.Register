@@ -324,6 +324,12 @@
   <data name="Update" xml:space="preserve">
     <value>oppdater</value>
   </data>
+  <data name="DOK_OwnerRequired" xml:space="preserve">
+    <value>Dette feltet er påkrevd</value>
+  </data>
+  <data name="ErrorMessageValidationDataset" xml:space="preserve">
+    <value>Datasettet finnes fra før!</value>
+  </data>
   <data name="Delivery_Harmonized" xml:space="preserve">
     <value>Harmoniserte data status</value>
   </data>

@@ -2,25 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt tjenestevarsel";
-}
-
-@section scripts
-{
-    <script>
-        $(function () {
-            // help text
-
-            $("a.help-text-toggle").click(function (event) {
-                event.preventDefault();
-                var helpTextId = $(this).data("help-text-id");
-                $("#" + helpTextId).toggle();
-            });
-
-            // add help icon to each help text paragraph
-            $(".help-text").prepend("<span class=\"badge\">?</span> ");
-        });
-    </script>
+    ViewBag.Title = ServiceAlerts.Title;
 }
 
 @section breadcrumb {
@@ -30,13 +12,13 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>Ny</li>
+    <li>@ServiceAlerts.Title</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt tjenestevarsel
+                @ServiceAlerts.Title
             </h2>
         </div>
         <div class="col-sm-12">
@@ -49,11 +31,11 @@
 {
 
     <div class="form-horizontal">
-        @Html.ValidationSummary(false, "Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler:", new { @class = "alert alert-danger" })
+        @Html.ValidationSummary(false, Shared.ValidationSummary, new { @class = "alert alert-danger" })
         @Html.Hidden("name", "navn")
 
         <div class="form-group required has-feedback">
-            @Html.LabelFor(model => model.ServiceUuid, "Tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ServiceUuid, ServiceAlerts.Service, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-9">
                 <div class="col-md-6 row">
                     @Html.DropDownList("ServiceUuid", null, "Velg tjeneste", htmlAttributes: new { @class = "form-control" })
@@ -61,7 +43,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-serviceuuid" style="display: none">
-                        Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker.
+                        @ServiceAlerts.HelpTextServiceuuid
                     </p>
                 </div>
             </div>
@@ -83,7 +65,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alerttype" style="display: none">
-                        Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til <a href="mailto:post@norgedigitalt.no">post@norgedigitalt.no</a> og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".
+                        @Html.Raw(ServiceAlerts.HelpTextAlerttype)
                     </p>
                 </div>
             </div>
@@ -101,12 +83,12 @@
             <div class="col-md-9">
                 <div class="col-md-4 row">
                     @Html.EditorFor(model => model.AlertDate, new { cssClass = "date" })
-                    <span class="field-validation-valid" id="AlertDate_validationMessage">Varslingsdato bør ikke settes bakover i tid</span>
+                    <span class="field-validation-valid" id="AlertDate_validationMessage">@ServiceAlerts.AlertDateValidationMessage</span>
                     <span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-alertdate" style="display: none">
-                        Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.
+                        @ServiceAlerts.HelpTextAlertdate
                     </p>
                 </div>
             </div>
@@ -126,7 +108,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-effectivedate" style="display: none">
-                        Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.
+                        @ServiceAlerts.HelpTextEffectivedate
                     </p>
                 </div>
             </div>
@@ -146,10 +128,7 @@
                 </div>
                 <div class="col-md-12 row">
                     <p class="help-text bg-success" id="help-text-note" style="display: none">
-                        Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
-                        Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
-                        I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre i tjenesten.
-
+                        @ServiceAlerts.HelpTextNote
                     </p>
                 </div>
             </div>
@@ -162,7 +141,7 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Publiser" class="btn btn-default pull-right" />
+            <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />
             <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
         </div>
     </div>

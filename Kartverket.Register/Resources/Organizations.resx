@@ -231,4 +231,28 @@
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="MunicipalityCodeRequired" xml:space="preserve">
+    <value>Kommunenummer er påkrevd</value>
+  </data>
+  <data name="AgreementYearErrorMessge" xml:space="preserve">
+    <value>Skriv inn et årstall yyyy</value>
+  </data>
+  <data name="BoundingBoxEastErrorMessage" xml:space="preserve">
+    <value>Geografisk utstrekning - øst er påkrevd</value>
+  </data>
+  <data name="BoundingBoxNorthErrorMessage" xml:space="preserve">
+    <value>Geografisk utstrekning - nord er påkrevd</value>
+  </data>
+  <data name="BoundingBoxSouthErrorMessage" xml:space="preserve">
+    <value>Geografisk utstrekning - sør er påkrevd</value>
+  </data>
+  <data name="BoundingBoxWestErrorMessage" xml:space="preserve">
+    <value>Geografisk utstrekning - vest er påkrevd</value>
+  </data>
+  <data name="GeographicCenterXErrorMessage" xml:space="preserve">
+    <value>Geografisk senterpunkt - x er påkrevd</value>
+  </data>
+  <data name="GeographicCenterYErrorMessage" xml:space="preserve">
+    <value>Geografisk senterpunkt - y er påkrevd</value>
+  </data>
 </root>

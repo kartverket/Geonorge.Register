@@ -327,4 +327,10 @@
   <data name="Update" xml:space="preserve">
     <value>update</value>
   </data>
+  <data name="DOK_OwnerRequired" xml:space="preserve">
+    <value>This field is required</value>
+  </data>
+  <data name="ErrorMessageValidationDataset" xml:space="preserve">
+    <value>The data set already exists!</value>
+  </data>
 </root>

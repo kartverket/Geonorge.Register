@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Det må settes lovlig innhold for registeret.
+        /// </summary>
+        public static string ContainedItemClassErrorMessage {
+            get {
+                return ResourceManager.GetString("ContainedItemClassErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innhold.
         /// </summary>
         public static string Content {
@@ -187,6 +196,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dokument url.
+        /// </summary>
+        public static string DocumentUrl {
+            get {
+                return ResourceManager.GetString("DocumentUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene..
         /// </summary>
         public static string DOKCoverageContent {
@@ -210,6 +228,24 @@ namespace Resources {
         public static string EditList {
             get {
                 return ResourceManager.GetString("EditList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!.
+        /// </summary>
+        public static string ErrorMessageDelete {
+            get {
+                return ResourceManager.GetString("ErrorMessageDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navnet finnes fra før!.
+        /// </summary>
+        public static string ErrorMessageValidationName {
+            get {
+                return ResourceManager.GetString("ErrorMessageValidationName", resourceCulture);
             }
         }
         
@@ -286,6 +322,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ny versjon.
+        /// </summary>
+        public static string NewVersion {
+            get {
+                return ResourceManager.GetString("NewVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ikke angitt.
         /// </summary>
         public static string NotSet {
@@ -340,6 +385,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publiser.
+        /// </summary>
+        public static string Publish {
+            get {
+                return ResourceManager.GetString("Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utgått.
         /// </summary>
         public static string Retired {
@@ -354,6 +408,33 @@ namespace Resources {
         public static string Submitter {
             get {
                 return ResourceManager.GetString("Submitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt register.
+        /// </summary>
+        public static string SuggestNewRegister {
+            get {
+                return ResourceManager.GetString("SuggestNewRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå nytt register i.
+        /// </summary>
+        public static string SuggestNewRegisterIn {
+            get {
+                return ResourceManager.GetString("SuggestNewRegisterIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foreslå ny versjon av.
+        /// </summary>
+        public static string SuggestNewVersionOf {
+            get {
+                return ResourceManager.GetString("SuggestNewVersionOf", resourceCulture);
             }
         }
         

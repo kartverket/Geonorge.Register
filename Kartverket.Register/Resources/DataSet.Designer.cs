@@ -493,6 +493,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dette feltet er påkrevd.
+        /// </summary>
+        public static string DOK_OwnerRequired {
+            get {
+                return ResourceManager.GetString("DOK_OwnerRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kartografidokumentasjon.
         /// </summary>
         public static string DOK_PresentationRulesStatus {
@@ -597,6 +606,15 @@ namespace Resources {
         public static string DOK_Tittel {
             get {
                 return ResourceManager.GetString("DOK_Tittel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datasettet finnes fra før!.
+        /// </summary>
+        public static string ErrorMessageValidationDataset {
+            get {
+                return ResourceManager.GetString("ErrorMessageValidationDataset", resourceCulture);
             }
         }
         

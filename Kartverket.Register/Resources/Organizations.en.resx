@@ -231,4 +231,28 @@
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="MunicipalityCodeRequired" xml:space="preserve">
+    <value>Municipality code is required</value>
+  </data>
+  <data name="AgreementYearErrorMessge" xml:space="preserve">
+    <value>Enter a year yyyy</value>
+  </data>
+  <data name="BoundingBoxEastErrorMessage" xml:space="preserve">
+    <value>Geographical extent - East is required</value>
+  </data>
+  <data name="BoundingBoxNorthErrorMessage" xml:space="preserve">
+    <value>Geographical extent - North is required</value>
+  </data>
+  <data name="BoundingBoxSouthErrorMessage" xml:space="preserve">
+    <value>Geographical extent - South is required</value>
+  </data>
+  <data name="BoundingBoxWestErrorMessage" xml:space="preserve">
+    <value>Geographical extent - West is required</value>
+  </data>
+  <data name="GeographicCenterXErrorMessage" xml:space="preserve">
+    <value>Geographic Center Point - x is required</value>
+  </data>
+  <data name="GeographicCenterYErrorMessage" xml:space="preserve">
+    <value>Geographic Center Point - y is required</value>
+  </data>
 </root>

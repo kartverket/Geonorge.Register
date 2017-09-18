@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vertikalt.
+        ///   Looks up a localized string similar to Horisontalt.
         /// </summary>
         public static string Horizontal {
             get {
@@ -196,7 +196,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Horisontalt.
+        ///   Looks up a localized string similar to Vertikalt.
         /// </summary>
         public static string Vertical {
             get {

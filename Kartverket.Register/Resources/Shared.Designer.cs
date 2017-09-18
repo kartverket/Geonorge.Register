@@ -275,5 +275,14 @@ namespace Resources {
                 return ResourceManager.GetString("Title", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler.
+        /// </summary>
+        public static string ValidationSummary {
+            get {
+                return ResourceManager.GetString("ValidationSummary", resourceCulture);
+            }
+        }
     }
 }

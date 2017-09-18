@@ -75,7 +75,7 @@
             {
                 <span><a href="@Url.Action("SignIn", "AuthServices")"> Logg inn</a> for å legge til nye varsler.</span><br />
             }
-            <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">Abonnere på tjenestevarsler</a><br />
+            <a href="@RegisterUrls.urlFormat(Request, "atom")" class="">@ServiceAlerts.SubscribeServiceAlert</a><br />
         }
     </div>
 

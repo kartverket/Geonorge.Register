@@ -88,11 +88,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skriv inn et årstall yyyy.
+        /// </summary>
+        public static string AgreementYearErrorMessge {
+            get {
+                return ResourceManager.GetString("AgreementYearErrorMessge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geografisk utstrekning - øst.
         /// </summary>
         public static string BoundingBoxEast {
             get {
                 return ResourceManager.GetString("BoundingBoxEast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - øst er påkrevd.
+        /// </summary>
+        public static string BoundingBoxEastErrorMessage {
+            get {
+                return ResourceManager.GetString("BoundingBoxEastErrorMessage", resourceCulture);
             }
         }
         
@@ -106,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - nord er påkrevd.
+        /// </summary>
+        public static string BoundingBoxNorthErrorMessage {
+            get {
+                return ResourceManager.GetString("BoundingBoxNorthErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geografisk utstrekning - sør.
         /// </summary>
         public static string BoundingBoxSouth {
@@ -115,11 +142,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - sør er påkrevd.
+        /// </summary>
+        public static string BoundingBoxSouthErrorMessage {
+            get {
+                return ResourceManager.GetString("BoundingBoxSouthErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geografisk utstrekning - vest.
         /// </summary>
         public static string BoundingBoxWest {
             get {
                 return ResourceManager.GetString("BoundingBoxWest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk utstrekning - vest er påkrevd.
+        /// </summary>
+        public static string BoundingBoxWestErrorMessage {
+            get {
+                return ResourceManager.GetString("BoundingBoxWestErrorMessage", resourceCulture);
             }
         }
         
@@ -205,11 +250,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Geografisk senterpunkt - x er påkrevd.
+        /// </summary>
+        public static string GeographicCenterXErrorMessage {
+            get {
+                return ResourceManager.GetString("GeographicCenterXErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Geografisk senterpunkt - y.
         /// </summary>
         public static string GeographicCenterY {
             get {
                 return ResourceManager.GetString("GeographicCenterY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Geografisk senterpunkt - y er påkrevd.
+        /// </summary>
+        public static string GeographicCenterYErrorMessage {
+            get {
+                return ResourceManager.GetString("GeographicCenterYErrorMessage", resourceCulture);
             }
         }
         
@@ -246,6 +309,15 @@ namespace Resources {
         public static string MunicipalityCode {
             get {
                 return ResourceManager.GetString("MunicipalityCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunenummer er påkrevd.
+        /// </summary>
+        public static string MunicipalityCodeRequired {
+            get {
+                return ResourceManager.GetString("MunicipalityCodeRequired", resourceCulture);
             }
         }
         

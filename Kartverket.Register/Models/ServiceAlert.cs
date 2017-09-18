@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
 using System.Linq;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -16,22 +17,22 @@ namespace Kartverket.Register.Models
             EffectiveDate = DateTime.Now.AddMonths(3);
         }
 
-        [Required(ErrorMessage = "Varslingsdato er påkrevd")]
-        [Display(Name = "Varslingsdato")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
+        [Display(Name = "AlertDate", ResourceType = typeof(ServiceAlerts))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime AlertDate { get; set; }
 
-        [Required(ErrorMessage = "Ikrafttredelsesdato er påkrevd")]
-        [Display(Name = "Ikrafttredelsesdato")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "EffectiveDateErrorMessage")]
+        [Display(Name = "EffectiveDate", ResourceType = typeof(ServiceAlerts))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime EffectiveDate { get; set; }
 
-        [Required(ErrorMessage = "Valg av type varsel er påkrevd")]
-        [Display(Name = "Type varsel")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "AlertTypeErrorMessage")]
+        [Display(Name = "AlertType", ResourceType = typeof(ServiceAlerts))]
         public string AlertType { get; set; }
 
-        [Required(ErrorMessage = "Valg av tjeneste er påkrevd")]
-        [Display(Name = "Tjenestetype")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
+        [Display(Name = "ServiceType", ResourceType = typeof(ServiceAlerts))]
         public string ServiceType { get; set; }
 
         [Required]
@@ -39,12 +40,12 @@ namespace Kartverket.Register.Models
 
         public string ServiceMetadataUrl { get; set; }
 
-        [Required(ErrorMessage = "Valg av tjeneste er påkrevd")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "ServiceTypeErrorMessage")]
         public string ServiceUuid { get; set; }
 
-        [Required(ErrorMessage = "Det er påkrevd å skrive hva varselet gjelder")]
+        [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "NoteErrorMessage")]
         [StringLength(500, MinimumLength = 3)]
-        [Display(Name = "Varselet gjelder")]
+        [Display(Name = "Note", ResourceType = typeof(ServiceAlerts))]
         public string Note { get; set; }
 
 

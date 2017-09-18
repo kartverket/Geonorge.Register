@@ -117,145 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AccessLabel" xml:space="preserve">
-    <value>Tilgang til registeret</value>
-  </data>
-  <data name="AccessText" xml:space="preserve">
-    <value>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang</value>
-  </data>
   <data name="Content" xml:space="preserve">
     <value>Innhold</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>Beskrivelse</value>
+  <data name="Etat" xml:space="preserve">
+    <value>Etat</value>
   </data>
-  <data name="DOKCoverageContent" xml:space="preserve">
-    <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>
+  <data name="NamespaceName" xml:space="preserve">
+    <value>Navnerom</value>
   </data>
-  <data name="Hits" xml:space="preserve">
-    <value>treff</value>
+  <data name="Service" xml:space="preserve">
+    <value>Tjeneste</value>
   </data>
-  <data name="HitsDisplay" xml:space="preserve">
-    <value>Viser</value>
+  <data name="ServiceUrl" xml:space="preserve">
+    <value>URL til tjeneste</value>
   </data>
-  <data name="HitsOf" xml:space="preserve">
-    <value>av</value>
-  </data>
-  <data name="Kartografi" xml:space="preserve">
-    <value>Kartografi</value>
-  </data>
-  <data name="KartografiContent" xml:space="preserve">
-    <value>Registeret inneholder datasett som har registrert digital kartografi</value>
-  </data>
-  <data name="LoadingMessage" xml:space="preserve">
-    <value>Henter register</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Navn</value>
-  </data>
-  <data name="NotSet" xml:space="preserve">
-    <value>Ikke angitt</value>
-  </data>
-  <data name="Objektregisteret" xml:space="preserve">
-    <value>Objektregisteret</value>
-  </data>
-  <data name="ObjektregisteretContent" xml:space="preserve">
-    <value>Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.</value>
-  </data>
-  <data name="Owner" xml:space="preserve">
-    <value>Eier</value>
-  </data>
-  <data name="SymbolContent" xml:space="preserve">
-    <value>Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.</value>
-  </data>
-  <data name="Updated" xml:space="preserve">
-    <value>Oppdatert</value>
-  </data>
-  <data name="Submitter" xml:space="preserve">
-    <value>Innsender</value>
-  </data>
-  <data name="Propose" xml:space="preserve">
-    <value>Foreslå</value>
-  </data>
-  <data name="ContainedItemClass" xml:space="preserve">
-    <value>Lovlig innhold</value>
-  </data>
-  <data name="VersionNumber" xml:space="preserve">
-    <value>Versjons ID</value>
-  </data>
-  <data name="EditList" xml:space="preserve">
-    <value>Rediger liste</value>
-  </data>
-  <data name="DateAccepted" xml:space="preserve">
-    <value>Dato godkjent</value>
-  </data>
-  <data name="DateNotAccepted" xml:space="preserve">
-    <value>Dato utkast</value>
-  </data>
-  <data name="DateRetired" xml:space="preserve">
-    <value>Dato utgått</value>
-  </data>
-  <data name="DateSuperseded" xml:space="preserve">
-    <value>Dato erstattet</value>
-  </data>
-  <data name="VersionName" xml:space="preserve">
-    <value>Utgave</value>
-  </data>
-  <data name="Accepted" xml:space="preserve">
-    <value>Godkjent</value>
-  </data>
-  <data name="ApprovalDocument" xml:space="preserve">
-    <value>Godkjenningstekst</value>
-  </data>
-  <data name="ApprovalReference" xml:space="preserve">
-    <value>Godkjenningsreferanse</value>
-  </data>
-  <data name="Current" xml:space="preserve">
-    <value>Gjeldende</value>
-  </data>
-  <data name="DeleteConfirm" xml:space="preserve">
-    <value>Er du sikker på at du vil slette</value>
-  </data>
-  <data name="Draft" xml:space="preserve">
-    <value>Utkast</value>
-  </data>
-  <data name="Historical" xml:space="preserve">
-    <value>Historiske</value>
-  </data>
-  <data name="Proposal" xml:space="preserve">
-    <value>Forslag</value>
-  </data>
-  <data name="Retired" xml:space="preserve">
-    <value>Utgått</value>
-  </data>
-  <data name="Superseded" xml:space="preserve">
-    <value>Erstattet</value>
-  </data>
-  <data name="SuggestNewRegister" xml:space="preserve">
-    <value>Foreslå nytt register</value>
-  </data>
-  <data name="SuggestNewRegisterIn" xml:space="preserve">
-    <value>Foreslå nytt register i</value>
-  </data>
-  <data name="ErrorMessageDelete" xml:space="preserve">
-    <value>Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!</value>
-  </data>
-  <data name="ErrorMessageValidationName" xml:space="preserve">
-    <value>Navnet finnes fra før!</value>
-  </data>
-  <data name="ContainedItemClassErrorMessage" xml:space="preserve">
-    <value>Det må settes lovlig innhold for registeret</value>
-  </data>
-  <data name="Publish" xml:space="preserve">
-    <value>Publiser</value>
-  </data>
-  <data name="NewVersion" xml:space="preserve">
-    <value>Ny versjon</value>
-  </data>
-  <data name="SuggestNewVersionOf" xml:space="preserve">
-    <value>Foreslå ny versjon av</value>
-  </data>
-  <data name="DocumentUrl" xml:space="preserve">
-    <value>Dokument url</value>
+  <data name="Title" xml:space="preserve">
+    <value>Foreslå nytt navnerom</value>
   </data>
 </root>

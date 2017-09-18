@@ -13,18 +13,18 @@
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
 
                 <div class="col-no-padding-xs col-date col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <p><span>Siste varsel: </span>@Html.DisplayFor(model => item.AlertDate)</p>
-                    <p><span>Ikrafttredelse: </span>@Html.DisplayFor(model => item.EffectiveDate)</p>
+                    <p><span>@Html.DisplayNameFor(model => item.AlertDate): </span>@Html.DisplayFor(model => item.AlertDate)</p>
+                    <p><span>@Html.DisplayNameFor(model => item.EffectiveDate): </span>@Html.DisplayFor(model => item.EffectiveDate)</p>
                 </div>
 
                 <div class="col-no-padding-xs col-information col-sm-3 col-md-3 col-lg-3 pull-right">
                     <p><span>@Registers.Owner: </span>@item.Owner</p>
-                    <p><span>Tjeneste varsel: </span>@item.AlertType</p>
-                    <p><span>Tjenestetype: </span>@item.ServiceType</p>
+                    <p><span>@Html.DisplayNameFor(model => item.AlertType): </span>@item.AlertType</p>
+                    <p><span>@Html.DisplayNameFor(model => item.ServiceType): </span>@item.ServiceType</p>
                 </div>
 
                 <div class="col-no-padding-xs col-description col-sm-2 col-md-2 col-lg-2 pull-right">
-                    <span>Beskrivelse: </span> <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
+                    <span>@ServiceAlerts.ServiceDesription: </span> <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
                 </div>
 
                 <div class="col-no-padding-xs col-title col-sm-3 col-md-3 col-lg-3 pull-left">

@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt register";
+    ViewBag.Title = Registers.SuggestNewRegister;
 }
 
 @section breadcrumb {
@@ -12,14 +12,14 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.parentRegister.GetObjectUrl()">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-    <li>Ny</li>
+    <li>@Registers.SuggestNewRegister</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt register i @Model.parentRegister.name
+                @Registers.SuggestNewRegisterIn @Model.parentRegister.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -79,7 +79,7 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, "Lovlig innhold", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.containedItemClass, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("containedItemClass", null, "-- Velg innhold --", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
@@ -87,7 +87,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.targetNamespace, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })

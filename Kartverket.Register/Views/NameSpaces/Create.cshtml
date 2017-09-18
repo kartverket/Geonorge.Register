@@ -2,7 +2,7 @@
 @using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt navnerom";
+    ViewBag.Title = Namespace.Title;
 }
 
 @section breadcrumb {
@@ -12,13 +12,13 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>Nytt</li>
+    <li>@Namespace.Title</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt navnerom
+                @Namespace.Title
             </h2>
         </div>
         <div class="col-sm-12">
@@ -38,7 +38,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.name, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, Namespace.NamespaceName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
@@ -46,7 +46,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, "Innhold", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, Namespace.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
@@ -54,7 +54,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.serviceUrl, "URL til tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.serviceUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.serviceUrl, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.serviceUrl, "", new { @class = "text-danger" })

@@ -16,6 +16,7 @@ using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.Search;
 using Kartverket.Register.Services.Translation;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -315,7 +316,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsRegisterItem.Count() > 0)
             {
-                ModelState.AddModelError("ErrorMessageDelete", "Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!");
+                ModelState.AddModelError("ErrorMessageDelete", Registers.ErrorMessageDelete);
                 return View(register);
             }
             else
@@ -385,7 +386,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsDataset.Count() > 0)
             {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
         }
 

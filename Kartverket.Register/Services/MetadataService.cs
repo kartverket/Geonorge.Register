@@ -239,7 +239,7 @@ namespace Kartverket.DOK.Service
                             ? data.KeywordsNationalTheme[0].KeywordValue.Value
                             : "Annen");
 
-                    if (data.ServiceUuid != null) inspireDataset.Uuid = data.ServiceUuid;
+                    if (data.ServiceUuid != null) inspireDataset.UuidService = data.ServiceUuid;
                     if (data.ServiceDistributionUrlForDataset != null)
                         inspireDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
 

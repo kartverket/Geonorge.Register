@@ -260,9 +260,9 @@ namespace Kartverket.Register.Services
                 {
                     if (autoUpdate)
                     {
-                        if (metadata.QualitySpecification != null)
+                        if (metadata.QualitySpecifications != null)
                         {
-                            if (metadata.QualitySpecification.Result == "true")
+                            if ( metadata.QualitySpecifications[0].Result == "true")
                             {
                                 status = "good";
                             }    
@@ -285,8 +285,8 @@ namespace Kartverket.Register.Services
         public string GetSpatialDataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
             var status = currentStatus;
-            try
-            {
+            //try
+            //{
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)
@@ -295,10 +295,10 @@ namespace Kartverket.Register.Services
                     {
                         if (metadata.DistributionDetails != null && metadata.DistributionDetails.Protocol == "GEONORGE:DOWNLOAD")
                         {
-                            var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid);
-                            if (relatedService.DistributionDetails != null && (metadata.DistributionDetails.Protocol == "REST-API"
-                                || metadata.DistributionDetails.Protocol == "W3C:WS"
-                                || metadata.DistributionDetails.Protocol == "OGC:WPS"))
+                            var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid.ToString());
+                            if (relatedService.DistributionDetails != null && (metadata.DistributionDetails.Protocol == "W3C:REST"
+                                || relatedService.DistributionDetails.Protocol == "W3C:WS"
+                                || relatedService.DistributionDetails.Protocol == "OGC:WPS"))
                             {
                                 status = "good";
                             }
@@ -309,12 +309,12 @@ namespace Kartverket.Register.Services
                 {
                     status = "deficient";
                 }
-            }
+            //}
 
-            catch (Exception)
-            {
-                return "deficient";
-            }
+            //catch (Exception)
+            //{
+            //    return "deficient";
+            //}
             if (!string.IsNullOrWhiteSpace(status)) return status;
             status = "deficient";
             return status;

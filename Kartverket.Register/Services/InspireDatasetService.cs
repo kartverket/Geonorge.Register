@@ -68,11 +68,11 @@ namespace Kartverket.Register.Services
             inspireDatasetViewModel.InspireDeliveryMetadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryMetadataStatus);
             inspireDatasetViewModel.InspireDeliveryMetadataServiceStatus = "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
             inspireDatasetViewModel.InspireDeliveryDistributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryDistributionStatus);
-            inspireDatasetViewModel.InspireDeliveryWmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryMetadataStatus, inspireDataset.UuidService);
+            inspireDatasetViewModel.InspireDeliveryWmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryWmsStatus, inspireDataset.UuidService);
             inspireDatasetViewModel.InspireDeliveryWfsStatus = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryWfsStatus);
             inspireDatasetViewModel.InspireDeliveryAtomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryAtomFeedStatus);
             inspireDatasetViewModel.InspireDeliveryWfsOrAtomStatus = GetInspireDeliveryWfsOrAtomFeedStatus(inspireDatasetViewModel.InspireDeliveryWfsStatus, inspireDatasetViewModel.InspireDeliveryAtomFeedStatus);
-            inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryAtomFeedStatus); // TODO Sjekk om det testes på riktige data...
+            inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus); // TODO Sjekk om det testes på riktige data...
             inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus); // TODO Sjekk om det testes på riktige data...
         }
 
@@ -99,7 +99,7 @@ namespace Kartverket.Register.Services
 
         public InspireDatasetViewModel NewInspireDataset(string parentRegister, string register)
         {
-            var model = new InspireDatasetViewModel {Register = _registerService.GetRegister(parentRegister, register)};
+            var model = new InspireDatasetViewModel {RegisterId = _registerService.GetRegisterId(parentRegister, register)};
 
             return model;
         }

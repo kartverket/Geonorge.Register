@@ -42,7 +42,7 @@
         }
 
         var cultureData = {
-            supportsMultiCulture: true,
+            supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
             urlSetCulture: '/SetCulture/en',
             urlSetCultureNorwegian: '/SetCulture/no',
             currentCulture: '@CultureHelper.GetCurrentCulture()'

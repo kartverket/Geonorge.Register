@@ -192,4 +192,7 @@
   <data name="ValidationSummary" xml:space="preserve">
     <value>The form is incorrectly filled in. Please correct the following errors:</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
 </root>

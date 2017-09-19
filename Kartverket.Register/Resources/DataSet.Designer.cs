@@ -619,6 +619,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommunal bekreftelse.
+        /// </summary>
+        public static string MunicipalConfirmation {
+            get {
+                return ResourceManager.GetString("MunicipalConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
         /// </summary>
         public static string MunicipalDOKConfirmedInfoPlaceholder {

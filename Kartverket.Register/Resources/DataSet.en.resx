@@ -333,4 +333,7 @@
   <data name="ErrorMessageValidationDataset" xml:space="preserve">
     <value>The data set already exists!</value>
   </data>
+  <data name="MunicipalConfirmation" xml:space="preserve">
+    <value>Municipal confirmation</value>
+  </data>
 </root>

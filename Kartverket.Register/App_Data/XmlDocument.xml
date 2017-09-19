@@ -1595,6 +1595,11 @@
               Looks up a localized string similar to metadataeditoren.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.MunicipalConfirmation">
+            <summary>
+              Looks up a localized string similar to Kommunal bekreftelse.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.MunicipalDOKConfirmedInfoPlaceholder">
             <summary>
               Looks up a localized string similar to Kommunen har {0} bekreftet at registrering er sluttført for året.
@@ -2298,6 +2303,11 @@
         <member name="P:Resources.Shared.Beskrivelse_Engelsk">
             <summary>
               Looks up a localized string similar to Beskrivelse engelsk.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Cancel">
+            <summary>
+              Looks up a localized string similar to Avbryt.
             </summary>
         </member>
         <member name="P:Resources.Shared.Delete">

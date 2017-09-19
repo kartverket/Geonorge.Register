@@ -330,4 +330,7 @@
   <data name="ErrorMessageValidationDataset" xml:space="preserve">
     <value>Datasettet finnes fra før!</value>
   </data>
+  <data name="MunicipalConfirmation" xml:space="preserve">
+    <value>Kommunal bekreftelse</value>
+  </data>
 </root>

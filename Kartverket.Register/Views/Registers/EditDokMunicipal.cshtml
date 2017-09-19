@@ -116,7 +116,7 @@
                 <h2>@selectedMunicipal</h2>
             </div>
             <div class="col-md-4" style="margin-top: 25px;">
-                <label>Kommunal bekreftelse:</label>
+                <label>@DataSet.MunicipalConfirmation:</label>
                 <div class="no-padding-bottom">
                     <div class="custom-select">
                         @Html.DropDownList("statusDOKMunicipal", null, "-- sett status --", htmlAttributes: new { @class = "form-control" })
@@ -143,11 +143,11 @@
                         <table id="myTable" class="tablesorter table-responsive table tableCoverage" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">Bekreft</a></th>
-                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">Dekning</a></th>
-                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">Merknad</span></th>
+                                    <th style="width:10%"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">@DataSet.DOK_Delivery_Theme</a></th>
+                                    <th style="width:10%" colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">@Shared.Title</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Bekreftet_Kommune">@DataSet.DOK_Confirmed</a></th>
+                                    <th class="text-center"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Coverage_Municipality">@DataSet.DOK_Coverage</a></th>
+                                    <th><span data-toggle="tooltip" class="link-unstyled" title="@DataSet.DOK_Kommentar">@DataSet.DOK_Note</span></th>
                                     <th class="text-center">@Shared.Delete</th>
                                 </tr>
                             </thead>
@@ -378,7 +378,7 @@
                 <a href="/register/det-offentlige-kartgrunnlaget-kommunalt">@Shared.Back</a>
             </div>
             <div class="col-sm-10 text-right">
-                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">Avbryt</a>
+                <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">@Shared.Cancel</a>
                 <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
             </div>
         </div>

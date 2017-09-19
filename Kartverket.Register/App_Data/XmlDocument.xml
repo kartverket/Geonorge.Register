@@ -1009,6 +1009,16 @@
               Looks up a localized string similar to Nei.
             </summary>
         </member>
+        <member name="P:Resources.Documents.NoHistoricalDocuments">
+            <summary>
+              Looks up a localized string similar to Ingen historiske dokumenter av.
+            </summary>
+        </member>
+        <member name="P:Resources.Documents.NoSuggestedDocuments">
+            <summary>
+              Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.Thumbnail">
             <summary>
               Looks up a localized string similar to Miniatyrbilde.

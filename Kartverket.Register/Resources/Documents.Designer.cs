@@ -124,6 +124,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingen historiske dokumenter av.
+        /// </summary>
+        public static string NoHistoricalDocuments {
+            get {
+                return ResourceManager.GetString("NoHistoricalDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+        /// </summary>
+        public static string NoSuggestedDocuments {
+            get {
+                return ResourceManager.GetString("NoSuggestedDocuments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Miniatyrbilde.
         /// </summary>
         public static string Thumbnail {

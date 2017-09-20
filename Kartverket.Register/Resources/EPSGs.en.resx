@@ -126,6 +126,9 @@
   <data name="Dimension" xml:space="preserve">
     <value>Dimension</value>
   </data>
+  <data name="EpsgCode" xml:space="preserve">
+    <value>Epsg code</value>
+  </data>
   <data name="ExternalReference" xml:space="preserve">
     <value>External references</value>
   </data>

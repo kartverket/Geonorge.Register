@@ -46,17 +46,17 @@
                     </td>
                     @if (item.Accepted == true)
                     {
-                        <td title="Godkjent">
+                        <td title="@Registers.Accepted">
                             @Registers.Accepted
                         </td>
                     }
                     else
                     {
-                        <td title="Utkast">
+                        <td title="@Registers.Draft">
                             @Registers.Draft
                         </td>
                     }
-                    <td title="Dato Godkjent @Html.DisplayFor(modelItem => item.dateAccepted)">
+                    <td title="@Registers.DateAccepted @Html.DisplayFor(modelItem => item.dateAccepted)">
                         @Html.DisplayFor(modelItem => item.dateAccepted)
                     </td>
                 </tr>

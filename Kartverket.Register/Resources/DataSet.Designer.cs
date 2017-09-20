@@ -676,6 +676,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Henter datasett.
+        /// </summary>
+        public static string LoadingMessageDataset {
+            get {
+                return ResourceManager.GetString("LoadingMessageDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Laster Egnethetsvurdering.
         /// </summary>
         public static string LoadingSuitability {

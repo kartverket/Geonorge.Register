@@ -124,6 +124,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ingen dokument er angitt for.
+        /// </summary>
+        public static string NoDocumentFor {
+            get {
+                return ResourceManager.GetString("NoDocumentFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingen historiske dokumenter av.
         /// </summary>
         public static string NoHistoricalDocuments {

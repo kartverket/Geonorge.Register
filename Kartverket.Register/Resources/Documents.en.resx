@@ -138,6 +138,9 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="NoDocumentFor" xml:space="preserve">
+    <value>No document is specified for</value>
+  </data>
   <data name="NoHistoricalDocuments" xml:space="preserve">
     <value>No historical documents of</value>
   </data>

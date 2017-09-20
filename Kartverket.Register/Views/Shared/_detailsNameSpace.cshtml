@@ -7,20 +7,20 @@
 
                     @if (Model.description == null)
                     {
-                        <p title="Innhold er ikke angitt for @Model.name."><span>@Namespace.Service: </span>@Registers.NotSet</p>
+                        <p title="@Namespace.NoContentFor @Model.name."><span>@Namespace.Service: </span>@Registers.NotSet</p>
                     }
                     else
                     {
-                        <p title="Link til innholdet i @Model.name"><span>@Namespace.Content: </span><a href="@Model.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                        <p title="@Namespace.LinkToContentOf @Model.name"><span>@Namespace.Content: </span><a href="@Model.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
 
                     @if (Model.serviceUrl == null)
                     {
-                        <p title="URL til tjeneste er ikke angitt."><span>@Namespace.Service: </span>@Registers.NotSet</p>
+                        <p title="@Namespace.UrlOfServiceNotSpecified"><span>@Namespace.Service: </span>@Registers.NotSet</p>
                     }
                     else
                     {
-                        <p title="URL til tjeneste i navnerommet @Model.name"><span>@Namespace.Service: </span><a href="@Model.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                        <p title="@Namespace.URLForServiceInNamespace @Model.name"><span>@Namespace.Service: </span><a href="@Model.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
 
             </div>

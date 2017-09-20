@@ -469,4 +469,7 @@ As a data set quality and coverage can vary considerably from site to area, the 
                     &lt;/ul&gt;
                 &lt;/p&gt;</value>
   </data>
+  <data name="LoadingMessageDataset" xml:space="preserve">
+    <value>Retrieving dataset</value>
+  </data>
 </root>

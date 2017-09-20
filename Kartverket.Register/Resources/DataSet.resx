@@ -473,4 +473,7 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
                     &lt;/ul&gt;
                 &lt;/p&gt;</value>
   </data>
+  <data name="LoadingMessageDataset" xml:space="preserve">
+    <value>Henter datasett</value>
+  </data>
 </root>

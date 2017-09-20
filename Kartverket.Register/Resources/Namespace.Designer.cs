@@ -70,15 +70,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etat.
-        /// </summary>
-        public static string Etat {
-            get {
-                return ResourceManager.GetString("Etat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Navnerom.
         /// </summary>
         public static string NamespaceName {

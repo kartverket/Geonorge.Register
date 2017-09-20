@@ -210,9 +210,6 @@
   <data name="MunicipalityInformation" xml:space="preserve">
     <value>Municipality information</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
   <data name="North" xml:space="preserve">
     <value>North</value>
   </data>
@@ -227,9 +224,6 @@
   </data>
   <data name="West" xml:space="preserve">
     <value>Vest</value>
-  </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
   </data>
   <data name="MunicipalityCodeRequired" xml:space="preserve">
     <value>Municipality code is required</value>

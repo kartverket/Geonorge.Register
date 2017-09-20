@@ -120,9 +120,6 @@
   <data name="Content" xml:space="preserve">
     <value>Content</value>
   </data>
-  <data name="Etat" xml:space="preserve">
-    <value>Agency</value>
-  </data>
   <data name="NamespaceName" xml:space="preserve">
     <value>Namespace</value>
   </data>

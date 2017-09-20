@@ -246,7 +246,7 @@
   <data name="ServiceUuid" xml:space="preserve">
     <value>Tjeneste uuid</value>
   </data>
-  <data name="DOK_Nasjonalt" xml:space="preserve">
+  <data name="DOK_Nasjonalt_SelectMunicipality" xml:space="preserve">
     <value>Velg kommune</value>
   </data>
   <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
@@ -332,5 +332,103 @@
   </data>
   <data name="MunicipalConfirmation" xml:space="preserve">
     <value>Kommunal bekreftelse</value>
+  </data>
+  <data name="DisplayInfoRegistration" xml:space="preserve">
+    <value>Vis veiledning om registrering</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Det offentlige kartgrunnlaget - Kommunalt</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Bakgrunnsfarge</value>
+  </data>
+  <data name="Coverage" xml:space="preserve">
+    <value>Bekrefte DOK</value>
+  </data>
+  <data name="LoadingCoverage" xml:space="preserve">
+    <value>Laster Bekrefte DOK</value>
+  </data>
+  <data name="LoadingSuitability" xml:space="preserve">
+    <value>Laster Egnethetsvurdering</value>
+  </data>
+  <data name="SetStatus" xml:space="preserve">
+    <value>sett status</value>
+  </data>
+  <data name="Suitability" xml:space="preserve">
+    <value>Egnethetsvurdering</value>
+  </data>
+  <data name="SuitabilityArealText" xml:space="preserve">
+    <value>Kommune-planens areal- del</value>
+  </data>
+  <data name="SuitabilityArealTitle" xml:space="preserve">
+    <value>Prosesser knyttet til kommuneplanens arealdel</value>
+  </data>
+  <data name="SuitabilityByggesakText" xml:space="preserve">
+    <value>Bygge- sak</value>
+  </data>
+  <data name="SuitabilityByggesakTitle" xml:space="preserve">
+    <value>Byggesak</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringText" xml:space="preserve">
+    <value>Regulerings- plan- detalj</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringTitle" xml:space="preserve">
+    <value>Reguleringsplanlegging - detaljregulering</value>
+  </data>
+  <data name="SuitabilityFradelingText" xml:space="preserve">
+    <value>Fra- deling</value>
+  </data>
+  <data name="SuitabilityFradelingTitle" xml:space="preserve">
+    <value>Fradeling</value>
+  </data>
+  <data name="SuitabilityKUText" xml:space="preserve">
+    <value>KU og ROS for pbl- planer</value>
+  </data>
+  <data name="SuitabilityKUTitle" xml:space="preserve">
+    <value>KU - konsekvensutredninger i forbindelse med arealplaner</value>
+  </data>
+  <data name="SuitabilityNoteTitle" xml:space="preserve">
+    <value>Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett</value>
+  </data>
+  <data name="SuitabilityOmraadeText" xml:space="preserve">
+    <value>Regulerings- plan- område</value>
+  </data>
+  <data name="SuitabilityOmraadeTitle" xml:space="preserve">
+    <value>Reguleringsplanlegging – områderegulering</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingText" xml:space="preserve">
+    <value>Region- plan</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingTitle" xml:space="preserve">
+    <value>Regionplanlegging</value>
+  </data>
+  <data name="SuitabilitySamfunnText" xml:space="preserve">
+    <value>Kommune-planens samfunns- del</value>
+  </data>
+  <data name="SuitabilitySamfunnTitle" xml:space="preserve">
+    <value>Prosesser knyttet til kommuneplanens samfunnsdel</value>
+  </data>
+  <data name="SuitabilityText" xml:space="preserve">
+    <value>Tekst om egnethet, tips til bruk eller andre kommentarer</value>
+  </data>
+  <data name="SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt;Kommunalt forslag til bruk ut fra egnethet&lt;/b&gt;&lt;br /&gt;
+Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
+Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
+                                    &lt;ul&gt;
+                                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
+                                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
+                                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
+                                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
+                                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
+                                        &lt;li&gt;Byggesak&lt;/li&gt;
+                                        &lt;li&gt;Fradeling&lt;/li&gt;
+                                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                                    &lt;/ul&gt;
+Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere intensitet på bakgrunnsfarge i avkrysningsboksene indikerer bedre egnethet basert på overordnede nasjonale vurderinger.</value>
+  </data>
+  <data name="SuitabitityHelpTextBtn" xml:space="preserve">
+    <value>Vis veiledning om registrering</value>
   </data>
 </root>

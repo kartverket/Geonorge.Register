@@ -79,10 +79,10 @@
         @Html.LabelFor(model => model.member, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div class="col-md-1">
-                @Html.RadioButtonFor(m => m.member, "true") @Organizations.Yes
+                @Html.RadioButtonFor(m => m.member, "true") @Shared.Yes
             </div>
             <div class="col-md-1">
-                @Html.RadioButtonFor(m => m.member, "false") @Organizations.No
+                @Html.RadioButtonFor(m => m.member, "false") @Shared.No
             </div>
             @Html.ValidationMessageFor(model => model.member, "", new { @class = "text-danger" })
         </div>

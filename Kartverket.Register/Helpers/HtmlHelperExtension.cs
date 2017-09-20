@@ -1137,7 +1137,7 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return translation.DataSet.DOK_Nasjonalt;
+            return translation.DataSet.DOK_Nasjonalt_SelectMunicipality;
         }
 
 

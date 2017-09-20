@@ -340,15 +340,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nei.
-        /// </summary>
-        public static string No {
-            get {
-                return ResourceManager.GetString("No", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Nord.
         /// </summary>
         public static string North {
@@ -462,15 +453,6 @@ namespace Resources {
         public static string West {
             get {
                 return ResourceManager.GetString("West", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ja.
-        /// </summary>
-        public static string Yes {
-            get {
-                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

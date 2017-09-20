@@ -246,7 +246,7 @@
   <data name="ServiceUuid" xml:space="preserve">
     <value>Serice uuid</value>
   </data>
-  <data name="DOK_Nasjonalt" xml:space="preserve">
+  <data name="DOK_Nasjonalt_SelectMunicipality" xml:space="preserve">
     <value>Select municipality</value>
   </data>
   <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
@@ -335,5 +335,104 @@
   </data>
   <data name="MunicipalConfirmation" xml:space="preserve">
     <value>Municipal confirmation</value>
+  </data>
+  <data name="DisplayInfoRegistration" xml:space="preserve">
+    <value>Show instructions for registration</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>The Public Map Data (DOK) - nationally</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Background color</value>
+  </data>
+  <data name="Coverage" xml:space="preserve">
+    <value>Confirm DOK</value>
+  </data>
+  <data name="LoadingCoverage" xml:space="preserve">
+    <value>Loading DOK</value>
+  </data>
+  <data name="LoadingSuitability" xml:space="preserve">
+    <value>Loading suitability</value>
+  </data>
+  <data name="SetStatus" xml:space="preserve">
+    <value>set status</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Suitability" xml:space="preserve">
+    <value>Suitability</value>
+  </data>
+  <data name="SuitabilityArealText" xml:space="preserve">
+    <value>Municipal-plan land use part</value>
+  </data>
+  <data name="SuitabilityArealTitle" xml:space="preserve">
+    <value>Processes related to the municipal area</value>
+  </data>
+  <data name="SuitabilityByggesakText" xml:space="preserve">
+    <value>Building Matters</value>
+  </data>
+  <data name="SuitabilityByggesakTitle" xml:space="preserve">
+    <value>Building Matters</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringText" xml:space="preserve">
+    <value>Regulatory planning - detailed</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringTitle" xml:space="preserve">
+    <value>Regulatory planning - detailed regulation</value>
+  </data>
+  <data name="SuitabilityFradelingText" xml:space="preserve">
+    <value>Deallocation</value>
+  </data>
+  <data name="SuitabilityFradelingTitle" xml:space="preserve">
+    <value>Deallocation</value>
+  </data>
+  <data name="SuitabilityKUText" xml:space="preserve">
+    <value>KU and ROS for pbl plans</value>
+  </data>
+  <data name="SuitabilityKUTitle" xml:space="preserve">
+    <value>KU impact assessments in connection with area plans</value>
+  </data>
+  <data name="SuitabilityNoteTitle" xml:space="preserve">
+    <value>Must be entered on data one choose not to include, can also be used for other data sets</value>
+  </data>
+  <data name="SuitabilityOmraadeText" xml:space="preserve">
+    <value>Regulatory Area</value>
+  </data>
+  <data name="SuitabilityOmraadeTitle" xml:space="preserve">
+    <value>Regulatory planning - area regulation</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingText" xml:space="preserve">
+    <value>Regional plan</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingTitle" xml:space="preserve">
+    <value>Region Planning</value>
+  </data>
+  <data name="SuitabilitySamfunnText" xml:space="preserve">
+    <value>Municipal plan community</value>
+  </data>
+  <data name="SuitabilitySamfunnTitle" xml:space="preserve">
+    <value>Processes related to the municipal plan's social section</value>
+  </data>
+  <data name="SuitabilityText" xml:space="preserve">
+    <value>Text about suitability, tips for use or other comments</value>
+  </data>
+  <data name="SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt; Municipal proposal for use based on suitability &lt;/b&gt; &lt;br /&gt;
+Here you can enter the municipality's assessment of suitability for each of the datasets. Different municipalities have different challenges and this can affect the assessment of suitability. Registration is not mandatory, but is voluntary to use, it must be a tool for the municipality's own work with DOK. Overall national proposals have been submitted. This proposal is only meant to be grossly guiding from professionals' knowledge of the dataset and knowledge of the tasks and processes to be solved according to the Planning and Building Act. As the quality and coverage of a data set can vary considerably from one municipality to another and one region to another, the municipalities themselves must consider suitability based on the available data for their municipality. The suitability assessment can be made for use in these processes:
+                                    &lt;ul&gt;
+                                        &lt;li&gt; Region Scheduling &lt;/li&gt;
+                                        &lt;li&gt; Processes related to the community plan community &lt;/li&gt;
+                                        &lt;li&gt; Processes associated with the area plan area &lt;/li&gt;
+                                        &lt;li&gt; Regulation Planning - Site Control &lt;/li&gt;
+                                        &lt;li&gt; Regulation Planning - Detail Regulation &lt;/li&gt;
+                                        &lt;li&gt; The building matters &lt;/li&gt;
+                                        &lt;li&gt; deallocation &lt;/li&gt;
+                                        &lt;li&gt; Co-impact assessments in connection with area plans &lt;/li&gt;
+                                    &lt;/ul&gt;
+Check for the type of tasks you use, or use the dataset. Higher intensity of background color in the checkboxes indicates better suitability based on overall national assessments.</value>
+  </data>
+  <data name="SuitabitityHelpTextBtn" xml:space="preserve">
+    <value>Show instructions for registration</value>
   </data>
 </root>

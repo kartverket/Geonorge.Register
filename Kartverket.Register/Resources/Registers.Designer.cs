@@ -250,6 +250,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Etat.
+        /// </summary>
+        public static string Etat {
+            get {
+                return ResourceManager.GetString("Etat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Historiske.
         /// </summary>
         public static string Historical {
@@ -399,6 +408,15 @@ namespace Resources {
         public static string Retired {
             get {
                 return ResourceManager.GetString("Retired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lagrer innhold.
+        /// </summary>
+        public static string SavingContentMessage {
+            get {
+                return ResourceManager.GetString("SavingContentMessage", resourceCulture);
             }
         }
         

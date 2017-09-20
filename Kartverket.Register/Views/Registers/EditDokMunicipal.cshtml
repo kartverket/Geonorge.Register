@@ -8,8 +8,8 @@
     }
 
     @section breadcrumb {
-        <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">Det offentlige kartgrunnlaget - Kommunalt</a></li>
-        <li>@Shared.Edit liste</li>
+        <li><a href="/register/det-offentlige-kartgrunnlaget-kommunalt">@DataSet.DOK_Nasjonalt</a></li>
+        <li>@Shared.Edit @Shared.List</li>
     }
     @section Scripts {
         <script>
@@ -94,11 +94,11 @@
 
 
             function changeText(element) {
-                if (element.innerText == "Vis veiledning om registrering") {
-                    element.innerHTML = "Skjul tekst";
+                if (element.innerText == "@DataSet.DisplayInfoRegistration") {
+                    element.innerHTML = "@Shared.HideText";
                 }
                 else {
-                    element.innerHTML = "Vis veiledning om registrering";
+                    element.innerHTML = "@DataSet.DisplayInfoRegistration";
                 }
             }
 
@@ -108,7 +108,7 @@
 
     @using (Html.BeginForm("EditDokMunicipal", "Registers", FormMethod.Post))
     {
-        <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default pull-right show-loading-animation" />
+        <input type="submit" value="@Shared.Save" data-loading-message="@Registers.SavingContentMessage" class="btn btn-default pull-right show-loading-animation" />
         <div class="clearfix"></div>
 
         <div class="row">
@@ -119,7 +119,7 @@
                 <label>@DataSet.MunicipalConfirmation:</label>
                 <div class="no-padding-bottom">
                     <div class="custom-select">
-                        @Html.DropDownList("statusDOKMunicipal", null, "-- sett status --", htmlAttributes: new { @class = "form-control" })
+                        @Html.DropDownList("statusDOKMunicipal", null, "-- " + DataSet.SetStatus + "--", htmlAttributes: new { @class = "form-control" })
                     </div>
                 </div>
             </div>
@@ -128,8 +128,8 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-                    <li class="tab pull-right" data-loading-message="Laster Egnethetsvurdering"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">Egnethetsvurdering</a></li>
-                    <li class="tab active pull-right" data-loading-message="Laster Bekrefte DOK"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">Bekrefte DOK</a></li>
+                    <li class="tab pull-right" data-loading-message="@DataSet.LoadingSuitability"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">@DataSet.Suitability</a></li>
+                    <li class="tab active pull-right" data-loading-message="@DataSet.LoadingCoverage"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">@DataSet.Coverage</a></li>
                 </ul>
             </div>
         </div>
@@ -184,14 +184,14 @@
                                         <td style="text-align: center" title="@DataSet.DOK_Coverage_Municipality">
                                             @if (Model[i].Coverage)
                                             {
-                                                <span>JA</span>
+                                                <span>@Shared.Yes</span>
                                             }
                                             else
                                             {
-                                                <span>NEI</span>
+                                                <span>@Shared.No</span>
                                             }
                                         </td>
-                                        <td title="Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett">
+                                        <td title="@DataSet.SuitabilityNoteTitle">
                                             @Html.TextArea("dokMunicipalList[" + i + "].Note", Model[i].Note, 1, 10, new { @style = "min-height:0px" })
                                         </td>
                                         <td id="cbDelete">
@@ -205,7 +205,7 @@
                                     <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                         <td colspan="3" style="padding:0px">
                                             <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
-                                                <b>Etat:</b> @Model[i].Owner<br />
+                                                <b>@Registers.Etat:</b> @Model[i].Owner<br />
                                                 <b>DOK status:</b> @Model[i].NationalDokStatus
                                             </label>
                                         </td>
@@ -219,30 +219,16 @@
                     <div class="tab-pane" style="margin-top:0px" id="suitability">
                         <div class="row">
                             <div class="col-md-8">
-                                <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
+                                <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">@DataSet.SuitabitityHelpTextBtn</div>
                                 <div id="suitabitityHelpText">
-                                    <b>Kommunalt forslag til bruk ut fra egnethet</b><br />
-                                    Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
-                                    Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
-                                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
-                                    <ul>
-                                        <li>Regionplanlegging</li>
-                                        <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
-                                        <li>Prosesser knyttet til kommuneplanens arealdel</li>
-                                        <li>Reguleringsplanlegging – områderegulering</li>
-                                        <li>Reguleringsplanlegging - detaljregulering</li>
-                                        <li>Byggesak</li>
-                                        <li>Fradeling</li>
-                                        <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
-                                    </ul>
-                                    Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere intensitet på bakgrunnsfarge i avkrysningsboksene indikerer bedre egnethet basert på overordnede nasjonale vurderinger.
+                                    @Html.Raw(DataSet.SuitabitityHelpText)
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <span class="custom-checkbox custom-checkbox-default pull-right">
                                     <input id="cbBackgroundColor" type="checkbox" checked>
                                     <label for="cbBackgroundColor" class="checkbox-icon"></label>
-                                    <label for="cbBackgroundColor">Bakgrunnsfarge </label>
+                                    <label for="cbBackgroundColor">@DataSet.BackgroundColor </label>
                                 </span>
                             </div>
                         </div>
@@ -250,16 +236,16 @@
                         <table id="myTable" class="tablesorter table-responsive table tableSuitability" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">Temagruppe</a></th>
-                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Tittel">Tittel</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Regionplanlegging">Region- plan</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens samfunnsdel">Kommune-planens samfunns- del</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Prosesser knyttet til kommuneplanens arealdel">Kommune-planens areal- del</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Reguleringsplanlegging – områderegulering">Regulerings- plan- område</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Reguleringsplanlegging - detaljregulering">Regulerings- plan- detalj</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Byggesak">Bygge- sak</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="Fradeling">Fra- deling</a></th>
-                                    <th class="text-center"><a data-toggle="tooltip" title="KU - konsekvensutredninger i forbindelse med arealplaner">KU og ROS for pbl- planer</a></th>
+                                    <th><a href="#" data-toggle="tooltip" title="@DataSet.DOK_Temagruppe">@DataSet.DOK_Temagruppe</a></th>
+                                    <th colspan="2"><a href="#" data-toggle="tooltip" title="@Shared.Title">@Shared.Title</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityRegionsplanleggingTitle">@DataSet.SuitabilityRegionsplanleggingText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilitySamfunnTitle">@DataSet.SuitabilitySamfunnText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityArealTitle">@DataSet.SuitabilityArealText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityOmraadeTitle">@DataSet.SuitabilityOmraadeText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityDetaljreguleringTitle">@DataSet.SuitabilityDetaljreguleringText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityByggesakTitle">@DataSet.SuitabilityByggesakText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityFradelingTitle">@DataSet.SuitabilityFradelingText</a></th>
+                                    <th class="text-center"><a data-toggle="tooltip" title="@DataSet.SuitabilityKUTitle">@DataSet.SuitabilityKUText</a></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -341,8 +327,8 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                <h3 class="modal-title">Egnethetsvurdering - @Model[i].Name</h3>
-                                                                <p>Tekst om egnethet, tips til bruk eller andre kommentarer</p>
+                                                                <h3 class="modal-title">@DataSet.Suitability - @Model[i].Name</h3>
+                                                                <p>@DataSet.SuitabilityText</p>
                                                             </div>
                                                             <div class="modal-body">
                                                                 @Html.TextArea("dokMunicipalList[" + i + "].SuitabilityAssessmentText", Model[i].SuitabilityAssessmentText, 3, 10, new { @style = "min-height:0px", @id = "txtArea-" + i })
@@ -359,7 +345,7 @@
                                         <tr class="tablesorter-childRow infoTxtDataset-@i infoTxt" style="background-color:#F4F4F4">
                                             <td colspan="3" style="padding:0px">
                                                 <label class="label-info label auto-width" style="height:100%; background-color:#F4F4F4">
-                                                    <b>Etat:</b> @Model[i].Owner<br />
+                                                    <b>@Registers.Etat:</b> @Model[i].Owner<br />
                                                     <b>DOK status:</b> @Model[i].NationalDokStatus
                                                 </label>
                                             </td>
@@ -379,7 +365,7 @@
             </div>
             <div class="col-sm-10 text-right">
                 <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@ViewBag.selectedMunicipalityCode" class="btn btn-default">@Shared.Cancel</a>
-                <input type="submit" value="@Shared.Save" data-loading-message="Lagrer innhold" class="btn btn-default show-loading-animation" />
+                <input type="submit" value="@Shared.Save" data-loading-message="@Registers.SavingContentMessage" class="btn btn-default show-loading-animation" />
             </div>
         </div>
     }

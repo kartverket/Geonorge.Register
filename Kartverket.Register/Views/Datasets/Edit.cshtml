@@ -31,11 +31,11 @@
         });
 
         function changeText(element) {
-            if (element.innerText == "Vis veiledning om registrering") {
-                element.innerHTML = "Skjul tekst";
+            if (element.innerText == "@DataSet.DisplayInfoRegistration") {
+                element.innerHTML = "@Shared.HideText";
             }
             else {
-                element.innerHTML = "Vis veiledning om registrering";
+                element.innerHTML = "@DataSet.DisplayInfoRegistration";
             }
         }
     </script>
@@ -406,37 +406,9 @@
         </div>
 
         <div class="tab-pane" id="suitability">
-            <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
+            <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">@DataSet.DisplayInfoRegistration</div>
             <div id="suitabitityHelpText">
-                <b>DOK nasjonal egnethetsvurdering</b><br />
-                <p>
-                    Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
-                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for spesifikke kommuner eller steder.
-                </p>
-
-                <p>
-                    <u>Egnethetsvurdering gjøres for disse prosessene:</u>
-                    <ul>
-                        <li>Regionplanlegging</li>
-                        <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
-                        <li>Prosesser knyttet til kommuneplanens arealdel</li>
-                        <li>Reguleringsplanlegging – områderegulering</li>
-                        <li>Reguleringsplanlegging - detaljregulering</li>
-                        <li>Byggesak</li>
-                        <li>Fradeling</li>
-                        <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
-                    </ul>
-                </p>
-                <p>
-                    Egnethetsvurderingen gis i form av verdier 1-5, og det kan legges inn kommentarer i tillegg
-                    <ul style="list-style:none">
-                        <li>1 = Ikke egnet</li>
-                        <li>2 = Litt egnet</li>
-                        <li>3 = Middels godt egnet</li>
-                        <li>4 = Godt egnet</li>
-                        <li>5 = Svært godt egnet</li>
-                    </ul>
-                </p>
+                @Html.Raw(DataSet.DOK_SuitabitityHelpText)
                 <hr />
             </div>
 
@@ -444,10 +416,10 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-1">
-                            <label>Egnethet</label>
+                            <label>@DataSet.Suitability</label>
                         </div>
                         <div class="col-md-8">
-                            <label>Tekst om egnethet, tips om bruk eller andre kommentarer</label>
+                            <label>@DataSet.SuitabilityText</label>
                         </div>
                     </div>
                 </div>
@@ -455,7 +427,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Regionplan</label>
+                            <label>@DataSet.SuitabilityRegionsplanleggingText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("RegionalPlan",null, htmlAttributes: new { @class = "form-control"})
@@ -469,7 +441,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>kommuneplanens samfunnsdel</label>
+                            <label>@DataSet.SuitabilitySamfunnText</label>
                         </div>
                         <div class="col-md-1 text-center">
                            @Html.DropDownList("MunicipalSocialPlan", null, htmlAttributes: new { @class = "form-control" })
@@ -482,7 +454,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>kommuneplanens arealdel</label>
+                            <label>@DataSet.SuitabilityArealText</label>
                         </div>
                         <div class="col-md-1 text-center">
                            @Html.DropDownList("MunicipalLandUseElementPlan", null, htmlAttributes: new { @class = "form-control" })
@@ -496,7 +468,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Reguleringsplan område</label>
+                            <label>@DataSet.SuitabilityOmraadeText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("ZoningPlanArea", null, htmlAttributes: new { @class = "form-control" })
@@ -510,7 +482,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Reguleringsplan detalj</label>
+                            <label>@DataSet.SuitabilityDetaljreguleringText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("ZoningPlanDetails", null, htmlAttributes: new { @class = "form-control" })
@@ -524,7 +496,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Byggesak</label>
+                            <label>@DataSet.SuitabilityByggesakText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("BuildingMatter", null, htmlAttributes: new { @class = "form-control" })
@@ -538,7 +510,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Fradeling</label>
+                            <label>@DataSet.SuitabilityFradelingText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("PartitionOff", null, htmlAttributes: new { @class = "form-control" })
@@ -551,7 +523,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>KU og ROS for pbl-planer</label>
+                            <label>@DataSet.SuitabilityKUText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("EenvironmentalImpactAssessment", null, htmlAttributes: new { @class = "form-control" })

@@ -128,7 +128,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-                    <li class="tab pull-right" data-loading-message="@DataSet.LoadingSuitability"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">@DataSet.Suitability</a></li>
+                    <li class="tab pull-right" data-loading-message="@DataSet.LoadingSuitability"><a aria-expanded="false" href="#suitability" id="suitabilityLink" data-toggle="tab">@DataSet.DOK_SuitabilityRating</a></li>
                     <li class="tab active pull-right" data-loading-message="@DataSet.LoadingCoverage"><a aria-expanded="false" href="#coverage" id="coverageLink" data-toggle="tab">@DataSet.Coverage</a></li>
                 </ul>
             </div>
@@ -319,7 +319,7 @@
                                             </td>
 
                                             <td>
-                                                <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="Tekst" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle"></span>
+                                                <span id="modalBtn-@i" type="button" class="fa-pencil-square fa" data-toggle="modal" data-target="#myModal-@i" title="@Shared.Text" style="font-size:20px; cursor: pointer; color:#337ab7; vertical-align: middle"></span>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="myModal-@i" role="textbox">
                                                     <div class="modal-dialog">
@@ -327,7 +327,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                <h3 class="modal-title">@DataSet.Suitability - @Model[i].Name</h3>
+                                                                <h3 class="modal-title">@DataSet.DOK_SuitabilityRating - @Model[i].Name</h3>
                                                                 <p>@DataSet.SuitabilityText</p>
                                                             </div>
                                                             <div class="modal-body">

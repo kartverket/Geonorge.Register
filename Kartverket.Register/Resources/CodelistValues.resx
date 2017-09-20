@@ -117,10 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BroaderItem" xml:space="preserve">
+    <value>Broader item</value>
+  </data>
+  <data name="Codelist" xml:space="preserve">
+    <value>Kodeliste</value>
+  </data>
   <data name="CodeValue" xml:space="preserve">
     <value>Kodeverdi</value>
   </data>
+  <data name="CreateNew" xml:space="preserve">
+    <value>Foreslå ny kodeverdi</value>
+  </data>
   <data name="ErrorMessagefile" xml:space="preserve">
     <value>Filen har feil innhold!</value>
+  </data>
+  <data name="HierarchicalCodelists" xml:space="preserve">
+    <value>Hierarkiske kodelister</value>
+  </data>
+  <data name="HierarchicalCodelistsSelectionText" xml:space="preserve">
+    <value>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Importer</value>
+  </data>
+  <data name="ImportFile" xml:space="preserve">
+    <value>Import fra CSV fil</value>
+  </data>
+  <data name="ImportFileInfo" xml:space="preserve">
+    <value>Velg csv fil i UTF-8 med kodeliste</value>
+  </data>
+  <data name="NarrowerItems" xml:space="preserve">
+    <value>Mer spesialiserte begrep</value>
   </data>
 </root>

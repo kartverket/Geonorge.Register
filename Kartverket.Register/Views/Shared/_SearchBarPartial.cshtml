@@ -61,7 +61,7 @@
         </div><!-- /input-group-btn -->
         <input name="text" style="z-index: 0;" type="text" placeholder="@Shared.Search_Placeholder" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
-            <button type="submit" class="show-loading-animation btn" data-loading-message="@Shared.Search_LoadingMessage" style="z-index: 0;">@Shared.Search_Button</button>
+            <button type="submit" class="show-loading-animation btn" data-loading-message="@Shared.Search_LoadingMessage" style="z-index: 0;">@Shared.Search</button>
         </span>
     </div>
 </form>

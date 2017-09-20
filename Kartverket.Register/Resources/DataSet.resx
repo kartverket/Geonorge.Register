@@ -355,7 +355,7 @@
     <value>sett status</value>
   </data>
   <data name="Suitability" xml:space="preserve">
-    <value>Egnethetsvurdering</value>
+    <value>Egnethet</value>
   </data>
   <data name="SuitabilityArealText" xml:space="preserve">
     <value>Kommune-planens areal- del</value>
@@ -430,5 +430,47 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   </data>
   <data name="SuitabitityHelpTextBtn" xml:space="preserve">
     <value>Vis veiledning om registrering</value>
+  </data>
+  <data name="AdditionalDatasetsSelected" xml:space="preserve">
+    <value>Valgte tilleggsdatasett</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfo" xml:space="preserve">
+    <value>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfoRegisterMetadata" xml:space="preserve">
+    <value>Registrer nye metadata</value>
+  </data>
+  <data name="SuggestNewDatasetMunicipality" xml:space="preserve">
+    <value>Legg til ekstra DOK-datasett for din kommune</value>
+  </data>
+  <data name="DOK_SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt;DOK nasjonal egnethetsvurdering&lt;/b&gt;&lt;br /&gt;
+                &lt;p&gt;
+                    Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for spesifikke kommuner eller steder.
+                &lt;/p&gt;
+                &lt;p&gt;
+                    &lt;u&gt;Egnethetsvurdering gjøres for disse prosessene:&lt;/u&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
+                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
+                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
+                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
+                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
+                        &lt;li&gt;Byggesak&lt;/li&gt;
+                        &lt;li&gt;Fradeling&lt;/li&gt;
+                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;
+                &lt;p&gt;
+                    Egnethetsvurderingen gis i form av verdier 1-5, og det kan legges inn kommentarer i tillegg
+                    &lt;ul style="list-style:none"&gt;
+                        &lt;li&gt;1 = Ikke egnet&lt;/li&gt;
+                        &lt;li&gt;2 = Litt egnet&lt;/li&gt;
+                        &lt;li&gt;3 = Middels godt egnet&lt;/li&gt;
+                        &lt;li&gt;4 = Godt egnet&lt;/li&gt;
+                        &lt;li&gt;5 = Svært godt egnet&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;</value>
   </data>
 </root>

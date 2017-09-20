@@ -29,8 +29,10 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("broaderItem")]
         public Guid? broaderItemId { get; set; }
+        [Display(Name = "BroaderItem", ResourceType = typeof(CodelistValues))]
         public virtual RegisterItem broaderItem { get; set; }
 
+        [Display(Name = "NarrowerItems", ResourceType = typeof(CodelistValues))]
         public virtual ICollection<CodelistValue> narrowerItems { get; set; }
 
         public virtual TranslationCollection<CodelistValueTranslation> Translations { get; set; }

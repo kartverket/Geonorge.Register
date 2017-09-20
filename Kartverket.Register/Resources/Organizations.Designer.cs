@@ -90,9 +90,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Skriv inn et årstall yyyy.
         /// </summary>
-        public static string AgreementYearErrorMessge {
+        public static string AgreementYearErrorMessage {
             get {
-                return ResourceManager.GetString("AgreementYearErrorMessge", resourceCulture);
+                return ResourceManager.GetString("AgreementYearErrorMessage", resourceCulture);
             }
         }
         

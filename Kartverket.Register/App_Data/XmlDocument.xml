@@ -1803,7 +1803,7 @@
               Looks up a localized string similar to Avtale godkjent år.
             </summary>
         </member>
-        <member name="P:Resources.Organizations.AgreementYearErrorMessge">
+        <member name="P:Resources.Organizations.AgreementYearErrorMessage">
             <summary>
               Looks up a localized string similar to Skriv inn et årstall yyyy.
             </summary>

@@ -258,4 +258,10 @@
   <data name="DocumentUrl" xml:space="preserve">
     <value>Dokument url</value>
   </data>
+  <data name="SavingContentMessage" xml:space="preserve">
+    <value>Lagrer innhold</value>
+  </data>
+  <data name="Etat" xml:space="preserve">
+    <value>Etat</value>
+  </data>
 </root>

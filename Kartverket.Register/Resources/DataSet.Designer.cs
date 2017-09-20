@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bakgrunnsfarge.
+        /// </summary>
+        public static string BackgroundColor {
+            get {
+                return ResourceManager.GetString("BackgroundColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kommentar.
         /// </summary>
         public static string Comment {
@@ -70,11 +79,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bekrefte DOK.
+        /// </summary>
+        public static string Coverage {
+            get {
+                return ResourceManager.GetString("Coverage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slett datasett.
         /// </summary>
         public static string DeleteDataset {
             get {
                 return ResourceManager.GetString("DeleteDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vis veiledning om registrering.
+        /// </summary>
+        public static string DisplayInfoRegistration {
+            get {
+                return ResourceManager.GetString("DisplayInfoRegistration", resourceCulture);
             }
         }
         
@@ -457,7 +484,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Velg kommune.
+        ///   Looks up a localized string similar to Det offentlige kartgrunnlaget - Kommunalt.
         /// </summary>
         public static string DOK_Nasjonalt {
             get {
@@ -471,6 +498,15 @@ namespace Resources {
         public static string DOK_Nasjonalt_Kommunalt {
             get {
                 return ResourceManager.GetString("DOK_Nasjonalt_Kommunalt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg kommune.
+        /// </summary>
+        public static string DOK_Nasjonalt_SelectMunicipality {
+            get {
+                return ResourceManager.GetString("DOK_Nasjonalt_SelectMunicipality", resourceCulture);
             }
         }
         
@@ -646,11 +682,38 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Laster Bekrefte DOK.
+        /// </summary>
+        public static string LoadingCoverage {
+            get {
+                return ResourceManager.GetString("LoadingCoverage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Laster Egnethetsvurdering.
+        /// </summary>
+        public static string LoadingSuitability {
+            get {
+                return ResourceManager.GetString("LoadingSuitability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to metadataeditoren.
         /// </summary>
         public static string MetadataEditor {
             get {
                 return ResourceManager.GetString("MetadataEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunal bekreftelse.
+        /// </summary>
+        public static string MunicipalConfirmation {
+            get {
+                return ResourceManager.GetString("MunicipalConfirmation", resourceCulture);
             }
         }
         
@@ -709,11 +772,211 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to sett status.
+        /// </summary>
+        public static string SetStatus {
+            get {
+                return ResourceManager.GetString("SetStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå nytt dataset.
         /// </summary>
         public static string SuggestNewDataset {
             get {
                 return ResourceManager.GetString("SuggestNewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egnethetsvurdering.
+        /// </summary>
+        public static string Suitability {
+            get {
+                return ResourceManager.GetString("Suitability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommune-planens areal- del.
+        /// </summary>
+        public static string SuitabilityArealText {
+            get {
+                return ResourceManager.GetString("SuitabilityArealText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prosesser knyttet til kommuneplanens arealdel.
+        /// </summary>
+        public static string SuitabilityArealTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityArealTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bygge- sak.
+        /// </summary>
+        public static string SuitabilityByggesakText {
+            get {
+                return ResourceManager.GetString("SuitabilityByggesakText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Byggesak.
+        /// </summary>
+        public static string SuitabilityByggesakTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityByggesakTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulerings- plan- detalj.
+        /// </summary>
+        public static string SuitabilityDetaljreguleringText {
+            get {
+                return ResourceManager.GetString("SuitabilityDetaljreguleringText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reguleringsplanlegging - detaljregulering.
+        /// </summary>
+        public static string SuitabilityDetaljreguleringTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityDetaljreguleringTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fra- deling.
+        /// </summary>
+        public static string SuitabilityFradelingText {
+            get {
+                return ResourceManager.GetString("SuitabilityFradelingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fradeling.
+        /// </summary>
+        public static string SuitabilityFradelingTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityFradelingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KU og ROS for pbl- planer.
+        /// </summary>
+        public static string SuitabilityKUText {
+            get {
+                return ResourceManager.GetString("SuitabilityKUText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KU - konsekvensutredninger i forbindelse med arealplaner.
+        /// </summary>
+        public static string SuitabilityKUTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityKUTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett.
+        /// </summary>
+        public static string SuitabilityNoteTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityNoteTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regulerings- plan- område.
+        /// </summary>
+        public static string SuitabilityOmraadeText {
+            get {
+                return ResourceManager.GetString("SuitabilityOmraadeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reguleringsplanlegging – områderegulering.
+        /// </summary>
+        public static string SuitabilityOmraadeTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityOmraadeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Region- plan.
+        /// </summary>
+        public static string SuitabilityRegionsplanleggingText {
+            get {
+                return ResourceManager.GetString("SuitabilityRegionsplanleggingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Regionplanlegging.
+        /// </summary>
+        public static string SuitabilityRegionsplanleggingTitle {
+            get {
+                return ResourceManager.GetString("SuitabilityRegionsplanleggingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommune-planens samfunns- del.
+        /// </summary>
+        public static string SuitabilitySamfunnText {
+            get {
+                return ResourceManager.GetString("SuitabilitySamfunnText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Prosesser knyttet til kommuneplanens samfunnsdel.
+        /// </summary>
+        public static string SuitabilitySamfunnTitle {
+            get {
+                return ResourceManager.GetString("SuitabilitySamfunnTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tekst om egnethet, tips til bruk eller andre kommentarer.
+        /// </summary>
+        public static string SuitabilityText {
+            get {
+                return ResourceManager.GetString("SuitabilityText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;Kommunalt forslag til bruk ut fra egnethet&lt;/b&gt;&lt;br /&gt;
+        ///Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
+        ///Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string SuitabitityHelpText {
+            get {
+                return ResourceManager.GetString("SuitabitityHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vis veiledning om registrering.
+        /// </summary>
+        public static string SuitabitityHelpTextBtn {
+            get {
+                return ResourceManager.GetString("SuitabitityHelpTextBtn", resourceCulture);
             }
         }
         

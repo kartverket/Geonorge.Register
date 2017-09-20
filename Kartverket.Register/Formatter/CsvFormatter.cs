@@ -237,7 +237,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (containedItemClass == "NameSpace")
             {
-                return Registers.Name + ";" + Namespace.Etat+ ";" + Namespace.Content + ";" + Namespace.Service;
+                return Registers.Name + ";" + Registers.Etat+ ";" + Namespace.Content + ";" + Namespace.Service;
             }
             else if (containedItemClass == "ServiceAlert")
             {

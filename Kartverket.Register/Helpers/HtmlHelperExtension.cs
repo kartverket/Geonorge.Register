@@ -38,6 +38,11 @@ namespace Kartverket.Register.Helpers
             return versionNumber;
         }
 
+        public static bool SupportsMultiCulture(this HtmlHelper helper)
+        {
+            return Boolean.Parse(WebConfigurationManager.AppSettings["SupportsMultiCulture"]); ;
+        }
+
         public static bool Access(object model)
         {
             return _accessControl.Access(model);
@@ -1135,7 +1140,7 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return translation.DataSet.DOK_Nasjonalt;
+            return translation.DataSet.DOK_Nasjonalt_SelectMunicipality;
         }
 
 

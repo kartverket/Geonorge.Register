@@ -2285,6 +2285,16 @@ input[type="submit"].btn {
   width: 16pt;
   height: 16pt; }
 
+.btn .custom-icon,
+.btn .glyphicon,
+.btn .fa {
+  margin: 0 4px; }
+
+.btn.icon-btn .custom-icon,
+.btn.icon-btn .glyphicon,
+.btn.icon-btn .fa {
+  margin: 0; }
+
 .disabled .custom-icon {
   cursor: not-allowed; }
 

@@ -192,4 +192,19 @@
   <data name="ValidationSummary" xml:space="preserve">
     <value>Skjemaet er ikke korrekt utfylt. Vennligst rett opp følgende feil og mangler</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+  <data name="HideText" xml:space="preserve">
+    <value>Skjul tekst</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>Liste</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nei</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
 </root>

@@ -201,9 +201,6 @@
   <data name="MunicipalityInformation" xml:space="preserve">
     <value>Kommuneinformasjon</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>Nei</value>
-  </data>
   <data name="North" xml:space="preserve">
     <value>Nord</value>
   </data>
@@ -228,13 +225,10 @@
   <data name="West" xml:space="preserve">
     <value>Vest</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Ja</value>
-  </data>
   <data name="MunicipalityCodeRequired" xml:space="preserve">
     <value>Kommunenummer er påkrevd</value>
   </data>
-  <data name="AgreementYearErrorMessge" xml:space="preserve">
+  <data name="AgreementYearErrorMessage" xml:space="preserve">
     <value>Skriv inn et årstall yyyy</value>
   </data>
   <data name="BoundingBoxEastErrorMessage" xml:space="preserve">

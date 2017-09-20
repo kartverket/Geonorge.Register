@@ -138,6 +138,12 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="NoHistoricalDocuments" xml:space="preserve">
+    <value>No historical documents of</value>
+  </data>
+  <data name="NoSuggestedDocuments" xml:space="preserve">
+    <value>No suggested documents of</value>
+  </data>
   <data name="Thumbnail" xml:space="preserve">
     <value>Thumbnail</value>
   </data>

@@ -120,9 +120,6 @@
   <data name="Content" xml:space="preserve">
     <value>Innhold</value>
   </data>
-  <data name="Etat" xml:space="preserve">
-    <value>Etat</value>
-  </data>
   <data name="NamespaceName" xml:space="preserve">
     <value>Navnerom</value>
   </data>

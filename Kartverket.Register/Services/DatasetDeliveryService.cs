@@ -285,8 +285,8 @@ namespace Kartverket.Register.Services
         public string GetSpatialDataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
             var status = currentStatus;
-            //try
-            //{
+            try
+            {
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)
@@ -295,6 +295,8 @@ namespace Kartverket.Register.Services
                     {
                         if (metadata.DistributionDetails != null && metadata.DistributionDetails.Protocol == "GEONORGE:DOWNLOAD")
                         {
+                            if (metadata.ServiceUuid != null)
+                            {
                             var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid.ToString());
                             if (relatedService.DistributionDetails != null && (metadata.DistributionDetails.Protocol == "W3C:REST"
                                 || relatedService.DistributionDetails.Protocol == "W3C:WS"
@@ -302,19 +304,20 @@ namespace Kartverket.Register.Services
                             {
                                 status = "good";
                             }
-                        }
+                            }
+                    }
                     }
                 }
                 else
                 {
                     status = "deficient";
                 }
-            //}
+            }
 
-            //catch (Exception)
-            //{
-            //    return "deficient";
-            //}
+            catch (Exception)
+            {
+                return "deficient";
+            }
             if (!string.IsNullOrWhiteSpace(status)) return status;
             status = "deficient";
             return status;

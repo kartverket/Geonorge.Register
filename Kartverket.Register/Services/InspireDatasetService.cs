@@ -48,7 +48,7 @@ namespace Kartverket.Register.Services
             inspireDataset.WmsUrl = inspireDatasetViewModel.WmsUrl;
             inspireDataset.ThemeGroupId = inspireDatasetViewModel.ThemeGroupId;
             inspireDataset.DatasetThumbnail = inspireDatasetViewModel.DatasetThumbnail;
-            inspireDataset.DokStatusId = inspireDatasetViewModel.DokStatusId;
+            inspireDataset.DokStatusId = "Proposal";
 
             GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
 

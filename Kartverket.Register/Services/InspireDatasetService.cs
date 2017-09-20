@@ -1,8 +1,10 @@
 ﻿using Kartverket.Register.Models;
 using System;
+using System.Linq;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Services
 {
@@ -10,15 +12,16 @@ namespace Kartverket.Register.Services
     {
         private readonly RegisterDbContext _dbContext;
         private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
         private readonly IDatasetDeliveryService _datasetDeliveryService;
 
         public InspireDatasetService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerService = new RegisterService(_dbContext);
+            _registerItemService = new RegisterItemService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
         }
-
 
         public void CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
         {
@@ -59,6 +62,7 @@ namespace Kartverket.Register.Services
             inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus, inspireDatasetViewModel.InspireDeliveryHarmonizedDataNote, true);
             inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus, inspireDatasetViewModel.InspireDeliverySpatialDataServiceNote, true);
 
+            inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
         }
@@ -102,6 +106,15 @@ namespace Kartverket.Register.Services
             var model = new InspireDatasetViewModel {RegisterId = _registerService.GetRegisterId(parentRegister, register)};
 
             return model;
+        }
+
+        public InspireDataset GetInspireDatasetByName(string itemname)
+        {
+            var queryResult = from i in _dbContext.InspireDatasets
+                              where i.Seoname == itemname
+                              select i;
+
+            return queryResult.FirstOrDefault();
         }
     }
 }

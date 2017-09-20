@@ -725,6 +725,14 @@
     <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.Designer.cs">
       <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.cs" />
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.Designer.cs">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.cs" />
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.Designer.cs">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1381,6 +1389,7 @@
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
     <Content Include="settings.config" />
     <Content Include="Views\Shared\_Resources.cshtml" />
+    <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1714,6 +1723,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.resx">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Documents.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

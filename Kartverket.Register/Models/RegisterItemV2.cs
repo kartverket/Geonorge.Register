@@ -47,8 +47,19 @@ namespace Kartverket.Register.Models
         [Display(Name = "Register:")]
         public virtual Register Register { get; set; }
 
+        public DateTime? DateAccepted { get; set; }
+        public DateTime? DateNotAccepted { get; set; }
+        public DateTime? DateSuperseded { get; set; }
+        public DateTime? DateRetired { get; set; }
+        public int VersionNumber { get; set; }
+        public string VersionName { get; set; }
+        [ForeignKey("Versioning")]
+        public Guid VersioningId { get; set; }
+        public virtual Version Versioning { get; set; }
+
         protected RegisterItemV2() {
             SystemId = Guid.NewGuid();
+            VersionNumber = 1;
         }
         
     }

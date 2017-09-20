@@ -127,86 +127,7 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public virtual string GetObjectEditUrl()
-        {
-            if (this is Document)
-            {
-                Document document = (Document)this;
-                return document.GetDocumentEditUrl();
-            }
-            else if (this is Dataset)
-            {
-                Dataset dataset = (Dataset)this;
-                return dataset.GetDatasetEditUrl();
-            }
-            else if (this is EPSG)
-            {
-                EPSG epsg = (EPSG)this;
-                return epsg.GetEPSGEditUrl();
-            }
-            else if (this is CodelistValue)
-            {
-                CodelistValue codelistValue = (CodelistValue)this;
-                return codelistValue.GetCodelistValueEditUrl();
-            }
-            else if (this is NameSpace)
-            {
-                NameSpace nameSpace = (NameSpace)this;
-                return nameSpace.GetNameSpaceEditUrl();
-            }
-            else if (this is Organization)
-            {
-                Organization organization = (Organization)this;
-                return organization.GetOrganizationEditUrl();
-            }
-            else if (this is ServiceAlert)
-            {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                return serviceAlert.GetServiceAlertEditUrl();
-            }
-            return "#";
-        }
-
-        public virtual string GetObjectDeleteUrl()
-        {
-            if (this is Document)
-            {
-                Document document = (Document)this;
-                return document.GetDocumentDeleteUrl();
-            }
-            else if (this is Dataset)
-            {
-                Dataset dataset = (Dataset)this;
-                return dataset.GetDatasetDeleteUrl();
-            }
-            else if (this is EPSG)
-            {
-                EPSG epsg = (EPSG)this;
-                return epsg.GetEPSGDeleteUrl();
-            }
-            else if (this is CodelistValue)
-            {
-                CodelistValue codelistValue = (CodelistValue)this;
-                return codelistValue.GetCodelistValueDeleteUrl();
-            }
-            else if (this is NameSpace)
-            {
-                NameSpace nameSpace = (NameSpace)this;
-                return nameSpace.GetNameSpaceDeleteUrl();
-            }
-            else if (this is Organization)
-            {
-                Organization organization = (Organization)this;
-                return organization.GetOrganizationDeleteUrl();
-            }
-            else if (this is ServiceAlert)
-            {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                return serviceAlert.GetServiceAlertDeleteUrl();
-            }
-            return "#";
-        }
-
+        
         public virtual Guid GetSystemId()
         {
             if (systemId == null || systemId == Guid.Empty)
@@ -290,6 +211,20 @@ namespace Kartverket.Register.Models
             versionNumber = 1;
             if (submitter != null) submitterId = submitter.systemId;
             if (register != null) registerId = register.systemId;
+        }
+
+        public Organization GetOwner()
+        {
+            switch (this)
+            {
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.datasetowner;
+                case Document _:
+                    var document = (Document)this;
+                    return document.documentowner;
+            }
+            return submitter;
         }
     }
 }//end namespace Datamodell

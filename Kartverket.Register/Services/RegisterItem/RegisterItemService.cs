@@ -254,6 +254,19 @@ namespace Kartverket.Register.Services.RegisterItem
             return versjoneringsGruppe.systemId;
         }
 
+        public Guid NewVersioningGroup(RegisterItemV2 registerItem)
+        {
+            var versjoneringsGruppe = new Models.Version();
+            versjoneringsGruppe.systemId = Guid.NewGuid();
+            versjoneringsGruppe.currentVersion = registerItem.SystemId;
+            versjoneringsGruppe.lastVersionNumber = registerItem.VersionNumber;
+
+            _dbContext.Entry(versjoneringsGruppe).State = EntityState.Modified;
+            _dbContext.Versions.Add(versjoneringsGruppe);
+            _dbContext.SaveChanges();
+            return versjoneringsGruppe.systemId;
+        }
+
         public CoverageDataset NewCoverage(Models.RegisterItem registerItem)
         {
             CoverageDataset coverage = new CoverageDataset();

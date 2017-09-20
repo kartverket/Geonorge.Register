@@ -48,7 +48,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string DatasetThumbnail { get; set; }
 
         [Display(Name = "DOK-status")]
-        public string DokStatusId { get; set; } = "Proposal";
+        public string DokStatusId { get; set; }
         public virtual DokStatus DokStatus { get; set; }
 
         [Display(Name = "DOK-status godkjent")]
@@ -63,21 +63,25 @@ namespace Kartverket.Register.Models.ViewModels
 
         public void UpdateDataset(DatasetV2 dataset)
         {
-            UpdateRegisterItem(dataset);
-            PresentationRulesUrl = dataset.PresentationRulesUrl;
-            ProductSheetUrl = dataset.ProductSheetUrl;
-            ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+            Uuid = dataset.Uuid;
+            Notes = dataset.Notes;
+            MetadataUrl = dataset.MetadataUrl;
             SpecificUsage = dataset.SpecificUsage;
+            ProductSheetUrl = dataset.ProductSheetUrl;
+            PresentationRulesUrl = dataset.PresentationRulesUrl;
+            ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+            DistributionFormat = dataset.DistributionFormat;
+            DistributionUrl = dataset.DistributionUrl;
+            DistributionArea = dataset.DistributionArea;
+            WmsUrl = dataset.WmsUrl;
+            ThemeGroupId = dataset.ThemeGroupId;
+            Theme = dataset.Theme;
             DatasetThumbnail = dataset.DatasetThumbnail;
             DokStatusId = dataset.DokStatusId;
             DokStatus = dataset.DokStatus;
-            ThemeGroupId = dataset.ThemeGroupId;
-            Theme = dataset.Theme;
-            Uuid = dataset.Uuid;
-            WmsUrl = dataset.WmsUrl;
-            DistributionUrl = dataset.DistributionUrl;
-            DistributionArea = dataset.DistributionArea;
-            DistributionFormat = dataset.DistributionFormat;
+            DokStatusDateAccepted = dataset.DokStatusDateAccepted;
+
+            UpdateRegisterItem(dataset);
         }
 
         public string GetThemeGroupDescription()

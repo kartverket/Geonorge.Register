@@ -1,22 +1,22 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.RegisterItem
-﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
+@using Kartverket.Register.Models.ViewModels
+@model RegisterItemV2ViewModel
 
 @{
-    ViewBag.Title = @Model.name;
-    string owner = ViewBag.Owner;
+    ViewBag.Title = @Model.Name;
 }
 
 @section breadcrumb {
-    <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>@Html.DisplayFor(model => model.name)</li>
+    <li><a href="@Model.Register.GetObjectUrl()">@Html.DisplayFor(model => model.Register.name)</a></li>
+    <li>@Html.DisplayFor(model => model.Name)</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.name)
+                @Html.DisplayFor(model => model.Name)
             </h1>
         </div>
         <div class="col-sm-12">
@@ -25,44 +25,44 @@
     </div>
 </section>
 <div class="row">
-    <article class="col-no-padding-xs col-xs-12 col-sm-12 col-md-10 col-lg-10">
-        @if (Model.register.containedItemClass != "NameSpace")
-        { <p> @Model.description</p>}
-        @if (Model.register.containedItemClass != "Dataset")
-        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
+    <article class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+        @if (Model.Register.containedItemClass != "NameSpace")
+        { <p> @Model.Description</p>}
+        @if (Model.Register.containedItemClass != "Dataset")
+        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
 
-        @if (Model.register.containedItemClass == "NameSpace")
-        { <span>@Registers.Owner: @Model.submitter.name</span><br>}
+        @if (Model.Register.containedItemClass == "NameSpace")
+        { <span>@Registers.Owner: @Model.Submitter.name</span><br>}
         else
-        {<span>@Registers.Submitter: @Model.submitter.name</span><br>}
+        {<span>@Registers.Submitter: @Model.Submitter.name</span><br>}
 
-        @if (owner != null)
-        { <span>@Registers.Owner: @owner</span><br />}
+        @if (Model.Owner != null)
+        { <span>@Registers.Owner: @Model.Owner.name</span><br />}
 
-        <span>@Html.DisplayNameFor(m => m.versionNumber) @Model.versionNumber</span><br>
-        @if (Model.versionName != null)
-        {<span>@Html.DisplayNameFor(model => model.versionName): @Model.versionName</span><br />}
+        <span>@Html.DisplayNameFor(m => m.VersionNumber) @Model.VersionNumber</span><br>
+        @if (Model.VersionName != null)
+        {<span>@Html.DisplayNameFor(model => model.VersionName): @Model.VersionName</span><br />}
 
     </article>
-    <article class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
-        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.modified)</span>
-        @if (Model.register.containedItemClass != "Dataset")
+    <article class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
+        @if (Model.Register.containedItemClass != "Dataset")
         {
-            if (Model.dateAccepted != null)
+            if (Model.DateAccepted != null)
             {
-                <span class="small">@Html.DisplayNameFor(model => model.dateAccepted): @Html.DisplayFor(modelItem => Model.dateAccepted)</span>
+                <span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
             }
-            if (Model.dateSuperseded != null)
+            if (Model.DateSuperseded != null)
             {
-                <br /><span class="small">@Html.DisplayNameFor(model => model.dateSuperseded): @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
+                <br /><span class="small">@Html.DisplayNameFor(model => model.DateSuperseded): @Html.DisplayFor(modelItem => Model.DateSuperseded)</span>
             }
             if (Model.DateRetired != null)
             {
                 <br /><span class="small">@Html.DisplayNameFor(model => model.DateRetired): @Html.DisplayFor(modelItem => Model.DateRetired)</span>
             }
-            if (Model.dateNotAccepted != null)
+            if (Model.DateNotAccepted != null)
             {
-                <br /><span class="small">@Html.DisplayNameFor(model => model.dateNotAccepted): @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
+                <br /><span class="small">@Html.DisplayNameFor(model => model.DateNotAccepted): @Html.DisplayFor(modelItem => Model.DateNotAccepted)</span>
             }
         }
     </article>
@@ -70,49 +70,48 @@
 </div>
  
 <div class="row">
-@if (Model is Kartverket.Register.Models.Dataset)
+    @if (Model is InspireDatasetViewModel)
     {
-        @Html.Partial("_detailsDataset")
+        @Html.Partial("_detailsInspireDataset")
     }
-    @if (Model.register.containedItemClass == "Organization")
+    else if (Model.RegisterItem is Dataset)
     {
-        @Html.Partial("_detailsOrganization")
+        @Html.Partial("_detailsDataset", (Dataset)Model.RegisterItem)
     }
-    @if (Model.register.containedItemClass == "Document")
+    else if (Model.RegisterItem is Organization)
     {
-        @Html.Partial("_detailsDocuments")
+        @Html.Partial("_detailsOrganization", (Organization)Model.RegisterItem)
     }
-    @if (Model.register.containedItemClass == "EPSG")
+    else if (Model.RegisterItem is Document)
     {
-        @Html.Partial("_detailsEpsg")
+        @Html.Partial("_detailsDocuments", (Document)Model.RegisterItem)
     }
-    @if (Model.register.containedItemClass == "CodelistValue")
+    else if (Model.RegisterItem is EPSG)
     {
-        @Html.Partial("_detailsCodelistValue")
+        @Html.Partial("_detailsEpsg", (EPSG)Model.RegisterItem)
     }
-    @if (Model.register.containedItemClass == "NameSpace")
+    else if (Model.RegisterItem is CodelistValue)
     {
-        @Html.Partial("_detailsNameSpace")
+        @Html.Partial("_detailsCodelistValue", (CodelistValue)Model.RegisterItem)
     }
-    @if (Model.register.containedItemClass == "ServiceAlert")
+    else if (Model.RegisterItem is NameSpace)
     {
-        @Html.Partial("_detailsServiceAlert")
+        @Html.Partial("_detailsNameSpace", (NameSpace)Model.RegisterItem)
     }
-
+    else if (Model.RegisterItem is ServiceAlert)
+    {
+        @Html.Partial("_detailsServiceAlert", (ServiceAlert)Model.RegisterItem)
+    }
 </div>
 
-
-
-
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+    <div class="hidden-print">
         <hr />
 
         @if (Request.IsAuthenticated)
         {
-            if (!Model.register.IsServiceAlertRegister())
+            if (!Model.Register.IsServiceAlertRegister())
             {
-                if (HtmlHelperExtensions.AccessEdit(Model))
+                if (HtmlHelperExtensions.Access(Model))
                 {
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
@@ -120,6 +119,6 @@
             }
         }
 
-        <a class="hidden-print" href="@Model.register.GetObjectUrl()">@Shared.Back</a>
+        <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
     </div>

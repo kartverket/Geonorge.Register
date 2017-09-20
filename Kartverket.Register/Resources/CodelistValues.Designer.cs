@@ -61,6 +61,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Broader item.
+        /// </summary>
+        public static string BroaderItem {
+            get {
+                return ResourceManager.GetString("BroaderItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kodeliste.
+        /// </summary>
+        public static string Codelist {
+            get {
+                return ResourceManager.GetString("Codelist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kodeverdi.
         /// </summary>
         public static string CodeValue {
@@ -70,11 +88,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foreslå ny kodeverdi.
+        /// </summary>
+        public static string CreateNew {
+            get {
+                return ResourceManager.GetString("CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filen har feil innhold!.
         /// </summary>
         public static string ErrorMessagefile {
             get {
                 return ResourceManager.GetString("ErrorMessagefile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hierarkiske kodelister.
+        /// </summary>
+        public static string HierarchicalCodelists {
+            get {
+                return ResourceManager.GetString("HierarchicalCodelists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet.
+        /// </summary>
+        public static string HierarchicalCodelistsSelectionText {
+            get {
+                return ResourceManager.GetString("HierarchicalCodelistsSelectionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importer.
+        /// </summary>
+        public static string Import {
+            get {
+                return ResourceManager.GetString("Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import fra CSV fil.
+        /// </summary>
+        public static string ImportFile {
+            get {
+                return ResourceManager.GetString("ImportFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg csv fil i UTF-8 med kodeliste.
+        /// </summary>
+        public static string ImportFileInfo {
+            get {
+                return ResourceManager.GetString("ImportFileInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mer spesialiserte begrep.
+        /// </summary>
+        public static string NarrowerItems {
+            get {
+                return ResourceManager.GetString("NarrowerItems", resourceCulture);
             }
         }
     }

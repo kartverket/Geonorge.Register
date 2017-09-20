@@ -138,7 +138,7 @@
   <data name="Search_AllRegisters" xml:space="preserve">
     <value>All registers</value>
   </data>
-  <data name="Search_Button" xml:space="preserve">
+  <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
   <data name="Search_Heading" xml:space="preserve">
@@ -206,5 +206,11 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="Enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="Text" xml:space="preserve">
+    <value>Text</value>
   </data>
 </root>

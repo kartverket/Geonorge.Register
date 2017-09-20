@@ -113,8 +113,8 @@
         @if (HtmlHelperExtensions.IsAdmin())
         {
             <hr />
-            <h4>Hierarkiske kodelister</h4>
-            <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+            <h4>@CodelistValues.HierarchicalCodelists</h4>
+            <small>@CodelistValues.HierarchicalCodelistsSelectionText</small>
             <br /><br />
             <div class="form-group">
                 @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -180,7 +180,6 @@
                             }
                         </select>
                     </div>
-                    <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
                 </div>
             </div>
         }

@@ -21,6 +21,7 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item);
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
+        Guid NewVersioningGroup(RegisterItemV2 registerItems);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null);
         bool validateName(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);

@@ -1315,6 +1315,26 @@
               Looks up a localized string similar to Vurderingspunkt.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.Delivery_Harmonized">
+            <summary>
+              Looks up a localized string similar to Harmoniserte data status.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.Delivery_MetadataService">
+            <summary>
+              Looks up a localized string similar to Metadatatjeneste status.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.Delivery_Spatial_Data_Service">
+            <summary>
+              Looks up a localized string similar to Sparial data service status.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.Delivery_Wfs_Or_Atom">
+            <summary>
+              Looks up a localized string similar to WFS eller Atom status.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Bekreftet_Kommune">
             <summary>
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.

@@ -87,7 +87,6 @@ namespace Kartverket.Register.Migrations
                 new Models.DokDeliveryStatus { value = "notset", description = "Ikke angitt" }
             );
 
-
             context.AccessTypes.AddOrUpdate(
                 new accessType { accessLevel = 1, description = "Only admin kan create, edit or delete" },
                 new accessType { accessLevel = 2, description = "Editor can create, edit or delete their owne items" },
@@ -148,6 +147,22 @@ namespace Kartverket.Register.Migrations
                 new Models.Dimension { value = "horizontal", description = "Horisontalt" },
                 new Models.Dimension { value = "vertical", description = "Vertikalt" },
                 new Models.Dimension { value = "compound", description = "Sammensatt" }
+            );
+
+            context.Registers.AddOrUpdate(
+                new Register
+                {
+                    systemId = Guid.Parse("9a9bef28-285b-477e-85f1-504f8227ff45"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    name = "Inspire statusregister",
+                    seoname = "inspire-statusregister",
+                    statusId = "Valid",
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    containedItemClass = "InspireDataset",
+                    accessId = 1
+                }
             );
 
 

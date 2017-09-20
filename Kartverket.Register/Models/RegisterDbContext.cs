@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Configuration;
 using Kartverket.Register.Services;
 using System.Data.Entity;
 using System.Linq;
@@ -39,6 +41,8 @@ namespace Kartverket.Register.Models
         public virtual DbSet<ContainedItemClass> ContainedItemClass { get; set; }
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
+        public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
+        public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,6 +54,16 @@ namespace Kartverket.Register.Models
             modelBuilder.Configurations.Add(new CodelistValueTranslationConfiguration());
             modelBuilder.Configurations.Add(new EPSGTranslationConfiguration());
             modelBuilder.Configurations.Add(new OrganizationTranslationConfiguration());
+
+            modelBuilder.Entity<InspireDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("InspireDatasets");
+            });
+
+            modelBuilder.Entity<RegisterItemV2>()
+                .Property(p => p.SystemId).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+
         }
 
         public override int SaveChanges()

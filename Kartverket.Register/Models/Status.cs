@@ -21,6 +21,10 @@ namespace Kartverket.Register.Models {
         public string description { get; set; }
         public string group { get; set; }
 
-	}//end Status
+        internal string StatusSubmitted()
+        {
+            return "Submitted";
+        }
+    }//end Status
 
 }//end namespace Datamodell

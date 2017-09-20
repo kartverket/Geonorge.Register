@@ -11,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using Resources;
 
 namespace Kartverket.Register.Helpers
 {
@@ -971,7 +972,8 @@ namespace Kartverket.Register.Helpers
                             gyldig += "- " + s.description + "&#013";
                         }
                     }
-                    else {
+                    else
+                    {
                         gyldig += "- " + s.description + "&#013";
                     }
                 }
@@ -1121,7 +1123,8 @@ namespace Kartverket.Register.Helpers
             {
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
@@ -1189,12 +1192,230 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        public static int cbChecked(bool checkboxChecked) {
+        public static int cbChecked(bool checkboxChecked)
+        {
             if (checkboxChecked)
             {
                 return 1;
             }
             return 0;
         }
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort)
+        {
+
+            var sortingClass = "";
+            var sortTitle = "";
+            var sortingParam = "";
+            var statusIcon = "custom-icon ";
+
+            if (sortingSelected == null)
+                sortingSelected = "name";
+
+            if (sortingSelected == defaultSort)
+            {
+                sortingClass = "sorted-asc";
+                sortTitle = DataSet.DOK_Delivery_Title;
+                sortingParam = defaultSort + "_desc";
+            }
+            else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
+            {
+                sortingClass = "sorted-desc";
+                sortTitle = DataSet.DOK_Delivery_Title;
+                sortingParam = defaultSort;
+            }
+            else
+            {
+                sortingClass = "";
+                sortTitle = "";
+                sortingParam = defaultSort;
+            }
+
+            if (sortingParam.IndexOf("Requirement") > -1)
+            {
+                sortTitle = "Sortert etter logisk rekkefølge";
+            }
+            var text = searchParam;
+
+            switch (sortingParam)
+            {
+                case "title":
+                    sortTitle = DataSet.DOK_Delivery_Title;
+                    break;
+                case "owner":
+                    sortTitle = DataSet.DOK_Delivery_Owner;
+                    break;
+                case "theme":
+                    sortTitle = DataSet.DOK_Delivery_Theme;
+                    break;
+                case "metadata":
+                    sortTitle = DataSet.DOK_Delivery_Metadata;
+                    statusIcon += "custom-icon-info";
+                    break;
+                case "metadataservice":
+                    sortTitle = DataSet.Delivery_MetadataService;
+                    statusIcon += "custom-icon-info";
+                    break;
+                case "productSheet":
+                    sortTitle = DataSet.DOK_Delivery_ProductSheet;
+                    statusIcon += "";
+                    break;
+                case "presentationRules":
+                    sortTitle = DataSet.DOK_Delivery_PresentationRules;
+                    statusIcon += "";
+                    break;
+                case "productSpecification":
+                    sortTitle = DataSet.DOK_Delivery_ProductSpesification;
+                    statusIcon += "";
+                    break;
+                case "wms":
+                    sortTitle = DataSet.DOK_Delivery_Wms;
+                    statusIcon += "custom-icon-wfs";
+                    break;
+                case "wfs":
+                    sortTitle = DataSet.DOK_Delivery_Wfs;
+                    statusIcon += "custom-icon-wfs";
+                    break;
+                case "sosi":
+                    sortTitle = DataSet.DOK_Delivery_SosiRequirements;
+                    statusIcon += "";
+                    break;
+                case "distribution":
+                    sortTitle = DataSet.DOK_Delivery_Distribution;
+                    statusIcon += "custom-icon-info";
+                    break;
+                case "gml":
+                    sortTitle = DataSet.DOK_Delivery_GmlRequirements;
+                    statusIcon += "";
+                    break;
+                case "atom":
+                    sortTitle = DataSet.DOK_Delivery_AtomFeed;
+                    statusIcon = "fa fa-rss-square";
+                    break;
+                case "wfsOrAtom":
+                    sortTitle = DataSet.Delivery_Wfs_Or_Atom;
+                    statusIcon = "fa fa-rss-square";
+                    break;
+                case "harmonizedData":
+                    sortTitle = DataSet.Delivery_Harmonized;
+                    statusIcon += "custom-icon-info";
+                    break;
+                case "spatialDataService":
+                    sortTitle = DataSet.Delivery_Spatial_Data_Service;
+                    statusIcon += "custom-icon-info";
+                    break;
+            }
+
+            var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+
+            if (text != null)
+                linkSort = linkSort + "&text=" + text;
+            if (string.IsNullOrWhiteSpace(tittel))
+                tittel = "<span class='" + statusIcon + "'></span>";
+            
+            linkSort = linkSort + "'>" + tittel + "</a>";
+
+            return new HtmlString(linkSort);
+        }
+
+        public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null)
+        {
+
+            var symbolDeficient = "custom-icon custom-icon-smile-red";
+            var symbolUseable = "custom-icon custom-icon-smile-yellow";
+            var symbolGood = "custom-icon custom-icon-smile-green";
+            var symbolNotSet = "custom-icon";
+
+            var statusSymbol = symbolUseable;
+            var title = "";
+
+            if (restricted.HasValue && restricted.Value && type != "metadata")
+            {
+                statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
+                title = DataSet.DOK_Delivery_Restricted;
+            }
+            else if (!string.IsNullOrEmpty(status))
+            {
+                switch (status)
+                {
+                    case "notset":
+                        statusSymbol = symbolNotSet;
+                        title = DataSet.DOK_Delivery_Status_NotSet;
+                        break;
+                    case "deficient":
+                        statusSymbol = symbolDeficient;
+                        title = DataSet.DOK_Delivery_Status_Deficient;
+                        break;
+                    case "useable":
+                        statusSymbol = symbolUseable;
+                        title = DataSet.DOK_Delivery_Status_Useable;
+                        break;
+                    case "good":
+                        statusSymbol = symbolGood;
+                        title = DataSet.DOK_Delivery_Status_Good;
+                        break;
+                }
+            }
+
+            var label = "";
+
+            switch (type)
+            {
+                case "metadata":
+                    label = DataSet.DOK_Delivery_Metadata;
+                    break;
+                case "metadataservice":
+                    label = DataSet.Delivery_MetadataService;
+                    break;
+                case "ProductSheet":
+                    label = DataSet.DOK_Delivery_ProductSheet;
+                    break;
+                case "presentationRules":
+                    label = DataSet.DOK_Delivery_PresentationRules;
+                    break;
+                case "productSpecification":
+                    label = DataSet.DOK_Delivery_ProductSpesification;
+                    break;
+                case "wms":
+                    label = DataSet.DOK_Delivery_Wms;
+                    break;
+                case "wfs":
+                    label = DataSet.DOK_Delivery_Wfs;
+                    break;
+                case "sosi":
+                    label = DataSet.DOK_Delivery_SosiRequirements;
+                    break;
+                case "distribution":
+                    label = DataSet.DOK_Delivery_Distribution;
+                    break;
+                case "gml":
+                    label = DataSet.DOK_Delivery_GmlRequirements;
+                    break;
+                case "atom":
+                    label = DataSet.DOK_Delivery_AtomFeed;
+                    break;
+                case "harmonizedData":
+                    label = DataSet.Delivery_Harmonized;
+                    break;
+                case "spatialDataService":
+                    label = DataSet.Delivery_Spatial_Data_Service;
+                    break;
+                case "wfsOrAtom":
+                    label = DataSet.Delivery_Wfs_Or_Atom;
+                    break;
+            }
+
+
+            if (!string.IsNullOrEmpty(label))
+                title = label + ": " + title;
+
+            var html = "";
+            if (status == "notset")
+                html = "<span class='" + symbolNotSet + "'></span>";
+            else
+                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
+
+            return new HtmlString(html);
+        }
+
     }
 }

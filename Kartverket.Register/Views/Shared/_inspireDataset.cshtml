@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
+@using Kartverket.Register.Helpers
+
+
+<div id="tableView" class="register dataset search-results-table-heading">
+    <div class="row result-row metadata">
+        <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Eier", "owner")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Temagruppe", "theme") </div>
+        <div class="col-md-4 col-sm-5 status-icons">
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadata")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadataservice")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "distribution")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wms")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfs")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "atom")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsOrAtom")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizedData")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialDataService")
+        </div>
+        <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokStatus")</div>
+    </div>
+    <div class="menu-separator search-results-table-heading"></div>
+   
+    @foreach (InspireDatasetViewModel item in Model)
+    {
+        <div class="row result-row metadata">
+            <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.Name </a></div>
+            <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
+            <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
+            <div class="col-md-4 col-sm-5 status-icons">
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataStatus, false, "metadata")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataServiceStatus, false, "metadataservice")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryDistributionStatus, false, "distribution")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWmsStatus, false, "wms")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWfsStatus, false, "wfs")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryAtomFeedStatus, false, "atom")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryWfsOrAtomStatus, false, "wfsOrAtom")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryHarmonizedDataStatus, false, "harmonizedData")
+                    @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliverySpatialDataServiceStatus, false, "spatialDataService")
+            </div>
+            <div class="col-md-1 text-center">
+                <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
+                    <i class="statusIcon-@item.DokStatusId"></i>
+                </span>
+            </div>
+        </div>
+    }
+</div>
+<div id="listView">
+    @foreach (InspireDatasetViewModel item in Model)
+    {
+        <div class="row result-row metadata">
+            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+                <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    <a href="@item.DetailPageUrl()">
+                        <img src="@item.DatasetThumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.Name"/>
+                    </a>
+                </div>
+                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                    <a href="@item.DetailPageUrl()">
+                        @item.Name
+                    </a>
+
+                    <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
+                        <img src="@Url.Content(item.LogoSrc())" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.Owner.name)"/>
+                    </a>
+                    <div class="orglogo">
+                        <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
+                            @Html.DisplayFor(modelItem => item.Owner.name)
+                        </a>
+                    </div>
+
+                    <a class="beskrivelse-print visible-print" href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
+                        <p>Eier: @Html.DisplayFor(modelItem => item.Owner.name)</p>
+                    </a>
+
+                    <br class="hidden-print"/>
+                    <div class="hidden-print">
+                        <p>
+                            @item.GetDescriptionAsSubstring();
+                            <a class="hidden-print" href="@item.DetailPageUrl()" title="Vis mer info om @item.Name">vis mer info</a>
+                        </p>
+                    </div>
+                    <p class="visible-print">@item.Description</p>
+                </div>
+                <div class="col-information col-xs-8 col-sm-5 col-md-5 col-lg-5">
+                    <ul style="list-style-type: none;">
+                        @if (item.DokStatusId != null)
+                        {
+                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.DokStatus.description <i class="statusIcon-@item.DokStatusId"></i></li>
+                        }
+                        @if (item.DokStatusDateAccepted != null)
+                        {
+                            <li><span>DOK-godkjenningsdato: </span>@item.DokStatusDateAccepted </li>
+                        }
+                        <li><span>Innsendt: </span>@item.DateSubmitted </li>
+                        <li><span>Siste endret: </span>@item.Modified </li>
+
+
+                        @if (item.ThemeGroupId != null)
+                        {
+                            <li title="Temagruppe: @item.Theme.description">
+                                <span>Gruppe: </span>@item.Theme.description
+                            </li>
+                        }
+                        else
+                        {
+                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    }
+</div>

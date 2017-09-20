@@ -266,6 +266,7 @@
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -716,6 +717,22 @@
     <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.Designer.cs">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.cs" />
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.Designer.cs">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.cs" />
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.Designer.cs">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.cs" />
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.Designer.cs">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.cs" />
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.Designer.cs">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -735,6 +752,9 @@
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
+    <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\InspireDataset.cs" />
+    <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />
@@ -745,6 +765,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
+    <Compile Include="Models\RegisterItemV2.cs" />
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
@@ -758,6 +779,8 @@
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
+    <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalEdit.cs" />
@@ -783,6 +806,8 @@
     <Compile Include="Models\Version.cs" />
     <Compile Include="Models\ViewModels\MetadataItemViewModel.cs" />
     <Compile Include="Models\ViewModels\MunicipalDatasetsViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemV2ViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterV2ViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />
@@ -897,15 +922,19 @@
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
+    <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
+    <Compile Include="Services\IInspireDatasetService.cs" />
+    <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
     <Compile Include="Services\Notify\IEmailService.cs" />
     <Compile Include="Services\Notify\INotificationService.cs" />
     <Compile Include="Services\Notify\NotificationService.cs" />
+    <Compile Include="Services\InspireDatasetService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
@@ -1343,7 +1372,7 @@
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
     <Content Include="Views\Shared\_SharedMenu.cshtml" />
     <Content Include="Views\DokCoverage\Index.cshtml" />
-    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="Views\Shared\_inspireDataset.cshtml" />
     <Content Include="Views\Shared\_municipalDataset.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
@@ -1352,11 +1381,18 @@
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
-    <Content Include="settings.config" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
+    <Content Include="Views\InspireDatasets\Create.cshtml" />
+    <Content Include="Views\InspireDatasets\Delete.cshtml" />
+    <Content Include="Views\InspireDatasets\Details.cshtml" />
+    <Content Include="Views\InspireDatasets\Edit.cshtml" />
+    <Content Include="Views\InspireDatasets\Index.cshtml" />
+    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="settings.config" />
     <Content Include="Views\Shared\_Resources.cshtml" />
+    <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1691,6 +1727,12 @@
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.resx">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Documents.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Documents.Designer.cs</LastGenOutput>
@@ -1727,6 +1769,9 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.resx">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\DokCoverage.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DokCoverage.Designer.cs</LastGenOutput>
@@ -1739,11 +1784,8 @@
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\DataSet.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
+    <EmbeddedResource Include="Migrations\201709050928505_AddInspireDataset.resx">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\DataSet.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1760,6 +1802,12 @@
     <EmbeddedResource Include="Resources\CodelistValues.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CodelistValues.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>

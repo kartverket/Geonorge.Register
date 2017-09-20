@@ -23,6 +23,7 @@ namespace Kartverket.Register.Models
     {
         public Register()
         {
+            this.RegisterItems = new HashSet<RegisterItemV2>();
             this.items = new HashSet<RegisterItem>();
             this.subregisters = new HashSet<Register>();
             this.replaces = new HashSet<Version>();
@@ -57,6 +58,7 @@ namespace Kartverket.Register.Models
         public string containedItemClass { get; set; }
 
         public virtual ICollection<RegisterItem> items { get; set; }
+        public virtual ICollection<RegisterItemV2> RegisterItems { get; set; }
         [ForeignKey("parentRegister")]
         public Guid? parentRegisterId { get; set; }
         public virtual Register parentRegister { get; set; }
@@ -86,14 +88,9 @@ namespace Kartverket.Register.Models
         /// <returns>Url</returns>
         public virtual string GetObjectUrl()
         {
-            if (parentRegisterId == null)
-            {
-                return "/register/" + seoname;
-            }
-            else
-            {
-                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname;
-            }
+            return parentRegisterId == null
+                ? "/register/" + seoname
+                : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname;
         }
 
         public bool IsServiceAlertRegister()
@@ -103,11 +100,7 @@ namespace Kartverket.Register.Models
 
         public bool IsOfTypeDataset()
         {
-            if (containedItemClass == "Dataset")
-            {
-                return true;
-            }
-            return false;
+            return containedItemClass == "Dataset";
         }
 
         public bool IsDokMunicipal()
@@ -117,12 +110,7 @@ namespace Kartverket.Register.Models
 
         public Guid GetSystemId()
         {
-            if (systemId == null || systemId == Guid.Empty)
-            {
-                return Guid.NewGuid();
-            }
-            else
-                return systemId;
+            return systemId == Guid.Empty ? Guid.NewGuid() : systemId;
         }
 
         public string GetDokMunicipalityUrl()
@@ -130,145 +118,95 @@ namespace Kartverket.Register.Models
             return "/register/det-offentlige-kartgrunnlaget-kommunalt";
         }
 
+        public bool IsInspireStatusregister()
+        {
+            return name == "Inspire statusregister" && parentRegister == null; // TODO, flere registre kan potensielt hete "Inspire statusregister"
+        }
+
+        public bool ContainedItemClassIsOrganization()
+        {
+            return containedItemClass == "Organization";
+        }
+
+        public bool ContainedItemClassIsCodelistValue()
+        {
+            return containedItemClass == "CodelistValue";
+        }
+
+        public bool ContainedItemClassIsRegister()
+        {
+            return containedItemClass == "Register";
+        }
+
+        public bool ContainedItemClassIsDocument()
+        {
+            return containedItemClass == "Document";
+        }
+
+        public bool ContainedItemClassIsDataset()
+        {
+            return containedItemClass == "Dataset";
+        }
+
+        public bool ContainedItemClassIsEpsg()
+        {
+            return containedItemClass == "EPSG";
+        }
+
+        public bool ContainedItemClassIsNameSpace()
+        {
+            return containedItemClass == "NameSpace";
+        }
+
+        public bool ContainedItemClassIsServiceAlert()
+        {
+            return containedItemClass == "ServiceAlert";
+        }
+
+        public bool ContainedItemClassIsInspireDataset()
+        {
+            return containedItemClass == "InspireDataset";
+        }
+
         public string GetObjectCreateUrl(string municipalityCode = null)
         {
-            string url;
-            if (parentRegister == null)
-            {
-                url = seoname + "/ny";
-            }
-            else {
-                url = parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/ny";
-            }
+            var url = parentRegister == null
+                ? seoname + "/ny"
+                : parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/ny";
 
-            if (containedItemClass == "Document") return "/dokument/" + url;
-            else if (containedItemClass == "CodelistValue") return "/kodeliste/" + url;
-            else if (containedItemClass == "Register") return "/subregister/" + url;
-            else if (containedItemClass == "Organization") return "/organisasjoner/" + url;
-            else if (containedItemClass == "EPSG") return "/epsg/" + url;
-            else if (containedItemClass == "NameSpace") return "/navnerom/" + url;
-            else if (containedItemClass == "ServiceAlert") return "/tjenestevarsler/" + url;
-            else if (containedItemClass == "Dataset")
+            switch (containedItemClass)
             {
-                if (IsDokMunicipal())
-                {
-                    return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
-                }
-                else {
+                case "Document":
+                    return "/dokument/" + url;
+                case "CodelistValue":
+                    return "/kodeliste/" + url;
+                case "Register":
+                    return "/subregister/" + url;
+                case "Organization":
+                    return "/organisasjoner/" + url;
+                case "EPSG":
+                    return "/epsg/" + url;
+                case "NameSpace":
+                    return "/navnerom/" + url;
+                case "ServiceAlert":
+                    return "/tjenestevarsler/" + url;
+                case "InspireDataset":
+                    return "/inspire/" + url;
+                case "Dataset":
+                    if (IsDokMunicipal())
+                    {
+                        return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
+                    }
                     return "/dataset/" + url;
-                }
             }
-            else {
-                return "#";
-            }
+            return "#";
         }
 
         public string GetEditObjectUrl()
         {
-            if (parentRegister == null)
-            {
-                return "/rediger/" + seoname;
-            }
-            else
-            {
-                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/rediger";
-            }
+            return parentRegister == null
+                ? "/rediger/" + seoname
+                : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/rediger";
         }
-
-        public string GetDeleteObjectUrl()
-        {
-            if (parentRegister == null)
-            {
-                return "/slett/" + seoname;
-            }
-            else
-            {
-                return "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/slett";
-            }
-        }
-
-        public bool HasParentRegister()
-        {
-            if (parentRegister != null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsOrganization()
-        {
-            if (containedItemClass == "Organization")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsCodelistValue()
-        {
-            if (containedItemClass == "CodelistValue")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsDocument()
-        {
-            if (containedItemClass == "Document")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsDataset()
-        {
-            if (containedItemClass == "Dataset")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsEPSG()
-        {
-            if (containedItemClass == "EPSG")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsNameSpace()
-        {
-            if (containedItemClass == "NameSpace")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsServiceAlert()
-        {
-            if (containedItemClass == "ServiceAlert")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public bool containedItemClassIsRegister()
-        {
-            if (containedItemClass == "Register")
-            {
-                return true;
-            }
-            return false;
-        }
-
-        //end Register
-
-    }//end namespace Datamodell
+    }
 }

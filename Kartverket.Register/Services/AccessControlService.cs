@@ -4,22 +4,17 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
+using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 
 namespace Kartverket.Register.Services
 {
     public class AccessControlService : IAccessControlService
     {
-        private ClaimsPrincipal _claimsPrincipal;
-        private RegisterDbContext db = new RegisterDbContext();
-        private IRegisterItemService _registerItemService;
-        private IRegisterService _registerService;
-        private IOrganizationService _organizationService;
-
-        public AccessControlService(ClaimsPrincipal claimsPrincipal)
-        {
-            _claimsPrincipal = claimsPrincipal;
-        }
+        private readonly RegisterDbContext db = new RegisterDbContext();
+        private readonly IRegisterItemService _registerItemService;
+        private readonly IRegisterService _registerService;
+        private readonly IOrganizationService _organizationService;
 
         public AccessControlService()
         {
@@ -36,41 +31,49 @@ namespace Kartverket.Register.Services
             }
             if (model is Models.Register)
             {
-                return accessRegister(model);
+                return AccessRegister(model);
             }
-            else if (model is Models.RegisterItem)
+            if (model is Models.RegisterItem)
             {
-                return accessRegisterItem(model);
+                return accessRegisterItem((Models.RegisterItem)model);
+            }
+            if (model is RegisterItemV2ViewModel)
+            {
+                return accessRegisterItem((RegisterItemV2ViewModel)model);
             }
             return false;
         }
 
-        private bool accessRegisterItem(object model)
+        private bool accessRegisterItem(Models.RegisterItem registerItem)
         {
-            Organization userOrganization = _registerService.GetOrganizationByUserName();
-            RegisterDbContext db = new RegisterDbContext();
-            Models.RegisterItem registerItem = (Models.RegisterItem)model;
+            Organization user = _registerService.GetOrganizationByUserName();
 
-            if (accessRegister(registerItem.register))
+            if (AccessRegister(registerItem.register))
             {
                 if (registerItem is Document)
                 {
                     Document document = (Document)registerItem;
-                    return IsOwner(document.documentowner.name, userOrganization.name);
+                    return IsOwner(document.documentowner.name, user.name);
                 }
-                else if (registerItem is Dataset)
+                if (registerItem is Dataset)
                 {
                     Dataset dataset = (Dataset)registerItem;
                     if (dataset.IsMunicipalDataset())
                     {
-                        return IsOwner(dataset.datasetowner.name, userOrganization.name) || IsDokAdmin();
+                        return IsOwner(dataset.datasetowner.name, user.name) || IsDokAdmin();
                     }
                 }
                 else {
-                    return IsOwner(registerItem.submitter.name, userOrganization.name);
+                    return IsOwner(registerItem.submitter.name, user.name);
                 }
             }
             return false;
+        }
+
+        private bool accessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
+        {
+            var user = _registerService.GetOrganizationByUserName();
+            return AccessRegister(registerItemViewModel.Register) && IsOwner(registerItemViewModel.Owner.name, user.name);
         }
 
         private bool IsDokEditor()
@@ -99,7 +102,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool accessRegister(object model)
+        private bool AccessRegister(object model)
         {
             Models.Register register = (Models.Register)model;
             if (register.accessId == 2)
@@ -145,19 +148,6 @@ namespace Kartverket.Register.Services
         public bool IsOwner(string owner, string user)
         {
             return (!string.IsNullOrEmpty(owner) && !string.IsNullOrEmpty(user)) && (owner.ToLower() == user.ToLower());
-        }
-
-        private bool IsOwnerOrMunicipal(string user, Dataset dataset)
-        {
-            if (IsMunicipalUser())
-            {
-                return true;
-            }
-            else if (IsAdmin())
-            {
-                return true;
-            }
-            return false;
         }
 
         public bool IsMunicipalUser()
@@ -257,11 +247,6 @@ namespace Kartverket.Register.Services
             }
 
             return currentUserMunicipalityCode == municipalityCode;
-        }
-
-        public bool AccessCreateNewMunicipalDataset(string municipalityCode)
-        {
-            return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
     }
 }

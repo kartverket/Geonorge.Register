@@ -18,11 +18,13 @@ namespace Kartverket.Register.Services.Register
     {
         private readonly RegisterDbContext _dbContext;
         private IRegisterItemService _registerItemService;
+        private IDatasetDeliveryService _datasetDeliveryService;
 
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerItemService = new RegisterItemService(_dbContext);
+            _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
         }
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
@@ -207,54 +209,18 @@ namespace Kartverket.Register.Services.Register
             Models.Register DOK = GetRegisterByName("DOK-statusregisteret");
             foreach (Models.Dataset item in DOK.items)
             {
-                item.dokDeliveryMetadataStatusId = GetMetadataStatus(item.Uuid, item.dokDeliveryMetadataStatusAutoUpdate, item.dokDeliveryMetadataStatusId);
+                item.dokDeliveryMetadataStatusId = _datasetDeliveryService.GetMetadataStatus(item.Uuid, item.dokDeliveryMetadataStatusAutoUpdate, item.dokDeliveryMetadataStatusId);
                 item.dokDeliveryProductSheetStatusId = GetDOKStatus(item.ProductSheetUrl, item.dokDeliveryProductSheetStatusAutoUpdate, item.dokDeliveryProductSheetStatusId);
                 item.dokDeliveryPresentationRulesStatusId = GetDOKStatus(item.PresentationRulesUrl, item.dokDeliveryPresentationRulesStatusAutoUpdate, item.dokDeliveryPresentationRulesStatusId);
                 item.dokDeliveryProductSpecificationStatusId = GetDOKStatus(item.ProductSpecificationUrl, item.dokDeliveryProductSpecificationStatusAutoUpdate, item.dokDeliveryProductSpecificationStatusId);
                 item.dokDeliverySosiRequirementsStatusId = GetSosiRequirements(item.Uuid, item.GetProductSpecificationUrl(), item.dokDeliverySosiStatusAutoUpdate, item.dokDeliverySosiRequirementsStatusId);
                 item.dokDeliveryGmlRequirementsStatusId = GetGmlRequirements(item.Uuid, item.dokDeliveryGmlRequirementsStatusAutoUpdate, item.dokDeliveryGmlRequirementsStatusId);
-                item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item);
-                item.dokDeliveryAtomFeedStatusId = GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
-                item.dokDeliveryWfsStatusId = GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
-                item.dokDeliveryDistributionStatusId = GetDeliveryDistributionStatus(item);
+                item.dokDeliveryWmsStatusId = GetDokDeliveryServiceStatus(item.Uuid, item.dokDeliveryWmsStatusAutoUpdate, item.dokDeliveryWmsStatusId, item.UuidService);
+                item.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(item.Uuid, item.dokDeliveryAtomFeedStatusAutoUpdate, item.dokDeliveryAtomFeedStatusId);
+                item.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(item.Uuid, item.dokDeliveryWfsStatusAutoUpdate, item.dokDeliveryWfsStatusId);
+                item.dokDeliveryDistributionStatusId = GetDeliveryDownloadStatus(item.Uuid, item.dokDeliveryDistributionStatusAutoUpdate, item.dokDeliveryDistributionStatusId);
             }
             _dbContext.SaveChanges();
-        }
-
-        public string GetMetadataStatus(string uuid, bool autoUpdate, string currentStatus)
-        {
-            string statusValue = currentStatus;
-            if (autoUpdate) { 
-            try
-            {
-                if (!string.IsNullOrEmpty(uuid))
-                {
-                    System.Net.WebClient c = new System.Net.WebClient();
-                    c.Encoding = System.Text.Encoding.UTF8;
-                    string url = System.Web.Configuration.WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + uuid;
-                    var data = c.DownloadString(url);
-                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                    var status = response["Status"];
-                    if (status != null)
-                    {
-                        string statusvalue = status?.ToString();
-
-                        if (statusvalue == "OK")
-                            return "good";
-                    }
-                }
-
-                return "useable";
-
-            }
-            catch (Exception ex)
-            {
-                return "deficient";
-            }
-
-            }
-
-            return statusValue;
         }
 
         public string GetDOKStatus(string url, bool autoUpdate, string currentStatus)
@@ -297,17 +263,17 @@ namespace Kartverket.Register.Services.Register
             return statusValue;
         }
 
-        public string GetDokDeliveryServiceStatus(Dataset item)
+        public string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService)
         {
             bool hasServiceUrl = false;
 
-            string status = (!string.IsNullOrEmpty(item.dokDeliveryWmsStatusId) ? item.dokDeliveryWmsStatusId : "notset");
+            string status = (!string.IsNullOrEmpty(currentStatus) ? currentStatus : "notset");
 
-            if (item.dokDeliveryWmsStatusAutoUpdate)
+            if (autoUpdate)
             {
                 try
                 { 
-                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + item.Uuid;
+                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                     System.Net.WebClient c = new System.Net.WebClient();
                     c.Encoding = System.Text.Encoding.UTF8;
 
@@ -341,7 +307,7 @@ namespace Kartverket.Register.Services.Register
 
 
                 string statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
-                statusUrl = statusUrl + item.UuidService;
+                statusUrl = statusUrl + uuidService;
                 using (var client = new HttpClient())
                 {
                     client.DefaultRequestHeaders.Accept.Clear();
@@ -423,13 +389,13 @@ namespace Kartverket.Register.Services.Register
             return status;
         }
 
-        public string GetDeliveryDistributionStatus(Dataset item)
+        public string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus)
         {
-            string status = item.dokDeliveryDistributionStatusId;
+            string status = currentStatus;
 
             try
             {
-                string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + item.Uuid;
+                string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                 System.Net.WebClient c = new System.Net.WebClient();
                 c.Encoding = System.Text.Encoding.UTF8;
 
@@ -452,11 +418,11 @@ namespace Kartverket.Register.Services.Register
 
                 }
 
-                if (item.dokDeliveryDistributionStatusAutoUpdate)
+                if (autoUpdate)
                 {
-                    if (item.dokDeliveryWfsStatusId == "good" || item.dokDeliveryAtomFeedStatusId == "good")
+                    if (currentStatus == "good" || currentStatus == "good")
                         status = "good";
-                    else if (item.dokDeliveryWfsStatusId == "useable" || item.dokDeliveryAtomFeedStatusId == "useable" || hasDistributionUrl)
+                    else if (currentStatus == "useable" || currentStatus == "useable" || hasDistributionUrl)
                         status = "useable";
                     else
                         status = "deficient";
@@ -611,117 +577,6 @@ namespace Kartverket.Register.Services.Register
                 catch (Exception ex)
                 {
                     return "deficient";
-                }
-            }
-
-            return statusValue;
-
-        }
-
-        public string GetAtomFeedStatus(string uuid, bool autoUpdate, string currentStatus)
-        {
-            string statusValue = currentStatus;
-
-            if (autoUpdate)
-            {
-                try
-                {
-                    var atomfeed = AtomFeed(uuid);
-
-                    if (!string.IsNullOrEmpty(atomfeed))
-                        statusValue = "good";
-                    else
-                        statusValue = "notset";
-                }
-
-                catch (Exception ex)
-                {
-                    return "notset";
-                }
-            }
-
-            return statusValue;
-
-        }
-
-        private System.Xml.XmlDocument AtomFeedDoc;
-        XmlNamespaceManager nsmgr;
-
-        public string AtomFeed(string uuid)
-        {
-            string atomFeed = "";
-            MemoryCache memoryCache = MemoryCache.Default;
-            AtomFeedDoc = memoryCache.Get("AtomFeedDoc") as System.Xml.XmlDocument;
-            if (AtomFeedDoc == null)
-                SetAtomFeed();
-
-            atomFeed = GetAtomFeed(uuid);
-
-            return atomFeed;
-        }
-
-        private string GetAtomFeed(string uuid)
-        {
-            nsmgr = new XmlNamespaceManager(AtomFeedDoc.NameTable);
-            nsmgr.AddNamespace("ns", "http://www.w3.org/2005/Atom");
-            nsmgr.AddNamespace("georss", "http://www.georss.org/georss");
-            nsmgr.AddNamespace("inspire_dls", "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0");
-
-            string feed = "";
-            XmlNode entry = AtomFeedDoc.SelectSingleNode("//ns:feed/ns:entry[inspire_dls:spatial_dataset_identifier_code='" + uuid + "']/ns:link", nsmgr);
-            if (entry != null)
-            {
-                feed = entry.InnerText;
-            }
-
-            return feed;
-        }
-
-        private void SetAtomFeed()
-        {
-            AtomFeedDoc = new XmlDocument();
-            AtomFeedDoc.Load("https://nedlasting.geonorge.no/geonorge/Tjenestefeed.xml");
-
-            MemoryCache memoryCache = MemoryCache.Default;
-            memoryCache.Add("AtomFeedDoc", AtomFeedDoc, new DateTimeOffset(DateTime.Now.AddDays(1)));
-        }
-
-        public string GetWfsStatus(string uuid, bool autoUpdate, string currentStatus)
-        {
-
-            string statusValue = currentStatus;
-
-            if (autoUpdate)
-            {
-                try
-                {
-                    string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
-                    System.Net.WebClient c = new System.Net.WebClient();
-                    c.Encoding = System.Text.Encoding.UTF8;
-
-                    var json = c.DownloadString(metadataUrl);
-
-                    dynamic metadata = Newtonsoft.Json.Linq.JObject.Parse(json);
-
-                    if (metadata != null)
-                    {
-                        if (metadata.Related != null)
-                        {
-                            foreach (var service in metadata.Related)
-                            {
-                                if(service.DistributionDetails != null)
-                                {
-                                    if(service.DistributionDetails.Protocol == "OGC:WFS") 
-                                        return "useable";
-                                }
-                            }
-                        }
-                    }
-                }
-
-                catch (Exception ex)
-                {
-                    return "notset";
                 }
             }
 
@@ -956,7 +811,30 @@ namespace Kartverket.Register.Services.Register
                 result.AddMissingTranslations();
                 return result;
             }
-            throw new NotImplementedException();
+        }
+
+        public Guid GetRegisterId(string parentRegisterName, string registerName)
+        {
+            if (string.IsNullOrWhiteSpace(parentRegisterName))
+            {
+                var queryResults = from r in _dbContext.Registers
+                    where r.seoname == registerName &&
+                          r.parentRegister == null
+                    select r.systemId;
+
+                var result = queryResults.FirstOrDefault();
+                return result;
+            }
+            else
+            {
+                var queryResults = from r in _dbContext.Registers
+                    where r.seoname == registerName &&
+                          r.parentRegister.seoname == parentRegisterName
+                    select r.systemId;
+
+                var result = queryResults.FirstOrDefault();
+                return result;
+            }
         }
 
         public Models.Register SetStatus(Models.Register register, Models.Register originalRegister)
@@ -1063,6 +941,21 @@ namespace Kartverket.Register.Services.Register
                 }
             }
             return datasets;
+        }
+
+        public Guid GetOrganizationIdByUserName()
+        {
+            var user = GetOrganizationByUserName();
+            return user?.systemId ?? GetOrganizationKartverket();
+        }
+
+        private Guid GetOrganizationKartverket()
+        {
+            var queryResults = from o in _dbContext.Organizations
+                where o.name == "Kartverket"
+                select o.systemId;
+
+            return queryResults.FirstOrDefault();
         }
     }
 }

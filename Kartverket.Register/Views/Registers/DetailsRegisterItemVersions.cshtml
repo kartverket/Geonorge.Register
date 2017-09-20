@@ -66,10 +66,6 @@
         {
             @Html.Partial("_detailsEpsg")
         }
-        @if (Model.currentVersion.register.containedItemClass == "Register")
-        {
-            @Html.Partial("_detailsSubregister")
-        }
         @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
         {
             @Html.Partial("_detailsCodelistValue")

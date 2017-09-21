@@ -178,7 +178,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (this is InspireDatasetViewModel inspireDatasetViewModel)
             {
-                return inspireDatasetViewModel.GetInspireDatasetEditUrl();
+                return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
             }
             switch (RegisterItem)
             {
@@ -196,13 +196,13 @@ namespace Kartverket.Register.Models.ViewModels
                     return codelistValue.GetCodelistValueDeleteUrl();
                 case NameSpace _:
                     var nameSpace = (NameSpace)RegisterItem;
-                    return nameSpace.GetNameSpaceEditUrl();
+                    return nameSpace.GetNameSpaceDeleteUrl();
                 case Organization _:
                     var organization = (Organization)RegisterItem;
-                    return organization.GetOrganizationEditUrl();
+                    return organization.GetOrganizationDeleteUrl();
                 case ServiceAlert _:
                     var serviceAlert = (ServiceAlert)RegisterItem;
-                    return serviceAlert.GetServiceAlertEditUrl();
+                    return serviceAlert.GetServiceAlertDeleteUrl();
             }
             return "#";
         }

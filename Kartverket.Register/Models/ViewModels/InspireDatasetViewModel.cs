@@ -129,7 +129,7 @@ namespace Kartverket.Register.Models.ViewModels
             return "/inspire/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
         }
 
-        public string GetDocumentDeleteUrl()
+        public string GetInspireDatasetDeleteUrl()
         {
             if (Register.parentRegister == null)
             {

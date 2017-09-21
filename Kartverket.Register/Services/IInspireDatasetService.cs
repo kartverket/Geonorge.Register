@@ -9,5 +9,6 @@ namespace Kartverket.Register.Services
         InspireDatasetViewModel NewInspireDataset(string parentRegister, string register);
         InspireDataset GetInspireDatasetByName(string registerSeoName, string itemSeoName);
         InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel);
+        void DeleteInspireDataset(InspireDataset inspireDataset);
     }
 }

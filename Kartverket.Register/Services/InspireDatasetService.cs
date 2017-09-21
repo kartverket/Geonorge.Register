@@ -233,5 +233,13 @@ namespace Kartverket.Register.Services
 
             return inspireDataset;
         }
+
+        public void DeleteInspireDataset(InspireDataset inspireDataset)
+        {
+            _dbContext.InspireDatasets.Remove(inspireDataset);
+
+            //Todo, må slette deliveryDataset?
+            _dbContext.SaveChanges();
+        }
     }
 }

@@ -128,29 +128,42 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: InspireDatasets/Delete/5
-        public ActionResult Delete(Guid? id)
+        [Authorize]
+        [Route("inspire/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        public ActionResult Delete(string parentregister, string registername, string itemname, string itemowner)
         {
-            if (id == null)
+            var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
+            if (inspireDataset != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (_accessControlService.Access(inspireDataset))
+                {
+                    return View(inspireDataset);
+                }
+                    throw new HttpException(401, "Access Denied");
             }
-            InspireDataset inspireDataset = _db.InspireDatasets.Find(id);
-            if (inspireDataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(inspireDataset);
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         // POST: InspireDatasets/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        [Route("inspire/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        public ActionResult DeleteConfirmed(string registername, string itemname)
         {
-            var inspireDataset = _db.InspireDatasets.Find(id);
-            _db.InspireDatasets.Remove(inspireDataset ?? throw new InvalidOperationException());
-            _db.SaveChanges();
-            return RedirectToAction("Details");
+            var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
+            if (inspireDataset != null)
+            {
+                var registerUrl = inspireDataset.Register.GetObjectUrl();
+                if (_accessControlService.Access(inspireDataset))
+                {
+                    _inspireDatasetService.DeleteInspireDataset(inspireDataset);
+                    return Redirect(registerUrl);
+                }
+                throw new HttpException(401, "Access Denied");
+            }
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         protected override void Dispose(bool disposing)

@@ -5,87 +5,87 @@
         <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
             @if (Model.epsgcode == null)
             {
-                <p title="EPSG-kode: @Model.epsgcode"><span>EPSG: </span> - </p>
+                <p title="@EPSGs.EpsgCode: @Model.epsgcode"><span>EPSG: </span> - </p>
             }
             else
             {
-                <p title="EPSG-kode: @Model.epsgcode"><b><span>EPSG: </span>@Html.DisplayFor(modelItem => Model.epsgcode)</b></p>
+                <p title="@EPSGs.EpsgCode: @Model.epsgcode"><b><span>EPSG: </span>@Html.DisplayFor(modelItem => Model.epsgcode)</b></p>
             }
         </div>
         <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
 
             @if (Model.sosiReferencesystem == null)
             {
-                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span> - </p>
+                <p title="@EPSGs.SosiReferencesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span> - </p>
             }
             else
             {
-                <p title="Sosi-referansesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
+                <p title="@EPSGs.SosiReferencesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
             }
 
             @if (Model.verticalReferenceSystem == null)
             {
-                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span> - </p>
+                <p title="@EPSGs.VerticalReferenceSystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span> - </p>
             }
             else
             {
-                <p title="Vertikaltreferansesystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
+                <p title="@EPSGs.VerticalReferenceSystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
             }
 
             @if (Model.horizontalReferenceSystem == null)
             {
-                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span> - </p>
+                <p title="@EPSGs.HorizontalReferenceSystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span> - </p>
             }
             else
             {
-                <p title="Horisontaltreferansesystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
+                <p title="@EPSGs.HorizontalReferenceSystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
             }
 
             @if (Model.dimensionId == null)
             {
-                <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                <p title="@EPSGs.Dimension: "><span>@EPSGs.Dimension: </span> - </p>
             }
             else
             {
-                <p title="Dimensjon: @Model.dimension.description"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
+                <p title="@EPSGs.Dimension: @Model.dimension.description"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
             }
 
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-information">
             @if (Model.inspireRequirement == null)
             {
-                <p title="Inspire krav: ikke angitt"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Registers.NotSet</p>
+                <p title="@EPSGs.InspireRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Inspire krav: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
+                <p title="@EPSGs.InspireRequirement: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
             }
 
             @if (Model.nationalRequirement == null)
             {
-                <p title="Nasjonalt krav: ikke angitt"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Registers.NotSet</p>
+                <p title="@EPSGs.NationalRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Nasjonalt krav: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
+                <p title="@EPSGs.NationalRequirement: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
             }
 
             @if (Model.nationalSeasRequirement == null)
             {
-                <p title="Nasjonalt krav for havområde: ikke angitt"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Registers.NotSet</p>
+                <p title="@EPSGs.NationalSeasRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Registers.NotSet</p>
             }
             else
             {
-                <p title="Nasjonalt krav for havområde: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
+                <p title="@EPSGs.NationalSeasRequirement: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
             }
 
             @if (Model.externalReference == null)
             {
-                <p title="Vis ekstern referanse for @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span> - </p>
+                <p title="@EPSGs.ExternalReference @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span> - </p>
             }
             else
             {
-                <p title="Vis ekstern referanse for @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                <p title="@EPSGs.ExternalReference @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
             }
         </div>
     </div>

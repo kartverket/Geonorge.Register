@@ -1009,6 +1009,11 @@
               Looks up a localized string similar to Nei.
             </summary>
         </member>
+        <member name="P:Resources.Documents.NoDocumentFor">
+            <summary>
+              Looks up a localized string similar to Ingen dokument er angitt for.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.NoHistoricalDocuments">
             <summary>
               Looks up a localized string similar to Ingen historiske dokumenter av.
@@ -1060,9 +1065,19 @@
               Looks up a localized string similar to Innhold.
             </summary>
         </member>
+        <member name="P:Resources.Namespace.LinkToContentOf">
+            <summary>
+              Looks up a localized string similar to Link til innholdet i.
+            </summary>
+        </member>
         <member name="P:Resources.Namespace.NamespaceName">
             <summary>
               Looks up a localized string similar to Navnerom.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.NoContentFor">
+            <summary>
+              Looks up a localized string similar to Innhold er ikke angitt for.
             </summary>
         </member>
         <member name="P:Resources.Namespace.Service">
@@ -1078,6 +1093,16 @@
         <member name="P:Resources.Namespace.Title">
             <summary>
               Looks up a localized string similar to Foreslå nytt navnerom.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.URLForServiceInNamespace">
+            <summary>
+              Looks up a localized string similar to URL til tjeneste i navnerommet.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.UrlOfServiceNotSpecified">
+            <summary>
+              Looks up a localized string similar to URL til tjeneste er ikke angitt.
             </summary>
         </member>
         <member name="T:Resources.ServiceAlerts">
@@ -1643,6 +1668,11 @@
               Looks up a localized string similar to Laster Bekrefte DOK.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.LoadingMessageDataset">
+            <summary>
+              Looks up a localized string similar to Henter datasett.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.LoadingSuitability">
             <summary>
               Looks up a localized string similar to Laster Egnethetsvurdering.
@@ -1925,6 +1955,11 @@
         <member name="P:Resources.EPSGs.Dimension">
             <summary>
               Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.EpsgCode">
+            <summary>
+              Looks up a localized string similar to Epsg kode.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.ExternalReference">

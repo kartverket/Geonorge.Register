@@ -138,6 +138,9 @@
   <data name="No" xml:space="preserve">
     <value>Nei</value>
   </data>
+  <data name="NoDocumentFor" xml:space="preserve">
+    <value>Ingen dokument er angitt for</value>
+  </data>
   <data name="NoHistoricalDocuments" xml:space="preserve">
     <value>Ingen historiske dokumenter av</value>
   </data>

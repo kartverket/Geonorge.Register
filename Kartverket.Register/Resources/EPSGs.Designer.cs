@@ -79,6 +79,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Epsg kode.
+        /// </summary>
+        public static string EpsgCode {
+            get {
+                return ResourceManager.GetString("EpsgCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekstern referanser.
         /// </summary>
         public static string ExternalReference {

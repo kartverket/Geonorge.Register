@@ -20,22 +20,22 @@
                 <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-descripton">
                     @if (item.description == null)
                     {
-                        <p title="Innhold er ikke angitt for @item.name."><span>Tjeneste: </span>@Registers.NotSet</p>
+                        <p title="@Namespace.NoContentFor @item.name."><span>@Namespace.Service: </span>@Registers.NotSet</p>
                     }
                     else
                     {
-                        <p title="Link til innholdet i @item.name"><span>Innhold: </span><a href="@item.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                        <p title="@Namespace.LinkToContentOf @item.name"><span>@Namespace.Content: </span><a href="@item.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
                 </div>
                 
                 <div class="col-actions col-xs-6 col-sm-6 col-md-2 col-lg-2">
                     @if (item.serviceUrl == null)
                     {
-                        <p title="URL til tjeneste er ikke angitt."><span>Tjeneste: </span>@Registers.NotSet</p>
+                        <p title="@Namespace.UrlOfServiceNotSpecified"><span>@Namespace.Service: </span>@Registers.NotSet</p>
                     }
                     else
                     {
-                        <p title="URL til tjeneste i navnerommet @item.name"><span>Tjeneste: </span><a href="@item.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                        <p title="@Namespace.URLForServiceInNamespace @item.name"><span>@Namespace.Service: </span><a href="@item.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
                 </div>
 

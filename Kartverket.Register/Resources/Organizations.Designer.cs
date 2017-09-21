@@ -286,6 +286,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import fra CSV fil.
+        /// </summary>
+        public static string ImportFromCSV {
+            get {
+                return ResourceManager.GetString("ImportFromCSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg csv fil i UTF-8 med orgnr, navn, beskrivelse, logofilnavn. Logo må lastes opp manuelt til server.
+        /// </summary>
+        public static string ImportFromCSVInfo {
+            get {
+                return ResourceManager.GetString("ImportFromCSVInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stor logo.
         /// </summary>
         public static string LargeLogo {

@@ -249,4 +249,10 @@
   <data name="GeographicCenterYErrorMessage" xml:space="preserve">
     <value>Geographic Center Point - y is required</value>
   </data>
+  <data name="ImportFromCSV" xml:space="preserve">
+    <value>Import from CSV file</value>
+  </data>
+  <data name="ImportFromCSVInfo" xml:space="preserve">
+    <value>Select csv file in UTF-8 with the word, name, description, log file name. Logo must be manually uploaded to server</value>
+  </data>
 </root>

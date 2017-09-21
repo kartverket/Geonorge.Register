@@ -151,6 +151,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Skriv inn.
+        /// </summary>
+        public static string Enter {
+            get {
+                return ResourceManager.GetString("Enter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generell informasjon.
         /// </summary>
         public static string GeneralInformation {
@@ -250,20 +259,20 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Søk.
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Alle registre.
         /// </summary>
         public static string Search_AllRegisters {
             get {
                 return ResourceManager.GetString("Search_AllRegisters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Søk.
-        /// </summary>
-        public static string Search_Button {
-            get {
-                return ResourceManager.GetString("Search_Button", resourceCulture);
             }
         }
         
@@ -300,6 +309,15 @@ namespace Resources {
         public static string Select {
             get {
                 return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tekst.
+        /// </summary>
+        public static string Text {
+            get {
+                return ResourceManager.GetString("Text", resourceCulture);
             }
         }
         

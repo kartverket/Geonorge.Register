@@ -24,7 +24,7 @@
         <div class="col-no-padding-xs col-title col-sm-4 col-md-4 col-lg-4">
             @if (Model.documentUrl.Contains("ikke angitt"))
             {
-                <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn disabled" title="Ingen dokument er angitt for @Model.name">
+                <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @Model.name">
                     <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
                 </a><br />
             }

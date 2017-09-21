@@ -61,6 +61,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Valgte tilleggsdatasett.
+        /// </summary>
+        public static string AdditionalDatasetsSelected {
+            get {
+                return ResourceManager.GetString("AdditionalDatasetsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakgrunnsfarge.
         /// </summary>
         public static string BackgroundColor {
@@ -628,6 +637,18 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;DOK nasjonal egnethetsvurdering&lt;/b&gt;&lt;br /&gt;
+        ///                &lt;p&gt;
+        ///                    Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+        ///                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for  [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string DOK_SuitabitityHelpText {
+            get {
+                return ResourceManager.GetString("DOK_SuitabitityHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temagruppe.
         /// </summary>
         public static string DOK_Temagruppe {
@@ -687,6 +708,15 @@ namespace Resources {
         public static string LoadingCoverage {
             get {
                 return ResourceManager.GetString("LoadingCoverage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Henter datasett.
+        /// </summary>
+        public static string LoadingMessageDataset {
+            get {
+                return ResourceManager.GetString("LoadingMessageDataset", resourceCulture);
             }
         }
         
@@ -781,6 +811,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune.
+        /// </summary>
+        public static string SuggestMunicipalitySearchInfo {
+            get {
+                return ResourceManager.GetString("SuggestMunicipalitySearchInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrer nye metadata.
+        /// </summary>
+        public static string SuggestMunicipalitySearchInfoRegisterMetadata {
+            get {
+                return ResourceManager.GetString("SuggestMunicipalitySearchInfoRegisterMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå nytt dataset.
         /// </summary>
         public static string SuggestNewDataset {
@@ -790,7 +838,16 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Egnethetsvurdering.
+        ///   Looks up a localized string similar to Legg til ekstra DOK-datasett for din kommune.
+        /// </summary>
+        public static string SuggestNewDatasetMunicipality {
+            get {
+                return ResourceManager.GetString("SuggestNewDatasetMunicipality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egnethet.
         /// </summary>
         public static string Suitability {
             get {

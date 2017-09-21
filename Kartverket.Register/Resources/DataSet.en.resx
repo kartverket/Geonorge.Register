@@ -357,9 +357,6 @@
   <data name="SetStatus" xml:space="preserve">
     <value>set status</value>
   </data>
-  <data name="String1" xml:space="preserve">
-    <value />
-  </data>
   <data name="Suitability" xml:space="preserve">
     <value>Suitability</value>
   </data>
@@ -434,5 +431,45 @@ Check for the type of tasks you use, or use the dataset. Higher intensity of bac
   </data>
   <data name="SuitabitityHelpTextBtn" xml:space="preserve">
     <value>Show instructions for registration</value>
+  </data>
+  <data name="AdditionalDatasetsSelected" xml:space="preserve">
+    <value>Valgte tilleggsdatasett</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfo" xml:space="preserve">
+    <value>If the dataset already exists in Geonorge, search for data sets and register it for your municipality</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfoRegisterMetadata" xml:space="preserve">
+    <value>Register new metadata</value>
+  </data>
+  <data name="SuggestNewDatasetMunicipality" xml:space="preserve">
+    <value>Add extra DOK data sets for your municipality</value>
+  </data>
+  <data name="DOK_SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt; DOK National Appraisal Assessment &lt;/b&gt; &lt;br /&gt;
+&lt;p&gt;Here are the overall national fitness assessments recorded. These are only grossly guiding assessments based on the knowledge of the professionals to the data set and knowledge of the tasks and processes that are to be solved according to the Planning and Building Act.
+As a data set quality and coverage can vary considerably from site to area, the assessments are considered rough and approximate and may differ significantly for specific municipalities or locations.&lt;/p&gt;
+                &lt;p&gt;&lt;u&gt;Appraisal assessment is made for these processes: &lt;/u&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt; Region Scheduling &lt;/li&gt;
+                        &lt;li&gt; Processes related to the community plan community &lt;/li&gt;
+                        &lt;li&gt; Processes associated with the area plan area &lt;/li&gt;
+                        &lt;li&gt; Regulation Planning - Site Control &lt;/li&gt;
+                        &lt;li&gt; Regulation Planning - Detail Regulation &lt;/li&gt;
+                        &lt;li&gt; The building matters &lt;/li&gt;
+                        &lt;li&gt; deallocation &lt;/li&gt;
+                        &lt;li&gt; Co-impact assessments in connection with area plans &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;
+                &lt;p&gt;The suitability assessment is given in the form of values ​​1-5, and comments can be added as well&lt;ul style = "list-style: none"&gt;
+                        &lt;li&gt; 1 = Not suitable &lt;/li&gt;
+                        &lt;li&gt; 2 = A little suitable &lt;/li&gt;
+                        &lt;li&gt; 3 = Medium-term &lt;/li&gt;
+                        &lt;li&gt; 4 = Good fit &lt;/li&gt;
+                        &lt;li&gt; 5 = Very suitable &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;</value>
+  </data>
+  <data name="LoadingMessageDataset" xml:space="preserve">
+    <value>Retrieving dataset</value>
   </data>
 </root>

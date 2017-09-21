@@ -16,7 +16,7 @@
     @if (!string.IsNullOrEmpty(Model.name)) { 
     <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
     }
-    <li>Ny</li>
+    <li>@Documents.TitleCreate</li>
 }
 
 <section class="heading">

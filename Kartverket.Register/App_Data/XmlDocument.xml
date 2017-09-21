@@ -1009,6 +1009,11 @@
               Looks up a localized string similar to Nei.
             </summary>
         </member>
+        <member name="P:Resources.Documents.NoDocumentFor">
+            <summary>
+              Looks up a localized string similar to Ingen dokument er angitt for.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.NoHistoricalDocuments">
             <summary>
               Looks up a localized string similar to Ingen historiske dokumenter av.
@@ -1060,9 +1065,19 @@
               Looks up a localized string similar to Innhold.
             </summary>
         </member>
+        <member name="P:Resources.Namespace.LinkToContentOf">
+            <summary>
+              Looks up a localized string similar to Link til innholdet i.
+            </summary>
+        </member>
         <member name="P:Resources.Namespace.NamespaceName">
             <summary>
               Looks up a localized string similar to Navnerom.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.NoContentFor">
+            <summary>
+              Looks up a localized string similar to Innhold er ikke angitt for.
             </summary>
         </member>
         <member name="P:Resources.Namespace.Service">
@@ -1078,6 +1093,16 @@
         <member name="P:Resources.Namespace.Title">
             <summary>
               Looks up a localized string similar to Foreslå nytt navnerom.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.URLForServiceInNamespace">
+            <summary>
+              Looks up a localized string similar to URL til tjeneste i navnerommet.
+            </summary>
+        </member>
+        <member name="P:Resources.Namespace.UrlOfServiceNotSpecified">
+            <summary>
+              Looks up a localized string similar to URL til tjeneste er ikke angitt.
             </summary>
         </member>
         <member name="T:Resources.ServiceAlerts">
@@ -1278,6 +1303,11 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.AdditionalDatasetsSelected">
+            <summary>
+              Looks up a localized string similar to Valgte tilleggsdatasett.
             </summary>
         </member>
         <member name="P:Resources.DataSet.BackgroundColor">
@@ -1595,6 +1625,14 @@
               Looks up a localized string similar to Egnethetsvurdering.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_SuitabitityHelpText">
+            <summary>
+              Looks up a localized string similar to &lt;b&gt;DOK nasjonal egnethetsvurdering&lt;/b&gt;&lt;br /&gt;
+                           &lt;p&gt;
+                               Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+                               Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for  [rest of string was truncated]&quot;;.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Temagruppe">
             <summary>
               Looks up a localized string similar to Temagruppe.
@@ -1628,6 +1666,11 @@
         <member name="P:Resources.DataSet.LoadingCoverage">
             <summary>
               Looks up a localized string similar to Laster Bekrefte DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.LoadingMessageDataset">
+            <summary>
+              Looks up a localized string similar to Henter datasett.
             </summary>
         </member>
         <member name="P:Resources.DataSet.LoadingSuitability">
@@ -1680,14 +1723,29 @@
               Looks up a localized string similar to sett status.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.SuggestMunicipalitySearchInfo">
+            <summary>
+              Looks up a localized string similar to Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.SuggestMunicipalitySearchInfoRegisterMetadata">
+            <summary>
+              Looks up a localized string similar to Registrer nye metadata.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.SuggestNewDataset">
             <summary>
               Looks up a localized string similar to Foreslå nytt dataset.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.SuggestNewDatasetMunicipality">
+            <summary>
+              Looks up a localized string similar to Legg til ekstra DOK-datasett for din kommune.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.Suitability">
             <summary>
-              Looks up a localized string similar to Egnethetsvurdering.
+              Looks up a localized string similar to Egnethet.
             </summary>
         </member>
         <member name="P:Resources.DataSet.SuitabilityArealText">
@@ -1818,14 +1876,59 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.BroaderItem">
+            <summary>
+              Looks up a localized string similar to Broader item.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.Codelist">
+            <summary>
+              Looks up a localized string similar to Kodeliste.
+            </summary>
+        </member>
         <member name="P:Resources.CodelistValues.CodeValue">
             <summary>
               Looks up a localized string similar to Kodeverdi.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.CreateNew">
+            <summary>
+              Looks up a localized string similar to Foreslå ny kodeverdi.
+            </summary>
+        </member>
         <member name="P:Resources.CodelistValues.ErrorMessagefile">
             <summary>
               Looks up a localized string similar to Filen har feil innhold!.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.HierarchicalCodelists">
+            <summary>
+              Looks up a localized string similar to Hierarkiske kodelister.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.HierarchicalCodelistsSelectionText">
+            <summary>
+              Looks up a localized string similar to Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.Import">
+            <summary>
+              Looks up a localized string similar to Importer.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ImportFile">
+            <summary>
+              Looks up a localized string similar to Import fra CSV fil.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ImportFileInfo">
+            <summary>
+              Looks up a localized string similar to Velg csv fil i UTF-8 med kodeliste.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.NarrowerItems">
+            <summary>
+              Looks up a localized string similar to Mer spesialiserte begrep.
             </summary>
         </member>
         <member name="T:Resources.EPSGs">
@@ -1852,6 +1955,11 @@
         <member name="P:Resources.EPSGs.Dimension">
             <summary>
               Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.EpsgCode">
+            <summary>
+              Looks up a localized string similar to Epsg kode.
             </summary>
         </member>
         <member name="P:Resources.EPSGs.ExternalReference">
@@ -2068,6 +2176,16 @@
         <member name="P:Resources.Organizations.GeographicExtent">
             <summary>
               Looks up a localized string similar to Geografisk utstrekning.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.ImportFromCSV">
+            <summary>
+              Looks up a localized string similar to Import fra CSV fil.
+            </summary>
+        </member>
+        <member name="P:Resources.Organizations.ImportFromCSVInfo">
+            <summary>
+              Looks up a localized string similar to Velg csv fil i UTF-8 med orgnr, navn, beskrivelse, logofilnavn. Logo må lastes opp manuelt til server.
             </summary>
         </member>
         <member name="P:Resources.Organizations.LargeLogo">
@@ -2492,6 +2610,11 @@
               Looks up a localized string similar to Rediger.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Enter">
+            <summary>
+              Looks up a localized string similar to Skriv inn.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.GeneralInformation">
             <summary>
               Looks up a localized string similar to Generell informasjon.
@@ -2547,14 +2670,14 @@
               Looks up a localized string similar to Lagre som.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Search">
+            <summary>
+              Looks up a localized string similar to Søk.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Search_AllRegisters">
             <summary>
               Looks up a localized string similar to Alle registre.
-            </summary>
-        </member>
-        <member name="P:Resources.Shared.Search_Button">
-            <summary>
-              Looks up a localized string similar to Søk.
             </summary>
         </member>
         <member name="P:Resources.Shared.Search_Heading">
@@ -2575,6 +2698,11 @@
         <member name="P:Resources.Shared.Select">
             <summary>
               Looks up a localized string similar to Velg.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Text">
+            <summary>
+              Looks up a localized string similar to Tekst.
             </summary>
         </member>
         <member name="P:Resources.Shared.Title">

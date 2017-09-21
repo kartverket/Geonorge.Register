@@ -3,8 +3,8 @@
     ViewBag.Title = "Import";
 }
 
-<h2>Import fra CSV fil</h2>
-<p>Velg csv fil i UTF-8 med orgnr, navn, beskrivelse, logofilnavn. Logo må lastes opp manuelt til server</p>
+<h2>@Organizations.ImportFromCSV</h2>
+<p>@Organizations.ImportFromCSVInfo</p>
 @using (Html.BeginForm("Import", "Organizations", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
 

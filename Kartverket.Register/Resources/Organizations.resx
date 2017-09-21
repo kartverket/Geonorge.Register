@@ -249,4 +249,10 @@
   <data name="GeographicCenterYErrorMessage" xml:space="preserve">
     <value>Geografisk senterpunkt - y er påkrevd</value>
   </data>
+  <data name="ImportFromCSV" xml:space="preserve">
+    <value>Import fra CSV fil</value>
+  </data>
+  <data name="ImportFromCSVInfo" xml:space="preserve">
+    <value>Velg csv fil i UTF-8 med orgnr, navn, beskrivelse, logofilnavn. Logo må lastes opp manuelt til server</value>
+  </data>
 </root>

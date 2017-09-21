@@ -120,8 +120,14 @@
   <data name="Content" xml:space="preserve">
     <value>Innhold</value>
   </data>
+  <data name="LinkToContentOf" xml:space="preserve">
+    <value>Link til innholdet i</value>
+  </data>
   <data name="NamespaceName" xml:space="preserve">
     <value>Navnerom</value>
+  </data>
+  <data name="NoContentFor" xml:space="preserve">
+    <value>Innhold er ikke angitt for</value>
   </data>
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>
@@ -131,5 +137,11 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Foreslå nytt navnerom</value>
+  </data>
+  <data name="URLForServiceInNamespace" xml:space="preserve">
+    <value>URL til tjeneste i navnerommet</value>
+  </data>
+  <data name="UrlOfServiceNotSpecified" xml:space="preserve">
+    <value>URL til tjeneste er ikke angitt</value>
   </data>
 </root>

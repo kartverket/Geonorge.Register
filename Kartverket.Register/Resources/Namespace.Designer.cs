@@ -70,11 +70,29 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Link til innholdet i.
+        /// </summary>
+        public static string LinkToContentOf {
+            get {
+                return ResourceManager.GetString("LinkToContentOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Navnerom.
         /// </summary>
         public static string NamespaceName {
             get {
                 return ResourceManager.GetString("NamespaceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Innhold er ikke angitt for.
+        /// </summary>
+        public static string NoContentFor {
+            get {
+                return ResourceManager.GetString("NoContentFor", resourceCulture);
             }
         }
         
@@ -102,6 +120,24 @@ namespace Resources {
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL til tjeneste i navnerommet.
+        /// </summary>
+        public static string URLForServiceInNamespace {
+            get {
+                return ResourceManager.GetString("URLForServiceInNamespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to URL til tjeneste er ikke angitt.
+        /// </summary>
+        public static string UrlOfServiceNotSpecified {
+            get {
+                return ResourceManager.GetString("UrlOfServiceNotSpecified", resourceCulture);
             }
         }
     }

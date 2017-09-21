@@ -32,7 +32,7 @@
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-@using (Html.BeginForm("Edit", "Datasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Edit", "InspireDatasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.HiddenFor(model => model.SystemId)
     @Html.HiddenFor(model => model.RegisterId)

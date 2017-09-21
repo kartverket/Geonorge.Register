@@ -96,5 +96,10 @@ namespace Kartverket.Register.Models.ViewModels
             if (Owner != null) return "~/data/organizations/" + Owner.logoFilename;
             return "";
         }
+
+        public DateTime? GetDateAccepted()
+        {
+            return DokStatusId == "Accepted" && DateAccepted == null ? DateTime.Now : DateAccepted;
+        }
     }
 }

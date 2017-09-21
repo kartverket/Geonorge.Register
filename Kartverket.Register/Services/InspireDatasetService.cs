@@ -1,5 +1,6 @@
 ﻿using Kartverket.Register.Models;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -27,6 +28,8 @@ namespace Kartverket.Register.Services
         public InspireDataset CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
         {
             var inspireDataset = new InspireDataset();
+
+            inspireDataset.SystemId = Guid.NewGuid();
             inspireDataset.Name = inspireDatasetViewModel.Name;
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
             inspireDataset.Description = inspireDatasetViewModel.Description;
@@ -35,6 +38,9 @@ namespace Kartverket.Register.Services
             inspireDataset.DateSubmitted = DateTime.Now;
             inspireDataset.Modified = DateTime.Now;
             inspireDataset.RegisterId = _registerService.GetRegisterId(parentregister, registername);
+            inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
+            inspireDataset.VersionNumber = 1;
+            inspireDataset.StatusId = "Submitted";
 
             inspireDataset.Uuid = inspireDatasetViewModel.Uuid;
             inspireDataset.Notes = inspireDatasetViewModel.Notes;
@@ -64,7 +70,6 @@ namespace Kartverket.Register.Services
             inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.HarmonizedDataStatus, inspireDatasetViewModel.HarmonizedDataNote, true);
             inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.SpatialDataServiceStatus, inspireDatasetViewModel.SpatialDataServiceNote, true);
 
-            inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
             return inspireDataset;
@@ -119,6 +124,114 @@ namespace Kartverket.Register.Services
                               select i;
 
             return queryResult.FirstOrDefault();
+        }
+
+        private InspireDataset GetInspireDatasetBySystemId(Guid systemId)
+        {
+            var queryResult = from i in _dbContext.InspireDatasets
+                where i.SystemId == systemId
+                select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        public InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel)
+        {
+            var inspireDataset = GetInspireDatasetBySystemId(viewModel.SystemId);
+            inspireDataset.Name = viewModel.Name;
+            inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
+            inspireDataset.Description = viewModel.Description;
+            inspireDataset.SubmitterId = viewModel.SubmitterId;
+            inspireDataset.OwnerId = viewModel.OwnerId;
+            inspireDataset.Modified = DateTime.Now;
+            inspireDataset.DateSubmitted = DateTime.Now;
+            inspireDataset.RegisterId = viewModel.RegisterId;
+
+            inspireDataset.Uuid = viewModel.Uuid;
+            inspireDataset.Notes = viewModel.Notes;
+            inspireDataset.SpecificUsage = viewModel.SpecificUsage;
+            inspireDataset.ProductSheetUrl = viewModel.ProductSheetUrl;
+            inspireDataset.PresentationRulesUrl = viewModel.PresentationRulesUrl;
+            inspireDataset.ProductSpecificationUrl = viewModel.ProductSpecificationUrl;
+            inspireDataset.MetadataUrl = viewModel.MetadataUrl;
+            inspireDataset.DistributionFormat = viewModel.DistributionFormat;
+            inspireDataset.DistributionUrl = viewModel.DistributionUrl;
+            inspireDataset.DistributionArea = viewModel.DistributionArea;
+            inspireDataset.WmsUrl = viewModel.WmsUrl;
+            inspireDataset.ThemeGroupId = viewModel.ThemeGroupId;
+            inspireDataset.DatasetThumbnail = viewModel.DatasetThumbnail;
+            inspireDataset.DokStatusId = viewModel.DokStatusId;
+            inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
+            inspireDataset.UuidService = viewModel.UuidService;
+            inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
+
+            if (inspireDataset.InspireDeliveryMetadata != null) 
+            {
+                inspireDataset.InspireDeliveryMetadata.StatusId = viewModel.MetadataStatus;
+                inspireDataset.InspireDeliveryMetadata.Note = viewModel.MetadataNote;
+                inspireDataset.InspireDeliveryMetadata.AutoUpdate = viewModel.MetadataAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryMetadataService != null)
+            {
+                inspireDataset.InspireDeliveryMetadataService.StatusId = viewModel.MetadataServiceStatus;
+                inspireDataset.InspireDeliveryMetadataService.Note = viewModel.MetadataServiceNote;
+                inspireDataset.InspireDeliveryMetadataService.AutoUpdate = viewModel.MetadataServiceAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryDistribution != null)
+            {
+                inspireDataset.InspireDeliveryDistribution.StatusId = viewModel.DistributionStatus;
+                inspireDataset.InspireDeliveryDistribution.Note = viewModel.DistributionNote;
+                inspireDataset.InspireDeliveryDistribution.AutoUpdate= viewModel.DistributionAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryWms != null)
+            {
+                inspireDataset.InspireDeliveryWms.StatusId = viewModel.WmsStatus;
+                inspireDataset.InspireDeliveryWms.Note = viewModel.WmsNote;
+                inspireDataset.InspireDeliveryWms.AutoUpdate = viewModel.WmsAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryWfs != null)
+            {
+                inspireDataset.InspireDeliveryWfs.StatusId = viewModel.WfsStatus;
+                inspireDataset.InspireDeliveryWfs.Note = viewModel.WfsNote;
+                inspireDataset.InspireDeliveryWfs.AutoUpdate = viewModel.WfsAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryAtomFeed != null)
+            {
+                inspireDataset.InspireDeliveryAtomFeed.StatusId = viewModel.AtomFeedStatus;
+                inspireDataset.InspireDeliveryAtomFeed.Note = viewModel.AtomFeedNote;
+                inspireDataset.InspireDeliveryAtomFeed.AutoUpdate = viewModel.AtomFeedAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryWfsOrAtom != null)
+            {
+                inspireDataset.InspireDeliveryWfsOrAtom.StatusId = viewModel.WfsOrAtomStatus;
+                inspireDataset.InspireDeliveryWfsOrAtom.Note = viewModel.WfsOrAtomNote;
+                inspireDataset.InspireDeliveryWfsOrAtom.AutoUpdate = viewModel.WfsOrAtomAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliveryHarmonizedData != null)
+            {
+                inspireDataset.InspireDeliveryHarmonizedData.StatusId = viewModel.HarmonizedDataStatus;
+                inspireDataset.InspireDeliveryHarmonizedData.Note = viewModel.HarmonizedDataNote;
+                inspireDataset.InspireDeliveryHarmonizedData.AutoUpdate = viewModel.HarmonizedDataAutoUpdate;
+            }
+
+            if (inspireDataset.InspireDeliverySpatialDataService != null)
+            {
+                inspireDataset.InspireDeliverySpatialDataService.StatusId = viewModel.HarmonizedDataStatus;
+                inspireDataset.InspireDeliverySpatialDataService.Note = viewModel.HarmonizedDataNote;
+                inspireDataset.InspireDeliverySpatialDataService.AutoUpdate = viewModel.HarmonizedDataAutoUpdate;
+            }
+
+            _dbContext.Entry(inspireDataset).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return inspireDataset;
         }
     }
 }

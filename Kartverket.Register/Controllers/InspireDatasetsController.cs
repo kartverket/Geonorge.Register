@@ -81,7 +81,7 @@ namespace Kartverket.Register.Controllers
                 else if (ModelState.IsValid)
                 {
                     var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
-                    return Redirect(inspireDataset.DetailPageUrl());
+                    return Redirect(inspireDataset.Register.GetObjectUrl());
                 }
                 return View(viewModel);
             }
@@ -113,16 +113,18 @@ namespace Kartverket.Register.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SystemId,InspireDeliveryMetadataId,InspireDeliveryMetadataServiceId,InspireDeliveryDistributionId,InspireDeliveryWmsId,InspireDeliveryWfsId,InspireDeliveryAtomFeedId,InspireDeliveryWfsOrAtomId,InspireDeliveryHarmonizedDataId,InspireDeliverySpatialDataServiceId,Uuid,Notes,SpecificUsage,ProductSheetUrl,PresentationRulesUrl,ProductSpecificationUrl,MetadataUrl,DistributionFormat,DistributionUrl,DistributionArea,WmsUrl,ThemeGroupId,DatasetThumbnail,DokStatusId,DokStatusDateAccepted,Name,Seoname,Description,SubmitterId,OwnerId,DateSubmitted,Modified,StatusId,RegisterId")] InspireDataset inspireDataset)
+        [Authorize]
+        [Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
+        [Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
+        public ActionResult Edit(InspireDatasetViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                _db.Entry(inspireDataset).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Details");
+                var inspireDataset = _inspireDatasetService.UpdateInspireDataset(viewModel);
+                return Redirect(inspireDataset.DetailPageUrl());
             }
-            return View();
+            ViewBags(viewModel);
+            return View(viewModel);
         }
 
         // GET: InspireDatasets/Delete/5
@@ -166,14 +168,14 @@ namespace Kartverket.Register.Controllers
             ViewBag.SubmitterId = _registerItemService.GetSubmitterSelectList(viewModel.SubmitterId);
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(viewModel.OwnerId);
             ViewBag.MetadataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.MetadataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.DistributionStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.WmsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.WfsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.AtomFeedStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.WfsOrAtomStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.HarmonizedDataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.SpatialDataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
+            ViewBag.MetadataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataServiceStatus);
+            ViewBag.DistributionStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.DistributionStatus);
+            ViewBag.WmsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WmsStatus);
+            ViewBag.WfsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsStatus);
+            ViewBag.AtomFeedStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.AtomFeedStatus);
+            ViewBag.WfsOrAtomStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsOrAtomStatus);
+            ViewBag.HarmonizedDataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.HarmonizedDataStatus);
+            ViewBag.SpatialDataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.SpatialDataServiceStatus);
         }
 
     }

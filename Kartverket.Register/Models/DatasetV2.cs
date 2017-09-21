@@ -52,7 +52,7 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("DokStatus")]
         [Display(Name = "DOK-status:")]
-        public string DokStatusId { get; set; } = "Proposal";
+        public string DokStatusId { get; set; }
         public virtual DokStatus DokStatus { get; set; }
 
         [Display(Name = "DOK-status godkjent:")]

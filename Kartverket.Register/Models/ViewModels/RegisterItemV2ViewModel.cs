@@ -60,6 +60,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public void UpdateRegisterItem(RegisterItemV2 item)
         {
+            SystemId = item.SystemId;
             Name = item.Name;
             Seoname = item.Seoname;
             Submitter = item.Submitter;
@@ -108,6 +109,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public RegisterItemV2ViewModel(RegisterItem registerItem)
         {
+            SystemId = registerItem.systemId;
             Name = registerItem.name;
             Seoname = registerItem.seoname;
             Description = registerItem.description;

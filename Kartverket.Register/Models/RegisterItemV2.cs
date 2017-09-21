@@ -38,7 +38,7 @@ namespace Kartverket.Register.Models
         public DateTime Modified { get; set; }
 
         [ForeignKey("Status"), Required]
-        public string StatusId { get; set; } = "Submitted";
+        public string StatusId { get; set; }
         [Display(Name = "Status:")]
         public virtual Status Status { get; set; }
 
@@ -58,8 +58,7 @@ namespace Kartverket.Register.Models
         public virtual Version Versioning { get; set; }
 
         protected RegisterItemV2() {
-            SystemId = Guid.NewGuid();
-            VersionNumber = 1;
+
         }
 
         public string DetailPageUrl()

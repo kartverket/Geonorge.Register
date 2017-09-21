@@ -33,11 +33,11 @@ namespace Kartverket.Register.Models
         public Guid submitterId { get; set; }
         public virtual Organization submitter { get; set; }
 
-        [Display(Name = "Dato innsendt:")]
+        [Display(Name = "DateSubmitted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
 
-        [Display(Name = "Dato endret:")]
+        [Display(Name = "Modified", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
 

@@ -213,4 +213,35 @@
   <data name="Text" xml:space="preserve">
     <value>Text</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Forside</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Search for</value>
+  </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>Search result</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorInfo" xml:space="preserve">
+    <value>Unfortunately, an error has occurred with your request. Please try again.</value>
+  </data>
+  <data name="ErrorReport" xml:space="preserve">
+    <value>&lt;p&gt;The error is logged and will be checked by the system administrator.&lt;/p&gt;
+&lt;p&gt;You can also report the error to &lt;a mailto:"post@norgedigitalt.no"&gt;post@norgedigitalt.no &lt;/a&gt;. &lt;/p&gt;</value>
+  </data>
+  <data name="NotFoundText" xml:space="preserve">
+    <value>We can not find the page you are looking for, but Geonorge will help you further.</value>
+  </data>
 </root>

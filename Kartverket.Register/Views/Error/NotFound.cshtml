@@ -1,10 +1,10 @@
 ﻿@using Kartverket.Register.Helpers
 <div class="container page-not-found-container">
-    <h1>Obs 404! Finn kart og kompass!</h1>
+    <h1>@Shared.NotFoundText</h1>
     <span class="separator-lg start-page-separator-lg"></span>
     <div class="illustration col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="illustration-text col-xs-12">
-            <p>Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre.</p>
+            <p>@Shared.NotFoundText</p>
         </div>
         <img src="@Html.GeonorgeUrl()Static/img/404_illustration-01.svg" alt="404 illustration">
         <div class="help-links">
@@ -13,7 +13,7 @@
                     <div class="help-links-icon-container">
                         <img src="@Html.GeonorgeUrl()Static/img/404_house_icon_968c83_35px-01.svg" class="icon-house" alt="Forside">
                     </div>
-                    <p>Forside</p>
+                    <p>@Shared.Home</p>
                 </a>
             </div>
             <div class="col-xs-4">
@@ -21,15 +21,15 @@
                     <div class="help-links-icon-container">
                         <img src="@Html.GeonorgeUrl()Static/img/404_envelope_icon_968c83_30px-01.svg" class="icon-envelope" alt="Kontakt oss">
                     </div>
-                    <p>Kontakt oss</p>
+                    <p>@Shared.ContactUs</p>
                 </a>
             </div>
             <div class="col-xs-4">
                 <a href="~/Search/">
                     <div class="help-links-icon-container">
-                        <img src="@Html.GeonorgeUrl()Static/img/404_magnifying_icon_968c83_34px-01.svg" class="icon-magnifying-glass" alt="Nytt søk">
+                        <img src="@Html.GeonorgeUrl()Static/img/404_magnifying_icon_968c83_34px-01.svg" class="icon-magnifying-glass" alt="@Shared.Search">
                     </div>
-                    <p>Nytt søk</p>
+                    <p>@Shared.Search</p>
                 </a>
             </div>
         </div>

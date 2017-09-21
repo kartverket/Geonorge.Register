@@ -123,6 +123,9 @@
   <data name="DeleteDocument" xml:space="preserve">
     <value>Slett dokument</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
   <data name="DocumentApproval" xml:space="preserve">
     <value>Dokumentgodkjenning</value>
   </data>

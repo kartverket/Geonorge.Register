@@ -7,17 +7,17 @@
 
 @if (Model.Count() != 0)
 {
-    <h3>Søkeresultat</h3>
+    <h3>@Shared.SearchResult</h3>
     <table class="table table-responsive">
     <tr>
         <th>
-            Navn
+            @Registers.Name
         </th>
         @*<th>
                 Beskrivelse
             </th>*@
         <th>
-            Type
+            @Registers.Content
         </th>
         <th>
             Register
@@ -61,14 +61,14 @@
                 @if (reg.parentRegisterId == null)
                 {
                     <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Registrene</a></li>
+                        <li><a href="/">Register</a></li>
                         <li class=""><a href="/register/@reg.seoname">@reg.name</a></li>
                     </ol>
                 }
                 else
                 {
                     <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Registrene</a></li>
+                        <li><a href="/">Register</a></li>
                         <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
                         <li class="active pull-right"><a href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname">@reg.name</a></li>
                         @while (parent != null && parent != mainRegister)
@@ -118,7 +118,7 @@
                 </td>
                 <td width="60%">
                     <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Registrene</a></li>
+                        <li><a href="/">Register</a></li>
                         <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
                         <li class="active pull-right"><a href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@reg.seoname">@item.name</a></li>
                         @while (parent != null && parent != mainRegister)
@@ -137,5 +137,5 @@
 }
 
 else { 
-    <p>Ingen treff...</p>
+    <p>@Shared.NoHits...</p>
 }

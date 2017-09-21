@@ -213,4 +213,35 @@
   <data name="Text" xml:space="preserve">
     <value>Tekst</value>
   </data>
+  <data name="Home" xml:space="preserve">
+    <value>Forside</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Neste</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Forrige</value>
+  </data>
+  <data name="SearchFor" xml:space="preserve">
+    <value>Søk etter</value>
+  </data>
+  <data name="SearchResult" xml:space="preserve">
+    <value>Søkeresultat</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontakt oss</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Feil</value>
+  </data>
+  <data name="ErrorInfo" xml:space="preserve">
+    <value>Det har desverre skjedd en feil med din forespørsel. Prøv igjen om litt.</value>
+  </data>
+  <data name="ErrorReport" xml:space="preserve">
+    <value>&lt;p&gt;Feilen er logget og vil sjekkes av systemansvarlig.&lt;/p&gt;
+&lt;p&gt;Du kan også rapportere feilen til &lt;a mailto:"post@norgedigitalt.no"&gt;post@norgedigitalt.no&lt;/a&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="NotFoundText" xml:space="preserve">
+    <value>Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre.</value>
+  </data>
 </root>

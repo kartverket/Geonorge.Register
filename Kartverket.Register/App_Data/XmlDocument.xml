@@ -984,6 +984,11 @@
               Looks up a localized string similar to Slett dokument.
             </summary>
         </member>
+        <member name="P:Resources.Documents.Document">
+            <summary>
+              Looks up a localized string similar to Dokument.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.DocumentApproval">
             <summary>
               Looks up a localized string similar to Dokumentgodkjenning.
@@ -1323,6 +1328,11 @@
         <member name="P:Resources.DataSet.Coverage">
             <summary>
               Looks up a localized string similar to Bekrefte DOK.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.Dataset">
+            <summary>
+              Looks up a localized string similar to Datasett.
             </summary>
         </member>
         <member name="P:Resources.DataSet.DeleteDataset">
@@ -2304,6 +2314,16 @@
               Looks up a localized string similar to Godkjent.
             </summary>
         </member>
+        <member name="P:Resources.Registers.AccessAdmin">
+            <summary>
+              Looks up a localized string similar to Kun administrator skal ha tilgang til dette registeret.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.AccessEditor">
+            <summary>
+              Looks up a localized string similar to Editor får lov til å forslå, endre og slette egne registeroppføringer (status kan kun endres av administrator).
+            </summary>
+        </member>
         <member name="P:Resources.Registers.AccessLabel">
             <summary>
               Looks up a localized string similar to Tilgang til registeret.
@@ -2357,6 +2377,11 @@
         <member name="P:Resources.Registers.DateRetired">
             <summary>
               Looks up a localized string similar to Dato utgått.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.DateSubmitted">
+            <summary>
+              Looks up a localized string similar to Dato innsendt.
             </summary>
         </member>
         <member name="P:Resources.Registers.DateSuperseded">
@@ -2442,6 +2467,11 @@
         <member name="P:Resources.Registers.LoadingMessage">
             <summary>
               Looks up a localized string similar to Henter register.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Modified">
+            <summary>
+              Looks up a localized string similar to Siste endret.
             </summary>
         </member>
         <member name="P:Resources.Registers.Name">
@@ -2585,6 +2615,11 @@
               Looks up a localized string similar to Avbryt.
             </summary>
         </member>
+        <member name="P:Resources.Shared.ContactUs">
+            <summary>
+              Looks up a localized string similar to Kontakt oss.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Delete">
             <summary>
               Looks up a localized string similar to Slett.
@@ -2615,6 +2650,22 @@
               Looks up a localized string similar to Skriv inn.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Error">
+            <summary>
+              Looks up a localized string similar to Feil.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.ErrorInfo">
+            <summary>
+              Looks up a localized string similar to Det har desverre skjedd en feil med din forespørsel. Prøv igjen om litt..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.ErrorReport">
+             <summary>
+               Looks up a localized string similar to &lt;p&gt;Feilen er logget og vil sjekkes av systemansvarlig.&lt;/p&gt;
+            &lt;p&gt;Du kan også rapportere feilen til &lt;a mailto:&quot;post@norgedigitalt.no&quot;&gt;post@norgedigitalt.no&lt;/a&gt;.&lt;/p&gt;.
+             </summary>
+        </member>
         <member name="P:Resources.Shared.GeneralInformation">
             <summary>
               Looks up a localized string similar to Generell informasjon.
@@ -2628,6 +2679,11 @@
         <member name="P:Resources.Shared.HideText">
             <summary>
               Looks up a localized string similar to Skjul tekst.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Home">
+            <summary>
+              Looks up a localized string similar to Forside.
             </summary>
         </member>
         <member name="P:Resources.Shared.LayoutList">
@@ -2650,6 +2706,11 @@
               Looks up a localized string similar to Navn engelsk.
             </summary>
         </member>
+        <member name="P:Resources.Shared.Next">
+            <summary>
+              Looks up a localized string similar to Neste.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.No">
             <summary>
               Looks up a localized string similar to Nei.
@@ -2658,6 +2719,16 @@
         <member name="P:Resources.Shared.NoHits">
             <summary>
               Looks up a localized string similar to Ingen treff.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.NotFoundText">
+            <summary>
+              Looks up a localized string similar to Vi finner ikke siden du leter etter, men Geonorge skal hjelpe deg videre..
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Previous">
+            <summary>
+              Looks up a localized string similar to Forrige.
             </summary>
         </member>
         <member name="P:Resources.Shared.Save">
@@ -2693,6 +2764,16 @@
         <member name="P:Resources.Shared.Search_Placeholder">
             <summary>
               Looks up a localized string similar to Søk etter registerdata.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.SearchFor">
+            <summary>
+              Looks up a localized string similar to Søk etter.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.SearchResult">
+            <summary>
+              Looks up a localized string similar to Søkeresultat.
             </summary>
         </member>
         <member name="P:Resources.Shared.Select">

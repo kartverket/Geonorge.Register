@@ -264,4 +264,16 @@
   <data name="Etat" xml:space="preserve">
     <value>Agency</value>
   </data>
+  <data name="AccessAdmin" xml:space="preserve">
+    <value>Only the administrator should have access to this registry</value>
+  </data>
+  <data name="AccessEditor" xml:space="preserve">
+    <value>Editor is allowed to propose, change and delete own registry entries (status can only be changed by administrator)</value>
+  </data>
+  <data name="DateSubmitted" xml:space="preserve">
+    <value>Date submitted</value>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Last changed</value>
+  </data>
 </root>

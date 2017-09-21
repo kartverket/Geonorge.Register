@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
+using Kartverket.Register.Migrations;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.RegisterItem;
 
@@ -23,14 +24,14 @@ namespace Kartverket.Register.Services
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
         }
 
-        public void CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
+        public InspireDataset CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
         {
             var inspireDataset = new InspireDataset();
             inspireDataset.Name = inspireDatasetViewModel.Name;
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
             inspireDataset.Description = inspireDatasetViewModel.Description;
             inspireDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();
-            inspireDataset.OwnerId = _registerService.GetOrganizationIdByUserName(); //  TODO, fiks
+            inspireDataset.OwnerId = inspireDatasetViewModel.OwnerId;
             inspireDataset.DateSubmitted = DateTime.Now;
             inspireDataset.Modified = DateTime.Now;
             inspireDataset.RegisterId = _registerService.GetRegisterId(parentregister, registername);
@@ -49,6 +50,7 @@ namespace Kartverket.Register.Services
             inspireDataset.ThemeGroupId = inspireDatasetViewModel.ThemeGroupId;
             inspireDataset.DatasetThumbnail = inspireDatasetViewModel.DatasetThumbnail;
             inspireDataset.DokStatusId = "Proposal";
+            inspireDataset.UuidService = inspireDatasetViewModel.UuidService;
 
             GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
 
@@ -65,6 +67,7 @@ namespace Kartverket.Register.Services
             inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
+            return inspireDataset;
         }
 
         private void GetDeliveryStatuses(InspireDatasetViewModel inspireDatasetViewModel, InspireDataset inspireDataset)

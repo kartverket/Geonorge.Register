@@ -61,6 +61,11 @@ namespace Kartverket.Register.Models
             SystemId = Guid.NewGuid();
             VersionNumber = 1;
         }
-        
+
+        public string DetailPageUrl()
+        {
+            return Register.GetObjectUrl() + "/" + Owner.seoname + "/" + Seoname;
+        }
+
     }
 }//end namespace Datamodell

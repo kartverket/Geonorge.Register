@@ -97,6 +97,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Datasett.
+        /// </summary>
+        public static string Dataset {
+            get {
+                return ResourceManager.GetString("Dataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slett datasett.
         /// </summary>
         public static string DeleteDataset {

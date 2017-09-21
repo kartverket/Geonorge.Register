@@ -276,27 +276,27 @@
                         }
                         @if (item.dokStatusDateAccepted != null)
                         {
-                            <li><span>DOK-godkjenningsdato: </span>@item.dokStatusDateAccepted </li>
+                            <li><span>@DataSet.DOK_StatusDateAccepted: </span>@item.dokStatusDateAccepted </li>
                         }
                         @if (item.dateSubmitted != null)
                         {
-                            <li><span>Innsendt: </span>@item.dateSubmitted </li>
+                            <li><span>@Registers.DateSubmitted: </span>@item.dateSubmitted </li>
                         }
                         @if (item.modified != null)
                         {
-                            <li><span>Siste endret: </span>@item.modified </li>
+                            <li><span>@Registers.Modified: </span>@item.modified </li>
                         }
 
 
                         @if (item.ThemeGroupId != null)
                         {
-                            <li title="Temagruppe: @item.theme.description">
-                                <span>Gruppe: </span>@item.theme.description
+                            <li title="@DataSet.DOK_Temagruppe: @item.theme.description">
+                                <span>@DataSet.DOK_Temagruppe: </span>@item.theme.description
                             </li>
                         }
                         else
                         {
-                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>@Registers.NotSet</li>
+                            <li title="@DataSet.DOK_Temagruppe: @Registers.NotSet"><span>@DataSet.DOK_Temagruppe: </span>@Registers.NotSet</li>
                         }
                     </ul>
 

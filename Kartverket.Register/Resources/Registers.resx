@@ -264,4 +264,16 @@
   <data name="Etat" xml:space="preserve">
     <value>Etat</value>
   </data>
+  <data name="AccessAdmin" xml:space="preserve">
+    <value>Kun administrator skal ha tilgang til dette registeret</value>
+  </data>
+  <data name="AccessEditor" xml:space="preserve">
+    <value>Editor får lov til å forslå, endre og slette egne registeroppføringer (status kan kun endres av administrator)</value>
+  </data>
+  <data name="DateSubmitted" xml:space="preserve">
+    <value>Dato innsendt</value>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Siste endret</value>
+  </data>
 </root>

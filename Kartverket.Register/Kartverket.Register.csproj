@@ -1316,7 +1316,6 @@
     <Content Include="Views\Shared\_organization.cshtml" />
     <Content Include="Views\Shared\_dataset.cshtml" />
     <Content Include="Views\Shared\_epsg.cshtml" />
-    <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Web.Dev.config">
@@ -1340,7 +1339,6 @@
     <Content Include="Views\Datasets\Delete.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />
     <Content Include="Views\Shared\_detailsDataset.cshtml" />
-    <Content Include="Views\Shared\_filter.cshtml" />
     <Content Include="Views\Shared\_codelistValue.cshtml" />
     <Content Include="Views\CodelistValues\Create.cshtml" />
     <Content Include="Views\CodelistValues\Delete.cshtml" />
@@ -1362,7 +1360,6 @@
     <Content Include="Views\Index\Reindex.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Index\IndexSingle.cshtml" />
-    <Content Include="Views\Subregister\DetailsSubregisterItemVersions.cshtml" />
     <Content Include="Views\Shared\_nameSpace.cshtml" />
     <Content Include="Views\NameSpaces\Create.cshtml" />
     <Content Include="Views\NameSpaces\Delete.cshtml" />
@@ -1370,7 +1367,6 @@
     <Content Include="Views\Shared\_detailsNameSpace.cshtml" />
     <Content Include="Views\Shared\_otherformats.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\_SharedMenu.cshtml" />
     <Content Include="Views\DokCoverage\Index.cshtml" />
     <Content Include="Views\Shared\_inspireDataset.cshtml" />
     <Content Include="Views\Shared\_municipalDataset.cshtml" />

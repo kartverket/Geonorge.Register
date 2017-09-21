@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kun administrator skal ha tilgang til dette registeret.
+        /// </summary>
+        public static string AccessAdmin {
+            get {
+                return ResourceManager.GetString("AccessAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editor får lov til å forslå, endre og slette egne registeroppføringer (status kan kun endres av administrator).
+        /// </summary>
+        public static string AccessEditor {
+            get {
+                return ResourceManager.GetString("AccessEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tilgang til registeret.
         /// </summary>
         public static string AccessLabel {
@@ -165,6 +183,15 @@ namespace Resources {
         public static string DateRetired {
             get {
                 return ResourceManager.GetString("DateRetired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dato innsendt.
+        /// </summary>
+        public static string DateSubmitted {
+            get {
+                return ResourceManager.GetString("DateSubmitted", resourceCulture);
             }
         }
         
@@ -318,6 +345,15 @@ namespace Resources {
         public static string LoadingMessage {
             get {
                 return ResourceManager.GetString("LoadingMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siste endret.
+        /// </summary>
+        public static string Modified {
+            get {
+                return ResourceManager.GetString("Modified", resourceCulture);
             }
         }
         

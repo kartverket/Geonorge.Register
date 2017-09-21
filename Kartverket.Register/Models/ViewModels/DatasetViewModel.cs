@@ -54,6 +54,8 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "DOK-status godkjent")]
         public DateTime? DokStatusDateAccepted { get; set; }
 
+        public string UuidService { get; set; }
+
         //Search for metadata
         public string SearchString { get; set; }
         public List<MetadataItemViewModel> SearchResultList { get; set; }

@@ -54,15 +54,15 @@ namespace Kartverket.Register.Services
 
             GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
 
-            inspireDataset.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryMetadataStatus, inspireDatasetViewModel.InspireDeliveryMetadataNote, true);
-            inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryMetadataServiceStatus, inspireDatasetViewModel.InspireDeliveryMetadataServiceNote, true);
-            inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryDistributionStatus, inspireDatasetViewModel.InspireDeliveryDistributionNote, true);
-            inspireDataset.InspireDeliveryWmsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryWmsStatus, inspireDatasetViewModel.InspireDeliveryWmsNote, true);
-            inspireDataset.InspireDeliveryWfsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryWfsStatus, inspireDatasetViewModel.InspireDeliveryWfsNote, true);
-            inspireDataset.InspireDeliveryAtomFeedId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryAtomFeedStatus, inspireDatasetViewModel.InspireDeliveryAtomFeedNote, true);
-            inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryWfsOrAtomStatus, inspireDatasetViewModel.InspireDeliveryWfsOrAtomNote, true);
-            inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus, inspireDatasetViewModel.InspireDeliveryHarmonizedDataNote, true);
-            inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus, inspireDatasetViewModel.InspireDeliverySpatialDataServiceNote, true);
+            inspireDataset.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataStatus, inspireDatasetViewModel.MetadataNote, true);
+            inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataServiceStatus, inspireDatasetViewModel.MetadataServiceNote, true);
+            inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.DistributionStatus, inspireDatasetViewModel.DistributionNote, true);
+            inspireDataset.InspireDeliveryWmsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WmsStatus, inspireDatasetViewModel.WmsNote, true);
+            inspireDataset.InspireDeliveryWfsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsStatus, inspireDatasetViewModel.WfsNote, true);
+            inspireDataset.InspireDeliveryAtomFeedId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.AtomFeedStatus, inspireDatasetViewModel.AtomFeedNote, true);
+            inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsOrAtomStatus, inspireDatasetViewModel.WfsOrAtomNote, true);
+            inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.HarmonizedDataStatus, inspireDatasetViewModel.HarmonizedDataNote, true);
+            inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.SpatialDataServiceStatus, inspireDatasetViewModel.SpatialDataServiceNote, true);
 
             inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
             _dbContext.InspireDatasets.Add(inspireDataset);
@@ -72,15 +72,15 @@ namespace Kartverket.Register.Services
 
         private void GetDeliveryStatuses(InspireDatasetViewModel inspireDatasetViewModel, InspireDataset inspireDataset)
         {
-            inspireDatasetViewModel.InspireDeliveryMetadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryMetadataStatus);
-            inspireDatasetViewModel.InspireDeliveryMetadataServiceStatus = "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
-            inspireDatasetViewModel.InspireDeliveryDistributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryDistributionStatus);
-            inspireDatasetViewModel.InspireDeliveryWmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryWmsStatus, inspireDataset.UuidService);
-            inspireDatasetViewModel.InspireDeliveryWfsStatus = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryWfsStatus);
-            inspireDatasetViewModel.InspireDeliveryAtomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryAtomFeedStatus);
-            inspireDatasetViewModel.InspireDeliveryWfsOrAtomStatus = GetInspireDeliveryWfsOrAtomFeedStatus(inspireDatasetViewModel.InspireDeliveryWfsStatus, inspireDatasetViewModel.InspireDeliveryAtomFeedStatus);
-            inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliveryHarmonizedDataStatus); // TODO Sjekk om det testes på riktige data...
-            inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.InspireDeliverySpatialDataServiceStatus); // TODO Sjekk om det testes på riktige data...
+            inspireDatasetViewModel.MetadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.MetadataStatus);
+            inspireDatasetViewModel.MetadataServiceStatus = "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
+            inspireDatasetViewModel.DistributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.DistributionStatus);
+            inspireDatasetViewModel.WmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WmsStatus, inspireDataset.UuidService);
+            inspireDatasetViewModel.WfsStatus = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WfsStatus);
+            inspireDatasetViewModel.AtomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.AtomFeedStatus);
+            inspireDatasetViewModel.WfsOrAtomStatus = GetInspireDeliveryWfsOrAtomFeedStatus(inspireDatasetViewModel.WfsStatus, inspireDatasetViewModel.AtomFeedStatus);
+            inspireDatasetViewModel.HarmonizedDataStatus = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.HarmonizedDataStatus); // TODO Sjekk om det testes på riktige data...
+            inspireDatasetViewModel.SpatialDataServiceStatus = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.SpatialDataServiceStatus); // TODO Sjekk om det testes på riktige data...
         }
 
         private static string GetInspireDeliveryWfsOrAtomFeedStatus(string wfsStatus, string atomFeedStatus)
@@ -111,10 +111,11 @@ namespace Kartverket.Register.Services
             return model;
         }
 
-        public InspireDataset GetInspireDatasetByName(string itemname)
+        public InspireDataset GetInspireDatasetByName(string registerSeoName, string itemSeoName)
         {
             var queryResult = from i in _dbContext.InspireDatasets
-                              where i.Seoname == itemname
+                              where i.Seoname == itemSeoName &&
+                              i.Register.seoname == registerSeoName
                               select i;
 
             return queryResult.FirstOrDefault();

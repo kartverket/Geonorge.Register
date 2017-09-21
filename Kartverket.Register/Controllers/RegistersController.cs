@@ -545,7 +545,7 @@ namespace Kartverket.Register.Controllers
 
             if (register.IsInspireStatusregister())
             {
-                return new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(itemname));
+                return new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(registername, itemname));
             }
             if (register.IsDokMunicipal())
             {

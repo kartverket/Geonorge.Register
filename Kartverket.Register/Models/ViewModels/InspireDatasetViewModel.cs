@@ -6,49 +6,49 @@ namespace Kartverket.Register.Models.ViewModels
     public class InspireDatasetViewModel : DatasetViewModel
     {
         [Display(Name = "Metadata:")]
-        public string InspireDeliveryMetadataStatus { get; set; }
-        public string InspireDeliveryMetadataNote { get; set; }
-        public SelectList InspireDeliveryMetadataStatusSelectList { get; set; }
+        public string MetadataStatus { get; set; }
+        public string MetadataNote { get; set; }
+        public bool MetadataAutoUpdate { get; set; }
 
         [Display(Name = "Metadatatjeneste:")]
-        public string InspireDeliveryMetadataServiceStatus { get; set; }
-        public string InspireDeliveryMetadataServiceNote { get; set; }
-        public SelectList InspireDeliveryMetadataServiceStatusSelectList { get; set; }
+        public string MetadataServiceStatus { get; set; }
+        public string MetadataServiceNote { get; set; }
+        public bool MetadataServiceAutoUpdate { get; set; }
 
         [Display(Name = "Deling av data:")]
-        public string InspireDeliveryDistributionStatus { get; set; }
-        public string InspireDeliveryDistributionNote { get; set; }
-        public SelectList InspireDeliveryDistributionStatusSelectList { get; set; }
+        public string DistributionStatus { get; set; }
+        public string DistributionNote { get; set; }
+        public bool DistributionAutoUpdate { get; set; }
 
         [Display(Name = "WMS:")]
-        public string InspireDeliveryWmsStatus { get; set; }
-        public string InspireDeliveryWmsNote { get; set; }
-        public SelectList InspireDeliveryWmsStatusSelectList { get; set; }
+        public string WmsStatus { get; set; }
+        public string WmsNote { get; set; }
+        public bool WmsAutoUpdate { get; set; }
 
         [Display(Name = "Nedlastingstjeneste WFS:")]
-        public string InspireDeliveryWfsStatus { get; set; }
-        public string InspireDeliveryWfsNote { get; set; }
-        public SelectList InspireDeliveryWfsStatusSelectList { get; set; }
+        public string WfsStatus { get; set; }
+        public string WfsNote { get; set; }
+        public bool WfsAutoUpdate { get; set; }
 
         [Display(Name = "Nedlastingstjeneste Atom-feed:")]
-        public string InspireDeliveryAtomFeedStatus { get; set; }
-        public string InspireDeliveryAtomFeedNote { get; set; }
-        public SelectList InspireDeliveryAtomFeedStatusSelectList { get; set; }
+        public string AtomFeedStatus { get; set; }
+        public string AtomFeedNote { get; set; }
+        public bool AtomFeedAutoUpdate { get; set; }
 
         [Display(Name = "Nedlastingstjeneste WFS eller Atom-feed:")]
-        public string InspireDeliveryWfsOrAtomStatus { get; set; }
-        public string InspireDeliveryWfsOrAtomNote { get; set; }
-        public SelectList InspireDeliveryWfsOrAtomStatusSelectList { get; set; }
+        public string WfsOrAtomStatus { get; set; }
+        public string WfsOrAtomNote { get; set; }
+        public bool WfsOrAtomAutoUpdate { get; set; }
 
         [Display(Name = "Harmoniserte data:")]
-        public string InspireDeliveryHarmonizedDataStatus { get; set; }
-        public string InspireDeliveryHarmonizedDataNote { get; set; }
-        public SelectList InspireDeliveryHarmonizedDataStatusSelectList { get; set; }
+        public string HarmonizedDataStatus { get; set; }
+        public string HarmonizedDataNote { get; set; }
+        public bool HarmonizedDataAutoUpdate { get; set; }
 
         [Display(Name = "Spatial data service:")]
-        public string InspireDeliverySpatialDataServiceStatus { get; set; }
-        public string InspireDeliverySpatialDataServiceNote { get; set; }
-        public SelectList InspireDeliverySpatialDataServiceStatusSelectList { get; set; }
+        public string SpatialDataServiceStatus { get; set; }
+        public string SpatialDataServiceNote { get; set; }
+        public bool SpatialDataServiceAutoUpdate { get; set; }
 
         public InspireDatasetViewModel(InspireDataset item)
         {
@@ -59,27 +59,62 @@ namespace Kartverket.Register.Models.ViewModels
         {
         }
 
-
         public void Update(InspireDataset inspireDataset)
         {
             if (inspireDataset.InspireDeliveryMetadata != null)
-                InspireDeliveryMetadataStatus = inspireDataset.InspireDeliveryMetadata.StatusId;
+            {
+                MetadataStatus = inspireDataset.InspireDeliveryMetadata.StatusId;
+                MetadataNote = inspireDataset.InspireDeliveryMetadata.Note;
+                MetadataAutoUpdate = inspireDataset.InspireDeliveryMetadata.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryMetadataService != null)
-                InspireDeliveryMetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.StatusId;
+            {
+                MetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.StatusId;
+                MetadataServiceNote = inspireDataset.InspireDeliveryMetadataService.Note;
+                MetadataServiceAutoUpdate = inspireDataset.InspireDeliveryMetadataService.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryDistribution != null)
-                InspireDeliveryDistributionStatus = inspireDataset.InspireDeliveryDistribution.StatusId;
+            {
+                DistributionStatus = inspireDataset.InspireDeliveryDistribution.StatusId;
+                DistributionNote = inspireDataset.InspireDeliveryDistribution.Note;
+                DistributionAutoUpdate = inspireDataset.InspireDeliveryDistribution.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryWms != null)
-                InspireDeliveryWmsStatus = inspireDataset.InspireDeliveryWms.StatusId;
+            {
+                WmsStatus = inspireDataset.InspireDeliveryWms.StatusId;
+                WmsNote = inspireDataset.InspireDeliveryWms.Note;
+                WmsAutoUpdate = inspireDataset.InspireDeliveryWms.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryWfs != null)
-                InspireDeliveryWfsStatus = inspireDataset.InspireDeliveryWfs.StatusId;
+            {
+                WfsStatus = inspireDataset.InspireDeliveryWfs.StatusId;
+                WfsNote= inspireDataset.InspireDeliveryWfs.Note;
+                WfsAutoUpdate = inspireDataset.InspireDeliveryWfs.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryAtomFeed != null)
-                InspireDeliveryAtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.StatusId;
+            {
+                AtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.StatusId;
+                AtomFeedNote = inspireDataset.InspireDeliveryAtomFeed.Note;
+                AtomFeedAutoUpdate = inspireDataset.InspireDeliveryAtomFeed.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryWfsOrAtom != null)
-                InspireDeliveryWfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.StatusId;
+            {
+                WfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.StatusId;
+                WfsOrAtomNote = inspireDataset.InspireDeliveryWfsOrAtom.Note;
+                WfsOrAtomAutoUpdate = inspireDataset.InspireDeliveryWfsOrAtom.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliveryHarmonizedData != null)
-                InspireDeliveryHarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.StatusId;
+            {
+                HarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.StatusId;
+                HarmonizedDataNote = inspireDataset.InspireDeliveryHarmonizedData.Note;
+                HarmonizedDataAutoUpdate = inspireDataset.InspireDeliveryHarmonizedData.AutoUpdate;
+            }
             if (inspireDataset.InspireDeliverySpatialDataService != null)
-                InspireDeliverySpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.StatusId;
+            {
+                SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.StatusId;
+                SpatialDataServiceNote = inspireDataset.InspireDeliverySpatialDataService.Note;
+                SpatialDataServiceAutoUpdate = inspireDataset.InspireDeliverySpatialDataService.AutoUpdate;
+            }
 
             UpdateDataset(inspireDataset);
         }

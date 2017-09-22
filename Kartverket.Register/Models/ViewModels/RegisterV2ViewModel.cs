@@ -31,7 +31,7 @@ namespace Kartverket.Register.Models.ViewModels
             }
         }
 
-        private Collection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)
+        private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)
         {
             var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();
             switch (containedItemClass)

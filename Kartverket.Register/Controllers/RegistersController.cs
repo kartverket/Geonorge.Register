@@ -87,10 +87,9 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
-
             CheckReferrer();
             DokOrderBy(sorting);
-            string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var viewModel = new RegisterV2ViewModel(_registerService.GetRegister(parentRegister, registername));
@@ -105,15 +104,13 @@ namespace Kartverket.Register.Controllers
                         return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
                     }
                 }
+                viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting); // Todo flytte sortering av register.registeritem 
                 ViewBagOrganizationMunizipality(filter.municipality);
                 viewModel.Register = RegisterItems(viewModel.Register, filter, page);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel.Register);
                 return View(viewModel);
             }
-            else
-            {
                 return HttpNotFound();
-            }
         }
 
 

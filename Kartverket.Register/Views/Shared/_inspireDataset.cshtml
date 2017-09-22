@@ -15,11 +15,11 @@
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wms")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfs")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "atom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsOrAtom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizedData")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialDataService")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsoratom")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizeddata")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialdataservice")
         </div>
-        <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokStatus")</div>
+        <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokstatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
    
@@ -36,9 +36,9 @@
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatus, false, "wms")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatus, false, "wfs")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatus, false, "atom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsOrAtomStatus, false, "wfsOrAtom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.HarmonizedDataStatus, false, "harmonizedData")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SpatialDataServiceStatus, false, "spatialDataService")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsOrAtomStatus, false, "wfsoratom")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.HarmonizedDataStatus, false, "harmonizeddata")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SpatialDataServiceStatus, false, "spatialdataservice")
             </div>
             <div class="col-md-1 text-center">
                 <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>

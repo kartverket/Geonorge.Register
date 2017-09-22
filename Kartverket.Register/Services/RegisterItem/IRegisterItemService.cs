@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -51,5 +52,7 @@ namespace Kartverket.Register.Services.RegisterItem
         /// <param name="municipality"></param>
         /// <returns></returns>
         string GetDOKMunicipalStatus(Models.RegisterItem municipality);
+
+        ICollection<RegisterItemV2ViewModel> OrderBy(ICollection<RegisterItemV2ViewModel> registerItems, string sorting);
     }
 }

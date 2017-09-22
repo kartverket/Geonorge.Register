@@ -1236,73 +1236,87 @@ namespace Kartverket.Register.Helpers
             }
             var text = searchParam;
 
-            switch (sortingParam)
+            if (sortingParam == "title" || sortingParam == "title_desc")
             {
-                case "title":
-                    sortTitle = DataSet.DOK_Delivery_Title;
-                    break;
-                case "owner":
-                    sortTitle = DataSet.DOK_Delivery_Owner;
-                    break;
-                case "theme":
-                    sortTitle = DataSet.DOK_Delivery_Theme;
-                    break;
-                case "metadata":
-                    sortTitle = DataSet.DOK_Delivery_Metadata;
-                    statusIcon += "custom-icon-info";
-                    break;
-                case "metadataservice":
-                    sortTitle = DataSet.Delivery_MetadataService;
-                    statusIcon += "custom-icon-info";
-                    break;
-                case "productSheet":
-                    sortTitle = DataSet.DOK_Delivery_ProductSheet;
-                    statusIcon += "";
-                    break;
-                case "presentationRules":
-                    sortTitle = DataSet.DOK_Delivery_PresentationRules;
-                    statusIcon += "";
-                    break;
-                case "productSpecification":
-                    sortTitle = DataSet.DOK_Delivery_ProductSpesification;
-                    statusIcon += "";
-                    break;
-                case "wms":
-                    sortTitle = DataSet.DOK_Delivery_Wms;
-                    statusIcon += "custom-icon-wfs";
-                    break;
-                case "wfs":
-                    sortTitle = DataSet.DOK_Delivery_Wfs;
-                    statusIcon += "custom-icon-wfs";
-                    break;
-                case "sosi":
-                    sortTitle = DataSet.DOK_Delivery_SosiRequirements;
-                    statusIcon += "";
-                    break;
-                case "distribution":
-                    sortTitle = DataSet.DOK_Delivery_Distribution;
-                    statusIcon += "custom-icon-info";
-                    break;
-                case "gml":
-                    sortTitle = DataSet.DOK_Delivery_GmlRequirements;
-                    statusIcon += "";
-                    break;
-                case "atom":
-                    sortTitle = DataSet.DOK_Delivery_AtomFeed;
-                    statusIcon = "fa fa-rss-square";
-                    break;
-                case "wfsOrAtom":
-                    sortTitle = DataSet.Delivery_Wfs_Or_Atom;
-                    statusIcon = "fa fa-rss-square";
-                    break;
-                case "harmonizedData":
-                    sortTitle = DataSet.Delivery_Harmonized;
-                    statusIcon += "custom-icon-info";
-                    break;
-                case "spatialDataService":
-                    sortTitle = DataSet.Delivery_Spatial_Data_Service;
-                    statusIcon += "custom-icon-info";
-                    break;
+                sortTitle = DataSet.DOK_Delivery_Title;
+            }
+            else if (sortingParam == "owner" || sortingParam == "owner_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Owner;
+            }
+            else if (sortingParam == "theme" || sortingParam == "theme_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Theme;
+            }
+            else if (sortingParam == "metadata" || sortingParam == "metadata_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Metadata;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "metadataservice" || sortingParam == "metadataservice_desc")
+            {
+                sortTitle = DataSet.Delivery_MetadataService;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "productSheet" || sortingParam == "metadataservice_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSheet;
+                statusIcon += "";
+            }
+            else if (sortingParam == "presentationRules" || sortingParam == "presentationRules_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_PresentationRules;
+                statusIcon += "";
+            }
+            else if (sortingParam == "productSpecification" || sortingParam == "productSpecification_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
+                statusIcon += "";
+            }
+            else if (sortingParam == "wms" || sortingParam == "wms_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wms;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "wfs" || sortingParam == "wfs_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wfs;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "sosi" || sortingParam == "sosi_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_SosiRequirements;
+                statusIcon += "";
+            }
+            else if (sortingParam == "distribution" || sortingParam == "distribution_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Distribution;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "gml" || sortingParam == "gml_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_GmlRequirements;
+                statusIcon += "";
+            }
+            else if (sortingParam == "atom" || sortingParam == "atom_atom")
+            {
+                sortTitle = DataSet.DOK_Delivery_AtomFeed;
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "wfsoratom" || sortingParam == "wfsoratom_desc")
+            {
+                sortTitle = DataSet.Delivery_Wfs_Or_Atom;
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "harmonizeddata" || sortingParam == "harmonizeddata_desc")
+            {
+                sortTitle = DataSet.Delivery_Harmonized;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "spatialdataservice" || sortingParam == "spatialdataservice_desc")
+            {
+                sortTitle = DataSet.Delivery_Spatial_Data_Service;
+                statusIcon += "custom-icon-info";
             }
 
             var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
@@ -1393,13 +1407,13 @@ namespace Kartverket.Register.Helpers
                 case "atom":
                     label = DataSet.DOK_Delivery_AtomFeed;
                     break;
-                case "harmonizedData":
+                case "harmonizeddata":
                     label = DataSet.Delivery_Harmonized;
                     break;
-                case "spatialDataService":
+                case "spatialdataservice":
                     label = DataSet.Delivery_Spatial_Data_Service;
                     break;
-                case "wfsOrAtom":
+                case "wfsoratom":
                     label = DataSet.Delivery_Wfs_Or_Atom;
                     break;
             }

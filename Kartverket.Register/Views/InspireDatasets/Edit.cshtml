@@ -371,23 +371,6 @@
                 document.getElementById('approvalDate').hidden = true;
             }
         }
-
-        $(document).ready(function () {
-            $(".infoTxt").hide()
-            $("#suitabitityHelpText").hide()
-            $("#suitabitityHelpTextBtn").click(function () {
-                $("#suitabitityHelpText").toggle(500);
-            });
-        });
-
-        function changeText(element) {
-            if (element.innerText == "@DataSet.DisplayInfoRegistration") {
-                element.innerHTML = "@Shared.HideText";
-            }
-            else {
-                element.innerHTML = "@DataSet.DisplayInfoRegistration";
-            }
-        }
     </script>
 }
 

@@ -89,7 +89,11 @@
             {
                 @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            else {
+            else if (Model.RegisterItems != null)
+            {
+                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            }
+            else { 
                 @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
             }
         </div>

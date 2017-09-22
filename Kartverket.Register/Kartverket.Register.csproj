@@ -1382,13 +1382,12 @@
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
     <Content Include="Views\InspireDatasets\Create.cshtml" />
     <Content Include="Views\InspireDatasets\Delete.cshtml" />
-    <Content Include="Views\InspireDatasets\Details.cshtml" />
     <Content Include="Views\InspireDatasets\Edit.cshtml" />
-    <Content Include="Views\InspireDatasets\Index.cshtml" />
     <Content Include="Views\Shared\_nationalDataset.cshtml" />
     <Content Include="settings.config" />
     <Content Include="Views\Shared\_Resources.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
+    <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

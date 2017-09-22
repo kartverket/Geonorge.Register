@@ -11,5 +11,3 @@
 + (Session["filterHorisontalt"] != null && !string.IsNullOrEmpty(Session["filterHorisontalt"].ToString()) ? "&filterHorisontalt=" + Session["filterHorisontalt"].ToString() : "")
 + (Session["municipality"] != null && !string.IsNullOrEmpty(Session["municipality"].ToString()) ? "&municipality=" + Session["municipality"] : "")
 , new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })
-
-

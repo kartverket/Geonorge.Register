@@ -56,7 +56,7 @@ namespace Kartverket.Register.Controllers
         }
 
         [Route("setculture/{culture}")]
-        public ActionResult SetCulture(string culture)
+        public ActionResult SetCulture(string culture, string ReturnUrl)
         {
             // Validate input
             culture = CultureHelper.GetImplementedCulture(culture);
@@ -71,6 +71,10 @@ namespace Kartverket.Register.Controllers
                 cookie.Expires = DateTime.Now.AddYears(1);
             }
             Response.Cookies.Add(cookie);
+
+            if (!string.IsNullOrEmpty(ReturnUrl))
+                return Redirect(ReturnUrl);
+            else
             return RedirectToAction("Index");
         }
 

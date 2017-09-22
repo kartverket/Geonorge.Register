@@ -43,8 +43,8 @@
 
         var cultureData = {
             supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
-            urlSetCulture: '/SetCulture/en',
-            urlSetCultureNorwegian: '/SetCulture/no',
+            urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = "en", ReturnUrl = Request.Url })',
+            urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = "no", ReturnUrl = Request.Url })',
             currentCulture: '@CultureHelper.GetCurrentCulture()'
         };
 

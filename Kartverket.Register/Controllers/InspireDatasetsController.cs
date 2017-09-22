@@ -1,6 +1,4 @@
-﻿using System;
-using System.Data.Entity;
-using System.Net;
+﻿using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
@@ -29,21 +27,6 @@ namespace Kartverket.Register.Controllers
             _registerService = registerService;
             _datasetDeliveryService = datasetDeliveryService;
             _registerItemService = registerItemService;
-        }
-        
-        // GET: InspireDatasets/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var inspireDataset = _db.InspireDatasets.Find(id);
-            if (inspireDataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(inspireDataset);
         }
 
         // GET: InspireDatasets/Create

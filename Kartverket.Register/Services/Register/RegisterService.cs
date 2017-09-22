@@ -797,7 +797,9 @@ namespace Kartverket.Register.Services.Register
                                    select r;
 
                 var result = queryResults.FirstOrDefault();
-                result.AddMissingTranslations();
+                if(result != null)
+                    result.AddMissingTranslations();
+                
                 return result;
             }
             else
@@ -808,7 +810,9 @@ namespace Kartverket.Register.Services.Register
                                    select r;
 
                 var result = queryResults.FirstOrDefault();
-                result.AddMissingTranslations();
+                if (result != null)
+                    result.AddMissingTranslations();
+                
                 return result;
             }
         }

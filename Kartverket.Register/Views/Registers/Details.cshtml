@@ -85,11 +85,12 @@
 
     <div class="search-result-navigation register-navigation">
         <div class="col-md-4">
+            
             @if (Model.Register.ContainedItemClassIsRegister())
             {
                 @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            else if (Model.RegisterItems != null)
+            else if (Model.RegisterItems != null && Model.RegisterItems.Count > 0)
             {
                 @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
             }
@@ -146,10 +147,14 @@
     <div class="clearfix"></div>
     <div class="col-sm-12 col-md-12 col-lg-12">
         @if (Model.Register.ContainedItemClassIsRegister())
-            {
+        {
             @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
         }
-        else {
+        else if (Model.RegisterItems != null && Model.RegisterItems.Count > 0)
+        {
+            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        }
+        else { 
             @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
         }
     </div>

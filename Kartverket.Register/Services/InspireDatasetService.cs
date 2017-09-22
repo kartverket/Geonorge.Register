@@ -69,9 +69,9 @@ namespace Kartverket.Register.Services
             inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsOrAtomStatus, inspireDatasetViewModel.WfsOrAtomNote, true);
             inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.HarmonizedDataStatus, inspireDatasetViewModel.HarmonizedDataNote, true);
             inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.SpatialDataServiceStatus, inspireDatasetViewModel.SpatialDataServiceNote, true);
-
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
+
             return inspireDataset;
         }
 

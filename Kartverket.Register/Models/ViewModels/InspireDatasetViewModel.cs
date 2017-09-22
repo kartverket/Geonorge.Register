@@ -62,62 +62,64 @@ namespace Kartverket.Register.Models.ViewModels
 
         public void Update(InspireDataset inspireDataset)
         {
-            if (inspireDataset.InspireDeliveryMetadata != null)
+            if (inspireDataset != null)
             {
-                MetadataStatus = inspireDataset.InspireDeliveryMetadata.StatusId;
-                MetadataNote = inspireDataset.InspireDeliveryMetadata.Note;
-                MetadataAutoUpdate = inspireDataset.InspireDeliveryMetadata.AutoUpdate;
+                if (inspireDataset.InspireDeliveryMetadata != null)
+                {
+                    MetadataStatus = inspireDataset.InspireDeliveryMetadata.StatusId;
+                    MetadataNote = inspireDataset.InspireDeliveryMetadata.Note;
+                    MetadataAutoUpdate = inspireDataset.InspireDeliveryMetadata.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryMetadataService != null)
+                {
+                    MetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.StatusId;
+                    MetadataServiceNote = inspireDataset.InspireDeliveryMetadataService.Note;
+                    MetadataServiceAutoUpdate = inspireDataset.InspireDeliveryMetadataService.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryDistribution != null)
+                {
+                    DistributionStatus = inspireDataset.InspireDeliveryDistribution.StatusId;
+                    DistributionNote = inspireDataset.InspireDeliveryDistribution.Note;
+                    DistributionAutoUpdate = inspireDataset.InspireDeliveryDistribution.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryWms != null)
+                {
+                    WmsStatus = inspireDataset.InspireDeliveryWms.StatusId;
+                    WmsNote = inspireDataset.InspireDeliveryWms.Note;
+                    WmsAutoUpdate = inspireDataset.InspireDeliveryWms.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryWfs != null)
+                {
+                    WfsStatus = inspireDataset.InspireDeliveryWfs.StatusId;
+                    WfsNote = inspireDataset.InspireDeliveryWfs.Note;
+                    WfsAutoUpdate = inspireDataset.InspireDeliveryWfs.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryAtomFeed != null)
+                {
+                    AtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.StatusId;
+                    AtomFeedNote = inspireDataset.InspireDeliveryAtomFeed.Note;
+                    AtomFeedAutoUpdate = inspireDataset.InspireDeliveryAtomFeed.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryWfsOrAtom != null)
+                {
+                    WfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.StatusId;
+                    WfsOrAtomNote = inspireDataset.InspireDeliveryWfsOrAtom.Note;
+                    WfsOrAtomAutoUpdate = inspireDataset.InspireDeliveryWfsOrAtom.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliveryHarmonizedData != null)
+                {
+                    HarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.StatusId;
+                    HarmonizedDataNote = inspireDataset.InspireDeliveryHarmonizedData.Note;
+                    HarmonizedDataAutoUpdate = inspireDataset.InspireDeliveryHarmonizedData.AutoUpdate;
+                }
+                if (inspireDataset.InspireDeliverySpatialDataService != null)
+                {
+                    SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.StatusId;
+                    SpatialDataServiceNote = inspireDataset.InspireDeliverySpatialDataService.Note;
+                    SpatialDataServiceAutoUpdate = inspireDataset.InspireDeliverySpatialDataService.AutoUpdate;
+                }
+                UpdateDataset(inspireDataset);
             }
-            if (inspireDataset.InspireDeliveryMetadataService != null)
-            {
-                MetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.StatusId;
-                MetadataServiceNote = inspireDataset.InspireDeliveryMetadataService.Note;
-                MetadataServiceAutoUpdate = inspireDataset.InspireDeliveryMetadataService.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryDistribution != null)
-            {
-                DistributionStatus = inspireDataset.InspireDeliveryDistribution.StatusId;
-                DistributionNote = inspireDataset.InspireDeliveryDistribution.Note;
-                DistributionAutoUpdate = inspireDataset.InspireDeliveryDistribution.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryWms != null)
-            {
-                WmsStatus = inspireDataset.InspireDeliveryWms.StatusId;
-                WmsNote = inspireDataset.InspireDeliveryWms.Note;
-                WmsAutoUpdate = inspireDataset.InspireDeliveryWms.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryWfs != null)
-            {
-                WfsStatus = inspireDataset.InspireDeliveryWfs.StatusId;
-                WfsNote= inspireDataset.InspireDeliveryWfs.Note;
-                WfsAutoUpdate = inspireDataset.InspireDeliveryWfs.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryAtomFeed != null)
-            {
-                AtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.StatusId;
-                AtomFeedNote = inspireDataset.InspireDeliveryAtomFeed.Note;
-                AtomFeedAutoUpdate = inspireDataset.InspireDeliveryAtomFeed.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryWfsOrAtom != null)
-            {
-                WfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.StatusId;
-                WfsOrAtomNote = inspireDataset.InspireDeliveryWfsOrAtom.Note;
-                WfsOrAtomAutoUpdate = inspireDataset.InspireDeliveryWfsOrAtom.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliveryHarmonizedData != null)
-            {
-                HarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.StatusId;
-                HarmonizedDataNote = inspireDataset.InspireDeliveryHarmonizedData.Note;
-                HarmonizedDataAutoUpdate = inspireDataset.InspireDeliveryHarmonizedData.AutoUpdate;
-            }
-            if (inspireDataset.InspireDeliverySpatialDataService != null)
-            {
-                SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.StatusId;
-                SpatialDataServiceNote = inspireDataset.InspireDeliverySpatialDataService.Note;
-                SpatialDataServiceAutoUpdate = inspireDataset.InspireDeliverySpatialDataService.AutoUpdate;
-            }
-
-            UpdateDataset(inspireDataset);
         }
 
         public string GetInspireDatasetEditUrl()

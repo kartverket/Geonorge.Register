@@ -1,4 +1,6 @@
-﻿@model Kartverket.Register.Models.Dataset
+﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models.ViewModels
+@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Models.ViewModels
 ﻿@using Kartverket.Register.Helpers
 
@@ -46,6 +48,7 @@
                             <input type="submit" value="@Shared.Search" class="btn btn-primary" style="margin-bottom:0px" />
                         </div>
                     </div>
+                    @Html.ValidationMessage("ErrorMessageMetadata")
                 }
 
                 @if (ViewBag.SearchResultList != null)

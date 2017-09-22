@@ -2,6 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
@@ -54,19 +55,27 @@ namespace Kartverket.Register.Controllers
             if (_accessControlService.Access(viewModel.Register)) { 
                 if (viewModel.SearchString != null)
                 {
-                    viewModel.SearchResultList =
-                        _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+                    viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
                 }
                 else if (metadataUuid != null)
                 {
                     viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
+                    if (viewModel.Name == null)
+                    {
+                        ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
+                    }
+                    return View(viewModel);
                 }
-                else if (ModelState.IsValid)
+                if (_registerItemService.validateName(viewModel))
+                {
+                    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
+                    return View(viewModel);
+                }
+                if (ModelState.IsValid)
                 {
                     var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
                     return Redirect(inspireDataset.Register.GetObjectUrl());
                 }
-                return View(viewModel);
             }
             throw new HttpException(401, "Access Denied");
         }

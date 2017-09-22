@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
+using SolrNet.Impl.FieldSerializers;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -378,7 +379,25 @@ namespace Kartverket.Register.Services.RegisterItem
                     return ValidateNameRegisterItem(model);
                 }
             }
+            if (model is RegisterItemV2ViewModel)
+            {
+                if (model is InspireDatasetViewModel)
+                {
+                    return ValidateNameInspireDataset((InspireDatasetViewModel)model);
+                }
+            }
             return false;
+        }
+
+        private bool ValidateNameInspireDataset(InspireDatasetViewModel inspireDataset)
+        {
+            var queryResults = from o in _dbContext.InspireDatasets
+                where o.Name == inspireDataset.Name &&
+                      o.SystemId != inspireDataset.SystemId
+                      && o.RegisterId == inspireDataset.RegisterId
+                select o.SystemId;
+
+            return !queryResults.Any();
         }
 
         private bool ValidateNameRegisterItem(object model)

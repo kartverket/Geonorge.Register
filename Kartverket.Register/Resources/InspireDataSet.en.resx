@@ -117,7 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AtomFeedStatus" xml:space="preserve">
+    <value>Download service Atom feed</value>
+  </data>
+  <data name="DistributionStatus" xml:space="preserve">
+    <value>Sharing of data</value>
+  </data>
+  <data name="HarmonizedDataStatus" xml:space="preserve">
+    <value>Harmoniserte data</value>
+  </data>
+  <data name="MetadataServiceStatus" xml:space="preserve">
+    <value>Metadata service status</value>
+  </data>
   <data name="NewDataset" xml:space="preserve">
     <value>Add a new inspire data set</value>
+  </data>
+  <data name="SpatialDataServiceStatus" xml:space="preserve">
+    <value>Spatial data service</value>
+  </data>
+  <data name="WfsOrAtomStatus" xml:space="preserve">
+    <value>Nedlastingstjeneste WFS eller Atom-feed</value>
+  </data>
+  <data name="WfsStatus" xml:space="preserve">
+    <value>Download service WFS</value>
   </data>
 </root>

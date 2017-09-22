@@ -256,12 +256,12 @@
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">@Shared.DisplayMoreInfo</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">@Shared.DisplayMoreInfo</a>
                                 }
                             </p>
                         }

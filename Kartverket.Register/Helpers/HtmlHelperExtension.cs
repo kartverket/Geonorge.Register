@@ -1255,7 +1255,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "metadataservice" || sortingParam == "metadataservice_desc")
             {
-                sortTitle = DataSet.Delivery_MetadataService;
+                sortTitle = InspireDataSet.MetadataServiceStatus;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "productSheet" || sortingParam == "metadataservice_desc")
@@ -1305,17 +1305,17 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "wfsoratom" || sortingParam == "wfsoratom_desc")
             {
-                sortTitle = DataSet.Delivery_Wfs_Or_Atom;
+                sortTitle = InspireDataSet.WfsOrAtomStatus;
                 statusIcon = "fa fa-rss-square";
             }
             else if (sortingParam == "harmonizeddata" || sortingParam == "harmonizeddata_desc")
             {
-                sortTitle = DataSet.Delivery_Harmonized;
+                sortTitle = InspireDataSet.HarmonizedDataStatus;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "spatialdataservice" || sortingParam == "spatialdataservice_desc")
             {
-                sortTitle = DataSet.Delivery_Spatial_Data_Service;
+                sortTitle = InspireDataSet.SpatialDataServiceStatus;
                 statusIcon += "custom-icon-info";
             }
 
@@ -1378,7 +1378,7 @@ namespace Kartverket.Register.Helpers
                     label = DataSet.DOK_Delivery_Metadata;
                     break;
                 case "metadataservice":
-                    label = DataSet.Delivery_MetadataService;
+                    label = InspireDataSet.MetadataServiceStatus;
                     break;
                 case "ProductSheet":
                     label = DataSet.DOK_Delivery_ProductSheet;
@@ -1408,13 +1408,13 @@ namespace Kartverket.Register.Helpers
                     label = DataSet.DOK_Delivery_AtomFeed;
                     break;
                 case "harmonizeddata":
-                    label = DataSet.Delivery_Harmonized;
+                    label = InspireDataSet.HarmonizedDataStatus;
                     break;
                 case "spatialdataservice":
-                    label = DataSet.Delivery_Spatial_Data_Service;
+                    label = InspireDataSet.SpatialDataServiceStatus;
                     break;
                 case "wfsoratom":
-                    label = DataSet.Delivery_Wfs_Or_Atom;
+                    label = InspireDataSet.WfsOrAtomStatus;
                     break;
             }
 

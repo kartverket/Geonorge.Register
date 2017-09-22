@@ -142,42 +142,6 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Harmoniserte data status.
-        /// </summary>
-        public static string Delivery_Harmonized {
-            get {
-                return ResourceManager.GetString("Delivery_Harmonized", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Metadatatjeneste status.
-        /// </summary>
-        public static string Delivery_MetadataService {
-            get {
-                return ResourceManager.GetString("Delivery_MetadataService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sparial data service status.
-        /// </summary>
-        public static string Delivery_Spatial_Data_Service {
-            get {
-                return ResourceManager.GetString("Delivery_Spatial_Data_Service", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to WFS eller Atom status.
-        /// </summary>
-        public static string Delivery_Wfs_Or_Atom {
-            get {
-                return ResourceManager.GetString("Delivery_Wfs_Or_Atom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
         /// </summary>
         public static string DOK_Bekreftet_Kommune {
@@ -798,6 +762,15 @@ namespace Resources {
         public static string RegionType {
             get {
                 return ResourceManager.GetString("RegionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skjermede data.
+        /// </summary>
+        public static string RestrictedData {
+            get {
+                return ResourceManager.GetString("RestrictedData", resourceCulture);
             }
         }
         

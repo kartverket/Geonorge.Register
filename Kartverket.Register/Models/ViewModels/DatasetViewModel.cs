@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
@@ -10,48 +11,48 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Uuid")]
         public string Uuid { get; set; }
 
-        [Display(Name = "Merknad")]
+        [Display(Name = "DOK_Note", ResourceType = typeof(DataSet))]
         public string Notes { get; set; }
 
-        [Display(Name = "Bruksområde")]
+        [Display(Name = "DOK_SpecificUsage", ResourceType = typeof(DataSet))]
         public string SpecificUsage { get; set; }
 
-        [Display(Name = "Produktark url")]
+        [Display(Name = "DOK_ProductSheetUrl", ResourceType = typeof(DataSet))]
         public string ProductSheetUrl { get; set; }
 
-        [Display(Name = "Presentasjonsregler url")]
+        [Display(Name = "DOK_PresentationRulesUrl", ResourceType = typeof(DataSet))]
         public string PresentationRulesUrl { get; set; }
 
-        [Display(Name = "Produktspesifikasjon url")]
+        [Display(Name = "DOK_ProductSpecificationUrl", ResourceType = typeof(DataSet))]
         public string ProductSpecificationUrl { get; set; }
 
         [Display(Name = "Metadata url")]
         public string MetadataUrl { get; set; }
 
-        [Display(Name = "Distribusjonsformat")]
+        [Display(Name = "DOK_Distribusjonsformat", ResourceType = typeof(DataSet))]
         public string DistributionFormat { get; set; }
 
-        [Display(Name = "Distribusjon url")]
+        [Display(Name = "DOK_DistributionUrl", ResourceType = typeof(DataSet))]
         public string DistributionUrl { get; set; }
 
-        [Display(Name = "Distribusjonsområde")]
+        [Display(Name = "DOK_DistributionArea", ResourceType = typeof(DataSet))]
         public string DistributionArea { get; set; }
 
         [Display(Name = "WMS url")]
         public string WmsUrl { get; set; }
 
-        [Display(Name = "Tema")]
+        [Display(Name = "DOK_Temagruppe", ResourceType = typeof(DataSet))]
         public string ThemeGroupId { get; set; }
         public virtual DOKTheme Theme { get; set; }
 
-        [Display(Name = "Miniatyrbilde")]
+        [Display(Name = "DOK_Datasetthumbnail", ResourceType = typeof(DataSet))]
         public string DatasetThumbnail { get; set; }
 
         [Display(Name = "DOK-status")]
         public string DokStatusId { get; set; }
         public virtual DokStatus DokStatus { get; set; }
 
-        [Display(Name = "DOK-status godkjent")]
+        [Display(Name = "DOK_StatusDateAccepted", ResourceType = typeof(DataSet))]
         public DateTime? DokStatusDateAccepted { get; set; }
 
         public string UuidService { get; set; }

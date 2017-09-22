@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -11,12 +12,12 @@ namespace Kartverket.Register.Models.ViewModels
         public string MetadataNote { get; set; }
         public bool MetadataAutoUpdate { get; set; }
 
-        [Display(Name = "Metadatatjeneste:")]
+        [Display(Name = "MetadataServiceStatus", ResourceType = typeof(InspireDataSet))]
         public string MetadataServiceStatus { get; set; }
         public string MetadataServiceNote { get; set; }
         public bool MetadataServiceAutoUpdate { get; set; }
 
-        [Display(Name = "Deling av data:")]
+        [Display(Name = "DistributionStatus", ResourceType = typeof(InspireDataSet))]
         public string DistributionStatus { get; set; }
         public string DistributionNote { get; set; }
         public bool DistributionAutoUpdate { get; set; }
@@ -26,27 +27,27 @@ namespace Kartverket.Register.Models.ViewModels
         public string WmsNote { get; set; }
         public bool WmsAutoUpdate { get; set; }
 
-        [Display(Name = "Nedlastingstjeneste WFS:")]
+        [Display(Name = "WfsStatus", ResourceType = typeof(InspireDataSet))]
         public string WfsStatus { get; set; }
         public string WfsNote { get; set; }
         public bool WfsAutoUpdate { get; set; }
 
-        [Display(Name = "Nedlastingstjeneste Atom-feed:")]
+        [Display(Name = "AtomFeedStatus", ResourceType = typeof(InspireDataSet))]
         public string AtomFeedStatus { get; set; }
         public string AtomFeedNote { get; set; }
         public bool AtomFeedAutoUpdate { get; set; }
 
-        [Display(Name = "Nedlastingstjeneste WFS eller Atom-feed:")]
+        [Display(Name = "WfsOrAtomStatus", ResourceType = typeof(InspireDataSet))]
         public string WfsOrAtomStatus { get; set; }
         public string WfsOrAtomNote { get; set; }
         public bool WfsOrAtomAutoUpdate { get; set; }
 
-        [Display(Name = "Harmoniserte data:")]
+        [Display(Name = "HarmonizedDataStatus", ResourceType = typeof(InspireDataSet))]
         public string HarmonizedDataStatus { get; set; }
         public string HarmonizedDataNote { get; set; }
         public bool HarmonizedDataAutoUpdate { get; set; }
 
-        [Display(Name = "Spatial data service:")]
+        [Display(Name = "SpatialDataServiceStatus", ResourceType = typeof(InspireDataSet))]
         public string SpatialDataServiceStatus { get; set; }
         public string SpatialDataServiceNote { get; set; }
         public bool SpatialDataServiceAutoUpdate { get; set; }

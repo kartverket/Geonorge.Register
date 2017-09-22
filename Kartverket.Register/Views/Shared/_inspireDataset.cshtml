@@ -5,9 +5,9 @@
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row">
-        <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
-        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Eier", "owner")</div>
-        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Temagruppe", "theme") </div>
+        <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadata")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadataservice")
@@ -26,8 +26,8 @@
     @foreach (InspireDatasetViewModel item in Model)
     {
         <div class="row result-row">
-            <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.Name </a></div>
-            <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+            <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
             <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
             <div class="col-md-4 col-sm-5 status-icons">
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatus, false, "metadata")
@@ -81,7 +81,7 @@
                     <div class="hidden-print">
                         <p>
                             @item.GetDescriptionAsSubstring();
-                            <a class="hidden-print" href="@item.DetailPageUrl()" title="Vis mer info om @item.Name">vis mer info</a>
+                            <a class="hidden-print" href="@item.DetailPageUrl()" title="Vis mer info om @item.Name"> @Shared.DisplayMoreInfo</a>
                         </p>
                     </div>
                     <p class="visible-print">@item.Description</p>
@@ -94,21 +94,21 @@
                         }
                         @if (item.DokStatusDateAccepted != null)
                         {
-                            <li><span>DOK-godkjenningsdato: </span>@item.DokStatusDateAccepted </li>
+                            <li><span>@DataSet.DOK_StatusDateAccepted: </span>@item.DokStatusDateAccepted </li>
                         }
-                        <li><span>Innsendt: </span>@item.DateSubmitted </li>
-                        <li><span>Siste endret: </span>@item.Modified </li>
+                        <li><span>@Registers.DateSubmitted: </span>@item.DateSubmitted </li>
+                        <li><span>@Registers.Modified: </span>@item.Modified </li>
 
 
                         @if (item.ThemeGroupId != null)
                         {
-                            <li title="Temagruppe: @item.Theme.description">
-                                <span>Gruppe: </span>@item.Theme.description
+                            <li title="@DataSet.DOK_Delivery_Theme: @item.Theme.description">
+                                <span>@DataSet.DOK_Delivery_Theme: </span>@item.Theme.description
                             </li>
                         }
                         else
                         {
-                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
+                            <li title="@DataSet.DOK_Delivery_Theme: @Registers.NotSet"><span>@DataSet.DOK_Delivery_Theme: </span>@Registers.NotSet</li>
                         }
                     </ul>
                 </div>

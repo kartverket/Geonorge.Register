@@ -974,9 +974,44 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.AtomFeedStatus">
+            <summary>
+              Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.DistributionStatus">
+            <summary>
+              Looks up a localized string similar to Deling av data.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.HarmonizedDataStatus">
+            <summary>
+              Looks up a localized string similar to Harmoniserte data.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.MetadataServiceStatus">
+            <summary>
+              Looks up a localized string similar to Metadatatjeneste.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.NewDataset">
             <summary>
               Looks up a localized string similar to Legg til nytt inspire datasett.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.SpatialDataServiceStatus">
+            <summary>
+              Looks up a localized string similar to Spatial data service.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.WfsOrAtomStatus">
+            <summary>
+              Looks up a localized string similar to Nedlastingstjeneste WFS eller Atom-feed.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.WfsStatus">
+            <summary>
+              Looks up a localized string similar to Nedlastingstjeneste WFS.
             </summary>
         </member>
         <member name="T:Resources.Documents">
@@ -1376,26 +1411,6 @@
               Looks up a localized string similar to Vurderingspunkt.
             </summary>
         </member>
-        <member name="P:Resources.DataSet.Delivery_Harmonized">
-            <summary>
-              Looks up a localized string similar to Harmoniserte data status.
-            </summary>
-        </member>
-        <member name="P:Resources.DataSet.Delivery_MetadataService">
-            <summary>
-              Looks up a localized string similar to Metadatatjeneste status.
-            </summary>
-        </member>
-        <member name="P:Resources.DataSet.Delivery_Spatial_Data_Service">
-            <summary>
-              Looks up a localized string similar to Sparial data service status.
-            </summary>
-        </member>
-        <member name="P:Resources.DataSet.Delivery_Wfs_Or_Atom">
-            <summary>
-              Looks up a localized string similar to WFS eller Atom status.
-            </summary>
-        </member>
         <member name="P:Resources.DataSet.DOK_Bekreftet_Kommune">
             <summary>
               Looks up a localized string similar to Bekreftelse på data som skal være kommunes DOK.
@@ -1742,6 +1757,11 @@
         <member name="P:Resources.DataSet.RegionType">
             <summary>
               Looks up a localized string similar to Regions-type.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.RestrictedData">
+            <summary>
+              Looks up a localized string similar to Skjermede data.
             </summary>
         </member>
         <member name="P:Resources.DataSet.ServiceUuid">
@@ -2649,6 +2669,11 @@
         <member name="P:Resources.Shared.Details">
             <summary>
               Looks up a localized string similar to Vis.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.DisplayMoreInfo">
+            <summary>
+              Looks up a localized string similar to vis mer info.
             </summary>
         </member>
         <member name="P:Resources.Shared.DisplayTypeSelect">

@@ -475,4 +475,7 @@ As a data set quality and coverage can vary considerably from site to area, the 
   <data name="Dataset" xml:space="preserve">
     <value>Dataset</value>
   </data>
+  <data name="RestrictedData" xml:space="preserve">
+    <value>Restricted data</value>
+  </data>
 </root>

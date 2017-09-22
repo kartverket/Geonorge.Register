@@ -9,12 +9,12 @@ namespace Kartverket.Register.Models.ViewModels
         public Guid SystemId { get; set; }
 
         [Required]
-        [Display(Name = "Navn:")]
+        [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string Name { get; set; }
 
         public string Seoname { get; set; }
 
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string Description { get; set; }
 
         public Guid SubmitterId { get; set; }

@@ -133,6 +133,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to vis mer info.
+        /// </summary>
+        public static string DisplayMoreInfo {
+            get {
+                return ResourceManager.GetString("DisplayMoreInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Velg visningsform.
         /// </summary>
         public static string DisplayTypeSelect {

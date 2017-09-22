@@ -61,11 +61,74 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
+        /// </summary>
+        public static string AtomFeedStatus {
+            get {
+                return ResourceManager.GetString("AtomFeedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deling av data.
+        /// </summary>
+        public static string DistributionStatus {
+            get {
+                return ResourceManager.GetString("DistributionStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Harmoniserte data.
+        /// </summary>
+        public static string HarmonizedDataStatus {
+            get {
+                return ResourceManager.GetString("HarmonizedDataStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadatatjeneste.
+        /// </summary>
+        public static string MetadataServiceStatus {
+            get {
+                return ResourceManager.GetString("MetadataServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Legg til nytt inspire datasett.
         /// </summary>
         public static string NewDataset {
             get {
                 return ResourceManager.GetString("NewDataset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spatial data service.
+        /// </summary>
+        public static string SpatialDataServiceStatus {
+            get {
+                return ResourceManager.GetString("SpatialDataServiceStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nedlastingstjeneste WFS eller Atom-feed.
+        /// </summary>
+        public static string WfsOrAtomStatus {
+            get {
+                return ResourceManager.GetString("WfsOrAtomStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nedlastingstjeneste WFS.
+        /// </summary>
+        public static string WfsStatus {
+            get {
+                return ResourceManager.GetString("WfsStatus", resourceCulture);
             }
         }
     }

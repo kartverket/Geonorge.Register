@@ -479,4 +479,7 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   <data name="Dataset" xml:space="preserve">
     <value>Datasett</value>
   </data>
+  <data name="RestrictedData" xml:space="preserve">
+    <value>Skjermede data</value>
+  </data>
 </root>

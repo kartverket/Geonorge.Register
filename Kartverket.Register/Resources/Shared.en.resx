@@ -244,4 +244,7 @@
   <data name="NotFoundText" xml:space="preserve">
     <value>We can not find the page you are looking for, but Geonorge will help you further.</value>
   </data>
+  <data name="DisplayMoreInfo" xml:space="preserve">
+    <value>vis mer info</value>
+  </data>
 </root>

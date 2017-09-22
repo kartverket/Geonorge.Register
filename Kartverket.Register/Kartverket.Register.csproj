@@ -816,6 +816,16 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\InspireDataSet.Designer.cs">
+      <DependentUpon>InspireDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\InspireDataSet.en.Designer.cs">
+      <DependentUpon>InspireDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\Documents.Designer.cs">
       <DependentUpon>Documents.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1727,6 +1737,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
       <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\InspireDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InspireDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\InspireDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InspireDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Documents.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

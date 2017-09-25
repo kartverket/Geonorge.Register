@@ -67,18 +67,12 @@ namespace Kartverket.Register.Controllers
                 {
                     ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
                 }
-                if (_registerItemService.ItemNameAlredyExist(viewModel))
-                {
-                    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
-                }
+            }
+            if (_registerItemService.ItemNameAlredyExist(viewModel))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
                 return View(viewModel);
             }
-
-            //if (_registerItemService.ItemNameAlredyExist(viewModel))
-            //{
-            //    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
-            //    return View(viewModel);
-            //}
             if (!ModelState.IsValid) return View(viewModel);
             var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
             return Redirect(inspireDataset.Register.GetObjectUrl());

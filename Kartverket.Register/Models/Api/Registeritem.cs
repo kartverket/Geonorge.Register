@@ -104,65 +104,146 @@ namespace Kartverket.Register.Models.Api
         public string Note { get; set; }
         public string ServiceUuid { get; set; }
 
-        public Registeritem(Models.RegisterItem item, string baseUrl, FilterParameters filter = null, string language = "nb-NO")
+        // InspireDataset
+        public string MetadataStatus { get; set; }
+        public string MetadataServiceStatus { get; set; }
+        public string DistributionStatus { get; set; }
+        public string WmsStatus { get; set; }
+        public string WfsStatus { get; set; }
+        public string AtomFeedStatus { get; set; }
+        public string WfsOrAtomStatus { get; set; }
+        public string HarmonizedDataStatus { get; set; }
+        public string SpatialDataServiceStatus { get; set; }
+
+        public Registeritem(Object item, string baseUrl, FilterParameters filter = null, string language = "nb-NO")
         {
             this.versions = new HashSet<Registeritem>();
             this.narrower = new HashSet<string>();
 
-            id = baseUrl + item.GetObjectUrl();
-            label = item.name;
-            lang = language.Substring(0,2);
-            lastUpdated = item.modified;
-            itemclass = item.register.containedItemClass;
-            if (item.submitter != null) owner = item.submitter.name;
-            if (item.status != null) {
-                if (lang == "no" || lang == "nb")
-                    status = item.status.description;
-                else
-                    status = item.status.value;
+            if (item is RegisterItem registerItem)
+            {
+                id = baseUrl + registerItem.GetObjectUrl();
+                label = registerItem.name;
+                lang = language.Substring(0, 2);
+                lastUpdated = registerItem.modified;
+                itemclass = registerItem.register.containedItemClass;
+                if (registerItem.submitter != null) owner = registerItem.submitter.name;
+                if (registerItem.status != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        status = registerItem.status.description;
+                    else
+                        status = registerItem.status.value;
+                }
+                if (registerItem.description != null) description = registerItem.description;
+                if (registerItem.versionName != null) versionName = registerItem.description;
+                versionNumber = registerItem.versionNumber;
+                versionName = registerItem.versionName;
+                dateSubmitted = registerItem.dateSubmitted;
+                dateAccepted = registerItem.dateAccepted.GetValueOrDefault();
+                itemclass = "RegisterItem";
+                uuid = registerItem.systemId;
             }
-            if (item.description != null) description = item.description;
-            if (item.versionName != null) versionName = item.description;
-            versionNumber = item.versionNumber;
-            versionName = item.versionName;
-            dateSubmitted = item.dateSubmitted;
-            dateAccepted = item.dateAccepted.GetValueOrDefault();
-            itemclass = "RegisterItem";
-            uuid = item.systemId;
-
-            if (item is EPSG)
+            if (item is RegisterItemV2 registerItemV2)
+            {
+                id = baseUrl + registerItemV2.DetailPageUrl();
+                label = registerItemV2.Name;
+                lang = language.Substring(0, 2);
+                lastUpdated = registerItemV2.Modified;
+                itemclass = registerItemV2.Register.containedItemClass;
+                if (registerItemV2.Owner != null) owner = registerItemV2.Owner.name;
+                if (registerItemV2.Status != null)
+                {
+                    if (lang == "no" || lang == "nb")
+                        status = registerItemV2.Status.description;
+                    else
+                        status = registerItemV2.Status.value;
+                }
+                description = registerItemV2.Description;
+                versionNumber = registerItemV2.VersionNumber;
+                versionName = registerItemV2.VersionName;
+                dateSubmitted = registerItemV2.DateSubmitted;
+                dateAccepted = registerItemV2.DateAccepted.GetValueOrDefault();
+                uuid = registerItemV2.SystemId;
+            }
+            if (item is DatasetV2 datasetV2)
+            {
+                if (datasetV2.DokStatus != null) dokStatus = datasetV2.DokStatus.description;
+                if (datasetV2.Theme != null) theme = datasetV2.Theme.description;
+                if (datasetV2.DokStatusDateAccepted != null) dateAccepted = datasetV2.DokStatusDateAccepted.Value;
+            }
+            if (item is InspireDataset inspireDataset)
+            {
+                if (inspireDataset.InspireDeliveryMetadata?.Status != null)
+                {
+                    MetadataStatus = inspireDataset.InspireDeliveryMetadata.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryMetadataService?.Status != null)
+                {
+                    MetadataServiceStatus = inspireDataset.InspireDeliveryMetadataService.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryDistribution?.Status != null)
+                {
+                    DistributionStatus = inspireDataset.InspireDeliveryDistribution.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryWms?.Status != null)
+                {
+                    WmsStatus = inspireDataset.InspireDeliveryWms.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryWfs?.Status != null)
+                {
+                    WfsStatus = inspireDataset.InspireDeliveryWfs.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryAtomFeed?.Status != null)
+                {
+                    AtomFeedStatus = inspireDataset.InspireDeliveryAtomFeed.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryWfsOrAtom?.Status != null)
+                {
+                    WfsOrAtomStatus = inspireDataset.InspireDeliveryWfsOrAtom.Status.value;
+                }
+                if (inspireDataset.InspireDeliveryHarmonizedData?.Status != null)
+                {
+                    HarmonizedDataStatus = inspireDataset.InspireDeliveryHarmonizedData.Status.value;
+                }
+                if (inspireDataset.InspireDeliverySpatialDataService?.Status != null)
+                {
+                    SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
+                }
+                MetadataUrl = inspireDataset.MetadataUrl;
+            }
+            if (item is EPSG epsg)
             {
                 itemclass = "EPSG";
-                var d = (EPSG)item;
-                label = GetNameLocale(d, language);
-                if (d.description != null) description = GetDescriptionLocale(d, language);
-                epsgcode = d.epsgcode;
-                sosiReferencesystem = d.sosiReferencesystem;
-                documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + d.epsgcode;
-                if (d.inspireRequirement != null)
+                label = GetNameLocale(epsg, language);
+                if (epsg.description != null) description = GetDescriptionLocale(epsg, language);
+                epsgcode = epsg.epsgcode;
+                sosiReferencesystem = epsg.sosiReferencesystem;
+                documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + epsg.epsgcode;
+                if (epsg.inspireRequirement != null)
                 {
                     if (lang == "no" || lang == "nb")
-                        inspireRequirement = d.inspireRequirement.description;
+                        inspireRequirement = epsg.inspireRequirement.description;
                     else
-                        inspireRequirement = d.inspireRequirement.value;
+                        inspireRequirement = epsg.inspireRequirement.value;
                 }
-                if (d.nationalRequirement != null)
+                if (epsg.nationalRequirement != null)
                 {
                     if (lang == "no" || lang == "nb")
-                        nationalRequirement = d.nationalRequirement.description;
+                        nationalRequirement = epsg.nationalRequirement.description;
                     else
-                        nationalRequirement = d.nationalRequirement.value;
+                        nationalRequirement = epsg.nationalRequirement.value;
                 }
-                if (d.nationalSeasRequirement != null)
+                if (epsg.nationalSeasRequirement != null)
                 {
                     if (lang == "no" || lang == "nb")
-                        nationalSeasRequirement = d.nationalSeasRequirement.description;
+                        nationalSeasRequirement = epsg.nationalSeasRequirement.description;
                     else
-                        nationalSeasRequirement = d.nationalSeasRequirement.value;
+                        nationalSeasRequirement = epsg.nationalSeasRequirement.value;
                 }
-                horizontalReferenceSystem = d.horizontalReferenceSystem;
-                verticalReferenceSystem = d.verticalReferenceSystem;
-                dimension = d.dimension != null ? d.dimension.description : "";
+                horizontalReferenceSystem = epsg.horizontalReferenceSystem;
+                verticalReferenceSystem = epsg.verticalReferenceSystem;
+                dimension = epsg.dimension != null ? epsg.dimension.description : "";
             }
             else if (item is CodelistValue)
             {

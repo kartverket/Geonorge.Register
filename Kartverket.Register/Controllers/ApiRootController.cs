@@ -15,6 +15,9 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Kartverket.Register.Models.Api;
+using SearchParameters = Kartverket.Register.Models.SearchParameters;
+using SearchResult = Kartverket.Register.Models.SearchResult;
 
 namespace Kartverket.Register.Controllers
 {
@@ -27,7 +30,7 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterItemService _registerItemService;
         private string language = "nb-NO";
 
-        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService)
+        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
             _registerItemService = registerItemService;
             _searchService = searchService;
@@ -148,7 +151,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             var registerItem = _registerItemService.GetRegisterItem(null, register, item, version);
-            return Ok(ConvertRegisterItem(registerItem.register, registerItem));
+            return Ok(ConvertRegisterItem(registerItem));
         }
 
 
@@ -202,7 +205,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
-                ConverteditemsByOwner.Add(ConvertRegisterItem(item.register, item));
+                ConverteditemsByOwner.Add(ConvertRegisterItem(item));
             }
 
             return Ok(ConverteditemsByOwner);
@@ -225,7 +228,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
-                ConverteditemsByOwner.Add(ConvertRegisterItem(item.register, item));
+                ConverteditemsByOwner.Add(ConvertRegisterItem(item));
             }
 
             return Ok(ConverteditemsByOwner);
@@ -265,13 +268,13 @@ namespace Kartverket.Register.Controllers
             {
                 if (v.versioning.currentVersion == v.systemId)
                 {
-                    currentVersion = ConvertRegisterItem(v.register, v);
+                    currentVersion = ConvertRegisterItem(v);
 
                     foreach (var ve in versjoner)
                     {
                         if (v.versionNumber != ve.versionNumber)
                         {
-                            currentVersion.versions.Add(ConvertRegisterItem(ve.register, ve));
+                            currentVersion.versions.Add(ConvertRegisterItem(ve));
                         }
                     }
                 }
@@ -301,22 +304,28 @@ namespace Kartverket.Register.Controllers
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, FilterParameters filter = null)
         {
             var tmp = ConvertRegister(item, filter);
-            if (item.items.Count() > 0 && item.items != null)
+            tmp.containeditems = new List<Models.Api.Registeritem>();
+            if (item.name == "Inspire statusregister")
             {
-                tmp.containeditems = new List<Models.Api.Registeritem>();
-
+                foreach (var inspireDataset in item.RegisterItems)
+                {
+                    tmp.containeditems.Add(ConvertRegisterItem(inspireDataset, filter));
+                }
+            }
+            else if (item.items.Any())
+            {
                 foreach (var d in item.items)
                 {
                     if (d.register.containedItemClass == "Document")
                     {
                         if (d.statusId != "Submitted" && d.versioning.currentVersion == d.systemId)
                         {
-                            tmp.containeditems.Add(ConvertRegisterItem(item, d, filter));
+                            tmp.containeditems.Add(ConvertRegisterItem(d, filter));
                         }
                     }
                     else
                     {
-                        tmp.containeditems.Add(ConvertRegisterItem(item, d, filter));
+                        tmp.containeditems.Add(ConvertRegisterItem(d, filter));
                     }
                 }
             }
@@ -336,11 +345,18 @@ namespace Kartverket.Register.Controllers
             return tmp;
         }
 
-        private Models.Api.Registeritem ConvertRegisterItem(Models.Register reg, Models.RegisterItem item, FilterParameters filter = null)
+        private Registeritem ConvertRegisterItem(RegisterItem item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Models.Api.Registeritem(item,registerId, filter, language);
+            var tmp = new Registeritem(item,registerId, filter, language);
+            return tmp;
+        }
+        private Registeritem ConvertRegisterItem(RegisterItemV2 item, FilterParameters filter = null)
+        {
+            string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
+            if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
+            var tmp = new Registeritem(item, registerId, filter, language);
             return tmp;
         }
 
@@ -423,7 +439,7 @@ namespace Kartverket.Register.Controllers
 
             foreach (var item in queryResult.ToList())
             {
-                versions.Add(ConvertRegisterItem(item.register, item));
+                versions.Add(ConvertRegisterItem(item));
             }
             versions.OrderBy(o => o.status);
             return versions;

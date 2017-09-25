@@ -150,7 +150,23 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "Dataset")
             {
-                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") :"" ) + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") :"") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) +(isAdmin ? ";" + item.uuid : "") + ";" + item.MetadataUrl;
+                text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) + (isAdmin ? ";" + item.uuid : "") + ";" + item.MetadataUrl;
+            }
+            else if (item.itemclass == "InspireDataset")
+            {
+                text = item.theme + ";" + 
+                        item.label + ";" + 
+                        item.owner + ";" + 
+                        item.dokStatus + ";" + 
+                        (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + 
+                        (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + 
+                        (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + 
+                        item.versionNumber + ";" + 
+                        item.description + ";" + 
+                        item.id + ";" + 
+                        GetInspireDaliveryStatus(item) + 
+                        (isAdmin ? ";" + item.uuid : "") + ";" + 
+                        item.MetadataUrl;
             }
             else if (item.itemclass == "Organization")
             {
@@ -174,6 +190,20 @@ namespace Kartverket.Register.Formatter
             return item.dokDeliveryMetadataStatus + ";" + item.dokDeliveryProductSheetStatus + ";" + item.dokDeliveryPresentationRulesStatus +
                 ";" + item.dokDeliveryProductSpecificationStatus + ";" + item.dokDeliveryWmsStatus + ";" + item.dokDeliveryWfsStatus +
                 ";" + item.dokDeliverySosiRequirementsStatus + ";" + item.dokDeliveryDistributionStatus + ";" + item.dokDeliveryGmlRequirementsStatus + ";" + item.dokDeliveryAtomFeedStatus;
+
+        }
+
+        private static string GetInspireDaliveryStatus(Registeritem item)
+        {
+            return item.MetadataStatus + ";" + 
+                   item.MetadataServiceStatus + ";" + 
+                   item.DistributionStatus+ ";" + 
+                   item.WmsStatus + ";" + 
+                   item.WfsStatus + ";" + 
+                   item.AtomFeedStatus + ";" + 
+                   item.WfsOrAtomStatus + ";" + 
+                   item.HarmonizedDataStatus + ";" + 
+                   item.SpatialDataServiceStatus;
 
         }
 
@@ -214,34 +244,54 @@ namespace Kartverket.Register.Formatter
 
             if (containedItemClass == "Document")
             {
-                return Registers.Name + ";"+ Documents.DocumentOwner + "; Status;" + Registers.Updated +";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + "; ID";
+                return Registers.Name + ";" + Documents.DocumentOwner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + Registers.DocumentUrl + "; ID";
             }
-            else if (containedItemClass == "CodelistValue")
+            if (containedItemClass == "CodelistValue")
             {
-                return Registers.Name + ";" + CodelistValues.CodeValue + ";"+ Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
+                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
             }
-            else if (containedItemClass == "EPSG")
+            if (containedItemClass == "EPSG")
             {
-                return Registers.Name + "; EPSG; SOSI;" + EPSGs.Vertical + ";"+ EPSGs.Horizontal + ";" + EPSGs.Dimension + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
+                return Registers.Name + "; EPSG; SOSI;" + EPSGs.Vertical + ";" + EPSGs.Horizontal + ";" + EPSGs.Dimension + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
             }
-            else if (containedItemClass == "Dataset")
+            if (containedItemClass == "Dataset")
             {
-                return DataSet.DOK_Delivery_Theme + ";"+ Registers.Name + ";"+ Registers.Owner + "; DOK-status;"+ DataSet.DOK_StatusDateAccepted +";" + DataSet.DOK_Kandidatdato  + (isAdmin ? ";" + Registers.Updated  : "") +";" + Registers.VersionNumber + ";" + Registers.Description + "; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
+                return DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + "; DOK-status;" + DataSet.DOK_StatusDateAccepted + ";" + DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID" + ";" + DataSet.DOK_Delivery_Metadata + ";"
                     + DataSet.DOK_Delivery_ProductSheet + ";" + DataSet.DOK_Delivery_PresentationRules + ";" + DataSet.DOK_Delivery_ProductSpesification + ";"
                     + DataSet.DOK_Delivery_Wms + ";" + DataSet.DOK_Delivery_Wfs + ";" + DataSet.DOK_Delivery_SosiRequirements + ";"
                     + DataSet.DOK_Delivery_Distribution + ";" + DataSet.DOK_Delivery_GmlRequirements + ";" + DataSet.DOK_Delivery_AtomFeed + (isAdmin ? ";Uuid" : "") + ";" + DataSet.DisplayKartkatalogen;
             }
-            else if (containedItemClass == "Organization")
+            if (containedItemClass == "InspireDataset")
             {
-                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";"+ Organizations.MunicipalityCode + ";"+ Organizations.GeographicCenterX +";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";"+ Organizations.BoundingBoxSouth +";" + Organizations.BoundingBoxWest+ ";" + Organizations.BoundingBoxEast;
+                return DataSet.DOK_Delivery_Theme + ";" +
+                        Registers.Name + ";" +
+                        Registers.Owner + "; DOK-status;" +
+                        DataSet.DOK_StatusDateAccepted + ";" +
+                        DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" +
+                        Registers.VersionNumber + ";" +
+                        Registers.Description + "; ID" + ";" +
+                        DataSet.DOK_Delivery_Metadata + ";" +
+                        InspireDataSet.MetadataServiceStatus + ";" +
+                        InspireDataSet.DistributionStatus + ";" +
+                        DataSet.DOK_Delivery_Wms + ";" +
+                        DataSet.DOK_Delivery_Wfs + ";" +
+                        DataSet.DOK_Delivery_AtomFeed + ";" +
+                        InspireDataSet.WfsOrAtomStatus + ";" +
+                        InspireDataSet.HarmonizedDataStatus + ";" +
+                        InspireDataSet.SpatialDataServiceStatus + (isAdmin ? ";Uuid" : "") + ";" +
+                        DataSet.DisplayKartkatalogen;
             }
-            else if (containedItemClass == "NameSpace")
+            if (containedItemClass == "Organization")
             {
-                return Registers.Name + ";" + Registers.Etat+ ";" + Namespace.Content + ";" + Namespace.Service;
+                return Organizations.Organization_Name + ";" + Organizations.Organization_Number + ";" + Organizations.MunicipalityCode + ";" + Organizations.GeographicCenterX + ";" + Organizations.GeographicCenterY + ";" + Organizations.BoundingBoxNorth + ";" + Organizations.BoundingBoxSouth + ";" + Organizations.BoundingBoxWest + ";" + Organizations.BoundingBoxEast;
             }
-            else if (containedItemClass == "ServiceAlert")
+            if (containedItemClass == "NameSpace")
             {
-                return ServiceAlerts.LastAlert + ";"+ ServiceAlerts.EffectiveDate +";" + ServiceAlerts.Service + ";" + ServiceAlerts.ServiceType +";" + ServiceAlerts.AlertType + ";" + Registers.Owner + ";" + ServiceAlerts.Note + ";" + ServiceAlerts.ServiceDesription;
+                return Registers.Name + ";" + Registers.Etat + ";" + Namespace.Content + ";" + Namespace.Service;
+            }
+            if (containedItemClass == "ServiceAlert")
+            {
+                return ServiceAlerts.LastAlert + ";" + ServiceAlerts.EffectiveDate + ";" + ServiceAlerts.Service + ";" + ServiceAlerts.ServiceType + ";" + ServiceAlerts.AlertType + ";" + Registers.Owner + ";" + ServiceAlerts.Note + ";" + ServiceAlerts.ServiceDesription;
             }
 
             return null;
@@ -249,13 +299,13 @@ namespace Kartverket.Register.Formatter
 
         private string RegisterHeading()
         {
-            return "Id ;"+ Registers.Name +";"+ Registers.Description+";" + Registers.Owner + ";" + Registers.Updated;
+            return "Id ;" + Registers.Name + ";" + Registers.Description + ";" + Registers.Owner + ";" + Registers.Updated;
         }
 
         private string RegisterItemDokMunicipalHeading(Models.Api.Register register)
         {
             string heading = "Det offentlige kartgrunnlaget - " + register.SelectedDOKMunicipality + ", " + DateTime.Today.ToString("d") + "\r\n";
-            heading = heading + DataSet.DOK_Delivery_Theme+ ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + Registers.Updated + ";"+ Registers.VersionNumber + ";" + Registers.Description + ";" + DataSet.RegionType + ";"+ DataSet.DOK_Confirmed +";" + DataSet.DOK_Coverage + ";" +DataSet.DOK_Note + ";" + DataSet.DisplayKartkatalogen;
+            heading = heading + DataSet.DOK_Delivery_Theme + ";" + Registers.Name + ";" + Registers.Owner + ";DOK-status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + DataSet.RegionType + ";" + DataSet.DOK_Confirmed + ";" + DataSet.DOK_Coverage + ";" + DataSet.DOK_Note + ";" + DataSet.DisplayKartkatalogen;
             return heading;
         }
 

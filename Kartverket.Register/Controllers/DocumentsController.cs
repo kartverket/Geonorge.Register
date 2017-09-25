@@ -254,7 +254,7 @@ namespace Kartverket.Register.Controllers
         /// <returns></returns>
         private bool NameIsValid(Document document)
         {
-            return _registerItemService.validateName(document);
+            return _registerItemService.ItemNameAlredyExist(document);
         }
 
         /// <summary>

@@ -96,7 +96,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(EPSG epsgKode)
         {
-            return _registerItemService.validateName(epsgKode);
+            return _registerItemService.ItemNameAlredyExist(epsgKode);
         }
 
         private string EPSGName(string name)

@@ -958,6 +958,13 @@
             <param name="municipality"></param>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Services.RegisterItem.RegisterItemService.ItemNameAlredyExist(System.Object)">
+            <summary>
+            Item name must be unique in one registery
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
         <member name="T:Resources.InspireDataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

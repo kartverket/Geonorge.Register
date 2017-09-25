@@ -52,32 +52,36 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(InspireDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
             viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
-            if (_accessControlService.Access(viewModel.Register)) { 
-                if (viewModel.SearchString != null)
+            if (!_accessControlService.Access(viewModel.Register)) throw new HttpException(401, "Access Denied");
+
+            if (viewModel.SearchString != null)
+            {
+                viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+                return View(viewModel);
+            }
+
+            if (metadataUuid != null)
+            {
+                viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
+                if (viewModel.Name == null)
                 {
-                    viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+                    ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
                 }
-                else if (metadataUuid != null)
-                {
-                    viewModel.Update(_metadataService.FetchInspireDatasetFromKartkatalogen(metadataUuid));
-                    if (viewModel.Name == null)
-                    {
-                        ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
-                    }
-                    return View(viewModel);
-                }
-                if (_registerItemService.validateName(viewModel))
+                if (_registerItemService.ItemNameAlredyExist(viewModel))
                 {
                     ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
-                    return View(viewModel);
                 }
-                if (ModelState.IsValid)
-                {
-                    var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
-                    return Redirect(inspireDataset.Register.GetObjectUrl());
-                }
+                return View(viewModel);
             }
-            throw new HttpException(401, "Access Denied");
+
+            //if (_registerItemService.ItemNameAlredyExist(viewModel))
+            //{
+            //    ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
+            //    return View(viewModel);
+            //}
+            if (!ModelState.IsValid) return View(viewModel);
+            var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
+            return Redirect(inspireDataset.Register.GetObjectUrl());
         }
 
         // GET: InspireDatasets/Edit/5

@@ -433,7 +433,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(Dataset dataset)
         {
-            return _registerItemService.validateName(dataset);
+            return _registerItemService.ItemNameAlredyExist(dataset);
         }
 
         private Dataset GetMetadataFromKartkatalogen(Dataset dataset, string uuid, bool dontUpdateDescription = false)

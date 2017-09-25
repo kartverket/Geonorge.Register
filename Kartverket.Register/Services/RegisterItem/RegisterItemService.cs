@@ -367,7 +367,12 @@ namespace Kartverket.Register.Services.RegisterItem
             return 1;
         }
 
-        public bool validateName(object model)
+        /// <summary>
+        /// Item name must be unique in one registery
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public bool ItemNameAlredyExist(object model)
         {
             if (model is Models.RegisterItem)
             {
@@ -383,13 +388,13 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 if (model is InspireDatasetViewModel)
                 {
-                    return ValidateNameInspireDataset((InspireDatasetViewModel)model);
+                    return InspireDatasetNameAlreadyExist((InspireDatasetViewModel)model);
                 }
             }
             return false;
         }
 
-        private bool ValidateNameInspireDataset(InspireDatasetViewModel inspireDataset)
+        private bool InspireDatasetNameAlreadyExist(InspireDatasetViewModel inspireDataset)
         {
             var queryResults = from o in _dbContext.InspireDatasets
                 where o.Name == inspireDataset.Name &&
@@ -397,7 +402,7 @@ namespace Kartverket.Register.Services.RegisterItem
                       && o.RegisterId == inspireDataset.RegisterId
                 select o.SystemId;
 
-            return !queryResults.Any();
+            return queryResults.Any();
         }
 
         private bool ValidateNameRegisterItem(object model)

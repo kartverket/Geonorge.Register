@@ -24,7 +24,7 @@ namespace Kartverket.Register.Services.RegisterItem
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
         Guid NewVersioningGroup(RegisterItemV2 registerItems);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null);
-        bool validateName(Object model);
+        bool ItemNameAlredyExist(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);
         void SaveEditedRegisterItem(Models.RegisterItem registerItem);
         void SaveDeleteRegisterItem(Models.RegisterItem registerItem);

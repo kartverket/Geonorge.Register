@@ -2,7 +2,7 @@
 @using System.Web.Configuration;
 @model ShowDatasetCoverageViewModel
 @{
-    ViewBag.Title = "Dekningskart for DOK-datasett";
+    ViewBag.Title = DokCoverage.Title;
 }
 
 @section breadcrumb {
@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                Dekningskart for DOK-datasett
+                @DokCoverage.Title
             </h1>
         </div>
         <div class="col-sm-12">
@@ -26,15 +26,15 @@
 <form action="@Request.Url.LocalPath" method="get">
     <div class="row">
         <div class="col-md-3">
-            <label for="fylke">Velg zoom-nivå:</label>
+            <label for="fylke">@DokCoverage.ZoomLevelSelection:</label>
             <div class="form-group custom-select">
-                @Html.DropDownList("fylke", (SelectList)ViewBag.States, "Hele landet", new { @class = "chosen-select form-control", onchange = "form.submit();" })
+                @Html.DropDownList("fylke", (SelectList)ViewBag.States, DokCoverage.ZoomLevelSelectionEntireCountry, new { @class = "chosen-select form-control", onchange = "form.submit();" })
             </div>
         </div>
         <div class="col-md-5">
-            <label for="dataset">Velg DOK-datasett:</label>
+            <label for="dataset">@DokCoverage.DokDatasetSelection:</label>
             <div class="form-group custom-select">
-                @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, "Velg datasett", new { @class = "chosen-select form-control", onchange = "form.submit();" })
+                @Html.DropDownList("dataset", (SelectList)ViewBag.Datasets, @DokCoverage.DatasetSelection, new { @class = "chosen-select form-control", onchange = "form.submit();" })
             </div>
         </div>
     </div>
@@ -46,13 +46,13 @@
 
 <div class="status-icons norgeskart-legend">
     <div>
-        <span class="custom-icon custom-icon-norgeskart-marker"></span> Kommunen har bekreftet dette datasettet.
+        <span class="custom-icon custom-icon-norgeskart-marker"></span> @DokCoverage.Confirmed.
         <div class="custom-checkbox inline-block">
-            <input type="checkbox" id="showMarkers" name="showMarkers" onchange="ToggleMarkers();" /><label for="showMarkers" class="checkbox-icon"></label> <label for="showMarkers">Vis markører</label>
+            <input type="checkbox" id="showMarkers" name="showMarkers" onchange="ToggleMarkers();" /><label for="showMarkers" class="checkbox-icon"></label> <label for="showMarkers">@DokCoverage.ShowMarker</label>
         </div>
     </div>
     <div>
-        <span class="custom-icon custom-icon-norgeskart-area"></span> Dekningsområde for dette datasettet
+        <span class="custom-icon custom-icon-norgeskart-area"></span> @DokCoverage.AreaForDataset
     </div>
 </div>
 
@@ -100,11 +100,11 @@
     var BBSouth = @Model.StateBoundingBox.South;
     var BBNorth = @Model.StateBoundingBox.North;
     xCenter = (BBWest + BBEast) /2;
-    yCenter = (BBSouth + BBNorth) /2;
+    yCenter = (BBSouth + BBNorth) / 2;
 
-    $.getJSON('@WebConfigurationManager.AppSettings["MapUrl"]/ws/trans.py?ost=' + xCenter + '&nord=' + yCenter + '&sosiKoordSys=84&resSosiKoordSys=23', function (result)
+    $.getJSON('@WebConfigurationManager.AppSettings["GeonorgeWebserviceUrl"]/transApi?ost=' + xCenter + '&nord=' + yCenter + '&fra=84&til=23', function (result)
     {
-        if (result.errKode == 0) {
+        if (result.kode == 0) {
 
             xCenter = Math.floor(result.ost);
             yCenter = Math.floor(result.nord);

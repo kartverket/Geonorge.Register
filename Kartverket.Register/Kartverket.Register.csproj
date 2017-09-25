@@ -266,6 +266,7 @@
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
     <Compile Include="Controllers\OrganizationsController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CultureHelper.cs" />
     <Compile Include="Helpers\RegisterUrls.cs" />
     <Compile Include="Helpers\HtmlHelperExtension.cs" />
     <Compile Include="Migrations\201410281525363_AddOrganization.cs" />
@@ -715,6 +717,22 @@
     <Compile Include="Migrations\201708290826183_AddOrganizationTranslation.Designer.cs">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.cs" />
+    <Compile Include="Migrations\201709050928505_AddInspireDataset.Designer.cs">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.cs" />
+    <Compile Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.Designer.cs">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.cs" />
+    <Compile Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.Designer.cs">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.cs" />
+    <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.Designer.cs">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -734,6 +752,9 @@
     <Compile Include="Models\Api\AlertService.cs" />
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
+    <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\InspireDataset.cs" />
+    <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
     <Compile Include="Models\DokDeliveryStatus.cs" />
     <Compile Include="Models\Facet.cs" />
@@ -744,6 +765,7 @@
     <Compile Include="Models\NotFoundModel.cs" />
     <Compile Include="Models\FilterParameters .cs" />
     <Compile Include="Models\RegisterIndexDoc.cs" />
+    <Compile Include="Models\RegisterItemV2.cs" />
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
@@ -757,6 +779,8 @@
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
+    <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
     <Compile Include="Models\ViewModels\DokMunicipalEdit.cs" />
@@ -782,6 +806,8 @@
     <Compile Include="Models\Version.cs" />
     <Compile Include="Models\ViewModels\MetadataItemViewModel.cs" />
     <Compile Include="Models\ViewModels\MunicipalDatasetsViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterItemV2ViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterV2ViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterItemVeiwModel.cs" />
     <Compile Include="Models\ViewModels\SearchResultItemViewModel.cs" />
@@ -790,25 +816,135 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\UI.Designer.cs">
+    <Compile Include="Resources\InspireDataSet.Designer.cs">
+      <DependentUpon>InspireDataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>UI.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\InspireDataSet.en.Designer.cs">
+      <DependentUpon>InspireDataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Documents.Designer.cs">
+      <DependentUpon>Documents.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Documents.en.Designer.cs">
+      <DependentUpon>Documents.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Namespace.Designer.cs">
+      <DependentUpon>Namespace.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Namespace.en.Designer.cs">
+      <DependentUpon>Namespace.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ServiceAlerts.Designer.cs">
+      <DependentUpon>ServiceAlerts.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ServiceAlerts.en.Designer.cs">
+      <DependentUpon>ServiceAlerts.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DokCoverage.Designer.cs">
+      <DependentUpon>DokCoverage.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DokCoverage.en.Designer.cs">
+      <DependentUpon>DokCoverage.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DataSet.Designer.cs">
+      <DependentUpon>DataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CodelistValues.Designer.cs">
+      <DependentUpon>CodelistValues.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\EPSGs.Designer.cs">
+      <DependentUpon>EPSGs.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DataSet.en1.Designer.cs">
+      <DependentUpon>DataSet.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CodelistValues.en.Designer.cs">
+      <DependentUpon>CodelistValues.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Organizations.Designer.cs">
+      <DependentUpon>Organizations.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\EPSGs.en.Designer.cs">
+      <DependentUpon>EPSGs.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Organizations.en.Designer.cs">
+      <DependentUpon>Organizations.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Registers.Designer.cs">
+      <DependentUpon>Registers.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Registers.en.Designer.cs">
+      <DependentUpon>Registers.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Resource.cs" />
+    <Compile Include="Resources\Shared.en.Designer.cs">
+      <DependentUpon>Shared.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Shared.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Shared.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\AccessControlService.cs" />
     <Compile Include="Services\CoverageService.cs" />
     <Compile Include="Services\DatasetService.cs" />
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
+    <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
+    <Compile Include="Services\IInspireDatasetService.cs" />
+    <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
     <Compile Include="Services\Notify\IEmailService.cs" />
     <Compile Include="Services\Notify\INotificationService.cs" />
     <Compile Include="Services\Notify\NotificationService.cs" />
+    <Compile Include="Services\InspireDatasetService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
@@ -977,10 +1113,14 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\main.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.html" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.html" />
     <Content Include="Content\bower_components\tablesorter\addons\pager\jquery.tablesorter.pager.css" />
@@ -1124,8 +1264,12 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\tzj9b56b8RgXW8FAriS3USBnSvpkopQaUR-2r7iU.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\Y3_3JNqUVRAQQRNVteQ.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\_ySUJH_bn48VBG8sNSonF5uFdDttMLvmWuJdhhgs.ttf" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.cshtml" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
@@ -1182,7 +1326,6 @@
     <Content Include="Views\Shared\_organization.cshtml" />
     <Content Include="Views\Shared\_dataset.cshtml" />
     <Content Include="Views\Shared\_epsg.cshtml" />
-    <Content Include="Views\Shared\_NavbarPartial.cshtml" />
     <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Web.Dev.config">
@@ -1202,12 +1345,10 @@
     <Content Include="Views\Shared\_detailsDocuments.cshtml" />
     <Content Include="Views\Shared\_detailsEpsg.cshtml" />
     <Content Include="Views\Organizations\Import.cshtml" />
-    <Content Include="Views\Shared\_Analytics.cshtml" />
     <Content Include="Views\Datasets\Create.cshtml" />
     <Content Include="Views\Datasets\Delete.cshtml" />
     <Content Include="Views\Datasets\Edit.cshtml" />
     <Content Include="Views\Shared\_detailsDataset.cshtml" />
-    <Content Include="Views\Shared\_filter.cshtml" />
     <Content Include="Views\Shared\_codelistValue.cshtml" />
     <Content Include="Views\CodelistValues\Create.cshtml" />
     <Content Include="Views\CodelistValues\Delete.cshtml" />
@@ -1229,7 +1370,6 @@
     <Content Include="Views\Index\Reindex.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Index\IndexSingle.cshtml" />
-    <Content Include="Views\Subregister\DetailsSubregisterItemVersions.cshtml" />
     <Content Include="Views\Shared\_nameSpace.cshtml" />
     <Content Include="Views\NameSpaces\Create.cshtml" />
     <Content Include="Views\NameSpaces\Delete.cshtml" />
@@ -1237,9 +1377,8 @@
     <Content Include="Views\Shared\_detailsNameSpace.cshtml" />
     <Content Include="Views\Shared\_otherformats.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\_SharedMenu.cshtml" />
     <Content Include="Views\DokCoverage\Index.cshtml" />
-    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="Views\Shared\_inspireDataset.cshtml" />
     <Content Include="Views\Shared\_municipalDataset.cshtml" />
     <Content Include="Views\Shared\_LayoutSelect.cshtml" />
     <Content Include="Views\Shared\_pagedListPager.cshtml" />
@@ -1248,10 +1387,17 @@
     <Content Include="Views\ServiceAlerts\Create.cshtml" />
     <Content Include="Views\Shared\_serviceAlert.cshtml" />
     <Content Include="Views\Shared\_detailsServiceAlert.cshtml" />
-    <Content Include="settings.config" />
     <Content Include="settings.default.config" />
     <Content Include="Views\Organizations\_Fields.cshtml" />
     <Content Include="Views\Registers\EditDokMunicipal.cshtml" />
+    <Content Include="Views\InspireDatasets\Create.cshtml" />
+    <Content Include="Views\InspireDatasets\Delete.cshtml" />
+    <Content Include="Views\InspireDatasets\Edit.cshtml" />
+    <Content Include="Views\Shared\_nationalDataset.cshtml" />
+    <Content Include="settings.config" />
+    <Content Include="Views\Shared\_Resources.cshtml" />
+    <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
+    <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1586,9 +1732,147 @@
     <EmbeddedResource Include="Migrations\201708290826183_AddOrganizationTranslation.resx">
       <DependentUpon>201708290826183_AddOrganizationTranslation.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UI.resx">
+    <EmbeddedResource Include="Migrations\201709191204295_AddApprovalDatesOnRegisterItemsV2.resx">
+      <DependentUpon>201709191204295_AddApprovalDatesOnRegisterItemsV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
+      <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UI.Designer.cs</LastGenOutput>
+      <LastGenOutput>InspireDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\InspireDataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>InspireDataSet.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Documents.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Documents.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Documents.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Documents.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Namespace.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Namespace.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Namespace.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Namespace.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ServiceAlerts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ServiceAlerts.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ServiceAlerts.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ServiceAlerts.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709140649297_UpdateDatasetV2AddUuidService.resx">
+      <DependentUpon>201709140649297_UpdateDatasetV2AddUuidService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DokCoverage.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DokCoverage.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709050928505_AddInspireDataset.resx">
+      <DependentUpon>201709050928505_AddInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DataSet.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataSet.en1.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodelistValues.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodelistValues.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodelistValues.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CodelistValues.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\DataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EPSGs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EPSGs.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\EPSGs.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EPSGs.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Organizations.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Organizations.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Organizations.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Organizations.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Registers.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registers.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Registers.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registers.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shared.en.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Shared.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -1599,7 +1883,9 @@
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Base\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

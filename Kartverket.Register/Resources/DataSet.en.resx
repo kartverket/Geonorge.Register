@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DOK_Bekreftet_Kommune" xml:space="preserve">
+    <value>Confirmation of data to be the municipality's DOK</value>
+  </data>
+  <data name="DOK_Coverage_Municipality" xml:space="preserve">
+    <value>Coverage shows whether the data set actually exists in the municipality</value>
+  </data>
+  <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
+    <value>Atom feed status</value>
+  </data>
+  <data name="DOK_Delivery_Distribution" xml:space="preserve">
+    <value>Download status</value>
+  </data>
+  <data name="DOK_Delivery_GmlRequirements" xml:space="preserve">
+    <value>GML requirement status</value>
+  </data>
+  <data name="DOK_Delivery_Metadata" xml:space="preserve">
+    <value>Metadata status</value>
+  </data>
+  <data name="DOK_Delivery_Owner" xml:space="preserve">
+    <value>Owner</value>
+  </data>
+  <data name="DOK_Delivery_PresentationRules" xml:space="preserve">
+    <value>Cartography rules status</value>
+  </data>
+  <data name="DOK_Delivery_ProductSheet" xml:space="preserve">
+    <value>Product sheet status</value>
+  </data>
+  <data name="DOK_Delivery_ProductSpesification" xml:space="preserve">
+    <value>Product Specifications Status</value>
+  </data>
+  <data name="DOK_Delivery_Restricted" xml:space="preserve">
+    <value>Protected data - Contact data owner for access request</value>
+  </data>
+  <data name="DOK_Delivery_SosiRequirements" xml:space="preserve">
+    <value>SOSI requirement status</value>
+  </data>
+  <data name="DOK_Delivery_Status" xml:space="preserve">
+    <value>Status dataset</value>
+  </data>
+  <data name="DOK_Delivery_Status_Deficient" xml:space="preserve">
+    <value>Not delivered</value>
+  </data>
+  <data name="DOK_Delivery_Status_Good" xml:space="preserve">
+    <value>Good</value>
+  </data>
+  <data name="DOK_Delivery_Status_NotSet" xml:space="preserve">
+    <value>Delivery status is not set</value>
+  </data>
+  <data name="DOK_Delivery_Status_Useable" xml:space="preserve">
+    <value>Usable</value>
+  </data>
+  <data name="DOK_Delivery_Theme" xml:space="preserve">
+    <value>Theme Group</value>
+  </data>
+  <data name="DOK_Delivery_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="DOK_Delivery_Wfs" xml:space="preserve">
+    <value>Wfs status</value>
+  </data>
+  <data name="DOK_Delivery_Wms" xml:space="preserve">
+    <value>Wms status</value>
+  </data>
+  <data name="DOK_Eier" xml:space="preserve">
+    <value>The organization that has an ownership of the dates and can answer in depth about the academic issues surrounding the structure and content of the dataset</value>
+  </data>
+  <data name="DOK_Kommentar" xml:space="preserve">
+    <value>Must be entered on data one choose not to include, can also be used for other data sets</value>
+  </data>
+  <data name="DOK_Nasjonalt_Kommunalt" xml:space="preserve">
+    <value>Shows whether the data set is national or municipal</value>
+  </data>
+  <data name="DOK_Nasjonal_Status" xml:space="preserve">
+    <value>Data set its status</value>
+  </data>
+  <data name="DOK_Temagruppe" xml:space="preserve">
+    <value>Theme group</value>
+  </data>
+  <data name="DOK_Tittel" xml:space="preserve">
+    <value>Official Title (Name) of Data Set</value>
+  </data>
+  <data name="DOK_Datasetthumbnail" xml:space="preserve">
+    <value>Thumbnail</value>
+  </data>
+  <data name="DOK_DatasetType" xml:space="preserve">
+    <value>Dataset type</value>
+  </data>
+  <data name="DOK_Distribusjonsformat" xml:space="preserve">
+    <value>Distribution format</value>
+  </data>
+  <data name="DOK_DistributionArea" xml:space="preserve">
+    <value>Distribution area</value>
+  </data>
+  <data name="DOK_DistributionUrl" xml:space="preserve">
+    <value>Distribution url</value>
+  </data>
+  <data name="DOK_Kandidatdato" xml:space="preserve">
+    <value>Candidate date</value>
+  </data>
+  <data name="DOK_Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="DOK_PresentationRulesStatus" xml:space="preserve">
+    <value>Cartography rules</value>
+  </data>
+  <data name="DOK_PresentationRulesUrl" xml:space="preserve">
+    <value>Presentation rules url</value>
+  </data>
+  <data name="DOK_ProductSheetStatus" xml:space="preserve">
+    <value>Product sheet</value>
+  </data>
+  <data name="DOK_ProductSheetUrl" xml:space="preserve">
+    <value>Product sheet url</value>
+  </data>
+  <data name="DOK_ProductSpecificationStatus" xml:space="preserve">
+    <value>Product spesification</value>
+  </data>
+  <data name="DOK_ProductSpecificationUrl" xml:space="preserve">
+    <value>Product specification url</value>
+  </data>
+  <data name="DOK_SpecificUsage" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="DOK_StatusDateAccepted" xml:space="preserve">
+    <value>DOK-status date approved</value>
+  </data>
+  <data name="ServiceUuid" xml:space="preserve">
+    <value>Serice uuid</value>
+  </data>
+  <data name="DOK_Nasjonalt_SelectMunicipality" xml:space="preserve">
+    <value>Select municipality</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>The municipality has {0} confirmed that registration has been completed for the year</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>The municipality is working to complete the registration for the year</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>not</value>
+  </data>
+  <data name="DOK_DeliveryStatusHeading" xml:space="preserve">
+    <value>Delivery status</value>
+  </data>
+  <data name="DOK_EvaluationCriteria" xml:space="preserve">
+    <value>Evaluation criteria</value>
+  </data>
+  <data name="AutoUpdatelabel" xml:space="preserve">
+    <value>Auto-&lt;br /&gt;oppdater</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="DeleteDataset" xml:space="preserve">
+    <value>Delete dataset</value>
+  </data>
+  <data name="DisplayKartkatalogen" xml:space="preserve">
+    <value>Display in catalog</value>
+  </data>
+  <data name="DOK_AssessmentPoint" xml:space="preserve">
+    <value>Assessment point</value>
+  </data>
+  <data name="DOK_Confirmed" xml:space="preserve">
+    <value>Confirmed</value>
+  </data>
+  <data name="DOK_Coverage" xml:space="preserve">
+    <value>Coverage</value>
+  </data>
+  <data name="DOK_GeneralLink" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="DOK_MunicipalityNote" xml:space="preserve">
+    <value>Municipality note</value>
+  </data>
+  <data name="DOK_Owner" xml:space="preserve">
+    <value>Dataset owner</value>
+  </data>
+  <data name="DOK_StatusValueHeader" xml:space="preserve">
+    <value>Status value</value>
+  </data>
+  <data name="DOK_SuitabilityRating" xml:space="preserve">
+    <value>Suitability Rating</value>
+  </data>
+  <data name="GetInfoKartkatalog" xml:space="preserve">
+    <value>Get information from the map directory</value>
+  </data>
+  <data name="GoTo" xml:space="preserve">
+    <value>Go to</value>
+  </data>
+  <data name="ListOfDatasets" xml:space="preserve">
+    <value>List of data sets</value>
+  </data>
+  <data name="MetadataEditor" xml:space="preserve">
+    <value>metadata editor</value>
+  </data>
+  <data name="ProductInformation" xml:space="preserve">
+    <value>Product information</value>
+  </data>
+  <data name="RegionType" xml:space="preserve">
+    <value>Region type</value>
+  </data>
+  <data name="SuggestNewDataset" xml:space="preserve">
+    <value>Suggest new dataset</value>
+  </data>
+  <data name="ToEditMetadata" xml:space="preserve">
+    <value>to edit metadata</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>update</value>
+  </data>
+  <data name="DOK_OwnerRequired" xml:space="preserve">
+    <value>This field is required</value>
+  </data>
+  <data name="ErrorMessageValidationDataset" xml:space="preserve">
+    <value>The data set already exists!</value>
+  </data>
+  <data name="MunicipalConfirmation" xml:space="preserve">
+    <value>Municipal confirmation</value>
+  </data>
+  <data name="DisplayInfoRegistration" xml:space="preserve">
+    <value>Show instructions for registration</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>The Public Map Data (DOK) - nationally</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Background color</value>
+  </data>
+  <data name="Coverage" xml:space="preserve">
+    <value>Confirm DOK</value>
+  </data>
+  <data name="LoadingCoverage" xml:space="preserve">
+    <value>Loading DOK</value>
+  </data>
+  <data name="LoadingSuitability" xml:space="preserve">
+    <value>Loading suitability</value>
+  </data>
+  <data name="SetStatus" xml:space="preserve">
+    <value>set status</value>
+  </data>
+  <data name="Suitability" xml:space="preserve">
+    <value>Suitability</value>
+  </data>
+  <data name="SuitabilityArealText" xml:space="preserve">
+    <value>Municipal-plan land use part</value>
+  </data>
+  <data name="SuitabilityArealTitle" xml:space="preserve">
+    <value>Processes related to the municipal area</value>
+  </data>
+  <data name="SuitabilityByggesakText" xml:space="preserve">
+    <value>Building Matters</value>
+  </data>
+  <data name="SuitabilityByggesakTitle" xml:space="preserve">
+    <value>Building Matters</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringText" xml:space="preserve">
+    <value>Regulatory planning - detailed</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringTitle" xml:space="preserve">
+    <value>Regulatory planning - detailed regulation</value>
+  </data>
+  <data name="SuitabilityFradelingText" xml:space="preserve">
+    <value>Deallocation</value>
+  </data>
+  <data name="SuitabilityFradelingTitle" xml:space="preserve">
+    <value>Deallocation</value>
+  </data>
+  <data name="SuitabilityKUText" xml:space="preserve">
+    <value>KU and ROS for pbl plans</value>
+  </data>
+  <data name="SuitabilityKUTitle" xml:space="preserve">
+    <value>KU impact assessments in connection with area plans</value>
+  </data>
+  <data name="SuitabilityNoteTitle" xml:space="preserve">
+    <value>Must be entered on data one choose not to include, can also be used for other data sets</value>
+  </data>
+  <data name="SuitabilityOmraadeText" xml:space="preserve">
+    <value>Regulatory Area</value>
+  </data>
+  <data name="SuitabilityOmraadeTitle" xml:space="preserve">
+    <value>Regulatory planning - area regulation</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingText" xml:space="preserve">
+    <value>Regional plan</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingTitle" xml:space="preserve">
+    <value>Region Planning</value>
+  </data>
+  <data name="SuitabilitySamfunnText" xml:space="preserve">
+    <value>Municipal plan community</value>
+  </data>
+  <data name="SuitabilitySamfunnTitle" xml:space="preserve">
+    <value>Processes related to the municipal plan's social section</value>
+  </data>
+  <data name="SuitabilityText" xml:space="preserve">
+    <value>Text about suitability, tips for use or other comments</value>
+  </data>
+  <data name="SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt; Municipal proposal for use based on suitability &lt;/b&gt; &lt;br /&gt;
+Here you can enter the municipality's assessment of suitability for each of the datasets. Different municipalities have different challenges and this can affect the assessment of suitability. Registration is not mandatory, but is voluntary to use, it must be a tool for the municipality's own work with DOK. Overall national proposals have been submitted. This proposal is only meant to be grossly guiding from professionals' knowledge of the dataset and knowledge of the tasks and processes to be solved according to the Planning and Building Act. As the quality and coverage of a data set can vary considerably from one municipality to another and one region to another, the municipalities themselves must consider suitability based on the available data for their municipality. The suitability assessment can be made for use in these processes:
+                                    &lt;ul&gt;
+                                        &lt;li&gt; Region Scheduling &lt;/li&gt;
+                                        &lt;li&gt; Processes related to the community plan community &lt;/li&gt;
+                                        &lt;li&gt; Processes associated with the area plan area &lt;/li&gt;
+                                        &lt;li&gt; Regulation Planning - Site Control &lt;/li&gt;
+                                        &lt;li&gt; Regulation Planning - Detail Regulation &lt;/li&gt;
+                                        &lt;li&gt; The building matters &lt;/li&gt;
+                                        &lt;li&gt; deallocation &lt;/li&gt;
+                                        &lt;li&gt; Co-impact assessments in connection with area plans &lt;/li&gt;
+                                    &lt;/ul&gt;
+Check for the type of tasks you use, or use the dataset. Higher intensity of background color in the checkboxes indicates better suitability based on overall national assessments.</value>
+  </data>
+  <data name="SuitabitityHelpTextBtn" xml:space="preserve">
+    <value>Show instructions for registration</value>
+  </data>
+  <data name="AdditionalDatasetsSelected" xml:space="preserve">
+    <value>Valgte tilleggsdatasett</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfo" xml:space="preserve">
+    <value>If the dataset already exists in Geonorge, search for data sets and register it for your municipality</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfoRegisterMetadata" xml:space="preserve">
+    <value>Register new metadata</value>
+  </data>
+  <data name="SuggestNewDatasetMunicipality" xml:space="preserve">
+    <value>Add extra DOK data sets for your municipality</value>
+  </data>
+  <data name="DOK_SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt; DOK National Appraisal Assessment &lt;/b&gt; &lt;br /&gt;
+&lt;p&gt;Here are the overall national fitness assessments recorded. These are only grossly guiding assessments based on the knowledge of the professionals to the data set and knowledge of the tasks and processes that are to be solved according to the Planning and Building Act.
+As a data set quality and coverage can vary considerably from site to area, the assessments are considered rough and approximate and may differ significantly for specific municipalities or locations.&lt;/p&gt;
+                &lt;p&gt;&lt;u&gt;Appraisal assessment is made for these processes: &lt;/u&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt; Region Scheduling &lt;/li&gt;
+                        &lt;li&gt; Processes related to the community plan community &lt;/li&gt;
+                        &lt;li&gt; Processes associated with the area plan area &lt;/li&gt;
+                        &lt;li&gt; Regulation Planning - Site Control &lt;/li&gt;
+                        &lt;li&gt; Regulation Planning - Detail Regulation &lt;/li&gt;
+                        &lt;li&gt; The building matters &lt;/li&gt;
+                        &lt;li&gt; deallocation &lt;/li&gt;
+                        &lt;li&gt; Co-impact assessments in connection with area plans &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;
+                &lt;p&gt;The suitability assessment is given in the form of values ​​1-5, and comments can be added as well&lt;ul style = "list-style: none"&gt;
+                        &lt;li&gt; 1 = Not suitable &lt;/li&gt;
+                        &lt;li&gt; 2 = A little suitable &lt;/li&gt;
+                        &lt;li&gt; 3 = Medium-term &lt;/li&gt;
+                        &lt;li&gt; 4 = Good fit &lt;/li&gt;
+                        &lt;li&gt; 5 = Very suitable &lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;</value>
+  </data>
+  <data name="LoadingMessageDataset" xml:space="preserve">
+    <value>Retrieving dataset</value>
+  </data>
+  <data name="Dataset" xml:space="preserve">
+    <value>Dataset</value>
+  </data>
+  <data name="RestrictedData" xml:space="preserve">
+    <value>Restricted data</value>
+  </data>
+</root>

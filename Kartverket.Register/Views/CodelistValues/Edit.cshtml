@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Rediger " + Model.name;
+    ViewBag.Title = Shared.Edit + " " + Model.name;
 }
 
 @section breadcrumb {
@@ -13,14 +13,14 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
     <li><a href="@Model.GetObjectUrl()">@Model.name</a></li>
-    <li>Rediger</li>
+    <li>@Shared.Edit</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Rediger @Model.name
+                @Shared.Edit @Model.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -76,7 +76,7 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.submitterId, "Innsender", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="custom-select">
                     @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "chosen-select form-control" })
@@ -113,8 +113,8 @@
         @if (HtmlHelperExtensions.IsAdmin())
         {
             <hr />
-            <h4>Hierarkiske kodelister</h4>
-            <small>Velg hvilke kodeverdier som skal ligge over og under kodeverdien i hierarkiet</small>
+            <h4>@CodelistValues.HierarchicalCodelists</h4>
+            <small>@CodelistValues.HierarchicalCodelistsSelectionText</small>
             <br /><br />
             <div class="form-group">
                 @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -180,7 +180,6 @@
                             }
                         </select>
                     </div>
-                    <p class="small">Hold Ctrl inne for å velge flere før listen lukkes</p>
                 </div>
             </div>
         }
@@ -188,7 +187,7 @@
     </div>
     <div class="form-group">
         <hr />
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">Tilbake</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 </form>

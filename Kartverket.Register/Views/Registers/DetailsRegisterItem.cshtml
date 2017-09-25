@@ -1,50 +1,22 @@
-﻿@model Kartverket.Register.Models.RegisterItem
 ﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models
+@using Kartverket.Register.Models.ViewModels
+@model RegisterItemV2ViewModel
 
 @{
-    ViewBag.Title = @Model.name;
-    string owner = ViewBag.Owner;
-    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
-    Kartverket.Register.Models.Register parent = Model.register.parentRegister;
-    string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
-    string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
-    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
+    ViewBag.Title = @Model.Name;
 }
 
 @section breadcrumb {
-
-    @if (Model.register.containedItemClass == "Document")
-    {
-        if (parent != null)
-        {
-            <li><a href="@RegisterUrls.registerUrl(null, null, mainRegister.seoname)">@mainRegister.name</a></li>
-            <li>@Model.name</li>
-            <li><a href="@RegisterUrls.registerUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname)">@Model.register.name</a></li>
-            <li><a href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname)">Alle versjoner av @Model.name</a></li>
-            while (parent != null && parent != mainRegister)
-            {
-                <li><a href="@RegisterUrls.registerUrl(parent.parentRegister.seoname, parent.owner.seoname, parent.seoname)">@parent.name</a></li>
-                parent = parent.parentRegister;
-            }
-        }
-        else
-        {
-            <li><a href="@RegisterUrls.registerUrl(null, null, Model.register.seoname)">@Model.register.name</a></li>
-            <li>@Model.name</li>
-            <li><a href="@RegisterUrls.DeatilsDocumentUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname)">Alle versjoner av @Model.name</a></li>
-        }
-    }
-    else
-    {
-        <li><a href="/register/@Model.register.seoname">@Html.DisplayFor(model => model.register.name)</a></li>
-        <li>@Html.DisplayFor(model => model.name)</li>
-    }
+    <li><a href="@Model.Register.GetObjectUrl()">@Html.DisplayFor(model => model.Register.name)</a></li>
+    <li>@Html.DisplayFor(model => model.Name)</li>
 }
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.name)
+                @Html.DisplayFor(model => model.Name)
             </h1>
         </div>
         <div class="col-sm-12">
@@ -53,252 +25,100 @@
     </div>
 </section>
 <div class="row">
-    @if (Model is Kartverket.Register.Models.Dataset)
+    <article class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+        @if (Model.Register.containedItemClass != "NameSpace")
+        { <p> @Model.Description</p>}
+        @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
+        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
+
+        @if (Model.Register.containedItemClass == "NameSpace")
+        { <span>@Registers.Owner: @Model.Submitter.name</span><br>}
+        else
+        {<span>@Registers.Submitter: @Model.Submitter.name</span><br>}
+
+        @if (Model.Owner != null)
+        { <span>@Registers.Owner: @Model.Owner.name</span><br />}
+
+        <span>@Html.DisplayNameFor(m => m.VersionNumber) @Model.VersionNumber</span><br>
+        @if (Model.VersionName != null)
+        {<span>@Html.DisplayNameFor(model => model.VersionName): @Model.VersionName</span><br />}
+
+    </article>
+    <article class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
+        @if (Model.Register.containedItemClass != "Dataset")
+        {
+            if (Model.DateAccepted != null)
+            {
+                <span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
+            }
+            if (Model.DateSuperseded != null)
+            {
+                <br /><span class="small">@Html.DisplayNameFor(model => model.DateSuperseded): @Html.DisplayFor(modelItem => Model.DateSuperseded)</span>
+            }
+            if (Model.DateRetired != null)
+            {
+                <br /><span class="small">@Html.DisplayNameFor(model => model.DateRetired): @Html.DisplayFor(modelItem => Model.DateRetired)</span>
+            }
+            if (Model.DateNotAccepted != null)
+            {
+                <br /><span class="small">@Html.DisplayNameFor(model => model.DateNotAccepted): @Html.DisplayFor(modelItem => Model.DateNotAccepted)</span>
+            }
+        }
+    </article>
+    <hr>
+</div>
+ 
+<div class="row">
+    @if (Model is InspireDatasetViewModel)
     {
-        Kartverket.Register.Models.Dataset dataset = (Kartverket.Register.Models.Dataset)Model;
-        <div>
-            <p> @Model.description</p>
-            @if (!string.IsNullOrEmpty(dataset.SpecificUsage)) { 
-            <h3>Bruksområde</h3>
-            <p> @dataset.SpecificUsage</p>
-            }
-            <h3>DOK-status</h3>
-            <div class="row">
-                <div class="col-md-3">Versjons ID </div><div class="col-md-9">@Model.versionNumber</div>
-            </div>
-            @if (Model.versionName != null)
-            {
-                <div class="row">
-                    <div class="col-md-3">Utgave:</div><div class="col-md-9"> @Model.versionName</div>
-                </div>
-            }
-            @if (dataset.dokStatus != null)
-            {
-                <div class="row">
-                    <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@dataset.dokStatus.description <i class="statusIcon-@dataset.dokStatusId"></i></div>
-                </div>
-            }
-            <div class="row">
-                <div class="col-md-3">DOK-Godkjent:</div><div class="col-md-9"> @Html.DisplayFor(modelItem => dataset.dokStatusDateAccepted)</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Kandidatdato:</div><div class="col-md-9"> @Html.DisplayFor(model => dataset.Kandidatdato)</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Endret:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
-            </div>
-            <div class="row">
-                <div class="col-md-3">Innsender:</div><div class="col-md-9"> @Model.submitter.name</div>
-            </div>
-            @if (owner != null)
-            {
-                <div class="row">
-                    <div class="col-md-3">Eier:</div><div class="col-md-9"> @owner</div>
-                </div>
-            }
-            @if (dataset.DatasetType != null)
-            {
-                <div class="row">
-                    <div class="col-md-3">Type datasett:</div><div class="col-md-9"> @dataset.DatasetType</div>
-                </div>
-            }
-            @if (dataset.theme != null)
-            {
-                <div class="row">
-                    <div class="col-md-3">Temagruppe:</div><div class="col-md-9"> @dataset.theme.description</div>
-                </div>
-            }
-
-            <div class="row col-sm-12">
-                <span class="separator-lg"></span>
-            </div>
-
-            <h3>Leveransestatus</h3>
-            <div class="row">
-                <div class="col-md-12"><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">Vurderingskriterier</a></div>
-            </div>
-            <p></p>
-            <div class="register dataset search-results-table-heading">
-                <div class="row">
-                    <div class="col-md-3">VURDERINGSPUNKT</div><div class="col-md-2">STATUSVERDI</div><div class="col-md-7">KOMMENTAR</div>
-                </div>
-                <div class="menu-separator search-results-table-heading"></div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryMetadataStatusId)</div><div class="col-md-2"> @Html.DisplayFor(model => dataset.dokDeliveryMetadataStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryMetadataStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSheetStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryProductSheetStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryPresentationRulesStatusId) </div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryPresentationRulesStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryProductSpecificationStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryProductSpecificationStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWmsStatusId)</div>
-                    <div class="col-md-2">
-                        @if (dataset.restricted == true)
-                        {
-                            <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => dataset.dokDeliveryWmsStatus.description)
-                        }
-                    </div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryWmsStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryWfsStatusId)</div>
-                    <div class="col-md-2">
-                        @if (dataset.restricted == true)
-                        {
-                            <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(model => dataset.dokDeliveryWfsStatus.description)
-                        }
-                    </div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryWfsStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliverySosiRequirementsStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliverySosiRequirementsStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliverySosiRequirementsStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryDistributionStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryDistributionStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryDistributionStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryGmlRequirementsStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryGmlRequirementsStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryGmlRequirementsStatusNote)</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">@Html.DisplayNameFor(model => dataset.dokDeliveryAtomFeedStatusId)</div>
-                    <div class="col-md-2">@Html.DisplayFor(model => dataset.dokDeliveryAtomFeedStatus.description)</div>
-                    <div class="col-md-7">@Html.DisplayFor(model => dataset.dokDeliveryAtomFeedStatusNote)</div>
-                </div>
-
-            </div>
-
-            @if (!string.IsNullOrWhiteSpace(dataset.MetadataUrl))
-            {
-                <h3>Produktinformasjon</h3>
-                <p><a href="@dataset.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> Vis i kartkatalogen</a></p>
-            }
-        </div>
+        @Html.Partial("_detailsInspireDataset")
     }
-    else
+    else if (Model.RegisterItem is Dataset)
     {
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-                @if (Model.register.containedItemClass != "NameSpace")
-                { <p> @Model.description</p>}
-                @if (Model.register.containedItemClass != "Dataset")
-                { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.description <i class="statusIcon-@Model.statusId"></i></span><br>}
-
-                @if (Model.register.containedItemClass == "NameSpace")
-                { <span>Eier: @Model.submitter.name</span><br>}
-                else
-                {<span>Innsender: @Model.submitter.name</span><br>}
-
-                @if (owner != null)
-                { <span>Eier: @owner</span><br />}
-
-                <span>Versjons ID @Model.versionNumber</span><br>
-                @if (Model.versionName != null)
-                {<span>Utgave: @Model.versionName</span><br />}
-
-            </div>
-            <div class="col-no-padding-xs col-xs-12 col-sm-2 col-md-2 col-lg-2">
-                @*<span class="small">Innsendt: @Html.DisplayFor(model => model.dateSubmitted)</span><br>*@
-                <span class="small">Endret: @Html.DisplayFor(model => model.modified)</span>
-                @if (Model.register.containedItemClass != "Dataset")
-                {
-                    if (Model.dateAccepted != null)
-                    {
-                        <span class="small">Godkjent: @Html.DisplayFor(modelItem => Model.dateAccepted)</span>
-                    }
-                    if (Model.dateSuperseded != null)
-                    {
-                        <br /><span class="small">Erstattet: @Html.DisplayFor(modelItem => Model.dateSuperseded)</span>
-                    }
-                    if (Model.DateRetired != null)
-                    {
-                        <br /><span class="small">Utgått: @Html.DisplayFor(modelItem => Model.DateRetired)</span>
-                    }
-                    if (Model.dateNotAccepted != null)
-                    {
-                        <br /><span class="small">Utkast: @Html.DisplayFor(modelItem => Model.dateNotAccepted)</span>
-                    }
-                }
-            </div>
-
-            <div class="col-no-padding-xs col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <hr>
-            </div>
-            <br />
-
-            @if (Model.register.containedItemClass == "Organization")
-            {
-                @Html.Partial("_detailsOrganization")
-            }
-            @if (Model.register.containedItemClass == "Document")
-            {
-                @Html.Partial("_detailsDocuments")
-            }
-            @if (Model.register.containedItemClass == "EPSG")
-            {
-                @Html.Partial("_detailsEpsg")
-            }
-            @if (Model.register.containedItemClass == "Register")
-            {
-                @Html.Partial("_detailsSubregister")
-            }
-            @if (Model.register.containedItemClass == "CodelistValue")
-            {
-                @Html.Partial("_detailsCodelistValue")
-            }
-            @if (Model.register.containedItemClass == "NameSpace")
-            {
-                @Html.Partial("_detailsNameSpace")
-            }
-            @if (Model.register.containedItemClass == "ServiceAlert")
-            {
-                @Html.Partial("_detailsServiceAlert")
-            }
-
-        </div>
+        @Html.Partial("_detailsDataset", (Dataset)Model.RegisterItem)
     }
+    else if (Model.RegisterItem is Organization)
+    {
+        @Html.Partial("_detailsOrganization", (Organization)Model.RegisterItem)
+    }
+    else if (Model.RegisterItem is Document)
+    {
+        @Html.Partial("_detailsDocuments", (Document)Model.RegisterItem)
+    }
+    else if (Model.RegisterItem is EPSG)
+    {
+        @Html.Partial("_detailsEpsg", (EPSG)Model.RegisterItem)
+    }
+    else if (Model.RegisterItem is CodelistValue)
+    {
+        @Html.Partial("_detailsCodelistValue", (CodelistValue)Model.RegisterItem)
+    }
+    else if (Model.RegisterItem is NameSpace)
+    {
+        @Html.Partial("_detailsNameSpace", (NameSpace)Model.RegisterItem)
+    }
+    else if (Model.RegisterItem is ServiceAlert)
+    {
+        @Html.Partial("_detailsServiceAlert", (ServiceAlert)Model.RegisterItem)
+    }
+</div>
 
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
+    <div class="hidden-print">
         <hr />
 
         @if (Request.IsAuthenticated)
         {
-            if (!Model.register.IsServiceAlertRegister())
+            if (!Model.Register.IsServiceAlertRegister())
             {
-                if (HtmlHelperExtensions.AccessEdit(Model))
+                if (HtmlHelperExtensions.Access(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">Rediger</a>
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">Slett</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         }
 
-        <a class="hidden-print" href="@Model.register.GetObjectUrl()">Tilbake</a>
+        <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
     </div>
-</div>

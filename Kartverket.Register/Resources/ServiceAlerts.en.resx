@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlertDate" xml:space="preserve">
+    <value>Alert date</value>
+  </data>
+  <data name="AlertDateErrorMessage" xml:space="preserve">
+    <value>Alert date is required</value>
+  </data>
+  <data name="AlertDateValidationMessage" xml:space="preserve">
+    <value>Notice date should not be set back in time</value>
+  </data>
+  <data name="AlertType" xml:space="preserve">
+    <value>Alert type</value>
+  </data>
+  <data name="AlertTypeErrorMessage" xml:space="preserve">
+    <value>Alert type is required</value>
+  </data>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>Effective date</value>
+  </data>
+  <data name="EffectiveDateErrorMessage" xml:space="preserve">
+    <value>Effective date is required</value>
+  </data>
+  <data name="HelpTextAlertdate" xml:space="preserve">
+    <value>Here you choose the date the notice is registered in Geonorge. The system proposes today's date. When you press the "Publish" button, the notification will be immediately available to anyone who follows service notifications, regardless of the date you selected in this field.</value>
+  </data>
+  <data name="HelpTextAlerttype" xml:space="preserve">
+    <value>Select a type of alert from the drop-down list. If you can not find an appropriate type of alert, please email &lt;a href="mailto:post@norgedigitalt.no"&gt; post@norgedigitalt.no &lt;/a&gt; and promote your wish for new types of alerts. But keep in mind that for users who receive the notifications, the alert type must be as specific and precise as possible, while it may be confusing with too many different types of notification. Often it is good enough with a warning type that covers a slightly larger subject. Therefore, try to use the suggested alert types and give an in-depth explanation in the field of "The alert message".</value>
+  </data>
+  <data name="HelpTextEffectivedate" xml:space="preserve">
+    <value>Here you choose the date when the service will be changed. In Norway digitally there is 3 months notification time for changing or removing services. The system therefore proposes a date 3 months ahead of time for this field.</value>
+  </data>
+  <data name="HelpTextNote" xml:space="preserve">
+    <value>Here you enter what specific changes will be made to the service that this notification includes. If the notification concerns the change of a URL, you should specify what the new URL will be.
+If the notification concerns a change in data quality or data structure, you should state what these changes mean so that users / developers can update their clients in line with the changes.
+In all cases, it is also advisable to state the reason for the changes, as users are often more understandable for changes if they receive information about why it is necessary to change the service.</value>
+  </data>
+  <data name="HelpTextServiceuuid" xml:space="preserve">
+    <value>Select a service from the drop-down list. You can only select a service that is already registered in Geonorge. If the service you wish to enter a new notice for not found in the drop down list, you must register the service in Geonorge via the metadata editor and your BAAT user.</value>
+  </data>
+  <data name="LastAlert" xml:space="preserve">
+    <value>Last alert</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>The alert message</value>
+  </data>
+  <data name="NoteErrorMessage" xml:space="preserve">
+    <value>The alert message is required</value>
+  </data>
+  <data name="Service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="ServiceDesription" xml:space="preserve">
+    <value>Service desription</value>
+  </data>
+  <data name="ServiceName" xml:space="preserve">
+    <value>Service name</value>
+  </data>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Service type</value>
+  </data>
+  <data name="ServiceTypeErrorMessage" xml:space="preserve">
+    <value>Service type is required</value>
+  </data>
+  <data name="SubscribeServiceAlert" xml:space="preserve">
+    <value>Subscribe to service notifications</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Suggest a new service alert</value>
+  </data>
+</root>

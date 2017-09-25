@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -21,8 +22,9 @@ namespace Kartverket.Register.Services.RegisterItem
         List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item);
         List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner);
         Guid NewVersioningGroup(Models.RegisterItem registerItem);
+        Guid NewVersioningGroup(RegisterItemV2 registerItems);
         Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null);
-        bool validateName(Object model);
+        bool ItemNameAlredyExist(Object model);
         void SaveNewRegisterItem(Models.RegisterItem registerItem);
         void SaveEditedRegisterItem(Models.RegisterItem registerItem);
         void SaveDeleteRegisterItem(Models.RegisterItem registerItem);
@@ -50,5 +52,7 @@ namespace Kartverket.Register.Services.RegisterItem
         /// <param name="municipality"></param>
         /// <returns></returns>
         string GetDOKMunicipalStatus(Models.RegisterItem municipality);
+
+        ICollection<RegisterItemV2ViewModel> OrderBy(ICollection<RegisterItemV2ViewModel> registerItems, string sorting);
     }
 }

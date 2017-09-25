@@ -6,50 +6,31 @@
 @{
     if (!string.IsNullOrWhiteSpace(Model.Text))
     {
-        ViewBag.Title = "Søk etter " + Model.Text;
+        ViewBag.Title = Shared.SearchFor + " " + Model.Text;
     }
     else
     {
-        ViewBag.Title = "Søk";
+        ViewBag.Title = Shared.Search;
     }
 }
 
 @helper DisplayPagination()
 {
-    <p class="text-right">Viser @Model.ShowingFromAndTo() av @Model.NumFound treff.</p>
+    <p class="text-right">@Registers.HitsDisplay @Model.ShowingFromAndTo() @Registers.HitsOf @Model.NumFound @Registers.Hits.</p>
     <nav class="text-right">
         <ul class="pagination">
             @if (Model.IsPreviousButtonActive())
             {
-                <li><a href="@Url.Action("Index", Model.ParamsForPreviousLink())">&laquo; Forrige</a></li>
+                <li><a href="@Url.Action("Index", Model.ParamsForPreviousLink())">&laquo; @Shared.Previous</a></li>
             }
             @if (Model.IsNextButtonActive())
             {
-                <li><a href="@Url.Action("Index", Model.ParamsForNextLink())">Neste &raquo;</a></li>
+                <li><a href="@Url.Action("Index", Model.ParamsForNextLink())">@Shared.Next &raquo;</a></li>
             }
         </ul>
     </nav>
 }
 
-@section scripts {
-    <script>
-        $('ul.facet').each(function () {
-            var max = 50;
-            if ($(this).find("li").length > max) {
-                $(this)
-                  .find('li:gt(' + max + ')')
-                  .hide()
-                  .end()
-                  .append(
-                    $('<li/>').append('<a href="">Vis flere</a>').click(function (event) {
-                        event.preventDefault();
-                        $(this).siblings(':hidden').show().end().remove();
-                    })
-                );
-            }
-        });
-    </script>
-}
 @Html.Partial("_SearchBarPartial")
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -66,10 +47,10 @@
         <table class="table table-responsive">
             <tr>
                 <th>
-                    Navn
+                    @Registers.Name
                 </th>
                 <th>
-                    Beskrivelse
+                    @Registers.Description
                 </th>
                 <th>
                     Type
@@ -132,23 +113,23 @@
                             <td width="10%">
                                 @if (item.Discriminator == "Organization" && item.RegisterItemName != null)
                                 {
-                                    <span>Organisasjon</span>
+                                    <span>@Organizations.Organization</span>
                                 }
                                 @if (item.Discriminator == "Dataset" && item.RegisterItemName != null)
                                 {
-                                    <span>Datasett</span>
+                                    <span>@DataSet.Dataset</span>
                                 }
                                 @if (item.Discriminator == "Document" && item.RegisterItemName != null)
                                 {
-                                    <span>Dokument</span>
+                                    <span>@Documents.Document</span>
                                 }
                                 @if (item.Discriminator == "CodelistValue" && item.RegisterItemName != null)
                                 {
-                                    <span>Kode</span>
+                                    <span>@CodelistValues.CodeValue</span>
                                 }
                                 @if (item.Discriminator == "EPSG" && item.RegisterItemName != null)
                                 {
-                                    <span>Epsg-kode</span>
+                                    <span>@EPSGs.EpsgCode</span>
                                 }
                                 @if (item.Discriminator == "Objektregister")
                                 {
@@ -160,7 +141,7 @@
                                 }
                                 @if (item.Discriminator == "NameSpace")
                                 {
-                                    <span>Navnerom</span>
+                                    <span>@Namespace.NamespaceName</span>
                                 }
 
                             </td>

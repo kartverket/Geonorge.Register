@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Collections;
 using System.Web.Mvc;
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -28,47 +29,48 @@ namespace Kartverket.Register.Models
         [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
 
-        [Required(ErrorMessage = "Dette feltet er påkrevd")]
+        [Required(ErrorMessageResourceType = typeof(DataSet), ErrorMessageResourceName = "DOK_OwnerRequired")]
         [ForeignKey("datasetowner")]
+        [Display(Name = "DOK_Owner", ResourceType = typeof(DataSet))]
         public Guid datasetownerId { get; set; }
         public virtual Organization datasetowner { get; set; }
 
-        [Display(Name = "Merknad:")]
+        [Display(Name = "DOK_Note", ResourceType = typeof(DataSet))]
         public string Notes { get; set; }
 
-        [Display(Name = "Bruksområde:")]
+        [Display(Name = "DOK_SpecificUsage", ResourceType = typeof(DataSet))]
         public string SpecificUsage { get; set; }
 
-        [Display(Name = "Produktark url:")]
+        [Display(Name = "DOK_ProductSheetUrl", ResourceType = typeof(DataSet))]
         public string ProductSheetUrl { get; set; }
 
-        [Display(Name = "Presentasjonsregler url:")]
+        [Display(Name = "DOK_PresentationRulesUrl", ResourceType = typeof(DataSet))]
         public string PresentationRulesUrl { get; set; }
 
-        [Display(Name = "Produktspesifikasjon url:")]
+        [Display(Name = "DOK_ProductSpecificationUrl", ResourceType = typeof(DataSet))]
         public string ProductSpecificationUrl { get; set; }
 
         [Display(Name = "Metadata url:")]
         public string MetadataUrl { get; set; }
 
-        [Display(Name = "Distribusjonsformat:")]
+        [Display(Name = "DOK_Distribusjonsformat", ResourceType = typeof(DataSet))]
         public string DistributionFormat { get; set; }
 
-        [Display(Name = "Distribusjon url:")]
+        [Display(Name = "DOK_DistributionUrl", ResourceType = typeof(DataSet))]
         public string DistributionUrl { get; set; }
 
-        [Display(Name = "Distribusjonsområde:")]
+        [Display(Name = "DOK_DistributionArea", ResourceType = typeof(DataSet))]
         public string DistributionArea { get; set; }
 
         [Display(Name = "WMS url:")]
         public string WmsUrl { get; set; }
 
-        [Display(Name = "Tema:")]
+        [Display(Name = "DOK_Temagruppe", ResourceType = typeof(DataSet))]
         [ForeignKey("theme")]
         public string ThemeGroupId { get; set; }
         public virtual DOKTheme theme { get; set; }
 
-        [Display(Name = "Miniatyrbilde:")]
+        [Display(Name = "DOK_Datasetthumbnail", ResourceType = typeof(DataSet))]
         public string datasetthumbnail { get; set; }
 
         [ForeignKey("dokStatus")]
@@ -76,14 +78,15 @@ namespace Kartverket.Register.Models
         public string dokStatusId { get; set; }
         public virtual DokStatus dokStatus { get; set; }
 
-        [Display(Name = "DOK-status godkjent:")]
+        [Display(Name = "DOK_StatusDateAccepted", ResourceType = typeof(DataSet))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dokStatusDateAccepted { get; set; }
 
-        [Display(Name = "Kandidatdato:")]
+        [Display(Name = "DOK_Kandidatdato", ResourceType = typeof(DataSet))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Kandidatdato { get; set; } = new DateTime(DateTime.Now.Year, 1, 1);
 
+        [Display(Name = "DOK_DatasetType", ResourceType = typeof(DataSet))]
         public string DatasetType { get; set; }
 
         public virtual List<CoverageDataset> Coverage { get; set; }
@@ -91,70 +94,70 @@ namespace Kartverket.Register.Models
         //Dok delivery statuses
         //Metadata
         [ForeignKey("dokDeliveryMetadataStatus")]
-        [Display(Name = "Metadatakvalitet:")]
+        [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
         public string dokDeliveryMetadataStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryMetadataStatus { get; set; }
         public string dokDeliveryMetadataStatusNote { get; set; }
         public bool dokDeliveryMetadataStatusAutoUpdate { get; set; } = true;
         //ProductSheet
         [ForeignKey("dokDeliveryProductSheetStatus")]
-        [Display(Name = "Produktark:")]
+        [Display(Name = "DOK_ProductSheetStatus", ResourceType = typeof(DataSet))]
         public string dokDeliveryProductSheetStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSheetStatus { get; set; }
         public string dokDeliveryProductSheetStatusNote { get; set; }
         public bool dokDeliveryProductSheetStatusAutoUpdate { get; set; } = true;
         //PresentationRules
         [ForeignKey("dokDeliveryPresentationRulesStatus")]
-        [Display(Name = "Kartografidokumentasjon:")]
+        [Display(Name = "DOK_PresentationRulesStatus", ResourceType = typeof(DataSet))]
         public string dokDeliveryPresentationRulesStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryPresentationRulesStatus { get; set; }
         public string dokDeliveryPresentationRulesStatusNote { get; set; }
         public bool dokDeliveryPresentationRulesStatusAutoUpdate { get; set; } = true;
         //ProductSpecification
         [ForeignKey("dokDeliveryProductSpecificationStatus")]
-        [Display(Name = "Produktspesifikasjon:")]
+        [Display(Name = "DOK_ProductSpecificationStatus", ResourceType = typeof(DataSet))]
         public string dokDeliveryProductSpecificationStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryProductSpecificationStatus { get; set; }
         public string dokDeliveryProductSpecificationStatusNote { get; set; }
         public bool dokDeliveryProductSpecificationStatusAutoUpdate { get; set; } = true;
         //WMS
         [ForeignKey("dokDeliveryWmsStatus")]
-        [Display(Name = "WMS-tjeneste:")]
+        [Display(Name = "DOK_Delivery_Wms", ResourceType = typeof(DataSet))]
         public string dokDeliveryWmsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWmsStatus { get; set; }
         public string dokDeliveryWmsStatusNote { get; set; }
         public bool dokDeliveryWmsStatusAutoUpdate { get; set; } = true;
         //WFS
         [ForeignKey("dokDeliveryWfsStatus")]
-        [Display(Name = "WFS-tjeneste:")]
+        [Display(Name = "DOK_Delivery_Wfs", ResourceType = typeof(DataSet))]
         public string dokDeliveryWfsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryWfsStatus { get; set; }
         public string dokDeliveryWfsStatusNote { get; set; }
         public bool dokDeliveryWfsStatusAutoUpdate { get; set; } = true;
         //Distribution
         [ForeignKey("dokDeliveryDistributionStatus")]
-        [Display(Name = "Filnedlasting:")]
+        [Display(Name = "DOK_Delivery_Distribution", ResourceType = typeof(DataSet))]
         public string dokDeliveryDistributionStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryDistributionStatus { get; set; }
         public string dokDeliveryDistributionStatusNote { get; set; }
         public bool dokDeliveryDistributionStatusAutoUpdate { get; set; } = true;
         //SOSI requirements
         [ForeignKey("dokDeliverySosiRequirementsStatus")]
-        [Display(Name = "SOSI-krav:")]
+        [Display(Name = "DOK_Delivery_SosiRequirements", ResourceType = typeof(DataSet))]
         public string dokDeliverySosiRequirementsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliverySosiRequirementsStatus { get; set; }
         public string dokDeliverySosiRequirementsStatusNote { get; set; }
         public bool dokDeliverySosiStatusAutoUpdate { get; set; } = true;
         //GML requirements
         [ForeignKey("dokDeliveryGmlRequirementsStatus")]
-        [Display(Name = "GML-krav:")]
+        [Display(Name = "DOK_Delivery_GmlRequirements", ResourceType = typeof(DataSet))]
         public string dokDeliveryGmlRequirementsStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryGmlRequirementsStatus { get; set; }
         public string dokDeliveryGmlRequirementsStatusNote { get; set; }
         public bool dokDeliveryGmlRequirementsStatusAutoUpdate { get; set; } = true;
         //Atom-feed
         [ForeignKey("dokDeliveryAtomFeedStatus")]
-        [Display(Name = "Atom-feed:")]
+        [Display(Name = "DOK_Delivery_AtomFeed", ResourceType = typeof(DataSet))]
         public string dokDeliveryAtomFeedStatusId { get; set; }
         public virtual DokDeliveryStatus dokDeliveryAtomFeedStatus { get; set; }
         public string dokDeliveryAtomFeedStatusNote { get; set; }
@@ -162,7 +165,7 @@ namespace Kartverket.Register.Models
 
         public bool? restricted { get; set; }
 
-        [Display(Name = "Tjeneste Uuid:")]
+        [Display(Name = "ServiceUuid", ResourceType = typeof(DataSet))]
         public string UuidService { get; set; }
 
         // DOK Suitability Rating

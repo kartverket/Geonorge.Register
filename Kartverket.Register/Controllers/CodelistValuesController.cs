@@ -13,6 +13,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Translation;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -71,7 +72,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
                 {
-                    ModelState.AddModelError("ErrorMessagefile", "Filen har feil innhold!");
+                    ModelState.AddModelError("ErrorMessagefile", CodelistValues.ErrorMessagefile);
                     ViewbagImport(register);
                     return View();
                 }
@@ -121,7 +122,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(codelistValue.register))
                 {
-                    if (!_registerItemService.validateName(codelistValue))
+                    if (!_registerItemService.ItemNameAlredyExist(codelistValue))
                     {
                         ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                         return View(codelistValue);
@@ -376,7 +377,7 @@ namespace Kartverket.Register.Controllers
 
             if (!string.IsNullOrWhiteSpace(codelistValue.value))
             {
-                if (_registerItemService.validateName(codelistValue))
+                if (_registerItemService.ItemNameAlredyExist(codelistValue))
                 {
                     SetCodelistValueSubmitter(codelistValue);
                     codelistValue.modified = DateTime.Now;
@@ -421,7 +422,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(CodelistValue codelistValue)
         {
-            return _registerItemService.validateName(codelistValue);
+            return _registerItemService.ItemNameAlredyExist(codelistValue);
         }
 
         private void initialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader, CodelistValue originalCodelistValue)

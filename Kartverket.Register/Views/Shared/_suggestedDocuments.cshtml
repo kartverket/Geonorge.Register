@@ -5,20 +5,20 @@
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     @if (Model.suggestions.Count() == 0)
     {
-        <p>Ingen foreslåtte dokumenter av @Model.currentVersion.name</p>
+        <p>@Documents.NoSuggestedDocuments @Model.currentVersion.name</p>
     }
     else
     {
         <table class="table table-responsive">
             <tr>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Tittel
+                    @Shared.Title
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Eier
+                    @Registers.Owner
                 </th>
                 <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Utgave
+                    @Registers.VersionName
                 </th>
                 @*<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Innsendt
@@ -34,10 +34,10 @@
                     <td>
                         <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
                     </td>
-                    <td title="Eier: @item.documentowner.name">
+                    <td title="@Registers.Owner: @item.documentowner.name">
                         @Html.DisplayFor(modelItem => item.documentowner.name)
                     </td>
-                    <td title="Utgave: @item.versionName">
+                    <td title="@Registers.VersionName: @item.versionName">
                         @Html.DisplayFor(modelItem => item.versionName)
                     </td>
                     @*<td title="Innsendt: @item.dateSubmitted">

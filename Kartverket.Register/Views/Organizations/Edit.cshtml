@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Rediger " + Model.name;
+    ViewBag.Title = Shared.Edit + " " + Model.name;
 }
 
 @section breadcrumb {
@@ -13,14 +13,14 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
     <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
-    <li>Rediger</li>
+    <li>@Shared.Edit</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Rediger @Model.name
+                @Shared.Edit @Model.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -40,10 +40,10 @@
         @Html.Partial("_Fields", Model)
         
         <hr />
-        <h3>Administrasjon</h3>
+        <h3>@Organizations.Administration</h3>
         
         <div class="form-group">
-            <label class="control-label col-md-2" for="SubmitterID">Innsender: </label>
+            <label class="control-label col-md-2" for="SubmitterID">@Registers.Submitter: </label>
             <div class="col-md-10">
                 @Html.DropDownList("SubmitterID", null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.submitterId)
@@ -66,8 +66,8 @@
     </div>
     <div class="form-group">
         <hr />
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">Tilbake</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 
 }

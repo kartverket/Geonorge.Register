@@ -2,7 +2,7 @@
 @using PagedList.Mvc;
 @using Kartverket.Register.Models
 
-Viser @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage av @Model.TotalItemCount treff
+@Registers.HitsDisplay @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage @Registers.HitsOf @Model.TotalItemCount @Registers.Hits
 
 @Html.PagedListPager(Model, page => Request.Path + "?page=" + page
 + (!string.IsNullOrEmpty(ViewBag.SortOrder) ? "&sorting=" + ViewBag.SortOrder : "")
@@ -11,5 +11,3 @@ Viser @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItem
 + (Session["filterHorisontalt"] != null && !string.IsNullOrEmpty(Session["filterHorisontalt"].ToString()) ? "&filterHorisontalt=" + Session["filterHorisontalt"].ToString() : "")
 + (Session["municipality"] != null && !string.IsNullOrEmpty(Session["municipality"].ToString()) ? "&municipality=" + Session["municipality"] : "")
 , new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })
-
-

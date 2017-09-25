@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Slett " + Model.name;
+    ViewBag.Title = Shared.Delete + " " + Model.name;
 }
 
 @section breadcrumb {
@@ -13,14 +13,14 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
     <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
-    <li>Slett</li>
+    <li>@Shared.Delete</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Slett dokument
+                @Documents.DeleteDocument
             </h2>
         </div>
         <div class="col-sm-12">
@@ -29,13 +29,13 @@
     </div>
 </section>
 
-<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<h4>@Registers.DeleteConfirm <b>@Model.name</b>?</h4>
     <hr />
     @using (Html.BeginForm())
     {
         @Html.HiddenFor(model => model.versionNumber)
         <div class="form-actions no-color">
-            <input type="submit" value="Slett" class="btn btn-default pull-right" />
-            <a href="@Model.GetObjectUrl()">Tilbake</a>
+            <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+            <a href="@Model.GetObjectUrl()">@Shared.Back</a>
         </div>
     }

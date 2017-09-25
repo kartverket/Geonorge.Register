@@ -13,13 +13,13 @@
         <li><a href="/register/@parentRegisterSeoName">@parentregister</a></li>
         <li><a href="/subregister/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName">@registerName</a></li>
         <li><a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Ny</a></li>
-        <li>Import</li>
+        <li>@CodelistValues.Import</li>
     }
     else
     {
         <li><a href="/register/@registerSeoName">@registerName</a></li>
         <li><a href="/kodelister/@registerSeoName/ny/">Ny</a></li>
-        <li>Import</li>
+        <li>@CodelistValues.Import</li>
     }
 }
 
@@ -27,7 +27,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Import fra CSV fil
+                @CodelistValues.ImportFile
             </h2>
         </div>
         <div class="col-sm-12">
@@ -35,7 +35,7 @@
         </div>
     </div>
 </section>
-<p>Velg csv fil i UTF-8 med kodeliste...</p>
+<p>@CodelistValues.ImportFileInfo...</p>
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">
     @if (parentregister != null)
     {
@@ -54,7 +54,7 @@
 
     <div class="form-group">
         <input type="submit" value="Importer" class="btn btn-default pull-right" />
-        <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">Tilbake</a>
+        <a href="/kodeliste/@parentRegisterSeoName/@parentRegisterOwner/@registerSeoName/ny/">@Shared.Back</a>
     </div>
 
 </form>

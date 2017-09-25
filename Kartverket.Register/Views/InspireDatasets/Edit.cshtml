@@ -1,0 +1,377 @@
+﻿@using System.Web.Mvc.Html
+@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.InspireDatasetViewModel
+
+@{
+    ViewBag.Title = Shared.Edit + " " + Model.Name;
+}
+
+@section breadcrumb {
+
+    @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
+    {
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
+    }
+    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
+    <li><a href="@Model.DetailPageUrl()">@Model.Name</a></li>
+    <li>@Shared.Edit</li>
+}
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @Shared.Edit status @Model.Name
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+@using (Html.BeginForm("Edit", "InspireDatasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.SystemId)
+    @Html.HiddenFor(model => model.RegisterId)
+
+    <ul class="nav nav-tabs" style="clear:both">
+        <li class="active"><a href="#general" id="generallink" data-toggle="tab">@DataSet.DOK_GeneralLink</a></li>
+        <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">@DataSet.DOK_StatusValueHeader</a></li>
+    </ul>
+
+    <div class="tab-content">
+    <div class="tab-pane active" id="general">
+        <div class="form-horizontal">
+            <p>@DataSet.GoTo <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">@DataSet.MetadataEditor</a> @DataSet.ToEditMetadata.</p>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessage("ErrorMessage")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SubmitterId, Registers.Submitter + ":", new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownList("SubmitterId", null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SubmitterId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            
+            <div class="form-group" id="dokStatus">
+                @Html.LabelFor(model => model.DokStatusId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownList("DokStatusId", null, new { @onchange = "dokStatus()", @class = "form-control", @id = "dokStatusId" })
+                    @Html.ValidationMessageFor(model => model.DokStatusId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" id="approvalDate">
+                @Html.LabelFor(model => model.DokStatusDateAccepted, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DokStatusDateAccepted, new { cssClass = "date" })
+                    @Html.ValidationMessageFor(model => model.DokStatusDateAccepted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+       
+
+                @*<div class="form-group">
+                    @Html.LabelFor(model => model.Kandidatdato, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        @Html.EditorFor(model => model.Kandidatdato, new { cssClass = "date" })
+                        @Html.ValidationMessageFor(model => model.Kandidatdato, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Owner, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownList("OwnerId", null, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Owner, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DatasetThumbnail, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DatasetThumbnail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.ThemeGroupId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.ProductSheetUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ProductSheetUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.PresentationRulesUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.PresentationRulesUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.ProductSpecificationUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ProductSpecificationUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.MetadataUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.MetadataUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DistributionFormat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionFormat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DistributionUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.DistributionArea, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UuidService, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.UuidService, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.UuidService, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.WmsUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.WmsUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Uuid, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Uuid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SpecificUsage, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.SpecificUsage, 5, 50, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.SpecificUsage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.TextAreaFor(model => model.Notes, 5, 50, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @Html.Hidden("dontUpdateDescription", false)
+        </div>
+    </div>
+    
+    <div class="tab-pane" id="statusvalues">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-6">
+                        <label>@DataSet.Comment</label>
+                    </div>
+                    <div class="col-md-1">
+                        <label>Auto-<br />@DataSet.Update</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MetadataStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("MetadataStatus", null, new { @class = "form-control"})
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.MetadataNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("MetadataAutoUpdate", Model.MetadataAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MetadataServiceStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("MetadataServiceStatus", null, new { @class = "form-control"})
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.MetadataServiceNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("MetadataServiceAutoUpdate", Model.MetadataServiceAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DistributionStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("DistributionStatus", null, new { @class = "form-control"})
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.DistributionNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("DistributionAutoUpdate", Model.DistributionAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WmsStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("WmsStatus", null, new { @class = "form-control"})
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.WmsNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("WmsAutoUpdate", Model.WmsAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WfsStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("WfsStatus", null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.WfsStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.WfsNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("WfsAutoUpdate", Model.WfsAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtomFeedStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("AtomFeedStatus", null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.AtomFeedStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.AtomFeedNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("AtomFeedAutoUpdate", Model.AtomFeedAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WfsOrAtomStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("WfsOrAtomStatus", null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.WfsOrAtomStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.WfsOrAtomNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("WfsOrAtomAutoUpdate", Model.WfsOrAtomAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.HarmonizedDataStatus,  new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("HarmonizedDataStatus", null,  new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.HarmonizedDataStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.HarmonizedDataNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("HarmonizedDataAutoUpdate", Model.HarmonizedDataAutoUpdate)</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SpatialDataServiceStatus, new { @class = "control-label col-md-3" })
+                    <div class="col-md-2">
+                        @Html.DropDownList("SpatialDataServiceStatus", null, new { @class = "form-control"})
+                        @Html.ValidationMessageFor(model => model.SpatialDataServiceStatus, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.SpatialDataServiceNote, new { htmlAttributes = new { @class = "form-control" } })
+                    </div>
+                    <div class="col-md-1">@Html.CheckBox("SpatialDataServiceAutoUpdate", Model.SpatialDataServiceAutoUpdate)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <hr />
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="@Model.DetailPageUrl()">@Shared.Back</a>
+    </div>
+
+}
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+            dokStatus();
+        }
+        function dokStatus() {
+            var dokStatus = document.getElementById('dokStatusId');
+            var selected = dokStatus.options[dokStatus.selectedIndex].text;
+
+            if (selected == "Godkjent") {
+                document.getElementById('approvalDate').hidden = false;
+                enable();
+            }
+            else {
+                document.getElementById('approvalDate').hidden = true;
+            }
+        }
+    </script>
+}
+
+

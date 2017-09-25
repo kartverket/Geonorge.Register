@@ -24,36 +24,36 @@ namespace Kartverket.Register.Models
         // logos will be stored in this directory
         public const string DataDirectory = "organizations/";
 
-        [Display(Name = "Organization_Number", ResourceType = typeof(UI))]
+        [Display(Name = "Organization_Number", ResourceType = typeof(Organizations))]
         public string number { get; set; }
 
-        [Display(Name = "Organization_Logo", ResourceType = typeof(UI))]
+        [Display(Name = "Organization_Logo", ResourceType = typeof(Organizations))]
         public string logoFilename { get; set; }
 
-        [Display(Name = "Stor logo")]
+        [Display(Name = "LargeLogo", ResourceType = typeof(Organizations))]
         public string largeLogo { get; set; }
 
-        [Display(Name = "Kontaktperson")]
+        [Display(Name = "ContactName", ResourceType = typeof(Organizations))]
         public string contact { get; set; }
 
-        [Display(Name = "E-postadresse")]
+        [Display(Name = "EmailAddress", ResourceType = typeof(Organizations))]
         [DataType(DataType.EmailAddress)] 
         public string epost { get; set; }
 
-        [Display(Name = "Norge digitaltmedlem")]
+        [Display(Name = "Member", ResourceType = typeof(Organizations))]
         public bool? member { get; set; }
 
-        [Display(Name = "Avtale godkjent år")]
-        [Range(1000,9999, ErrorMessage = "Skriv inn et årstall yyyy")] 
+        [Display(Name = "AgreementYear", ResourceType = typeof(Organizations))]
+        [Range(1000,9999, ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "AgreementYearErrorMessage")]
         public int? agreementYear { get; set; }
 
-        [Display(Name = "Avtaledokument")]
+        [Display(Name = "AgreementDocumentUrl", ResourceType = typeof(Organizations))]
         public string agreementDocumentUrl { get; set; }
 
-        [Display(Name = "Prisskjema/Kalkulator")]
-        public string priceFormDocument { get; set; }        
+        [Display(Name = "PriceFormDocument", ResourceType = typeof(Organizations))]
+        public string priceFormDocument { get; set; }
 
-        [Display(Name = "Kortnavn")]
+        [Display(Name = "Shortname", ResourceType = typeof(Organizations))]
         public string shortname { get; set; }
 
         /// <summary>
@@ -61,32 +61,32 @@ namespace Kartverket.Register.Models
         /// If empty, then regular organization. 
         /// If set to 'municipality' then the municipality specific attributes below should be populated
         /// </summary>
-        [Display(Name = "Organisasjonstype")]
+        [Display(Name = "OrganizationType", ResourceType = typeof(Organizations))]
         public string OrganizationType { get; set; }
 
         // municipality specific attributes
-        [Display(Name = "Kommunenummer")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Kommunenummer er påkrevd")]
+        [Display(Name = "MunicipalityCode", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "MunicipalityCodeRequired")]
         public string MunicipalityCode { get; set; }
-        [Display(Name = "Geografisk senterpunkt - x")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - x er påkrevd")]
+        [Display(Name = "GeographicCenterX", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "GeographicCenterXErrorMessage")]
         public string GeographicCenterX { get; set; }
-        [Display(Name = "Geografisk senterpunkt - y")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk senterpunkt - y er påkrevd")]
+        [Display(Name = "GeographicCenterY", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "GeographicCenterYErrorMessage")]
         public string GeographicCenterY { get; set; }
-        [Display(Name = "Geografisk utstrekning - nord")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - nord er påkrevd")]
+        [Display(Name = "BoundingBoxNorth", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxNorthErrorMessage")]
         public string BoundingBoxNorth { get; set; }
-        [Display(Name = "Geografisk utstrekning - sør")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - sør er påkrevd")]
+        [Display(Name = "BoundingBoxSouth", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxSouthErrorMessage")]
         public string BoundingBoxSouth { get; set; }
-        [Display(Name = "Geografisk utstrekning - øst")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - øst er påkrevd")]
+        [Display(Name = "BoundingBoxEast", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxEastErrorMessage")]
         public string BoundingBoxEast { get; set; }
-        [Display(Name = "Geografisk utstrekning - vest")]
-        [RequiredIf("IsMunicipality()", ErrorMessage = "Geografisk utstrekning - vest er påkrevd")]
+        [Display(Name = "BoundingBoxWest", ResourceType = typeof(Organizations))]
+        [RequiredIf("IsMunicipality()", ErrorMessageResourceType = typeof(Organizations), ErrorMessageResourceName = "BoundingBoxWestErrorMessage")]
         public string BoundingBoxWest { get; set; }
-        [Display(Name = "Dato bekreftet for registrering av kommunalt DOK")]
+        [Display(Name = "DateConfirmedMunicipalDOK", ResourceType = typeof(Organizations))]
         public DateTime? DateConfirmedMunicipalDOK { get; set; }
         public string StatusConfirmationMunicipalDOK { get; set; }
         public virtual TranslationCollection<OrganizationTranslation> Translations { get; set; }

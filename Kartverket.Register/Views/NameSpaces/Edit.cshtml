@@ -2,7 +2,7 @@
 @using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Rediger " + Model.name;
+    ViewBag.Title = Shared.Edit + " " + Model.name;
 }
 @section breadcrumb {
 
@@ -12,14 +12,14 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
     <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
-    <li>Rediger</li>
+    <li>@Shared.Edit</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Rediger @Model.name
+                @Shared.Edit @Model.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -35,7 +35,7 @@
         @Html.HiddenFor(model => model.systemId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.name, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.name, Namespace.NamespaceName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
@@ -43,7 +43,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.description, "Innhold", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.description, Namespace.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.submitterId, "Innsender:", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
@@ -73,7 +73,7 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.serviceUrl, "URL til tjeneste", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.serviceUrl, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.serviceUrl, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.serviceUrl, "", new { @class = "text-danger" })
@@ -82,7 +82,7 @@
     </div>
     <div class="form-group">
         <hr />
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">Tilbake</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 }

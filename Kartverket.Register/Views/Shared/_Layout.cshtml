@@ -17,7 +17,7 @@
         {
             <text> - </text>
         }
-        @Resources.UI.AppPageTitle
+        @Resources.Shared.AppPageTitle
     </title>
     <!-- Stylesheets -->
     @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
@@ -40,12 +40,20 @@
                 }
             }
         }
+
+        var cultureData = {
+            supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
+            urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = "en", ReturnUrl = Request.Url })',
+            urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = "no", ReturnUrl = Request.Url })',
+            currentCulture: '@CultureHelper.GetCurrentCulture()'
+        };
+
     </script>
+    @Html.Partial("_Resources")
     @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts")
     @Scripts.Render("~/Scripts/local-scripts")
 
     @RenderSection("head", false)
-    @Html.Partial("_Analytics")
 
 </head>
 
@@ -53,26 +61,14 @@
     
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
-    <!-- Google Tag Manager -->
-    <noscript>
-        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-MR2X5P"
-                height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <script>
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-MR2X5P');</script>
-    <!-- End Google Tag Manager -->
-
+    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_SharedMenu.min.cshtml")
 
     <div class="body-content">
         <div class="container container-breadcrumbs" id="navTabCont">
             <ul class="breadcrumbs col-md-12">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
-                <li><a href="/">Registrene</a></li>
+                <li><a href="/">@Shared.Heading</a></li>
                 @RenderSection("breadcrumb", false)
             </ul>
         </div>
@@ -98,7 +94,15 @@
         </div>
 
     </div>
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.cshtml")
+    @if (CultureHelper.IsNorwegian())
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer.min.cshtml");
+    }
+    else
+    {
+        @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
+    }
+
 
     @RenderSection("scripts", false)
     <script>

@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Rediger " + Model.name;
+    ViewBag.Title = Shared.Edit + " " + Model.name;
 }
 @section Scripts {
     <script>
@@ -31,11 +31,11 @@
         });
 
         function changeText(element) {
-            if (element.innerText == "Vis veiledning om registrering") {
-                element.innerHTML = "Skjul tekst";
+            if (element.innerText == "@DataSet.DisplayInfoRegistration") {
+                element.innerHTML = "@Shared.HideText";
             }
             else {
-                element.innerHTML = "Vis veiledning om registrering";
+                element.innerHTML = "@DataSet.DisplayInfoRegistration";
             }
         }
     </script>
@@ -49,14 +49,14 @@
     }
     <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
     <li><a href="@Model.GetObjectUrl()">@Model.name</a></li>
-    <li>Rediger</li>
+    <li>@Shared.Edit</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Rediger status @Model.name
+                @Shared.Edit status @Model.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -75,14 +75,14 @@
     @Html.HiddenFor(model => model.registerId)
     @Html.HiddenFor(model => model.restricted)
     <ul class="nav nav-tabs" style="clear:both">
-        <li class="active"><a href="#general" id="generallink" data-toggle="tab">Generelt</a></li>
-        <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">Statusverdier</a></li>
-        <li><a href="#suitability" id="suitabilitylink" data-toggle="tab">Egnethetsvurdering</a></li>
+        <li class="active"><a href="#general" id="generallink" data-toggle="tab">@DataSet.DOK_GeneralLink</a></li>
+        <li><a href="#statusvalues" id="statusvalueslink" data-toggle="tab">@DataSet.DOK_StatusValueHeader</a></li>
+        <li><a href="#suitability" id="suitabilitylink" data-toggle="tab">@DataSet.DOK_SuitabilityRating</a></li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="general">
             <div class="form-horizontal">
-                <p>Gå til <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">metadataeditoren</a> for å redigere metadata.</p>
+                <p>@DataSet.GoTo <a href="@(!string.IsNullOrEmpty(Model.Uuid) ? Html.EditorUrl()+"Metadata/Edit?uuid=" + Model.Uuid : Html.EditorUrl()+"Metadata")" target="_blank">@DataSet.MetadataEditor</a> @DataSet.ToEditMetadata.</p>
                 <div class="form-group">
                     @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.submitterId, "Innsender:", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "form-control" })
                         @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
@@ -138,7 +138,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.datasetownerId, "Datasetteier:", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.datasetownerId, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.DisplayFor(model => model.datasetowner.name)
                         @Html.DropDownList("datasetownerId", null, htmlAttributes: new { @class = "form-control hidden" })
@@ -155,7 +155,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.ThemeGroupId, "Nasjonal temainndeling:", new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
                         @Html.EditorFor(model => model.ThemeGroupId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                     </div>
@@ -265,10 +265,10 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-offset-5 col-md-6">
-                            <label>Kommentar</label>
+                            <label>@DataSet.Comment</label>
                         </div>
                         <div class="col-md-1">
-                            <label>Auto-<br />oppdater</label>
+                            <label>Auto-<br />@DataSet.Update</label>
                         </div>
                     </div>
                 </div>
@@ -406,37 +406,9 @@
         </div>
 
         <div class="tab-pane" id="suitability">
-            <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">Vis veiledning om registrering</div>
+            <div class="btn-default btn" id="suitabitityHelpTextBtn" onclick="changeText(this)">@DataSet.DisplayInfoRegistration</div>
             <div id="suitabitityHelpText">
-                <b>DOK nasjonal egnethetsvurdering</b><br />
-                <p>
-                    Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
-                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for spesifikke kommuner eller steder.
-                </p>
-
-                <p>
-                    <u>Egnethetsvurdering gjøres for disse prosessene:</u>
-                    <ul>
-                        <li>Regionplanlegging</li>
-                        <li>Prosesser knyttet til kommuneplanens samfunnsdel</li>
-                        <li>Prosesser knyttet til kommuneplanens arealdel</li>
-                        <li>Reguleringsplanlegging – områderegulering</li>
-                        <li>Reguleringsplanlegging - detaljregulering</li>
-                        <li>Byggesak</li>
-                        <li>Fradeling</li>
-                        <li>KU - konsekvensutredninger i forbindelse med arealplaner</li>
-                    </ul>
-                </p>
-                <p>
-                    Egnethetsvurderingen gis i form av verdier 1-5, og det kan legges inn kommentarer i tillegg
-                    <ul style="list-style:none">
-                        <li>1 = Ikke egnet</li>
-                        <li>2 = Litt egnet</li>
-                        <li>3 = Middels godt egnet</li>
-                        <li>4 = Godt egnet</li>
-                        <li>5 = Svært godt egnet</li>
-                    </ul>
-                </p>
+                @Html.Raw(DataSet.DOK_SuitabitityHelpText)
                 <hr />
             </div>
 
@@ -444,10 +416,10 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-1">
-                            <label>Egnethet</label>
+                            <label>@DataSet.Suitability</label>
                         </div>
                         <div class="col-md-8">
-                            <label>Tekst om egnethet, tips om bruk eller andre kommentarer</label>
+                            <label>@DataSet.SuitabilityText</label>
                         </div>
                     </div>
                 </div>
@@ -455,7 +427,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Regionplan</label>
+                            <label>@DataSet.SuitabilityRegionsplanleggingText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("RegionalPlan",null, htmlAttributes: new { @class = "form-control"})
@@ -469,7 +441,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>kommuneplanens samfunnsdel</label>
+                            <label>@DataSet.SuitabilitySamfunnText</label>
                         </div>
                         <div class="col-md-1 text-center">
                            @Html.DropDownList("MunicipalSocialPlan", null, htmlAttributes: new { @class = "form-control" })
@@ -482,7 +454,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>kommuneplanens arealdel</label>
+                            <label>@DataSet.SuitabilityArealText</label>
                         </div>
                         <div class="col-md-1 text-center">
                            @Html.DropDownList("MunicipalLandUseElementPlan", null, htmlAttributes: new { @class = "form-control" })
@@ -496,7 +468,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Reguleringsplan område</label>
+                            <label>@DataSet.SuitabilityOmraadeText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("ZoningPlanArea", null, htmlAttributes: new { @class = "form-control" })
@@ -510,7 +482,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Reguleringsplan detalj</label>
+                            <label>@DataSet.SuitabilityDetaljreguleringText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("ZoningPlanDetails", null, htmlAttributes: new { @class = "form-control" })
@@ -524,7 +496,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Byggesak</label>
+                            <label>@DataSet.SuitabilityByggesakText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("BuildingMatter", null, htmlAttributes: new { @class = "form-control" })
@@ -538,7 +510,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>Fradeling</label>
+                            <label>@DataSet.SuitabilityFradelingText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("PartitionOff", null, htmlAttributes: new { @class = "form-control" })
@@ -551,7 +523,7 @@
                 <div class="row">
                     <div class="form-group">
                         <div class="col-md-3 control-label">
-                            <label>KU og ROS for pbl-planer</label>
+                            <label>@DataSet.SuitabilityKUText</label>
                         </div>
                         <div class="col-md-1 text-center">
                             @Html.DropDownList("EenvironmentalImpactAssessment", null, htmlAttributes: new { @class = "form-control" })
@@ -567,8 +539,8 @@
 
     <div class="row">
         <hr />
-        <input type="submit" value="Lagre" class="btn btn-default pull-right" />
-        <a href="@Model.GetObjectUrl()">Tilbake</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-default pull-right" />
+        <a href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 
 }

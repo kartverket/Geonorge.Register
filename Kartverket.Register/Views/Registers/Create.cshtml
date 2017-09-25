@@ -1,18 +1,18 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = "Foreslå nytt register";
+    ViewBag.Title = Registers.SuggestNewRegister;
 }
 
 @section breadcrumb {
-    <li>Ny</li>
+    <li>@Registers.SuggestNewRegister</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt register
+                @Registers.SuggestNewRegister
             </h2>
         </div>
         <div class="col-sm-12">
@@ -55,8 +55,8 @@
         <div class="form-group">
             <div class="col-md-2"></div>
             <div class="col-md-10">
-                @Html.LabelFor(model => model.accessId, "Tilgang til registeret")
-                <br /><small>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang </small> <br /><br />
+                @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                <br /><small>@Registers.AccessText</small> <br /><br />
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-5">
@@ -71,8 +71,8 @@
 
     <div class="form-group">
         <hr />
-        <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
-        <a href="/">Tilbake</a>
+        <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
+        <a href="/">@Shared.Back</a>
     </div>
 
 }

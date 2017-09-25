@@ -117,124 +117,72 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppPageTitle" xml:space="preserve">
-    <value>Geonorge Register</value>
+  <data name="AlertDate" xml:space="preserve">
+    <value>Varslingsdato</value>
   </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>Foreslå ny organisasjon</value>
+  <data name="AlertDateErrorMessage" xml:space="preserve">
+    <value>Varslingsdato er påkrevd</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Slett</value>
+  <data name="AlertDateValidationMessage" xml:space="preserve">
+    <value>Varslingsdato bør ikke settes bakover i tid</value>
   </data>
-  <data name="Details" xml:space="preserve">
-    <value>Vis</value>
+  <data name="AlertType" xml:space="preserve">
+    <value>Type varsel</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Rediger</value>
+  <data name="AlertTypeErrorMessage" xml:space="preserve">
+    <value>Valg av type varsel er påkrevd</value>
   </data>
-  <data name="Organization" xml:space="preserve">
-    <value>Organisasjon</value>
+  <data name="EffectiveDate" xml:space="preserve">
+    <value>Ikrafttredelsesdato</value>
   </data>
-  <data name="Organizations" xml:space="preserve">
-    <value>Organisasjoner</value>
+  <data name="EffectiveDateErrorMessage" xml:space="preserve">
+    <value>Ikrafttredelsesdato er påkrevd</value>
   </data>
-  <data name="Organization_Logo" xml:space="preserve">
-    <value>Liten logo</value>
+  <data name="HelpTextAlertdate" xml:space="preserve">
+    <value>Her velger du den datoen varselet er registrert i Geonorge. Systemet foreslår dagens dato. Når du trykker på «Publiser»-knappen blir varselet umiddelbart tilgjengelig for alle som følger tjenestevarsler, uavhengig av hvilken dato du har valgt i dette feltet.</value>
   </data>
-  <data name="Organization_Name" xml:space="preserve">
-    <value>Organisasjonsnavn</value>
+  <data name="HelpTextAlerttype" xml:space="preserve">
+    <value>Velg en type varsel fra nedtrekkslisten. Dersom du ikke finner en passende type varsel kan du sende en epost til &lt;a href="mailto:post@norgedigitalt.no"&gt;post@norgedigitalt.no&lt;/a&gt; og fremme ditt ønske om nye typer varsler. Men husk at for brukerne som mottar varslene så må varseltype være så konkret og presis som mulig, samtidig som det kan være forvirrende med altfor mange ulike typer varsel. Ofte er det godt nok med en varseltype som dekker et litt større emne. Forsøk derfor å bruke de foreslåtte varseltypene og gi heller en utdypende forklaring i feltet for "Varselet gjelder".</value>
   </data>
-  <data name="Organization_Number" xml:space="preserve">
-    <value>Organisasjonsnummer</value>
+  <data name="HelpTextEffectivedate" xml:space="preserve">
+    <value>Her velger du den datoen hvor tjenesten vil bli endret. I Norge digitalt er det 3 måneders varslingstid for endring eller fjerning av tjenester. Systemet foreslår derfor en dato 3 måneder frem i tid for dette feltet.</value>
   </data>
-  <data name="DOK_Bekreftet_Kommune" xml:space="preserve">
-    <value>Bekreftelse på data som skal være kommunes DOK</value>
+  <data name="HelpTextNote" xml:space="preserve">
+    <value>Her skriver du inn hvilke konkrete endringer som vil bli gjort i tjenesten som dette varselet omfatter. Dersom varselet gjelder endring av en URL bør du oppgi hva den nye URLen vil bli.
+Dersom varselet gjelder endring i datakvalitet eller datastruktur, bør du opplyse hva disse endringene innebærer slik at brukere/utviklere kan oppdatere sin klienter i tråd med endringene.
+I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden brukerne ofte blir mer forståelsesfulle for endringer dersom de får informasjon om hvorfor det er nødvendig å endre i tjenesten.</value>
   </data>
-  <data name="DOK_Eier" xml:space="preserve">
-    <value>Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold</value>
+  <data name="HelpTextServiceuuid" xml:space="preserve">
+    <value>Velg en tjeneste fra nedtrekkslisten. Du kan kun velge en tjeneste som allerede er registrert i Geonorge. Dersom tjenesten du skal legge inn nytt varsel for ikke finnes i nedtrekkslista, må du registrere tjenesten i Geonorge via metadataeditoren og din BAAT-bruker.</value>
   </data>
-  <data name="DOK_Kommentar" xml:space="preserve">
-    <value>Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett</value>
+  <data name="LastAlert" xml:space="preserve">
+    <value>Siste varsel</value>
   </data>
-  <data name="DOK_Nasjonalt_Kommunalt" xml:space="preserve">
-    <value>Viser om datasettet er nasjonalt eller kommunalt</value>
+  <data name="Note" xml:space="preserve">
+    <value>Varselet gjelder</value>
   </data>
-  <data name="DOK_Nasjonal_Status" xml:space="preserve">
-    <value>Datasettet sin status</value>
+  <data name="NoteErrorMessage" xml:space="preserve">
+    <value>Det er påkrevd å skrive hva varselet gjelder</value>
   </data>
-  <data name="DOK_Temagruppe" xml:space="preserve">
-    <value>Datasett overordnet kategorisering</value>
+  <data name="Service" xml:space="preserve">
+    <value>Tjeneste</value>
   </data>
-  <data name="DOK_Tittel" xml:space="preserve">
-    <value>Offisiell tittel (navn) på datasett</value>
+  <data name="ServiceDesription" xml:space="preserve">
+    <value>Tjenestebeskrivelse</value>
   </data>
-  <data name="DOK_Delivery_Distribution" xml:space="preserve">
-    <value>Nedlastning status</value>
+  <data name="ServiceName" xml:space="preserve">
+    <value>Tjenestenavn</value>
   </data>
-  <data name="DOK_Delivery_SosiRequirements" xml:space="preserve">
-    <value>SOSI-krav status</value>
+  <data name="ServiceType" xml:space="preserve">
+    <value>Tjenestetype</value>
   </data>
-  <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
-    <value>Atom-feed status</value>
+  <data name="ServiceTypeErrorMessage" xml:space="preserve">
+    <value>Valg av tjeneste er påkrevd</value>
   </data>
-  <data name="DOK_Delivery_Metadata" xml:space="preserve">
-    <value>Metadata status</value>
+  <data name="SubscribeServiceAlert" xml:space="preserve">
+    <value>Abonnere på tjenestevarsler</value>
   </data>
-  <data name="DOK_Delivery_Owner" xml:space="preserve">
-    <value>Eier</value>
-  </data>
-  <data name="DOK_Delivery_PresentationRules" xml:space="preserve">
-    <value>Tegneregler status</value>
-  </data>
-  <data name="DOK_Delivery_ProductSheet" xml:space="preserve">
-    <value>Produktark status</value>
-  </data>
-  <data name="DOK_Delivery_ProductSpesification" xml:space="preserve">
-    <value>Produktspesifikasjoner status</value>
-  </data>
-  <data name="DOK_Delivery_Restricted" xml:space="preserve">
-    <value>Skjermede data - kontakt dataeier for tilgangsforespørsel</value>
-  </data>
-  <data name="DOK_Delivery_GmlRequirements" xml:space="preserve">
-    <value>GML-krav status</value>
-  </data>
-  <data name="DOK_Delivery_Status" xml:space="preserve">
-    <value>Status datasett</value>
-  </data>
-  <data name="DOK_Delivery_Status_Deficient" xml:space="preserve">
-    <value>Ikke levert</value>
-  </data>
-  <data name="DOK_Delivery_Status_Good" xml:space="preserve">
-    <value>God</value>
-  </data>
-  <data name="DOK_Delivery_Status_Useable" xml:space="preserve">
-    <value>Brukbar</value>
-  </data>
-  <data name="DOK_Delivery_Theme" xml:space="preserve">
-    <value>Temagruppe</value>
-  </data>
-  <data name="DOK_Delivery_Title" xml:space="preserve">
-    <value>Tittel</value>
-  </data>
-  <data name="DOK_Delivery_Wfs" xml:space="preserve">
-    <value>Wfs status</value>
-  </data>
-  <data name="DOK_Delivery_Wms" xml:space="preserve">
-    <value>Wms status</value>
-  </data>
-  <data name="DOK_Coverage_Municipality" xml:space="preserve">
-    <value>Dekning viser om datasettet faktisk finnes i kommunen</value>
-  </data>
-  <data name="DOK_Delivery_Status_NotSet" xml:space="preserve">
-    <value>Leveransestatus er ikke satt</value>
-  </data>
-  <data name="Beskrivelse_Engelsk" xml:space="preserve">
-    <value>Beskrivelse engelsk</value>
-  </data>
-  <data name="inspireRequirementDescription_Engelsk" xml:space="preserve">
-    <value>Beskrivelse av krav engelsk</value>
-  </data>
-  <data name="Navn_Engelsk" xml:space="preserve">
-    <value>Navn engelsk</value>
+  <data name="Title" xml:space="preserve">
+    <value>Foreslå nytt tjenestevarsel</value>
   </data>
 </root>

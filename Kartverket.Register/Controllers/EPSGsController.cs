@@ -11,6 +11,7 @@ using Kartverket.Register.Services;
 using Kartverket.Register.Helpers;
 using System.Web;
 using Kartverket.Register.Services.Translation;
+using Resources;
 
 namespace Kartverket.Register.Controllers
 {
@@ -95,7 +96,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(EPSG epsgKode)
         {
-            return _registerItemService.validateName(epsgKode);
+            return _registerItemService.ItemNameAlredyExist(epsgKode);
         }
 
         private string EPSGName(string name)
@@ -383,7 +384,7 @@ namespace Kartverket.Register.Controllers
 
             if (queryResultsDataset.Count() > 0)
             {
-                ModelState.AddModelError("ErrorMessage", "Navnet finnes fra før!");
+                ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
             }
         }
 

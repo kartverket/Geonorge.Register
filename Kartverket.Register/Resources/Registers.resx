@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccessLabel" xml:space="preserve">
+    <value>Tilgang til registeret</value>
+  </data>
+  <data name="AccessText" xml:space="preserve">
+    <value>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang</value>
+  </data>
+  <data name="Content" xml:space="preserve">
+    <value>Innhold</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Beskrivelse</value>
+  </data>
+  <data name="DOKCoverageContent" xml:space="preserve">
+    <value>Dekningskartet viser hvilke datasett i det offentlige kartgrunnlaget som har dekning i de ulike kommunene.</value>
+  </data>
+  <data name="Hits" xml:space="preserve">
+    <value>treff</value>
+  </data>
+  <data name="HitsDisplay" xml:space="preserve">
+    <value>Viser</value>
+  </data>
+  <data name="HitsOf" xml:space="preserve">
+    <value>av</value>
+  </data>
+  <data name="Kartografi" xml:space="preserve">
+    <value>Kartografi</value>
+  </data>
+  <data name="KartografiContent" xml:space="preserve">
+    <value>Registeret inneholder datasett som har registrert digital kartografi</value>
+  </data>
+  <data name="LoadingMessage" xml:space="preserve">
+    <value>Henter register</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Navn</value>
+  </data>
+  <data name="NotSet" xml:space="preserve">
+    <value>Ikke angitt</value>
+  </data>
+  <data name="Objektregisteret" xml:space="preserve">
+    <value>Objektregisteret</value>
+  </data>
+  <data name="ObjektregisteretContent" xml:space="preserve">
+    <value>Inneholder en samling av sentrale objektkataloger fra SOSI, Inspire og fra parter i Norge digitalt. Her finnes dataspesifikasjoner som er nyttige ved fremstilling av datasett, eller som dokumentasjon av hvordan innholdet og strukturen i et datasett skal tolkes.</value>
+  </data>
+  <data name="Owner" xml:space="preserve">
+    <value>Eier</value>
+  </data>
+  <data name="SymbolContent" xml:space="preserve">
+    <value>Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje.</value>
+  </data>
+  <data name="Updated" xml:space="preserve">
+    <value>Oppdatert</value>
+  </data>
+  <data name="Submitter" xml:space="preserve">
+    <value>Innsender</value>
+  </data>
+  <data name="Propose" xml:space="preserve">
+    <value>Foreslå</value>
+  </data>
+  <data name="ContainedItemClass" xml:space="preserve">
+    <value>Lovlig innhold</value>
+  </data>
+  <data name="VersionNumber" xml:space="preserve">
+    <value>Versjons ID</value>
+  </data>
+  <data name="EditList" xml:space="preserve">
+    <value>Rediger liste</value>
+  </data>
+  <data name="DateAccepted" xml:space="preserve">
+    <value>Dato godkjent</value>
+  </data>
+  <data name="DateNotAccepted" xml:space="preserve">
+    <value>Dato utkast</value>
+  </data>
+  <data name="DateRetired" xml:space="preserve">
+    <value>Dato utgått</value>
+  </data>
+  <data name="DateSuperseded" xml:space="preserve">
+    <value>Dato erstattet</value>
+  </data>
+  <data name="VersionName" xml:space="preserve">
+    <value>Utgave</value>
+  </data>
+  <data name="Accepted" xml:space="preserve">
+    <value>Godkjent</value>
+  </data>
+  <data name="ApprovalDocument" xml:space="preserve">
+    <value>Godkjenningstekst</value>
+  </data>
+  <data name="ApprovalReference" xml:space="preserve">
+    <value>Godkjenningsreferanse</value>
+  </data>
+  <data name="Current" xml:space="preserve">
+    <value>Gjeldende</value>
+  </data>
+  <data name="DeleteConfirm" xml:space="preserve">
+    <value>Er du sikker på at du vil slette</value>
+  </data>
+  <data name="Draft" xml:space="preserve">
+    <value>Utkast</value>
+  </data>
+  <data name="Historical" xml:space="preserve">
+    <value>Historiske</value>
+  </data>
+  <data name="Proposal" xml:space="preserve">
+    <value>Forslag</value>
+  </data>
+  <data name="Retired" xml:space="preserve">
+    <value>Utgått</value>
+  </data>
+  <data name="Superseded" xml:space="preserve">
+    <value>Erstattet</value>
+  </data>
+  <data name="SuggestNewRegister" xml:space="preserve">
+    <value>Foreslå nytt register</value>
+  </data>
+  <data name="SuggestNewRegisterIn" xml:space="preserve">
+    <value>Foreslå nytt register i</value>
+  </data>
+  <data name="ErrorMessageDelete" xml:space="preserve">
+    <value>Registeret kan ikke slettes fordi det inneholder elementer som må slettes først!</value>
+  </data>
+  <data name="ErrorMessageValidationName" xml:space="preserve">
+    <value>Navnet finnes fra før!</value>
+  </data>
+  <data name="ContainedItemClassErrorMessage" xml:space="preserve">
+    <value>Det må settes lovlig innhold for registeret</value>
+  </data>
+  <data name="Publish" xml:space="preserve">
+    <value>Publiser</value>
+  </data>
+  <data name="NewVersion" xml:space="preserve">
+    <value>Ny versjon</value>
+  </data>
+  <data name="SuggestNewVersionOf" xml:space="preserve">
+    <value>Foreslå ny versjon av</value>
+  </data>
+  <data name="DocumentUrl" xml:space="preserve">
+    <value>Dokument url</value>
+  </data>
+  <data name="SavingContentMessage" xml:space="preserve">
+    <value>Lagrer innhold</value>
+  </data>
+  <data name="Etat" xml:space="preserve">
+    <value>Etat</value>
+  </data>
+  <data name="AccessAdmin" xml:space="preserve">
+    <value>Kun administrator skal ha tilgang til dette registeret</value>
+  </data>
+  <data name="AccessEditor" xml:space="preserve">
+    <value>Editor får lov til å forslå, endre og slette egne registeroppføringer (status kan kun endres av administrator)</value>
+  </data>
+  <data name="DateSubmitted" xml:space="preserve">
+    <value>Dato innsendt</value>
+  </data>
+  <data name="Modified" xml:space="preserve">
+    <value>Siste endret</value>
+  </data>
+</root>

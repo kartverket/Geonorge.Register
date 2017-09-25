@@ -1,13 +1,13 @@
 ﻿@model Kartverket.Register.Models.Register
 
 @{
-    ViewBag.Title = "Slett" + Model.name;
+    ViewBag.Title = Shared.Delete + " " + Model.name;
 }
 
 @section breadcrumb {
 
     <li><a href="/register/@Model.seoname">@Html.DisplayFor(model => model.name)</a></li>
-    <li>Slett</li>
+    <li>@Shared.Delete</li>
 }
 
 
@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Slett register
+                @Shared.Delete register
             </h2>
         </div>
         <div class="col-sm-12">
@@ -24,7 +24,7 @@
     </div>
 </section>
 
-<h4>Er du sikker på at du vil slette <b>@Model.name</b>?</h4>
+<h4>@Registers.DeleteConfirm <b>@Model.name</b>?</h4>
 @Html.ValidationMessage("ErrorMessageDelete")
 <hr />
 
@@ -32,9 +32,9 @@
 {
 
     <div class="form-actions no-color">
-        <input type="submit" value="Slett" class="btn btn-default pull-right" />
+        <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
         
-        <a href="/register/@Model.seoname/">Tilbake</a>
+        <a href="/register/@Model.seoname/">@Shared.Back</a>
     </div>
 }
 

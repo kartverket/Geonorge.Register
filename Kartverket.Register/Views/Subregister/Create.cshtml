@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt register";
+    ViewBag.Title = Registers.SuggestNewRegister;
 }
 
 @section breadcrumb {
@@ -12,14 +12,14 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.parentRegister.GetObjectUrl()">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-    <li>Ny</li>
+    <li>@Registers.SuggestNewRegister</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Nytt register i @Model.parentRegister.name
+                @Registers.SuggestNewRegisterIn @Model.parentRegister.name
             </h2>
         </div>
         <div class="col-sm-12">
@@ -79,7 +79,7 @@
         }
 
         <div class="form-group">
-            @Html.LabelFor(model => model.containedItemClass, "Lovlig innhold", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.containedItemClass, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("containedItemClass", null, "-- Velg innhold --", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
@@ -87,7 +87,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.targetNamespace, "Navnerom", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.targetNamespace, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.targetNamespace, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.containedItemClass, "", new { @class = "text-danger" })
@@ -100,14 +100,14 @@
             <div class="form-group">
                 <div class="col-md-2"></div>
                 <div class="col-md-10">
-                    @Html.LabelFor(model => model.accessId, "Tilgang til registeret")
-                    <br /><small>Gjelder tilgang til å foreslå, endre- og slette egne registeroppføringer. Admin har alltid full tilgang </small> <br /><br />
+                    @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                    <br /><small>@Registers.AccessText</small> <br /><br />
                 </div>
                 <div class="col-md-2"></div>
                 <div class="col-md-5">
-                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Kun administrator skal ha tilgang til dette registeret", @class = "col-md-1", @checked = "checked" })
+                    @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = Registers.AccessAdmin, @class = "col-md-1", @checked = "checked" })
                     <label class="col-md-4" for=" admin">Admin</label>
-                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Editor får låv til å forslå, endre og slette egne registeroppføringer. (status kan kun endres av administrator)", @class = "col-md-1" })
+                    @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = Registers.AccessEditor, @class = "col-md-1" })
                     <label class="col-md-4" for="editor">Admin + Editor</label>
                 </div>
             </div>
@@ -119,14 +119,14 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
+            <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
             @if (Model.parentRegister.parentRegister != null)
             {
-                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">Tilbake</a>
+                <a href="/subregister/@Model.parentRegister.parentRegister.seoname/@Model.parentRegister.parentRegister.owner.seoname/@Model.parentRegister.seoname">@Shared.Back</a>
             }
             else
             {
-                <a href="/register/@Model.parentRegister.seoname/">Tilbake</a>
+                <a href="/register/@Model.parentRegister.seoname/">@Shared.Back</a>
             }
         </div>
     </div>

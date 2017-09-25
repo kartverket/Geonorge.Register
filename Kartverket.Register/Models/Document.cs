@@ -12,7 +12,7 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using Resources;
 
 namespace Kartverket.Register.Models
 {
@@ -21,9 +21,9 @@ namespace Kartverket.Register.Models
         // logos will be stored in this directory
         public const string DataDirectory = "documents/";
 
-        [Display(Name = "Miniatyrbilde:")]
+        [Display(Name = "Thumbnail", ResourceType = typeof(Documents))]
         public string thumbnail { get; set; }
-        [Display(Name = "Dokumenteier:")]
+        [Display(Name = "DocumentOwner", ResourceType = typeof(Documents))]
         [ForeignKey("documentowner")]
         public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }

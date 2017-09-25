@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå nytt datasett";
+    ViewBag.Title = DataSet.SuggestNewDataset;
 }
 
 @section breadcrumb {
@@ -11,14 +11,14 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
-    <li>Nytt</li>
+    <li>@DataSet.SuggestNewDataset</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Legg til ekstra DOK-datasett for din kommune
+                @DataSet.SuggestNewDatasetMunicipality
             </h2>
         </div>
         <div class="col-sm-12">
@@ -27,9 +27,9 @@
     </div>
 </section>
 
-<h3>Søk</h3>
-<p>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</p>
-<p>Hvis datasettet ikke finnes i Geonorge, må du <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">registrere nye metadata</a> for de data som du ønsker som dine kommunale DOK-data</p>
+<h3>@Shared.Search</h3>
+<p>@DataSet.SuggestMunicipalitySearchInfo</p>
+<p>@DataSet.SuggestMunicipalitySearchInfo. <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">@DataSet.SuggestMunicipalitySearchInfoRegisterMetadata</a></p>
 
 @using (Html.BeginForm("CreateMunicipalDataset", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "searchDataset" }))
 {
@@ -38,11 +38,11 @@
     @Html.HiddenFor(model => model.DatasetOwner)
     <div class="form-horizontal" style="margin: 30px 0px;">
         <div class="form-group">
-            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" placeholder="Skriv inn" value="@ViewBag.SearchString" />
-            <input type="submit" value="Søk" class="btn btn-primary" style="margin-bottom:0px" />
+            <input type="text" class="col-md-6" style="width:50%;" id="searchString" name="searchString" placeholder="@Shared.Enter" value="@ViewBag.SearchString" />
+            <input type="submit" value="@Shared.Search" class="btn btn-primary" style="margin-bottom:0px" />
             @if (Model.SearchResult != null && Model.SearchResult.Count == 0 && !string.IsNullOrEmpty(ViewBag.SearchString))
             {
-            <div><b>Ingen treff...</b></div>
+            <div><b>@Shared.NoHits...</b></div>
             }
         </div>
         
@@ -55,7 +55,7 @@
         <table class="table-responsive table" style="margin-bottom:50px">
             <thead>
                 <tr>
-                    <th>Treffliste datasett</th>
+                    <th>@DataSet.ListOfDatasets</th>
                     <th></th>
                 </tr>
             </thead>
@@ -73,7 +73,7 @@
                     <tr>
                         <td width="90%" id="title-@Model.SearchResult[i].Uuid" class="@( itemSelected  ? "text-muted" : "" )">@Model.SearchResult[i].Title</td>
                         <td width="10%" class="text-center">
-                            <input type="submit" value="Legg til" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
+                            <input type="submit" value="@Shared.Add" id="add-@Model.SearchResult[i].Uuid" class="btn btn-primary @( itemSelected  ? "disabled" : "" )" onclick="$('#SearchResult_@(@i)__Selected').attr('value', 'True');" />
                         </td>
                     </tr>
                 }
@@ -89,7 +89,7 @@
                 {
                 <thead>
                     <tr>
-                        <th>Valgte tilleggsdatasett</th>
+                        <th>@DataSet.AdditionalDatasetsSelected</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -118,13 +118,13 @@
 </div>
 <div class="row">
     <div class="col-lg-2">
-        <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">Tilbake</a>
+        <a href="@Model.Register.GetObjectUrl()?municipality=@ViewBag.municipalityCode">@Shared.Back</a>
     </div>
     <div class="col-lg-10 text-right">
     @if (Model.SelectedList != null)
     {
-        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">Avbryt</a>
-        <input type="submit" value="Lagre" class="btn btn-primary" onclick="$('#save').attr('value', 'True');" />
+        <a href="/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=@Model.MunicipalityCode" class="btn btn-default">@Shared.Cancel</a>
+        <input type="submit" value="@Shared.Save" class="btn btn-primary" onclick="$('#save').attr('value', 'True');" />
     }
     </div>
 </div>

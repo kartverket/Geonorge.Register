@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////
 
 using Kartverket.Register.Helpers;
+using Resources;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,22 +22,22 @@ namespace Kartverket.Register.Models
         public Guid systemId { get; set; }
         //public virtual ICollection<Version> replaces { get; set; }
 
-        [Display(Name = "Navn:")]
+        [Display(Name = "Name", ResourceType = typeof(Registers))]
         public string name { get; set; }
 
-        [Display(Name = "Beskrivelse:")]
+        [Display(Name = "Description", ResourceType = typeof(Registers))]
         public string description { get; set; }
 
         [ForeignKey("submitter")]
-        [Display(Name = "Innsender:")]
+        [Display(Name = "Submitter", ResourceType = typeof(Registers))]
         public Guid submitterId { get; set; }
         public virtual Organization submitter { get; set; }
 
-        [Display(Name = "Dato innsendt:")]
+        [Display(Name = "DateSubmitted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime dateSubmitted { get; set; }
 
-        [Display(Name = "Dato endret:")]
+        [Display(Name = "Modified", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime modified { get; set; }
 
@@ -45,19 +46,19 @@ namespace Kartverket.Register.Models
         public string statusId { get; set; }
         public virtual Status status { get; set; }
 
-        [Display(Name = "Dato godkjent:")]
+        [Display(Name = "DateAccepted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
-        [Display(Name = "Dato Utkast:")]
+        [Display(Name = "DateNotAccepted", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateNotAccepted { get; set; }
 
-        [Display(Name = "Dato erstattet:")]
+        [Display(Name = "DateSuperseded", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateSuperseded { get; set; }
 
-        [Display(Name = "Dato utgått:")]
+        [Display(Name = "DateRetired", ResourceType = typeof(Registers))]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? DateRetired { get; set; }
 
@@ -71,22 +72,22 @@ namespace Kartverket.Register.Models
         public Guid versioningId { get; set; }
         public virtual Version versioning { get; set; }
 
-        [Display(Name = "Versjons ID:")]
+        [Display(Name = "VersionNumber", ResourceType = typeof(Registers))]
         public int versionNumber { get; set; }
 
-        [Display(Name = "Utgave:")]
+        [Display(Name = "VersionName", ResourceType = typeof(Registers))]
         public string versionName { get; set; }
 
-        [Display(Name = "Dokument url:")]
+        [Display(Name = "DocumentUrl", ResourceType = typeof(Registers))]
         public string documentUrl { get; set; }
 
-        [Display(Name = "Godkjenningstekst:")]
+        [Display(Name = "ApprovalDocument", ResourceType = typeof(Registers))]
         public string approvalDocument { get; set; }
 
-        [Display(Name = "Godkjenningsreferanse:")]
+        [Display(Name = "ApprovalReference", ResourceType = typeof(Registers))]
         public string approvalReference { get; set; }
 
-        [Display(Name = "Godkjent")]
+        [Display(Name = "Accepted", ResourceType = typeof(Registers))]
         public bool? Accepted { get; set; }
 
         [Display(Name = "UML-modell")]
@@ -126,86 +127,7 @@ namespace Kartverket.Register.Models
             }
         }
 
-        public virtual string GetObjectEditUrl()
-        {
-            if (this is Document)
-            {
-                Document document = (Document)this;
-                return document.GetDocumentEditUrl();
-            }
-            else if (this is Dataset)
-            {
-                Dataset dataset = (Dataset)this;
-                return dataset.GetDatasetEditUrl();
-            }
-            else if (this is EPSG)
-            {
-                EPSG epsg = (EPSG)this;
-                return epsg.GetEPSGEditUrl();
-            }
-            else if (this is CodelistValue)
-            {
-                CodelistValue codelistValue = (CodelistValue)this;
-                return codelistValue.GetCodelistValueEditUrl();
-            }
-            else if (this is NameSpace)
-            {
-                NameSpace nameSpace = (NameSpace)this;
-                return nameSpace.GetNameSpaceEditUrl();
-            }
-            else if (this is Organization)
-            {
-                Organization organization = (Organization)this;
-                return organization.GetOrganizationEditUrl();
-            }
-            else if (this is ServiceAlert)
-            {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                return serviceAlert.GetServiceAlertEditUrl();
-            }
-            return "#";
-        }
-
-        public virtual string GetObjectDeleteUrl()
-        {
-            if (this is Document)
-            {
-                Document document = (Document)this;
-                return document.GetDocumentDeleteUrl();
-            }
-            else if (this is Dataset)
-            {
-                Dataset dataset = (Dataset)this;
-                return dataset.GetDatasetDeleteUrl();
-            }
-            else if (this is EPSG)
-            {
-                EPSG epsg = (EPSG)this;
-                return epsg.GetEPSGDeleteUrl();
-            }
-            else if (this is CodelistValue)
-            {
-                CodelistValue codelistValue = (CodelistValue)this;
-                return codelistValue.GetCodelistValueDeleteUrl();
-            }
-            else if (this is NameSpace)
-            {
-                NameSpace nameSpace = (NameSpace)this;
-                return nameSpace.GetNameSpaceDeleteUrl();
-            }
-            else if (this is Organization)
-            {
-                Organization organization = (Organization)this;
-                return organization.GetOrganizationDeleteUrl();
-            }
-            else if (this is ServiceAlert)
-            {
-                ServiceAlert serviceAlert = (ServiceAlert)this;
-                return serviceAlert.GetServiceAlertDeleteUrl();
-            }
-            return "#";
-        }
-
+        
         public virtual Guid GetSystemId()
         {
             if (systemId == null || systemId == Guid.Empty)
@@ -289,6 +211,20 @@ namespace Kartverket.Register.Models
             versionNumber = 1;
             if (submitter != null) submitterId = submitter.systemId;
             if (register != null) registerId = register.systemId;
+        }
+
+        public Organization GetOwner()
+        {
+            switch (this)
+            {
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.datasetowner;
+                case Document _:
+                    var document = (Document)this;
+                    return document.documentowner;
+            }
+            return submitter;
         }
     }
 }//end namespace Datamodell

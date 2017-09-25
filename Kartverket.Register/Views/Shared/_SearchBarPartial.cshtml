@@ -1,5 +1,4 @@
 ﻿@using Kartverket.Register.Helpers
-@section Scripts {
 <script>
     function registerName(reg) {
         document.getElementById("register").value = reg;
@@ -7,7 +6,6 @@
     }
 
 </script>
-}
 
 @{
     var kontroller = "/search/";
@@ -27,7 +25,7 @@
     else { 
         if (register == null)
         { 
-            register = "Alle registre";
+            register = Shared.Search_AllRegisters;
         } 
     }
 
@@ -40,7 +38,7 @@
 
     <input type="hidden" id="register" name="register" value="@(Request.QueryString["register"] != null ? Request.QueryString["register"].ToString() : @register)" />
 
-    <h3 class="h-md" id="register-heading">Søk i register</h3>
+    <h3 class="h-md" id="register-heading">@Shared.Search_Heading</h3>
     <div class="input-group input-group-split-on-xs edgesRegistre">
         @*Set edges* class for borders according to dropdown choice*@
         <div class="input-group-btn">
@@ -50,9 +48,9 @@
             </button>
             <ul class="geonorge-dropdown dropdown-menu" id="SearchRegister" tabindex="-1">
 
-                <li tabindex="0" onclick="registerName('Alle registre')" class="left-edge-registre"><a href="@Html.RegistryUrl()">Alle registre</a></li>
-                <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">Objektregisteret</a></li>
-                <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/kartografi">Kartografi</a></li>
+                <li tabindex="0" onclick="registerName('Alle registre')" class="left-edge-registre"><a href="@Html.RegistryUrl()">@Shared.Search_AllRegisters</a></li>
+                <li tabindex="0" onclick="registerName('Objektregisteret')" class="left-edge-registre"><a href="@Html.ObjektkatalogUrl()">@Registers.Objektregisteret</a></li>
+                <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/kartografi">@Registers.Kartografi</a></li>
                 <li tabindex="0" onclick="registerName('Symbol')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/symbol">Symbol</a></li>
 
                 @foreach (var item in HtmlHelperExtensions.Registers().OrderBy(r => r.name))
@@ -61,9 +59,9 @@
                 }
             </ul>
         </div><!-- /input-group-btn -->
-        <input name="text" style="z-index: 0;" type="text" placeholder="Søk etter registerdata" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
+        <input name="text" style="z-index: 0;" type="text" placeholder="@Shared.Search_Placeholder" title="Søk" class="form-control" id="txtSearch" value="@(Request.QueryString["text"] != null ? Request.QueryString["text"].ToString() : "")" />
         <span class="input-group-btn">
-            <button type="submit" class="show-loading-animation btn" data-loading-message="Henter søkeresultater" style="z-index: 0;">Søk</button>
+            <button type="submit" class="show-loading-animation btn" data-loading-message="@Shared.Search_LoadingMessage" style="z-index: 0;">@Shared.Search</button>
         </span>
     </div>
 </form>

@@ -31,11 +31,11 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-                <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">Gjeldende</a></li>
+                <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
 
-                <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">Forslag</a></li>
+                <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
 
-                <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">Historiske</a></li>
+                <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
             </ul>
             <br />
         </div>
@@ -66,10 +66,6 @@
         {
             @Html.Partial("_detailsEpsg")
         }
-        @if (Model.currentVersion.register.containedItemClass == "Register")
-        {
-            @Html.Partial("_detailsSubregister")
-        }
         @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
         {
             @Html.Partial("_detailsCodelistValue")
@@ -85,10 +81,10 @@
             {
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">Foreslå ny versjon av @Model.currentVersion.name</a>
+                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.CreateNewRegisterItemVersionUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname, Model.currentVersion.submitter.seoname, Model.currentVersion.seoname, Model.currentVersion.register.containedItemClass)">@Registers.SuggestNewVersionOf @Model.currentVersion.name</a>
                 }
             }
         }
-        <a href="@RegisterUrls.registerUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname)">Tilbake</a>
+        <a href="@RegisterUrls.registerUrl(parentRegister, Model.currentVersion.register.owner.seoname, Model.currentVersion.register.seoname)">@Shared.Back</a>
     </div>
 </div>

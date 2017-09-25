@@ -24,12 +24,14 @@ namespace Kartverket.Register.Controllers
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
+        private IDatasetDeliveryService _datasetDeliveryService;
 
-        public DatasetsController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService)
+        public DatasetsController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService)
         {
             _registerItemService = registerItemService;
             _registerService = registerService;
             _accessControlService = accessControllService;
+            _datasetDeliveryService = datasetDeliveryService;
         }
 
         public DatasetsController()
@@ -37,6 +39,7 @@ namespace Kartverket.Register.Controllers
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
+            _datasetDeliveryService = new DatasetDeliveryService(db);
         }
 
         // GET: Datasets/Create
@@ -430,7 +433,7 @@ namespace Kartverket.Register.Controllers
 
         private bool NameIsValid(Dataset dataset)
         {
-            return _registerItemService.validateName(dataset);
+            return _registerItemService.ItemNameAlredyExist(dataset);
         }
 
         private Dataset GetMetadataFromKartkatalogen(Dataset dataset, string uuid, bool dontUpdateDescription = false)
@@ -553,7 +556,7 @@ namespace Kartverket.Register.Controllers
             dataset.ThemeGroupId = inputDataset.GetThemeGroupId();
             dataset.datasetthumbnail = inputDataset.Getdatasetthumbnail();
             dataset.Uuid = inputDataset.Uuid;
-            dataset.dokDeliveryMetadataStatusId = _registerService.GetMetadataStatus(inputDataset.Uuid, inputDataset.dokDeliveryMetadataStatusAutoUpdate, inputDataset.dokDeliveryMetadataStatusId);
+            dataset.dokDeliveryMetadataStatusId = _datasetDeliveryService.GetMetadataStatus(inputDataset.Uuid, inputDataset.dokDeliveryMetadataStatusAutoUpdate, inputDataset.dokDeliveryMetadataStatusId);
             dataset.dokDeliveryMetadataStatusNote = inputDataset.dokDeliveryMetadataStatusNote;
             dataset.dokDeliveryMetadataStatusAutoUpdate = inputDataset.dokDeliveryMetadataStatusAutoUpdate;
             dataset.dokDeliveryProductSheetStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSheetUrl(), inputDataset.dokDeliveryProductSheetStatusAutoUpdate, inputDataset.dokDeliveryProductSheetStatusId);
@@ -565,10 +568,10 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryProductSpecificationStatusId = _registerService.GetDOKStatus(inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliveryProductSpecificationStatusAutoUpdate, inputDataset.dokDeliveryProductSpecificationStatusId);
             dataset.dokDeliveryProductSpecificationStatusNote = inputDataset.dokDeliveryProductSpecificationStatusNote;
             dataset.dokDeliveryProductSpecificationStatusAutoUpdate = inputDataset.dokDeliveryProductSpecificationStatusAutoUpdate;
-            dataset.dokDeliveryWmsStatusId = _registerService.GetDokDeliveryServiceStatus(inputDataset);
+            dataset.dokDeliveryWmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(inputDataset.Uuid, inputDataset.dokDeliveryWmsStatusAutoUpdate, inputDataset.dokDeliveryWmsStatusId, inputDataset.UuidService);
             dataset.dokDeliveryWmsStatusNote = inputDataset.dokDeliveryWmsStatusNote;
             dataset.dokDeliveryWmsStatusAutoUpdate = inputDataset.dokDeliveryWmsStatusAutoUpdate;
-            dataset.dokDeliveryWfsStatusId = _registerService.GetWfsStatus(inputDataset.Uuid, inputDataset.dokDeliveryWfsStatusAutoUpdate, inputDataset.dokDeliveryWfsStatusId);
+            dataset.dokDeliveryWfsStatusId = _datasetDeliveryService.GetWfsStatus(inputDataset.Uuid, inputDataset.dokDeliveryWfsStatusAutoUpdate, inputDataset.dokDeliveryWfsStatusId);
             dataset.dokDeliveryWfsStatusNote = inputDataset.dokDeliveryWfsStatusNote;
             dataset.dokDeliveryWfsStatusAutoUpdate = inputDataset.dokDeliveryWfsStatusAutoUpdate;
             dataset.dokDeliverySosiRequirementsStatusId = _registerService.GetSosiRequirements(inputDataset.Uuid, inputDataset.GetProductSpecificationUrl(), inputDataset.dokDeliverySosiStatusAutoUpdate, inputDataset.dokDeliverySosiRequirementsStatusId);
@@ -577,17 +580,17 @@ namespace Kartverket.Register.Controllers
             dataset.dokDeliveryGmlRequirementsStatusId = _registerService.GetGmlRequirements(inputDataset.Uuid, inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate, inputDataset.dokDeliveryGmlRequirementsStatusId);
             dataset.dokDeliveryGmlRequirementsStatusNote = inputDataset.dokDeliveryGmlRequirementsStatusNote;
             dataset.dokDeliveryGmlRequirementsStatusAutoUpdate = inputDataset.dokDeliveryGmlRequirementsStatusAutoUpdate;
-            dataset.dokDeliveryAtomFeedStatusId = _registerService.GetAtomFeedStatus(inputDataset.Uuid, inputDataset.dokDeliveryAtomFeedStatusAutoUpdate, inputDataset.dokDeliveryAtomFeedStatusId);
+            dataset.dokDeliveryAtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(inputDataset.Uuid, inputDataset.dokDeliveryAtomFeedStatusAutoUpdate, inputDataset.dokDeliveryAtomFeedStatusId);
             dataset.dokDeliveryAtomFeedStatusNote = inputDataset.dokDeliveryAtomFeedStatusNote;
             dataset.dokDeliveryAtomFeedStatusAutoUpdate = inputDataset.dokDeliveryAtomFeedStatusAutoUpdate;
             dataset.SpecificUsage = inputDataset.SpecificUsage;
             dataset.restricted = inputDataset.restricted;
-            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
+            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
             initialisationCoverageDataset(inputCoverage, dataset, originalDatasetownerId);
             dataset.dokDeliveryDistributionStatusNote = inputDataset.dokDeliveryDistributionStatusNote;
             dataset.dokDeliveryDistributionStatusAutoUpdate = inputDataset.dokDeliveryDistributionStatusAutoUpdate;
             dataset.dokDeliveryDistributionStatusId = inputDataset.dokDeliveryDistributionStatusId;
-            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDistributionStatus(dataset);
+            dataset.dokDeliveryDistributionStatusId = _registerService.GetDeliveryDownloadStatus(dataset.Uuid, dataset.dokDeliveryDistributionStatusAutoUpdate, dataset.dokDeliveryDistributionStatusId);
 
             dataset.RegionalPlan = inputDataset.RegionalPlan;
             dataset.RegionalPlanNote = inputDataset.RegionalPlanNote;

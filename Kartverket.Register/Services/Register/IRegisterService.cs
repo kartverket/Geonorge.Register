@@ -20,23 +20,22 @@ namespace Kartverket.Register.Services.Register
         List<Models.Register> GetSubregistersOfRegister(Models.Register register);
         Models.Register GetRegisterBySystemId(Guid systemId);
         Models.Register GetRegister(string parentRegister, string register);
+        Guid GetRegisterId(string parentRegister, string register);
         Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
         bool RegisterHasChildren(string parentname, string registername);
         bool validationName(Object model);
         Organization GetOrganizationByUserName();
+        Guid GetOrganizationIdByUserName();
         Organization GetOrganizationByOrganizationNr(string number);
         Organization GetOrganizationByMunicipalityCode(string municipalityCode);
         List<Models.RegisterItem> GetDatasetBySelectedMunicipality(Models.Register register, Models.RegisterItem municipality);
         Models.Register GetDokMunicipalRegister();
         void UpdateDOKStatus();
-        string GetMetadataStatus(string uuid, bool autoUpdate, string currentStatus);
         string GetDOKStatus(string url, bool autoUpdate, string currentStatus);
-        string GetDokDeliveryServiceStatus(Dataset item);
-        string GetDeliveryDistributionStatus(Dataset item);
+        string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus);
         string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus);
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
-        string GetAtomFeedStatus(string uuid, bool autoUpdate, string currentStatus);
-        string GetWfsStatus(string uuid, bool autoUpdate, string currentStatus);
         List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality);
+        string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService);
     }
 }

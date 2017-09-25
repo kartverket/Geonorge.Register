@@ -1,7 +1,9 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Resources;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
+using translation = Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using Resources;
 
 namespace Kartverket.Register.Helpers
 {
@@ -33,6 +36,11 @@ namespace Kartverket.Register.Helpers
         {
             string versionNumber = WebConfigurationManager.AppSettings["BuildVersionNumber"];
             return versionNumber;
+        }
+
+        public static bool SupportsMultiCulture(this HtmlHelper helper)
+        {
+            return Boolean.Parse(WebConfigurationManager.AppSettings["SupportsMultiCulture"]); ;
         }
 
         public static bool Access(object model)
@@ -964,7 +972,8 @@ namespace Kartverket.Register.Helpers
                             gyldig += "- " + s.description + "&#013";
                         }
                     }
-                    else {
+                    else
+                    {
                         gyldig += "- " + s.description + "&#013";
                     }
                 }
@@ -988,12 +997,12 @@ namespace Kartverket.Register.Helpers
 
         public static string ErrorMessageValidationName()
         {
-            return "Navnet finnes fra før!";
+            return translation.Registers.ErrorMessageValidationName;
         }
 
         public static string ErrorMessageValidationDataset()
         {
-            return "Datasettet finnes fra før!";
+            return translation.DataSet.ErrorMessageValidationDataset;
         }
 
         public static CodelistValue GetSelectedMunicipality(string selectedMunicipalityCode)
@@ -1114,7 +1123,8 @@ namespace Kartverket.Register.Helpers
             {
                 return true;
             }
-            else {
+            else
+            {
                 return false;
             }
         }
@@ -1130,7 +1140,7 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return "Velg kommune";
+            return translation.DataSet.DOK_Nasjonalt_SelectMunicipality;
         }
 
 
@@ -1138,7 +1148,7 @@ namespace Kartverket.Register.Helpers
         {
             if (municipality != null)
             {
-                string confirmed = "ikke ";
+                string confirmed = translation.DataSet.NotConfirmedMunicipalDOK;
                 string lastDateConfirmedText = "";
                 string status = "danger";
                 if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))
@@ -1149,7 +1159,7 @@ namespace Kartverket.Register.Helpers
                 {
                     status = "warning";
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
-                    return "<label class='label-" + status + " label auto-width'>Kommunen jobber med å sluttføre registreringen for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                    return "<label class='label-" + status + " label auto-width'>"+ translation.DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {
@@ -1158,7 +1168,7 @@ namespace Kartverket.Register.Helpers
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
                 }
 
-                return "<label class='label-" + status + " label auto-width'>Kommunen har " + confirmed + "bekreftet at registrering er sluttført for året " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                return "<label class='label-" + status + " label auto-width'>" + Resource.MunicipalDOKConfirmedInfo(confirmed) + " "  + DateTime.Now.Year + lastDateConfirmedText + "</label>";
             }
             return "";
         }
@@ -1182,12 +1192,244 @@ namespace Kartverket.Register.Helpers
             return null;
         }
 
-        public static int cbChecked(bool checkboxChecked) {
+        public static int cbChecked(bool checkboxChecked)
+        {
             if (checkboxChecked)
             {
                 return 1;
             }
             return 0;
         }
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort)
+        {
+
+            var sortingClass = "";
+            var sortTitle = "";
+            var sortingParam = "";
+            var statusIcon = "custom-icon ";
+
+            if (sortingSelected == null)
+                sortingSelected = "name";
+
+            if (sortingSelected == defaultSort)
+            {
+                sortingClass = "sorted-asc";
+                sortTitle = DataSet.DOK_Delivery_Title;
+                sortingParam = defaultSort + "_desc";
+            }
+            else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
+            {
+                sortingClass = "sorted-desc";
+                sortTitle = DataSet.DOK_Delivery_Title;
+                sortingParam = defaultSort;
+            }
+            else
+            {
+                sortingClass = "";
+                sortTitle = "";
+                sortingParam = defaultSort;
+            }
+
+            if (sortingParam.IndexOf("Requirement") > -1)
+            {
+                sortTitle = "Sortert etter logisk rekkefølge";
+            }
+            var text = searchParam;
+
+            if (sortingParam == "title" || sortingParam == "title_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Title;
+            }
+            else if (sortingParam == "owner" || sortingParam == "owner_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Owner;
+            }
+            else if (sortingParam == "theme" || sortingParam == "theme_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Theme;
+            }
+            else if (sortingParam == "metadata" || sortingParam == "metadata_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Metadata;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "metadataservice" || sortingParam == "metadataservice_desc")
+            {
+                sortTitle = InspireDataSet.MetadataServiceStatus;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "productSheet" || sortingParam == "metadataservice_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSheet;
+                statusIcon += "";
+            }
+            else if (sortingParam == "presentationRules" || sortingParam == "presentationRules_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_PresentationRules;
+                statusIcon += "";
+            }
+            else if (sortingParam == "productSpecification" || sortingParam == "productSpecification_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
+                statusIcon += "";
+            }
+            else if (sortingParam == "wms" || sortingParam == "wms_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wms;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "wfs" || sortingParam == "wfs_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wfs;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "sosi" || sortingParam == "sosi_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_SosiRequirements;
+                statusIcon += "";
+            }
+            else if (sortingParam == "distribution" || sortingParam == "distribution_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Distribution;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "gml" || sortingParam == "gml_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_GmlRequirements;
+                statusIcon += "";
+            }
+            else if (sortingParam == "atom" || sortingParam == "atom_atom")
+            {
+                sortTitle = DataSet.DOK_Delivery_AtomFeed;
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "wfsoratom" || sortingParam == "wfsoratom_desc")
+            {
+                sortTitle = InspireDataSet.WfsOrAtomStatus;
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "harmonizeddata" || sortingParam == "harmonizeddata_desc")
+            {
+                sortTitle = InspireDataSet.HarmonizedDataStatus;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "spatialdataservice" || sortingParam == "spatialdataservice_desc")
+            {
+                sortTitle = InspireDataSet.SpatialDataServiceStatus;
+                statusIcon += "custom-icon-info";
+            }
+
+            var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
+
+            if (text != null)
+                linkSort = linkSort + "&text=" + text;
+            if (string.IsNullOrWhiteSpace(tittel))
+                tittel = "<span class='" + statusIcon + "'></span>";
+            
+            linkSort = linkSort + "'>" + tittel + "</a>";
+
+            return new HtmlString(linkSort);
+        }
+
+        public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null)
+        {
+
+            var symbolDeficient = "custom-icon custom-icon-smile-red";
+            var symbolUseable = "custom-icon custom-icon-smile-yellow";
+            var symbolGood = "custom-icon custom-icon-smile-green";
+            var symbolNotSet = "custom-icon";
+
+            var statusSymbol = symbolUseable;
+            var title = "";
+
+            if (restricted.HasValue && restricted.Value && type != "metadata")
+            {
+                statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
+                title = DataSet.DOK_Delivery_Restricted;
+            }
+            else if (!string.IsNullOrEmpty(status))
+            {
+                switch (status)
+                {
+                    case "notset":
+                        statusSymbol = symbolNotSet;
+                        title = DataSet.DOK_Delivery_Status_NotSet;
+                        break;
+                    case "deficient":
+                        statusSymbol = symbolDeficient;
+                        title = DataSet.DOK_Delivery_Status_Deficient;
+                        break;
+                    case "useable":
+                        statusSymbol = symbolUseable;
+                        title = DataSet.DOK_Delivery_Status_Useable;
+                        break;
+                    case "good":
+                        statusSymbol = symbolGood;
+                        title = DataSet.DOK_Delivery_Status_Good;
+                        break;
+                }
+            }
+
+            var label = "";
+
+            switch (type)
+            {
+                case "metadata":
+                    label = DataSet.DOK_Delivery_Metadata;
+                    break;
+                case "metadataservice":
+                    label = InspireDataSet.MetadataServiceStatus;
+                    break;
+                case "ProductSheet":
+                    label = DataSet.DOK_Delivery_ProductSheet;
+                    break;
+                case "presentationRules":
+                    label = DataSet.DOK_Delivery_PresentationRules;
+                    break;
+                case "productSpecification":
+                    label = DataSet.DOK_Delivery_ProductSpesification;
+                    break;
+                case "wms":
+                    label = DataSet.DOK_Delivery_Wms;
+                    break;
+                case "wfs":
+                    label = DataSet.DOK_Delivery_Wfs;
+                    break;
+                case "sosi":
+                    label = DataSet.DOK_Delivery_SosiRequirements;
+                    break;
+                case "distribution":
+                    label = DataSet.DOK_Delivery_Distribution;
+                    break;
+                case "gml":
+                    label = DataSet.DOK_Delivery_GmlRequirements;
+                    break;
+                case "atom":
+                    label = DataSet.DOK_Delivery_AtomFeed;
+                    break;
+                case "harmonizeddata":
+                    label = InspireDataSet.HarmonizedDataStatus;
+                    break;
+                case "spatialdataservice":
+                    label = InspireDataSet.SpatialDataServiceStatus;
+                    break;
+                case "wfsoratom":
+                    label = InspireDataSet.WfsOrAtomStatus;
+                    break;
+            }
+
+
+            if (!string.IsNullOrEmpty(label))
+                title = label + ": " + title;
+
+            var html = "";
+            if (status == "notset")
+                html = "<span class='" + symbolNotSet + "'></span>";
+            else
+                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + title + "'><span class='" + statusSymbol + "'></span></span>";
+
+            return new HtmlString(html);
+        }
+
     }
 }

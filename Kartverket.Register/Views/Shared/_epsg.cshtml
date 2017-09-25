@@ -12,7 +12,7 @@
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
                 
                 <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <a href="@item.GetObjectUrl()" data-loading-message="Henter innhold" class="show-loading-animation">
+                    <a href="@item.GetObjectUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">
                         @item.name
                     </a>
                     <p>
@@ -24,47 +24,47 @@
 
                     @if (item.epsgcode == null)
                     {
-                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span> - </p>
+                        <p title="@EPSGs.EpsgCode: @item.epsgcode"><span>EPSG: </span> - </p>
                     }
                     else
                     {
-                        <p title="EPSG-kode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
+                        <p title="@EPSGs.EpsgCode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
                     }
 
                     @if (item.sosiReferencesystem == null)
                     {
-                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
+                        <p title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
                     }
                     else
                     {
-                        <p title="Sosi-referansesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
+                        <p title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
                     }
 
                     @if (item.verticalReferenceSystem == null)
                     {
-                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
+                        <p title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
                     }
                     else
                     {
-                        <p title="Vertikaltreferansesystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
+                        <p title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
                     }
 
                     @if (item.horizontalReferenceSystem == null)
                     {
-                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
+                        <p title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
                     }
                     else
                     {
-                        <p title="Horisontaltreferansesystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
+                        <p title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
                     }
 
                     @if (item.dimensionId == null)
                     {
-                        <p title="Dimensjon: "><span>Dimensjon: </span> - </p>
+                        <p title="@EPSGs.Dimension: "><span>@EPSGs.Dimension: </span> - </p>
                     }
                     else
                     {
-                        <p title="Dimensjon: @item.dimension.description"><span>Dimensjon: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                        <p title="@EPSGs.Dimension: @item.dimension.description"><span>@EPSGs.Dimension: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
                     }
 
                 </div>
@@ -73,11 +73,11 @@
 
                     @if (item.externalReference == null)
                     {
-                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span> - </p>
+                        <p title="@EPSGs.ExternalReference @item.name"><span>@EPSGs.ExternalReference: </span> - </p>
                     }
                     else
                     {
-                        <p title="Vis ekstern referanse for @item.name"><span>Ekstern referanse: </span><a href="@item.externalReference">Vis<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+                        <p title="@EPSGs.ExternalReference @item.name"><span>@EPSGs.ExternalReference: </span><a href="@item.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
                     }
                 </div>
 

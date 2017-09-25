@@ -1,7 +1,7 @@
 ﻿@using  Kartverket.Register.Helpers
 
 <div class="save-as-menu">
-    <label>Lagre som:</label>
+    <label>@Shared.SaveAs:</label>
     <div class="no-padding-bottom save-as-dropdown">
         <div class="custom-select">
             <select onchange="additionalView(this.value)" class="form-control">
@@ -19,11 +19,11 @@
         </div>
     </div>
     <div id="saveButtons" class="no-padding-bottom save-as-buttons">
-        <a id="atomUrl" href="@RegisterUrls.urlFormat(Request, "atom")" class="hidden" title="Vis Atom feed(Beta)">Lagre</a>
-        <a id="rssUrl" href="@RegisterUrls.urlFormat(Request, "rss")" class="hidden" title="Vis rss feed(Beta)">Lagre</a>
-        <a id="csvUrl" href="@RegisterUrls.urlFormat(Request, "csv")" class="btn" title="Vis CSV(Beta)">Lagre</a>
-        <a id="gmlUrl" href="@RegisterUrls.urlFormat(Request, "gml")" class="hidden" title="Vis GML Dictionary(Beta)">Lagre</a>
-        <a id="rdfUrl" href="@RegisterUrls.urlFormat(Request, "rdf")" class="hidden" title="Vis SKOS/RDF(Beta)">Lagre</a>
-        <a id="jsonUrl" href="@RegisterUrls.urlFormat(Request, "json")" class="hidden" title="Vis JSON(Beta)">Lagre</a>
+        <a id="atomUrl" href="@RegisterUrls.urlFormat(Request, "atom")" class="hidden" title="Vis Atom feed(Beta)">@Shared.Save</a>
+        <a id="rssUrl" href="@RegisterUrls.urlFormat(Request, "rss")" class="hidden" title="Vis rss feed(Beta)">@Shared.Save</a>
+        <a id="csvUrl" href="@RegisterUrls.urlFormat(Request, "csv")" class="btn" title="Vis CSV(Beta)">@Shared.Save</a>
+        <a id="gmlUrl" href="@RegisterUrls.urlFormat(Request, "gml")" class="hidden" title="Vis GML Dictionary(Beta)">@Shared.Save</a>
+        <a id="rdfUrl" href="@RegisterUrls.urlFormat(Request, "rdf")" class="hidden" title="Vis SKOS/RDF(Beta)">@Shared.Save</a>
+        <a id="jsonUrl" href="@RegisterUrls.urlFormat(Request, "json")" class="hidden" title="Vis JSON(Beta)">@Shared.Save</a>
     </div>
 </div>

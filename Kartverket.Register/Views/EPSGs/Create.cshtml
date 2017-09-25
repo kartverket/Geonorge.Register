@@ -2,7 +2,7 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = "Foreslå ny EPSG-kode";
+    ViewBag.Title = EPSGs.SuggestNewEpsgCode;
 }
 
 @section breadcrumb {
@@ -12,13 +12,13 @@
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
     <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>Ny</li>
+    <li>@EPSGs.SuggestNewEpsgCode</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                Ny EPSG kode
+                @EPSGs.SuggestNewEpsgCode
             </h2>
         </div>
         <div class="col-sm-12">
@@ -93,7 +93,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.dimensionId, "Dimensjon:", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.dimensionId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("dimensionId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.dimensionId, "", new { @class = "text-danger" })
@@ -126,8 +126,8 @@
 
         <div class="form-group">
             <hr />
-            <input type="submit" value="Foreslå" class="btn btn-default pull-right" />
-            <a href="@Model.GetObjectUrl()">Tilbake</a>
+            <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />
+            <a href="@Model.GetObjectUrl()">@Shared.Back</a>
         </div>
     </div>
 }

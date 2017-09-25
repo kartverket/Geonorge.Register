@@ -3,21 +3,21 @@
 
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <h3>Generell informasjon</h3>
-        <p>Organisasjonsnummer: @Model.number</p>
+        <h3>@Shared.GeneralInformation</h3>
+        <p>@Organizations.Organization_Number: @Model.number</p>
 
-        <h3>Dokumenter</h3>
+        <h3>@Organizations.Documents</h3>
         <p>
             @if (!string.IsNullOrWhiteSpace(Model.agreementDocumentUrl))
             {
-                <a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span> Avtaledokument</a>
+                <a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span> @Organizations.AgreementDocumentUrl</a>
             }
             else
             {
-                <span>Avtaledokument: Ikke angitt</span>
+                <span>@Organizations.AgreementDocumentUrl: @Registers.NotSet</span>
             }
 
-            <span class="pull-right" title="Avtaledokumentet ble godkjent @Model.agreementYear">Godkjent år: @Html.DisplayFor(m => m.agreementYear)</span>
+            <span class="pull-right" title="@Organizations.AgreementYear @Model.agreementYear">@Organizations.AgreementYear: @Html.DisplayFor(m => m.agreementYear)</span>
         </p>
         
         @if (HtmlHelperExtensions.accessRegisterItem(Model))
@@ -25,65 +25,65 @@
             <p>
                 @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))
                 {
-                    <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link til prisskjema/kalkulator for @Model.name" style="font-size:15px"></span> Prisskjema/Kalkulator</a>
+                    <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link @Organizations.PriceFormDocument for @Model.name" style="font-size:15px"></span> @Organizations.PriceFormDocument</a>
                 }
                 else
                 {
-                    <span>Prisskjema/Kalkulator: Ikke angitt</span>
+                    <span>@Organizations.PriceFormDocument: @Registers.NotSet</span>
                 }
             </p>
         }
         
-        <h3>Kontaktperson</h3>
-        <p>Navn: @Html.DisplayFor(m => m.contact)</p>
-        <p>Epost: @Html.DisplayFor(m => m.epost)</p>
+        <h3>@Organizations.Contact</h3>
+        <p>@Organizations.ContactName: @Html.DisplayFor(m => m.contact)</p>
+        <p>@Organizations.EmailAddress: @Html.DisplayFor(m => m.epost)</p>
         <p>
-            Norge digitalmedlem:
+            @Organizations.Member:
             @if (Model.member == true)
             {
-                <span>Ja</span>
+                <span>@Shared.Yes</span>
             }
             else if (Model.member == false)
             {
-                <span>Nei</span>
+                <span>@Shared.No</span>
             }
             else
             {
-                <span>Ikke angitt</span>
+                <span>@Registers.NotSet</span>
             }
         </p>
 
         @if (Model.IsMunicipality())
         {
-            <h3>Kommuneinformasjon</h3>
-            <p>Kommunenummer: @Html.DisplayFor(m => m.MunicipalityCode)</p>
+            <h3>@Organizations.MunicipalityInformation</h3>
+            <p>@Organizations.MunicipalityCode: @Html.DisplayFor(m => m.MunicipalityCode)</p>
 
             <p>
-                Geografisk senterpunkt:
+                @Organizations.GeographicCenterPoint:
                 @if (Model.HasGeographicCenter())
                 {
                     <text>@Html.DisplayFor(m => m.GeographicCenterX),@Html.DisplayFor(m => m.GeographicCenterY)</text>
                 }
                 else
                 {
-                    <text>Ikke angitt</text>
-                }
+                    <text>@Registers.NotSet</text>
+}
             </p>
 
-            <p>Geografisk utstrekning:
+            <p>@Organizations.GeographicExtent:
                 @if (Model.HasBoundingBox())
                 {
                     <ul>
-                        <li>Nord: @Html.DisplayFor(m => m.BoundingBoxNorth)</li>
-                        <li>Vest: @Html.DisplayFor(m => m.BoundingBoxWest)</li>
-                        <li>Sør: @Html.DisplayFor(m => m.BoundingBoxSouth)</li>
-                        <li>Øst: @Html.DisplayFor(m => m.BoundingBoxEast)</li>
+                        <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxNorth)</li>
+                        <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxWest)</li>
+                        <li>@Organizations.South: @Html.DisplayFor(m => m.BoundingBoxSouth)</li>
+                        <li>@Organizations.East: @Html.DisplayFor(m => m.BoundingBoxEast)</li>
                     </ul>
                 }
                 else
                 {
-                    <text>Ikke angitt</text>
-                }
+                    <text>@Registers.NotSet</text>
+}
             </p>
         }
 

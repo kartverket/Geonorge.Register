@@ -17,29 +17,29 @@
         if (restricted.HasValue && restricted.Value == true && type != "metadata")
         {
             statusSymbol = "custom-icon custom-icon-hengelaas-closed-red";
-            title = UI.DOK_Delivery_Restricted;
+            title = DataSet.DOK_Delivery_Restricted;
         }
         else if (!string.IsNullOrEmpty(status))
         {
             if (status == "notset")
             {
                 statusSymbol = symbolNotSet;
-                title = UI.DOK_Delivery_Status_NotSet;
+                title = DataSet.DOK_Delivery_Status_NotSet;
             }
             else if (status == "deficient")
             {
                 statusSymbol = symbolDeficient;
-                title = UI.DOK_Delivery_Status_Deficient;
+                title = DataSet.DOK_Delivery_Status_Deficient;
             }
             else if (status == "useable")
             {
                 statusSymbol = symbolUseable;
-                title = UI.DOK_Delivery_Status_Useable;
+                title = DataSet.DOK_Delivery_Status_Useable;
             }
             else if (status == "good")
             {
                 statusSymbol = symbolGood;
-                title = UI.DOK_Delivery_Status_Good;
+                title = DataSet.DOK_Delivery_Status_Good;
             }
         }
 
@@ -47,25 +47,25 @@
 
 
         if (type.Contains("metadata"))
-            label = UI.DOK_Delivery_Metadata;
+            label = DataSet.DOK_Delivery_Metadata;
         else if (type.Contains("dokDeliveryProductSheetStatus"))
-            label = UI.DOK_Delivery_ProductSheet;
+            label = DataSet.DOK_Delivery_ProductSheet;
         else if (type.Contains("dokDeliveryPresentationRulesStatus"))
-            label = UI.DOK_Delivery_PresentationRules;
+            label = DataSet.DOK_Delivery_PresentationRules;
         else if (type.Contains("dokDeliveryProductSpecificationStatus"))
-            label = UI.DOK_Delivery_ProductSpesification;
+            label = DataSet.DOK_Delivery_ProductSpesification;
         else if (type.Contains("dokDeliveryWmsStatus"))
-            label = UI.DOK_Delivery_Wms;
+            label = DataSet.DOK_Delivery_Wms;
         else if (type.Contains("dokDeliveryWfsStatus"))
-            label = UI.DOK_Delivery_Wfs;
+            label = DataSet.DOK_Delivery_Wfs;
         else if (type.Contains("dokDeliverySosiRequirementsStatus"))
-            label = UI.DOK_Delivery_SosiRequirements;
+            label = DataSet.DOK_Delivery_SosiRequirements;
         else if (type.Contains("dokDeliveryDistributionStatus"))
-            label = UI.DOK_Delivery_Distribution;
+            label = DataSet.DOK_Delivery_Distribution;
         else if (type.Contains("dokDeliveryGmlRequirementsStatus"))
-            label = UI.DOK_Delivery_GmlRequirements;
+            label = DataSet.DOK_Delivery_GmlRequirements;
         else if (type.Contains("dokDeliveryAtomFeedStatus"))
-            label = UI.DOK_Delivery_AtomFeed;
+            label = DataSet.DOK_Delivery_AtomFeed;
 
         if (!string.IsNullOrEmpty(label))
             title = label + ": " + title;
@@ -94,13 +94,13 @@
         if (sortingSelected == defaultSort)
         {
             sortingClass = "sorted-asc";
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
             sortingParam = defaultSort + "_desc";
         }
         else if (sortingSelected.IndexOf("_desc") > -1 && sortingSelected == defaultSort + "_desc")
         {
             sortingClass = "sorted-desc";
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
             sortingParam = defaultSort;
         }
         else
@@ -117,33 +117,33 @@
         var text = Request.QueryString["text"];
 
         if (sortingParam.Contains("title"))
-            sortTitle = UI.DOK_Delivery_Title;
+            sortTitle = DataSet.DOK_Delivery_Title;
         else if (sortingParam.Contains("datasetOwner"))
-            sortTitle = UI.DOK_Delivery_Owner;
+            sortTitle = DataSet.DOK_Delivery_Owner;
         else if (sortingParam.Contains("theme"))
-            sortTitle = UI.DOK_Delivery_Theme;
+            sortTitle = DataSet.DOK_Delivery_Theme;
         else if (sortingParam.Contains("dokDeliveryMetadataStatus"))
-            sortTitle = UI.DOK_Delivery_Metadata;
+            sortTitle = DataSet.DOK_Delivery_Metadata;
         else if (sortingParam.Contains("dokDeliveryProductSheetStatus"))
-            sortTitle = UI.DOK_Delivery_ProductSheet;
+            sortTitle = DataSet.DOK_Delivery_ProductSheet;
         else if (sortingParam.Contains("dokDeliveryPresentationRulesStatus"))
-            sortTitle = UI.DOK_Delivery_PresentationRules;
+            sortTitle = DataSet.DOK_Delivery_PresentationRules;
         else if (sortingParam.Contains("dokDeliveryProductSpecificationStatus"))
-            sortTitle = UI.DOK_Delivery_ProductSpesification;
+            sortTitle = DataSet.DOK_Delivery_ProductSpesification;
         else if (sortingParam.Contains("dokDeliveryWmsStatus"))
-            sortTitle = UI.DOK_Delivery_Wms;
+            sortTitle = DataSet.DOK_Delivery_Wms;
         else if (sortingParam.Contains("dokDeliveryWfsStatus"))
-            sortTitle = UI.DOK_Delivery_Wfs;
+            sortTitle = DataSet.DOK_Delivery_Wfs;
         else if (sortingParam.Contains("dokDeliverySosiRequirementsStatus"))
-            sortTitle = UI.DOK_Delivery_SosiRequirements;
+            sortTitle = DataSet.DOK_Delivery_SosiRequirements;
         else if (sortingParam.Contains("dokDeliveryDistributionStatus"))
-            sortTitle = UI.DOK_Delivery_Distribution;
+            sortTitle = DataSet.DOK_Delivery_Distribution;
         else if (sortingParam.Contains("dokDeliveryGmlRequirementsStatus"))
-            sortTitle = UI.DOK_Delivery_GmlRequirements;
+            sortTitle = DataSet.DOK_Delivery_GmlRequirements;
         else if (sortingParam.Contains("dokDeliveryAtomFeedStatus"))
-            sortTitle = UI.DOK_Delivery_AtomFeed;
+            sortTitle = DataSet.DOK_Delivery_AtomFeed;
         else if (sortingParam.Contains("dokStatus"))
-            sortTitle = UI.DOK_Delivery_Status;
+            sortTitle = DataSet.DOK_Delivery_Status;
 
 
         var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
@@ -163,9 +163,9 @@
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row result-row metadata">
-        <div class="col-md-3 col-sm-2">@OrderByLink("Tittel", "name")</div>
-        <div class="col-md-2">@OrderByLink("Eier", "datasetOwner")</div>
-        <div class="col-md-2">@OrderByLink("Temagruppe", "theme") </div>
+        <div class="col-md-3 col-sm-2">@OrderByLink(Shared.Title, "name")</div>
+        <div class="col-md-2">@OrderByLink(Registers.Owner, "datasetOwner")</div>
+        <div class="col-md-2">@OrderByLink(DataSet.DOK_Temagruppe, "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
             @OrderByLink("", "dokDeliveryMetadataStatus", "custom-icon custom-icon-info")
             @OrderByLink("", "dokDeliveryProductSheetStatus", "custom-icon custom-icon-produktark")
@@ -184,8 +184,8 @@
     @foreach (Dataset item in Model)
     {
         <div class="row result-row metadata">
-            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="Henter innhold"> @item.name </a></div>
-            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="Henter innhold">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.name </a></div>
+            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
             <div class="col-md-2">
                 @if (item.ThemeGroupId != null)
                 {
@@ -193,7 +193,7 @@
                 }
                 else
                 {
-                    <span>Ikke angitt</span>
+                    <span>@Registers.NotSet</span>
                 }
             </div>
 
@@ -245,7 +245,7 @@
                     </div>
 
                     <a class="beskrivelse-print visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                        <p>Eier: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
+                        <p>@Registers.Owner: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
                     </a>
 
                     <br class="hidden-print" />
@@ -256,12 +256,12 @@
                                 @if (item.description.Length < 80)
                                 {
                                     @item.description.Substring(0, item.description.Length)
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">@Shared.DisplayMoreInfo</a>
                                 }
                                 else
                                 {
                                     @item.description.Substring(0, 80)<text>...</text>
-                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">vis mer info</a>
+                                    <a class="hidden-print" href="/register/@Html.ToUrl(item.register.name)/@Html.ToUrl(item.datasetowner.name)/@Html.ToUrl(item.name)" title="Vis mer info om @item.name">@Shared.DisplayMoreInfo</a>
                                 }
                             </p>
                         }
@@ -276,27 +276,27 @@
                         }
                         @if (item.dokStatusDateAccepted != null)
                         {
-                            <li><span>DOK-godkjenningsdato: </span>@item.dokStatusDateAccepted </li>
+                            <li><span>@DataSet.DOK_StatusDateAccepted: </span>@item.dokStatusDateAccepted </li>
                         }
                         @if (item.dateSubmitted != null)
                         {
-                            <li><span>Innsendt: </span>@item.dateSubmitted </li>
+                            <li><span>@Registers.DateSubmitted: </span>@item.dateSubmitted </li>
                         }
                         @if (item.modified != null)
                         {
-                            <li><span>Siste endret: </span>@item.modified </li>
+                            <li><span>@Registers.Modified: </span>@item.modified </li>
                         }
 
 
                         @if (item.ThemeGroupId != null)
                         {
-                            <li title="Temagruppe: @item.theme.description">
-                                <span>Gruppe: </span>@item.theme.description
+                            <li title="@DataSet.DOK_Temagruppe: @item.theme.description">
+                                <span>@DataSet.DOK_Temagruppe: </span>@item.theme.description
                             </li>
                         }
                         else
                         {
-                            <li title="Temagruppe: Ikke angitt"><span>Gruppe: </span>Ikke angitt</li>
+                            <li title="@DataSet.DOK_Temagruppe: @Registers.NotSet"><span>@DataSet.DOK_Temagruppe: </span>@Registers.NotSet</li>
                         }
                     </ul>
 

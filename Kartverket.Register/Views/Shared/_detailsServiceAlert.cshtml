@@ -3,12 +3,12 @@
 <div class="row result-row metadata">
     <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
         <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
-            <p><b>Type varsel: </b>@Model.AlertType</p>
-            <p><b>Tjenestetype: </b>@Model.ServiceType</p>
-            <p><b>Siste varsel: </b>@Html.DisplayFor(model => model.AlertDate)</p>
-            <p><b>Ikrafttredelse: </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
-            <p><b>Varselet gjelder:</b> @Model.Note</p>
-            <p><b>Tjenestebeskrivelse: </b> <a href="@Model.ServiceMetadataUrl" title="Beskrivelse av @Model.name">Vis</a></p>
+            <p><b>@Html.DisplayNameFor(model => model.AlertType): </b>@Model.AlertType</p>
+            <p><b>@Html.DisplayNameFor(model => model.ServiceType): </b>@Model.ServiceType</p>
+            <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
+            <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
+            <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.Note</p>
+            <p><b>@ServiceAlerts.ServiceDesription: </b> <a href="@Model.ServiceMetadataUrl" title="@Registers.Description @Model.name">@Shared.Details</a></p>
         </div>
     </div>
 </div>

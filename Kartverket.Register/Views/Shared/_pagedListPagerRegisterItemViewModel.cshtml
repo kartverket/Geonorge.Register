@@ -1,0 +1,11 @@
+﻿@model PagedList.IPagedList<Kartverket.Register.Models.ViewModels.RegisterItemV2ViewModel>
+@using PagedList.Mvc;
+
+@Registers.HitsDisplay @(Model.TotalItemCount == 0 ? 0 : Model.FirstItemOnPage) - @Model.LastItemOnPage @Registers.HitsOf @Model.TotalItemCount @Registers.Hits
+
+@Html.PagedListPager(Model, page => Request.Path + "?page=" + page
+                                    + (!string.IsNullOrEmpty(ViewBag.SortOrder) ? "&sorting=" + ViewBag.SortOrder : "")
+                                    + (Session["text"] != null && !string.IsNullOrEmpty(Session["text"].ToString()) ? "&text=" + Session["text"].ToString() : "")
+                                    , new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })
+
+

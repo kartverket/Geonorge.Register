@@ -1,0 +1,485 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DOK_Bekreftet_Kommune" xml:space="preserve">
+    <value>Bekreftelse på data som skal være kommunes DOK</value>
+  </data>
+  <data name="DOK_Coverage_Municipality" xml:space="preserve">
+    <value>Dekning viser om datasettet faktisk finnes i kommunen</value>
+  </data>
+  <data name="DOK_Delivery_AtomFeed" xml:space="preserve">
+    <value>Atom-feed status</value>
+  </data>
+  <data name="DOK_Delivery_Distribution" xml:space="preserve">
+    <value>Nedlastning status</value>
+  </data>
+  <data name="DOK_Delivery_GmlRequirements" xml:space="preserve">
+    <value>GML-krav status</value>
+  </data>
+  <data name="DOK_Delivery_Metadata" xml:space="preserve">
+    <value>Metadata status</value>
+  </data>
+  <data name="DOK_Delivery_Owner" xml:space="preserve">
+    <value>Eier</value>
+  </data>
+  <data name="DOK_Delivery_PresentationRules" xml:space="preserve">
+    <value>Tegneregler status</value>
+  </data>
+  <data name="DOK_Delivery_ProductSheet" xml:space="preserve">
+    <value>Produktark status</value>
+  </data>
+  <data name="DOK_Delivery_ProductSpesification" xml:space="preserve">
+    <value>Produktspesifikasjoner status</value>
+  </data>
+  <data name="DOK_Delivery_Restricted" xml:space="preserve">
+    <value>Skjermede data - kontakt dataeier for tilgangsforespørsel</value>
+  </data>
+  <data name="DOK_Delivery_SosiRequirements" xml:space="preserve">
+    <value>SOSI-krav status</value>
+  </data>
+  <data name="DOK_Delivery_Status" xml:space="preserve">
+    <value>Status datasett</value>
+  </data>
+  <data name="DOK_Delivery_Status_Deficient" xml:space="preserve">
+    <value>Ikke levert</value>
+  </data>
+  <data name="DOK_Delivery_Status_Good" xml:space="preserve">
+    <value>God</value>
+  </data>
+  <data name="DOK_Delivery_Status_NotSet" xml:space="preserve">
+    <value>Leveransestatus er ikke satt</value>
+  </data>
+  <data name="DOK_Delivery_Status_Useable" xml:space="preserve">
+    <value>Brukbar</value>
+  </data>
+  <data name="DOK_Delivery_Theme" xml:space="preserve">
+    <value>Temagruppe</value>
+  </data>
+  <data name="DOK_Delivery_Title" xml:space="preserve">
+    <value>Tittel</value>
+  </data>
+  <data name="DOK_Delivery_Wfs" xml:space="preserve">
+    <value>Wfs status</value>
+  </data>
+  <data name="DOK_Delivery_Wms" xml:space="preserve">
+    <value>Wms status</value>
+  </data>
+  <data name="DOK_Eier" xml:space="preserve">
+    <value>Organisasjonen som har et eierforhold til datene og kan svare inngående om faglige forhold rundt datasettets struktur og innhold</value>
+  </data>
+  <data name="DOK_Kommentar" xml:space="preserve">
+    <value>Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett</value>
+  </data>
+  <data name="DOK_Nasjonalt_Kommunalt" xml:space="preserve">
+    <value>Viser om datasettet er nasjonalt eller kommunalt</value>
+  </data>
+  <data name="DOK_Nasjonal_Status" xml:space="preserve">
+    <value>Datasettet sin status</value>
+  </data>
+  <data name="DOK_Temagruppe" xml:space="preserve">
+    <value>Temagruppe</value>
+  </data>
+  <data name="DOK_Tittel" xml:space="preserve">
+    <value>Offisiell tittel (navn) på datasett</value>
+  </data>
+  <data name="DOK_Datasetthumbnail" xml:space="preserve">
+    <value>Miniatyrbilde</value>
+  </data>
+  <data name="DOK_DatasetType" xml:space="preserve">
+    <value>Type datasett</value>
+  </data>
+  <data name="DOK_Distribusjonsformat" xml:space="preserve">
+    <value>Distribusjonsformat</value>
+  </data>
+  <data name="DOK_DistributionArea" xml:space="preserve">
+    <value>Distribusjonsområde</value>
+  </data>
+  <data name="DOK_DistributionUrl" xml:space="preserve">
+    <value>Distribusjon url</value>
+  </data>
+  <data name="DOK_Kandidatdato" xml:space="preserve">
+    <value>Kandidatdato</value>
+  </data>
+  <data name="DOK_Note" xml:space="preserve">
+    <value>Merknad</value>
+  </data>
+  <data name="DOK_PresentationRulesStatus" xml:space="preserve">
+    <value>Kartografidokumentasjon</value>
+  </data>
+  <data name="DOK_PresentationRulesUrl" xml:space="preserve">
+    <value>Presentasjonsregler url</value>
+  </data>
+  <data name="DOK_ProductSheetStatus" xml:space="preserve">
+    <value>Produktark</value>
+  </data>
+  <data name="DOK_ProductSheetUrl" xml:space="preserve">
+    <value>Produktark url</value>
+  </data>
+  <data name="DOK_ProductSpecificationStatus" xml:space="preserve">
+    <value>Produktspesifikasjon</value>
+  </data>
+  <data name="DOK_ProductSpecificationUrl" xml:space="preserve">
+    <value>Produktspesifikasjon url</value>
+  </data>
+  <data name="DOK_SpecificUsage" xml:space="preserve">
+    <value>Bruksområde</value>
+  </data>
+  <data name="DOK_StatusDateAccepted" xml:space="preserve">
+    <value>DOK-status godkjent</value>
+  </data>
+  <data name="ServiceUuid" xml:space="preserve">
+    <value>Tjeneste uuid</value>
+  </data>
+  <data name="DOK_Nasjonalt_SelectMunicipality" xml:space="preserve">
+    <value>Velg kommune</value>
+  </data>
+  <data name="MunicipalDOKConfirmedInfoPlaceholder" xml:space="preserve">
+    <value>Kommunen har {0} bekreftet at registrering er sluttført for året</value>
+  </data>
+  <data name="MunicipalDOKStatusDraft" xml:space="preserve">
+    <value>Kommunen jobber med å sluttføre registreringen for året</value>
+  </data>
+  <data name="NotConfirmedMunicipalDOK" xml:space="preserve">
+    <value>ikke</value>
+  </data>
+  <data name="DOK_DeliveryStatusHeading" xml:space="preserve">
+    <value>Leveransestatus</value>
+  </data>
+  <data name="DOK_EvaluationCriteria" xml:space="preserve">
+    <value>Vurderingskriterier</value>
+  </data>
+  <data name="Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="DeleteDataset" xml:space="preserve">
+    <value>Slett datasett</value>
+  </data>
+  <data name="DisplayKartkatalogen" xml:space="preserve">
+    <value>Vis i kartkatalogen</value>
+  </data>
+  <data name="DOK_AssessmentPoint" xml:space="preserve">
+    <value>Vurderingspunkt</value>
+  </data>
+  <data name="DOK_Confirmed" xml:space="preserve">
+    <value>Bekreftet</value>
+  </data>
+  <data name="DOK_Coverage" xml:space="preserve">
+    <value>Dekning</value>
+  </data>
+  <data name="DOK_GeneralLink" xml:space="preserve">
+    <value>Generelt</value>
+  </data>
+  <data name="DOK_MunicipalityNote" xml:space="preserve">
+    <value>Kommunens merknad</value>
+  </data>
+  <data name="DOK_Owner" xml:space="preserve">
+    <value>Datasett eier</value>
+  </data>
+  <data name="DOK_StatusValueHeader" xml:space="preserve">
+    <value>Statusverdi</value>
+  </data>
+  <data name="DOK_SuitabilityRating" xml:space="preserve">
+    <value>Egnethetsvurdering</value>
+  </data>
+  <data name="GetInfoKartkatalog" xml:space="preserve">
+    <value>Hent informasjon fra kartkatalogen</value>
+  </data>
+  <data name="GoTo" xml:space="preserve">
+    <value>Gå til</value>
+  </data>
+  <data name="ListOfDatasets" xml:space="preserve">
+    <value>Treffliste over datasett</value>
+  </data>
+  <data name="MetadataEditor" xml:space="preserve">
+    <value>metadataeditoren</value>
+  </data>
+  <data name="ProductInformation" xml:space="preserve">
+    <value>Produktinformasjon</value>
+  </data>
+  <data name="RegionType" xml:space="preserve">
+    <value>Regions-type</value>
+  </data>
+  <data name="SuggestNewDataset" xml:space="preserve">
+    <value>Foreslå nytt dataset</value>
+  </data>
+  <data name="ToEditMetadata" xml:space="preserve">
+    <value>for å redigere metadata</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>oppdater</value>
+  </data>
+  <data name="DOK_OwnerRequired" xml:space="preserve">
+    <value>Dette feltet er påkrevd</value>
+  </data>
+  <data name="ErrorMessageValidationDataset" xml:space="preserve">
+    <value>Datasettet finnes fra før!</value>
+  </data>
+  <data name="MunicipalConfirmation" xml:space="preserve">
+    <value>Kommunal bekreftelse</value>
+  </data>
+  <data name="DisplayInfoRegistration" xml:space="preserve">
+    <value>Vis veiledning om registrering</value>
+  </data>
+  <data name="DOK_Nasjonalt" xml:space="preserve">
+    <value>Det offentlige kartgrunnlaget - Kommunalt</value>
+  </data>
+  <data name="BackgroundColor" xml:space="preserve">
+    <value>Bakgrunnsfarge</value>
+  </data>
+  <data name="Coverage" xml:space="preserve">
+    <value>Bekrefte DOK</value>
+  </data>
+  <data name="LoadingCoverage" xml:space="preserve">
+    <value>Laster Bekrefte DOK</value>
+  </data>
+  <data name="LoadingSuitability" xml:space="preserve">
+    <value>Laster Egnethetsvurdering</value>
+  </data>
+  <data name="SetStatus" xml:space="preserve">
+    <value>sett status</value>
+  </data>
+  <data name="Suitability" xml:space="preserve">
+    <value>Egnethet</value>
+  </data>
+  <data name="SuitabilityArealText" xml:space="preserve">
+    <value>Kommune-planens areal- del</value>
+  </data>
+  <data name="SuitabilityArealTitle" xml:space="preserve">
+    <value>Prosesser knyttet til kommuneplanens arealdel</value>
+  </data>
+  <data name="SuitabilityByggesakText" xml:space="preserve">
+    <value>Bygge- sak</value>
+  </data>
+  <data name="SuitabilityByggesakTitle" xml:space="preserve">
+    <value>Byggesak</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringText" xml:space="preserve">
+    <value>Regulerings- plan- detalj</value>
+  </data>
+  <data name="SuitabilityDetaljreguleringTitle" xml:space="preserve">
+    <value>Reguleringsplanlegging - detaljregulering</value>
+  </data>
+  <data name="SuitabilityFradelingText" xml:space="preserve">
+    <value>Fra- deling</value>
+  </data>
+  <data name="SuitabilityFradelingTitle" xml:space="preserve">
+    <value>Fradeling</value>
+  </data>
+  <data name="SuitabilityKUText" xml:space="preserve">
+    <value>KU og ROS for pbl- planer</value>
+  </data>
+  <data name="SuitabilityKUTitle" xml:space="preserve">
+    <value>KU - konsekvensutredninger i forbindelse med arealplaner</value>
+  </data>
+  <data name="SuitabilityNoteTitle" xml:space="preserve">
+    <value>Må legges inn på data en velger ikke å ta med, kan brukes også for andre datasett</value>
+  </data>
+  <data name="SuitabilityOmraadeText" xml:space="preserve">
+    <value>Regulerings- plan- område</value>
+  </data>
+  <data name="SuitabilityOmraadeTitle" xml:space="preserve">
+    <value>Reguleringsplanlegging – områderegulering</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingText" xml:space="preserve">
+    <value>Region- plan</value>
+  </data>
+  <data name="SuitabilityRegionsplanleggingTitle" xml:space="preserve">
+    <value>Regionplanlegging</value>
+  </data>
+  <data name="SuitabilitySamfunnText" xml:space="preserve">
+    <value>Kommune-planens samfunns- del</value>
+  </data>
+  <data name="SuitabilitySamfunnTitle" xml:space="preserve">
+    <value>Prosesser knyttet til kommuneplanens samfunnsdel</value>
+  </data>
+  <data name="SuitabilityText" xml:space="preserve">
+    <value>Tekst om egnethet, tips til bruk eller andre kommentarer</value>
+  </data>
+  <data name="SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt;Kommunalt forslag til bruk ut fra egnethet&lt;/b&gt;&lt;br /&gt;
+Her kan du angi kommunens vurdering av egnethet for hvert av datasettene. Ulike kommuner har ulike utfordringer og dette kan påvirke vurderingen av egnethet. Registreringen er ikke obligatorisk, men er frivillig å bruke, det skal være et verktøy for kommunens eget arbeid med DOK.
+Det er lagt inn overordnede nasjonale forslag. Dette forslaget er kun ment som grovt veiledende ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+Ettersom et datasetts kvalitet og dekning kan variere betydelig fra en kommune til en annen og en landsdel til en annen, må kommunene selv vurdere egnethet ut fra tilgjengelige data for sin kommune. Egnethetsvurderingen kan gjøres for bruk i disse prosessene:
+                                    &lt;ul&gt;
+                                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
+                                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
+                                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
+                                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
+                                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
+                                        &lt;li&gt;Byggesak&lt;/li&gt;
+                                        &lt;li&gt;Fradeling&lt;/li&gt;
+                                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                                    &lt;/ul&gt;
+Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere intensitet på bakgrunnsfarge i avkrysningsboksene indikerer bedre egnethet basert på overordnede nasjonale vurderinger.</value>
+  </data>
+  <data name="SuitabitityHelpTextBtn" xml:space="preserve">
+    <value>Vis veiledning om registrering</value>
+  </data>
+  <data name="AdditionalDatasetsSelected" xml:space="preserve">
+    <value>Valgte tilleggsdatasett</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfo" xml:space="preserve">
+    <value>Hvis datasettet allerede finnes i Geonorge, søk opp datasett og registrer det for din kommune</value>
+  </data>
+  <data name="SuggestMunicipalitySearchInfoRegisterMetadata" xml:space="preserve">
+    <value>Registrer nye metadata</value>
+  </data>
+  <data name="SuggestNewDatasetMunicipality" xml:space="preserve">
+    <value>Legg til ekstra DOK-datasett for din kommune</value>
+  </data>
+  <data name="DOK_SuitabitityHelpText" xml:space="preserve">
+    <value>&lt;b&gt;DOK nasjonal egnethetsvurdering&lt;/b&gt;&lt;br /&gt;
+                &lt;p&gt;
+                    Her registreres overordnede nasjonale egnethetsvurderinger. Dette er kun grove veiledende vurderinger ut fra fagpersoners kjennskap til datasettet og kjennskap til de oppgaver og prosesser som skal løses etter plan- og bygningsloven.
+                    Ettersom et datasetts kvalitet og dekning kan variere betydelig fra område til område, er vurderingene å anse som grove og omtrentlige, og vil kunne avvike betydelig for spesifikke kommuner eller steder.
+                &lt;/p&gt;
+                &lt;p&gt;
+                    &lt;u&gt;Egnethetsvurdering gjøres for disse prosessene:&lt;/u&gt;
+                    &lt;ul&gt;
+                        &lt;li&gt;Regionplanlegging&lt;/li&gt;
+                        &lt;li&gt;Prosesser knyttet til kommuneplanens samfunnsdel&lt;/li&gt;
+                        &lt;li&gt;Prosesser knyttet til kommuneplanens arealdel&lt;/li&gt;
+                        &lt;li&gt;Reguleringsplanlegging – områderegulering&lt;/li&gt;
+                        &lt;li&gt;Reguleringsplanlegging - detaljregulering&lt;/li&gt;
+                        &lt;li&gt;Byggesak&lt;/li&gt;
+                        &lt;li&gt;Fradeling&lt;/li&gt;
+                        &lt;li&gt;KU - konsekvensutredninger i forbindelse med arealplaner&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;
+                &lt;p&gt;
+                    Egnethetsvurderingen gis i form av verdier 1-5, og det kan legges inn kommentarer i tillegg
+                    &lt;ul style="list-style:none"&gt;
+                        &lt;li&gt;1 = Ikke egnet&lt;/li&gt;
+                        &lt;li&gt;2 = Litt egnet&lt;/li&gt;
+                        &lt;li&gt;3 = Middels godt egnet&lt;/li&gt;
+                        &lt;li&gt;4 = Godt egnet&lt;/li&gt;
+                        &lt;li&gt;5 = Svært godt egnet&lt;/li&gt;
+                    &lt;/ul&gt;
+                &lt;/p&gt;</value>
+  </data>
+  <data name="LoadingMessageDataset" xml:space="preserve">
+    <value>Henter datasett</value>
+  </data>
+  <data name="Dataset" xml:space="preserve">
+    <value>Datasett</value>
+  </data>
+  <data name="RestrictedData" xml:space="preserve">
+    <value>Skjermede data</value>
+  </data>
+</root>

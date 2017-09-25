@@ -28,15 +28,13 @@ namespace Kartverket.Register.Controllers
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
-        private readonly IInspireDatasetService _inspireDatasetService;
         private string language = "nb-NO";
 
-        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService) 
+        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
             _registerItemService = registerItemService;
             _searchService = searchService;
             _registerService = registerService;
-            _inspireDatasetService = inspireDatasetService;
         }
 
         /// <summary>

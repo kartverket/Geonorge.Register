@@ -939,11 +939,13 @@
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
+    <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IInspireDatasetService.cs" />
     <Compile Include="Services\DatasetDeliveryService.cs" />
+    <Compile Include="Services\GeodatalovDatasetService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />

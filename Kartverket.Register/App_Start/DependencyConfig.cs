@@ -45,6 +45,7 @@ namespace Kartverket.Register
             builder.RegisterType<EmailService>().As<IEmailService>();
             builder.RegisterType<TranslationService>().As<ITranslationService>();
             builder.RegisterType<DatasetDeliveryService>().As<IDatasetDeliveryService>();
+            builder.RegisterType<GeodatalovDatasetService>().As<IGeodatalovDatasetService>();
 
             var container = builder.Build();
 

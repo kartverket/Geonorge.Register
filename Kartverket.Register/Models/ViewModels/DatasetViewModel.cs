@@ -83,6 +83,7 @@ namespace Kartverket.Register.Models.ViewModels
             DokStatusId = dataset.DokStatusId;
             DokStatus = dataset.DokStatus;
             DokStatusDateAccepted = dataset.DokStatusDateAccepted;
+            UuidService = dataset.UuidService;
 
             UpdateRegisterItem(dataset);
         }

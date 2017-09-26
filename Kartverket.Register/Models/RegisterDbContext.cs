@@ -42,6 +42,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<CoverageDataset> CoverageDatasets { get; set; }
         public virtual DbSet<ServiceAlert> ServiceAlerts { get; set; }
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
+        public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -59,6 +60,12 @@ namespace Kartverket.Register.Models
             {
                 m.MapInheritedProperties();
                 m.ToTable("InspireDatasets");
+            });
+
+            modelBuilder.Entity<GeodatalovDataset>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("GeodatalovDatasets");
             });
 
             modelBuilder.Entity<RegisterItemV2>()

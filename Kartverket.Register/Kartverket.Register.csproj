@@ -733,6 +733,10 @@
     <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.Designer.cs">
       <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709260552344_AddGeodatalovdataset.cs" />
+    <Compile Include="Migrations\201709260552344_AddGeodatalovdataset.Designer.cs">
+      <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -753,6 +757,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
@@ -1737,6 +1742,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
       <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260552344_AddGeodatalovdataset.resx">
+      <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

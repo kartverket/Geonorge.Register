@@ -36,7 +36,7 @@ namespace Kartverket.Register.Controllers
         [Route("inspire/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
-            var model = _inspireDatasetService.NewInspireDataset(parentregister, registername);
+            var model = _inspireDatasetService.NewInspireDatasetViewModel(parentregister, registername);
             if (_accessControlService.Access(model.Register))
                 return View(model);
             throw new HttpException(401, "Access Denied");

@@ -42,6 +42,12 @@ namespace Kartverket.Register.Models.ViewModels
                         registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
                     }
                     break;
+                case "GeodatalovDataset":
+                    foreach (GeodatalovDataset geodatalovDataset in registerItems)
+                    {
+                        registerItemsViewModel.Add(new GeodatalovDatasetViewModel(geodatalovDataset));
+                    }
+                    break;
             }
             return registerItemsViewModel;
         }

@@ -8,13 +8,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
-using System.Globalization;
 using Resources;
 
 namespace Kartverket.Register.Models
@@ -54,7 +50,7 @@ namespace Kartverket.Register.Models
         public DateTime? dateAccepted { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Registers), ErrorMessageResourceName = "ContainedItemClassErrorMessage")]
-        [Display(Name = "ContainedItemClass", ResourceType = typeof(Registers))]     
+        [Display(Name = "ContainedItemClass", ResourceType = typeof(Registers))]
         public string containedItemClass { get; set; }
 
         public virtual ICollection<RegisterItem> items { get; set; }
@@ -118,9 +114,14 @@ namespace Kartverket.Register.Models
             return "/register/det-offentlige-kartgrunnlaget-kommunalt";
         }
 
-        public bool IsInspireStatusregister()
+        public bool IsInspireStatusRegister()
         {
             return name == "Inspire statusregister" && parentRegister == null; // TODO, flere registre kan potensielt hete "Inspire statusregister"
+        }
+
+        public bool IsGeodatalovStatusRegister()
+        {
+            return name == "Geodatalov statusregister" && parentRegister == null;
         }
 
         public bool ContainedItemClassIsOrganization()
@@ -168,36 +169,30 @@ namespace Kartverket.Register.Models
             return containedItemClass == "InspireDataset";
         }
 
+        public bool ContainedItemClassIsGeodatalovDataset()
+        {
+            return containedItemClass == "GeodatalovDataset";
+        }
+
         public string GetObjectCreateUrl(string municipalityCode = null)
         {
             var url = parentRegister == null
                 ? seoname + "/ny"
                 : parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/ny";
 
-            switch (containedItemClass)
+            if (ContainedItemClassIsDocument()) return "/dokument/" + url;
+            if (ContainedItemClassIsCodelistValue()) return "/kodeliste/" + url;
+            if (ContainedItemClassIsRegister()) return "/subregister/" + url;
+            if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
+            if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
+            if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
+            if (ContainedItemClassIsServiceAlert()) return "/tjenestevarsler/" + url;
+            if (ContainedItemClassIsInspireDataset()) return "/inspire/" + url;
+            if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
+            if (ContainedItemClassIsDataset())
             {
-                case "Document":
-                    return "/dokument/" + url;
-                case "CodelistValue":
-                    return "/kodeliste/" + url;
-                case "Register":
-                    return "/subregister/" + url;
-                case "Organization":
-                    return "/organisasjoner/" + url;
-                case "EPSG":
-                    return "/epsg/" + url;
-                case "NameSpace":
-                    return "/navnerom/" + url;
-                case "ServiceAlert":
-                    return "/tjenestevarsler/" + url;
-                case "InspireDataset":
-                    return "/inspire/" + url;
-                case "Dataset":
-                    if (IsDokMunicipal())
-                    {
-                        return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
-                    }
-                    return "/dataset/" + url;
+                if (IsDokMunicipal()) return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
+                return "/dataset/" + url;
             }
             return "#";
         }

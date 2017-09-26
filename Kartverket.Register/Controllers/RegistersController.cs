@@ -29,6 +29,7 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private ITranslationService _translationService;
         private IInspireDatasetService _inspireDatasetService;
+        private IGeodatalovDatasetService _geodatalovDatasetService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -42,6 +43,7 @@ namespace Kartverket.Register.Controllers
             _accessControlService = new AccessControlService();
             _translationService = translationService;
             _inspireDatasetService = new InspireDatasetService(db);
+            _geodatalovDatasetService = new GeodatalovDatasetService(db);
         }
 
         // GET: Registers
@@ -544,9 +546,13 @@ namespace Kartverket.Register.Controllers
         {
             var register = _registerService.GetRegister(parentregister, registername);
 
-            if (register.IsInspireStatusregister())
+            if (register.IsInspireStatusRegister())
             {
                 return new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(registername, itemname));
+            }
+            if (register.IsGeodatalovStatusRegister())
+            {
+                return new GeodatalovDatasetViewModel(_geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname));
             }
             if (register.IsDokMunicipal())
             {

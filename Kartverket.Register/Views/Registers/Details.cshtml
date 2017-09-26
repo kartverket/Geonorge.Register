@@ -143,6 +143,10 @@
             {
             @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
         }
+        @if (Model.Register.ContainedItemClassIsGeodatalovDataset())
+        {
+            @Html.Partial("_geodatalovDataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        }
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 col-md-12 col-lg-12">

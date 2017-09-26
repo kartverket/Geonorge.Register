@@ -109,7 +109,7 @@ namespace Kartverket.Register.Services
             return "notset";
         }
 
-        public InspireDatasetViewModel NewInspireDataset(string parentRegister, string register)
+        public InspireDatasetViewModel NewInspireDatasetViewModel(string parentRegister, string register)
         {
             var model = new InspireDatasetViewModel {RegisterId = _registerService.GetRegisterId(parentRegister, register)};
 

@@ -241,7 +241,6 @@ namespace Kartverket.Register.Controllers
                 {
                     if (!string.IsNullOrEmpty(dataset.Uuid))
                     {
-                        
                         Dataset model = GetMetadataFromKartkatalogen(dataset, dataset.Uuid, false);
                         Viewbags(model);
                         return View(model);
@@ -689,17 +688,6 @@ namespace Kartverket.Register.Controllers
             }
         }
 
-
-        private Organization GetSubmitter(Organization submitter)
-        {
-            if (submitter == null)
-            {
-                return _registerService.GetOrganizationByUserName();
-            }
-            else {
-                return submitter;
-            }
-        }
 
         private Dataset GetDataset(Dataset originalDataset)
         {

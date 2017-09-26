@@ -91,6 +91,7 @@ namespace Kartverket.Register.Controllers
             }
             if (_accessControlService.Access(inspireDataset))
             {
+                inspireDataset = _inspireDatasetService.UpdateInspireDatasetFromKartkatalogen(inspireDataset);
                 var viewModel = new InspireDatasetViewModel(inspireDataset);
                 ViewBags(viewModel);
                 return View(viewModel);

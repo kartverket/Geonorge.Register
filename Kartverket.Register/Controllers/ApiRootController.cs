@@ -241,6 +241,7 @@ namespace Kartverket.Register.Controllers
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
             new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            new InspireDatasetService(db).SynchronizeInspireDatasets();
             _registerService.UpdateDOKStatus();
             return Ok();
         }

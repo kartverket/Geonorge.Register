@@ -1,0 +1,297 @@
+﻿@model IEnumerable<Kartverket.Register.Models.GeodatalovDataset>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Register.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Submitter.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Versioning.containedItemClass)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seoname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateSubmitted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Modified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateAccepted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateNotAccepted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateSuperseded)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateRetired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VersionNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VersionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uuid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Notes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecificUsage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSheetUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PresentationRulesUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSpecificationUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetadataUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DistributionFormat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DistributionUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DistributionArea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WmsUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatasetThumbnail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DokStatusDateAccepted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UuidService)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DokStatus.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Theme.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InspireTheme)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dok)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NationalDataset)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Geodatalov)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AtomFeedStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CommonStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.GmlDataStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MetadataStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductSpesificationStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SosiDataStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WfsStatus.StatusId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WmsStatus.StatusId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Register.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Submitter.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Versioning.containedItemClass)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seoname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSubmitted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Modified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateAccepted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateNotAccepted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSuperseded)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateRetired)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VersionNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VersionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uuid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Notes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecificUsage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSheetUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PresentationRulesUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSpecificationUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetadataUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DistributionFormat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DistributionUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DistributionArea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WmsUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DatasetThumbnail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DokStatusDateAccepted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UuidService)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DokStatus.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Theme.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InspireTheme)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Dok)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NationalDataset)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Plan)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Geodatalov)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AtomFeedStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CommonStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.GmlDataStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MetadataStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductSpesificationStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SosiDataStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WfsStatus.StatusId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WmsStatus.StatusId)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SystemId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SystemId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SystemId })
+        </td>
+    </tr>
+}
+
+</table>

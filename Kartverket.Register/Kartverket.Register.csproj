@@ -265,6 +265,7 @@
     <Compile Include="Controllers\DokCoverageController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
@@ -1403,6 +1404,11 @@
     <Content Include="Views\Shared\_Resources.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Create.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Delete.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Details.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Edit.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

@@ -143,13 +143,12 @@ namespace Kartverket.Register.Models.ViewModels
 
         public virtual string GetObjectEditUrl()
         {
-            if (this is InspireDatasetViewModel inspireDatasetViewModel)
+            switch (this)
             {
-                return inspireDatasetViewModel.GetInspireDatasetEditUrl();
-            }
-            if (this is GeodatalovDatasetViewModel geodatalovDatasetViewModel)
-            {
-                return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
+                case InspireDatasetViewModel inspireDatasetViewModel:
+                    return inspireDatasetViewModel.GetInspireDatasetEditUrl();
+                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                    return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
             }
             switch (RegisterItem)
             {
@@ -180,13 +179,12 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetObjectDeleteUrl()
         {
-            if (this is InspireDatasetViewModel inspireDatasetViewModel)
+            switch (this)
             {
-                return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
-            }
-            if (this is GeodatalovDatasetViewModel geodatalovDatasetViewModel)
-            {
-                return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
+                case InspireDatasetViewModel inspireDatasetViewModel:
+                    return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
+                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                    return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
             }
             switch (RegisterItem)
             {

@@ -1411,6 +1411,7 @@
     <Content Include="Views\GeodatalovDatasets\Delete.cshtml" />
     <Content Include="Views\GeodatalovDatasets\Edit.cshtml" />
     <Content Include="Views\Shared\_geodatalovDataset.cshtml" />
+    <Content Include="Views\Shared\_detailsGeodatalovDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

@@ -68,11 +68,15 @@
     </article>
     <hr>
 </div>
- 
+
 <div class="row">
     @if (Model is InspireDatasetViewModel)
     {
         @Html.Partial("_detailsInspireDataset")
+    }
+    else if (Model is GeodatalovDatasetViewModel)
+    {
+        @Html.Partial("_detailsGeodatalovDataset")
     }
     else if (Model.RegisterItem is Dataset)
     {
@@ -104,21 +108,21 @@
     }
 </div>
 
-    <div class="hidden-print">
-        <hr />
+<div class="hidden-print">
+    <hr />
 
-        @if (Request.IsAuthenticated)
+    @if (Request.IsAuthenticated)
+    {
+        if (!Model.Register.IsServiceAlertRegister())
         {
-            if (!Model.Register.IsServiceAlertRegister())
+            if (HtmlHelperExtensions.Access(Model))
             {
-                if (HtmlHelperExtensions.Access(Model))
-                {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
-                }
             }
         }
+    }
 
-        <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
+    <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
-    </div>
+</div>

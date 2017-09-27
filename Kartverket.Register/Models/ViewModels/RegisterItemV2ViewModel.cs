@@ -147,6 +147,10 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 return inspireDatasetViewModel.GetInspireDatasetEditUrl();
             }
+            if (this is GeodatalovDatasetViewModel geodatalovDatasetViewModel)
+            {
+                return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
+            }
             switch (RegisterItem)
             {
                 case Document _:
@@ -179,6 +183,10 @@ namespace Kartverket.Register.Models.ViewModels
             if (this is InspireDatasetViewModel inspireDatasetViewModel)
             {
                 return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
+            }
+            if (this is GeodatalovDatasetViewModel geodatalovDatasetViewModel)
+            {
+                return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
             }
             switch (RegisterItem)
             {

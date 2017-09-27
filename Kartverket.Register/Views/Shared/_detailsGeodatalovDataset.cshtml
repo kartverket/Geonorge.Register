@@ -1,0 +1,109 @@
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.GeodatalovDatasetViewModel
+
+
+@if (!string.IsNullOrEmpty(Model.SpecificUsage))
+{
+    <article class="col-md-12">
+        <h3>@Html.DisplayNameFor(model => Model.SpecificUsage)</h3>
+        <p> @Model.SpecificUsage</p>
+    </article>
+}
+<article class="col-md-12">
+    <h3>DOK-status</h3>
+    <div class="row">
+        <div class="col-md-3">@Html.DisplayNameFor(m => m.VersionNumber) </div><div class="col-md-9">@Model.VersionNumber</div>
+    </div>
+
+    @if (Model.DokStatus != null)
+    {
+    <div class="row">
+        <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></div>
+    </div>
+    }
+    <div class="row">
+        <div class="col-md-3">@Html.DisplayNameFor(model => Model.DokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.Modified)</div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.Submitter.name</div>
+    </div>
+    @if (Model.Owner != null)
+            {
+    <div class="row">
+        <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.Owner.name</div>
+    </div>
+    }
+    @if (Model.Theme != null)
+            {
+    <div class="row">
+        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.Theme.description</div>
+    </div>
+    }
+</article>
+
+<article class="col-md-12">
+    @*<h3>@DataSet.DOK_DeliveryStatusHeading</h3>*@
+    <h3>Geodatalov status</h3>
+    <div class="row">
+        <div class="col-md-12"><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></div>
+    </div>
+    <p></p>
+    <div class="register dataset search-results-table-heading">
+        <div class="row">
+            <div class="col-md-3">@DataSet.DOK_AssessmentPoint.ToUpper()</div><div class="col-md-2">@DataSet.DOK_StatusValueHeader.ToUpper()</div><div class="col-md-7">@DataSet.Comment.ToUpper()</div>
+        </div>
+        <div class="menu-separator search-results-table-heading"></div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataStatus)</div>
+            <div class="col-md-2"> @Html.DisplayFor(model => Model.MetadataStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.MetadataNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.ProductSpesificationStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.ProductSpesificationStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.ProduktspesifikasjonNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.SosiDataStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.SosiDataStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.SosiDataNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.GmlDataStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.GmlDataStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.GmlDataNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WmsStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.WmsStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.WmsNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.WfsStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.WfsNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.AtomFeedStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.AtomFeedStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.CommonStatus)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.CommonStatus)</div>
+            <div class="col-md-7">@Html.DisplayFor(model => Model.CommonNote)</div>
+        </div>
+    </div>
+</article>
+
+
+@if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))
+{
+    <article class="col-md-12">
+        <h3>@DataSet.ProductInformation</h3>
+        <p><a href="@Model.MetadataUrl" class="btn btn-fresh-green"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
+    </article>
+}

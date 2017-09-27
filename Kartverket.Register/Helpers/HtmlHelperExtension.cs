@@ -1298,7 +1298,7 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_GmlRequirements;
                 statusIcon += "";
             }
-            else if (sortingParam == "atom" || sortingParam == "atom_atom")
+            else if (sortingParam == "atom" || sortingParam == "atom_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_AtomFeed;
                 statusIcon = "fa fa-rss-square";

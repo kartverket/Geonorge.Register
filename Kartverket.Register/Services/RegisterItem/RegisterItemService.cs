@@ -736,12 +736,12 @@ namespace Kartverket.Register.Services.RegisterItem
                         var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WfsOrAtomStatus).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
-                    case "harmonizedData":
+                    case "harmonizeddata":
                     {
                         var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.HarmonizedDataStatus).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
-                    case "harmonizedData_desc":
+                    case "harmonizeddata_desc":
                     {
                         var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.HarmonizedDataStatus).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();

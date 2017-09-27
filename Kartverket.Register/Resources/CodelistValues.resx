@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BroaderItem" xml:space="preserve">
-    <value>Broader item</value>
+    <value>Mer generelt begrep</value>
   </data>
   <data name="Codelist" xml:space="preserve">
     <value>Kodeliste</value>

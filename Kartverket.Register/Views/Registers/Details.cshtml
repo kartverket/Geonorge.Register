@@ -12,9 +12,9 @@
 
     @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
     {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
+        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
     }
-    <li>@Model.Register.name</li>
+    <li>@Model.Register.NameTranslated()</li>
 }
 
 @{
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.Register.name)
+                @Model.Register.NameTranslated()
             </h1>
         </div>
         <div class="col-sm-12">
@@ -61,7 +61,7 @@
         @if (Model.Register.description != null)
             {
             <p>
-                @Html.DisplayFor(model => model.Register.description)
+                @Model.Register.DescriptionTranslated()
                 @if (Model.Register.IsDokMunicipal())
                 {
                     <br />

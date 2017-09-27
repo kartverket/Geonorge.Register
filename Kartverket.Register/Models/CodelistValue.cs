@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
 using Resources;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
@@ -42,6 +43,15 @@ namespace Kartverket.Register.Models
             Translations.AddMissingTranslations();
         }
 
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
 
         public virtual string GetCodelistValueEditUrl()
         {

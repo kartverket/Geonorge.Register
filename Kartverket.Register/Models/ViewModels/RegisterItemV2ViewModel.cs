@@ -82,7 +82,15 @@ namespace Kartverket.Register.Models.ViewModels
             VersionName = item.VersionName;
         }
 
+        public string NameTranslated()
+        {
+            return RegisterItem.NameTranslated();
+        }
 
+        public string DescriptionTranslated()
+        {
+            return RegisterItem.DescriptionTranslated();
+        }
 
         public string DetailPageUrl()
         {

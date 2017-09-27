@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Broader item.
+        ///   Looks up a localized string similar to Mer generelt begrep.
         /// </summary>
         public static string BroaderItem {
             get {

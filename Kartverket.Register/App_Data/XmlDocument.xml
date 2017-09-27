@@ -1936,7 +1936,7 @@
         </member>
         <member name="P:Resources.CodelistValues.BroaderItem">
             <summary>
-              Looks up a localized string similar to Broader item.
+              Looks up a localized string similar to Mer generelt begrep.
             </summary>
         </member>
         <member name="P:Resources.CodelistValues.Codelist">

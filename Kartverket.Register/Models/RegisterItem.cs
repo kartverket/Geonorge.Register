@@ -101,6 +101,68 @@ namespace Kartverket.Register.Models
 
         //end RegisterItem
 
+        public string NameTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var nameTranslated = name;
+
+            if (this is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)this;
+                nameTranslated = codelistValue.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is EPSG)
+            {
+                EPSG epsg = (EPSG)this;
+                nameTranslated = epsg.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is Organization)
+            {
+                Organization organization = (Organization)this;
+                nameTranslated = organization.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+
+            return nameTranslated;
+        }
+
+        public string DescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var descriptionTranslated = name;
+
+            if (this is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)this;
+                descriptionTranslated = codelistValue.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is EPSG)
+            {
+                EPSG epsg = (EPSG)this;
+                descriptionTranslated = epsg.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is Organization)
+            {
+                Organization organization = (Organization)this;
+                descriptionTranslated = organization.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+
+            return descriptionTranslated;
+        }
+
 
         public virtual string GetObjectUrl()
         {

@@ -611,8 +611,7 @@ var baseurl_local = searchOption.baseUrl;
                           var currResult = curr.data.Results[y];
 
                           item.title = getType(currResult.Type);
-                          item.url = searchOption.url;
-
+                          item.url = getUrl(currResult.Type);
 
                           item.list.push({
                             externalId: curr.SectionName + '_' + curr.Section + '_' + y,
@@ -624,7 +623,7 @@ var baseurl_local = searchOption.baseUrl;
                         }
                         $scope.autoCompleteResult.push(item);
                       }
-
+                      
                     }
                   }
 
@@ -640,6 +639,23 @@ var baseurl_local = searchOption.baseUrl;
                       return "Datapakker";
                       case "software":
                       return "Applikasjon";
+                      default:
+                    }
+                  }
+
+                  function getUrl(type) {
+                    var baseUrl = searchOption.baseUrl;
+                    switch (type) {
+                      case "dataset":
+                      return baseUrl + "/search";
+                      case "servicelayer":
+                      return baseUrl + "/apier-og-tjenester";
+                      case "service":
+                      return baseUrl + "/apier-og-tjenester";
+                      case "dimensionGroup":
+                      return baseUrl + "/search";
+                      case "software":
+                      return baseUrl + "/kartlosninger";
                       default:
                     }
                   }
@@ -809,7 +825,6 @@ $(document).ready(function () {
             url: menuService,
             headers: {
               'Content-Type': 'application/json; charset=utf-8'
-
             },
             data: {}
           });

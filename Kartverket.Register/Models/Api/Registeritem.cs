@@ -171,6 +171,7 @@ namespace Kartverket.Register.Models.Api
                 if (datasetV2.DokStatus != null) dokStatus = datasetV2.DokStatus.description;
                 if (datasetV2.Theme != null) theme = datasetV2.Theme.description;
                 if (datasetV2.DokStatusDateAccepted != null) dateAccepted = datasetV2.DokStatusDateAccepted.Value;
+                MetadataUrl = datasetV2.MetadataUrl;
             }
             if (item is InspireDataset inspireDataset)
             {
@@ -210,7 +211,6 @@ namespace Kartverket.Register.Models.Api
                 {
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
-                MetadataUrl = inspireDataset.MetadataUrl;
             }
             if (item is EPSG epsg)
             {

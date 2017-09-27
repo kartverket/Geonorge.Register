@@ -224,6 +224,7 @@ namespace Kartverket.DOK.Service
                     inspireDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
                     inspireDataset.SpecificUsage = data.SpecificUsage;
                     inspireDataset.Uuid = data.Uuid;
+                    inspireDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + inspireDataset.Uuid;
                     var thumbnails = data.Thumbnails;
                     if (thumbnails != null && thumbnails.Count > 0)
                     {

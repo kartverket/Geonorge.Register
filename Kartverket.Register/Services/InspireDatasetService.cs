@@ -239,6 +239,10 @@ namespace Kartverket.Register.Services
         public InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset originalDataset)
         {
             var inspireDataset = _metadataService.FetchInspireDatasetFromKartkatalogen(originalDataset.Uuid);
+            if (inspireDataset == null)
+            {
+                return originalDataset; //Skal datasettet da fjernes??
+            }
             originalDataset.Name = inspireDataset.Name;
             originalDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataset.Name);
             originalDataset.Description = inspireDataset.Description;

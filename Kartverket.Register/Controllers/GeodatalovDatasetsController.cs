@@ -1,71 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Kartverket.DOK.Service;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services;
+using Kartverket.Register.Services.Register;
+using Kartverket.Register.Services.RegisterItem;
 
 namespace Kartverket.Register.Controllers
 {
     public class GeodatalovDatasetsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext _db = new RegisterDbContext();
+        private readonly MetadataService _metadataService;
+        private readonly IAccessControlService _accessControlService;
+        private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
+        private readonly IGeodatalovDatasetService _geodatalovDatasetService;
 
-        // GET: GeodatalovDatasets/Create
-        public ActionResult Create()
+        public GeodatalovDatasetsController(IGeodatalovDatasetService geodatalovDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IRegisterItemService registerItemService)
         {
-            ViewBag.OwnerId = new SelectList(db.RegisterItems, "systemId", "name");
-            ViewBag.RegisterId = new SelectList(db.Registers, "systemId", "name");
-            ViewBag.StatusId = new SelectList(db.Statuses, "value", "description");
-            ViewBag.SubmitterId = new SelectList(db.RegisterItems, "systemId", "name");
-            ViewBag.VersioningId = new SelectList(db.Versions, "systemId", "containedItemClass");
-            ViewBag.DokStatusId = new SelectList(db.DokStatuses, "value", "description");
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description");
-            ViewBag.AtomFeedStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.CommonStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.GmlDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.MetadataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.ProductSpesificationStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.SosiDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.WfsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            ViewBag.WmsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId");
-            return View();
+            _geodatalovDatasetService = geodatalovDatasetService;
+            _accessControlService = accessControllService;
+            _metadataService = new MetadataService();
+            _registerService = registerService;
+            _registerItemService = registerItemService;
+        }
+
+        // GET: InspireDatasets/Create
+        [Authorize]
+        [Route("geodatalov/{registername}/ny")]
+        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
+        public ActionResult Create(string registername, string parentregister)
+        {
+            var viewModel = _geodatalovDatasetService.NewGeodatalovDatasetViewModel(parentregister, registername);
+            if (_accessControlService.Access(viewModel.Register))
+                return View(viewModel);
+            throw new HttpException(401, "Access Denied");
         }
 
         // POST: GeodatalovDatasets/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SystemId,Name,Seoname,Description,SubmitterId,OwnerId,DateSubmitted,Modified,StatusId,RegisterId,DateAccepted,DateNotAccepted,DateSuperseded,DateRetired,VersionNumber,VersionName,VersioningId,Uuid,Notes,SpecificUsage,ProductSheetUrl,PresentationRulesUrl,ProductSpecificationUrl,MetadataUrl,DistributionFormat,DistributionUrl,DistributionArea,WmsUrl,ThemeGroupId,DatasetThumbnail,DokStatusId,DokStatusDateAccepted,UuidService,InspireTheme,Dok,NationalDataset,Plan,Geodatalov,MetadataStatusId,ProductSpesificationStatusId,SosiDataStatusId,GmlDataStatusId,WmsStatusId,WfsStatusId,AtomFeedStatusId,CommonStatusId")] GeodatalovDataset geodatalovDataset)
+        [Authorize]
+        [Route("geodatalov/{registername}/ny")]
+        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/ny")]
+        public ActionResult Create(GeodatalovDatasetViewModel viewModel, string parentregister, string registername, string metadataUuid)
         {
-            if (ModelState.IsValid)
+            viewModel.Register = _registerService.GetRegisterBySystemId(viewModel.RegisterId);
+            if (!_accessControlService.Access(viewModel.Register)) throw new HttpException(401, "Access Denied");
+
+            if (viewModel.SearchString != null)
             {
-                geodatalovDataset.SystemId = Guid.NewGuid();
-                db.GeodatalovDatasets.Add(geodatalovDataset);
-                db.SaveChanges();
-                return View();
+                viewModel.SearchResultList = _metadataService.SearchMetadataFromKartkatalogen(viewModel.SearchString);
+                return View(viewModel);
             }
 
-            ViewBag.OwnerId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.OwnerId);
-            ViewBag.RegisterId = new SelectList(db.Registers, "systemId", "name", geodatalovDataset.RegisterId);
-            ViewBag.StatusId = new SelectList(db.Statuses, "value", "description", geodatalovDataset.StatusId);
-            ViewBag.SubmitterId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.SubmitterId);
-            ViewBag.VersioningId = new SelectList(db.Versions, "systemId", "containedItemClass", geodatalovDataset.VersioningId);
-            ViewBag.DokStatusId = new SelectList(db.DokStatuses, "value", "description", geodatalovDataset.DokStatusId);
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", geodatalovDataset.ThemeGroupId);
-            ViewBag.AtomFeedStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.AtomFeedStatusId);
-            ViewBag.CommonStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.CommonStatusId);
-            ViewBag.GmlDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.GmlDataStatusId);
-            ViewBag.MetadataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.MetadataStatusId);
-            ViewBag.ProductSpesificationStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.ProductSpesificationStatusId);
-            ViewBag.SosiDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.SosiDataStatusId);
-            ViewBag.WfsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WfsStatusId);
-            ViewBag.WmsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WmsStatusId);
-            return View(geodatalovDataset);
+            if (metadataUuid != null)
+            {
+                viewModel.Update(_metadataService.FetchGeodatalovDatasetFromKartkatalogen(metadataUuid));
+                if (viewModel.Name == null)
+                {
+                    ModelState.AddModelError("ErrorMessage", "Det har oppstått en feil ved henting av metadata...");
+                }
+            }
+            if (_registerItemService.ItemNameAlredyExist(viewModel))
+            {
+                ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationDataset());
+                return View(viewModel);
+            }
+            if (!ModelState.IsValid) return View(viewModel);
+            var inspireDataset = _geodatalovDatasetService.CreateNewGeodatalovDataset(viewModel, parentregister, registername);
+            return Redirect(inspireDataset.Register.GetObjectUrl());
         }
 
         // GET: GeodatalovDatasets/Edit/5
@@ -75,26 +86,26 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GeodatalovDataset geodatalovDataset = db.GeodatalovDatasets.Find(id);
+            GeodatalovDataset geodatalovDataset = _db.GeodatalovDatasets.Find(id);
             if (geodatalovDataset == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.OwnerId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.OwnerId);
-            ViewBag.RegisterId = new SelectList(db.Registers, "systemId", "name", geodatalovDataset.RegisterId);
-            ViewBag.StatusId = new SelectList(db.Statuses, "value", "description", geodatalovDataset.StatusId);
-            ViewBag.SubmitterId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.SubmitterId);
-            ViewBag.VersioningId = new SelectList(db.Versions, "systemId", "containedItemClass", geodatalovDataset.VersioningId);
-            ViewBag.DokStatusId = new SelectList(db.DokStatuses, "value", "description", geodatalovDataset.DokStatusId);
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", geodatalovDataset.ThemeGroupId);
-            ViewBag.AtomFeedStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.AtomFeedStatusId);
-            ViewBag.CommonStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.CommonStatusId);
-            ViewBag.GmlDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.GmlDataStatusId);
-            ViewBag.MetadataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.MetadataStatusId);
-            ViewBag.ProductSpesificationStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.ProductSpesificationStatusId);
-            ViewBag.SosiDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.SosiDataStatusId);
-            ViewBag.WfsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WfsStatusId);
-            ViewBag.WmsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WmsStatusId);
+            ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name", geodatalovDataset.OwnerId);
+            ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name", geodatalovDataset.RegisterId);
+            ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description", geodatalovDataset.StatusId);
+            ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name", geodatalovDataset.SubmitterId);
+            ViewBag.VersioningId = new SelectList(_db.Versions, "systemId", "containedItemClass", geodatalovDataset.VersioningId);
+            ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description", geodatalovDataset.DokStatusId);
+            ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description", geodatalovDataset.ThemeGroupId);
+            ViewBag.AtomFeedStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.AtomFeedStatusId);
+            ViewBag.CommonStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.CommonStatusId);
+            ViewBag.GmlDataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.GmlDataStatusId);
+            ViewBag.MetadataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.MetadataStatusId);
+            ViewBag.ProductSpesificationStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.ProductSpesificationStatusId);
+            ViewBag.SosiDataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.SosiDataStatusId);
+            ViewBag.WfsStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WfsStatusId);
+            ViewBag.WmsStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WmsStatusId);
             return View(geodatalovDataset);
         }
 
@@ -107,25 +118,25 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(geodatalovDataset).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(geodatalovDataset).State = EntityState.Modified;
+                _db.SaveChanges();
                 return View();
             }
-            ViewBag.OwnerId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.OwnerId);
-            ViewBag.RegisterId = new SelectList(db.Registers, "systemId", "name", geodatalovDataset.RegisterId);
-            ViewBag.StatusId = new SelectList(db.Statuses, "value", "description", geodatalovDataset.StatusId);
-            ViewBag.SubmitterId = new SelectList(db.RegisterItems, "systemId", "name", geodatalovDataset.SubmitterId);
-            ViewBag.VersioningId = new SelectList(db.Versions, "systemId", "containedItemClass", geodatalovDataset.VersioningId);
-            ViewBag.DokStatusId = new SelectList(db.DokStatuses, "value", "description", geodatalovDataset.DokStatusId);
-            ViewBag.ThemeGroupId = new SelectList(db.DOKThemes, "value", "description", geodatalovDataset.ThemeGroupId);
-            ViewBag.AtomFeedStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.AtomFeedStatusId);
-            ViewBag.CommonStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.CommonStatusId);
-            ViewBag.GmlDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.GmlDataStatusId);
-            ViewBag.MetadataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.MetadataStatusId);
-            ViewBag.ProductSpesificationStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.ProductSpesificationStatusId);
-            ViewBag.SosiDataStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.SosiDataStatusId);
-            ViewBag.WfsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WfsStatusId);
-            ViewBag.WmsStatusId = new SelectList(db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WmsStatusId);
+            ViewBag.OwnerId = new SelectList(_db.RegisterItems, "systemId", "name", geodatalovDataset.OwnerId);
+            ViewBag.RegisterId = new SelectList(_db.Registers, "systemId", "name", geodatalovDataset.RegisterId);
+            ViewBag.StatusId = new SelectList(_db.Statuses, "value", "description", geodatalovDataset.StatusId);
+            ViewBag.SubmitterId = new SelectList(_db.RegisterItems, "systemId", "name", geodatalovDataset.SubmitterId);
+            ViewBag.VersioningId = new SelectList(_db.Versions, "systemId", "containedItemClass", geodatalovDataset.VersioningId);
+            ViewBag.DokStatusId = new SelectList(_db.DokStatuses, "value", "description", geodatalovDataset.DokStatusId);
+            ViewBag.ThemeGroupId = new SelectList(_db.DOKThemes, "value", "description", geodatalovDataset.ThemeGroupId);
+            ViewBag.AtomFeedStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.AtomFeedStatusId);
+            ViewBag.CommonStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.CommonStatusId);
+            ViewBag.GmlDataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.GmlDataStatusId);
+            ViewBag.MetadataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.MetadataStatusId);
+            ViewBag.ProductSpesificationStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.ProductSpesificationStatusId);
+            ViewBag.SosiDataStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.SosiDataStatusId);
+            ViewBag.WfsStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WfsStatusId);
+            ViewBag.WmsStatusId = new SelectList(_db.DatasetDeliveries, "DatasetDeliveryId", "StatusId", geodatalovDataset.WmsStatusId);
             return View(geodatalovDataset);
         }
 
@@ -136,7 +147,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            GeodatalovDataset geodatalovDataset = db.GeodatalovDatasets.Find(id);
+            GeodatalovDataset geodatalovDataset = _db.GeodatalovDatasets.Find(id);
             if (geodatalovDataset == null)
             {
                 return HttpNotFound();
@@ -149,9 +160,9 @@ namespace Kartverket.Register.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            GeodatalovDataset geodatalovDataset = db.GeodatalovDatasets.Find(id);
-            db.GeodatalovDatasets.Remove(geodatalovDataset);
-            db.SaveChanges();
+            GeodatalovDataset geodatalovDataset = _db.GeodatalovDatasets.Find(id);
+            _db.GeodatalovDatasets.Remove(geodatalovDataset);
+            _db.SaveChanges();
             return View();
         }
 
@@ -159,7 +170,7 @@ namespace Kartverket.Register.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

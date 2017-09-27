@@ -268,6 +268,69 @@ namespace Kartverket.DOK.Service
             return inspireDataset;
         }
 
+        public GeodatalovDataset FetchGeodatalovDatasetFromKartkatalogen(string uuid)
+        {
+            var geodatalovDataset = new GeodatalovDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    geodatalovDataset.Name = data.Title;
+                    geodatalovDataset.Description = data.Abstract;
+                    geodatalovDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    geodatalovDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    geodatalovDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    geodatalovDataset.SpecificUsage = data.SpecificUsage;
+                    geodatalovDataset.Uuid = data.Uuid;
+                    geodatalovDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + geodatalovDataset.Uuid;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        geodatalovDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    geodatalovDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "");
+                    geodatalovDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) geodatalovDataset.UuidService = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        geodatalovDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        geodatalovDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        geodatalovDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            geodatalovDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return geodatalovDataset;
+        }
+
         public SearchResultsType SearchMetadata(string searchString)
         {
             GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);

@@ -9,21 +9,20 @@
         <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
         <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadata")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadataservice")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "distribution")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wms")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfs")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "atom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsoratom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizeddata")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialdataservice")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status")
         </div>
         <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokstatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
    
-    @foreach (InspireDatasetViewModel item in Model)
+    @foreach (GeodatalovDatasetViewModel item in Model)
     {
         <div class="row result-row">
             <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
@@ -31,14 +30,13 @@
             <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
             <div class="col-md-4 col-sm-5 status-icons">
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatus, false, "metadata")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataServiceStatus, false, "metadataservice")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.DistributionStatus, false, "distribution")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatus, false, "productspecification")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatus, false, "sosi")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.GmlDataStatus, false, "gml")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatus, false, "wms")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatus, false, "wfs")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatus, false, "atom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsOrAtomStatus, false, "wfsoratom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.HarmonizedDataStatus, false, "harmonizeddata")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SpatialDataServiceStatus, false, "spatialdataservice")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatus, false, "common")
             </div>
             <div class="col-md-1 text-center">
                 <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
@@ -50,7 +48,7 @@
     }
 </div>
 <div id="listView">
-    @foreach (InspireDatasetViewModel item in Model)
+    @foreach (GeodatalovDatasetViewModel item in Model)
     {
         <div class="row result-row metadata">
             <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">

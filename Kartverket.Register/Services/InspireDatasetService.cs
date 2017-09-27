@@ -2,11 +2,9 @@
 using System;
 using System.Data.Entity;
 using System.Linq;
-using System.Web.Configuration;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
-using Kartverket.Register.Migrations;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.RegisterItem;
 
@@ -291,7 +289,10 @@ namespace Kartverket.Register.Services
 
             if (originalDataset.InspireDeliveryWfsOrAtom != null)
             {
-                originalDataset.InspireDeliveryWfsOrAtom.StatusId = GetInspireDeliveryWfsOrAtomFeedStatus(originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryWfsOrAtom.StatusId);
+                if (originalDataset.InspireDeliveryWfs != null && originalDataset.InspireDeliveryAtomFeed != null)
+                    originalDataset.InspireDeliveryWfsOrAtom.StatusId = GetInspireDeliveryWfsOrAtomFeedStatus(originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryAtomFeed.StatusId);
+                else originalDataset.InspireDeliveryWfsOrAtom.StatusId = "notset";
+                
             }
 
             if (originalDataset.InspireDeliveryHarmonizedData != null)

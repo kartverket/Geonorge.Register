@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using Kartverket.Register.Models.Translations;
-using Resources;
 
 namespace Kartverket.Register.Models.ViewModels
 {

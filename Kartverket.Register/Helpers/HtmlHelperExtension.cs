@@ -1248,72 +1248,108 @@ namespace Kartverket.Register.Helpers
             {
                 sortTitle = DataSet.DOK_Delivery_Theme;
             }
-            else if (sortingParam == "metadata" || sortingParam == "metadata_desc")
+            else if (sortingParam == "productsheet" || sortingParam == "productsheet_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSheet;
+                statusIcon += "custom-icon-produktark";
+            }
+            else if (sortingParam == "presentationrules" || sortingParam == "presentationrules_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_PresentationRules;
+                statusIcon += "glyphicon-picture";
+            }
+            else if (sortingParam == "productspecification" || sortingParam == "productspecification_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
+                statusIcon += "glyphicon-list-alt";
+            }
+
+            // *** INSPIRE SORTERING
+
+            else if (sortingParam == "inspire_metadata_status" || sortingParam == "inspire_metadata_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
-            else if (sortingParam == "metadataservice" || sortingParam == "metadataservice_desc")
+            else if (sortingParam == "inspire_metadataservice_status" || sortingParam == "inspire_metadataservice_status_desc")
             {
                 sortTitle = InspireDataSet.MetadataServiceStatus;
                 statusIcon += "custom-icon-info";
             }
-            else if (sortingParam == "productSheet" || sortingParam == "metadataservice_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_ProductSheet;
-                statusIcon += "";
-            }
-            else if (sortingParam == "presentationRules" || sortingParam == "presentationRules_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_PresentationRules;
-                statusIcon += "";
-            }
-            else if (sortingParam == "productSpecification" || sortingParam == "productSpecification_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
-                statusIcon += "";
-            }
-            else if (sortingParam == "wms" || sortingParam == "wms_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_Wms;
-                statusIcon += "custom-icon-wfs";
-            }
-            else if (sortingParam == "wfs" || sortingParam == "wfs_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_Wfs;
-                statusIcon += "custom-icon-wfs";
-            }
-            else if (sortingParam == "sosi" || sortingParam == "sosi_desc")
-            {
-                sortTitle = DataSet.DOK_Delivery_SosiRequirements;
-                statusIcon += "";
-            }
-            else if (sortingParam == "distribution" || sortingParam == "distribution_desc")
+            else if (sortingParam == "inspire_distribution_status" || sortingParam == "inspire_distribution_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Distribution;
                 statusIcon += "custom-icon-info";
             }
-            else if (sortingParam == "gml" || sortingParam == "gml_desc")
+            else if (sortingParam == "inspire_wms_status" || sortingParam == "inspire_wms_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_GmlRequirements;
-                statusIcon += "";
+                sortTitle = DataSet.DOK_Delivery_Wms;
+                statusIcon += "custom-icon-wfs";
             }
-            else if (sortingParam == "atom" || sortingParam == "atom_desc")
+            else if (sortingParam == "inspire_wfs_status" || sortingParam == "inspire_wfs_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wfs;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "inspire_atom_status" || sortingParam == "inspire_atom_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_AtomFeed;
                 statusIcon = "fa fa-rss-square";
             }
-            else if (sortingParam == "wfsoratom" || sortingParam == "wfsoratom_desc")
+            else if (sortingParam == "inspire_wfsoratom_status" || sortingParam == "inspire_wfsoratom_status_desc")
             {
                 sortTitle = InspireDataSet.WfsOrAtomStatus;
                 statusIcon = "fa fa-rss-square";
             }
-            else if (sortingParam == "harmonizeddata" || sortingParam == "harmonizeddata_desc")
+            else if (sortingParam == "inspire_harmonizeddata_status" || sortingParam == "inspire_harmonizeddata_status_desc")
             {
                 sortTitle = InspireDataSet.HarmonizedDataStatus;
                 statusIcon += "custom-icon-info";
             }
-            else if (sortingParam == "spatialdataservice" || sortingParam == "spatialdataservice_desc")
+            else if (sortingParam == "inspire_spatialdataservice_status" || sortingParam == "inspire_spatialdataservice_status_desc")
+            {
+                sortTitle = InspireDataSet.SpatialDataServiceStatus;
+                statusIcon += "custom-icon-info";
+            }
+
+            // *** GEODATALOV SORTERING
+
+            else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Metadata;
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
+                statusIcon += "glyphicon-list-alt";
+            }
+            else if (sortingParam == "geodatalov_sosi_status" || sortingParam == "geodatalov_sosi_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_SosiRequirements;
+                statusIcon += "custom-icon-sosi";
+            }
+            else if (sortingParam == "geodatalov_gml_status" || sortingParam == "geodatalov_gml_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_GmlRequirements;
+                statusIcon += "custom-icon-gml";
+            }
+            else if (sortingParam == "geodatalov_wms_status" || sortingParam == "geodatalov_wms_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wms;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "geodatalov_wfs_status" || sortingParam == "geodatalov_wfs_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_Wfs;
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "geodatalov_atom_status" || sortingParam == "geodatalov_atom_status_desc")
+            {
+                sortTitle = DataSet.DOK_Delivery_AtomFeed;
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "geodatalov_common_status" || sortingParam == "geodatalov_common_status_desc")
             {
                 sortTitle = InspireDataSet.SpatialDataServiceStatus;
                 statusIcon += "custom-icon-info";

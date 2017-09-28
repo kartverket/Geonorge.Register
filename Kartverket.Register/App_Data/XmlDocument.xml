@@ -2582,6 +2582,11 @@
               Looks up a localized string similar to Lagrer innhold.
             </summary>
         </member>
+        <member name="P:Resources.Registers.StatusAvailable">
+            <summary>
+              Looks up a localized string similar to Mulige statuser.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Submitter">
             <summary>
               Looks up a localized string similar to Innsender.
@@ -2615,6 +2620,11 @@
         <member name="P:Resources.Registers.Updated">
             <summary>
               Looks up a localized string similar to Oppdatert.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.Valid">
+            <summary>
+              Looks up a localized string similar to Gyldig.
             </summary>
         </member>
         <member name="P:Resources.Registers.VersionName">

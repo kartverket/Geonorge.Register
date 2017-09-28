@@ -45,7 +45,7 @@
                     }
                     else
                     {
-                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@Html.DisplayFor(model => item.status.description) <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
                     }
                 </div>
 

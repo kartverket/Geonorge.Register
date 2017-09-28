@@ -44,7 +44,7 @@
                         @Html.DisplayFor(modelItem => item.dateSubmitted)
                     </td>*@
                     <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">
-                        @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
+                        @Html.DisplayFor(modelItem => item.status.DescriptionTranslated()) <i class="statusIcon-@item.statusId"></i>
                     </td>
                 </tr>
             }

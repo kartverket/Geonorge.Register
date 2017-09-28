@@ -276,4 +276,10 @@
   <data name="Modified" xml:space="preserve">
     <value>Last changed</value>
   </data>
+  <data name="StatusAvailable" xml:space="preserve">
+    <value>Possible statuses</value>
+  </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
 </root>

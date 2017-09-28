@@ -77,7 +77,7 @@
                     }
                     else
                     {
-                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
                     }
                 </div>
             </div>

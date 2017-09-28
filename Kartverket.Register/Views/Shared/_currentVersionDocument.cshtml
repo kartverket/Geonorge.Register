@@ -117,7 +117,7 @@
             }
             else
             {
-                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
             }
             
             <p><span>@Html.DisplayNameFor(i => item.versionNumber) : </span>@item.versionNumber</p>

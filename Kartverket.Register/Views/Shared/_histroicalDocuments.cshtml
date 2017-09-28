@@ -42,7 +42,7 @@
                         @Html.DisplayFor(modelItem => item.versionName)
                     </td>
                     <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">
-                        @Html.DisplayFor(modelItem => item.status.description) <i class="statusIcon-@item.statusId"></i>
+                        @item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i>
                     </td>
                     @if (item.Accepted == true)
                     {

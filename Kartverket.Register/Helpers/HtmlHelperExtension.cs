@@ -111,23 +111,23 @@ namespace Kartverket.Register.Helpers
         {
             if (containedItemClass == "Document")
             {
-                return "Dokument";
+                return Documents.Document;
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Datasett";
+                return DataSet.Dataset;
             }
             else if (containedItemClass == "EPSG")
             {
-                return "EPSG-kode";
+                return EPSGs.EpsgCode;
             }
             else if (containedItemClass == "Organization")
             {
-                return "Organisasjon";
+                return Organizations.Organization;
             }
             else if (containedItemClass == "CodelistValue")
             {
-                return "Kodeverdi";
+                return CodelistValues.CodeValue;
             }
             else if (containedItemClass == "Register")
             {
@@ -135,7 +135,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (containedItemClass == "NameSpace")
             {
-                return "Navnerom";
+                return Namespace.NamespaceName;
             }
             return "";
         }

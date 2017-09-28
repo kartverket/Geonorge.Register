@@ -273,6 +273,14 @@ namespace Kartverket.Register.Services
             return geodatalovDataset;
         }
 
+        public void DeleteInspireDataset(GeodatalovDataset geodatalovDataset)
+        {
+            _dbContext.GeodatalovDatasets.Remove(geodatalovDataset);
+
+            //Todo, må slette deliveryDataset?
+            _dbContext.SaveChanges();
+        }
+
         private GeodatalovDataset GetGeodatalovDatasetBySystemId(Guid systemId)
         {
             var queryResult = from i in _dbContext.GeodatalovDatasets

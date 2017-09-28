@@ -120,29 +120,42 @@ namespace Kartverket.Register.Controllers
         }
 
         // GET: GeodatalovDatasets/Delete/5
-        public ActionResult Delete(Guid? id)
+        [Authorize]
+        [Route("geodatalov/{parentregister}/{parentregisterowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
+        public ActionResult Delete(string parentregister, string registername, string itemname, string itemowner)
         {
-            if (id == null)
+            var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);
+            if (geodatalovDataset != null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (_accessControlService.Access(geodatalovDataset))
+                {
+                    return View(geodatalovDataset);
+                }
+                throw new HttpException(401, "Access Denied");
             }
-            GeodatalovDataset geodatalovDataset = _db.GeodatalovDatasets.Find(id);
-            if (geodatalovDataset == null)
-            {
-                return HttpNotFound();
-            }
-            return View(geodatalovDataset);
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         // POST: GeodatalovDatasets/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        [Route("inspire/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        public ActionResult DeleteConfirmed(string registername, string itemname)
         {
-            GeodatalovDataset geodatalovDataset = _db.GeodatalovDatasets.Find(id);
-            _db.GeodatalovDatasets.Remove(geodatalovDataset);
-            _db.SaveChanges();
-            return View();
+            var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);
+            if (geodatalovDataset != null)
+            {
+                var registerUrl = geodatalovDataset.Register.GetObjectUrl();
+                if (_accessControlService.Access(geodatalovDataset))
+                {
+                    _geodatalovDatasetService.DeleteInspireDataset(geodatalovDataset);
+                    return Redirect(registerUrl);
+                }
+                throw new HttpException(401, "Access Denied");
+            }
+            return HttpNotFound("Finner ikke datasettet");
         }
 
         protected override void Dispose(bool disposing)

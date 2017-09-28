@@ -83,48 +83,56 @@ namespace Kartverket.Register.Models.ViewModels
                 if (geodatalovDataset.MetadataStatus != null)
                 {
                     MetadataStatusId = geodatalovDataset.MetadataStatus.StatusId;
+                    MetadataStatus = geodatalovDataset.MetadataStatus.Status;
                     MetadataNote = geodatalovDataset.MetadataStatus.Note;
                     MetadataAutoUpdate = geodatalovDataset.MetadataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.ProductSpesificationStatus != null)
                 {
                     ProductSpesificationStatusId = geodatalovDataset.ProductSpesificationStatus.StatusId;
+                    ProductSpesificationStatus = geodatalovDataset.ProductSpesificationStatus.Status;
                     ProduktspesifikasjonNote = geodatalovDataset.ProductSpesificationStatus.Note;
                     ProduktspesifikasjonAutoUpdate = geodatalovDataset.ProductSpesificationStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.SosiDataStatus != null)
                 {
                     SosiDataStatusId = geodatalovDataset.SosiDataStatus.StatusId;
+                    SosiDataStatus = geodatalovDataset.SosiDataStatus.Status;
                     SosiDataNote = geodatalovDataset.SosiDataStatus.Note;
                     SosiDataAutoUpdate = geodatalovDataset.SosiDataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.GmlDataStatus != null)
                 {
                     GmlDataStatusId = geodatalovDataset.GmlDataStatus.StatusId;
+                    GmlDataStatus = geodatalovDataset.GmlDataStatus.Status;
                     GmlDataNote = geodatalovDataset.GmlDataStatus.Note;
                     GmlDataAutoUpdate = geodatalovDataset.GmlDataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.WmsStatus != null)
                 {
                     WmsStatusId = geodatalovDataset.WmsStatus.StatusId;
+                    WmsStatus = geodatalovDataset.WmsStatus.Status;
                     WmsNote = geodatalovDataset.WmsStatus.Note;
                     WmsAutoUpdate = geodatalovDataset.WmsStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.WfsStatus != null)
                 {
                     WfsStatusId = geodatalovDataset.WfsStatus.StatusId;
+                    WfsStatus = geodatalovDataset.WfsStatus.Status;
                     WfsNote = geodatalovDataset.WfsStatus.Note;
                     WfsAutoUpdate = geodatalovDataset.WfsStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.AtomFeedStatus != null)
                 {
                     AtomFeedStatusId = geodatalovDataset.AtomFeedStatus.StatusId;
+                    AtomFeedStatus = geodatalovDataset.AtomFeedStatus.Status;
                     AtomFeedNote = geodatalovDataset.AtomFeedStatus.Note;
                     AtomFeedAutoUpdate = geodatalovDataset.AtomFeedStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.CommonStatus != null)
                 {
                     CommonStatusId = geodatalovDataset.CommonStatus.StatusId;
+                    CommonStatus = geodatalovDataset.CommonStatus.Status;
                     CommonNote = geodatalovDataset.CommonStatus.Note;
                     CommonAutoUpdate = geodatalovDataset.CommonStatus.AutoUpdate;
                 }

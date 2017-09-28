@@ -10,5 +10,6 @@ namespace Kartverket.Register.Services
         GeodatalovDataset NewGeodatalovDataset(GeodatalovDatasetViewModel geodatalovViewModel, string parentregister, string registername);
         GeodatalovDataset UpdateGeodatalovDatasetFromKartkatalogen(GeodatalovDataset geodatalovDataset);
         GeodatalovDataset UpdateGeodatalovDataset(GeodatalovDatasetViewModel viewModel);
+        void DeleteGeodatalovDataset(GeodatalovDataset geodatalovDataset);
     }
 }

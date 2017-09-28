@@ -171,15 +171,15 @@ namespace Kartverket.Register.Controllers
             ViewBag.DokStatusId = _registerItemService.GetDokStatusSelectList(viewModel.DokStatusId);
             ViewBag.SubmitterId = _registerItemService.GetSubmitterSelectList(viewModel.SubmitterId);
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(viewModel.OwnerId);
-            ViewBag.MetadataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatus);
-            ViewBag.MetadataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataServiceStatus);
-            ViewBag.DistributionStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.DistributionStatus);
-            ViewBag.WmsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WmsStatus);
-            ViewBag.WfsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsStatus);
-            ViewBag.AtomFeedStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.AtomFeedStatus);
-            ViewBag.WfsOrAtomStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsOrAtomStatus);
-            ViewBag.HarmonizedDataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.HarmonizedDataStatus);
-            ViewBag.SpatialDataServiceStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.SpatialDataServiceStatus);
+            ViewBag.MetadataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatusId);
+            ViewBag.MetadataServiceStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataServiceStatusId);
+            ViewBag.DistributionStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.DistributionStatusId);
+            ViewBag.WmsStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WmsStatusId);
+            ViewBag.WfsStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsStatusId);
+            ViewBag.AtomFeedStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.AtomFeedStatusId);
+            ViewBag.WfsOrAtomStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsOrAtomStatusId);
+            ViewBag.HarmonizedDataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.HarmonizedDataStatusId);
+            ViewBag.SpatialDataServiceStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.SpatialDataServiceStatusId);
         }
 
     }

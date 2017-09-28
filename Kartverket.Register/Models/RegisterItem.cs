@@ -136,7 +136,7 @@ namespace Kartverket.Register.Models
         {
             var cultureName = CultureHelper.GetCurrentCulture();
 
-            var descriptionTranslated = name;
+            var descriptionTranslated = description;
 
             if (this is CodelistValue)
             {

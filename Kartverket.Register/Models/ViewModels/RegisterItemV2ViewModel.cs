@@ -80,16 +80,19 @@ namespace Kartverket.Register.Models.ViewModels
             DateRetired = item.DateRetired;
             VersionNumber = item.VersionNumber;
             VersionName = item.VersionName;
+
+            NameTranslated();
+            DescriptionTranslated();
         }
 
         public string NameTranslated()
         {
-            return RegisterItem.NameTranslated();
+            return RegisterItem != null ? RegisterItem.NameTranslated() : Name;
         }
 
         public string DescriptionTranslated()
         {
-            return RegisterItem.DescriptionTranslated();
+            return RegisterItem != null ? RegisterItem.DescriptionTranslated() : Description;
         }
 
         public string DetailPageUrl()
@@ -138,6 +141,9 @@ namespace Kartverket.Register.Models.ViewModels
             VersionNumber = registerItem.versionNumber;
             VersionName = registerItem.versionName;
             RegisterItem = registerItem;
+
+            NameTranslated();
+            DescriptionTranslated();
         }
 
         public RegisterItemV2ViewModel()

@@ -162,6 +162,20 @@ namespace Kartverket.Register.Migrations
                     modified = DateTime.Now,
                     containedItemClass = "InspireDataset",
                     accessId = 1
+                },
+
+            new Register
+                {
+                    systemId = Guid.Parse("3d9114f6-faab-4521-bdf8-19ef6211e7d2"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    name = "Geodatalov statusregister",
+                    seoname = "geodatalov-statusregister",
+                    statusId = "Valid",
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    containedItemClass = "GeodatalovDataset",
+                    accessId = 1
                 }
             );
 

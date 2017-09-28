@@ -14,42 +14,50 @@ namespace Kartverket.Register.Models.ViewModels
         public bool Geodatalov { get; set; }
 
         [Display(Name = "Metadata:")]
-        public string MetadataStatus { get; set; }
+        public string MetadataStatusId { get; set; }
+        public virtual DokDeliveryStatus MetadataStatus { get; set; }
         public string MetadataNote { get; set; }
         public bool MetadataAutoUpdate { get; set; }
 
         [Display(Name = "Produktspesifikasjon:")]
-        public string ProductSpesificationStatus { get; set; }
+        public string ProductSpesificationStatusId { get; set; }
+        public virtual DokDeliveryStatus ProductSpesificationStatus { get; set; }
         public string ProduktspesifikasjonNote { get; set; }
         public bool ProduktspesifikasjonAutoUpdate { get; set; }
 
         [Display(Name = "SOSI data:")]
-        public string SosiDataStatus { get; set; }
+        public string SosiDataStatusId { get; set; }
+        public virtual DokDeliveryStatus SosiDataStatus { get; set; }
         public string SosiDataNote { get; set; }
         public bool SosiDataAutoUpdate { get; set; }
 
         [Display(Name = "GML data")]
-        public string GmlDataStatus { get; set; }
+        public string GmlDataStatusId { get; set; }
+        public virtual DokDeliveryStatus GmlDataStatus { get; set; }
         public string GmlDataNote { get; set; }
         public bool GmlDataAutoUpdate { get; set; }
 
         [Display(Name = "WMS")]
-        public string WmsStatus { get; set; }
+        public string WmsStatusId { get; set; }
+        public virtual DokDeliveryStatus WmsStatus { get; set; }
         public string WmsNote { get; set; }
         public bool WmsAutoUpdate { get; set; }
 
         [Display(Name = "WFS")]
-        public string WfsStatus { get; set; }
+        public string WfsStatusId { get; set; }
+        public virtual DokDeliveryStatus WfsStatus { get; set; }
         public string WfsNote { get; set; }
         public bool WfsAutoUpdate { get; set; }
 
         [Display(Name = "Atom feed")]
-        public string AtomFeedStatus { get; set; }
+        public string AtomFeedStatusId { get; set; }
+        public virtual DokDeliveryStatus AtomFeedStatus { get; set; }
         public string AtomFeedNote { get; set; }
         public bool AtomFeedAutoUpdate { get; set; }
 
         [Display(Name = "Felles Status")]
-        public string CommonStatus { get; set; }
+        public string CommonStatusId { get; set; }
+        public virtual DokDeliveryStatus CommonStatus { get; set; }
         public string CommonNote { get; set; }
         public bool CommonAutoUpdate { get; set; }
 
@@ -74,49 +82,49 @@ namespace Kartverket.Register.Models.ViewModels
 
                 if (geodatalovDataset.MetadataStatus != null)
                 {
-                    MetadataStatus = geodatalovDataset.MetadataStatus.StatusId;
+                    MetadataStatusId = geodatalovDataset.MetadataStatus.StatusId;
                     MetadataNote = geodatalovDataset.MetadataStatus.Note;
                     MetadataAutoUpdate = geodatalovDataset.MetadataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.ProductSpesificationStatus != null)
                 {
-                    ProductSpesificationStatus = geodatalovDataset.ProductSpesificationStatus.StatusId;
+                    ProductSpesificationStatusId = geodatalovDataset.ProductSpesificationStatus.StatusId;
                     ProduktspesifikasjonNote = geodatalovDataset.ProductSpesificationStatus.Note;
                     ProduktspesifikasjonAutoUpdate = geodatalovDataset.ProductSpesificationStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.SosiDataStatus != null)
                 {
-                    SosiDataStatus = geodatalovDataset.SosiDataStatus.StatusId;
+                    SosiDataStatusId = geodatalovDataset.SosiDataStatus.StatusId;
                     SosiDataNote = geodatalovDataset.SosiDataStatus.Note;
                     SosiDataAutoUpdate = geodatalovDataset.SosiDataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.GmlDataStatus != null)
                 {
-                    GmlDataStatus = geodatalovDataset.GmlDataStatus.StatusId;
+                    GmlDataStatusId = geodatalovDataset.GmlDataStatus.StatusId;
                     GmlDataNote = geodatalovDataset.GmlDataStatus.Note;
                     GmlDataAutoUpdate = geodatalovDataset.GmlDataStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.WmsStatus != null)
                 {
-                    WmsStatus = geodatalovDataset.WmsStatus.StatusId;
+                    WmsStatusId = geodatalovDataset.WmsStatus.StatusId;
                     WmsNote = geodatalovDataset.WmsStatus.Note;
                     WmsAutoUpdate = geodatalovDataset.WmsStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.WfsStatus != null)
                 {
-                    WfsStatus = geodatalovDataset.WfsStatus.StatusId;
+                    WfsStatusId = geodatalovDataset.WfsStatus.StatusId;
                     WfsNote = geodatalovDataset.WfsStatus.Note;
                     WfsAutoUpdate = geodatalovDataset.WfsStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.AtomFeedStatus != null)
                 {
-                    AtomFeedStatus = geodatalovDataset.AtomFeedStatus.StatusId;
+                    AtomFeedStatusId = geodatalovDataset.AtomFeedStatus.StatusId;
                     AtomFeedNote = geodatalovDataset.AtomFeedStatus.Note;
                     AtomFeedAutoUpdate = geodatalovDataset.AtomFeedStatus.AutoUpdate;
                 }
                 if (geodatalovDataset.CommonStatus != null)
                 {
-                    CommonStatus = geodatalovDataset.CommonStatus.StatusId;
+                    CommonStatusId = geodatalovDataset.CommonStatus.StatusId;
                     CommonNote = geodatalovDataset.CommonStatus.Note;
                     CommonAutoUpdate = geodatalovDataset.CommonStatus.AutoUpdate;
                 }

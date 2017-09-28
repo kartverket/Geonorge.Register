@@ -84,14 +84,14 @@ namespace Kartverket.Register.Services
             geodatalovDataset.NationalDataset = geodatalovViewModel.NationalDataset;
             geodatalovDataset.Plan = geodatalovViewModel.Plan;
             geodatalovDataset.Geodatalov = geodatalovViewModel.Geodatalov;
-            geodatalovDataset.MetadataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.MetadataStatus, geodatalovViewModel.MetadataNote, true);
-            geodatalovDataset.ProductSpesificationStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatus, geodatalovViewModel.WmsNote, true);
-            geodatalovDataset.SosiDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatus, geodatalovViewModel.WmsNote, true);
-            geodatalovDataset.GmlDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatus, geodatalovViewModel.WmsNote, true);
-            geodatalovDataset.WmsStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatus, geodatalovViewModel.WmsNote, true);
-            geodatalovDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WfsStatus, geodatalovViewModel.WfsNote, true);
-            geodatalovDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.AtomFeedStatus, geodatalovViewModel.AtomFeedNote, true);
-            geodatalovDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatus, geodatalovViewModel.WmsNote, true);
+            geodatalovDataset.MetadataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.MetadataStatusId, geodatalovViewModel.MetadataNote, true);
+            geodatalovDataset.ProductSpesificationStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatusId, geodatalovViewModel.WmsNote, true);
+            geodatalovDataset.SosiDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatusId, geodatalovViewModel.WmsNote, true);
+            geodatalovDataset.GmlDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatusId, geodatalovViewModel.WmsNote, true);
+            geodatalovDataset.WmsStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatusId, geodatalovViewModel.WmsNote, true);
+            geodatalovDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WfsStatusId, geodatalovViewModel.WfsNote, true);
+            geodatalovDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.AtomFeedStatusId, geodatalovViewModel.AtomFeedNote, true);
+            geodatalovDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(geodatalovViewModel.WmsStatusId, geodatalovViewModel.WmsNote, true);
             _dbContext.GeodatalovDatasets.Add(geodatalovDataset);
             _dbContext.SaveChanges();
 
@@ -100,14 +100,14 @@ namespace Kartverket.Register.Services
 
         private void GetDeliveryStatuses(GeodatalovDatasetViewModel geodatalovDatasetViewModel, GeodatalovDataset geodatalovDataset)
         {
-            geodatalovDatasetViewModel.MetadataStatus = _datasetDeliveryService.GetMetadataStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.MetadataStatus);
-            geodatalovDatasetViewModel.ProductSpesificationStatus = _registerService.GetDOKStatus(geodatalovDataset.ProductSpecificationUrl, true, geodatalovDatasetViewModel.ProductSpesificationStatus);
-            geodatalovDatasetViewModel.SosiDataStatus = _registerService.GetSosiRequirements(geodatalovDataset.Uuid, geodatalovDatasetViewModel.ProductSpecificationUrl, true, geodatalovDatasetViewModel.SosiDataStatus);
-            geodatalovDatasetViewModel.GmlDataStatus = _registerService.GetGmlRequirements(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.GmlDataStatus);
-            geodatalovDatasetViewModel.WmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.WmsStatus, geodatalovDataset.UuidService);
-            geodatalovDatasetViewModel.WfsStatus = _datasetDeliveryService.GetWfsStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.WfsStatus);
-            geodatalovDatasetViewModel.AtomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.AtomFeedStatus);
-            geodatalovDatasetViewModel.CommonStatus = "notset"; // TODO
+            geodatalovDatasetViewModel.MetadataStatusId = _datasetDeliveryService.GetMetadataStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.MetadataStatusId);
+            geodatalovDatasetViewModel.ProductSpesificationStatusId = _registerService.GetDOKStatus(geodatalovDataset.ProductSpecificationUrl, true, geodatalovDatasetViewModel.ProductSpesificationStatusId);
+            geodatalovDatasetViewModel.SosiDataStatusId = _registerService.GetSosiRequirements(geodatalovDataset.Uuid, geodatalovDatasetViewModel.ProductSpecificationUrl, true, geodatalovDatasetViewModel.SosiDataStatusId);
+            geodatalovDatasetViewModel.GmlDataStatusId = _registerService.GetGmlRequirements(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.GmlDataStatusId);
+            geodatalovDatasetViewModel.WmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.WmsStatusId, geodatalovDataset.UuidService);
+            geodatalovDatasetViewModel.WfsStatusId = _datasetDeliveryService.GetWfsStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.WfsStatusId);
+            geodatalovDatasetViewModel.AtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(geodatalovDataset.Uuid, true, geodatalovDatasetViewModel.AtomFeedStatusId);
+            geodatalovDatasetViewModel.CommonStatusId = "notset"; // TODO
         }
 
         public GeodatalovDataset UpdateGeodatalovDatasetFromKartkatalogen(GeodatalovDataset originalDataset)
@@ -213,56 +213,56 @@ namespace Kartverket.Register.Services
 
             if (geodatalovDataset.MetadataStatus != null)
             {
-                geodatalovDataset.MetadataStatus.StatusId = viewModel.MetadataStatus;
+                geodatalovDataset.MetadataStatus.StatusId = viewModel.MetadataStatusId;
                 geodatalovDataset.MetadataStatus.Note = viewModel.MetadataNote;
                 geodatalovDataset.MetadataStatus.AutoUpdate = viewModel.MetadataAutoUpdate;
             }
 
             if (geodatalovDataset.ProductSpesificationStatus != null)
             {
-                geodatalovDataset.ProductSpesificationStatus.StatusId = viewModel.ProductSpesificationStatus;
+                geodatalovDataset.ProductSpesificationStatus.StatusId = viewModel.ProductSpesificationStatusId;
                 geodatalovDataset.ProductSpesificationStatus.Note = viewModel.ProduktspesifikasjonNote;
                 geodatalovDataset.ProductSpesificationStatus.AutoUpdate = viewModel.ProduktspesifikasjonAutoUpdate;
             }
 
             if (geodatalovDataset.SosiDataStatus != null)
             {
-                geodatalovDataset.SosiDataStatus.StatusId = viewModel.SosiDataStatus;
+                geodatalovDataset.SosiDataStatus.StatusId = viewModel.SosiDataStatusId;
                 geodatalovDataset.SosiDataStatus.Note = viewModel.SosiDataNote;
                 geodatalovDataset.SosiDataStatus.AutoUpdate = viewModel.SosiDataAutoUpdate;
             }
 
             if (geodatalovDataset.GmlDataStatus != null)
             {
-                geodatalovDataset.GmlDataStatus.StatusId = viewModel.GmlDataStatus;
+                geodatalovDataset.GmlDataStatus.StatusId = viewModel.GmlDataStatusId;
                 geodatalovDataset.GmlDataStatus.Note = viewModel.GmlDataNote;
                 geodatalovDataset.GmlDataStatus.AutoUpdate = viewModel.GmlDataAutoUpdate;
             }
 
             if (geodatalovDataset.WmsStatus != null)
             {
-                geodatalovDataset.WmsStatus.StatusId = viewModel.WmsStatus;
+                geodatalovDataset.WmsStatus.StatusId = viewModel.WmsStatusId;
                 geodatalovDataset.WmsStatus.Note = viewModel.WmsNote;
                 geodatalovDataset.WmsStatus.AutoUpdate = viewModel.WmsAutoUpdate;
             }
 
             if (geodatalovDataset.WfsStatus != null)
             {
-                geodatalovDataset.WfsStatus.StatusId = viewModel.WfsStatus;
+                geodatalovDataset.WfsStatus.StatusId = viewModel.WfsStatusId;
                 geodatalovDataset.WfsStatus.Note = viewModel.WfsNote;
                 geodatalovDataset.WfsStatus.AutoUpdate = viewModel.WfsAutoUpdate;
             }
 
             if (geodatalovDataset.AtomFeedStatus != null)
             {
-                geodatalovDataset.AtomFeedStatus.StatusId = viewModel.AtomFeedStatus;
+                geodatalovDataset.AtomFeedStatus.StatusId = viewModel.AtomFeedStatusId;
                 geodatalovDataset.AtomFeedStatus.Note = viewModel.AtomFeedNote;
                 geodatalovDataset.AtomFeedStatus.AutoUpdate = viewModel.AtomFeedAutoUpdate;
             }
 
             if (geodatalovDataset.CommonStatus != null)
             {
-                geodatalovDataset.CommonStatus.StatusId = viewModel.CommonStatus;
+                geodatalovDataset.CommonStatus.StatusId = viewModel.CommonStatusId;
                 geodatalovDataset.CommonStatus.Note = viewModel.CommonNote;
                 geodatalovDataset.CommonStatus.AutoUpdate = viewModel.CommonAutoUpdate;
             }

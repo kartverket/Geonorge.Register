@@ -14,6 +14,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Kartverket.Register.Models.Translations;
 using Resources;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
@@ -66,6 +67,26 @@ namespace Kartverket.Register.Models
             Translations.AddMissingTranslations();
         }
 
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
+
+        public string InspireRequirementDescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var inspireRequirementDescriptionTranslated = Translations[cultureName]?.InspireRequirementDescription;
+            if (string.IsNullOrEmpty(inspireRequirementDescriptionTranslated))
+                inspireRequirementDescriptionTranslated = inspireRequirementDescription;
+            return inspireRequirementDescriptionTranslated;
+        }
+        
 
         public virtual string GetEPSGEditUrl()
         {

@@ -8,15 +8,15 @@
 }
 
 @section breadcrumb {
-    <li><a href="@Model.Register.GetObjectUrl()">@Html.DisplayFor(model => model.Register.name)</a></li>
-    <li>@Html.DisplayFor(model => model.Name)</li>
+    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.NameTranslated()</a></li>
+    <li>@Model.NameTranslated()</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.Name)
+                @Model.NameTranslated()
             </h1>
         </div>
         <div class="col-sm-12">
@@ -27,7 +27,7 @@
 <div class="row">
     <article class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         @if (Model.Register.containedItemClass != "NameSpace")
-        { <p> @Model.Description</p>}
+        { <p> @Model.DescriptionTranslated()</p>}
         @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
         { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
 

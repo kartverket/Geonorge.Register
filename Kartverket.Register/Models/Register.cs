@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
 using Resources;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
@@ -76,6 +77,24 @@ namespace Kartverket.Register.Models
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();
+        }
+
+        public string NameTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var nameTranslated = Translations[cultureName]?.Name;
+            if (string.IsNullOrEmpty(nameTranslated))
+                nameTranslated = name;
+            return nameTranslated;
+        }
+
+        public string DescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var descriptionTranslated = Translations[cultureName]?.Description;
+            if (string.IsNullOrEmpty(descriptionTranslated))
+                descriptionTranslated = name;
+            return descriptionTranslated;
         }
 
         /// <summary>

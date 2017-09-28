@@ -16,17 +16,17 @@
 
     @foreach (var register in HtmlHelperExtensions.registers(Model.register))
     {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
+        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
     }
-    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>@Model.name</li>
+    <li><a href="@Model.register.GetObjectUrl()">@Model.register.NameTranslated()</a></li>
+    <li>@Model.NameTranslated()</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.name)
+                @Model.NameTranslated()
             </h1>
         </div>
         <div class="col-sm-12">
@@ -40,7 +40,7 @@
             ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
 
             <p>
-                @Html.DisplayFor(model => model.description)
+                @Model.DescriptionTranslated()
             </p>
             @if (Model.status == null)
             {

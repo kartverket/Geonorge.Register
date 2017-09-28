@@ -332,24 +332,24 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingType == "documentOwner")
             {
-                var sorting = register.items.OfType<Document>().OrderBy(o => o.documentowner.name);
+                var sorting = register.items.OfType<Document>().OrderBy(o => o.documentowner.NameTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "documentOwner_desc")
             {
-                var sorting = register.items.OfType<Document>().OrderByDescending(o => o.documentowner.name);
+                var sorting = register.items.OfType<Document>().OrderByDescending(o => o.documentowner.NameTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
 
             // ***** Dataset
             else if (sortingType == "datasetOwner")
             {
-                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.datasetowner.name);
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.datasetowner.NameTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "datasetOwner_desc")
             {
-                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.name);
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.datasetowner.NameTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "dokStatus")
@@ -841,11 +841,11 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingType == "owner")
             {
-                sortedList = Model.subregisters.OrderBy(o => o.owner.name).ToList();
+                sortedList = Model.subregisters.OrderBy(o => o.owner.NameTranslated()).ToList();
             }
             else if (sortingType == "owner_desc")
             {
-                sortedList = Model.subregisters.OrderByDescending(o => o.owner.name).ToList();
+                sortedList = Model.subregisters.OrderByDescending(o => o.owner.NameTranslated()).ToList();
             }
 
             return sortedList;
@@ -1071,14 +1071,14 @@ namespace Kartverket.Register.Helpers
             {
                 if (coverage.ConfirmedDok)
                 {
-                    return "Ja";
+                    return Shared.Yes;
                 }
                 else
                 {
-                    return "Nei";
+                    return Shared.No;
                 }
             }
-            else return "Nei";
+            else return Shared.No;
 
         }
 
@@ -1089,14 +1089,14 @@ namespace Kartverket.Register.Helpers
             {
                 if (coverage.Coverage)
                 {
-                    return "Ja";
+                    return Shared.Yes;
                 }
                 else
                 {
-                    return "Nei";
+                    return Shared.No;
                 }
             }
-            else return "Nei";
+            else return Shared.No;
 
         }
 

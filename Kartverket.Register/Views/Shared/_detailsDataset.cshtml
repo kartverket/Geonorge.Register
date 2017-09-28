@@ -31,12 +31,12 @@
         <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
     </div>
     <div class="row">
-        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.submitter.name</div>
+        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.submitter.NameTranslated()</div>
     </div>
     @if (Model.datasetowner != null)
             {
     <div class="row">
-        <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.datasetowner.name</div>
+        <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.datasetowner.NameTranslated()</div>
     </div>
     }
     @if (Model.DatasetType != null)

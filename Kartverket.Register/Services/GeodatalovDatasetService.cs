@@ -273,7 +273,7 @@ namespace Kartverket.Register.Services
             return geodatalovDataset;
         }
 
-        public void DeleteInspireDataset(GeodatalovDataset geodatalovDataset)
+        public void DeleteGeodatalovDataset(GeodatalovDataset geodatalovDataset)
         {
             _dbContext.GeodatalovDatasets.Remove(geodatalovDataset);
 

@@ -48,7 +48,7 @@
             }
             else
             {
-                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.DescriptionTranslated()) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
             }
             @if (Model.submitter == null)
             {

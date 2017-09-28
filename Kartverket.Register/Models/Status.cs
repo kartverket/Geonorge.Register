@@ -11,8 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations;
-
-
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models {
 	public class Status {
@@ -25,6 +24,16 @@ namespace Kartverket.Register.Models {
         {
             return "Submitted";
         }
+        public string DescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var statusDescription = description;
+            if (!CultureHelper.IsNorwegian())
+                statusDescription = value;
+
+            return statusDescription;
+        }
+
     }//end Status
 
 }//end namespace Datamodell

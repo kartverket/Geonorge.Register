@@ -18,7 +18,7 @@
     @if (Model.dokStatus != null)
     {
     <div class="row">
-        <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.dokStatus.description <i class="statusIcon-@Model.dokStatusId"></i></div>
+        <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.dokStatus.DescriptionTranslated() <i class="statusIcon-@Model.dokStatusId"></i></div>
     </div>
     }
     <div class="row">

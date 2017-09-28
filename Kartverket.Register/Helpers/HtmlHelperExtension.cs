@@ -279,17 +279,17 @@ namespace Kartverket.Register.Helpers
             HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
 
 
-            var sortedList = register.items.OrderBy(o => o.name).ToList();
+            var sortedList = register.items.OrderBy(o => o.NameTranslated()).ToList();
 
             // ***** RegisterItems
 
             if (sortingType == "name_desc")
             {
-                sortedList = register.items.OrderByDescending(o => o.name).ToList();
+                sortedList = register.items.OrderByDescending(o => o.NameTranslated()).ToList();
             }
             else if (sortingType == "submitter")
             {
-                sortedList = register.items.OrderBy(o => o.submitter.name).ToList();
+                sortedList = register.items.OrderBy(o => o.submitter.NameTranslated()).ToList();
             }
             else if (sortingType == "submitter_desc")
             {
@@ -297,11 +297,11 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingType == "status")
             {
-                sortedList = register.items.OrderBy(o => o.status.description).ToList();
+                sortedList = register.items.OrderBy(o => o.status.DescriptionTranslated()).ToList();
             }
             else if (sortingType == "status_desc")
             {
-                sortedList = register.items.OrderByDescending(o => o.status.description).ToList();
+                sortedList = register.items.OrderByDescending(o => o.status.DescriptionTranslated()).ToList();
             }
             else if (sortingType == "dateSubmitted")
             {
@@ -354,12 +354,12 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingType == "dokStatus")
             {
-                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokStatus.description);
+                var sorting = register.items.OfType<Dataset>().OrderBy(o => o.dokStatus.DescriptionTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "dokStatus_desc")
             {
-                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokStatus.description);
+                var sorting = register.items.OfType<Dataset>().OrderByDescending(o => o.dokStatus.DescriptionTranslated());
                 sortedList = sorting.Cast<RegisterItem>().ToList();
             }
             else if (sortingType == "distributionFormat")
@@ -949,19 +949,19 @@ namespace Kartverket.Register.Helpers
             var queryResults = from s in db.Statuses
                                select s;
 
-            string forslag = "Forslag:&#013";
-            string gyldig = "Gyldig:&#013";
-            string historiske = "Historiske:&#013";
+            string forslag = translation.Registers.Proposal + ":&#013";
+            string gyldig = translation.Registers.Valid + ":&#013";
+            string historiske = translation.Registers.Historical + ":&#013";
 
             foreach (Status s in queryResults)
             {
                 if (s.group == "suggested")
                 {
-                    forslag += "- " + s.description + "&#013";
+                    forslag += "- " + s.DescriptionTranslated() + "&#013";
                 }
                 if (s.group == "historical")
                 {
-                    historiske += "- " + s.description + "&#013";
+                    historiske += "- " + s.DescriptionTranslated() + "&#013";
                 }
                 if (s.group == "current")
                 {
@@ -969,17 +969,17 @@ namespace Kartverket.Register.Helpers
                     {
                         if (s.value != "Sosi-valid")
                         {
-                            gyldig += "- " + s.description + "&#013";
+                            gyldig += "- " + s.DescriptionTranslated() + "&#013";
                         }
                     }
                     else
                     {
-                        gyldig += "- " + s.description + "&#013";
+                        gyldig += "- " + s.DescriptionTranslated() + "&#013";
                     }
                 }
             }
 
-            string beskrivelse = "Mulige statuser:&#013&#013" + forslag + "&#013" + gyldig + "&#013" + historiske;
+            string beskrivelse = translation.Registers.StatusAvailable + ":&#013&#013" + forslag + "&#013" + gyldig + "&#013" + historiske;
             return beskrivelse;
         }
 
@@ -1021,7 +1021,7 @@ namespace Kartverket.Register.Helpers
         {
             if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
-                return item.dokStatus.description;
+                return item.dokStatus.DescriptionTranslated();
             }
             else
             {
@@ -1045,7 +1045,7 @@ namespace Kartverket.Register.Helpers
                 return " ";
             }
             else
-                return item.dokStatus.description;
+                return item.dokStatus.DescriptionTranslated();
         }
 
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)

@@ -457,6 +457,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mulige statuser.
+        /// </summary>
+        public static string StatusAvailable {
+            get {
+                return ResourceManager.GetString("StatusAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Innsender.
         /// </summary>
         public static string Submitter {
@@ -516,6 +525,15 @@ namespace Resources {
         public static string Updated {
             get {
                 return ResourceManager.GetString("Updated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gyldig.
+        /// </summary>
+        public static string Valid {
+            get {
+                return ResourceManager.GetString("Valid", resourceCulture);
             }
         }
         

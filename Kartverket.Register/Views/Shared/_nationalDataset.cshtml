@@ -212,7 +212,7 @@
             <div class="col-md-1 text-center">
                 @if (item.dokStatus != null)
                 {
-                    <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.description'>
+                    <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.DescriptionTranslated()'>
                         <i class="statusIcon-@item.dokStatusId"></i>
                     </span>
                 }
@@ -272,7 +272,7 @@
                     <ul style="list-style-type:none;">
                         @if (item.dokStatus != null)
                         {
-                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
+                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.DescriptionTranslated() <i class="statusIcon-@item.dokStatusId"></i></li>
                         }
                         @if (item.dokStatusDateAccepted != null)
                         {

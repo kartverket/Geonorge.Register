@@ -78,31 +78,31 @@ namespace Kartverket.Register.Helpers
         {
             if (containedItemClass == "Document")
             {
-                return "Dokumenter";
+                return Documents.Document;
             }
             else if (containedItemClass == "Dataset")
             {
-                return "Datasett";
+                return DataSet.Dataset;
             }
             else if (containedItemClass == "EPSG")
             {
-                return "EPSG-koder";
+                return EPSGs.EpsgCode;
             }
             else if (containedItemClass == "Organization")
             {
-                return "Organisasjoner";
+                return Organizations.Organization;
             }
             else if (containedItemClass == "CodelistValue")
             {
-                return "Kodeverdier";
+                return CodelistValues.CodeValue;
             }
             else if (containedItemClass == "Register")
             {
-                return "Registre";
+                return "Register";
             }
             else if (containedItemClass == "NameSpace")
             {
-                return "Navnerom";
+                return Namespace.NamespaceName;
             }
             return "";
         }

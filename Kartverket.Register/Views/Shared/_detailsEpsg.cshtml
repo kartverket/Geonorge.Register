@@ -58,7 +58,7 @@
             }
             else
             {
-                <p title="@EPSGs.InspireRequirement: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Html.DisplayFor(modelItem => Model.inspireRequirement.description)</p>
+                <p title="@EPSGs.InspireRequirement: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Model.inspireRequirement.DescriptionTranslated()</p>
             }
 
             @if (Model.nationalRequirement == null)
@@ -67,7 +67,7 @@
             }
             else
             {
-                <p title="@EPSGs.NationalRequirement: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalRequirement.description)</p>
+                <p title="@EPSGs.NationalRequirement: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Model.nationalRequirement.DescriptionTranslated()</p>
             }
 
             @if (Model.nationalSeasRequirement == null)
@@ -76,7 +76,7 @@
             }
             else
             {
-                <p title="@EPSGs.NationalSeasRequirement: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Html.DisplayFor(modelItem => Model.nationalSeasRequirement.description)</p>
+                <p title="@EPSGs.NationalSeasRequirement: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Model.nationalSeasRequirement.DescriptionTranslated()</p>
             }
 
             @if (Model.externalReference == null)

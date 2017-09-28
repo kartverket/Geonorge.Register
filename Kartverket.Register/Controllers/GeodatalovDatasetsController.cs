@@ -150,7 +150,7 @@ namespace Kartverket.Register.Controllers
                 var registerUrl = geodatalovDataset.Register.GetObjectUrl();
                 if (_accessControlService.Access(geodatalovDataset))
                 {
-                    _geodatalovDatasetService.DeleteInspireDataset(geodatalovDataset);
+                    _geodatalovDatasetService.DeleteGeodatalovDataset(geodatalovDataset);
                     return Redirect(registerUrl);
                 }
                 throw new HttpException(401, "Access Denied");

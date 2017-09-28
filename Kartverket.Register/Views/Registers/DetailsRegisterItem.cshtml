@@ -27,7 +27,7 @@
 <div class="row">
     <article class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
         @if (Model.Register.containedItemClass != "NameSpace")
-        { <p> @Model.DescriptionTranslated()</p>}
+        { <p> @Model.Description</p>}
         @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
         { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
 

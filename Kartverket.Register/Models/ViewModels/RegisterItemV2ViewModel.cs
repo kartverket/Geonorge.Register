@@ -87,19 +87,9 @@ namespace Kartverket.Register.Models.ViewModels
             return registerItem != null ? registerItem.NameTranslated() : Name;
         }
 
-        public string NameTranslated()
-        {
-            return RegisterItem != null ? RegisterItem.NameTranslated() : Name;
-        }
-
         public string DescriptionTranslated(RegisterItem registerItem)
         {
             return registerItem != null ? registerItem.DescriptionTranslated() : Description;
-        }
-
-        public string DescriptionTranslated()
-        {
-            return RegisterItem != null ? RegisterItem.DescriptionTranslated() : Description;
         }
 
         public string DetailPageUrl()
@@ -130,7 +120,7 @@ namespace Kartverket.Register.Models.ViewModels
             SystemId = registerItem.systemId;
             Name = NameTranslated(registerItem);
             Seoname = registerItem.seoname;
-            Description = registerItem.description;
+            Description = DescriptionTranslated(registerItem);
             SubmitterId = registerItem.submitterId;
             Submitter = registerItem.submitter;
             Owner = GetOwner(registerItem);

@@ -27,7 +27,7 @@ namespace Kartverket.Register.Services
             _metadataService = new MetadataService();
         }
 
-        public InspireDataset CreateNewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
+        public InspireDataset NewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
         {
             var inspireDataset = new InspireDataset();
 
@@ -270,7 +270,7 @@ namespace Kartverket.Register.Services
             originalDataset.InspireDeliveryMetadataService.StatusId = "good";
             if (originalDataset.InspireDeliveryDistribution != null)
             {
-                originalDataset.InspireDeliveryDistribution.StatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, originalDataset.StatusId);
+                originalDataset.InspireDeliveryDistribution.StatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryDistribution.StatusId);
             }
             if (originalDataset.InspireDeliveryWms != null)
             {

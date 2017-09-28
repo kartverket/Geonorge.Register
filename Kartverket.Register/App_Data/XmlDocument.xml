@@ -1403,6 +1403,11 @@
               Looks up a localized string similar to Slett datasett.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.Delivery_Common">
+            <summary>
+              Looks up a localized string similar to Felles/kombi.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DisplayInfoRegistration">
             <summary>
               Looks up a localized string similar to Vis veiledning om registrering.

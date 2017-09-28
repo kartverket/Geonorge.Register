@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Felles/kombi.
+        /// </summary>
+        public static string Delivery_Common {
+            get {
+                return ResourceManager.GetString("Delivery_Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vis veiledning om registrering.
         /// </summary>
         public static string DisplayInfoRegistration {

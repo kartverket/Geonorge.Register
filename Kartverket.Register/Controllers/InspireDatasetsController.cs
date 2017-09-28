@@ -74,7 +74,7 @@ namespace Kartverket.Register.Controllers
                 return View(viewModel);
             }
             if (!ModelState.IsValid) return View(viewModel);
-            var inspireDataset = _inspireDatasetService.CreateNewInspireDataset(viewModel, parentregister, registername);
+            var inspireDataset = _inspireDatasetService.NewInspireDataset(viewModel, parentregister, registername);
             return Redirect(inspireDataset.Register.GetObjectUrl());
         }
 

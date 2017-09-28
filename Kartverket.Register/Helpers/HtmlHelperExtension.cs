@@ -1351,7 +1351,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "geodatalov_common_status" || sortingParam == "geodatalov_common_status_desc")
             {
-                sortTitle = InspireDataSet.SpatialDataServiceStatus;
+                sortTitle = DataSet.Delivery_Common;
                 statusIcon += "custom-icon-info";
             }
 

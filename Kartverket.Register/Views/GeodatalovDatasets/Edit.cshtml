@@ -297,7 +297,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.AtomFeedStatusId, new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("AtomFeedStatus", null, new { @class = "form-control" })
+                            @Html.DropDownList("AtomFeedStatusId", null, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.AtomFeedStatus, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-6">
@@ -310,7 +310,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.CommonStatusId, new { @class = "control-label col-md-3" })
                         <div class="col-md-2">
-                            @Html.DropDownList("CommonStatus", null, new { @class = "form-control" })
+                            @Html.DropDownList("CommonStatusId", null, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.CommonStatus, "", new { @class = "text-danger" })
                         </div>
                         <div class="col-md-6">

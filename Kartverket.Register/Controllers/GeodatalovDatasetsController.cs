@@ -159,14 +159,14 @@ namespace Kartverket.Register.Controllers
             ViewBag.DokStatusId = _registerItemService.GetDokStatusSelectList(viewModel.DokStatusId);
             ViewBag.SubmitterId = _registerItemService.GetSubmitterSelectList(viewModel.SubmitterId);
             ViewBag.OwnerId = _registerItemService.GetOwnerSelectList(viewModel.OwnerId);
-            ViewBag.MetadataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatusId);
-            ViewBag.ProductSpesificationStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.ProductSpesificationStatusId);
-            ViewBag.SosiDataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.SosiDataStatusId);
-            ViewBag.GmlDataStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.GmlDataStatusId);
-            ViewBag.WmsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WmsStatusId);
-            ViewBag.WfsStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsStatusId);
-            ViewBag.AtomFeedStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.AtomFeedStatusId);
-            ViewBag.CommonStatus = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.CommonStatusId);
+            ViewBag.MetadataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatusId);
+            ViewBag.ProductSpesificationStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.ProductSpesificationStatusId);
+            ViewBag.SosiDataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.SosiDataStatusId);
+            ViewBag.GmlDataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.GmlDataStatusId);
+            ViewBag.WmsStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WmsStatusId);
+            ViewBag.WfsStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.WfsStatusId);
+            ViewBag.AtomFeedStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.AtomFeedStatusId);
+            ViewBag.CommonStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.CommonStatusId);
         }
     }
 }

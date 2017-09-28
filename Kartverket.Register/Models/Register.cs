@@ -93,7 +93,7 @@ namespace Kartverket.Register.Models
             var cultureName = CultureHelper.GetCurrentCulture();
             var descriptionTranslated = Translations[cultureName]?.Description;
             if (string.IsNullOrEmpty(descriptionTranslated))
-                descriptionTranslated = name;
+                descriptionTranslated = description;
             return descriptionTranslated;
         }
 

@@ -42,7 +42,7 @@
             </p>
 
             <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname">
-                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@Html.DisplayFor(modelItem => item.documentowner.name)" />
+                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@item.documentowner.NameTranslated()" />
             </a>
             <p class=" ">
                 @Html.DisplayFor(modelItem => item.description)

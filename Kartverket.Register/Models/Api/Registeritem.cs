@@ -115,6 +115,12 @@ namespace Kartverket.Register.Models.Api
         public string HarmonizedDataStatus { get; set; }
         public string SpatialDataServiceStatus { get; set; }
 
+        // GeodatalovDataset
+        public string CommonStatus { get; set; }
+        public string GmlStatus { get; set; }
+        public string SosiStatus { get; set; }
+        public string ProductspesificationStatus { get; set; }
+
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null, string language = "nb-NO")
         {
             this.versions = new HashSet<Registeritem>();
@@ -210,6 +216,41 @@ namespace Kartverket.Register.Models.Api
                 if (inspireDataset.InspireDeliverySpatialDataService?.Status != null)
                 {
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
+                }
+            }
+            if (item is GeodatalovDataset geodatalovDataset)
+            {
+                if (geodatalovDataset.MetadataStatus?.Status != null)
+                {
+                    MetadataStatus = geodatalovDataset.MetadataStatus.Status.value;
+                }
+                if (geodatalovDataset.ProductSpesificationStatus?.Status != null)
+                {
+                    ProductspesificationStatus = geodatalovDataset.ProductSpesificationStatus.Status.value;
+                }
+                if (geodatalovDataset.SosiDataStatus?.Status != null)
+                {
+                    SosiStatus = geodatalovDataset.SosiDataStatus.Status.value;
+                }
+                if (geodatalovDataset.GmlDataStatus?.Status != null)
+                {
+                    GmlStatus = geodatalovDataset.GmlDataStatus.Status.value;
+                }
+                if (geodatalovDataset.WmsStatus?.Status != null)
+                {
+                    WmsStatus = geodatalovDataset.WmsStatus.Status.value;
+                }
+                if (geodatalovDataset.WfsStatus?.Status != null)
+                {
+                    WfsStatus = geodatalovDataset.WfsStatus.Status.value;
+                }
+                if (geodatalovDataset.AtomFeedStatus?.Status != null)
+                {
+                    AtomFeedStatus = geodatalovDataset.AtomFeedStatus.Status.value;
+                }
+                if (geodatalovDataset.CommonStatus?.Status != null)
+                {
+                    CommonStatus = geodatalovDataset.CommonStatus.Status.value;
                 }
             }
             if (item is EPSG epsg)

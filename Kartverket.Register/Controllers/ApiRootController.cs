@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Helpers;
+﻿
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -7,12 +7,7 @@ using Kartverket.Register.Services.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Kartverket.Register.Models.Api;
@@ -28,7 +23,7 @@ namespace Kartverket.Register.Controllers
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
-        private string language = "nb-NO";
+        private string _language = "nb-NO";
 
         public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
@@ -297,7 +292,7 @@ namespace Kartverket.Register.Controllers
                     selectedDOKMunicipality = org.name;
                 }
             }
-            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality, language);
+            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality, _language);
             return tmp;
         }
 
@@ -306,13 +301,14 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = ConvertRegister(item, filter);
             tmp.containeditems = new List<Models.Api.Registeritem>();
-            if (item.name == "Inspire statusregister")
+            if (!item.items.Any())
             {
-                foreach (var inspireDataset in item.RegisterItems)
+                foreach (var registerItem in item.RegisterItems)
                 {
-                    tmp.containeditems.Add(ConvertRegisterItem(inspireDataset, filter));
+                    tmp.containeditems.Add(ConvertRegisterItem(registerItem, filter));
                 }
             }
+
             else if (item.items.Any())
             {
                 foreach (var d in item.items)
@@ -350,14 +346,14 @@ namespace Kartverket.Register.Controllers
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item,registerId, filter, language);
+            var tmp = new Registeritem(item,registerId, filter, _language);
             return tmp;
         }
         private Registeritem ConvertRegisterItem(RegisterItemV2 item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item, registerId, filter, language);
+            var tmp = new Registeritem(item, registerId, filter, _language);
             return tmp;
         }
 
@@ -451,7 +447,7 @@ namespace Kartverket.Register.Controllers
             IEnumerable<string> headerValues;
             if (request.Headers.TryGetValues("Accept-Language", out headerValues))
             {
-                language = headerValues.FirstOrDefault();
+                _language = headerValues.FirstOrDefault();
             }
         }
     }

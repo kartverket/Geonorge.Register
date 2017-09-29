@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Kartverket.DOK.Service;
 using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
@@ -18,18 +19,19 @@ namespace Kartverket.Register.Controllers
 {
     public class ApiRootController : ApiController
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private RegisterDbContext db;
 
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
         private string _language = "nb-NO";
 
-        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
             _registerItemService = registerItemService;
             _searchService = searchService;
             _registerService = registerService;
+            db = dbContext;
         }
 
         /// <summary>
@@ -237,6 +239,7 @@ namespace Kartverket.Register.Controllers
             new CoverageService(db).UpdateDatasetsWithCoverage();
             new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
             new InspireDatasetService(db).SynchronizeInspireDatasets();
+            new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
             _registerService.UpdateDOKStatus();
             return Ok();
         }

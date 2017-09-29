@@ -332,7 +332,7 @@ namespace Kartverket.Register.Services
                 UpdateInspireDatasetFromKartkatalogen(inspireDataset);
             }
             _dbContext.SaveChanges();
-            _dbContext.Dispose();
+            //_dbContext.Dispose();
         }
     }
 }

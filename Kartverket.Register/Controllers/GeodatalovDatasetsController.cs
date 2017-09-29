@@ -14,7 +14,7 @@ namespace Kartverket.Register.Controllers
 {
     public class GeodatalovDatasetsController : Controller
     {
-        private readonly RegisterDbContext _db = new RegisterDbContext();
+        private readonly RegisterDbContext _db;
         private readonly MetadataService _metadataService;
         private readonly IAccessControlService _accessControlService;
         private readonly IRegisterService _registerService;
@@ -22,7 +22,7 @@ namespace Kartverket.Register.Controllers
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
         private readonly IDatasetDeliveryService _datasetDeliveryService;
 
-        public GeodatalovDatasetsController(IGeodatalovDatasetService geodatalovDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IRegisterItemService registerItemService, IDatasetDeliveryService datasetDeliveryService)
+        public GeodatalovDatasetsController(RegisterDbContext dbContext, IGeodatalovDatasetService geodatalovDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IRegisterItemService registerItemService, IDatasetDeliveryService datasetDeliveryService)
         {
             _geodatalovDatasetService = geodatalovDatasetService;
             _accessControlService = accessControllService;
@@ -30,6 +30,7 @@ namespace Kartverket.Register.Controllers
             _registerService = registerService;
             _registerItemService = registerItemService;
             _datasetDeliveryService = datasetDeliveryService;
+            _db = dbContext;
         }
 
         // GET: GeodatalovDatasets/Create

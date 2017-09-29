@@ -667,184 +667,184 @@ namespace Kartverket.Register.Services.RegisterItem
                         }
                     case "dokStatus":
                         {
-                            var sortedList = registerItems.OfType<DatasetViewModel>().OrderBy(o => o.DokStatus).ToList();
+                            var sortedList = registerItems.OfType<DatasetViewModel>().OrderBy(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "dokStatus_desc":
                         {
-                            var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.DokStatus).ToList();
+                            var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadata_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadata_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.MetadataStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.MetadataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadataservice_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataServiceStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataServiceStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadataservice_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.MetadataServiceStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.MetadataServiceStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_distribution_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.DistributionStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.DistributionStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_distribution_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.DistributionStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.DistributionStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wms_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WmsStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WmsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wms_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WmsStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WmsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wfs_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WfsStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WfsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wfs_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WfsStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WfsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_atom_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.AtomFeedStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.AtomFeedStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_atom_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.AtomFeedStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.AtomFeedStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wfsoratom_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WfsOrAtomStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.WfsOrAtomStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_wfsoratom_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WfsOrAtomStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.WfsOrAtomStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_harmonizeddata_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.HarmonizedDataStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.HarmonizedDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_harmonizeddata_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.HarmonizedDataStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.HarmonizedDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_spatialdataservice_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.SpatialDataServiceStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.SpatialDataServiceStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_spatialdataservice_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.SpatialDataServiceStatus).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.SpatialDataServiceStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
 
 
                     case "geodatalov_metadata_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.MetadataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.MetadataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_metadata_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.MetadataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.MetadataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_productspecification_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.ProductSpesificationStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.ProductSpesificationStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_productspecification_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.ProductSpesificationStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.ProductSpesificationStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_sosi_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.SosiDataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.SosiDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_sosi_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.SosiDataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.SosiDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_gml_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.GmlDataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.GmlDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_gml_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.GmlDataStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.GmlDataStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_wms_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.WmsStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.WmsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_wms_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.WmsStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.WmsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_wfs_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.WfsStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.WfsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_wfs_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.WfsStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.WfsStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_atom_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.AtomFeedStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.AtomFeedStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_atom_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.AtomFeedStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.AtomFeedStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_common_status":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.CommonStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.CommonStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "geodatalov_common_status_desc":
                         {
-                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.CommonStatus).ToList();
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.CommonStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                 }

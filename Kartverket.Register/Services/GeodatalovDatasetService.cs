@@ -289,5 +289,20 @@ namespace Kartverket.Register.Services
 
             return queryResult.FirstOrDefault();
         }
+
+        public void SynchronizeGeodatalovDatasets()
+        {
+            var queryResultsRegisterItem = from d in _dbContext.GeodatalovDatasets
+                where !string.IsNullOrEmpty(d.Uuid)
+                select d;
+
+            var geodatalovDatasets = queryResultsRegisterItem.ToList();
+
+            foreach (var geodatalovDataset in geodatalovDatasets)
+            {
+                UpdateGeodatalovDatasetFromKartkatalogen(geodatalovDataset);
+            }
+            _dbContext.SaveChanges();
+        }
     }
 }

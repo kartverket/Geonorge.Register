@@ -77,26 +77,56 @@
             {
                 if (string.IsNullOrEmpty(item.ParentRegisterId))
                 {
-                    <tr>
-                        <td>
-                            <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a></p>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Description)
-                        </td>
+                    if (item.Name == "Inspire statusregister")
+                    {
+                        if (HtmlHelperExtensions.IsAdmin())
+                        {
+                            <tr>
+                                <td>
+                                    <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a>
+                                    </p>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
 
-                        <td title="@Registers.Owner: @item.Owner">
-                            @if (string.IsNullOrEmpty(item.Owner))
-                            {
-                                <span>@Registers.NotSet</span>
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.Owner)
-                            }
-                        </td>
+                                <td title="@Registers.Owner: @item.Owner">
+                                    @if (string.IsNullOrEmpty(item.Owner))
+                                    {
+                                        <span>@Registers.NotSet</span>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Owner)
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a>
+                                </p>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
 
-                    </tr>
+                            <td title="@Registers.Owner: @item.Owner">
+                                @if (string.IsNullOrEmpty(item.Owner))
+                                {
+                                    <span>@Registers.NotSet</span>
+                                }
+                                else
+                                {
+                                    @Html.DisplayFor(modelItem => item.Owner)
+                                }
+                            </td>
+
+                        </tr>
+                    }
                 }
             }
 

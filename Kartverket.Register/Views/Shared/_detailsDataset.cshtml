@@ -65,22 +65,22 @@
         </div>
         <div class="menu-separator search-results-table-heading"></div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryMetadataStatusId)</div><div class="col-md-2"> @Html.DisplayFor(model => Model.dokDeliveryMetadataStatus.description)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryMetadataStatusId)</div><div class="col-md-2"> @Model.dokDeliveryMetadataStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryMetadataStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryProductSheetStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryProductSheetStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryProductSheetStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryProductSheetStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryPresentationRulesStatusId) </div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryPresentationRulesStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryPresentationRulesStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryPresentationRulesStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryProductSpecificationStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryProductSpecificationStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryProductSpecificationStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryProductSpecificationStatusNote)</div>
         </div>
         <div class="row">
@@ -92,7 +92,7 @@
                 }
                 else
                 {
-                @Html.DisplayFor(model => Model.dokDeliveryWmsStatus.description)
+                @Model.dokDeliveryWmsStatus.DescriptionTranslated()
                 }
             </div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryWmsStatusNote)</div>
@@ -106,29 +106,29 @@
                 }
                 else
                 {
-                @Html.DisplayFor(model => Model.dokDeliveryWfsStatus.description)
+                @Model.dokDeliveryWfsStatus.DescriptionTranslated()
                 }
             </div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryWfsStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliverySosiRequirementsStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliverySosiRequirementsStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliverySosiRequirementsStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliverySosiRequirementsStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryDistributionStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryDistributionStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryDistributionStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryDistributionStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryGmlRequirementsStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryGmlRequirementsStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryGmlRequirementsStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryGmlRequirementsStatusNote)</div>
         </div>
         <div class="row">
             <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryAtomFeedStatusId)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.dokDeliveryAtomFeedStatus.description)</div>
+            <div class="col-md-2">@Model.dokDeliveryAtomFeedStatus.DescriptionTranslated()</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryAtomFeedStatusNote)</div>
         </div>
 

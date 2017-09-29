@@ -288,5 +288,63 @@ namespace Kartverket.Register.Models
             }
             return submitter;
         }
+
+        public virtual string GetObjectEditUrl()
+        {
+            switch (this)
+            {
+                case Document _:
+                    var document = (Document)this;
+                    return document.GetDocumentEditUrl();
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.GetDatasetEditUrl();
+                case EPSG _:
+                    var epsg = (EPSG)this;
+                    return epsg.GetEPSGEditUrl();
+                case CodelistValue _:
+                    var codelistValue = (CodelistValue)this;
+                    return codelistValue.GetCodelistValueEditUrl();
+                case NameSpace _:
+                    var nameSpace = (NameSpace)this;
+                    return nameSpace.GetNameSpaceEditUrl();
+                case Organization _:
+                    var organization = (Organization)this;
+                    return organization.GetOrganizationEditUrl();
+                case ServiceAlert _:
+                    var serviceAlert = (ServiceAlert)this;
+                    return serviceAlert.GetServiceAlertEditUrl();
+            }
+            return "#";
+        }
+
+        public string GetObjectDeleteUrl()
+        {
+            switch (this)
+            {
+                case Document _:
+                    var document = (Document)this;
+                    return document.GetDocumentDeleteUrl();
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.GetDatasetDeleteUrl();
+                case EPSG _:
+                    var epsg = (EPSG)this;
+                    return epsg.GetEPSGDeleteUrl();
+                case CodelistValue _:
+                    var codelistValue = (CodelistValue)this;
+                    return codelistValue.GetCodelistValueDeleteUrl();
+                case NameSpace _:
+                    var nameSpace = (NameSpace)this;
+                    return nameSpace.GetNameSpaceDeleteUrl();
+                case Organization _:
+                    var organization = (Organization)this;
+                    return organization.GetOrganizationDeleteUrl();
+                case ServiceAlert _:
+                    var serviceAlert = (ServiceAlert)this;
+                    return serviceAlert.GetServiceAlertDeleteUrl();
+            }
+            return "#";
+        }
     }
 }//end namespace Datamodell

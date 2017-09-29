@@ -91,22 +91,24 @@ namespace Kartverket.Register.Controllers
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
-            var viewModel = new RegisterV2ViewModel(_registerService.GetRegister(parentRegister, registername));
-            if (viewModel.Register != null)
+            var register = _registerService.GetRegister(parentRegister, registername);
+            if (register != null)
             {
-                if (viewModel.Register.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
+                register = RegisterItems(register, filter, page);
+                var viewModel = new RegisterV2ViewModel(register);
+                if (viewModel.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
                 {
-                    CodelistValue municipality = _accessControlService.GetMunicipality();
+                    var municipality = _accessControlService.GetMunicipality();
                     if (municipality != null)
                     {
                         ViewBagOrganizationMunizipality(municipality.value);
                         return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
                     }
                 }
-                viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting); // Todo flytte sortering av register.registeritem 
+                viewModel.RegisterItemsV2 = _registerItemService.OrderBy(viewModel.RegisterItemsV2, sorting); // Todo flytte sortering av register.registeritem 
                 ViewBagOrganizationMunizipality(filter.municipality);
-                viewModel.Register = RegisterItems(viewModel.Register, filter, page);
-                ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel.Register);
+                //viewModel.Register = RegisterItems(viewModel.Register, filter, page);
+                ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel);
                 return View(viewModel);
             }
                 return HttpNotFound();
@@ -560,7 +562,7 @@ namespace Kartverket.Register.Controllers
             
         }
 
-        private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, Models.Register register)
+        private void ViewbagsRegisterDetails(string owner, string sorting, int? page, FilterParameters filter, RegisterV2ViewModel register)
         {
             ViewBag.search = filter.text;
             ViewBag.page = page;
@@ -568,8 +570,8 @@ namespace Kartverket.Register.Controllers
             ViewBag.selectedMunicipalityCode = filter.municipality;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.municipality = _registerItemService.GetMunicipalityList();
-            ViewBag.register = register.name;
-            ViewBag.registerSEO = register.seoname;
+            ViewBag.register = register.Name;
+            ViewBag.registerSEO = register.Seoname;
             ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
             ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);

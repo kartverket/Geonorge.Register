@@ -1,20 +1,16 @@
-﻿@model Kartverket.Register.Models.RegisterItem
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.RegisterItem
 ﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = @Model.name;
-    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
-    Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     var documentOwner = ViewBag.documentOwner;
-    string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
-    string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
-    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
 }
 
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
     }
@@ -106,8 +102,8 @@
 
                 if (HtmlHelperExtensions.accessRegisterItem(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">@Shared.Edit</a>
-                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">@Shared.Delete</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         </div>

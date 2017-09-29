@@ -3,34 +3,34 @@
 @using PagedList
 @using Kartverket.Register.Models
 @{
-    ViewBag.Title = @Model.Register.name;
+    ViewBag.Title = @Model.Name;
     string municipalityCode = ViewBag.selectedMunicipalityCode;
     Organization municipality = ViewBag.organizationMunicipality;
 }
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model))
     {
         <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
     }
-    <li>@Model.Register.NameTranslated()</li>
+    <li>@Model.Name</li>
 }
 
 @{
     var page = ViewBag.page;
-    var sortering = Model.Register.items.OrderBy(o => o.name).ToList();
-    var sorteringRegister = Model.Register.subregisters.OrderByDescending(s => s.name).ToList();
+    var sortering = Model.RegisterItems.OrderBy(o => o.name).ToList();
+    var sorteringRegister = Model.Subregisters.OrderByDescending(s => s.name).ToList();
     int pageSize = 50;
     int pageNumber = (page ?? 1);
 
-    if (Model.Register.containedItemClass == "Register")
+    if (Model.ContainedItemClass == "Register")
     {
-        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model.Register, ViewBag.SortOrder);
+        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
     }
     else
     {
-        sortering = HtmlHelperExtensions.SortingRegisterItems(Model.Register, ViewBag.SortOrder);
+        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
     }
 }
 @section Scripts {
@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Model.Register.NameTranslated()
+                @Model.Name
             </h1>
         </div>
         <div class="col-sm-12">
@@ -58,18 +58,18 @@
 
 <div class="row">
     <div class="col-no-padding-xs col-xs-12 col-sm-10 col-md-10 col-lg-10">
-        @if (Model.Register.description != null)
+        @if (Model.Description != null)
             {
             <p>
-                @Model.Register.DescriptionTranslated()
-                @if (Model.Register.IsDokMunicipal())
+                @Model.Description
+                @if (Model.IsDokMunicipal())
                 {
                     <br />
                     @Html.Raw(HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality));
                 }
             </p>
         }
-        @if (Model.Register.IsServiceAlertRegister())
+        @if (Model.IsServiceAlertRegister())
         {
             if (!Request.IsAuthenticated)
             {
@@ -80,19 +80,19 @@
     </div>
 
     <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-2 col-lg-2 text-right">
-        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Register.modified)</span><br />
+        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
     </div>
 
     <div class="search-result-navigation register-navigation">
         <div class="col-md-4">
             
-            @if (Model.Register.ContainedItemClassIsRegister())
+            @if (Model.ContainedItemClassIsRegister())
             {
                 @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
             }
-            else if (Model.RegisterItems != null && Model.RegisterItems.Count > 0)
+            else if (Model.RegisterItemsV2.Any())
             {
-                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
             }
             else { 
                 @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
@@ -107,56 +107,56 @@
     </div>
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        @if (Model.Register.ContainedItemClassIsOrganization())
+        @if (Model.ContainedItemClassIsOrganization())
             {
             @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsCodelistValue())
+        @if (Model.ContainedItemClassIsCodelistValue())
             {
             @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsDocument())
+        @if (Model.ContainedItemClassIsDocument())
             {
             @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize));
             }
-        @if (Model.Register.ContainedItemClassIsDataset())
+        @if (Model.ContainedItemClassIsDataset())
             {
             @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsEpsg())
+        @if (Model.ContainedItemClassIsEpsg())
             {
             @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsNameSpace())
+        @if (Model.ContainedItemClassIsNameSpace())
             {
             @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsServiceAlert())
+        @if (Model.ContainedItemClassIsServiceAlert())
             {
             @Html.Partial("_serviceAlert", sortering.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsInspireDataset())
+        @if (Model.ContainedItemClassIsInspireDataset())
             {
-            @Html.Partial("_inspireDataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsRegister())
+        @if (Model.ContainedItemClassIsRegister())
             {
             @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
         }
-        @if (Model.Register.ContainedItemClassIsGeodatalovDataset())
+        @if (Model.ContainedItemClassIsGeodatalovDataset())
         {
-            @Html.Partial("_geodatalovDataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
     </div>
     <div class="clearfix"></div>
     <div class="col-sm-12 col-md-12 col-lg-12">
-        @if (Model.Register.ContainedItemClassIsRegister())
+        @if (Model.ContainedItemClassIsRegister())
         {
             @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
         }
         else if (Model.RegisterItems != null && Model.RegisterItems.Count > 0)
         {
-            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
         else { 
             @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
@@ -169,28 +169,28 @@
             {
                 if (HtmlHelperExtensions.Access(Model))
                 {
-                    if (Model.Register.IsDokMunicipal())
+                    if (Model.IsDokMunicipal())
                     {
                         if (municipalityCode != null)
                         {
                             if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                             {
                             <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
-                            <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
+                            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
                         }
                     }
                 }
                 else
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetObjectCreateUrl()">@Shared.Add</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
                 }
             }
-            if (HtmlHelperExtensions.IsAdmin() && !Model.Register.IsServiceAlertRegister())
+            if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
             {
-                <a class="btn btn-default btn-space pull-right" href="@Model.Register.GetEditObjectUrl()">@Shared.Edit</a>
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
             }
         }
         
-            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
+            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 </div>

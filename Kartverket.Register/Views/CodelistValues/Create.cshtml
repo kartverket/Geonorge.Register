@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.CodelistValue
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.CodelistValue
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -19,7 +20,7 @@
 </section>
 
 @section breadcrumb {
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }

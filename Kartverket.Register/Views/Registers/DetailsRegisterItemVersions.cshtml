@@ -1,14 +1,14 @@
-﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
 ﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = @Model.currentVersion.name;
-    string parentRegister = HtmlHelperExtensions.HasParent(Model.currentVersion.register);
 }
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.currentVersion.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.currentVersion.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }

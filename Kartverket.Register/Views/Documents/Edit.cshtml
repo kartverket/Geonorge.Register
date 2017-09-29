@@ -1,6 +1,7 @@
 ﻿@model Kartverket.Register.Models.Document
 ﻿@using Kartverket.Register.Helpers
 @using System.Web.Configuration
+@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = Shared.Edit + " " + Model.name;
@@ -63,7 +64,7 @@
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }

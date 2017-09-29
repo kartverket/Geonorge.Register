@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.ViewModels.CreateDokMunicipalViewModel
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.CreateDokMunicipalViewModel
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -6,7 +7,7 @@
 }
 
 @section breadcrumb {
-    @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.Register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }

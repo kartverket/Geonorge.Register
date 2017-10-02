@@ -54,5 +54,6 @@ namespace Kartverket.Register.Services.RegisterItem
         string GetDOKMunicipalStatus(Models.RegisterItem municipality);
 
         ICollection<RegisterItemV2ViewModel> OrderBy(ICollection<RegisterItemV2ViewModel> registerItems, string sorting);
+        void MakeAllRegisterItemsValid(Models.Register register);
     }
 }

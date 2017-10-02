@@ -2522,6 +2522,11 @@
               Looks up a localized string similar to Henter register.
             </summary>
         </member>
+        <member name="P:Resources.Registers.MakeAllItemsValid">
+            <summary>
+              Looks up a localized string similar to Sett status &quot;Gyldig&quot; på alle kodeverdier.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Modified">
             <summary>
               Looks up a localized string similar to Siste endret.

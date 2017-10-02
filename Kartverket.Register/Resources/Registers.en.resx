@@ -282,4 +282,7 @@
   <data name="Valid" xml:space="preserve">
     <value>Valid</value>
   </data>
+  <data name="MakeAllItemsValid" xml:space="preserve">
+    <value>Set status "Valid" on all codelist values</value>
+  </data>
 </root>

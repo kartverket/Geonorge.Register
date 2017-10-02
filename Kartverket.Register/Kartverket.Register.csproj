@@ -738,6 +738,10 @@
     <Compile Include="Migrations\201709260552344_AddGeodatalovdataset.Designer.cs">
       <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710020630209_AddMakeAllItemsValid.cs" />
+    <Compile Include="Migrations\201710020630209_AddMakeAllItemsValid.Designer.cs">
+      <DependentUpon>201710020630209_AddMakeAllItemsValid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1754,6 +1758,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709260552344_AddGeodatalovdataset.resx">
       <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020630209_AddMakeAllItemsValid.resx">
+      <DependentUpon>201710020630209_AddMakeAllItemsValid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

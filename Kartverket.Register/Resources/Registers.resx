@@ -282,4 +282,7 @@
   <data name="Valid" xml:space="preserve">
     <value>Gyldig</value>
   </data>
+  <data name="MakeAllItemsValid" xml:space="preserve">
+    <value>Sett status "Gyldig" på alle kodeverdier</value>
+  </data>
 </root>

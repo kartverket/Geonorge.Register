@@ -851,5 +851,15 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             return registerItems;
         }
+
+        public void MakeAllRegisterItemsValid(Models.Register register)
+        {
+            foreach (var item in register.items)
+            {
+                item.statusId = "Valid";
+                _dbContext.Entry(item).State = EntityState.Modified;
+            }
+            _dbContext.SaveChanges();
+        }
     }
 }

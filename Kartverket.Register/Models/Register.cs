@@ -72,6 +72,9 @@ namespace Kartverket.Register.Models
         public int? accessId { get; set; }
         public virtual accessType access { get; set; }
 
+        [Display(Name = "MakeAllItemsValid", ResourceType = typeof(Registers))]
+        public bool MakeAllItemsValid { get; set; }
+
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
 
         public void AddMissingTranslations()

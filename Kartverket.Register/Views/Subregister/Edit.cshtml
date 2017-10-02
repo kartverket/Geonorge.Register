@@ -148,10 +148,25 @@
                     <label class="col-md-4" for="editor">Admin + Editor</label>
                 </div>
             </div>
+            if (Model.ContainedItemClassIsCodelistValue())
+             {
+                 <div class="form-group">
+                     <div class="col-md-2"></div>
+                     <div class="col-md-10">
+                         @Html.LabelFor(model => model.MakeAllItemsValid)
+                     </div>
+                     <div class="col-md-2"></div>
+                     <div class="col-md-10">
+                         @Html.CheckBoxFor(m => m.MakeAllItemsValid, new {title = "Sett status på kodeverdier i registeret til 'Gyldig'", @class = "checkbox-inline"})
+                         <small>Sett status på alle kodeverdier i registeret til "Gyldig". Status på hver enkelt kodeverdi kan fortsatt endres.</small>
+                     </div>
+                 </div>
+             }
         }
         else
         {
             @Html.HiddenFor(model => model.accessId)
+            @Html.HiddenFor(model => model.MakeAllItemsValid)
         }
     </div>
     <div class="form-group">

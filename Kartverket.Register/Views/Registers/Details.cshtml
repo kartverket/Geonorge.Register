@@ -19,19 +19,8 @@
 
 @{
     var page = ViewBag.page;
-    var sortering = Model.RegisterItems.OrderBy(o => o.name).ToList();
-    var sorteringRegister = Model.Subregisters.OrderByDescending(s => s.name).ToList();
     int pageSize = 50;
     int pageNumber = (page ?? 1);
-
-    if (Model.ContainedItemClass == "Register")
-    {
-        sorteringRegister = HtmlHelperExtensions.SortingRegisters(Model, ViewBag.SortOrder);
-    }
-    else
-    {
-        sortering = HtmlHelperExtensions.SortingRegisterItems(Model, ViewBag.SortOrder);
-    }
 }
 @section Scripts {
     <script>
@@ -88,14 +77,14 @@
             
             @if (Model.ContainedItemClassIsRegister())
             {
-                @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
             }
             else if (Model.RegisterItemsV2.Any())
             {
                 @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
             }
             else { 
-                @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
             }
         </div>
         <div class="col-md-4">
@@ -109,31 +98,31 @@
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         @if (Model.ContainedItemClassIsOrganization())
             {
-            @Html.Partial("_organization", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_organization", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsCodelistValue())
             {
-            @Html.Partial("_codelistValue", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_codelistValue", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsDocument())
             {
-            @Html.Partial("_documents", sortering.ToPagedList(pageNumber, pageSize));
+            @Html.Partial("_documents", Model.RegisterItems.ToPagedList(pageNumber, pageSize));
             }
         @if (Model.ContainedItemClassIsDataset())
             {
-            @Html.Partial("_dataset", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsEpsg())
             {
-            @Html.Partial("_epsg", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_epsg", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsNameSpace())
             {
-            @Html.Partial("_nameSpace", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_nameSpace", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsServiceAlert())
             {
-            @Html.Partial("_serviceAlert", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_serviceAlert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsInspireDataset())
             {
@@ -141,7 +130,7 @@
         }
         @if (Model.ContainedItemClassIsRegister())
             {
-            @Html.Partial("_subregister", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_subregister", Model.Subregisters.ToPagedList(pageNumber, pageSize))
         }
         @if (Model.ContainedItemClassIsGeodatalovDataset())
         {
@@ -152,14 +141,14 @@
     <div class="col-sm-12 col-md-12 col-lg-12">
         @if (Model.ContainedItemClassIsRegister())
         {
-            @Html.Partial("_pagedListPagerSubRegisters", sorteringRegister.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
         }
-        else if (Model.RegisterItems != null && Model.RegisterItems.Count > 0)
+        else if (Model.RegisterItemsV2.Any())
         {
             @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
         else { 
-            @Html.Partial("_pagedListPager", sortering.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
     </div>
 

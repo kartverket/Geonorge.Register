@@ -389,6 +389,164 @@ namespace Kartverket.Register.Services.Register
             return status;
         }
 
+        public ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string orderBy)
+        {
+            if (!registers.Any()) return registers;
+            var text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
+            var filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
+            var municipality = HttpContext.Current.Request.QueryString["municipality"] != null ? HttpContext.Current.Request.QueryString["municipality"].ToString() : "";
+            var filterHorisontalt = HttpContext.Current.Request.QueryString["filterHorisontalt"] != null ? HttpContext.Current.Request.QueryString["filterHorisontalt"].ToString() : "";
+            var InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
+            var nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
+            var nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+
+            if (HttpContext.Current.Request.QueryString.Count < 1)
+            {
+                if (HttpContext.Current.Session != null)
+                {
+                    if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(orderBy))
+                        orderBy = HttpContext.Current.Session["sortingType"].ToString();
+
+                    if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
+                        text = HttpContext.Current.Session["text"].ToString();
+
+                    if (HttpContext.Current.Session["filterVertikalt"] != null && string.IsNullOrEmpty(filterVertikalt))
+                        filterVertikalt = HttpContext.Current.Session["filterVertikalt"].ToString();
+
+                    if (HttpContext.Current.Session["filterHorisontalt"] != null && string.IsNullOrEmpty(filterHorisontalt))
+                        filterHorisontalt = HttpContext.Current.Session["filterHorisontalt"].ToString();
+
+                    if (HttpContext.Current.Session["InspireRequirement"] != null && string.IsNullOrEmpty(InspireRequirementParam))
+                        InspireRequirementParam = HttpContext.Current.Session["InspireRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["nationalRequirement"] != null && string.IsNullOrEmpty(nationalRequirementParam))
+                        nationalRequirementParam = HttpContext.Current.Session["nationalRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
+                        nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
+
+                    if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
+                        municipality = HttpContext.Current.Session["municipality"].ToString();
+
+                    string redirect = HttpContext.Current.Request.Path + "?sorting=" + orderBy;
+                    bool shallRedirect = false;
+
+                    if (text != "")
+                    {
+                        redirect = redirect + "&text=" + text;
+                        shallRedirect = true;
+                    }
+
+                    if (filterVertikalt != "")
+                    {
+                        if (filterVertikalt.Contains(","))
+                            filterVertikalt = filterVertikalt.Replace(",false", "");
+                        redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                        shallRedirect = true;
+                    }
+
+                    if (filterHorisontalt != "")
+                    {
+                        if (filterHorisontalt.Contains(","))
+                            filterHorisontalt = filterHorisontalt.Replace(",false", "");
+                        redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                        shallRedirect = true;
+                    }
+
+                    if (InspireRequirementParam != "")
+                    {
+                        redirect = redirect + "&inspireRequirement=" + InspireRequirementParam;
+                        shallRedirect = true;
+                    }
+
+                    if (nationalRequirementParam != "")
+                    {
+                        redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
+                        shallRedirect = true;
+                    }
+
+                    if (nationalSeaRequirementParam != "")
+                    {
+                        redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+                        shallRedirect = true;
+                    }
+
+                    if (nationalSeaRequirementParam != "")
+                    {
+                        redirect = redirect + "&municipality=" + municipality;
+                        shallRedirect = true;
+                    }
+
+                    if (shallRedirect)
+                    {
+                        HttpContext.Current.Response.Redirect(redirect);
+                    }
+
+                }
+            }
+            HttpContext.Current.Session["sortingType"] = orderBy;
+            HttpContext.Current.Session["municipality"] = municipality;
+            HttpContext.Current.Session["text"] = text;
+            HttpContext.Current.Session["filterVertikalt"] = filterVertikalt;
+            HttpContext.Current.Session["filterHorisontalt"] = filterHorisontalt;
+            HttpContext.Current.Session["InspireRequirement"] = InspireRequirementParam;
+            HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
+            HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+
+
+            var sortedList = registers.OrderBy(o => o.name).ToList();
+            switch (orderBy)
+            {
+                case "name_desc":
+                    sortedList = registers.OrderByDescending(o => o.name).ToList();
+                    break;
+                case "submitter":
+                    sortedList = registers.OrderBy(o => o.owner.name).ToList();
+                    break;
+                case "submitter_desc":
+                    sortedList = registers.OrderByDescending(o => o.owner.name).ToList();
+                    break;
+                case "status":
+                    sortedList = registers.OrderBy(o => o.status.description).ToList();
+                    break;
+                case "status_desc":
+                    sortedList = registers.OrderByDescending(o => o.status.description).ToList();
+                    break;
+                case "dateSubmitted":
+                    sortedList = registers.OrderBy(o => o.dateSubmitted).ToList();
+                    break;
+                case "dateSubmitted_desc":
+                    sortedList = registers.OrderByDescending(o => o.dateSubmitted).ToList();
+                    break;
+                case "modified":
+                    sortedList = registers.OrderBy(o => o.modified).ToList();
+                    break;
+                case "modified_desc":
+                    sortedList = registers.OrderByDescending(o => o.modified).ToList();
+                    break;
+                case "dateAccepted":
+                    sortedList = registers.OrderBy(o => o.dateAccepted).ToList();
+                    break;
+                case "dateAccepted_desc":
+                    sortedList = registers.OrderByDescending(o => o.dateAccepted).ToList();
+                    break;
+                case "description":
+                    sortedList = registers.OrderBy(o => o.description).ToList();
+                    break;
+                case "description_desc":
+                    sortedList = registers.OrderByDescending(o => o.description).ToList();
+                    break;
+                case "owner":
+                    sortedList = registers.OrderBy(o => o.owner.NameTranslated()).ToList();
+                    break;
+                case "owner_desc":
+                    sortedList = registers.OrderByDescending(o => o.owner.NameTranslated()).ToList();
+                    break;
+            }
+
+            return sortedList;
+        }
+
         public string GetDeliveryDownloadStatus(string uuid, bool autoUpdate, string currentStatus)
         {
             string status = currentStatus;

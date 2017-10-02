@@ -106,8 +106,9 @@ namespace Kartverket.Register.Controllers
                     }
                 }
                 viewModel.RegisterItemsV2 = _registerItemService.OrderBy(viewModel.RegisterItemsV2, sorting); // Todo flytte sortering av register.registeritem 
+                viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting); // Todo midlertidig.. 
+                viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting); // Todo midlertidig.. 
                 ViewBagOrganizationMunizipality(filter.municipality);
-                //viewModel.Register = RegisterItems(viewModel.Register, filter, page);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel);
                 return View(viewModel);
             }

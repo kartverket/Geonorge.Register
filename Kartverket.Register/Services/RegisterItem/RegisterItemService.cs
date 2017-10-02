@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
 using SolrNet.Impl.FieldSerializers;
@@ -647,6 +648,8 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 switch (sorting)
                 {
+
+                    // RegisterItemV2
                     case "name":
                         return registerItems.OrderBy(o => o.Name).ToList();
                     case "name_desc":
@@ -655,6 +658,24 @@ namespace Kartverket.Register.Services.RegisterItem
                         return registerItems.OrderBy(o => o.Owner.name).ToList();
                     case "owner_desc":
                         return registerItems.OrderByDescending(o => o.Owner.name).ToList();
+                    case "status":
+                        return registerItems.OrderBy(o => o.Status.DescriptionTranslated()).ToList();
+                    case "status_desc":
+                        return registerItems.OrderByDescending(o => o.Status.DescriptionTranslated()).ToList();
+                    case "dateSubmitted":
+                        return registerItems.OrderBy(o => o.DateSubmitted).ToList();
+                    case "dateSubmitted_desc":
+                        return registerItems.OrderByDescending(o => o.DateSubmitted).ToList();
+                    case "modified":
+                        return registerItems.OrderBy(o => o.Modified).ToList();
+                    case "modified_desc":
+                        return registerItems.OrderByDescending(o => o.Modified).ToList();
+                    case "dateAccepted":
+                        return registerItems.OrderBy(o => o.DateAccepted).ToList();
+                    case "dateAccepted_desc":
+                        return registerItems.OrderByDescending(o => o.DateAccepted).ToList();
+
+                    // DatasetV2
                     case "theme":
                         {
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderBy(o => o.Theme.description).ToList();
@@ -675,6 +696,8 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+
+                    // InspireDataset
                     case "inspire_metadata_status":
                         {
                             var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataStatusId).ToList();
@@ -766,7 +789,7 @@ namespace Kartverket.Register.Services.RegisterItem
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
 
-
+                    // GeodatalovDataset
                     case "geodatalov_metadata_status":
                         {
                             var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.MetadataStatusId).ToList();
@@ -848,6 +871,514 @@ namespace Kartverket.Register.Services.RegisterItem
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                 }
+            }
+            return registerItems;
+        }
+
+        public ICollection<Models.RegisterItem> OrderBy(ICollection<Models.RegisterItem> registerItems, string sorting)
+        {
+            if (registerItems.Any())
+            {
+                var text = HttpContext.Current.Request.QueryString["text"] != null ? HttpContext.Current.Request.QueryString["text"].ToString() : "";
+                var filterVertikalt = HttpContext.Current.Request.QueryString["filterVertikalt"] != null ? HttpContext.Current.Request.QueryString["filterVertikalt"].ToString() : "";
+                var municipality = HttpContext.Current.Request.QueryString["municipality"] != null ? HttpContext.Current.Request.QueryString["municipality"].ToString() : "";
+                var filterHorisontalt = HttpContext.Current.Request.QueryString["filterHorisontalt"] != null ? HttpContext.Current.Request.QueryString["filterHorisontalt"].ToString() : "";
+                var inspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
+                var nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
+                var nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+
+                if (HttpContext.Current.Request.QueryString.Count < 1)
+                {
+                    if (HttpContext.Current.Session != null)
+                    {
+                        if (HttpContext.Current.Session["sortingType"] != null && string.IsNullOrEmpty(sorting))
+                            sorting = HttpContext.Current.Session["sortingType"].ToString();
+
+                        if (HttpContext.Current.Session["text"] != null && string.IsNullOrEmpty(text))
+                            text = HttpContext.Current.Session["text"].ToString();
+
+                        if (HttpContext.Current.Session["filterVertikalt"] != null && string.IsNullOrEmpty(filterVertikalt))
+                            filterVertikalt = HttpContext.Current.Session["filterVertikalt"].ToString();
+
+                        if (HttpContext.Current.Session["filterHorisontalt"] != null && string.IsNullOrEmpty(filterHorisontalt))
+                            filterHorisontalt = HttpContext.Current.Session["filterHorisontalt"].ToString();
+
+                        if (HttpContext.Current.Session["InspireRequirement"] != null && string.IsNullOrEmpty(inspireRequirementParam))
+                            inspireRequirementParam = HttpContext.Current.Session["InspireRequirement"].ToString();
+
+                        if (HttpContext.Current.Session["nationalRequirement"] != null && string.IsNullOrEmpty(nationalRequirementParam))
+                            nationalRequirementParam = HttpContext.Current.Session["nationalRequirement"].ToString();
+
+                        if (HttpContext.Current.Session["nationalSeaRequirement"] != null && string.IsNullOrEmpty(nationalSeaRequirementParam))
+                            nationalSeaRequirementParam = HttpContext.Current.Session["nationalSeaRequirement"].ToString();
+
+                        if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
+                            municipality = HttpContext.Current.Session["municipality"].ToString();
+
+                        string redirect = HttpContext.Current.Request.Path + "?sorting=" + sorting;
+                        bool shallRedirect = false;
+
+                        if (text != "")
+                        {
+                            redirect = redirect + "&text=" + text;
+                            shallRedirect = true;
+                        }
+
+                        if (filterVertikalt != "")
+                        {
+                            if (filterVertikalt.Contains(","))
+                                filterVertikalt = filterVertikalt.Replace(",false", "");
+                            redirect = redirect + "&filterVertikalt=" + filterVertikalt;
+                            shallRedirect = true;
+                        }
+
+                        if (filterHorisontalt != "")
+                        {
+                            if (filterHorisontalt.Contains(","))
+                                filterHorisontalt = filterHorisontalt.Replace(",false", "");
+                            redirect = redirect + "&filterHorisontalt=" + filterHorisontalt;
+                            shallRedirect = true;
+                        }
+
+                        if (inspireRequirementParam != "")
+                        {
+                            redirect = redirect + "&inspireRequirement=" + inspireRequirementParam;
+                            shallRedirect = true;
+                        }
+
+                        if (nationalRequirementParam != "")
+                        {
+                            redirect = redirect + "&nationalRequirement=" + nationalRequirementParam;
+                            shallRedirect = true;
+                        }
+
+                        if (nationalSeaRequirementParam != "")
+                        {
+                            redirect = redirect + "&nationalSeaRequirement=" + nationalSeaRequirementParam;
+                            shallRedirect = true;
+                        }
+
+                        if (nationalSeaRequirementParam != "")
+                        {
+                            redirect = redirect + "&municipality=" + municipality;
+                            shallRedirect = true;
+                        }
+
+                        if (shallRedirect)
+                        {
+                            HttpContext.Current.Response.Redirect(redirect);
+                        }
+
+                    }
+                }
+                HttpContext.Current.Session["sortingType"] = sorting;
+                HttpContext.Current.Session["municipality"] = municipality;
+                HttpContext.Current.Session["text"] = text;
+                HttpContext.Current.Session["filterVertikalt"] = filterVertikalt;
+                HttpContext.Current.Session["filterHorisontalt"] = filterHorisontalt;
+                HttpContext.Current.Session["InspireRequirement"] = inspireRequirementParam;
+                HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
+                HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+
+
+                var sortedList = registerItems.OrderBy(o => o.NameTranslated()).ToList();
+
+                // ***** RegisterItems
+
+                if (sorting == "name_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.NameTranslated()).ToList();
+                }
+                else if (sorting == "description")
+                {
+                    sortedList = registerItems.OrderBy(o => o.description).ToList();
+                }
+                else if (sorting == "description_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.description).ToList();
+                }
+                else if (sorting == "submitter")
+                {
+                    sortedList = registerItems.OrderBy(o => o.submitter.NameTranslated()).ToList();
+                }
+                else if (sorting == "submitter_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.submitter.name).ToList();
+                }
+                else if (sorting == "status")
+                {
+                    sortedList = registerItems.OrderBy(o => o.status.DescriptionTranslated()).ToList();
+                }
+                else if (sorting == "status_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.status.DescriptionTranslated()).ToList();
+                }
+                else if (sorting == "dateSubmitted")
+                {
+                    sortedList = registerItems.OrderBy(o => o.dateSubmitted).ToList();
+                }
+                else if (sorting == "dateSubmitted_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.dateSubmitted).ToList();
+                }
+                else if (sorting == "modified")
+                {
+                    sortedList = registerItems.OrderBy(o => o.modified).ToList();
+                }
+                else if (sorting == "modified_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.modified).ToList();
+                }
+                else if (sorting == "dateAccepted")
+                {
+                    sortedList = registerItems.OrderBy(o => o.dateAccepted).ToList();
+                }
+                else if (sorting == "dateAccepted_desc")
+                {
+                    sortedList = registerItems.OrderByDescending(o => o.dateAccepted).ToList();
+                }
+
+                // ***** Documents 
+
+                else if (sorting == "documentOwner")
+                {
+                    var documentSorted = registerItems.OfType<Document>().OrderBy(o => o.documentowner.NameTranslated());
+                    sortedList = documentSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "documentOwner_desc")
+                {
+                    var documentSorted = registerItems.OfType<Document>().OrderByDescending(o => o.documentowner.NameTranslated());
+                    sortedList = documentSorted.Cast<Models.RegisterItem>().ToList();
+                }
+
+                // ***** Dataset
+                else if (sorting == "datasetOwner")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.datasetowner.NameTranslated());
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "datasetOwner_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.datasetowner.NameTranslated());
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokStatus.DescriptionTranslated());
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokStatus.DescriptionTranslated());
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "distributionFormat")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.DistributionFormat);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "distributionFormat_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.DistributionFormat);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "wmsUrl")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.WmsUrl);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "wmsUrl_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.WmsUrl);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "theme")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.theme == null ? "" : o.theme.value);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "theme_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.theme == null ? "" : o.theme.value);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "type")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.DatasetType);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "type_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.DatasetType);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+
+
+                //DOK delivery status
+                else if (sorting == "dokDeliveryMetadataStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryMetadataStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryMetadataStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryMetadataStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+
+                else if (sorting == "dokDeliveryProductSheetStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSheetStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryProductSheetStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSheetStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryPresentationRulesStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryPresentationRulesStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryPresentationRulesStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryPresentationRulesStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryProductSpecificationStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSpecificationStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryProductSpecificationStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSpecificationStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryWmsStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryWmsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryWmsStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWmsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryWfsStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryWfsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryWfsStatusId_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWfsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliverySosiRequirementsStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliverySosiRequirementsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliverySosiRequirementsStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliverySosiRequirementsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryDistributionStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryDistributionStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryDistributionStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryDistributionStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryGmlRequirementsStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryGmlRequirementsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryGmlRequirementsStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryGmlRequirementsStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryAtomFeedStatus")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryAtomFeedStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dokDeliveryAtomFeedStatus_desc")
+                {
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryAtomFeedStatusId);
+                    sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
+                }
+
+
+                // ***** CodelistValue
+
+                else if (sorting == "codevalue")
+                {
+                    var codevalue = registerItems.OfType<CodelistValue>().OrderBy(o => o.value);
+                    sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "codevalue_desc")
+                {
+                    var codevalue = registerItems.OfType<CodelistValue>().OrderByDescending(o => o.value);
+                    sortedList = codevalue.Cast<Models.RegisterItem>().ToList();
+                }
+
+                // ***** Organization
+
+                else if (sorting == "number")
+                {
+                    var number = registerItems.OfType<Organization>().OrderBy(o => o.number);
+                    sortedList = number.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "number_desc")
+                {
+                    var number = registerItems.OfType<Organization>().OrderByDescending(o => o.number);
+                    sortedList = number.Cast<Models.RegisterItem>().ToList();
+                }
+
+                // ***** EPSG
+                else if (sorting == "verticalReferenceSystem")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "verticalReferenceSystem_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "horizontalReferenceSystem")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "horizontalReferenceSystem_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dimension")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.description);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "dimension_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "epsg")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.epsgcode);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "epsg_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "sosiReferencesystem")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "sosiReferencesystem_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "inspireRequirement")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.inspireRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "inspireRequirement_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.inspireRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "nationalRequirement")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.nationalRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "nationalRequirement_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.nationalRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "nationalSeasRequirement")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.nationalSeasRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "nationalSeasRequirement_desc")
+                {
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.nationalSeasRequirement.sortOrder);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+
+                // ***** ServiceAlert
+                else if (sorting == "alertdate")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.AlertDate);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "alertdate_desc")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.AlertDate);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "effektivedate")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.EffectiveDate);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "effektivedate_desc")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.EffectiveDate);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "owner")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.Owner);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "owner_desc")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.Owner);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "servicetype")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.ServiceType);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "servicetype_desc")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.ServiceType);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "servicealert")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderBy(o => o.AlertType);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+                else if (sorting == "servicealert_desc")
+                {
+                    var epsgSorting = registerItems.OfType<ServiceAlert>().OrderByDescending(o => o.AlertType);
+                    sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
+                }
+
+                return sortedList;
             }
             return registerItems;
         }

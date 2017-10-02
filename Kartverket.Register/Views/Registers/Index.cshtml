@@ -76,26 +76,40 @@
             {
                 if (item.parentRegisterId == null)
                 {
-                    <tr>
-                        <td>
-                            <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a></p>
-                        </td>
-                        <td>
-                            @item.DescriptionTranslated()
-                        </td>
+                    if (item.name == "Inspire statusregister")
+                    {
+                        if (HtmlHelperExtensions.IsAdmin())
+                        {
+                            <tr>
+                                <td>
+                                    <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
+                                    </p>
+                                </td>
+                                <td>
+                                    item.DescriptionTranslated()
+                                </td>
+                                <td title="@Registers.Owner: @item.owner.NameTranslated()">
+                                    @item.owner.NameTranslated()
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>
+                                <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
+                                </p>
+                            </td>
+                            <td>
+                                @item.DescriptionTranslated()
+                            </td>
+                            <td title="@Registers.Owner: @item.owner.NameTranslated()">
+                                @item.owner.NameTranslated()
+                            </td>
 
-                        <td title="@Registers.Owner: @item.owner.name">
-                            @if (item.owner == null)
-                            {
-                                <span>@Registers.NotSet</span>
-                            }
-                            else
-                            {
-                                @Html.DisplayFor(modelItem => item.owner.name)
-                            }
-                        </td>
-
-                    </tr>
+                        </tr>
+                    }
                 }
             }
 

@@ -48,7 +48,7 @@
     @if (Model.theme != null)
             {
     <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.theme.description</div>
+        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.ThemeGroupIdTranslated()</div>
     </div>
     }
 </article>

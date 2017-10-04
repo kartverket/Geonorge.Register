@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kartverket.Register.Models.Translations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -13,9 +14,9 @@ namespace Kartverket.Register.Helpers
         // Include ONLY cultures you are implementing
         private static readonly List<string> _cultures = new List<string> {
         "no",  // first culture is the DEFAULT
-        "nb-NO", 
-        "en"  
-        
+        "nb-NO",
+        Culture.EnglishCode
+
     };
         /// <summary>
         /// Returns true if the language is a right-to-left language. Otherwise, false.

@@ -43,7 +43,7 @@
 
         var cultureData = {
             supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
-            urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = "en", ReturnUrl = Request.Url })',
+            urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url })',
             urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = "no", ReturnUrl = Request.Url })',
             currentCulture: '@CultureHelper.GetCurrentCulture()'
         };

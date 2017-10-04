@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using www.opengis.net;
 using Kartverket.Register.Models.ViewModels;
 using System.Linq;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     [HandleError]
     public class DatasetsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -25,13 +26,16 @@ namespace Kartverket.Register.Controllers
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
         private IDatasetDeliveryService _datasetDeliveryService;
+        private ITranslationService _translationService;
 
-        public DatasetsController(IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService)
+        public DatasetsController(RegisterDbContext dbContext, IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService)
         {
+             db = dbContext;
             _registerItemService = registerItemService;
             _registerService = registerService;
             _accessControlService = accessControllService;
             _datasetDeliveryService = datasetDeliveryService;
+            _translationService = translationService;
         }
 
         public DatasetsController()
@@ -488,6 +492,7 @@ namespace Kartverket.Register.Controllers
                 return View(originalDataset);
             }
             initialisationDataset(dataset, originalDataset, coverage);
+            _translationService.UpdateTranslations(dataset, originalDataset);
             _registerItemService.SaveEditedRegisterItem(originalDataset);
             return Redirect(originalDataset.GetObjectUrl());
         }
@@ -607,6 +612,7 @@ namespace Kartverket.Register.Controllers
             dataset.PartitionOffNote = inputDataset.PartitionOffNote;
             dataset.EenvironmentalImpactAssessment = inputDataset.EenvironmentalImpactAssessment;
             dataset.EenvironmentalImpactAssessmentNote = inputDataset.EenvironmentalImpactAssessmentNote;
+
             return dataset;
         }
 

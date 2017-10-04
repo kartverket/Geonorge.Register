@@ -7,6 +7,7 @@ using Kartverket.Register.Helpers;
 using System;
 using System.Collections.Generic;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.DOK.Service
 {
@@ -71,6 +72,8 @@ namespace Kartverket.DOK.Service
                 {
                     dataset.DistributionFormat = metadata.DistributionFormat;
                 }
+                dataset.Translations.Clear();
+                dataset.Translations = metadata.Translations;
             }
 
             return dataset;
@@ -143,9 +146,9 @@ namespace Kartverket.DOK.Service
             {
                 var json = c.DownloadString(url);
 
-                dynamic data  = Newtonsoft.Json.Linq.JObject.Parse(json);
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
                 if (data != null)
-                { 
+                {
                     metadata.name = data.Title;
                     metadata.description = data.Abstract;
                     metadata.PresentationRulesUrl = data.LegendDescriptionUrl;
@@ -153,7 +156,7 @@ namespace Kartverket.DOK.Service
                     metadata.ProductSpecificationUrl = data.ProductSpecificationUrl;
                     metadata.SpecificUsage = data.SpecificUsage;
                     var thumbnails = data.Thumbnails;
-                    if(thumbnails != null && thumbnails.Count > 0)
+                    if (thumbnails != null && thumbnails.Count > 0)
                     {
                         metadata.datasetthumbnail = thumbnails[0].URL.Value;
                     }
@@ -169,16 +172,16 @@ namespace Kartverket.DOK.Service
 
                 }
 
-                if(data.DistributionDetails != null)
+                if (data.DistributionDetails != null)
                     metadata.DistributionUrl = data.DistributionDetails.URL;
 
-                if(data.UnitsOfDistribution != null)
+                if (data.UnitsOfDistribution != null)
                     metadata.DistributionArea = data.UnitsOfDistribution.Value;
 
                 var distributionFormat = data.DistributionFormat;
                 if (distributionFormat != null)
                 {
-                    if(distributionFormat.Name != null)
+                    if (distributionFormat.Name != null)
                         metadata.DistributionFormat = distributionFormat.Name.Value;
                 }
 
@@ -186,14 +189,28 @@ namespace Kartverket.DOK.Service
 
                 var constraints = data.Constraints;
 
-                if(constraints != null)
-                { 
+                if (constraints != null)
+                {
                     string accessConstraint = constraints.AccessConstraints.Value;
                     if (!string.IsNullOrEmpty(accessConstraint) && accessConstraint == "Beskyttet")
                     {
                         metadata.restricted = true;
                     }
                 }
+
+                var englishTitle = data.EnglishTitle;
+                var englishAbstract = data.EnglishAbstract;
+                var keywordsNationalThemeEnglish = data.KeywordsNationalTheme[0].EnglishKeyword;
+                metadata.Translations.Add(new DatasetTranslation
+                {
+                    CultureName = Culture.EnglishCode,
+                    Name = englishTitle,
+                    Description = englishAbstract,
+                    ThemeGroupId = keywordsNationalThemeEnglish
+                });
+
+                metadata.AddMissingTranslations();
+
             }
             catch (Exception e)
             {

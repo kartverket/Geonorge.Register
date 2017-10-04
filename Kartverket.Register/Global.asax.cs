@@ -66,6 +66,11 @@ namespace Kartverket.Register
         protected void Application_BeginRequest()
         {
             var cookie = Context.Request.Cookies["_culture"];
+            if (cookie == null)
+            {
+                cookie = new HttpCookie("_culture","no");
+            }
+
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))
             {
                 var culture = new CultureInfo(cookie.Value);

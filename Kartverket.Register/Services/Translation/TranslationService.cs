@@ -39,5 +39,11 @@ namespace Kartverket.Register.Services.Translation
             originalRegister.Translations.Where(t => t.RegisterItemId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
             originalRegister.Translations = register.Translations;
         }
+
+        public void UpdateTranslations(Models.Dataset register, Models.Dataset originalRegister)
+        {
+            originalRegister.Translations.Where(t => t.RegisterItemId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
+            originalRegister.Translations = register.Translations;
+        }
     }
 }

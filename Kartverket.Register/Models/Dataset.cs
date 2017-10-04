@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Web.Mvc;
 using Resources;
+using Kartverket.Register.Models.Translations;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
@@ -22,6 +24,7 @@ namespace Kartverket.Register.Models
         public Dataset()
         {
             Coverage = new List<CoverageDataset>();
+            this.Translations = new TranslationCollection<DatasetTranslation>();
         }
 
         //public int Id { get; set; }
@@ -202,6 +205,33 @@ namespace Kartverket.Register.Models
         public int? EenvironmentalImpactAssessment { get; set; }
         public string EenvironmentalImpactAssessmentNote { get; set; }
 
+        public virtual TranslationCollection<DatasetTranslation> Translations { get; set; }
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
+        public string ThemeGroupIdTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var themeGroupIdTranslated = ThemeGroupId;
+            themeGroupIdTranslated = this.Translations[cultureName]?.ThemeGroupId;
+
+            if (string.IsNullOrEmpty(themeGroupIdTranslated))
+            themeGroupIdTranslated = ThemeGroupId;
+
+            return themeGroupIdTranslated;
+        }
 
         public virtual string GetDatasetUrl()
         {

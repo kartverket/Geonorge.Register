@@ -128,6 +128,13 @@ namespace Kartverket.Register.Models
                 if (string.IsNullOrEmpty(nameTranslated))
                     nameTranslated = name;
             }
+            else if (this is Dataset)
+            {
+                Dataset dataset = (Dataset)this;
+                nameTranslated = dataset.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
 
             return nameTranslated;
         }
@@ -156,6 +163,13 @@ namespace Kartverket.Register.Models
             {
                 Organization organization = (Organization)this;
                 descriptionTranslated = organization.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is Dataset)
+            {
+                Dataset dataset = (Dataset)this;
+                descriptionTranslated = dataset.Translations[cultureName]?.Description;
                 if (string.IsNullOrEmpty(descriptionTranslated))
                     descriptionTranslated = description;
             }

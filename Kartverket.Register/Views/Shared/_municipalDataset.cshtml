@@ -72,27 +72,27 @@
             @foreach (Dataset item in Model)
                 {
                 <tr>
-                    <td title="@DataSet.DOK_Delivery_Theme @item.name: @item.ThemeGroupId">@item.ThemeGroupId</td>
+                    <td title="@DataSet.DOK_Delivery_Theme @item.name: @item.ThemeGroupId">@item.ThemeGroupIdTranslated()</td>
                     <td title="@item.name">
                         @if (item.MetadataUrl != null)
                         {
                             if (item.MetadataUrl.Contains("http"))
                             {
                                 <a href="@item.MetadataUrl" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
-                                    @item.name
+                                    @item.NameTranslated()
                                 </a>
                             }
                             else
                             {
                                 <a href="@item.GetObjectUrl()" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
-                                    @item.name
+                                    @item.NameTranslated()
                                 </a>
                             }
                         }
                         else
                         {
                             <a href="@item.GetObjectUrl()" data-loading-message="@DataSet.LoadingMessageDataset" class="show-loading-animation">
-                                @item.name
+                                @item.NameTranslated()
                             </a>
                         }
                     </td>

@@ -1,4 +1,5 @@
-﻿@using Kartverket.Register.Helpers
+﻿@using System.Activities.Expressions
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
 @model RegisterItemV2ViewModel
@@ -115,7 +116,7 @@
     {
         if (!Model.Register.IsServiceAlertRegister())
         {
-            if (HtmlHelperExtensions.Access(Model))
+            if (HtmlHelperExtensions.Access(Model) && Model.RegisterItem.register.containedItemClass != "Document")
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

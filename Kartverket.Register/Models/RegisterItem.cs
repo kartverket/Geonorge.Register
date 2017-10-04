@@ -346,5 +346,32 @@ namespace Kartverket.Register.Models
             }
             return "#";
         }
+
+        public string CreateNewRegisterItemVersionUrl(/*string parentRegister, string registerOwner, string register, string itemOwner, string item, string itemClass*/)
+        {
+            if (register.parentRegister == null)
+            {
+                string url = "versjon/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/ny";
+
+                if (this is Document) return "/dokument/" + url;
+                if (this is CodelistValue) return "/kodeliste/" + url;
+                if (this is Organization) return "/organisasjoner/" + url;
+                if (this is Dataset) return "/dataset/" + url;
+                if (this is EPSG) return "/epsg/" + url;
+                if (this is NameSpace) return "/navnerom/" + url;
+            }
+            else
+            {
+                string url = "versjon/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register + "/" + submitter.seoname + "/" + seoname + "/ny";
+
+                if (this is Document) return "/dokument/" + url;
+                if (this is CodelistValue) return "/kodeliste/" + url;
+                if (this is Organization) return "/organisasjoner/" + url;
+                if (this is Dataset) return "/dataset/" + url;
+                if (this is EPSG) return "/epsg/" + url;
+                if (this is NameSpace) return "/navnerom/" + url;
+            }
+            return "#";
+        }
     }
 }//end namespace Datamodell

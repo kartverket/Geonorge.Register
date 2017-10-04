@@ -118,7 +118,7 @@
         {
             if (HtmlHelperExtensions.Access(Model))
             {
-                if (Model.Register.ContainedItemClassIsDocument())
+                if (!Model.Register.ContainedItemClassIsDocument())
                 {
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

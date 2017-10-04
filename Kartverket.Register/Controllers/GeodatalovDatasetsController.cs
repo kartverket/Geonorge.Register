@@ -141,8 +141,8 @@ namespace Kartverket.Register.Controllers
         // POST: GeodatalovDatasets/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
-        [Route("inspire/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
-        [Route("inspire/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("geodatalov/{parentregister}/{registerowner}/{registername}/{itemowner}/{itemname}/slett")]
+        [Route("geodatalov/{registername}/{itemowner}/{itemname}/slett")]
         public ActionResult DeleteConfirmed(string registername, string itemname)
         {
             var geodatalovDataset = _geodatalovDatasetService.GetGeodatalovDatasetByName(registername, itemname);

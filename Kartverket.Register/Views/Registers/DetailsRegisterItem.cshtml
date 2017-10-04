@@ -116,10 +116,13 @@
     {
         if (!Model.Register.IsServiceAlertRegister())
         {
-            if (HtmlHelperExtensions.Access(Model) && Model.RegisterItem.register.containedItemClass != "Document")
+            if (HtmlHelperExtensions.Access(Model))
             {
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                if (Model.Register.ContainedItemClassIsDocument())
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
+                }
             }
         }
     }

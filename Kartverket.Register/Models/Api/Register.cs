@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kartverket.Register.Models.Translations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace Kartverket.Register.Models.Api
     {
         public string id { get; set; }
         public string label { get; set; }
-        public string lang { get; set; } = "no";
+        public string lang { get; set; } = Culture.NorwegianCode;
         public string contentsummary { get; set; }
         public string owner { get; set; }
         public string manager { get; set; }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Resources;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -12,7 +13,7 @@ namespace Kartverket.Register.Models.Api
         // RegisterItem
         public string id { get; set; }
         public string label { get; set; }
-        public string lang { get; set; } = "no";
+        public string lang { get; set; } = Culture.NorwegianCode;
         public string itemclass { get; set; }
         public Guid uuid { get; set; }
         public string status { get; set; }
@@ -136,7 +137,7 @@ namespace Kartverket.Register.Models.Api
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
                 if (registerItem.status != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (lang == Culture.NorwegianCode || lang == "nb")
                         status = registerItem.status.description;
                     else
                         status = registerItem.status.value;
@@ -160,7 +161,7 @@ namespace Kartverket.Register.Models.Api
                 if (registerItemV2.Owner != null) owner = registerItemV2.Owner.name;
                 if (registerItemV2.Status != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (lang == Culture.NorwegianCode || lang == "nb")
                         status = registerItemV2.Status.description;
                     else
                         status = registerItemV2.Status.value;
@@ -263,21 +264,21 @@ namespace Kartverket.Register.Models.Api
                 documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + epsg.epsgcode;
                 if (epsg.inspireRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (lang == Culture.NorwegianCode || lang == "nb")
                         inspireRequirement = epsg.inspireRequirement.description;
                     else
                         inspireRequirement = epsg.inspireRequirement.value;
                 }
                 if (epsg.nationalRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (lang == Culture.NorwegianCode || lang == "nb")
                         nationalRequirement = epsg.nationalRequirement.description;
                     else
                         nationalRequirement = epsg.nationalRequirement.value;
                 }
                 if (epsg.nationalSeasRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (lang == Culture.NorwegianCode || lang == "nb")
                         nationalSeasRequirement = epsg.nationalSeasRequirement.description;
                     else
                         nationalSeasRequirement = epsg.nationalSeasRequirement.value;

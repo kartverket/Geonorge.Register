@@ -13,6 +13,7 @@ using System.Web.Configuration;
 using System.Net.Http.Formatting;
 using System.Globalization;
 using System.Threading;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register
 {
@@ -68,7 +69,7 @@ namespace Kartverket.Register
             var cookie = Context.Request.Cookies["_culture"];
             if (cookie == null)
             {
-                cookie = new HttpCookie("_culture","no");
+                cookie = new HttpCookie("_culture", Culture.NorwegianCode);
             }
 
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))

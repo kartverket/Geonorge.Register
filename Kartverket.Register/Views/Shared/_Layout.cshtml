@@ -44,7 +44,7 @@
         var cultureData = {
             supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
             urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url })',
-            urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = "no", ReturnUrl = Request.Url })',
+            urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url })',
             currentCulture: '@CultureHelper.GetCurrentCulture()'
         };
 

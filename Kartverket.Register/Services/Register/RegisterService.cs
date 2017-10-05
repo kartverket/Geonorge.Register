@@ -1119,5 +1119,14 @@ namespace Kartverket.Register.Services.Register
 
             return queryResults.FirstOrDefault();
         }
+
+        public Guid GetInspireStatusRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                where o.name == "Inspire statusregister"
+                select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
     }
 }

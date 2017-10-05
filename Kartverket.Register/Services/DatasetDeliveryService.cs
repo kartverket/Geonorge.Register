@@ -14,6 +14,11 @@ namespace Kartverket.Register.Services
         private readonly RegisterDbContext _dbContext;
         private XmlDocument _atomFeedDoc;
         XmlNamespaceManager _nsmgr;
+        const string Useable = "useable";
+        const string Good = "good";
+        const string Notset = "notset";
+        const string Deficient = "deficient";
+
 
         public DatasetDeliveryService(RegisterDbContext dbContext)
         {
@@ -36,63 +41,41 @@ namespace Kartverket.Register.Services
         public string GetMetadataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
             var statusValue = currentStatus;
-            if (autoUpdate)
+            if (!autoUpdate) return statusValue;
+            try
             {
-                try
-                {
-                    if (string.IsNullOrEmpty(metadataUuid)) return "useable";
-                    var c = new WebClient {Encoding = System.Text.Encoding.UTF8};
-                    var url = WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + metadataUuid;
-                    var data = c.DownloadString(url);
-                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                    var status = response["Status"];
-                    if (status != null)
-                    {
-                        var statusvalue = status.ToString();
+                if (string.IsNullOrEmpty(metadataUuid)) return Useable;
 
-                        if (statusvalue == "OK")
-                            return "good";
-                    }
+                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+                var url = WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + metadataUuid;
+                var data = c.DownloadString(url);
+                var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                var status = response["Status"];
 
-                    return "useable";
-
-                }
-                catch (Exception)
-                {
-                    return "deficient";
-                }
-
+                if (status == null) return Useable;
+                var statusvalue = status.ToString();
+                return statusvalue == "OK" ? Good : Useable;
             }
-
-            return statusValue;
+            catch (Exception)
+            {
+                return Deficient;
+            }
         }
 
-        public string GetDeliveryDistributionStatus(string metadataUuid, bool autoupdate, string currentStatus)
+        public string GetDeliveryDistributionStatus(string distributionUrl, bool autoupdate, string currentStatus)
         {
             var status = currentStatus;
             try
             {
-                var metadata = GetMetadataFromKartkatalogen(metadataUuid);
-                var hasDistributionUrl = false;
-
-                if (metadata != null)
-                {
-                    var distribution = metadata.DistributionDetails;
-                    if (distribution != null && distribution.URL != null)
-                    {
-                        hasDistributionUrl = true;
-                    }
-                }
-
+                var hasDistributionUrl = distributionUrl != null;
                 if (autoupdate)
                 {
-                    status = currentStatus == "good" || hasDistributionUrl ? "good" : "deficient";
+                    status = hasDistributionUrl ? Good : Deficient;
                 }
             }
-
             catch (Exception)
             {
-                return "deficient";
+                return Deficient;
             }
 
             return status;
@@ -101,7 +84,7 @@ namespace Kartverket.Register.Services
         public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
         {
             var hasServiceUrl = false;
-            var status = !string.IsNullOrEmpty(currentStatus) ? currentStatus : "deficient";
+            var status = !string.IsNullOrEmpty(currentStatus) ? currentStatus : Deficient;
 
             if (!autoupdate) return status;
             try
@@ -117,7 +100,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
-                // ignored
+
             }
 
             var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
@@ -165,7 +148,7 @@ namespace Kartverket.Register.Services
                             hasCoverage = true;
 
                         if (!hasServiceUrl)
-                            status = "deficient";
+                            status = Deficient;
                         //Grønn på WMS:
                         //Respons fra GetCapabilities
                         //Svartid innen 4 sekunder
@@ -177,7 +160,7 @@ namespace Kartverket.Register.Services
                         else if ((resposeGetCapabilities && responseTime <= 4
                                   && supportCors && epsgSupport && featuresSupport
                                   && hasLegend && hasCoverage) || connectSoso)
-                            status = "good";
+                            status = Good;
                         //Gul:
                         //Respons fra GetCapabilities
                         //Svartid innen 10 sekunder
@@ -187,11 +170,11 @@ namespace Kartverket.Register.Services
                         //Oppgir dekningsområde
                         else if ((resposeGetCapabilities && responseTime <= 10
                                   && epsgSupport && hasLegend && hasCoverage))
-                            status = "useable";
+                            status = Useable;
                         //Rød:
                         //Feiler på en av testene til gul
                         else
-                            status = "deficient";
+                            status = Deficient;
                     }
                 }
                 catch (Exception)
@@ -216,18 +199,18 @@ namespace Kartverket.Register.Services
                     foreach (var service in metadata.Related)
                     {
                         if (service.DistributionDetails != null && service.DistributionDetails.Protocol == "OGC:WFS"
-                        ) return "useable";
+                        ) return Useable;
                     }
                 }
                 else
                 {
-                    return "deficient";
+                    return Deficient;
                 }
             }
 
             catch (Exception)
             {
-                return "notset";
+                return Notset;
             }
 
             return statusValue;
@@ -240,11 +223,11 @@ namespace Kartverket.Register.Services
             try
             {
                 var atomfeed = AtomFeed(metadataUuid);
-                statusValue = !string.IsNullOrEmpty(atomfeed) ? "good" : "deficient";
+                statusValue = !string.IsNullOrEmpty(atomfeed) ? Good : Deficient;
             }
             catch (Exception)
             {
-                return "notset";
+                return Notset;
             }
 
             return statusValue;
@@ -252,26 +235,24 @@ namespace Kartverket.Register.Services
 
         public string GetHarmonizedStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
-            var status = currentStatus;
+            string status;
             try
             {
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
-                    if (autoUpdate)
+                    if (metadata.QualitySpecifications != null)
                     {
-                        if (metadata.QualitySpecifications != null)
-                        {
-                            if ( metadata.QualitySpecifications[0].Result == "true")
-                            {
-                                status = "good";
-                            }    
-                        }
+                        status = metadata.QualitySpecifications[0].Result == "true" ? Good : Deficient;
+                    }
+                    else
+                    {
+                        status = Deficient;
                     }
                 }
                 else
                 {
-                    status = "deficient";
+                    status = Deficient;
                 }
             }
 
@@ -284,42 +265,48 @@ namespace Kartverket.Register.Services
 
         public string GetSpatialDataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
-            var status = currentStatus;
+            string status = currentStatus;
             try
             {
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)
                 {
-                    if (autoUpdate)
+                    if (metadata.DistributionDetails != null && metadata.DistributionDetails.Protocol == "GEONORGE:DOWNLOAD")
                     {
-                        if (metadata.DistributionDetails != null && metadata.DistributionDetails.Protocol == "GEONORGE:DOWNLOAD")
+                        if (metadata.ServiceUuid != null)
                         {
-                            if (metadata.ServiceUuid != null)
-                            {
                             var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid.ToString());
-                            if (relatedService.DistributionDetails != null && (metadata.DistributionDetails.Protocol == "W3C:REST"
-                                || relatedService.DistributionDetails.Protocol == "W3C:WS"
-                                || relatedService.DistributionDetails.Protocol == "OGC:WPS"))
-                            {
-                                status = "good";
-                            }
-                            }
+                            status = relatedService.DistributionDetails != null &&
+                                     (relatedService.DistributionDetails.Protocol == "W3C:REST"
+                                      || relatedService.DistributionDetails.Protocol == "W3C:WS"
+                                      || relatedService.DistributionDetails.Protocol == "OGC:WPS")
+                                ? Good
+                                : Deficient;
+                        }
+                        else
+                        {
+                            status = Deficient;
+                        }
                     }
+                    else
+                    {
+                        status = Deficient;
                     }
+
                 }
                 else
                 {
-                    status = "deficient";
+                    status = Deficient;
                 }
             }
 
             catch (Exception)
             {
-                return "deficient";
+                return Deficient;
             }
             if (!string.IsNullOrWhiteSpace(status)) return status;
-            status = "deficient";
+            status = Deficient;
             return status;
         }
 

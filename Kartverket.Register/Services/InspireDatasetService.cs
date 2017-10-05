@@ -1,7 +1,9 @@
 ﻿using Kartverket.Register.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.Configuration;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -62,32 +64,98 @@ namespace Kartverket.Register.Services
 
             GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
 
-            inspireDataset.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataStatusId, inspireDatasetViewModel.MetadataNote, true);
-            inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataServiceStatusId, inspireDatasetViewModel.MetadataServiceNote, true);
-            inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.DistributionStatusId, inspireDatasetViewModel.DistributionNote, true);
-            inspireDataset.InspireDeliveryWmsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WmsStatusId, inspireDatasetViewModel.WmsNote, true);
-            inspireDataset.InspireDeliveryWfsId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsStatusId, inspireDatasetViewModel.WfsNote, true);
-            inspireDataset.InspireDeliveryAtomFeedId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.AtomFeedStatusId, inspireDatasetViewModel.AtomFeedNote, true);
-            inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsOrAtomStatusId, inspireDatasetViewModel.WfsOrAtomNote, true);
-            inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.HarmonizedDataStatusId, inspireDatasetViewModel.HarmonizedDataNote, true);
-            inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.SpatialDataServiceStatusId, inspireDatasetViewModel.SpatialDataServiceNote, true);
+            inspireDataset.InspireDeliveryMetadataId =
+                _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataStatusId,
+                    inspireDatasetViewModel.MetadataNote, true);
+            inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(
+                inspireDatasetViewModel.MetadataServiceStatusId, inspireDatasetViewModel.MetadataServiceNote, true);
+            inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(
+                inspireDatasetViewModel.DistributionStatusId, inspireDatasetViewModel.DistributionNote, true);
+            inspireDataset.InspireDeliveryWmsId =
+                _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WmsStatusId,
+                    inspireDatasetViewModel.WmsNote, true);
+            inspireDataset.InspireDeliveryWfsId =
+                _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsStatusId,
+                    inspireDatasetViewModel.WfsNote, true);
+            inspireDataset.InspireDeliveryAtomFeedId =
+                _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.AtomFeedStatusId,
+                    inspireDatasetViewModel.AtomFeedNote, true);
+            inspireDataset.InspireDeliveryWfsOrAtomId =
+                _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.WfsOrAtomStatusId,
+                    inspireDatasetViewModel.WfsOrAtomNote, true);
+            inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(
+                inspireDatasetViewModel.HarmonizedDataStatusId, inspireDatasetViewModel.HarmonizedDataNote, true);
+            inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(
+                inspireDatasetViewModel.SpatialDataServiceStatusId, inspireDatasetViewModel.SpatialDataServiceNote,
+                true);
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
 
             return inspireDataset;
         }
 
+        private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset)
+        {
+            inspireDataset.SystemId = Guid.NewGuid();
+            inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
+            inspireDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();
+            inspireDataset.DateSubmitted = DateTime.Now;
+            inspireDataset.Modified = DateTime.Now;
+            inspireDataset.RegisterId = _registerService.GetInspireStatusRegisterId();
+            inspireDataset.VersioningId = _registerItemService.NewVersioningGroup(inspireDataset);
+            inspireDataset.VersionNumber = 1;
+            inspireDataset.StatusId = "Submitted";
+            inspireDataset.DokStatusId = "Proposal";
+
+            //GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
+            var metadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, "deficient");
+            var metadataServiceStatus = "good";
+            var distributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.DistributionUrl, true, "deficient");
+            var wmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, "deficient", inspireDataset.UuidService);
+            var wfsStatus = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, "deficient");
+            var atomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, "deficient");
+            var wfsOrAtomStatus = GetInspireDeliveryWfsOrAtomFeedStatus(wfsStatus, atomFeedStatus);
+            var harmonizedDataStatus = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, "deficient");
+            var spatialDataServiceStatusId = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, "deficient");
+
+            inspireDataset.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(metadataStatus, null, true);
+            inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(metadataServiceStatus, null, true);
+            inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(distributionStatus, null, true);
+            inspireDataset.InspireDeliveryWmsId = _datasetDeliveryService.CreateDatasetDelivery(wmsStatus, null, true);
+            inspireDataset.InspireDeliveryWfsId = _datasetDeliveryService.CreateDatasetDelivery(wfsStatus, null, true);
+            inspireDataset.InspireDeliveryAtomFeedId = _datasetDeliveryService.CreateDatasetDelivery(atomFeedStatus, null, true);
+            inspireDataset.InspireDeliveryWfsOrAtomId = _datasetDeliveryService.CreateDatasetDelivery(wfsOrAtomStatus, null, true);
+            inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(harmonizedDataStatus, null, true);
+            inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(spatialDataServiceStatusId, null, true);
+
+            _dbContext.InspireDatasets.Add(inspireDataset);
+            _dbContext.SaveChanges();
+        }
+
         private void GetDeliveryStatuses(InspireDatasetViewModel inspireDatasetViewModel, InspireDataset inspireDataset)
         {
-            inspireDatasetViewModel.MetadataStatusId = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.MetadataStatusId);
-            inspireDatasetViewModel.MetadataServiceStatusId = "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
-            inspireDatasetViewModel.DistributionStatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.DistributionStatusId);
-            inspireDatasetViewModel.WmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WmsStatusId, inspireDataset.UuidService);
-            inspireDatasetViewModel.WfsStatusId = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WfsStatusId);
-            inspireDatasetViewModel.AtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.AtomFeedStatusId);
-            inspireDatasetViewModel.WfsOrAtomStatusId = GetInspireDeliveryWfsOrAtomFeedStatus(inspireDatasetViewModel.WfsStatusId, inspireDatasetViewModel.AtomFeedStatusId);
-            inspireDatasetViewModel.HarmonizedDataStatusId = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.HarmonizedDataStatusId);
-            inspireDatasetViewModel.SpatialDataServiceStatusId = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.SpatialDataServiceStatusId);
+            inspireDatasetViewModel.MetadataStatusId = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid,
+                true, inspireDatasetViewModel.MetadataStatusId);
+            inspireDatasetViewModel.MetadataServiceStatusId =
+                "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
+            inspireDatasetViewModel.DistributionStatusId =
+                _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true,
+                    inspireDatasetViewModel.DistributionStatusId);
+            inspireDatasetViewModel.WmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(
+                inspireDataset.Uuid, true, inspireDatasetViewModel.WmsStatusId, inspireDataset.UuidService);
+            inspireDatasetViewModel.WfsStatusId =
+                _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WfsStatusId);
+            inspireDatasetViewModel.AtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid,
+                true, inspireDatasetViewModel.AtomFeedStatusId);
+            inspireDatasetViewModel.WfsOrAtomStatusId =
+                GetInspireDeliveryWfsOrAtomFeedStatus(inspireDatasetViewModel.WfsStatusId,
+                    inspireDatasetViewModel.AtomFeedStatusId);
+            inspireDatasetViewModel.HarmonizedDataStatusId =
+                _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true,
+                    inspireDatasetViewModel.HarmonizedDataStatusId);
+            inspireDatasetViewModel.SpatialDataServiceStatusId =
+                _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true,
+                    inspireDatasetViewModel.SpatialDataServiceStatusId);
         }
 
         private static string GetInspireDeliveryWfsOrAtomFeedStatus(string wfsStatus, string atomFeedStatus)
@@ -102,7 +170,7 @@ namespace Kartverket.Register.Services
             }
             if (wfsStatus == "deficient" || atomFeedStatus == "deficient")
             {
-                return  "deficient";
+                return "deficient";
             }
             if (wfsStatus == "notset" || atomFeedStatus == "notset")
             {
@@ -113,7 +181,10 @@ namespace Kartverket.Register.Services
 
         public InspireDatasetViewModel NewInspireDatasetViewModel(string parentRegister, string register)
         {
-            var model = new InspireDatasetViewModel {RegisterId = _registerService.GetRegisterId(parentRegister, register)};
+            var model = new InspireDatasetViewModel
+            {
+                RegisterId = _registerService.GetRegisterId(parentRegister, register)
+            };
 
             return model;
         }
@@ -122,7 +193,7 @@ namespace Kartverket.Register.Services
         {
             var queryResult = from i in _dbContext.InspireDatasets
                               where i.Seoname == itemSeoName &&
-                              i.Register.seoname == registerSeoName
+                                    i.Register.seoname == registerSeoName
                               select i;
 
             return queryResult.FirstOrDefault();
@@ -131,8 +202,8 @@ namespace Kartverket.Register.Services
         private InspireDataset GetInspireDatasetBySystemId(Guid systemId)
         {
             var queryResult = from i in _dbContext.InspireDatasets
-                where i.SystemId == systemId
-                select i;
+                              where i.SystemId == systemId
+                              select i;
 
             return queryResult.FirstOrDefault();
         }
@@ -166,7 +237,7 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
 
-            if (inspireDataset.InspireDeliveryMetadata != null) 
+            if (inspireDataset.InspireDeliveryMetadata != null)
             {
                 inspireDataset.InspireDeliveryMetadata.StatusId = viewModel.MetadataStatusId;
                 inspireDataset.InspireDeliveryMetadata.Note = viewModel.MetadataNote;
@@ -184,7 +255,7 @@ namespace Kartverket.Register.Services
             {
                 inspireDataset.InspireDeliveryDistribution.StatusId = viewModel.DistributionStatusId;
                 inspireDataset.InspireDeliveryDistribution.Note = viewModel.DistributionNote;
-                inspireDataset.InspireDeliveryDistribution.AutoUpdate= viewModel.DistributionAutoUpdate;
+                inspireDataset.InspireDeliveryDistribution.AutoUpdate = viewModel.DistributionAutoUpdate;
             }
 
             if (inspireDataset.InspireDeliveryWms != null)
@@ -224,9 +295,9 @@ namespace Kartverket.Register.Services
 
             if (inspireDataset.InspireDeliverySpatialDataService != null)
             {
-                inspireDataset.InspireDeliverySpatialDataService.StatusId = viewModel.HarmonizedDataStatusId;
-                inspireDataset.InspireDeliverySpatialDataService.Note = viewModel.HarmonizedDataNote;
-                inspireDataset.InspireDeliverySpatialDataService.AutoUpdate = viewModel.HarmonizedDataAutoUpdate;
+                inspireDataset.InspireDeliverySpatialDataService.StatusId = viewModel.SpatialDataServiceStatusId;
+                inspireDataset.InspireDeliverySpatialDataService.Note = viewModel.SpatialDataServiceNote;
+                inspireDataset.InspireDeliverySpatialDataService.AutoUpdate = viewModel.SpatialDataServiceAutoUpdate;
             }
 
             _dbContext.Entry(inspireDataset).State = EntityState.Modified;
@@ -235,80 +306,95 @@ namespace Kartverket.Register.Services
             return inspireDataset;
         }
 
-        public InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset originalDataset)
+        public InspireDataset UpdateInspireDataset(InspireDataset originalDataset, InspireDataset inspireDatasetFromKartkatalogen)
         {
-            var inspireDataset = _metadataService.FetchInspireDatasetFromKartkatalogen(originalDataset.Uuid);
-            if (inspireDataset == null)
-            {
-                return originalDataset; //Skal datasettet da fjernes??
-            }
-            originalDataset.Name = inspireDataset.Name;
+            originalDataset.Name = inspireDatasetFromKartkatalogen.Name;
             originalDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataset.Name);
-            originalDataset.Description = inspireDataset.Description;
-            originalDataset.OwnerId = inspireDataset.OwnerId;
+            originalDataset.Description = inspireDatasetFromKartkatalogen.Description;
+            originalDataset.OwnerId = inspireDatasetFromKartkatalogen.OwnerId;
             originalDataset.Modified = DateTime.Now;
 
-            originalDataset.Uuid = inspireDataset.Uuid;
-            originalDataset.Notes = inspireDataset.Notes;
-            originalDataset.SpecificUsage = inspireDataset.SpecificUsage;
-            originalDataset.ProductSheetUrl = inspireDataset.ProductSheetUrl;
-            originalDataset.PresentationRulesUrl = inspireDataset.PresentationRulesUrl;
-            originalDataset.ProductSpecificationUrl = inspireDataset.ProductSpecificationUrl;
-            originalDataset.MetadataUrl = inspireDataset.MetadataUrl;
-            originalDataset.DistributionFormat = inspireDataset.DistributionFormat;
-            originalDataset.DistributionUrl = inspireDataset.DistributionUrl;
-            originalDataset.DistributionArea = inspireDataset.DistributionArea;
-            originalDataset.WmsUrl = inspireDataset.WmsUrl;
-            originalDataset.ThemeGroupId = inspireDataset.ThemeGroupId;
-            originalDataset.DatasetThumbnail = inspireDataset.DatasetThumbnail;
-            originalDataset.UuidService = inspireDataset.UuidService;
+            originalDataset.Uuid = inspireDatasetFromKartkatalogen.Uuid;
+            //originalDataset.Notes = inspireDatasetFromKartkatalogen.Notes;
+            originalDataset.SpecificUsage = inspireDatasetFromKartkatalogen.SpecificUsage;
+            originalDataset.ProductSheetUrl = inspireDatasetFromKartkatalogen.ProductSheetUrl;
+            originalDataset.PresentationRulesUrl = inspireDatasetFromKartkatalogen.PresentationRulesUrl;
+            originalDataset.ProductSpecificationUrl = inspireDatasetFromKartkatalogen.ProductSpecificationUrl;
+            originalDataset.MetadataUrl = inspireDatasetFromKartkatalogen.MetadataUrl;
+            originalDataset.DistributionFormat = inspireDatasetFromKartkatalogen.DistributionFormat;
+            originalDataset.DistributionUrl = inspireDatasetFromKartkatalogen.DistributionUrl;
+            originalDataset.DistributionArea = inspireDatasetFromKartkatalogen.DistributionArea;
+            originalDataset.WmsUrl = inspireDatasetFromKartkatalogen.WmsUrl;
+            originalDataset.ThemeGroupId = inspireDatasetFromKartkatalogen.ThemeGroupId;
+            originalDataset.DatasetThumbnail = inspireDatasetFromKartkatalogen.DatasetThumbnail;
+            originalDataset.UuidService = inspireDatasetFromKartkatalogen.UuidService;
 
             if (originalDataset.InspireDeliveryMetadata != null)
             {
-                originalDataset.InspireDeliveryMetadata.StatusId = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryMetadata.StatusId);
+                originalDataset.InspireDeliveryMetadata.StatusId =
+                    _datasetDeliveryService.GetMetadataStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                        originalDataset.InspireDeliveryMetadata.StatusId);
             }
             originalDataset.InspireDeliveryMetadataService.StatusId = "good";
             if (originalDataset.InspireDeliveryDistribution != null)
             {
-                originalDataset.InspireDeliveryDistribution.StatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryDistribution.StatusId);
+                originalDataset.InspireDeliveryDistribution.StatusId =
+                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                        originalDataset.InspireDeliveryDistribution.StatusId);
             }
             if (originalDataset.InspireDeliveryWms != null)
             {
-                originalDataset.InspireDeliveryWms.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryWms.StatusId, originalDataset.UuidService);
+                originalDataset.InspireDeliveryWms.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(
+                    inspireDatasetFromKartkatalogen.Uuid, true, originalDataset.InspireDeliveryWms.StatusId,
+                    originalDataset.UuidService);
             }
 
             if (originalDataset.InspireDeliveryWfs != null)
             {
-                originalDataset.InspireDeliveryWfs.StatusId = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryWfs.StatusId);
+                originalDataset.InspireDeliveryWfs.StatusId = _datasetDeliveryService.GetWfsStatus(inspireDatasetFromKartkatalogen.Uuid,
+                    true, originalDataset.InspireDeliveryWfs.StatusId);
             }
 
             if (originalDataset.InspireDeliveryAtomFeed != null)
             {
-                originalDataset.InspireDeliveryAtomFeed.StatusId = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryAtomFeed.StatusId);
+                originalDataset.InspireDeliveryAtomFeed.StatusId =
+                    _datasetDeliveryService.GetAtomFeedStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                        originalDataset.InspireDeliveryAtomFeed.StatusId);
             }
 
             if (originalDataset.InspireDeliveryWfsOrAtom != null)
             {
                 if (originalDataset.InspireDeliveryWfs != null && originalDataset.InspireDeliveryAtomFeed != null)
-                    originalDataset.InspireDeliveryWfsOrAtom.StatusId = GetInspireDeliveryWfsOrAtomFeedStatus(originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryAtomFeed.StatusId);
+                    originalDataset.InspireDeliveryWfsOrAtom.StatusId = GetInspireDeliveryWfsOrAtomFeedStatus(
+                        originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryAtomFeed.StatusId);
                 else originalDataset.InspireDeliveryWfsOrAtom.StatusId = "notset";
-                
+
             }
 
             if (originalDataset.InspireDeliveryHarmonizedData != null)
             {
-                originalDataset.InspireDeliveryHarmonizedData.StatusId = _datasetDeliveryService.GetHarmonizedStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliveryHarmonizedData.StatusId);
+                originalDataset.InspireDeliveryHarmonizedData.StatusId =
+                    _datasetDeliveryService.GetHarmonizedStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                        originalDataset.InspireDeliveryHarmonizedData.StatusId);
             }
 
             if (originalDataset.InspireDeliverySpatialDataService != null)
             {
-                originalDataset.InspireDeliverySpatialDataService.StatusId = _datasetDeliveryService.GetSpatialDataStatus(inspireDataset.Uuid, true, originalDataset.InspireDeliverySpatialDataService.StatusId);
+                originalDataset.InspireDeliverySpatialDataService.StatusId =
+                    _datasetDeliveryService.GetSpatialDataStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                        originalDataset.InspireDeliverySpatialDataService.StatusId);
             }
 
             _dbContext.Entry(originalDataset).State = EntityState.Modified;
             _dbContext.SaveChanges();
 
             return originalDataset;
+        }
+
+        public InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset originalDataset)
+        {
+            var inspireDatasetFromKartkatalogen = _metadataService.FetchInspireDatasetFromKartkatalogen(originalDataset.Uuid);
+            return inspireDatasetFromKartkatalogen == null ? originalDataset : UpdateInspireDataset(originalDataset, inspireDatasetFromKartkatalogen);
         }
 
         public void DeleteInspireDataset(InspireDataset inspireDataset)
@@ -321,18 +407,103 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeInspireDatasets()
         {
+            var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen();
+            RemoveInspireDatasets(inspireDatasetsFromKartkatalogen);
+            UpdateInspireDataset(inspireDatasetsFromKartkatalogen);
+            _dbContext.SaveChanges();
+        }
+
+        private void UpdateInspireDataset(List<InspireDataset> inspireDatasetsFromKartkatalogen)
+        {
+            //Update register
+            foreach (var inspireDatasetFromKartkatalogen in inspireDatasetsFromKartkatalogen)
+            {
+                var originalInspireDataset = GetInspireDatasetByUuid(inspireDatasetFromKartkatalogen.Uuid);
+                if (originalInspireDataset != null)
+                {
+                    UpdateInspireDataset(originalInspireDataset, inspireDatasetFromKartkatalogen);
+                }
+                else
+                {
+                    NewInspireDatasetFromKartkatalogen(inspireDatasetFromKartkatalogen);
+                }
+            }
+        }
+
+        private void RemoveInspireDatasets(List<InspireDataset> inspireDatasetsFromKartkatalogen)
+        {
+            var inspireDatasetsFromRegister = GetInspireDatasets();
+            var exists = false;
+            var removeDatasets = new List<InspireDataset>();
+
+            foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
+            {
+                if (inspireDatasetsFromKartkatalogen.Any(inspireDatasetFromKartkatalog => inspireDatasetFromKartkatalog.Uuid == inspireDatasetFromRegister.Uuid))
+                {
+                    exists = true;
+                }
+                if (!exists)
+                {
+                    removeDatasets.Add(inspireDatasetFromRegister);
+                }
+                exists = false;
+            }
+            foreach (var inspireDataset in removeDatasets)
+            {
+                DeleteInspireDataset(inspireDataset);
+            }
+        }
+
+        private InspireDataset GetInspireDatasetByUuid(string uuid)
+        {
+            var queryResult = from i in _dbContext.InspireDatasets
+                where i.Uuid == uuid                      
+                select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        private List<InspireDataset> GetInspireDatasets()
+        {
             var queryResultsRegisterItem = from d in _dbContext.InspireDatasets
-                where !string.IsNullOrEmpty(d.Uuid)
-                select d;
+                                           where !string.IsNullOrEmpty(d.Uuid)
+                                           select d;
 
             var inspireDatasets = queryResultsRegisterItem.ToList();
+            return inspireDatasets;
+        }
 
-            foreach (var inspireDataset in inspireDatasets)
+        private List<InspireDataset> FetchInspireDatasetsFromKartkatalogen()
+        {
+            var inspireDatasetsFromKartkatalogen = new List<InspireDataset>();
+
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
             {
-                UpdateInspireDatasetFromKartkatalogen(inspireDataset);
+                var json = c.DownloadString(url);
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    var result = data.Results;
+
+                    foreach (var item in result)
+                    {
+                        var inspireDataset = _metadataService.FetchInspireDatasetFromKartkatalogen(item.Uuid.ToString());
+                        if (inspireDataset != null)
+                        {
+                            inspireDatasetsFromKartkatalogen.Add(inspireDataset);
+                        }
+                    }
+                }
+                return inspireDatasetsFromKartkatalogen;
             }
-            _dbContext.SaveChanges();
-            //_dbContext.Dispose();
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
         }
     }
 }

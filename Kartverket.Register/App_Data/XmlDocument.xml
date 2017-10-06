@@ -1918,6 +1918,16 @@
               Looks up a localized string similar to for å redigere metadata.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.TypeMunicipality">
+            <summary>
+              Looks up a localized string similar to Kommunalt.
+            </summary>
+        </member>
+        <member name="P:Resources.DataSet.TypeNational">
+            <summary>
+              Looks up a localized string similar to Nasjonalt.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.Update">
             <summary>
               Looks up a localized string similar to oppdater.

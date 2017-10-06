@@ -1038,6 +1038,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kommunalt.
+        /// </summary>
+        public static string TypeMunicipality {
+            get {
+                return ResourceManager.GetString("TypeMunicipality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nasjonalt.
+        /// </summary>
+        public static string TypeNational {
+            get {
+                return ResourceManager.GetString("TypeNational", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to oppdater.
         /// </summary>
         public static string Update {

@@ -1,13 +1,13 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
 @using Kartverket.Register.Models
 @{ 
-    var registerName = ViewBag.register; 
+    var registerId = ViewBag.registerId.ToString().ToUpper(); 
 }
-@if (registerName == "DOK-statusregisteret")
+@if (registerId == "CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD") //DOK-statusregisteret
 {
     @Html.Partial("_nationalDataset", Model)
 }
-else if (registerName == "Det offentlige kartgrunnlaget - Kommunalt")
+else if (registerId == "E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8") // Det offentlige kartgrunnlaget - Kommunalt
 {
     @Html.Partial("_municipalDataset", Model)
 }

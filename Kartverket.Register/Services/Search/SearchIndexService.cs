@@ -8,6 +8,8 @@ using SolrNet.Commands.Parameters;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
 using System;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Services.Search
 {
@@ -56,7 +58,7 @@ namespace Kartverket.Register.Services.Search
                     Start = parameters.Offset -1,
                     Facet = BuildFacetParameters(parameters),
 
-                    Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",
+                    Fields = new[] { "SystemID", "RegisterName", "RegisterDescription", "RegisterItemName", "RegisterItemName_en", "RegisterItemDescription", "RegisterID", "Discriminator", "RegisterItemUpdated", "type",
                     "ParentRegisterUrl", "RegisteItemUrl",  "SubregisterUrl","subregisterItemUrl", "theme" , "organization" }
                     
 
@@ -159,7 +161,7 @@ namespace Kartverket.Register.Services.Search
                         RegisterDescription = doc.RegisterDescription,
                         RegisterID = doc.RegisterID,
                         RegisterItemDescription = doc.RegisterItemDescription,
-                        RegisterItemName = doc.RegisterItemName,
+                        RegisterItemName = CultureHelper.IsNorwegian() ? doc.RegisterItemName : doc.RegisterItemNameEnglish,
                         RegisterItemSeoname = doc.RegisterItemSeoname,
                         RegisterItemStatus = doc.RegisterItemStatus,
                         RegisterItemUpdated = doc.RegisterItemUpdated,
@@ -215,34 +217,32 @@ namespace Kartverket.Register.Services.Search
                 text = text.Replace("(", " ");
                 text = text.Replace(")", " ");
                 text = text.Replace("^", " ");
-                
+
+                var lang = "";
+                if (!CultureHelper.IsNorwegian())
+                    lang = "_" + Culture.EnglishCode;
+
                 if (text.Trim().Length == 0) query = SolrQuery.All;
                 else if (text.Trim().Length < 5)
                 {
                     query = new SolrMultipleCriteriaQuery(new[]
                     {
-                        new SolrQuery("registerText:"+ text + "^50"),
-                        new SolrQuery("registerItemText:"+ text + "^50"),
-                        new SolrQuery("registerText:"+ text + "*^40"),
-                        new SolrQuery("registerItemText:"+ text + "*^40"),
-                        new SolrQuery("allText:" + text + "^1.2"),
-                        new SolrQuery("allText:" + text + "*^1.1")
+                        new SolrQuery("registerText"+lang+":"+ text + "^50"),
+                        new SolrQuery("registerItemText"+lang+":"+ text + "^50"),
+                        new SolrQuery("registerText"+lang+":"+ text + "*^40"),
+                        new SolrQuery("registerItemText"+lang+":"+ text + "*^40"),
+                        new SolrQuery("allText"+lang+":" + text + "^1.2"),
+                        new SolrQuery("allText"+lang+":" + text + "*^1.1")
                     });
                 }
                 else
                 {
                     query = new SolrMultipleCriteriaQuery(new[]
                     {
-                        new SolrQuery("registerText:"+ text + "^50"),
-                        new SolrQuery("registerItemText:"+ text + "^50"),
-                        new SolrQuery("registerText:"+ text + "*^40"),
-                        new SolrQuery("registerItemText:"+ text + "*^40"),
-                        new SolrQuery("registerText:"+ text + "~2^1.1"),
-                        new SolrQuery("registerItemText:"+ text + "~2^1.1"),
-                        new SolrQuery("allText:" + text + "^1.2"),
-                        new SolrQuery("allText:" + text + "*^1.1"),
-                        new SolrQuery("allText:" + text + "~1"),   //Fuzzy
-                        new SolrQuery("allText2:" + text + "") //Stemmer
+                        new SolrQuery("registerText"+lang+":\""+ text + "\"^50"),
+                        new SolrQuery("registerItemText"+lang+":\""+ text + "\"^50"),
+                        new SolrQuery("allText"+lang+":\"" + text + "\"~1"),   //Fuzzy
+                        new SolrQuery("allText2"+lang+":\"" + text + "\"") //Stemmer
                         //new SolrQuery("allText3:" + text)        //Fonetisk
                     });
                 }

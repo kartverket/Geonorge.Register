@@ -96,6 +96,7 @@ namespace Kartverket.Register.Services
 
         private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset)
         {
+            if (_registerItemService.ItemNameAlredyExist(inspireDataset)) return;
             inspireDataset.SystemId = Guid.NewGuid();
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
             inspireDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();

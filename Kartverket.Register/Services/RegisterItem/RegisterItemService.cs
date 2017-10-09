@@ -395,6 +395,10 @@ namespace Kartverket.Register.Services.RegisterItem
                     return InspireDatasetNameAlreadyExist((InspireDatasetViewModel)model);
                 }
             }
+            if (model is InspireDataset)
+            {
+                return InspireDatasetNameAlreadyExist((InspireDataset)model);
+            }
             return false;
         }
 
@@ -405,6 +409,18 @@ namespace Kartverket.Register.Services.RegisterItem
                                      o.SystemId != inspireDataset.SystemId
                                      && o.RegisterId == inspireDataset.RegisterId
                                select o.SystemId;
+
+            return queryResults.Any();
+        }
+
+        private bool InspireDatasetNameAlreadyExist(InspireDataset inspireDataset)
+        {
+            if (inspireDataset == null) throw new ArgumentNullException(nameof(inspireDataset));
+            var queryResults = from o in _dbContext.InspireDatasets
+                where o.Name == inspireDataset.Name &&
+                      o.SystemId != inspireDataset.SystemId
+                      && o.RegisterId == inspireDataset.RegisterId
+                select o.SystemId;
 
             return queryResults.Any();
         }
@@ -648,7 +664,6 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 switch (sorting)
                 {
-
                     // RegisterItemV2
                     case "name":
                         return registerItems.OrderBy(o => o.Name).ToList();
@@ -872,7 +887,7 @@ namespace Kartverket.Register.Services.RegisterItem
                         }
                 }
             }
-            return registerItems;
+            return registerItems.OrderBy(o => o.Name).ToList();
         }
 
         public ICollection<Models.RegisterItem> OrderBy(ICollection<Models.RegisterItem> registerItems, string sorting)

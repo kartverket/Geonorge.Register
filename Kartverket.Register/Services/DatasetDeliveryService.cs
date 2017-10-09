@@ -84,7 +84,7 @@ namespace Kartverket.Register.Services
         public string GetDokDeliveryServiceStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
         {
             var hasServiceUrl = false;
-            var status = !string.IsNullOrEmpty(currentStatus) ? currentStatus : Deficient;
+            var status = Deficient;
 
             if (!autoupdate) return status;
             try

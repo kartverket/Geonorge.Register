@@ -238,9 +238,25 @@ namespace Kartverket.Register.Controllers
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
             new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
-            new InspireDatasetService(db).SynchronizeInspireDatasets();
-            new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
             _registerService.UpdateDOKStatus();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireStatusregister()
+        {
+            new InspireDatasetService(db).SynchronizeInspireDatasets();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/geodatalov-statusregister")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeGeodatalovStatusregister()
+        {
+            new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
             return Ok();
         }
 

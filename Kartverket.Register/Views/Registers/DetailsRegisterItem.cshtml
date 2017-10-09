@@ -30,15 +30,15 @@
         @if (Model.Register.containedItemClass != "NameSpace")
         { <p> @Model.Description</p>}
         @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
+        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></span><br>}
 
         @if (Model.Register.containedItemClass == "NameSpace")
         { <span>@Registers.Owner: @Model.Submitter.name</span><br>}
         else
-        {<span>@Registers.Submitter: @Model.Submitter.name</span><br>}
+        {<span>@Registers.Submitter: @Model.Submitter.NameTranslated()</span><br>}
 
         @if (Model.Owner != null)
-        { <span>@Registers.Owner: @Model.Owner.name</span><br />}
+        { <span>@Registers.Owner: @Model.Owner.NameTranslated()</span><br />}
 
         <span>@Html.DisplayNameFor(m => m.VersionNumber) @Model.VersionNumber</span><br>
         @if (Model.VersionName != null)

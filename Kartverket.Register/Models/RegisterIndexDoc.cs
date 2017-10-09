@@ -11,14 +11,26 @@ namespace Kartverket.Register.Models
         [SolrField("RegisterName")]
         public string RegisterName { get; set; }
 
+        [SolrField("RegisterName_en")]
+        public string RegisterNameEnglish { get; set; }
+
         [SolrField("RegisterDescription")]
         public string RegisterDescription { get; set; }
+
+        [SolrField("RegisterDescription_en")]
+        public string RegisterDescriptionEnglish { get; set; }
 
         [SolrField("RegisterItemName")]
         public string RegisterItemName { get; set; }
 
+        [SolrField("RegisterItemName_en")]
+        public string RegisterItemNameEnglish { get; set; }
+
         [SolrField("RegisterItemDescription")]
         public string RegisterItemDescription { get; set; }
+
+        [SolrField("RegisterItemDescription_en")]
+        public string RegisterItemDescriptionEnglish { get; set; }
 
         [SolrField("RegisterID")]
         public Guid RegisterID { get; set; }
@@ -107,6 +119,9 @@ namespace Kartverket.Register.Models
 
         [SolrField("organization")]
         public string Organization { get; set; }
+
+        [SolrField("organization_en")]
+        public string OrganizationEnglish { get; set; }
 
     }
 }

@@ -103,7 +103,7 @@
                         @HtmlHelperExtensions.GetNationalDokStatus(item)
                     </td>
                     <td title="Datasett type: @item.DatasetType">
-                        <span title="@DataSet.DOK_DatasetType: @item.DatasetType" class="label label-@item.DatasetType">@item.DatasetType</span>
+                        <span title="@DataSet.DOK_DatasetType: @item.DatasetType" class="label label-@item.DatasetType">@item.GetDatasetType()</span>
                     </td>
                     <td style="text-align: center" title="@DataSet.DOK_Bekreftet_Kommune: @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)">
                         @HtmlHelperExtensions.GetConfirmedFromCoverage(item, selectedMunicipality)

@@ -571,6 +571,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.selectedMunicipalityCode = filter.municipality;
             ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.municipality = _registerItemService.GetMunicipalityList();
+            ViewBag.registerId = register.SystemId;
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
             ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);

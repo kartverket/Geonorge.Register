@@ -1249,6 +1249,7 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
+
                 var culture = CultureHelper.GetCurrentCulture();
                 List<SearchResultItem> searchResultItem = new List<SearchResultItem>();
                 Guid systemIDSearch = new Guid();
@@ -1272,6 +1273,7 @@ namespace Kartverket.Register.Services.Search
                                        RegisterName = d.name,
                                        RegisterDescription = d.description,
                                        RegisterItemName = null,
+                                       RegisterItemNameEnglish = null,
                                        RegisterItemDescription = null,
                                        RegisterID = d.systemId,
                                        SystemID = d.systemId,
@@ -1308,6 +1310,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName = d.register.name,
                                          RegisterDescription = d.register.description,
                                          RegisterItemName = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : d.name,
+                                         RegisterItemNameEnglish = d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : d.name,
                                          RegisterItemDescription = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : d.description,
                                          RegisterID = d.registerId,
                                          SystemID = d.systemId,
@@ -1344,6 +1347,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName =  o.register.name,
                                          RegisterDescription = o.register.description,
                                          RegisterItemName = o.Translations.Where(t => t.CultureName == culture).Count() > 0 ? o.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : o.name,
+                                         RegisterItemNameEnglish = o.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? o.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : o.name,
                                          RegisterItemDescription = o.Translations.Where(t => t.CultureName == culture).Count() > 0 ? o.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : o.description,
                                          RegisterID = o.registerId,
                                          SystemID = o.systemId,
@@ -1378,6 +1382,7 @@ namespace Kartverket.Register.Services.Search
                                           RegisterName = o.register.name,
                                           RegisterDescription = o.register.description,
                                           RegisterItemName = o.name,
+                                          RegisterItemNameEnglish = null,
                                           RegisterItemDescription = o.description,
                                           RegisterID = o.registerId,
                                           SystemID = o.systemId,
@@ -1413,6 +1418,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName = d.register.name,
                                          RegisterDescription = d.register.description,
                                          RegisterItemName = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : d.name,
+                                         RegisterItemNameEnglish = d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : d.name,
                                          RegisterItemDescription = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : d.description,
                                          RegisterID = d.registerId,
                                          SystemID = d.systemId,
@@ -1449,6 +1455,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName = e.register.name,
                                          RegisterDescription = e.register.description,
                                          RegisterItemName = e.Translations.Where(t => t.CultureName == culture).Count() > 0 ? e.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : e.name,
+                                         RegisterItemNameEnglish = e.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? e.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : e.name,
                                          RegisterItemDescription = e.Translations.Where(t => t.CultureName == culture).Count() > 0 ? e.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : e.description,
                                          RegisterID = e.registerId,
                                          SystemID = e.systemId,
@@ -1481,6 +1488,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName = o.register.name,
                                          RegisterDescription = o.register.description,
                                          RegisterItemName = o.name,
+                                         RegisterItemNameEnglish = null,
                                          RegisterItemDescription = o.description,
                                          RegisterID = o.registerId,
                                          SystemID = o.systemId,
@@ -1518,6 +1526,7 @@ namespace Kartverket.Register.Services.Search
                                     RegisterName = d.register.name,
                                     RegisterDescription = d.register.description,
                                     RegisterItemName = d.name,
+                                    RegisterItemNameEnglish = null,
                                     RegisterItemDescription = d.description,
                                     RegisterID = d.registerId,
                                     SystemID = d.systemId,
@@ -1563,6 +1572,7 @@ namespace Kartverket.Register.Services.Search
                         {
                             RegisterName = "Objektregister",
                             RegisterItemName = obj["name"] != null ? obj["name"].ToString() : null,
+                            RegisterItemNameEnglish = null,
                             RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
                             Discriminator = "Objektregister",
                             ObjektkatalogUrl = obj["url"] != null ? obj["url"].ToString() : null,
@@ -1585,6 +1595,7 @@ namespace Kartverket.Register.Services.Search
                          RegisterName = o.RegisterName,
                          RegisterDescription = null,
                          RegisterItemName = o.RegisterItemName,
+                         RegisterItemNameEnglish = null,
                          RegisterItemDescription = o.RegisterItemDescription,
                          RegisterID = new Guid(),
                          SystemID = new Guid(),
@@ -1627,6 +1638,7 @@ namespace Kartverket.Register.Services.Search
                         RegisterName = register.RegisterName,
                         RegisterDescription = register.RegisterDescription,
                         RegisterItemName = register.RegisterItemName,
+                        RegisterItemNameEnglish = register.RegisterItemNameEnglish,
                         RegisterItemDescription = register.RegisterItemDescription,
                         RegisterID = register.RegisterID,
                         SystemID = register.SystemID,

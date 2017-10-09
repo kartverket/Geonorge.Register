@@ -10,6 +10,10 @@ using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.Api.SearchParameters;
 using SearchResult = Kartverket.Register.Models.Api.SearchResult;
 using System;
+using System.Net.Http;
+using Kartverket.Register.Models.Translations;
+using System.Threading;
+using System.Globalization;
 
 namespace Kartverket.Register.Controllers
 {
@@ -33,7 +37,7 @@ namespace Kartverket.Register.Controllers
         {
             try
             {
-
+                SetLanguage(Request);
                 if (parameters == null)
                     parameters = new SearchParameters();
 
@@ -76,6 +80,15 @@ namespace Kartverket.Register.Controllers
                 .ToList();
         }
 
-
+        private void SetLanguage(HttpRequestMessage request)
+        {
+            IEnumerable<string> headerValues;
+            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            {
+                var culture = new CultureInfo(headerValues.FirstOrDefault());
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
+            }
+        }
     }
 }

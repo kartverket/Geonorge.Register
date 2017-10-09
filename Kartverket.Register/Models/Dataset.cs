@@ -305,11 +305,11 @@ namespace Kartverket.Register.Models
         {
             if (register.IsDokMunicipal())
             {
-                return "Kommunalt";
+                return DataSet.TypeMunicipality;
             }
             else
             {
-                return "Nasjonalt";
+                return DataSet.TypeNational;
             }
         }
 

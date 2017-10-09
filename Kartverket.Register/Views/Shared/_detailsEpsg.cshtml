@@ -47,7 +47,7 @@
             }
             else
             {
-                <p title="@EPSGs.Dimension: @Model.dimension.description"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Html.DisplayFor(modelItem => Model.dimension.description)</p>
+                <p title="@EPSGs.Dimension: @Model.dimension.DescriptionTranslated()"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Model.dimension.DescriptionTranslated()</p>
             }
 
         </div>

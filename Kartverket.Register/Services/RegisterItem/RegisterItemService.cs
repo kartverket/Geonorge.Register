@@ -1267,12 +1267,12 @@ namespace Kartverket.Register.Services.RegisterItem
                 }
                 else if (sorting == "dimension")
                 {
-                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.description);
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.dimension == null ? "" : o.dimension.DescriptionTranslated());
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dimension_desc")
                 {
-                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.description);
+                    var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.dimension == null ? "" : o.dimension.DescriptionTranslated());
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "epsg")

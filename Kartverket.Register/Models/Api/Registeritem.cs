@@ -285,7 +285,7 @@ namespace Kartverket.Register.Models.Api
                 }
                 horizontalReferenceSystem = epsg.horizontalReferenceSystem;
                 verticalReferenceSystem = epsg.verticalReferenceSystem;
-                dimension = epsg.dimension != null ? epsg.dimension.description : "";
+                dimension = epsg.dimension != null ? epsg.dimension.DescriptionTranslated() : "";
             }
             else if (item is CodelistValue)
             {

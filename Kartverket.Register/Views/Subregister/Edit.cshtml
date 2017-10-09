@@ -157,8 +157,8 @@
                      </div>
                      <div class="col-md-2"></div>
                      <div class="col-md-10">
-                         @Html.CheckBoxFor(m => m.MakeAllItemsValid, new {title = "Sett status på kodeverdier i registeret til 'Gyldig'", @class = "checkbox-inline"})
-                         <small>Sett status på alle kodeverdier i registeret til "Gyldig". Status på hver enkelt kodeverdi kan fortsatt endres.</small>
+                         @Html.CheckBoxFor(m => m.MakeAllItemsValid, new {title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline"})
+                         <small>@Registers.MakeAllItemsValidMessage.</small>
                      </div>
                  </div>
              }

@@ -285,4 +285,7 @@
   <data name="MakeAllItemsValid" xml:space="preserve">
     <value>Sett status "Gyldig" på alle kodeverdier</value>
   </data>
+  <data name="MakeAllItemsValidMessage" xml:space="preserve">
+    <value>Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes</value>
+  </data>
 </root>

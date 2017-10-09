@@ -358,6 +358,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes.
+        /// </summary>
+        public static string MakeAllItemsValidMessage {
+            get {
+                return ResourceManager.GetString("MakeAllItemsValidMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Siste endret.
         /// </summary>
         public static string Modified {

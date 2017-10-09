@@ -285,4 +285,7 @@
   <data name="MakeAllItemsValid" xml:space="preserve">
     <value>Set status "Valid" on all codelist values</value>
   </data>
+  <data name="MakeAllItemsValidMessage" xml:space="preserve">
+    <value>Set status of all values in code list. Individual values can still be set</value>
+  </data>
 </root>

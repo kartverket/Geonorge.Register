@@ -11,19 +11,24 @@ using System.Text.RegularExpressions;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Resources;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     public class NameSpacesController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
-        public NameSpacesController()
+        private ITranslationService _translationService;
+
+        public NameSpacesController(RegisterDbContext dbContext, ITranslationService translationService)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
+            _translationService = translationService;
         }
 
         // GET: NameSpaces
@@ -55,6 +60,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             NameSpace nameSpace = new NameSpace();
+            nameSpace.AddMissingTranslations();
             Models.Register register = GetRegister(registername, parentRegister);
 
             nameSpace.register = register;
@@ -181,6 +187,7 @@ namespace Kartverket.Register.Controllers
 
                 originalNameSpace.modified = DateTime.Now;
                 db.Entry(originalNameSpace).State = EntityState.Modified;
+                _translationService.UpdateTranslations(nameSpace, originalNameSpace);
                 db.SaveChanges();
 
                 Viewbags(originalNameSpace);

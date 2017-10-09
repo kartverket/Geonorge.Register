@@ -57,6 +57,7 @@ namespace Kartverket.Register.Models
             modelBuilder.Configurations.Add(new OrganizationTranslationConfiguration());
             modelBuilder.Configurations.Add(new DatasetTranslationConfiguration());
             modelBuilder.Configurations.Add(new DocumentTranslationConfiguration());
+            modelBuilder.Configurations.Add(new NamespaceTranslationConfiguration());
 
             modelBuilder.Entity<InspireDataset>().Map(m =>
             {

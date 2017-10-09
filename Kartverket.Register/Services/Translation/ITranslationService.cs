@@ -16,5 +16,6 @@ namespace Kartverket.Register.Services.Translation
         void UpdateTranslations(Models.Organization register, Models.Organization originalRegister);
         void UpdateTranslations(Models.Dataset register, Models.Dataset originalRegister);
         void UpdateTranslations(Models.Document register, Models.Document originalRegister);
+        void UpdateTranslations(Models.NameSpace register, Models.NameSpace originalRegister);
     }
 }

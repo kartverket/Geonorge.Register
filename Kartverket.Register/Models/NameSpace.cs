@@ -1,4 +1,5 @@
-﻿using Resources;
+﻿using Kartverket.Register.Models.Translations;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,10 @@ namespace Kartverket.Register.Models
 {
     public class NameSpace : RegisterItem 
     {
+        public NameSpace()
+        {
+            this.Translations = new TranslationCollection<NamespaceTranslation>();
+        }
         [Display(Name = "ServiceUrl", ResourceType = typeof(Namespace))]
         public string serviceUrl { get; set; }
 
@@ -33,6 +38,22 @@ namespace Kartverket.Register.Models
             else {
                 return "/navnerom/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/slett";
             }
+        }
+
+        public virtual TranslationCollection<NamespaceTranslation> Translations { get; set; }
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
         }
     }
 }

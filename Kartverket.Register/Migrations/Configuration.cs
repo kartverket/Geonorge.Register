@@ -72,6 +72,14 @@ namespace Kartverket.Register.Migrations
             }
         }
 
+        internal class NamespaceTranslationConfiguration : EntityTypeConfiguration<NameSpace>
+        {
+            public NamespaceTranslationConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
+            }
+        }
+
         protected override void Seed(RegisterDbContext context)
         {
             //  This method will be called after migrating to the latest version.

@@ -750,6 +750,10 @@
     <Compile Include="Migrations\201710090833469_AddDocumentTranslation.Designer.cs">
       <DependentUpon>201710090833469_AddDocumentTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710091039096_AddNamespaceTranslation.cs" />
+    <Compile Include="Migrations\201710091039096_AddNamespaceTranslation.Designer.cs">
+      <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -792,6 +796,7 @@
     <Compile Include="Models\Translations\DatasetTranslation.cs" />
     <Compile Include="Models\Translations\DocumentTranslation.cs" />
     <Compile Include="Models\Translations\EPSGTranslation.cs" />
+    <Compile Include="Models\Translations\NamespaceTranslation.cs" />
     <Compile Include="Models\Translations\OrganizationTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
@@ -1777,6 +1782,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710090833469_AddDocumentTranslation.resx">
       <DependentUpon>201710090833469_AddDocumentTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710091039096_AddNamespaceTranslation.resx">
+      <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

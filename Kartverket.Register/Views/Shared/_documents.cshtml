@@ -33,13 +33,13 @@
                     @if (item.register.parentRegister != null)
                     {
                         <a href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @item.name
+                            @item.NameTranslated()
                         </a>
                     }
                     else
                     {
                         <a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @item.name
+                            @item.NameTranslated()
                         </a>
                     }
                     <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">

@@ -78,6 +78,7 @@ namespace Kartverket.Register.Services.Search
             {
                 var queryResults = (from o in _dbContext.ServiceAlerts
                                     where o.name.Contains(text)
+                                    || o.Translations.Any(oo => oo.Name.Contains(text))
                                     select o);
 
                 if (queryResults.Count() > 0)
@@ -124,7 +125,10 @@ namespace Kartverket.Register.Services.Search
                                     || d.register.seoname.Contains(register.seoname))
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
-                                    || d.documentowner.name.Contains(text))
+                                    || d.documentowner.name.Contains(text)
+                                    || d.Translations.Any(dd => dd.Name.Contains(text))
+                                    || d.Translations.Any(dd => dd.Description.Contains(text))
+                                    )
                                     select d);
 
                 if (queryResults.Count() > 0)
@@ -176,7 +180,10 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from d in _dbContext.NameSpases
                                     where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
                                     && (d.name.Contains(text)
-                                    || d.description.Contains(text))
+                                    || d.description.Contains(text)
+                                    || d.Translations.Any(oo => oo.Name.Contains(text))
+                                    || d.Translations.Any(oo => oo.Description.Contains(text))
+                                    )
                                     select d);
 
                 if (queryResults.Count() > 0)

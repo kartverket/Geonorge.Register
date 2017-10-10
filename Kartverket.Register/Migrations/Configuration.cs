@@ -438,11 +438,6 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryDistributionStatusAutoUpdate = 1 WHERE  Discriminator ='Dataset' AND dokDeliveryDistributionStatusAutoUpdate IS NULL");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryGmlRequirementsStatusAutoUpdate = 1 WHERE  Discriminator ='Dataset' AND dokDeliveryGmlRequirementsStatusAutoUpdate IS NULL");
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryAtomFeedStatusAutoUpdate = 1 WHERE  Discriminator ='Dataset' AND dokDeliveryAtomFeedStatusAutoUpdate IS NULL");
-            context.Database.ExecuteSqlCommand("UPDATE GeodatalovDatasets SET InspireTheme = 0");
-            context.Database.ExecuteSqlCommand("UPDATE GeodatalovDatasets SET Dok = false");
-            context.Database.ExecuteSqlCommand("UPDATE GeodatalovDatasets SET NationalDataset = 0");
-            context.Database.ExecuteSqlCommand("UPDATE GeodatalovDatasets SET Plan = 0");
-            context.Database.ExecuteSqlCommand("UPDATE GeodatalovDatasets SET Geodatalov = 0");
 
 
             var queryResult = from c in context.CoverageDatasets

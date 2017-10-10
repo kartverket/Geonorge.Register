@@ -7,6 +7,8 @@ using Kartverket.Register.Helpers;
 using System.Collections.Generic;
 using System.Net;
 using Kartverket.Register.Services.Versioning;
+using Kartverket.Register.Models.Translations;
+using System.Linq;
 
 namespace Kartverket.Register.Controllers
 {
@@ -33,6 +35,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string parentRegister, string registerName)
         {
             ServiceAlert serviceAlert = new ServiceAlert();
+            serviceAlert.AddMissingTranslations();
             serviceAlert.register = _registerService.GetRegister(parentRegister, registerName);
             ViewBags(serviceAlert);
 
@@ -68,9 +71,16 @@ namespace Kartverket.Register.Controllers
                     }
                     if (ModelState.IsValid)
                     {
+                        var alertTranslation = new AlertTypes().GetAlertType(serviceAlert.AlertType);
                         serviceAlert.GetMetadataByUuid();
                         serviceAlert.submitter = _registerService.GetOrganizationByUserName();
                         serviceAlert.InitializeNewServiceAlert();
+                        serviceAlert.AlertType = alertTranslation.Key.Value;
+                        for (int t = 0; t < serviceAlert.Translations.Count; t++)
+                        {
+                            var translation = alertTranslation.Value;
+                            serviceAlert.Translations[t].AlertType = translation.Where(c => c.Culture.Equals(serviceAlert.Translations[t].CultureName)).Select(s => s.AlertType).FirstOrDefault();
+                        }
                         serviceAlert.versioningId = _registerItemService.NewVersioningGroup(serviceAlert);
                         serviceAlert.register.modified = System.DateTime.Now;
                         _registerItemService.SaveNewRegisterItem(serviceAlert);
@@ -85,7 +95,8 @@ namespace Kartverket.Register.Controllers
 
         private void ViewBags(ServiceAlert serviceAlert)
         {
-            ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
+            //ViewBag.AlertType = new SelectList(serviceAlert.GetAlertTypes(), serviceAlert.AlertType);
+            ViewBag.AlertType = new SelectList(new AlertTypes().GetAlertTypes() , "Key", "Value", serviceAlert.AlertType);
             ViewBag.ServiceUuid = new SelectList(GetServicesFromKartkatalogen(), "Key", "Value", serviceAlert.ServiceUuid);
         }
 

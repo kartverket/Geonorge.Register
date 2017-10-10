@@ -198,6 +198,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Varselet gjelder på engelsk.
+        /// </summary>
+        public static string NoteTranslated {
+            get {
+                return ResourceManager.GetString("NoteTranslated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tjeneste.
         /// </summary>
         public static string Service {

@@ -1266,6 +1266,11 @@
               Looks up a localized string similar to Det er påkrevd å skrive hva varselet gjelder.
             </summary>
         </member>
+        <member name="P:Resources.ServiceAlerts.NoteTranslated">
+            <summary>
+              Looks up a localized string similar to Varselet gjelder på engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.ServiceAlerts.Service">
             <summary>
               Looks up a localized string similar to Tjeneste.

@@ -140,6 +140,18 @@
             </div>
         </div>
 
+        @for (int t = 0; t < Model.Translations.Count; t++)
+        {
+            @Html.HiddenFor(m => Model.Translations[t].CultureName)
+            <div class="form-group">
+                @Html.LabelFor(m => Model.Translations[t].Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => Model.Translations[t].Note, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => Model.Translations[t].Note)
+                </div>
+            </div>
+        }
+
         <div class="form-group">
             <hr />
             <input type="submit" value="@Registers.Publish" class="btn btn-default pull-right" />

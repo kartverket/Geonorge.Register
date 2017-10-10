@@ -754,6 +754,10 @@
     <Compile Include="Migrations\201710091039096_AddNamespaceTranslation.Designer.cs">
       <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710100636059_AddServiceAlertTranslation.cs" />
+    <Compile Include="Migrations\201710100636059_AddServiceAlertTranslation.Designer.cs">
+      <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -791,6 +795,7 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
     <Compile Include="Models\Translations\DatasetTranslation.cs" />
@@ -799,6 +804,7 @@
     <Compile Include="Models\Translations\NamespaceTranslation.cs" />
     <Compile Include="Models\Translations\OrganizationTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
+    <Compile Include="Models\Translations\ServiceAlertTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
@@ -1785,6 +1791,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710091039096_AddNamespaceTranslation.resx">
       <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710100636059_AddServiceAlertTranslation.resx">
+      <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

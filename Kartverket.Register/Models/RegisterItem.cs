@@ -143,6 +143,13 @@ namespace Kartverket.Register.Models
                 if (string.IsNullOrEmpty(nameTranslated))
                     nameTranslated = name;
             }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                nameTranslated = serviceAlert.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
 
             return nameTranslated;
         }
@@ -186,6 +193,13 @@ namespace Kartverket.Register.Models
             {
                 Document document = (Document)this;
                 descriptionTranslated = document.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                descriptionTranslated = serviceAlert.Translations[cultureName]?.Description;
                 if (string.IsNullOrEmpty(descriptionTranslated))
                     descriptionTranslated = description;
             }

@@ -83,5 +83,9 @@ namespace Kartverket.Register.Helpers
 
             return name.Split('-')[0]; // Read first part only. E.g. "en", "es"
         }
+        public static bool IsNorwegian(string culture)
+        {
+            return culture == Culture.NorwegianCode || culture == "nb-NO" || culture == "nn-NO";
+        }
     }
 }

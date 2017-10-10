@@ -23,11 +23,11 @@ namespace Kartverket.Register.Models.Api
         public string targetNamespace { get; set; }
         public string SelectedDOKMunicipality { get; set; }
 
-        public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = "nb-NO") 
+        public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = Culture.NorwegianCode) 
         {
             id = baseUrl + item.GetObjectUrl();
             label = GetNameLocale(item, cultureName);
-            lang = cultureName.Substring(0, 2);
+            lang = cultureName;
             contentsummary = GetDescriptionLocale(item, cultureName);
             lastUpdated = item.modified;
             targetNamespace = item.targetNamespace;
@@ -44,7 +44,7 @@ namespace Kartverket.Register.Models.Api
         {
             var name = item.Translations[cultureName].Name;
             if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0,2)].Name;
+                name = item.Translations[cultureName].Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -54,7 +54,7 @@ namespace Kartverket.Register.Models.Api
         {
             var description = item.Translations[cultureName].Description;
             if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName.Substring(0, 2)].Description;
+                description = item.Translations[cultureName].Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 

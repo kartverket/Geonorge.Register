@@ -14,6 +14,10 @@ using Kartverket.DOK.Service;
 using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.Translations;
+using System.Globalization;
+using System.Threading;
 
 namespace Kartverket.Register.Controllers
 {
@@ -24,8 +28,7 @@ namespace Kartverket.Register.Controllers
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
-        private string _language = "nb-NO";
-
+        
         public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
             _registerItemService = registerItemService;
@@ -311,7 +314,7 @@ namespace Kartverket.Register.Controllers
                     selectedDOKMunicipality = org.name;
                 }
             }
-            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality, _language);
+            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality);
             return tmp;
         }
 
@@ -365,14 +368,14 @@ namespace Kartverket.Register.Controllers
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item,registerId, filter, _language);
+            var tmp = new Registeritem(item,registerId, filter);
             return tmp;
         }
         private Registeritem ConvertRegisterItem(RegisterItemV2 item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item, registerId, filter, _language);
+            var tmp = new Registeritem(item, registerId, filter);
             return tmp;
         }
 
@@ -466,7 +469,15 @@ namespace Kartverket.Register.Controllers
             IEnumerable<string> headerValues;
             if (request.Headers.TryGetValues("Accept-Language", out headerValues))
             {
-                _language = headerValues.FirstOrDefault();
+                var language = headerValues.FirstOrDefault();
+                if (CultureHelper.IsNorwegian(language))
+                    language = Culture.NorwegianCode;
+                else
+                    language = Culture.EnglishCode;
+
+                var culture = new CultureInfo(language);
+                Thread.CurrentThread.CurrentCulture = culture;
+                Thread.CurrentThread.CurrentUICulture = culture;
             }
         }
     }

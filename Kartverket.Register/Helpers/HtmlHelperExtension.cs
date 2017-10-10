@@ -496,6 +496,11 @@ namespace Kartverket.Register.Helpers
                 sortTitle = DataSet.DOK_Delivery_ProductSpesification;
                 statusIcon += "glyphicon-list-alt";
             }
+            else if (sortingParam == "dokstatus" || sortingParam == "dokstatus_desc")
+            {
+                sortTitle = "DOK-Status";
+;                statusIcon = "statusIcon-Accepted";
+            }
 
             // *** INSPIRE SORTERING
 
@@ -547,6 +552,31 @@ namespace Kartverket.Register.Helpers
 
             // *** GEODATALOV SORTERING
 
+            else if (sortingParam == "inspire" || sortingParam == "inspire_desc")
+            {
+                sortTitle = "Inspire i henhold rapportering";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "dok" || sortingParam == "dok_desc")
+            {
+                sortTitle = "DOK i henhold til KMD-definisjon";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "nationalt_dataset" || sortingParam == "nationalt_dataset_desc")
+            {
+                sortTitle = "Norge digitalt-avtale";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "plan" || sortingParam == "plan_desc")
+            {
+                sortTitle = "Arealplaner underlagt Pbl";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "geodatalov" || sortingParam == "geodatalov_desc")
+            {
+                sortTitle = "Underlagt Geodataloven";
+                statusIcon += "custom-icon-info";
+            }
             else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Metadata;
@@ -741,7 +771,14 @@ namespace Kartverket.Register.Helpers
         {
             return register;
         }
-        
 
+
+        public static HtmlString Checked(bool isChecked, string type)
+        {
+            var html = "";
+            if (isChecked)
+                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + type + "'><span class='fa fa-check'></span></span>";
+            return new HtmlString(html);
+        }
     }
 }

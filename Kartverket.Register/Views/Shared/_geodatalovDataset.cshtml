@@ -5,10 +5,17 @@
 
 <div id="tableView" class="register dataset search-results-table-heading">
     <div class="row">
-        <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
+        <div class="col-md-3">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
         <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
         <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
-        <div class="col-md-4 col-sm-5 status-icons">
+        <div class="col-md-5 col-sm-2 status-icons pull-right">
+
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dok")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "nationalt_dataset")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "plan")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov")
+            
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status")
@@ -17,8 +24,8 @@
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status")
             @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
         </div>
-        <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokstatus")</div>
     </div>
     <div class="menu-separator search-results-table-heading"></div>
    
@@ -28,7 +35,12 @@
             <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
             <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
             <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
-            <div class="col-md-4 col-sm-5 status-icons">
+            <div class="col-md-5 col-sm-5 status-icons pull-right">
+                @HtmlHelperExtensions.Checked(item.InspireTheme, "Inspire")
+                @HtmlHelperExtensions.Checked(item.InspireTheme, "Det offentlige kartgrunnlaget")
+                @HtmlHelperExtensions.Checked(item.InspireTheme, "Nasjonalt datasett")
+                @HtmlHelperExtensions.Checked(item.InspireTheme, "Plan")
+                @HtmlHelperExtensions.Checked(item.InspireTheme, "Geodataloven")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi")
@@ -37,8 +49,6 @@
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, "common")
-            </div>
-            <div class="col-md-1 text-center">
                 <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
                     <i class="statusIcon-@item.DokStatusId"></i>
                 </span>

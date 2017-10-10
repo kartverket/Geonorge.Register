@@ -7,7 +7,7 @@ namespace Kartverket.Register.Models
 {
     public class GeodatalovDataset : DatasetV2
     {
-        public string InspireTheme { get; set; }
+        public bool InspireTheme { get; set; }
         public bool Dok { get; set; }
         public bool NationalDataset { get; set; }
         public bool Plan { get; set; }

@@ -337,6 +337,31 @@ namespace Kartverket.DOK.Service
                         if (distributionFormat.Name != null)
                             geodatalovDataset.DistributionFormat = distributionFormat.Name.Value;
                     }
+
+                    foreach (var keyword in data.KeywordsNationalInitiative)
+                    {
+                        if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
+                        {
+                            geodatalovDataset.Dok = true;
+                        }
+                        else if (keyword.KeywordValue == "geodataloven")
+                        {
+                            geodatalovDataset.Geodatalov = true;
+                        }
+                        else if (keyword.KeywordValue == "Norge digitalt")
+                        {
+                            geodatalovDataset.NationalDataset = true;
+                        }
+                        else if (keyword.KeywordValue == "Inspire")
+                        {
+                            geodatalovDataset.InspireTheme = true;
+                        }
+                        else if (keyword.KeywordValue == "arealplanerPBL")
+                        {
+                            geodatalovDataset.Plan = true;
+                        }
+                    }
+                    
                 }
             }
             catch (Exception e)

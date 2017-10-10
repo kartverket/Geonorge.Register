@@ -7,7 +7,7 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class GeodatalovDatasetViewModel : DatasetViewModel
     {
-        public string InspireTheme { get; set; }
+        public bool InspireTheme { get; set; }
         public bool Dok { get; set; }
         public bool NationalDataset { get; set; }
         public bool Plan { get; set; }

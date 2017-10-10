@@ -758,6 +758,10 @@
     <Compile Include="Migrations\201710100636059_AddServiceAlertTranslation.Designer.cs">
       <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710100928000_UpdateGeodatalovDataset.cs" />
+    <Compile Include="Migrations\201710100928000_UpdateGeodatalovDataset.Designer.cs">
+      <DependentUpon>201710100928000_UpdateGeodatalovDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1794,6 +1798,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710100636059_AddServiceAlertTranslation.resx">
       <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710100928000_UpdateGeodatalovDataset.resx">
+      <DependentUpon>201710100928000_UpdateGeodatalovDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

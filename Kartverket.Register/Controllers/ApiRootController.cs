@@ -18,6 +18,7 @@ using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.Translations;
 using System.Globalization;
 using System.Threading;
+using System.Net.Http.Headers;
 
 namespace Kartverket.Register.Controllers
 {
@@ -466,19 +467,30 @@ namespace Kartverket.Register.Controllers
 
         private void SetLanguage(HttpRequestMessage request)
         {
-            IEnumerable<string> headerValues;
-            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
-            {
-                var language = headerValues.FirstOrDefault();
-                if (CultureHelper.IsNorwegian(language))
-                    language = Culture.NorwegianCode;
-                else
-                    language = Culture.EnglishCode;
+            string language = Culture.NorwegianCode;
 
-                var culture = new CultureInfo(language);
-                Thread.CurrentThread.CurrentCulture = culture;
-                Thread.CurrentThread.CurrentUICulture = culture;
+            CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+            if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
+            {
+                language = cookie["_culture"].Value;
             }
+            else
+            { 
+            IEnumerable<string> headerValues;
+                if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+                {
+                    language = headerValues.FirstOrDefault();
+                    if (CultureHelper.IsNorwegian(language))
+                        language = Culture.NorwegianCode;
+                    else
+                        language = Culture.EnglishCode;
+                }
+            }
+
+            var culture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
         }
     }
 }

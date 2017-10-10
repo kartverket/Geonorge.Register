@@ -259,7 +259,7 @@ namespace Kartverket.Register.Formatter
             }
             else
             {
-                description = "ikke angitt";
+                description = Registers.NotSet;
             }
 
             return description;

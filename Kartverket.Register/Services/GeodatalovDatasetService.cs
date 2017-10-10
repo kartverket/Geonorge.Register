@@ -112,7 +112,7 @@ namespace Kartverket.Register.Services
 
         public GeodatalovDataset UpdateGeodatalovDatasetFromKartkatalogen(GeodatalovDataset originalDataset)
         {
-            var geodatalovDataset = _metadataService.FetchInspireDatasetFromKartkatalogen(originalDataset.Uuid);
+            var geodatalovDataset = _metadataService.FetchGeodatalovDatasetFromKartkatalogen(originalDataset.Uuid);
             if (geodatalovDataset == null)
             {
                 return originalDataset; //Skal datasettet da fjernes??
@@ -137,6 +137,12 @@ namespace Kartverket.Register.Services
             originalDataset.ThemeGroupId = geodatalovDataset.ThemeGroupId;
             originalDataset.DatasetThumbnail = geodatalovDataset.DatasetThumbnail;
             originalDataset.UuidService = geodatalovDataset.UuidService;
+
+            originalDataset.InspireTheme = geodatalovDataset.InspireTheme;
+            originalDataset.Dok = geodatalovDataset.Dok;
+            originalDataset.NationalDataset = geodatalovDataset.NationalDataset;
+            originalDataset.Plan = geodatalovDataset.Plan;
+            originalDataset.Geodatalov = geodatalovDataset.Geodatalov;
 
             if (originalDataset.MetadataStatus != null)
             {

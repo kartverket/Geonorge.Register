@@ -965,6 +965,52 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:Resources.GeodatalovDataSet">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.Common">
+            <summary>
+              Looks up a localized string similar to Nedlastingskrav status.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.dok">
+            <summary>
+              Looks up a localized string similar to DOK i henhold til KMD-definisjon.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.Geodatalov">
+            <summary>
+              Looks up a localized string similar to Underlagt Geodataloven.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.InspireTheme">
+            <summary>
+              Looks up a localized string similar to Inspire i henhold rapportering.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.NationalDataset">
+            <summary>
+              Looks up a localized string similar to Norge digitalt-avtale.
+            </summary>
+        </member>
+        <member name="P:Resources.GeodatalovDataSet.Plan">
+            <summary>
+              Looks up a localized string similar to Arealplaner underlagt Pbl.
+            </summary>
+        </member>
         <member name="T:Resources.InspireDataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

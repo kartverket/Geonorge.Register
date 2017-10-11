@@ -288,4 +288,7 @@
   <data name="MakeAllItemsValidMessage" xml:space="preserve">
     <value>Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes</value>
   </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
 </root>

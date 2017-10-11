@@ -167,6 +167,12 @@ I alle tilfeller er det også lurt å oppgi årsaken til endringene, siden bruke
   <data name="NoteTranslated" xml:space="preserve">
     <value>Varselet gjelder på engelsk</value>
   </data>
+  <data name="SelectService" xml:space="preserve">
+    <value>Velg tjeneste</value>
+  </data>
+  <data name="SelectServiceAlert" xml:space="preserve">
+    <value>Velg tjenestevarsel</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>Tjeneste</value>
   </data>

@@ -150,4 +150,7 @@
   <data name="NarrowerItems" xml:space="preserve">
     <value>Mer spesialiserte begrep</value>
   </data>
+  <data name="SelectCodeValue" xml:space="preserve">
+    <value>velg kodeverdi</value>
+  </data>
 </root>

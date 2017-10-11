@@ -165,7 +165,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.datasetownerId, htmlAttributes: new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
-                        @Html.DisplayFor(model => model.datasetowner.name)
+                        @Model.datasetowner.NameTranslated()
                         @Html.DropDownList("datasetownerId", null, htmlAttributes: new { @class = "form-control hidden" })
                         @Html.ValidationMessageFor(model => model.datasetownerId, "", new { @class = "text-danger" })
                     </div>

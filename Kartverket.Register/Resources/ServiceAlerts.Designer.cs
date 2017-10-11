@@ -207,6 +207,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Velg tjeneste.
+        /// </summary>
+        public static string SelectService {
+            get {
+                return ResourceManager.GetString("SelectService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Velg tjenestevarsel.
+        /// </summary>
+        public static string SelectServiceAlert {
+            get {
+                return ResourceManager.GetString("SelectServiceAlert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tjeneste.
         /// </summary>
         public static string Service {

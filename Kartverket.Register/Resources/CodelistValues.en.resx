@@ -150,4 +150,7 @@
   <data name="NarrowerItems" xml:space="preserve">
     <value>More specialized term</value>
   </data>
+  <data name="SelectCodeValue" xml:space="preserve">
+    <value>select code value</value>
+  </data>
 </root>

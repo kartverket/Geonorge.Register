@@ -38,7 +38,7 @@ namespace Kartverket.Register.Services
             return new SelectList(_dbContext.DokDeliveryStatuses, "value", "description", statusId);
         }
 
-        public string GetMetadataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
+        public string GetMetadataStatus(string metadataUuid, bool autoUpdate, string currentStatus = Deficient)
         {
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
@@ -258,14 +258,14 @@ namespace Kartverket.Register.Services
 
             catch (Exception)
             {
-                return "deficient";
+                return Deficient;
             }
             return status;
         }
 
         public string GetSpatialDataStatus(string metadataUuid, bool autoUpdate, string currentStatus)
         {
-            string status = currentStatus;
+            string status;
             try
             {
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
@@ -308,6 +308,27 @@ namespace Kartverket.Register.Services
             if (!string.IsNullOrWhiteSpace(status)) return status;
             status = Deficient;
             return status;
+        }
+
+        public string GetDownloadRequirementsStatus(string wfsStatus, string atomFeedStatus)
+        {
+            if (wfsStatus == Good || atomFeedStatus == Good)
+            {
+                return Good;
+            }
+            if (wfsStatus == Useable || atomFeedStatus == Useable)
+            {
+                return Useable;
+            }
+            if (wfsStatus == Deficient || atomFeedStatus == Deficient)
+            {
+                return Deficient;
+            }
+            if (wfsStatus == Notset || atomFeedStatus == Notset)
+            {
+                return Notset;
+            }
+            return Notset;
         }
 
         private static dynamic GetMetadataFromKartkatalogen(string metadataUuid)

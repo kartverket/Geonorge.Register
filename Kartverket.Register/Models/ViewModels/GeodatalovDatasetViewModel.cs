@@ -55,7 +55,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string AtomFeedNote { get; set; }
         public bool AtomFeedAutoUpdate { get; set; }
 
-        [Display(Name = "Felles Status")]
+        [Display(Name = "Nedlastingskrav status")]
         public string CommonStatusId { get; set; }
         public virtual DokDeliveryStatus CommonStatus { get; set; }
         public string CommonNote { get; set; }

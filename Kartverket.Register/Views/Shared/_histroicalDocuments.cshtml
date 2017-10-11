@@ -33,10 +33,10 @@
             {
                 <tr>
                     <td>
-                        <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.name</a></strong>
+                        <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.NameTranslated()</a></strong>
                     </td>
-                    <td title="@Registers.Owner: @item.documentowner.name">
-                        @Html.DisplayFor(modelItem => item.documentowner.name)
+                    <td title="@Registers.Owner: @item.documentowner.NameTranslated()">
+                        @item.documentowner.NameTranslated()
                     </td>
                     <td title="@Registers.VersionName: @item.versionName">
                         @Html.DisplayFor(modelItem => item.versionName)

@@ -507,7 +507,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public SelectList GetDokStatusSelectList(string dokStatusId)
         {
-            return new SelectList(_dbContext.DokStatuses.OrderBy(s => s.description), "value", "description", dokStatusId);
+            return new SelectList(_dbContext.DokStatuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", dokStatusId);
         }
 
         public SelectList GetDokDeliveryStatusSelectList(string dokDeliveryStatusId)
@@ -517,7 +517,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public SelectList GetSubmitterSelectList(Guid submitterId)
         {
-            return new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "systemId", "name", submitterId);
+            return new SelectList(_dbContext.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", submitterId);
         }
 
         public SelectList GetOwnerSelectList(Guid ownerId)
@@ -537,12 +537,12 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public SelectList GetBroaderItems(Guid? broaderItemId)
         {
-            return new SelectList(_dbContext.CodelistValues.OrderBy(s => s.name), "systemId", "name", broaderItemId);
+            return new SelectList(_dbContext.CodelistValues.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", broaderItemId);
         }
 
         public SelectList GetStatusSelectList(Models.RegisterItem registerItem)
         {
-            return new SelectList(_dbContext.Statuses.OrderBy(s => s.description), "value", "description", registerItem.statusId);
+            return new SelectList(_dbContext.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", registerItem.statusId);
         }
 
         public void SaveDeleteRegisterItem(Models.RegisterItem item)

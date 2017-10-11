@@ -50,7 +50,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(ePSg.register))
                 {
-                    ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+                    ViewBag.dimensionId = new SelectList(db.Dimensions.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", string.Empty);
                     return View(ePSg);
                 }
             }
@@ -77,7 +77,7 @@ namespace Kartverket.Register.Controllers
                         if (!NameIsValid(epsgKode))
                         {
                             ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
-                            ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+                            ViewBag.dimensionId = new SelectList(db.Dimensions.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", string.Empty);
                             return View(epsgKode);
                         }
                         _registerItemService.SaveNewRegisterItem(epsgKode);
@@ -90,7 +90,7 @@ namespace Kartverket.Register.Controllers
                     }
                 }
             }
-            ViewBag.dimensionId = new SelectList(db.Dimensions.OrderBy(s => s.description), "value", "description", string.Empty);
+            ViewBag.dimensionId = new SelectList(db.Dimensions.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", string.Empty);
             return View(epsgKode);
         }
 
@@ -365,12 +365,12 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(EPSG ePSG)
         {
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", ePSG.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
-            ViewBag.inspireRequirementId = new SelectList(db.requirements, "value", "description", ePSG.inspireRequirementId);
-            ViewBag.nationalRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalRequirementId);
-            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements, "value", "description", ePSG.nationalSeasRequirementId);
-            ViewBag.dimensionId = new SelectList(db.Dimensions, "value", "description", ePSG.dimensionId);
+            ViewBag.statusId = new SelectList(db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", ePSG.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", ePSG.submitterId);
+            ViewBag.inspireRequirementId = new SelectList(db.requirements.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }), "value", "description", ePSG.inspireRequirementId);
+            ViewBag.nationalRequirementId = new SelectList(db.requirements.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }), "value", "description", ePSG.nationalRequirementId);
+            ViewBag.nationalSeasRequirementId = new SelectList(db.requirements.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }), "value", "description", ePSG.nationalSeasRequirementId);
+            ViewBag.dimensionId = new SelectList(db.Dimensions.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(s => s.description), "value", "description", ePSG.dimensionId);
         }
 
         private void ValidationName(EPSG epsg, Models.Register register)

@@ -394,9 +394,9 @@ namespace Kartverket.Register.Controllers
         private void Viewbags(Models.Register register)
         {
             //ViewBag.registerId = new SelectList(db.Registers, "systemId", "name", document.registerId);
-            ViewBag.statusId = new SelectList(_db.Statuses.OrderBy(s => s.description), "value", "description", register.statusId);
-            ViewBag.ownerId = new SelectList(_db.Organizations.OrderBy(s => s.name), "systemId", "name", register.ownerId);
-            ViewBag.parentRegisterId = new SelectList(_db.Registers.Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
+            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", register.statusId);
+            ViewBag.ownerId = new SelectList(_db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", register.ownerId);
+            ViewBag.parentRegisterId = new SelectList(_db.Registers.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated(), containedItemClass = s.containedItemClass }).Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
         }
 
         protected override void OnException(ExceptionContext filterContext)

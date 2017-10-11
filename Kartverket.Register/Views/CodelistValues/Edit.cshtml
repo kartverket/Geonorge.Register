@@ -121,7 +121,7 @@
                 @Html.LabelFor(model => model.broaderItem, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="custom-select">
-                        <select name="broader" data-placeholder="Velg kodeverdi" class="form-control chosen-select dropdown" data-toggle="dropdown">
+                        <select name="broader" data-placeholder="@CodelistValues.SelectCodeValue" class="form-control chosen-select dropdown" data-toggle="dropdown">
                             <option selected="selected"></option>
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {
@@ -156,7 +156,7 @@
                 @Html.LabelFor(model => model.narrowerItems, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="custom-select">
-                        <select name="narrower" data-placeholder="Velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                        <select name="narrower" data-placeholder="@CodelistValues.SelectCodeValue" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {
                                 <optgroup label="@register.name">

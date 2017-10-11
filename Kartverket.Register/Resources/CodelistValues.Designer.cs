@@ -158,5 +158,14 @@ namespace Resources {
                 return ResourceManager.GetString("NarrowerItems", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to velg kodeverdi.
+        /// </summary>
+        public static string SelectCodeValue {
+            get {
+                return ResourceManager.GetString("SelectCodeValue", resourceCulture);
+            }
+        }
     }
 }

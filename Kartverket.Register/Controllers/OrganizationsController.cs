@@ -215,8 +215,8 @@ namespace Kartverket.Register.Controllers
             }
             ViewBag.registername = register.name;
             ViewBag.registerSEO = register.seoname;
-            ViewBag.statusId = new SelectList(_dbContext.Statuses.OrderBy(s => s.description), "value", "description", organization.statusId);
-            ViewBag.submitterId = new SelectList(_dbContext.Organizations.OrderBy(s => s.name), "SystemId", "name", organization.submitterId);
+            ViewBag.statusId = new SelectList(_dbContext.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", organization.statusId);
+            ViewBag.submitterId = new SelectList(_dbContext.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", organization.submitterId);
         }
 
 

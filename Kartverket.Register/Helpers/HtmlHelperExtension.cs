@@ -554,27 +554,27 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "inspire" || sortingParam == "inspire_desc")
             {
-                sortTitle = "Inspire i henhold rapportering";
+                sortTitle = GeodatalovDataSet.InspireTheme;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "dok" || sortingParam == "dok_desc")
             {
-                sortTitle = "DOK i henhold til KMD-definisjon";
+                sortTitle = GeodatalovDataSet.dok;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "nationalt_dataset" || sortingParam == "nationalt_dataset_desc")
             {
-                sortTitle = "Norge digitalt-avtale";
+                sortTitle = GeodatalovDataSet.NationalDataset;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "plan" || sortingParam == "plan_desc")
             {
-                sortTitle = "Arealplaner underlagt Pbl";
+                sortTitle = GeodatalovDataSet.Plan;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "geodatalov" || sortingParam == "geodatalov_desc")
             {
-                sortTitle = "Underlagt Geodataloven";
+                sortTitle = GeodatalovDataSet.Geodatalov;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc")
@@ -614,7 +614,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "geodatalov_common_status" || sortingParam == "geodatalov_common_status_desc")
             {
-                sortTitle = DataSet.Delivery_Common;
+                sortTitle = GeodatalovDataSet.Common;
                 statusIcon += "custom-icon-info";
             }
 
@@ -714,6 +714,9 @@ namespace Kartverket.Register.Helpers
                     break;
                 case "wfsoratom":
                     label = InspireDataSet.WfsOrAtomStatus;
+                    break;
+                case "common":
+                    label = GeodatalovDataSet.Common;
                     break;
             }
 

@@ -7,10 +7,15 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class GeodatalovDatasetViewModel : DatasetViewModel
     {
+        [Display(Name = "InspireTheme", ResourceType = typeof(GeodatalovDataSet))]
         public bool InspireTheme { get; set; }
+        [Display(Name = "Dok", ResourceType = typeof(GeodatalovDataSet))]
         public bool Dok { get; set; }
+        [Display(Name = "NationalDataset", ResourceType = typeof(GeodatalovDataSet))]
         public bool NationalDataset { get; set; }
+        [Display(Name = "Plan", ResourceType = typeof(GeodatalovDataSet))]
         public bool Plan { get; set; }
+        [Display(Name = "Geodatalov", ResourceType = typeof(GeodatalovDataSet))]
         public bool Geodatalov { get; set; }
 
         [Display(Name = "Metadata:")]
@@ -19,43 +24,43 @@ namespace Kartverket.Register.Models.ViewModels
         public string MetadataNote { get; set; }
         public bool MetadataAutoUpdate { get; set; }
 
-        [Display(Name = "Produktspesifikasjon:")]
+        [Display(Name = "DOK_ProductSpecificationStatus", ResourceType = typeof(DataSet))]
         public string ProductSpesificationStatusId { get; set; }
         public virtual DokDeliveryStatus ProductSpesificationStatus { get; set; }
         public string ProduktspesifikasjonNote { get; set; }
         public bool ProduktspesifikasjonAutoUpdate { get; set; }
 
-        [Display(Name = "SOSI data:")]
+        [Display(Name = "DOK_Delivery_SosiRequirements", ResourceType = typeof(DataSet))]
         public string SosiDataStatusId { get; set; }
         public virtual DokDeliveryStatus SosiDataStatus { get; set; }
         public string SosiDataNote { get; set; }
         public bool SosiDataAutoUpdate { get; set; }
 
-        [Display(Name = "GML data")]
+        [Display(Name = "DOK_Delivery_GmlRequirements", ResourceType = typeof(DataSet))]
         public string GmlDataStatusId { get; set; }
         public virtual DokDeliveryStatus GmlDataStatus { get; set; }
         public string GmlDataNote { get; set; }
         public bool GmlDataAutoUpdate { get; set; }
 
-        [Display(Name = "WMS")]
+        [Display(Name = "DOK_Delivery_Wms", ResourceType = typeof(DataSet))]
         public string WmsStatusId { get; set; }
         public virtual DokDeliveryStatus WmsStatus { get; set; }
         public string WmsNote { get; set; }
         public bool WmsAutoUpdate { get; set; }
 
-        [Display(Name = "WFS")]
+        [Display(Name = "DOK_Delivery_Wfs", ResourceType = typeof(DataSet))]
         public string WfsStatusId { get; set; }
         public virtual DokDeliveryStatus WfsStatus { get; set; }
         public string WfsNote { get; set; }
         public bool WfsAutoUpdate { get; set; }
 
-        [Display(Name = "Atom feed")]
+        [Display(Name = "DOK_Delivery_AtomFeed", ResourceType = typeof(DataSet))]
         public string AtomFeedStatusId { get; set; }
         public virtual DokDeliveryStatus AtomFeedStatus { get; set; }
         public string AtomFeedNote { get; set; }
         public bool AtomFeedAutoUpdate { get; set; }
 
-        [Display(Name = "Nedlastingskrav status")]
+        [Display(Name = "Common", ResourceType = typeof(GeodatalovDataSet))]
         public string CommonStatusId { get; set; }
         public virtual DokDeliveryStatus CommonStatus { get; set; }
         public string CommonNote { get; set; }

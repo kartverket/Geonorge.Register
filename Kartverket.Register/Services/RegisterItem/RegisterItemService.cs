@@ -399,7 +399,23 @@ namespace Kartverket.Register.Services.RegisterItem
             {
                 return InspireDatasetNameAlreadyExist((InspireDataset)model);
             }
+            if (model is GeodatalovDataset)
+            {
+                return GeodatalovDatasetNameAlreadyExist((GeodatalovDataset) model);
+            }
             return false;
+        }
+
+        private bool GeodatalovDatasetNameAlreadyExist(GeodatalovDataset geodatalovDataset)
+        {
+            if (geodatalovDataset == null) throw new ArgumentNullException(nameof(geodatalovDataset));
+            var queryResults = from o in _dbContext.GeodatalovDatasets
+                where o.Name == geodatalovDataset.Name &&
+                      o.SystemId != geodatalovDataset.SystemId
+                      && o.RegisterId == geodatalovDataset.RegisterId
+                select o.SystemId;
+
+            return queryResults.Any();
         }
 
         private bool InspireDatasetNameAlreadyExist(InspireDatasetViewModel inspireDataset)
@@ -885,6 +901,56 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.CommonStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
+                    case "inspire":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_desc":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "dok":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Dok).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "dok_desc":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Dok).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "nationalt_dataset":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.NationalDataset).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "nationalt_dataset_desc":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.NationalDataset).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "plan":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Plan).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "plan_desc":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Plan).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "geodatalov":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Geodatalov).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "geodatalov_desc":
+                    {
+                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Geodatalov).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
                 }
             }
             return registerItems.OrderBy(o => o.Name).ToList();

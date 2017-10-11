@@ -39,5 +39,6 @@ namespace Kartverket.Register.Services.Register
         string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService);
         ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string sorting);
         Guid GetInspireStatusRegisterId();
+        Guid GetGeodatalovStatusRegisterId();
     }
 }

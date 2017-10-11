@@ -34,7 +34,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                @(Model.CannotChangeName() ? 
+                    Html.EditorFor(model => model.name, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}}) : 
+                    Html.EditorFor(model => model.name, new {htmlAttributes = new {@class = "form-control"}}))
                 @Html.ValidationMessage("ErrorMessage")
             </div>
         </div>
@@ -45,7 +47,9 @@
             <div class="form-group">
                 @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
+                @(Model.CannotChangeName() ? 
+                    Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } }) :
+                    Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control"} }))
                     @Html.ValidationMessageFor(m => Model.Translations[t].Name)
                 </div>
             </div>
@@ -86,7 +90,7 @@
                 @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

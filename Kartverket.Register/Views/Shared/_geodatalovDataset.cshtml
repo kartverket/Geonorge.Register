@@ -37,10 +37,10 @@
             <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
             <div class="col-md-5 col-sm-5 status-icons pull-right">
                 @HtmlHelperExtensions.Checked(item.InspireTheme, "Inspire")
-                @HtmlHelperExtensions.Checked(item.InspireTheme, "Det offentlige kartgrunnlaget")
-                @HtmlHelperExtensions.Checked(item.InspireTheme, "Nasjonalt datasett")
-                @HtmlHelperExtensions.Checked(item.InspireTheme, "Plan")
-                @HtmlHelperExtensions.Checked(item.InspireTheme, "Geodataloven")
+                @HtmlHelperExtensions.Checked(item.Dok, "Det offentlige kartgrunnlaget")
+                @HtmlHelperExtensions.Checked(item.NationalDataset, "Nasjonalt datasett")
+                @HtmlHelperExtensions.Checked(item.Plan, "Plan")
+                @HtmlHelperExtensions.Checked(item.Geodatalov, "Geodataloven")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
                 @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi")

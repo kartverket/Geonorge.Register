@@ -18,6 +18,10 @@ namespace Kartverket.Register.Models
 {
     public class Register
     {
+        private const string _geodatalovStatusRegister = "Geodatalov statusregister";
+        private const string _inspireStatusRegister = "Inspire statusregister";
+        private const string _DetOffentligeKartgrunnlagetKommunalt = "Det offentlige kartgrunnlaget - Kommunalt";
+
         public Register()
         {
             this.RegisterItems = new HashSet<RegisterItemV2>();
@@ -123,7 +127,7 @@ namespace Kartverket.Register.Models
 
         public bool IsDokMunicipal()
         {
-            return name == "Det offentlige kartgrunnlaget - Kommunalt";
+            return name == _DetOffentligeKartgrunnlagetKommunalt;
         }
 
         public Guid GetSystemId()
@@ -138,12 +142,12 @@ namespace Kartverket.Register.Models
 
         public bool IsInspireStatusRegister()
         {
-            return name == "Inspire statusregister" && parentRegister == null; // TODO, flere registre kan potensielt hete "Inspire statusregister"
+            return name == _inspireStatusRegister && parentRegister == null;
         }
 
         public bool IsGeodatalovStatusRegister()
         {
-            return name == "Geodatalov statusregister" && parentRegister == null;
+            return name == _geodatalovStatusRegister && parentRegister == null;
         }
 
         public bool ContainedItemClassIsOrganization()
@@ -224,6 +228,15 @@ namespace Kartverket.Register.Models
             return parentRegister == null
                 ? "/rediger/" + seoname
                 : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/rediger";
+        }
+
+
+        
+        public bool CannotChangeName()
+        {
+            return name == _inspireStatusRegister ||
+                   name == _geodatalovStatusRegister ||
+                   name == _DetOffentligeKartgrunnlagetKommunalt;
         }
     }
 }

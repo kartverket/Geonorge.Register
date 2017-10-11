@@ -1128,5 +1128,14 @@ namespace Kartverket.Register.Services.Register
 
             return queryResults.FirstOrDefault();
         }
+
+        public Guid GetGeodatalovStatusRegisterId()
+        {
+            var queryResults = from o in _dbContext.Registers
+                where o.name == "Geodatalov statusregister"
+                select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
     }
 }

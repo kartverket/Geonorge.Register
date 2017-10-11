@@ -775,10 +775,9 @@ namespace Kartverket.Register.Helpers
 
         public static HtmlString Checked(bool isChecked, string type)
         {
-            var html = "";
-            if (isChecked)
-                html = "<span data-toggle='tooltip' data-placement = 'bottom' title='" + type + "'><span class='fa fa-check'></span></span>";
-            return new HtmlString(html);
+            var className = "custom-icon";
+            if (isChecked) className = "fa fa-check";
+            return new HtmlString("<span data-toggle='tooltip' data-placement = 'bottom' title='" + type + "'><span class='" + className + "'></span></span>");
         }
     }
 }

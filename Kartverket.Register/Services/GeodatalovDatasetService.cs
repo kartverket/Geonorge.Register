@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using Kartverket.Register.Models;
 using System.Linq;
+using System.Web.Configuration;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
@@ -112,80 +114,8 @@ namespace Kartverket.Register.Services
 
         public GeodatalovDataset UpdateGeodatalovDatasetFromKartkatalogen(GeodatalovDataset originalDataset)
         {
-            var geodatalovDataset = _metadataService.FetchGeodatalovDatasetFromKartkatalogen(originalDataset.Uuid);
-            if (geodatalovDataset == null)
-            {
-                return originalDataset; //Skal datasettet da fjernes??
-            }
-            originalDataset.Name = geodatalovDataset.Name;
-            originalDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataset.Name);
-            originalDataset.Description = geodatalovDataset.Description;
-            originalDataset.OwnerId = geodatalovDataset.OwnerId;
-            originalDataset.Modified = DateTime.Now;
-
-            originalDataset.Uuid = geodatalovDataset.Uuid;
-            originalDataset.Notes = geodatalovDataset.Notes;
-            originalDataset.SpecificUsage = geodatalovDataset.SpecificUsage;
-            originalDataset.ProductSheetUrl = geodatalovDataset.ProductSheetUrl;
-            originalDataset.PresentationRulesUrl = geodatalovDataset.PresentationRulesUrl;
-            originalDataset.ProductSpecificationUrl = geodatalovDataset.ProductSpecificationUrl;
-            originalDataset.MetadataUrl = geodatalovDataset.MetadataUrl;
-            originalDataset.DistributionFormat = geodatalovDataset.DistributionFormat;
-            originalDataset.DistributionUrl = geodatalovDataset.DistributionUrl;
-            originalDataset.DistributionArea = geodatalovDataset.DistributionArea;
-            originalDataset.WmsUrl = geodatalovDataset.WmsUrl;
-            originalDataset.ThemeGroupId = geodatalovDataset.ThemeGroupId;
-            originalDataset.DatasetThumbnail = geodatalovDataset.DatasetThumbnail;
-            originalDataset.UuidService = geodatalovDataset.UuidService;
-
-            originalDataset.InspireTheme = geodatalovDataset.InspireTheme;
-            originalDataset.Dok = geodatalovDataset.Dok;
-            originalDataset.NationalDataset = geodatalovDataset.NationalDataset;
-            originalDataset.Plan = geodatalovDataset.Plan;
-            originalDataset.Geodatalov = geodatalovDataset.Geodatalov;
-
-            if (originalDataset.MetadataStatus != null)
-            {
-                originalDataset.MetadataStatus.StatusId = _datasetDeliveryService.GetMetadataStatus(geodatalovDataset.Uuid, true, originalDataset.MetadataStatus.StatusId);
-            }
-            if (originalDataset.ProductSpesificationStatus != null)
-            {
-                originalDataset.ProductSpesificationStatus.StatusId = _registerService.GetDOKStatus(geodatalovDataset.ProductSpecificationUrl, true, originalDataset.ProductSpesificationStatus.StatusId);
-            }
-            if (originalDataset.SosiDataStatus != null)
-            {
-                originalDataset.SosiDataStatus.StatusId = _registerService.GetSosiRequirements(geodatalovDataset.Uuid, originalDataset.ProductSpecificationUrl, true, originalDataset.SosiDataStatus.StatusId);
-            }
-
-            if (originalDataset.GmlDataStatus != null)
-            {
-                originalDataset.GmlDataStatus.StatusId = _registerService.GetGmlRequirements(geodatalovDataset.Uuid, true, originalDataset.GmlDataStatus.StatusId);
-            }
-
-            if (originalDataset.WmsStatus != null)
-            {
-                originalDataset.WmsStatus.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(geodatalovDataset.Uuid, true, originalDataset.WmsStatus.StatusId, geodatalovDataset.UuidService);
-            }
-
-            if (originalDataset.WfsStatus != null)
-            {
-                originalDataset.WfsStatus.StatusId = _datasetDeliveryService.GetWfsStatus(geodatalovDataset.Uuid, true, originalDataset.WfsStatus.StatusId);
-            }
-
-            if (originalDataset.AtomFeedStatus != null)
-            {
-                originalDataset.AtomFeedStatus.StatusId = _datasetDeliveryService.GetAtomFeedStatus(geodatalovDataset.Uuid, true, originalDataset.AtomFeedStatus.StatusId);
-            }
-
-            if (originalDataset.CommonStatus != null)
-            {
-                originalDataset.CommonStatus.StatusId = "notset";
-            }
-
-            _dbContext.Entry(originalDataset).State = EntityState.Modified;
-            _dbContext.SaveChanges();
-
-            return originalDataset;
+            var geodatalovDatasetFromKartkatalogen = _metadataService.FetchGeodatalovDatasetFromKartkatalogen(originalDataset.Uuid);
+            return geodatalovDatasetFromKartkatalogen == null ? originalDataset : UpdateGeodatalovDataset(originalDataset, geodatalovDatasetFromKartkatalogen);
         }
 
         public GeodatalovDataset UpdateGeodatalovDataset(GeodatalovDatasetViewModel viewModel)
@@ -298,17 +228,215 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeGeodatalovDatasets()
         {
+            var geodatalovDatasetsFromKartkatalogen = FetchGeodatalovDatasetsFromKartkatalogen();
+            RemoveGeodatalovDatasets(geodatalovDatasetsFromKartkatalogen);
+            UpdateGeodatalovDataset(geodatalovDatasetsFromKartkatalogen);
+
+            _dbContext.SaveChanges();
+        }
+
+        private void UpdateGeodatalovDataset(List<GeodatalovDataset> geodatalovDatasetsFromKartkatalogen)
+        {
+            //Update register
+            foreach (var geodatalovDataset in geodatalovDatasetsFromKartkatalogen)
+            {
+                var originalGeodatalovDataset = GetGeodatalovDatasetByUuid(geodatalovDataset.Uuid);
+                if (originalGeodatalovDataset != null)
+                {
+                    UpdateGeodatalovDataset(originalGeodatalovDataset, geodatalovDataset);
+                }
+                else
+                {
+                    NewGeodatalovDatasetFromKartkatalogen(geodatalovDataset);
+                }
+            }
+        }
+
+        private void NewGeodatalovDatasetFromKartkatalogen(GeodatalovDataset geodatalovDataset)
+        {
+            if (_registerItemService.ItemNameAlredyExist(geodatalovDataset)) return;
+            geodatalovDataset.SystemId = Guid.NewGuid();
+            geodatalovDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(geodatalovDataset.Name);
+            geodatalovDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();
+            geodatalovDataset.DateSubmitted = DateTime.Now;
+            geodatalovDataset.Modified = DateTime.Now;
+            geodatalovDataset.RegisterId = _registerService.GetGeodatalovStatusRegisterId();
+            geodatalovDataset.VersioningId = _registerItemService.NewVersioningGroup(geodatalovDataset);
+            geodatalovDataset.VersionNumber = 1;
+            geodatalovDataset.StatusId = "Submitted";
+            geodatalovDataset.DokStatusId = "Proposal";
+
+            //GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
+            var metadataStatusId = _datasetDeliveryService.GetMetadataStatus(geodatalovDataset.Uuid, true, "deficient");
+            var productSpesificationStatusId = _registerService.GetDOKStatus(geodatalovDataset.ProductSpecificationUrl, true, "deficient");
+            var sosiDataStatusId = _registerService.GetSosiRequirements(geodatalovDataset.Uuid, "", true, "deficient");
+            var gmlDataStatusId = _registerService.GetGmlRequirements(geodatalovDataset.Uuid, true, "deficient");
+            var wmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(geodatalovDataset.Uuid, true, "deficient", geodatalovDataset.UuidService);
+            var wfsStatusId = _datasetDeliveryService.GetWfsStatus(geodatalovDataset.Uuid, true, "deficient");
+            var atomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(geodatalovDataset.Uuid, true, "deficient");
+            var commonStatusId = "notset"; // TODO
+
+            geodatalovDataset.MetadataStatusId = _datasetDeliveryService.CreateDatasetDelivery(metadataStatusId, null, true);
+            geodatalovDataset.ProductSpesificationStatusId = _datasetDeliveryService.CreateDatasetDelivery(productSpesificationStatusId, null, true);
+            geodatalovDataset.SosiDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(sosiDataStatusId, null, true);
+            geodatalovDataset.GmlDataStatusId = _datasetDeliveryService.CreateDatasetDelivery(gmlDataStatusId, null, true);
+            geodatalovDataset.WmsStatusId = _datasetDeliveryService.CreateDatasetDelivery(wmsStatusId, null, true);
+            geodatalovDataset.WfsStatusId = _datasetDeliveryService.CreateDatasetDelivery(wfsStatusId, null, true);
+            geodatalovDataset.AtomFeedStatusId = _datasetDeliveryService.CreateDatasetDelivery(atomFeedStatusId, null, true);
+            geodatalovDataset.CommonStatusId = _datasetDeliveryService.CreateDatasetDelivery(commonStatusId, null, true);
+            _dbContext.GeodatalovDatasets.Add(geodatalovDataset);
+
+            _dbContext.GeodatalovDatasets.Add(geodatalovDataset);
+            _dbContext.SaveChanges();
+        }
+
+        private GeodatalovDataset UpdateGeodatalovDataset(GeodatalovDataset originalDataset, GeodatalovDataset geodatalovDatasetFromKartkatalogen)
+        {
+            originalDataset.Name = geodatalovDatasetFromKartkatalogen.Name;
+            originalDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataset.Name);
+            originalDataset.Description = geodatalovDatasetFromKartkatalogen.Description;
+            originalDataset.OwnerId = geodatalovDatasetFromKartkatalogen.OwnerId;
+            originalDataset.Modified = DateTime.Now;
+
+            originalDataset.Uuid = geodatalovDatasetFromKartkatalogen.Uuid;
+            originalDataset.Notes = geodatalovDatasetFromKartkatalogen.Notes;
+            originalDataset.SpecificUsage = geodatalovDatasetFromKartkatalogen.SpecificUsage;
+            originalDataset.ProductSheetUrl = geodatalovDatasetFromKartkatalogen.ProductSheetUrl;
+            originalDataset.PresentationRulesUrl = geodatalovDatasetFromKartkatalogen.PresentationRulesUrl;
+            originalDataset.ProductSpecificationUrl = geodatalovDatasetFromKartkatalogen.ProductSpecificationUrl;
+            originalDataset.MetadataUrl = geodatalovDatasetFromKartkatalogen.MetadataUrl;
+            originalDataset.DistributionFormat = geodatalovDatasetFromKartkatalogen.DistributionFormat;
+            originalDataset.DistributionUrl = geodatalovDatasetFromKartkatalogen.DistributionUrl;
+            originalDataset.DistributionArea = geodatalovDatasetFromKartkatalogen.DistributionArea;
+            originalDataset.WmsUrl = geodatalovDatasetFromKartkatalogen.WmsUrl;
+            originalDataset.ThemeGroupId = geodatalovDatasetFromKartkatalogen.ThemeGroupId;
+            originalDataset.DatasetThumbnail = geodatalovDatasetFromKartkatalogen.DatasetThumbnail;
+            originalDataset.UuidService = geodatalovDatasetFromKartkatalogen.UuidService;
+
+            originalDataset.InspireTheme = geodatalovDatasetFromKartkatalogen.InspireTheme;
+            originalDataset.Dok = geodatalovDatasetFromKartkatalogen.Dok;
+            originalDataset.NationalDataset = geodatalovDatasetFromKartkatalogen.NationalDataset;
+            originalDataset.Plan = geodatalovDatasetFromKartkatalogen.Plan;
+            originalDataset.Geodatalov = geodatalovDatasetFromKartkatalogen.Geodatalov;
+
+            if (originalDataset.MetadataStatus != null)
+            {
+                originalDataset.MetadataStatus.StatusId = _datasetDeliveryService.GetMetadataStatus(geodatalovDatasetFromKartkatalogen.Uuid, true, originalDataset.MetadataStatus.StatusId);
+            }
+            if (originalDataset.ProductSpesificationStatus != null)
+            {
+                originalDataset.ProductSpesificationStatus.StatusId = _registerService.GetDOKStatus(geodatalovDatasetFromKartkatalogen.ProductSpecificationUrl, true, originalDataset.ProductSpesificationStatus.StatusId);
+            }
+            if (originalDataset.SosiDataStatus != null)
+            {
+                originalDataset.SosiDataStatus.StatusId = _registerService.GetSosiRequirements(geodatalovDatasetFromKartkatalogen.Uuid, originalDataset.ProductSpecificationUrl, true, originalDataset.SosiDataStatus.StatusId);
+            }
+
+            if (originalDataset.GmlDataStatus != null)
+            {
+                originalDataset.GmlDataStatus.StatusId = _registerService.GetGmlRequirements(geodatalovDatasetFromKartkatalogen.Uuid, true, originalDataset.GmlDataStatus.StatusId);
+            }
+
+            if (originalDataset.WmsStatus != null)
+            {
+                originalDataset.WmsStatus.StatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(geodatalovDatasetFromKartkatalogen.Uuid, true, originalDataset.WmsStatus.StatusId, geodatalovDatasetFromKartkatalogen.UuidService);
+            }
+
+            if (originalDataset.WfsStatus != null)
+            {
+                originalDataset.WfsStatus.StatusId = _datasetDeliveryService.GetWfsStatus(geodatalovDatasetFromKartkatalogen.Uuid, true, originalDataset.WfsStatus.StatusId);
+            }
+
+            if (originalDataset.AtomFeedStatus != null)
+            {
+                originalDataset.AtomFeedStatus.StatusId = _datasetDeliveryService.GetAtomFeedStatus(geodatalovDatasetFromKartkatalogen.Uuid, true, originalDataset.AtomFeedStatus.StatusId);
+            }
+
+            if (originalDataset.CommonStatus != null)
+            {
+                originalDataset.CommonStatus.StatusId = "notset";
+            }
+
+            _dbContext.Entry(originalDataset).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return originalDataset;
+        }
+
+        private GeodatalovDataset GetGeodatalovDatasetByUuid(string uuid)
+        {
+            var queryResult = from i in _dbContext.GeodatalovDatasets
+                where i.Uuid == uuid
+                select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        private void RemoveGeodatalovDatasets(List<GeodatalovDataset> geodatalovDatasetsFromKartkatalogen)
+        {
+            var geodatalovDatasetsFromRegister = GetGeodatalovDatasets();
+            var exists = false;
+            var removeDatasets = new List<GeodatalovDataset>();
+
+            foreach (var geodatalovDatasetFromRegister in geodatalovDatasetsFromRegister)
+            {
+                if (geodatalovDatasetsFromKartkatalogen.Any(geodatalovDatasetFromKartkatalog => geodatalovDatasetFromKartkatalog.Uuid == geodatalovDatasetFromRegister.Uuid))
+                {
+                    exists = true;
+                }
+                if (!exists)
+                {
+                    removeDatasets.Add(geodatalovDatasetFromRegister);
+                }
+                exists = false;
+            }
+            foreach (var geodatalovDataset in removeDatasets)
+            {
+                DeleteGeodatalovDataset(geodatalovDataset);
+            }
+        }
+
+        private List<GeodatalovDataset> GetGeodatalovDatasets()
+        {
             var queryResultsRegisterItem = from d in _dbContext.GeodatalovDatasets
                 where !string.IsNullOrEmpty(d.Uuid)
                 select d;
 
             var geodatalovDatasets = queryResultsRegisterItem.ToList();
+            return geodatalovDatasets;
+        }
 
-            foreach (var geodatalovDataset in geodatalovDatasets)
+        private List<GeodatalovDataset> FetchGeodatalovDatasetsFromKartkatalogen()
+        {
+            var geodatalovDatasetsFromKartkatalogen = new List<GeodatalovDataset>();
+
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=geodataloven&Offset=1&limit=500&mediatype=json";
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
             {
-                UpdateGeodatalovDatasetFromKartkatalogen(geodatalovDataset);
+                var json = c.DownloadString(url);
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    var result = data.Results;
+
+                    foreach (var item in result)
+                    {
+                        var geodatalovDataset = _metadataService.FetchGeodatalovDatasetFromKartkatalogen(item.Uuid.ToString());
+                        if (geodatalovDataset != null)
+                        {
+                            geodatalovDatasetsFromKartkatalogen.Add(geodatalovDataset);
+                        }
+                    }
+                }
+                return geodatalovDatasetsFromKartkatalogen;
             }
-            _dbContext.SaveChanges();
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
         }
     }
 }

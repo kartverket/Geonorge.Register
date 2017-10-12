@@ -155,22 +155,23 @@
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
         @if (Request.IsAuthenticated)
+        {
+            if (HtmlHelperExtensions.Access(Model))
             {
-                if (HtmlHelperExtensions.Access(Model))
+                if (Model.IsDokMunicipal())
                 {
-                    if (Model.IsDokMunicipal())
+                    if (municipalityCode != null)
                     {
-                        if (municipalityCode != null)
+                        if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                         {
-                            if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
-                            {
                             <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
                             <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
                         }
                     }
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
                 }
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
             }
+        
             if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>

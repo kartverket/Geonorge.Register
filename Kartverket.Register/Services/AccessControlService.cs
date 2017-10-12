@@ -68,15 +68,15 @@ namespace Kartverket.Register.Services
                     }
                 }
                 else {
-                    return IsOwner(registerItem.submitter.name, user.name) || IsRegisterOwner(registerItem.register, user.name) ;
+                    return IsOwner(registerItem.submitter.name, user.name) || IsRegisterOwner(registerItem.register.owner.name, user.name) ;
                 }
             }
             return false;
         }
 
-        private bool IsRegisterOwner(Models.Register register, string userName)
+        private bool IsRegisterOwner(string registerOwner, string userName)
         {
-            return register.owner.name == userName || register.manager.name == userName;
+            return registerOwner == userName || registerOwner == userName;
         }
 
         private bool accessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
@@ -121,7 +121,7 @@ namespace Kartverket.Register.Services
                 {
                     if (register.ContainedItemClassIsCodelistValue())
                     {
-                        return IsRegisterOwner(register, user.name);
+                        return IsRegisterOwner(register.owner.name, user.name);
                     }
                     return true;
                 }
@@ -135,10 +135,15 @@ namespace Kartverket.Register.Services
 
         private bool AccessRegister(RegisterV2ViewModel register)
         {
+            Organization user = _registerService.GetOrganizationByUserName();
             if (register.Access == 2)
             {
                 if (IsEditor())
                 {
+                    if (register.ContainedItemClassIsCodelistValue())
+                    {
+                        return IsRegisterOwner(register.Owner.name, user.name);
+                    }
                     return true;
                 }
             }

@@ -2860,6 +2860,11 @@
               Looks up a localized string similar to Liste.
             </summary>
         </member>
+        <member name="P:Resources.Shared.NameFor_en">
+            <summary>
+              Looks up a localized string similar to Navn engelsk.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.Navn_Engelsk">
             <summary>
               Looks up a localized string similar to Navn engelsk.

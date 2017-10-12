@@ -247,4 +247,7 @@
   <data name="DisplayMoreInfo" xml:space="preserve">
     <value>vis mer info</value>
   </data>
+  <data name="NameFor_en" xml:space="preserve">
+    <value>Navn engelsk</value>
+  </data>
 </root>

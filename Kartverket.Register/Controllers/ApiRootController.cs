@@ -324,6 +324,7 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = ConvertRegister(item, filter);
             tmp.containeditems = new List<Models.Api.Registeritem>();
+            tmp.lang = CultureHelper.GetCurrentCulture();
             if (!item.items.Any())
             {
                 foreach (var registerItem in item.RegisterItems)

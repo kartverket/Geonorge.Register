@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
+using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Services.Search;
@@ -21,12 +22,14 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterService _registerService;
         private readonly ITranslationService _translationService;
         private readonly IRegisterItemService _registerItemService;
+        private IAccessControlService _accessControlService;
 
         public SubregisterController(ITranslationService translationService, RegisterDbContext dbContex)
         {
             _db = dbContex;
             _registerService = new RegisterService(_db);
             _registerItemService = new RegisterItemService(_db);
+            _accessControlService = new AccessControlService();
             _translationService = translationService;
         }
 
@@ -76,12 +79,7 @@ namespace Kartverket.Register.Controllers
                 nyttRegister.parentRegister.parentRegister = register.parentRegister;
             }
 
-            if (role == "nd.metadata_admin")
-            {
-                return View(nyttRegister);
-            }
-
-            if ((role == "nd.metadata" || role == "nd.metadata_editor") && register.accessId == 2)
+            if (_accessControlService.Access(register))
             {
                 return View(nyttRegister);
             }

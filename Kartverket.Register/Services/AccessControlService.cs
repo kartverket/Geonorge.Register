@@ -114,10 +114,15 @@ namespace Kartverket.Register.Services
         private bool AccessRegister(object model)
         {
             Models.Register register = (Models.Register)model;
+            Organization user = _registerService.GetOrganizationByUserName();
             if (register.accessId == 2)
             {
                 if (IsEditor())
                 {
+                    if (register.ContainedItemClassIsCodelistValue())
+                    {
+                        return IsRegisterOwner(register, user.name);
+                    }
                     return true;
                 }
             }

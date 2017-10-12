@@ -168,9 +168,6 @@
                             <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
                         }
                     }
-                }
-                else
-                {
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
                 }
             }
@@ -180,6 +177,6 @@
             }
         }
         
-            <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.GetObjectUrl()">@Shared.Back</a>
+        <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.GetObjectUrl()">@Shared.Back</a>
     </div>
 </div>

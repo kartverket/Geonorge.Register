@@ -169,9 +169,12 @@
                         }
                     }
                 }
-                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
+                else
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
+                }
             }
-        
+
             if (HtmlHelperExtensions.IsAdmin() && !Model.IsServiceAlertRegister())
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>

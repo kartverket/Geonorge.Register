@@ -33,6 +33,10 @@ namespace Kartverket.Register.Services
             {
                 return AccessRegister(model);
             }
+            if (model is RegisterV2ViewModel)
+            {
+                return AccessRegister((RegisterV2ViewModel)model);
+            }
             if (model is Models.RegisterItem)
             {
                 return accessRegisterItem((Models.RegisterItem)model);
@@ -64,10 +68,15 @@ namespace Kartverket.Register.Services
                     }
                 }
                 else {
-                    return IsOwner(registerItem.submitter.name, user.name);
+                    return IsOwner(registerItem.submitter.name, user.name) || IsRegisterOwner(registerItem.register, user.name) ;
                 }
             }
             return false;
+        }
+
+        private bool IsRegisterOwner(Models.Register register, string userName)
+        {
+            return register.owner.name == userName || register.manager.name == userName;
         }
 
         private bool accessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
@@ -113,6 +122,22 @@ namespace Kartverket.Register.Services
                 }
             }
             else if (register.accessId == 4)
+            {
+                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
+            }
+            return false;
+        }
+
+        private bool AccessRegister(RegisterV2ViewModel register)
+        {
+            if (register.Access == 2)
+            {
+                if (IsEditor())
+                {
+                    return true;
+                }
+            }
+            else if (register.Access == 4)
             {
                 return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
             }

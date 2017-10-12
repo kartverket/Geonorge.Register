@@ -53,6 +53,7 @@ namespace Kartverket.Register.Models.ViewModels
         public TranslationCollection<RegisterTranslation> Translations { get; set; }
 
         public string OrderBy { get; set; }
+        public int Access { get; set; }
 
 
         public RegisterV2ViewModel(Register register)
@@ -76,6 +77,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+                if (register.accessId != null) Access = register.accessId.Value;
             }
 
             if (register.IsServiceAlertRegister())

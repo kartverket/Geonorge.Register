@@ -30,7 +30,7 @@
         @if (Model.Register.containedItemClass != "NameSpace")
         { <p> @Model.Description</p>}
         @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-        { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p><br>}
+        { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
 
         @if (Model.Register.containedItemClass == "NameSpace")
         { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}

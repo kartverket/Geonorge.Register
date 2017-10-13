@@ -506,7 +506,7 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "inspire_metadata_status" || sortingParam == "inspire_metadata_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_Metadata;
+                sortTitle = InspireDataSet.Metadata;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "inspire_metadataservice_status" || sortingParam == "inspire_metadataservice_status_desc")
@@ -516,22 +516,22 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "inspire_distribution_status" || sortingParam == "inspire_distribution_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_Distribution;
+                sortTitle = InspireDataSet.Distribution;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "inspire_wms_status" || sortingParam == "inspire_wms_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_Wms;
+                sortTitle = InspireDataSet.WmsStatus;
                 statusIcon += "custom-icon-wfs";
             }
             else if (sortingParam == "inspire_wfs_status" || sortingParam == "inspire_wfs_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_Wfs;
+                sortTitle = InspireDataSet.WfsStatus;
                 statusIcon += "custom-icon-wfs";
             }
             else if (sortingParam == "inspire_atom_status" || sortingParam == "inspire_atom_status_desc")
             {
-                sortTitle = DataSet.DOK_Delivery_AtomFeed;
+                sortTitle = InspireDataSet.AtomStatus;
                 statusIcon = "fa fa-rss-square";
             }
             else if (sortingParam == "inspire_wfsoratom_status" || sortingParam == "inspire_wfsoratom_status_desc")
@@ -630,7 +630,7 @@ namespace Kartverket.Register.Helpers
             return new HtmlString(linkSort);
         }
 
-        public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string type = null)
+        public static IHtmlString GetDokDeliveryStatusSymbol(string status, bool? restricted, string label, string type = null)
         {
 
             var symbolDeficient = "custom-icon custom-icon-smile-red";
@@ -668,58 +668,6 @@ namespace Kartverket.Register.Helpers
                         break;
                 }
             }
-
-            var label = "";
-
-            switch (type)
-            {
-                case "metadata":
-                    label = DataSet.DOK_Delivery_Metadata;
-                    break;
-                case "metadataservice":
-                    label = InspireDataSet.MetadataServiceStatus;
-                    break;
-                case "ProductSheet":
-                    label = DataSet.DOK_Delivery_ProductSheet;
-                    break;
-                case "presentationRules":
-                    label = DataSet.DOK_Delivery_PresentationRules;
-                    break;
-                case "productSpecification":
-                    label = DataSet.DOK_Delivery_ProductSpesification;
-                    break;
-                case "wms":
-                    label = DataSet.DOK_Delivery_Wms;
-                    break;
-                case "wfs":
-                    label = DataSet.DOK_Delivery_Wfs;
-                    break;
-                case "sosi":
-                    label = DataSet.DOK_Delivery_SosiRequirements;
-                    break;
-                case "distribution":
-                    label = DataSet.DOK_Delivery_Distribution;
-                    break;
-                case "gml":
-                    label = DataSet.DOK_Delivery_GmlRequirements;
-                    break;
-                case "atom":
-                    label = DataSet.DOK_Delivery_AtomFeed;
-                    break;
-                case "harmonizeddata":
-                    label = InspireDataSet.HarmonizedDataStatus;
-                    break;
-                case "spatialdataservice":
-                    label = InspireDataSet.SpatialDataServiceStatus;
-                    break;
-                case "wfsoratom":
-                    label = InspireDataSet.WfsOrAtomStatus;
-                    break;
-                case "common":
-                    label = GeodatalovDataSet.Common;
-                    break;
-            }
-
 
             if (!string.IsNullOrEmpty(label))
                 title = label + ": " + title;

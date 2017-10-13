@@ -120,11 +120,20 @@
   <data name="AtomFeedStatus" xml:space="preserve">
     <value>Nedlastingstjeneste Atom-feed</value>
   </data>
+  <data name="AtomStatus" xml:space="preserve">
+    <value>Atom feed</value>
+  </data>
+  <data name="Distribution" xml:space="preserve">
+    <value>Datadeling</value>
+  </data>
   <data name="DistributionStatus" xml:space="preserve">
     <value>Deling av data</value>
   </data>
   <data name="HarmonizedDataStatus" xml:space="preserve">
     <value>Harmoniserte data</value>
+  </data>
+  <data name="Metadata" xml:space="preserve">
+    <value>Metadata</value>
   </data>
   <data name="MetadataServiceStatus" xml:space="preserve">
     <value>Metadatatjeneste</value>
@@ -140,5 +149,8 @@
   </data>
   <data name="WfsStatus" xml:space="preserve">
     <value>Nedlastingstjeneste WFS</value>
+  </data>
+  <data name="WmsStatus" xml:space="preserve">
+    <value>WMS</value>
   </data>
 </root>

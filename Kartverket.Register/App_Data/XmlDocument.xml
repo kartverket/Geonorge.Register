@@ -1032,6 +1032,16 @@
               Looks up a localized string similar to Nedlastingstjeneste Atom-feed.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.AtomStatus">
+            <summary>
+              Looks up a localized string similar to Atom feed.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Distribution">
+            <summary>
+              Looks up a localized string similar to Datadeling.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.DistributionStatus">
             <summary>
               Looks up a localized string similar to Deling av data.
@@ -1040,6 +1050,11 @@
         <member name="P:Resources.InspireDataSet.HarmonizedDataStatus">
             <summary>
               Looks up a localized string similar to Harmoniserte data.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.Metadata">
+            <summary>
+              Looks up a localized string similar to Metadata.
             </summary>
         </member>
         <member name="P:Resources.InspireDataSet.MetadataServiceStatus">
@@ -1065,6 +1080,11 @@
         <member name="P:Resources.InspireDataSet.WfsStatus">
             <summary>
               Looks up a localized string similar to Nedlastingstjeneste WFS.
+            </summary>
+        </member>
+        <member name="P:Resources.InspireDataSet.WmsStatus">
+            <summary>
+              Looks up a localized string similar to WMS.
             </summary>
         </member>
         <member name="T:Resources.Documents">

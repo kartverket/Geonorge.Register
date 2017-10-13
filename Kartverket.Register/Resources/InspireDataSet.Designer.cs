@@ -106,6 +106,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inspire tema.
+        /// </summary>
+        public static string InspireTheme {
+            get {
+                return ResourceManager.GetString("InspireTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Metadata.
         /// </summary>
         public static string Metadata {

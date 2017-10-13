@@ -132,6 +132,9 @@
   <data name="HarmonizedDataStatus" xml:space="preserve">
     <value>Harmoniserte data</value>
   </data>
+  <data name="InspireTheme" xml:space="preserve">
+    <value>Inspire tema</value>
+  </data>
   <data name="Metadata" xml:space="preserve">
     <value>Metadata</value>
   </data>

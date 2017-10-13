@@ -7,6 +7,9 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class InspireDatasetViewModel : DatasetViewModel
     {
+        [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
+        public string InspireTheme { get; set; }
+
         [Display(Name = "Metadata:")]
         public string MetadataStatusId { get; set; }
         public virtual DokDeliveryStatus MetadataStatus { get; set; }
@@ -74,6 +77,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (inspireDataset != null)
             {
+                InspireTheme = inspireDataset.InspireTheme;
                 if (inspireDataset.InspireDeliveryMetadata != null)
                 {
                     MetadataStatusId = inspireDataset.InspireDeliveryMetadata.StatusId;

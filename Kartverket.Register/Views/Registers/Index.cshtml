@@ -76,7 +76,7 @@
             {
                 if (item.parentRegisterId == null)
                 {
-                    if (item.name == "Inspire statusregister")
+                    if (item.IsInspireStatusRegister() || item.IsGeodatalovStatusRegister())
                     {
                         if (HtmlHelperExtensions.IsAdmin())
                         {

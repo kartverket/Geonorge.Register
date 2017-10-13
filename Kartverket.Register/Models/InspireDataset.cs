@@ -8,6 +8,7 @@ namespace Kartverket.Register.Models
     public class InspireDataset : DatasetV2
     {
         //Inspire delivery statuses
+        public string InspireTheme { get; set; }
 
         //Metadata
         [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]

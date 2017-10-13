@@ -729,6 +729,16 @@ namespace Kartverket.Register.Services.RegisterItem
                         }
 
                     // InspireDataset
+                    case "inspiretheme":
+                        {
+                        var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
+                    case "inspiretheme_desc":
+                        {
+                        var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_metadata_status":
                         {
                             var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.MetadataStatusId).ToList();

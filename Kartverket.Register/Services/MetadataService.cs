@@ -252,10 +252,14 @@ namespace Kartverket.DOK.Service
                         data.ContactOwner != null && data.ContactOwner.Organization != null
                             ? data.ContactOwner.Organization.Value
                             : "");
-                    inspireDataset.ThemeGroupId =
-                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
-                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                    inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
+
+                    inspireDataset.InspireTheme = GetInspireThemeName(
+                        data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
+                            ? data.KeywordsInspire[0].KeywordValue.Value
                             : "Annen");
+
+
 
                     if (data.ServiceUuid != null)
                         inspireDataset.UuidService = data.ServiceUuid;
@@ -284,6 +288,20 @@ namespace Kartverket.DOK.Service
             }
 
             return inspireDataset;
+        }
+
+        private string GetInspireThemeName(string code)
+        {
+            if (!String.IsNullOrWhiteSpace(code))
+            {
+                RegisterDbContext db = new RegisterDbContext();
+                var queryResultsRegisterItem = from o in db.CodelistValues
+                    where o.value == code
+                    select o.name;
+
+                return queryResultsRegisterItem.FirstOrDefault();
+            }
+            return code;
         }
 
         public GeodatalovDataset FetchGeodatalovDatasetFromKartkatalogen(string uuid)

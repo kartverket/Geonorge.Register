@@ -1052,6 +1052,11 @@
               Looks up a localized string similar to Harmoniserte data.
             </summary>
         </member>
+        <member name="P:Resources.InspireDataSet.InspireTheme">
+            <summary>
+              Looks up a localized string similar to Inspire tema.
+            </summary>
+        </member>
         <member name="P:Resources.InspireDataSet.Metadata">
             <summary>
               Looks up a localized string similar to Metadata.

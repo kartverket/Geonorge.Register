@@ -1,47 +1,45 @@
 ﻿@model PagedList.IPagedList<Register>
+@using System.Diagnostics.Eventing.Reader
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
 
 @{
-    var register = ViewBag.register;
     var search = ViewBag.search;
-    var page2 = ViewBag.page;
-    int pageNumber = (page2 ?? 1);
 }
 
+<div class="table-heading col-md-12">
+    <div class="col-md-3 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Name, "name")</div>
+    <div class="col-md-5 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Description, "description")</div>
+    <div class="col-md-2 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.ContainedItemClass, "containedItemClass")</div>
+    <div class="col-md-2 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+</div>
 @if (string.IsNullOrWhiteSpace(search))
 {
-    <div class="register registersub search-results">
-        @foreach (var item in Model)
-        {
-            <div class="row result-row metadata">
-                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                    
-                    <div class="col-title col-sm-3 col-md-3 col-lg-3">
-                        <a class="" href="/subregister/@item.parentRegister.seoname/@item.owner.seoname/@item.seoname">
-                            @item.NameTranslated()
-                        </a>
-                    </div>
-                    
-                    <div class="col-no-padding-xs col-sm-6 col-md-6 col-col-lg-6 col-descripton">
-                        <p>@item.DescriptionTranslated()</p>
-                    </div>
-                    
-                    <div class="col-no-padding-xs col-information col-sm-3 col-md-3 col-lg-3">
-                        <p title="Innhold: @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)"><span>@Registers.ContainedItemClass: </span> @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</p>
-                        <p title="@Registers.Owner: @item.owner.name"><span>@Registers.Owner: </span> @item.owner.NameTranslated()</p>
-                    </div>
-
-                </div>
+    foreach (var item in Model)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-3 col-sm-12 col">
+                <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
             </div>
-            <hr />
-        }
-    </div>
+            <div class="col-md-5 col-sm-12 col">
+                <p>@item.DescriptionTranslated()</p>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                <p title="Innhold: @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)">@HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</p>
+            </div>
+            <div class="col-md-2 col-sm-12 col">
+                <p title="@Registers.Owner: @item.owner.name">@item.owner.NameTranslated()</p>
+            </div>
+        </div>
+    }
 }
 else
 {
     @Html.Partial("_searchResultSubregisters", Model.ToList())
 }
+
+
+
 
 
 

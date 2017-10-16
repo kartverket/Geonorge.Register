@@ -1,90 +1,54 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 
-@{
-    var registerName = ViewBag.register;
+<div class="table-heading col-md-12">
+    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
+    <div class="col-md-2 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderEpsg, "epsg")</div>
+    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderSosi, "sosi")</div>
+    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
+    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
+    <div class="col-md-2 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
+    <div class="col-md-1 col-sm-2 col">@EPSGs.TableHeaderEksternalReference</div>
+</div>
+
+@foreach (EPSG item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-4 col-sm-12 col">
+            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            <span title="@EPSGs.EpsgCode: @item.epsgcode">@item.epsgcode</span>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <span title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem">@item.sosiReferencesystem</span>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <span title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem">@item.verticalReferenceSystem</span>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <span title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem">@item.horizontalReferenceSystem</span>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            @if (item.dimension != null)
+            {
+                <span title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()">@item.dimension.DescriptionTranslated()</span>
+            }
+            else
+            {
+                <span></span>
+            }
+            
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <a href="@item.externalReference" title="@EPSGs.ExternalReference @item.name"><i class="custom-icon-sm custom-icon-eksternlink"></i></a>
+        </div>
+
+        
+       
+    </div>
 }
 
-<div class="register epsg search-results">
-    @foreach (EPSG item in Model)
-    {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                
-                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <a href="@item.GetObjectUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">
-                        @item.NameTranslated()
-                    </a>
-                    <p>
-                        @item.DescriptionTranslated()
-                    </p>
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
-
-                    @if (item.epsgcode == null)
-                    {
-                        <p title="@EPSGs.EpsgCode: @item.epsgcode"><span>EPSG: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.EpsgCode: @item.epsgcode"><span>EPSG: </span>@Html.DisplayFor(modelItem => item.epsgcode)</p>
-                    }
-
-                    @if (item.sosiReferencesystem == null)
-                    {
-                        <p title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.SosiReferencesystem: @item.sosiReferencesystem"><span>Sosi referansesystem: </span>@Html.DisplayFor(modelItem => item.sosiReferencesystem)</p>
-                    }
-
-                    @if (item.verticalReferenceSystem == null)
-                    {
-                        <p title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.VerticalReferenceSystem: @item.verticalReferenceSystem"><span>Vertikaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.verticalReferenceSystem)</p>
-                    }
-
-                    @if (item.horizontalReferenceSystem == null)
-                    {
-                        <p title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.HorizontalReferenceSystem: @item.horizontalReferenceSystem"><span>Horisontaltreferansesystem: </span>@Html.DisplayFor(modelItem => item.horizontalReferenceSystem)</p>
-                    }
-
-                    @if (item.dimensionId == null)
-                    {
-                        <p title="@EPSGs.Dimension: "><span>@EPSGs.Dimension: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()"><span>@EPSGs.Dimension: </span>@item.dimension.DescriptionTranslated()</p>
-                    }
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md- col-lg-4 col-information">
-
-                    @if (item.externalReference == null)
-                    {
-                        <p title="@EPSGs.ExternalReference @item.name"><span>@EPSGs.ExternalReference: </span> - </p>
-                    }
-                    else
-                    {
-                        <p title="@EPSGs.ExternalReference @item.name"><span>@EPSGs.ExternalReference: </span><a href="@item.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-                    }
-                </div>
-
-            </div>
-        </div>
-        <hr />
-    }
-</div>
 
 

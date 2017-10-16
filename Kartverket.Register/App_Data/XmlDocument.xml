@@ -2191,6 +2191,36 @@
               Looks up a localized string similar to Foreslå ny EPSG-kode.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.TableHeaderDimension">
+            <summary>
+              Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderEksternalReference">
+            <summary>
+              Looks up a localized string similar to Referanser.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderEpsg">
+            <summary>
+              Looks up a localized string similar to EPSG.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderHorizontalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Horisontalt.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderSosi">
+            <summary>
+              Looks up a localized string similar to SOSI.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderVertikalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Vertikal.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.Vertical">
             <summary>
               Looks up a localized string similar to Vertikalt.

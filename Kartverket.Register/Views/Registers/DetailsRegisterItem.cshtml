@@ -14,7 +14,7 @@
 }
 
 <section class="heading">
-    <div class="row">
+    <article class="row">
         <div class="col-sm-12">
             <h1 class="small-h1">
                 @Model.Name
@@ -23,51 +23,48 @@
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
-    </div>
+        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+            @if (Model.Register.containedItemClass != "NameSpace")
+            { <p> @Model.Description</p>}
+            @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
+            { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
+
+            @if (Model.Register.containedItemClass == "NameSpace")
+            { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
+            else
+            {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
+
+            @if (Model.Owner != null)
+            { <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
+
+            <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
+            @if (Model.VersionName != null)
+            {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}
+        </div>
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
+            <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
+            @if (Model.Register.containedItemClass != "Dataset")
+            {
+                if (Model.DateAccepted != null)
+                {
+                    <span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
+                }
+                if (Model.DateSuperseded != null)
+                {
+                    <br /><span class="small">@Html.DisplayNameFor(model => model.DateSuperseded): @Html.DisplayFor(modelItem => Model.DateSuperseded)</span>
+                }
+                if (Model.DateRetired != null)
+                {
+                    <br /><span class="small">@Html.DisplayNameFor(model => model.DateRetired): @Html.DisplayFor(modelItem => Model.DateRetired)</span>
+                }
+                if (Model.DateNotAccepted != null)
+                {
+                    <br /><span class="small">@Html.DisplayNameFor(model => model.DateNotAccepted): @Html.DisplayFor(modelItem => Model.DateNotAccepted)</span>
+                }
+            }
+        </div>
+    </article>
 </section>
-<div class="row">
-    <article class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
-        @if (Model.Register.containedItemClass != "NameSpace")
-        { <p> @Model.Description</p>}
-        @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-        { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
-
-        @if (Model.Register.containedItemClass == "NameSpace")
-        { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
-        else
-        {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
-
-        @if (Model.Owner != null)
-        { <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
-
-        <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
-        @if (Model.VersionName != null)
-        {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}
-    </article>
-    <article class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
-        <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
-        @if (Model.Register.containedItemClass != "Dataset")
-        {
-            if (Model.DateAccepted != null)
-            {
-                <span class="small">@Html.DisplayNameFor(model => model.DateAccepted): @Html.DisplayFor(modelItem => Model.DateAccepted)</span>
-            }
-            if (Model.DateSuperseded != null)
-            {
-                <br /><span class="small">@Html.DisplayNameFor(model => model.DateSuperseded): @Html.DisplayFor(modelItem => Model.DateSuperseded)</span>
-            }
-            if (Model.DateRetired != null)
-            {
-                <br /><span class="small">@Html.DisplayNameFor(model => model.DateRetired): @Html.DisplayFor(modelItem => Model.DateRetired)</span>
-            }
-            if (Model.DateNotAccepted != null)
-            {
-                <br /><span class="small">@Html.DisplayNameFor(model => model.DateNotAccepted): @Html.DisplayFor(modelItem => Model.DateNotAccepted)</span>
-            }
-        }
-    </article>
-    <hr>
-</div>
 
 <div class="row">
     @if (Model is InspireDatasetViewModel)

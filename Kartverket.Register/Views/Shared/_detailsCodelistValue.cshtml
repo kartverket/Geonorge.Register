@@ -1,41 +1,31 @@
 ﻿@model Kartverket.Register.Models.CodelistValue
 
-<div>
-    <div class="row result-row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="hidden-xs col-sm-12 col-md-6 col-lg-6 top-padding">
+<article class="col-md-12">
+    <p><strong>@CodelistValues.CodeValue:</strong> @Html.DisplayFor(c => c.value)</p>
+</article>
 
-                @CodelistValues.CodeValue: @Html.DisplayFor(c => c.value)
-
-            </div>
-
-            <div class="col-sm-12 col-md-6 col-lg-6">
-                <div class="col-sm-12 col-md-12 col-lg-12">
-                    <h4>@CodelistValues.HierarchicalCodelists</h4>
-                </div>
-
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <p><strong>@CodelistValues.BroaderItem</strong></p>
-                    @if (Model.broaderItemId != null)
-                    {
-                        <a href="@Model.broaderItem.GetObjectUrl()">
-                            @Model.broaderItem.name
-                        </a>
-                    }
-                </div>
-                <div class="col-sm-12 col-md-6 col-lg-6">
-                    <p><strong>@CodelistValues.NarrowerItems</strong></p>
-
-                    @foreach (Kartverket.Register.Models.CodelistValue narrower in Model.narrowerItems)
-                    {
-                        <p><a href="@narrower.GetObjectUrl()">
-                            @narrower.name
-                        </a></p>
-                    }
-                </div>
-
-            </div>
-        </div>
+<article class="col-sm-12">
+    <h3>@CodelistValues.HierarchicalCodelists</h3>
+    <div class="col-sm-12 col-md-6 col">
+        <p><strong>@CodelistValues.BroaderItem</strong></p>
+        @if (Model.broaderItemId != null)
+        {
+            <a href="@Model.broaderItem.GetObjectUrl()">
+                @Model.broaderItem.name
+            </a>
+        }
     </div>
+    <div class="col-sm-12 col-md-6 col">
+        <p><strong>@CodelistValues.NarrowerItems</strong></p>
 
-</div>
+        @foreach (Kartverket.Register.Models.CodelistValue narrower in Model.narrowerItems)
+        {
+            <p>
+                <a href="@narrower.GetObjectUrl()">
+                    @narrower.name
+                </a>
+            </p>
+        }
+    </div>
+</article>
+

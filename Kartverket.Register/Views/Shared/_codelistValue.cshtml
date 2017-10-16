@@ -1,56 +1,31 @@
 ﻿@using Kartverket.Register.Helpers
-@model PagedList.IPagedList<Kartverket.Register.Models.RegisterItem>
+@using Kartverket.Register.Models
+@model PagedList.IPagedList<RegisterItem>
 
-<h3 style="margin-top: 0px;">@CodelistValues.Codelist</h3>
-<div class="register codelist search-results">
-    @foreach (Kartverket.Register.Models.CodelistValue item in Model)
-    {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
+<h3 style="margin-top: 0;">@CodelistValues.Codelist</h3>
 
-                <div class="col-title col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    @if (item.register.parentRegister != null)
-                    {
-                        <a href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @item.NameTranslated()
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname">
-                            @item.NameTranslated()
-                        </a>
-                    }
-                </div>
-
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-descripton">
-                    <p>@item.DescriptionTranslated()</p>
-                </div>
-
-                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-actions">
-                    @if (item.value != null)
-                    {
-                        <p title="@CodelistValues.CodeValue: @item.value"><span>@CodelistValues.CodeValue: </span>@item.value</p>
-                    }
-                    else
-                    {
-                        <p title="@CodelistValues.CodeValue: @Registers.NotSet"><span>@CodelistValues.CodeValue: </span>@Registers.NotSet</p>
-                    }
-                </div>
-
-                <div class="col-no-padding-xs col-information col-md-2 col-lg-2">
-                    @if (item.status == null)
-                    {
-                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@Registers.NotSet</p>
-                    }
-                    else
-                    {
-                        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
-                    }
-                </div>
-
-            </div>
-        </div>
-        <hr />
-    }
+<div class="table-heading col-md-12">
+    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Navn", "name")</div>
+    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Beskrivelse", "description")</div>
+    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Kodeverdi", "codevalue")</div>
+    <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Status", "status")</div>
 </div>
+
+@foreach (CodelistValue item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-3 col-sm-12 col">
+            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+        </div>
+        <div class="col-md-4 col-sm-12 col">
+            <span>@item.DescriptionTranslated()</span>
+        </div>
+        <div class="col-md-3 col-sm-12 col">
+            <span title="@CodelistValues.CodeValue: @item.value">@item.value</span>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => item.statusId)"></i></p>
+        </div>
+    </div>
+}
+

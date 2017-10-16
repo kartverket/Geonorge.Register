@@ -7,17 +7,17 @@
     <div class="row">
         <div class="col-md-3 col-sm-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
         <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
-        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
+        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspiretheme") </div>
         <div class="col-md-4 col-sm-5 status-icons">
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadata")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "metadataservice")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "distribution")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wms")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfs")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "atom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "wfsoratom")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "harmonizeddata")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "spatialdataservice")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadata_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadataservice_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_distribution_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wms_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfs_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_atom_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_wfsoratom_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_harmonizeddata_status")
+            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_spatialdataservice_status")
         </div>
         <div class="col-md-1 text-center">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "STATUS", "dokstatus")</div>
     </div>
@@ -28,20 +28,20 @@
         <div class="row result-row">
             <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
             <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
-            <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
+            <div class="col-md-2"><span>@item.InspireTheme</span></div>
             <div class="col-md-4 col-sm-5 status-icons">
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatus, false, "metadata")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataServiceStatus, false, "metadataservice")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.DistributionStatus, false, "distribution")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatus, false, "wms")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatus, false, "wfs")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatus, false, "atom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsOrAtomStatus, false, "wfsoratom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.HarmonizedDataStatus, false, "harmonizeddata")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SpatialDataServiceStatus, false, "spatialdataservice")
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, InspireDataSet.Metadata)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataServiceStatusId, false, InspireDataSet.MetadataServiceStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.DistributionStatusId, false, InspireDataSet.Distribution)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, InspireDataSet.WmsStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, InspireDataSet.WfsStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, InspireDataSet.AtomFeedStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsOrAtomStatusId, false, InspireDataSet.WfsOrAtomStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.HarmonizedDataStatusId, false, InspireDataSet.HarmonizedDataStatus)
+                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SpatialDataServiceStatusId, false, InspireDataSet.SpatialDataServiceStatus)
             </div>
             <div class="col-md-1 text-center">
-                <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
+                <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='DOK-Status: @item.DokStatus.description'>
                     <i class="statusIcon-@item.DokStatusId"></i>
                 </span>
             </div>

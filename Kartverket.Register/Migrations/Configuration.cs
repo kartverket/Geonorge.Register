@@ -56,6 +56,38 @@ namespace Kartverket.Register.Migrations
 
         }
 
+        internal class DatasetTranslationConfiguration : EntityTypeConfiguration<Dataset>
+        {
+            public DatasetTranslationConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
+            }
+        }
+
+        internal class DocumentTranslationConfiguration : EntityTypeConfiguration<Document>
+        {
+            public DocumentTranslationConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
+            }
+        }
+
+        internal class NamespaceTranslationConfiguration : EntityTypeConfiguration<NameSpace>
+        {
+            public NamespaceTranslationConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
+            }
+        }
+
+        internal class ServiceAlertTranslationConfiguration : EntityTypeConfiguration<ServiceAlert>
+        {
+            public ServiceAlertTranslationConfiguration()
+            {
+                HasMany(x => x.Translations).WithRequired().HasForeignKey(x => x.RegisterItemId);
+            }
+        }
+
         protected override void Seed(RegisterDbContext context)
         {
             //  This method will be called after migrating to the latest version.
@@ -161,6 +193,20 @@ namespace Kartverket.Register.Migrations
                     dateSubmitted = DateTime.Now,
                     modified = DateTime.Now,
                     containedItemClass = "InspireDataset",
+                    accessId = 1
+                },
+
+            new Register
+                {
+                    systemId = Guid.Parse("3d9114f6-faab-4521-bdf8-19ef6211e7d2"),
+                    ownerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    managerId = Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3"),
+                    name = "Geodatalov statusregister",
+                    seoname = "geodatalov-statusregister",
+                    statusId = "Valid",
+                    dateSubmitted = DateTime.Now,
+                    modified = DateTime.Now,
+                    containedItemClass = "GeodatalovDataset",
                     accessId = 1
                 }
             );

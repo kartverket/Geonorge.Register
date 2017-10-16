@@ -14,6 +14,7 @@ using GhostscriptSharp.Settings;
 using System.Drawing;
 using GhostscriptSharp;
 using Kartverket.Register.Services.Notify;
+using Kartverket.Register.Services.Translation;
 //ghostscriptsharp MIT license:
 //Copyright(c) 2009 Matthew Ephraim
 //Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -25,7 +26,7 @@ namespace Kartverket.Register.Controllers
     [HandleError]
     public class DocumentsController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -33,13 +34,16 @@ namespace Kartverket.Register.Controllers
         private IRegisterItemService _registerItemService;
         private IAccessControlService _accessControlService;
         private INotificationService _notificationService;
+        private ITranslationService _translationService;
 
-        public DocumentsController(INotificationService notificationService)
+        public DocumentsController(RegisterDbContext dbContext, INotificationService notificationService, ITranslationService translationService)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
             _accessControlService = new AccessControlService();
             _notificationService = notificationService;
+            _translationService = translationService;
         }
 
 
@@ -50,6 +54,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             Document document = new Document();
+            document.AddMissingTranslations();
             document.register = _registerService.GetRegister(parentRegister, registername);
             if (document.register != null)
             {
@@ -148,6 +153,7 @@ namespace Kartverket.Register.Controllers
             {
                 if (_accessControlService.Access(document))
                 {
+                    document.AddMissingTranslations();
                     Viewbags(document);
                     return View(document);
                 }
@@ -468,10 +474,12 @@ namespace Kartverket.Register.Controllers
                 ApprovalProcess(document, retired, inputDocument, sosi);
                 db.Entry(document).State = EntityState.Modified;
             }
+
+            _translationService.UpdateTranslations(inputDocument, document);
+
             db.SaveChanges();
             if (sendNotification)
                 _notificationService.SendSubmittedNotification(document);
-
 
             return document;
         }

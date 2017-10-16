@@ -7,7 +7,7 @@
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
@@ -52,6 +52,18 @@
                 @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
             </div>
         </div>
+
+        @for (int t = 0; t < Model.Translations.Count; t++)
+        {
+            @Html.HiddenFor(m => Model.Translations[t].CultureName)
+            <div class="form-group">
+                @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => Model.Translations[t].Description)
+                </div>
+            </div>
+        }
 
         <div class="form-group">
             @Html.LabelFor(model => model.serviceUrl, htmlAttributes: new { @class = "control-label col-md-2" })

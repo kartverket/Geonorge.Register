@@ -276,4 +276,19 @@
   <data name="Modified" xml:space="preserve">
     <value>Siste endret</value>
   </data>
+  <data name="StatusAvailable" xml:space="preserve">
+    <value>Mulige statuser</value>
+  </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Gyldig</value>
+  </data>
+  <data name="MakeAllItemsValid" xml:space="preserve">
+    <value>Sett status "Gyldig" på alle kodeverdier</value>
+  </data>
+  <data name="MakeAllItemsValidMessage" xml:space="preserve">
+    <value>Sett status for alle verdier i kodelista. Individuelle verdier kan fortsatt settes</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
 </root>

@@ -6,6 +6,7 @@ using SearchResult = Kartverket.Register.Models.SearchResult;
 using Kartverket.Register.Models;
 using System.Web.Configuration;
 using Kartverket.Register.Helpers;
+using Resources;
 
 namespace Kartverket.Register.Services.Search
 {
@@ -32,6 +33,8 @@ namespace Kartverket.Register.Services.Search
                                     where o.name.Contains(text)
                                     || o.description.Contains(text)
                                     || o.shortname.Contains(text)
+                                    || o.Translations.Any(oo => oo.Name.Contains(text))
+                                    || o.Translations.Any(oo => oo.Description.Contains(text))
                                     select o);
 
                 if (queryResults.Count() > 0)
@@ -75,6 +78,7 @@ namespace Kartverket.Register.Services.Search
             {
                 var queryResults = (from o in _dbContext.ServiceAlerts
                                     where o.name.Contains(text)
+                                    || o.Translations.Any(oo => oo.Name.Contains(text))
                                     select o);
 
                 if (queryResults.Count() > 0)
@@ -121,7 +125,10 @@ namespace Kartverket.Register.Services.Search
                                     || d.register.seoname.Contains(register.seoname))
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
-                                    || d.documentowner.name.Contains(text))
+                                    || d.documentowner.name.Contains(text)
+                                    || d.Translations.Any(dd => dd.Name.Contains(text))
+                                    || d.Translations.Any(dd => dd.Description.Contains(text))
+                                    )
                                     select d);
 
                 if (queryResults.Count() > 0)
@@ -173,7 +180,10 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from d in _dbContext.NameSpases
                                     where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
                                     && (d.name.Contains(text)
-                                    || d.description.Contains(text))
+                                    || d.description.Contains(text)
+                                    || d.Translations.Any(oo => oo.Name.Contains(text))
+                                    || d.Translations.Any(oo => oo.Description.Contains(text))
+                                    )
                                     select d);
 
                 if (queryResults.Count() > 0)
@@ -220,6 +230,8 @@ namespace Kartverket.Register.Services.Search
                                     && (d.name.Contains(text)
                                     || d.description.Contains(text)
                                     || d.datasetowner.name.Contains(text))
+                                    || d.Translations.Any(dd => dd.Name.Contains(text))
+                                    || d.Translations.Any(dd => dd.Description.Contains(text))
                                     select d);
 
                 if (register.name == "DOK-statusregisteret")
@@ -269,6 +281,9 @@ namespace Kartverket.Register.Services.Search
                                     where e.name.Contains(text)
                                     || e.description.Contains(text)
                                     || e.epsgcode.Contains(text)
+                                    || e.Translations.Any(ee => ee.Name.Contains(text))
+                                    || e.Translations.Any(ee => ee.Description.Contains(text))
+
                                     select e);
 
                 if (queryResults.Count() > 0)
@@ -313,7 +328,10 @@ namespace Kartverket.Register.Services.Search
                 var queryResults = (from e in _dbContext.CodelistValues
                                     where e.register.systemId == register.systemId && (e.name.Contains(text)
                                     || e.description.Contains(text)
-                                    || e.value.Contains(text))
+                                    || e.value.Contains(text)
+                                    || e.Translations.Any(ee => ee.Name.Contains(text))
+                                    || e.Translations.Any(ee => ee.Description.Contains(text))
+                                    )
                                     select e);
 
                 if (queryResults.Count() > 0)
@@ -373,7 +391,9 @@ namespace Kartverket.Register.Services.Search
                         sub.items.Clear();
                         foreach (Models.RegisterItem item in searchResultItems)
                         {
-                            if (item.name.Contains(text) || (!string.IsNullOrWhiteSpace(item.description) && item.description.Contains(text)))
+                            if (item.name.Contains(text) || (!string.IsNullOrWhiteSpace(item.description) && item.description.Contains(text))    
+                                ||
+                                item.NameTranslated().Contains(text) || (!string.IsNullOrWhiteSpace(item.DescriptionTranslated()) && item.DescriptionTranslated().Contains(text)))
                             {
                                 if (item.register.containedItemClass == "Document" && (item.statusId != "Submitted") || item.submitter.seoname == user || role == "nd.metadata_admin")
                                 {
@@ -403,7 +423,10 @@ namespace Kartverket.Register.Services.Search
                         sub.subregisters.Clear();
                         foreach (Models.Register reg in searchResultSub)
                         {
-                            if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text)))
+                            if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text))  
+                                ||
+                                reg.NameTranslated().Contains(text) || (!string.IsNullOrWhiteSpace(reg.DescriptionTranslated()) && reg.DescriptionTranslated().Contains(text))
+                            )
                             {
                                 sub.subregisters.Add(reg);
                             }
@@ -417,7 +440,10 @@ namespace Kartverket.Register.Services.Search
                 foreach (var reg in allSubregisters)
                 {
                     bool finnesFraFor = false;
-                    if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text)))
+                    if (reg.name.Contains(text) || (!string.IsNullOrWhiteSpace(reg.description) && reg.description.Contains(text))
+                        ||
+                        reg.NameTranslated().Contains(text) || (!string.IsNullOrWhiteSpace(reg.DescriptionTranslated()) && reg.DescriptionTranslated().Contains(text))
+                    )
                     {
                         if (subregisters.Count() != 0)
                         {
@@ -506,7 +532,7 @@ namespace Kartverket.Register.Services.Search
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
             string itemClass = "";
 
-            if (parameters.Register != "Alle registre")
+            if (parameters.Register != Shared.Search_AllRegisters)
             {
                 var queryResultsRegister = from o in _dbContext.Registers
                                            where o.name == parameters.Register || o.seoname == parameters.Register
@@ -1230,6 +1256,8 @@ namespace Kartverket.Register.Services.Search
 
             else
             {
+
+                var culture = CultureHelper.GetCurrentCulture();
                 List<SearchResultItem> searchResultItem = new List<SearchResultItem>();
                 Guid systemIDSearch = new Guid();
                 Guid.TryParse(parameters.Text, out systemIDSearch);
@@ -1238,7 +1266,10 @@ namespace Kartverket.Register.Services.Search
                                    where d.parentRegister.containedItemClass == "Register"
                                    && (d.name.Contains(parameters.Text)
                                    || d.description.Contains(parameters.Text)
-                                   || d.systemId.Equals(systemIDSearch))
+                                   || d.systemId.Equals(systemIDSearch)
+                                   || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
+                                   || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
+                                   )
                                    select new SearchResultItem
                                    {
                                        ParentRegisterId = d.parentRegisterId,
@@ -1249,6 +1280,7 @@ namespace Kartverket.Register.Services.Search
                                        RegisterName = d.name,
                                        RegisterDescription = d.description,
                                        RegisterItemName = null,
+                                       RegisterItemNameEnglish = null,
                                        RegisterItemDescription = null,
                                        RegisterID = d.systemId,
                                        SystemID = d.systemId,
@@ -1273,6 +1305,8 @@ namespace Kartverket.Register.Services.Search
                                      || d.description.Contains(parameters.Text)
                                      || d.value.Contains(parameters.Text)
                                      || d.systemId.Equals(systemIDSearch)
+                                     || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
+                                     || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
@@ -1282,8 +1316,9 @@ namespace Kartverket.Register.Services.Search
                                          ParentregisterOwner = d.register.parentRegister.owner.seoname,
                                          RegisterName = d.register.name,
                                          RegisterDescription = d.register.description,
-                                         RegisterItemName = d.name,
-                                         RegisterItemDescription = d.description,
+                                         RegisterItemName = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : d.name,
+                                         RegisterItemNameEnglish = d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : d.name,
+                                         RegisterItemDescription = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : d.description,
                                          RegisterID = d.registerId,
                                          SystemID = d.systemId,
                                          Discriminator = d.register.containedItemClass,
@@ -1307,6 +1342,8 @@ namespace Kartverket.Register.Services.Search
                                      || o.name.Contains(parameters.Text)
                                      || o.description.Contains(parameters.Text)
                                      || o.systemId.Equals(systemIDSearch)
+                                     || o.Translations.Any(oo => oo.Name.Contains(parameters.Text))
+                                     || o.Translations.Any(oo => oo.Description.Contains(parameters.Text))
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = o.register.parentRegisterId,
@@ -1314,10 +1351,11 @@ namespace Kartverket.Register.Services.Search
                                          ParentRegisterDescription = o.register.parentRegister.description,
                                          ParentRegisterSeoname = o.register.parentRegister.seoname,
                                          ParentregisterOwner = o.register.parentRegister.owner.seoname,
-                                         RegisterName = o.register.name,
+                                         RegisterName =  o.register.name,
                                          RegisterDescription = o.register.description,
-                                         RegisterItemName = o.name,
-                                         RegisterItemDescription = o.description,
+                                         RegisterItemName = o.Translations.Where(t => t.CultureName == culture).Count() > 0 ? o.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : o.name,
+                                         RegisterItemNameEnglish = o.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? o.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : o.name,
+                                         RegisterItemDescription = o.Translations.Where(t => t.CultureName == culture).Count() > 0 ? o.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : o.description,
                                          RegisterID = o.registerId,
                                          SystemID = o.systemId,
                                          Discriminator = o.register.containedItemClass,
@@ -1351,6 +1389,7 @@ namespace Kartverket.Register.Services.Search
                                           RegisterName = o.register.name,
                                           RegisterDescription = o.register.description,
                                           RegisterItemName = o.name,
+                                          RegisterItemNameEnglish = null,
                                           RegisterItemDescription = o.description,
                                           RegisterID = o.registerId,
                                           SystemID = o.systemId,
@@ -1374,6 +1413,8 @@ namespace Kartverket.Register.Services.Search
                                      || d.description.Contains(parameters.Text)
                                      || d.datasetowner.name.Contains(parameters.Text)
                                      || d.systemId.Equals(systemIDSearch)
+                                     || d.Translations.Any(dd => dd.Name.Contains(parameters.Text))
+                                     || d.Translations.Any(dd => dd.Description.Contains(parameters.Text))
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = d.register.parentRegisterId,
@@ -1383,8 +1424,9 @@ namespace Kartverket.Register.Services.Search
                                          ParentregisterOwner = d.register.parentRegister.owner.seoname,
                                          RegisterName = d.register.name,
                                          RegisterDescription = d.register.description,
-                                         RegisterItemName = d.name,
-                                         RegisterItemDescription = d.description,
+                                         RegisterItemName = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : d.name,
+                                         RegisterItemNameEnglish = d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? d.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : d.name,
+                                         RegisterItemDescription = d.Translations.Where(t => t.CultureName == culture).Count() > 0 ? d.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : d.description,
                                          RegisterID = d.registerId,
                                          SystemID = d.systemId,
                                          Discriminator = d.register.containedItemClass,
@@ -1408,6 +1450,8 @@ namespace Kartverket.Register.Services.Search
                                     || e.description.Contains(parameters.Text)
                                     || e.epsgcode.Contains(parameters.Text)
                                     || e.systemId.Equals(systemIDSearch)
+                                    || e.Translations.Any(ee => ee.Name.Contains(parameters.Text))
+                                    || e.Translations.Any(ee => ee.Description.Contains(parameters.Text))
                                      select new SearchResultItem
                                      {
                                          ParentRegisterId = e.register.parentRegisterId,
@@ -1417,8 +1461,9 @@ namespace Kartverket.Register.Services.Search
                                          ParentregisterOwner = e.register.parentRegister.owner.seoname,
                                          RegisterName = e.register.name,
                                          RegisterDescription = e.register.description,
-                                         RegisterItemName = e.name,
-                                         RegisterItemDescription = e.description,
+                                         RegisterItemName = e.Translations.Where(t => t.CultureName == culture).Count() > 0 ? e.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Name : e.name,
+                                         RegisterItemNameEnglish = e.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).Count() > 0 ? e.Translations.Where(t => t.CultureName == Kartverket.Register.Models.Translations.Culture.EnglishCode).FirstOrDefault().Name : e.name,
+                                         RegisterItemDescription = e.Translations.Where(t => t.CultureName == culture).Count() > 0 ? e.Translations.Where(t => t.CultureName == culture).FirstOrDefault().Description : e.description,
                                          RegisterID = e.registerId,
                                          SystemID = e.systemId,
                                          Discriminator = e.register.containedItemClass,
@@ -1450,6 +1495,7 @@ namespace Kartverket.Register.Services.Search
                                          RegisterName = o.register.name,
                                          RegisterDescription = o.register.description,
                                          RegisterItemName = o.name,
+                                         RegisterItemNameEnglish = null,
                                          RegisterItemDescription = o.description,
                                          RegisterID = o.registerId,
                                          SystemID = o.systemId,
@@ -1487,6 +1533,7 @@ namespace Kartverket.Register.Services.Search
                                     RegisterName = d.register.name,
                                     RegisterDescription = d.register.description,
                                     RegisterItemName = d.name,
+                                    RegisterItemNameEnglish = null,
                                     RegisterItemDescription = d.description,
                                     RegisterID = d.registerId,
                                     SystemID = d.systemId,
@@ -1532,6 +1579,7 @@ namespace Kartverket.Register.Services.Search
                         {
                             RegisterName = "Objektregister",
                             RegisterItemName = obj["name"] != null ? obj["name"].ToString() : null,
+                            RegisterItemNameEnglish = null,
                             RegisterItemDescription = obj["description"] != null ? obj["description"].ToString() : null,
                             Discriminator = "Objektregister",
                             ObjektkatalogUrl = obj["url"] != null ? obj["url"].ToString() : null,
@@ -1554,6 +1602,7 @@ namespace Kartverket.Register.Services.Search
                          RegisterName = o.RegisterName,
                          RegisterDescription = null,
                          RegisterItemName = o.RegisterItemName,
+                         RegisterItemNameEnglish = null,
                          RegisterItemDescription = o.RegisterItemDescription,
                          RegisterID = new Guid(),
                          SystemID = new Guid(),
@@ -1596,6 +1645,7 @@ namespace Kartverket.Register.Services.Search
                         RegisterName = register.RegisterName,
                         RegisterDescription = register.RegisterDescription,
                         RegisterItemName = register.RegisterItemName,
+                        RegisterItemNameEnglish = register.RegisterItemNameEnglish,
                         RegisterItemDescription = register.RegisterItemDescription,
                         RegisterID = register.RegisterID,
                         SystemID = register.SystemID,

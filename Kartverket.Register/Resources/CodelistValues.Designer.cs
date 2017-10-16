@@ -61,7 +61,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Broader item.
+        ///   Looks up a localized string similar to Mer generelt begrep.
         /// </summary>
         public static string BroaderItem {
             get {
@@ -156,6 +156,15 @@ namespace Resources {
         public static string NarrowerItems {
             get {
                 return ResourceManager.GetString("NarrowerItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to velg kodeverdi.
+        /// </summary>
+        public static string SelectCodeValue {
+            get {
+                return ResourceManager.GetString("SelectCodeValue", resourceCulture);
             }
         }
     }

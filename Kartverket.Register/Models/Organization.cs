@@ -96,6 +96,16 @@ namespace Kartverket.Register.Models
             Translations.AddMissingTranslations();
         }
 
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
+
         public virtual string GetOrganizationEditUrl()
         {
             if (register.parentRegister == null)

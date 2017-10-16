@@ -1,4 +1,5 @@
-﻿@using Kartverket.Register.Helpers
+﻿@using System.Activities.Expressions
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
 @model RegisterItemV2ViewModel
@@ -8,15 +9,15 @@
 }
 
 @section breadcrumb {
-    <li><a href="@Model.Register.GetObjectUrl()">@Html.DisplayFor(model => model.Register.name)</a></li>
-    <li>@Html.DisplayFor(model => model.Name)</li>
+    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.NameTranslated()</a></li>
+    <li>@Model.Name</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.Name)
+                @Model.Name
             </h1>
         </div>
         <div class="col-sm-12">
@@ -29,20 +30,19 @@
         @if (Model.Register.containedItemClass != "NameSpace")
         { <p> @Model.Description</p>}
         @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-        { <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))">Status: @Model.Status.description <i class="statusIcon-@Model.StatusId"></i></span><br>}
+        { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
 
         @if (Model.Register.containedItemClass == "NameSpace")
-        { <span>@Registers.Owner: @Model.Submitter.name</span><br>}
+        { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
         else
-        {<span>@Registers.Submitter: @Model.Submitter.name</span><br>}
+        {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
 
         @if (Model.Owner != null)
-        { <span>@Registers.Owner: @Model.Owner.name</span><br />}
+        { <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
 
-        <span>@Html.DisplayNameFor(m => m.VersionNumber) @Model.VersionNumber</span><br>
+        <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
         @if (Model.VersionName != null)
-        {<span>@Html.DisplayNameFor(model => model.VersionName): @Model.VersionName</span><br />}
-
+        {<p><strong>@Html.DisplayNameFor(model => model.VersionName):</strong> @Model.VersionName</p>}
     </article>
     <article class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
         <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span>
@@ -68,11 +68,15 @@
     </article>
     <hr>
 </div>
- 
+
 <div class="row">
     @if (Model is InspireDatasetViewModel)
     {
         @Html.Partial("_detailsInspireDataset")
+    }
+    else if (Model is GeodatalovDatasetViewModel)
+    {
+        @Html.Partial("_detailsGeodatalovDataset")
     }
     else if (Model.RegisterItem is Dataset)
     {
@@ -104,21 +108,24 @@
     }
 </div>
 
-    <div class="hidden-print">
-        <hr />
+<div class="hidden-print">
+    <hr />
 
-        @if (Request.IsAuthenticated)
+    @if (Request.IsAuthenticated)
+    {
+        if (!Model.Register.IsServiceAlertRegister())
         {
-            if (!Model.Register.IsServiceAlertRegister())
+            if (HtmlHelperExtensions.Access(Model))
             {
-                if (HtmlHelperExtensions.Access(Model))
+                if (!Model.Register.ContainedItemClassIsDocument())
                 {
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
                     <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         }
+    }
 
-        <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
+    <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
-    </div>
+</div>

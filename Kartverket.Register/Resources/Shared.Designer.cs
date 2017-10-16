@@ -271,6 +271,15 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to Navn engelsk.
         /// </summary>
+        public static string NameFor_en {
+            get {
+                return ResourceManager.GetString("NameFor_en", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navn engelsk.
+        /// </summary>
         public static string Navn_Engelsk {
             get {
                 return ResourceManager.GetString("Navn_Engelsk", resourceCulture);

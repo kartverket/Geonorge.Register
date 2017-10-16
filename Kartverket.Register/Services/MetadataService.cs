@@ -7,6 +7,7 @@ using Kartverket.Register.Helpers;
 using System;
 using System.Collections.Generic;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.DOK.Service
 {
@@ -71,6 +72,8 @@ namespace Kartverket.DOK.Service
                 {
                     dataset.DistributionFormat = metadata.DistributionFormat;
                 }
+                dataset.Translations.Clear();
+                dataset.Translations = metadata.Translations;
             }
 
             return dataset;
@@ -143,9 +146,9 @@ namespace Kartverket.DOK.Service
             {
                 var json = c.DownloadString(url);
 
-                dynamic data  = Newtonsoft.Json.Linq.JObject.Parse(json);
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
                 if (data != null)
-                { 
+                {
                     metadata.name = data.Title;
                     metadata.description = data.Abstract;
                     metadata.PresentationRulesUrl = data.LegendDescriptionUrl;
@@ -153,7 +156,7 @@ namespace Kartverket.DOK.Service
                     metadata.ProductSpecificationUrl = data.ProductSpecificationUrl;
                     metadata.SpecificUsage = data.SpecificUsage;
                     var thumbnails = data.Thumbnails;
-                    if(thumbnails != null && thumbnails.Count > 0)
+                    if (thumbnails != null && thumbnails.Count > 0)
                     {
                         metadata.datasetthumbnail = thumbnails[0].URL.Value;
                     }
@@ -169,16 +172,16 @@ namespace Kartverket.DOK.Service
 
                 }
 
-                if(data.DistributionDetails != null)
+                if (data.DistributionDetails != null)
                     metadata.DistributionUrl = data.DistributionDetails.URL;
 
-                if(data.UnitsOfDistribution != null)
+                if (data.UnitsOfDistribution != null)
                     metadata.DistributionArea = data.UnitsOfDistribution.Value;
 
                 var distributionFormat = data.DistributionFormat;
                 if (distributionFormat != null)
                 {
-                    if(distributionFormat.Name != null)
+                    if (distributionFormat.Name != null)
                         metadata.DistributionFormat = distributionFormat.Name.Value;
                 }
 
@@ -186,14 +189,28 @@ namespace Kartverket.DOK.Service
 
                 var constraints = data.Constraints;
 
-                if(constraints != null)
-                { 
+                if (constraints != null)
+                {
                     string accessConstraint = constraints.AccessConstraints.Value;
                     if (!string.IsNullOrEmpty(accessConstraint) && accessConstraint == "Beskyttet")
                     {
                         metadata.restricted = true;
                     }
                 }
+
+                var englishTitle = data.EnglishTitle;
+                var englishAbstract = data.EnglishAbstract;
+                var keywordsNationalThemeEnglish = data.KeywordsNationalTheme[0].EnglishKeyword;
+                metadata.Translations.Add(new DatasetTranslation
+                {
+                    CultureName = Culture.EnglishCode,
+                    Name = englishTitle,
+                    Description = englishAbstract,
+                    ThemeGroupId = keywordsNationalThemeEnglish
+                });
+
+                metadata.AddMissingTranslations();
+
             }
             catch (Exception e)
             {
@@ -235,12 +252,17 @@ namespace Kartverket.DOK.Service
                         data.ContactOwner != null && data.ContactOwner.Organization != null
                             ? data.ContactOwner.Organization.Value
                             : "");
-                    inspireDataset.ThemeGroupId =
-                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
-                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                    inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
+
+                    inspireDataset.InspireTheme = GetInspireThemeName(
+                        data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
+                            ? data.KeywordsInspire[0].KeywordValue.Value
                             : "Annen");
 
-                    if (data.ServiceUuid != null) inspireDataset.UuidService = data.ServiceUuid;
+
+
+                    if (data.ServiceUuid != null)
+                        inspireDataset.UuidService = data.ServiceUuid;
                     if (data.ServiceDistributionUrlForDataset != null)
                         inspireDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
 
@@ -266,6 +288,108 @@ namespace Kartverket.DOK.Service
             }
 
             return inspireDataset;
+        }
+
+        private string GetInspireThemeName(string code)
+        {
+            if (!String.IsNullOrWhiteSpace(code))
+            {
+                RegisterDbContext db = new RegisterDbContext();
+                var queryResultsRegisterItem = from o in db.CodelistValues
+                    where o.value == code
+                    select o.name;
+
+                return queryResultsRegisterItem.FirstOrDefault();
+            }
+            return code;
+        }
+
+        public GeodatalovDataset FetchGeodatalovDatasetFromKartkatalogen(string uuid)
+        {
+            var geodatalovDataset = new GeodatalovDataset();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    geodatalovDataset.Name = data.Title;
+                    geodatalovDataset.Description = data.Abstract;
+                    geodatalovDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
+                    geodatalovDataset.ProductSheetUrl = data.ProductSheetUrl;
+                    geodatalovDataset.ProductSpecificationUrl = data.ProductSpecificationUrl;
+                    geodatalovDataset.SpecificUsage = data.SpecificUsage;
+                    geodatalovDataset.Uuid = data.Uuid;
+                    geodatalovDataset.MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + geodatalovDataset.Uuid;
+                    var thumbnails = data.Thumbnails;
+                    if (thumbnails != null && thumbnails.Count > 0)
+                    {
+                        geodatalovDataset.DatasetThumbnail = thumbnails[0].URL.Value;
+                    }
+
+                    geodatalovDataset.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "");
+                    geodatalovDataset.ThemeGroupId =
+                        AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
+                            ? data.KeywordsNationalTheme[0].KeywordValue.Value
+                            : "Annen");
+
+                    if (data.ServiceUuid != null) geodatalovDataset.UuidService = data.ServiceUuid;
+                    if (data.ServiceDistributionUrlForDataset != null)
+                        geodatalovDataset.WmsUrl = data.ServiceDistributionUrlForDataset;
+
+                    if (data.DistributionDetails != null)
+                        geodatalovDataset.DistributionUrl = data.DistributionDetails.URL;
+
+                    if (data.UnitsOfDistribution != null)
+                        geodatalovDataset.DistributionArea = data.UnitsOfDistribution.Value;
+
+                    var distributionFormat = data.DistributionFormat;
+                    if (distributionFormat != null)
+                    {
+                        if (distributionFormat.Name != null)
+                            geodatalovDataset.DistributionFormat = distributionFormat.Name.Value;
+                    }
+
+                    foreach (var keyword in data.KeywordsNationalInitiative)
+                    {
+                        if (keyword.KeywordValue == "Det offentlige kartgrunnlaget")
+                        {
+                            geodatalovDataset.Dok = true;
+                        }
+                        else if (keyword.KeywordValue == "geodataloven")
+                        {
+                            geodatalovDataset.Geodatalov = true;
+                        }
+                        else if (keyword.KeywordValue == "Norge digitalt")
+                        {
+                            geodatalovDataset.NationalDataset = true;
+                        }
+                        else if (keyword.KeywordValue == "Inspire")
+                        {
+                            geodatalovDataset.InspireTheme = true;
+                        }
+                        else if (keyword.KeywordValue == "arealplanerPBL")
+                        {
+                            geodatalovDataset.Plan = true;
+                        }
+                    }
+                    
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return geodatalovDataset;
         }
 
         public SearchResultsType SearchMetadata(string searchString)

@@ -13,10 +13,10 @@
                 
                 <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
                     <a href="@item.GetObjectUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">
-                        @item.name
+                        @item.NameTranslated()
                     </a>
                     <p>
-                        @item.description
+                        @item.DescriptionTranslated()
                     </p>
                 </div>
 
@@ -64,7 +64,7 @@
                     }
                     else
                     {
-                        <p title="@EPSGs.Dimension: @item.dimension.description"><span>@EPSGs.Dimension: </span>@Html.DisplayFor(modelItem => item.dimension.description)</p>
+                        <p title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()"><span>@EPSGs.Dimension: </span>@item.dimension.DescriptionTranslated()</p>
                     }
 
                 </div>

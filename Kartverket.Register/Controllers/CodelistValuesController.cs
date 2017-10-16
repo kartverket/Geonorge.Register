@@ -482,6 +482,10 @@ namespace Kartverket.Register.Controllers
                 {
                     originalCodelistValue.dateAccepted = null;
                 }
+                if (originalCodelistValue.statusId != "Valid")
+                {
+                    originalCodelistValue.register.MakeAllItemsValid = false;
+                }
             }
         }
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Resources;
+using Kartverket.Register.Models.Translations;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -12,7 +14,7 @@ namespace Kartverket.Register.Models.Api
         // RegisterItem
         public string id { get; set; }
         public string label { get; set; }
-        public string lang { get; set; } = "no";
+        public string lang { get; set; } = Culture.NorwegianCode;
         public string itemclass { get; set; }
         public Guid uuid { get; set; }
         public string status { get; set; }
@@ -115,7 +117,13 @@ namespace Kartverket.Register.Models.Api
         public string HarmonizedDataStatus { get; set; }
         public string SpatialDataServiceStatus { get; set; }
 
-        public Registeritem(Object item, string baseUrl, FilterParameters filter = null, string language = "nb-NO")
+        // GeodatalovDataset
+        public string CommonStatus { get; set; }
+        public string GmlStatus { get; set; }
+        public string SosiStatus { get; set; }
+        public string ProductspesificationStatus { get; set; }
+
+        public Registeritem(Object item, string baseUrl, FilterParameters filter = null)
         {
             this.versions = new HashSet<Registeritem>();
             this.narrower = new HashSet<string>();
@@ -124,13 +132,13 @@ namespace Kartverket.Register.Models.Api
             {
                 id = baseUrl + registerItem.GetObjectUrl();
                 label = registerItem.name;
-                lang = language.Substring(0, 2);
+                lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
                 itemclass = registerItem.register.containedItemClass;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
                 if (registerItem.status != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (CultureHelper.IsNorwegian())
                         status = registerItem.status.description;
                     else
                         status = registerItem.status.value;
@@ -148,13 +156,13 @@ namespace Kartverket.Register.Models.Api
             {
                 id = baseUrl + registerItemV2.DetailPageUrl();
                 label = registerItemV2.Name;
-                lang = language.Substring(0, 2);
+                lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItemV2.Modified;
                 itemclass = registerItemV2.Register.containedItemClass;
                 if (registerItemV2.Owner != null) owner = registerItemV2.Owner.name;
                 if (registerItemV2.Status != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (CultureHelper.IsNorwegian())
                         status = registerItemV2.Status.description;
                     else
                         status = registerItemV2.Status.value;
@@ -212,45 +220,80 @@ namespace Kartverket.Register.Models.Api
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
             }
+            if (item is GeodatalovDataset geodatalovDataset)
+            {
+                if (geodatalovDataset.MetadataStatus?.Status != null)
+                {
+                    MetadataStatus = geodatalovDataset.MetadataStatus.Status.value;
+                }
+                if (geodatalovDataset.ProductSpesificationStatus?.Status != null)
+                {
+                    ProductspesificationStatus = geodatalovDataset.ProductSpesificationStatus.Status.value;
+                }
+                if (geodatalovDataset.SosiDataStatus?.Status != null)
+                {
+                    SosiStatus = geodatalovDataset.SosiDataStatus.Status.value;
+                }
+                if (geodatalovDataset.GmlDataStatus?.Status != null)
+                {
+                    GmlStatus = geodatalovDataset.GmlDataStatus.Status.value;
+                }
+                if (geodatalovDataset.WmsStatus?.Status != null)
+                {
+                    WmsStatus = geodatalovDataset.WmsStatus.Status.value;
+                }
+                if (geodatalovDataset.WfsStatus?.Status != null)
+                {
+                    WfsStatus = geodatalovDataset.WfsStatus.Status.value;
+                }
+                if (geodatalovDataset.AtomFeedStatus?.Status != null)
+                {
+                    AtomFeedStatus = geodatalovDataset.AtomFeedStatus.Status.value;
+                }
+                if (geodatalovDataset.CommonStatus?.Status != null)
+                {
+                    CommonStatus = geodatalovDataset.CommonStatus.Status.value;
+                }
+            }
             if (item is EPSG epsg)
             {
                 itemclass = "EPSG";
-                label = GetNameLocale(epsg, language);
-                if (epsg.description != null) description = GetDescriptionLocale(epsg, language);
+                label = GetNameLocale(epsg);
+                if (epsg.description != null) description = GetDescriptionLocale(epsg);
                 epsgcode = epsg.epsgcode;
                 sosiReferencesystem = epsg.sosiReferencesystem;
                 documentreference = "http://www.opengis.net/def/crs/EPSG/0/" + epsg.epsgcode;
                 if (epsg.inspireRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (CultureHelper.IsNorwegian())
                         inspireRequirement = epsg.inspireRequirement.description;
                     else
                         inspireRequirement = epsg.inspireRequirement.value;
                 }
                 if (epsg.nationalRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (CultureHelper.IsNorwegian())
                         nationalRequirement = epsg.nationalRequirement.description;
                     else
                         nationalRequirement = epsg.nationalRequirement.value;
                 }
                 if (epsg.nationalSeasRequirement != null)
                 {
-                    if (lang == "no" || lang == "nb")
+                    if (CultureHelper.IsNorwegian())
                         nationalSeasRequirement = epsg.nationalSeasRequirement.description;
                     else
                         nationalSeasRequirement = epsg.nationalSeasRequirement.value;
                 }
                 horizontalReferenceSystem = epsg.horizontalReferenceSystem;
                 verticalReferenceSystem = epsg.verticalReferenceSystem;
-                dimension = epsg.dimension != null ? epsg.dimension.description : "";
+                dimension = epsg.dimension != null ? epsg.dimension.DescriptionTranslated() : "";
             }
             else if (item is CodelistValue)
             {
                 itemclass = "CodelistValue";
                 var c = (CodelistValue)item;
-                label = GetNameLocale(c, language);
-                if (c.description != null) description = GetDescriptionLocale(c, language);
+                label = GetNameLocale(c);
+                if (c.description != null) description = GetDescriptionLocale(c);
                 codevalue = c.value;
                 if (c.broaderItemId != null)
                     broader = baseUrl + c.broaderItem.GetObjectUrl();
@@ -263,7 +306,9 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "Document";
                 var d = (Document)item;
-                if (d.documentowner != null) owner = d.documentowner.name;
+                label = GetNameLocale(d);
+                if (d.description != null) description = GetDescriptionLocale(d);
+                if (d.documentowner != null) owner = d.documentowner.NameTranslated();
                 documentreference = d.documentUrl;
                 ApplicationSchema = d.ApplicationSchema;
                 GMLApplicationSchema = d.GMLApplicationSchema;
@@ -315,14 +360,16 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "NameSpace";
                 var n = (NameSpace)item;
+                if (n.submitter != null) owner = n.submitter.NameTranslated();
+                if (n.description != null) description = GetDescriptionLocale(n);
                 serviceUrl = n.serviceUrl;
             }
             else if (item is Models.Organization)
             {
                 itemclass = "Organization";
                 Models.Organization organization = (Models.Organization)item;
-                label = GetNameLocale(organization, language);
-                if (organization.description != null) description = GetDescriptionLocale(organization, language);
+                label = GetNameLocale(organization);
+                if (organization.description != null) description = GetDescriptionLocale(organization);
                 number = organization.number;
                 MunicipalityCode = organization.MunicipalityCode;
                 GeographicCenterX = organization.GeographicCenterX;
@@ -337,95 +384,158 @@ namespace Kartverket.Register.Models.Api
             {
                 itemclass = "ServiceAlert";
                 var s = (ServiceAlert)item;
-                owner = s.Owner;
+                label = GetNameLocale(s);
+                owner = GetOwnerLocale(s);
                 MetadataUrl = s.ServiceMetadataUrl;
                 AlertDate = s.AlertDate;
-                AlertType = s.AlertType;
+                AlertType = GetAlertTypeLocale(s);
                 ServiceType = s.ServiceType;
                 EffectiveDate = s.EffectiveDate;
-                Note = s.Note;
+                Note = GetNoteLocale(s);
                 ServiceUuid = s.ServiceUuid;
             }
         }
 
-        private string GetNameLocale(Models.Register item, string cultureName)
+        private string GetNameLocale(Models.Register item)
         {
-            var name = item.Translations[cultureName].Name;
-            if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0,2)].Name;
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
             return name;
         }
 
-        private string GetNameLocale(Models.EPSG item, string cultureName)
+        private string GetNameLocale(Models.EPSG item)
         {
-            var name = item.Translations[cultureName].Name;
-            if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
             return name;
         }
 
-        private string GetNameLocale(Models.CodelistValue item, string cultureName)
+        private string GetNameLocale(Models.CodelistValue item)
         {
-            var name = item.Translations[cultureName].Name;
-            if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
             return name;
         }
 
-        private string GetNameLocale(Models.Organization item, string cultureName)
+        private string GetNameLocale(Models.Organization item)
         {
-            var name = item.Translations[cultureName].Name;
-            if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName.Substring(0, 2)].Name;
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
             return name;
         }
-        private string GetDescriptionLocale(Models.Register item, string cultureName)
+
+        private string GetNameLocale(Models.Document item)
         {
-            var description = item.Translations[cultureName].Description;
-            if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+
+        private string GetNameLocale(Models.ServiceAlert item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Name;
+            if (string.IsNullOrEmpty(name))
+                name = item.name;
+
+            return name;
+        }
+
+        private string GetOwnerLocale(Models.ServiceAlert item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Owner;
+            if (string.IsNullOrEmpty(name))
+                name = item.Owner;
+
+            return name;
+        }
+
+        private string GetAlertTypeLocale(Models.ServiceAlert item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].AlertType;
+            if (string.IsNullOrEmpty(name))
+                name = item.AlertType;
+
+            return name;
+        }
+
+        private string GetNoteLocale(Models.ServiceAlert item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var name = item.Translations[culture].Note;
+            if (string.IsNullOrEmpty(name))
+                name = item.Note;
+
+            return name;
+        }
+
+        private string GetDescriptionLocale(Models.Register item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
             return description;
         }
-        private string GetDescriptionLocale(Models.EPSG item, string cultureName)
+        private string GetDescriptionLocale(Models.EPSG item)
         {
-            var description = item.Translations[cultureName].Description;
-            if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
                 description = item.name;
 
             return description;
         }
-        private string GetDescriptionLocale(Models.CodelistValue item, string cultureName)
+        private string GetDescriptionLocale(Models.CodelistValue item)
         {
-            var description = item.Translations[cultureName].Description;
-            if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName.Substring(0, 2)].Description;
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
                 description = item.name;
 
             return description;
         }
-        private string GetDescriptionLocale(Models.Organization item, string cultureName)
+        private string GetDescriptionLocale(Models.Organization item)
         {
-            var description = item.Translations[cultureName].Description;
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName.Substring(0, 2)].Description;
+                description = item.name;
+
+            return description;
+        }
+        private string GetDescriptionLocale(Models.Document item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
+            if (string.IsNullOrEmpty(description))
+                description = item.name;
+
+            return description;
+        }
+
+        private string GetDescriptionLocale(Models.NameSpace item)
+        {
+            var culture = CultureHelper.GetCurrentCulture();
+            var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
                 description = item.name;
 

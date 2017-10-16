@@ -69,6 +69,7 @@ namespace Kartverket.Register.Services
                 indexDoc.RegisterID = item.RegisterID;
                 indexDoc.RegisterItemDescription = item.RegisterItemDescription;
                 indexDoc.RegisterItemName = item.RegisterItemName;
+                indexDoc.RegisterItemNameEnglish = item.RegisterItemNameEnglish;
                 indexDoc.RegisterItemSeoname = item.RegisterItemSeoname;
                 indexDoc.RegisterItemStatus = item.RegisterItemStatus;
                 indexDoc.RegisterItemUpdated = item.RegisterItemUpdated;

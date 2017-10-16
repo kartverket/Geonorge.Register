@@ -184,12 +184,12 @@
     @foreach (Dataset item in Model)
     {
         <div class="row result-row metadata">
-            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.name </a></div>
-            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.datasetowner.name)</a></div>
+            <div class="col-md-3 col-sm-2"><a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.NameTranslated() </a></div>
+            <div class="col-md-2"><a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.datasetowner.NameTranslated()</a></div>
             <div class="col-md-2">
                 @if (item.ThemeGroupId != null)
                 {
-                    <span> @item.theme.description </span>
+                    <span> @item.ThemeGroupIdTranslated() </span>
                 }
                 else
                 {
@@ -212,7 +212,7 @@
             <div class="col-md-1 text-center">
                 @if (item.dokStatus != null)
                 {
-                    <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.description'>
+                    <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.dokStatus.DescriptionTranslated()'>
                         <i class="statusIcon-@item.dokStatusId"></i>
                     </span>
                 }
@@ -240,12 +240,12 @@
                     </a>
                     <div class="orglogo">
                         <a href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                            @Html.DisplayFor(modelItem => item.datasetowner.name)
+                            @item.datasetowner.NameTranslated()
                         </a>
                     </div>
 
                     <a class="beskrivelse-print visible-print" href="/register/@item.register.seoname/@item.datasetowner.seoname" title="Datasett eier: @item.datasetowner.name">
-                        <p>@Registers.Owner: @Html.DisplayFor(modelItem => item.datasetowner.name)</p>
+                        <p>@Registers.Owner: @item.datasetowner.NameTranslated()</p>
                     </a>
 
                     <br class="hidden-print" />
@@ -272,7 +272,7 @@
                     <ul style="list-style-type:none;">
                         @if (item.dokStatus != null)
                         {
-                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.description <i class="statusIcon-@item.dokStatusId"></i></li>
+                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.dokStatus.DescriptionTranslated() <i class="statusIcon-@item.dokStatusId"></i></li>
                         }
                         @if (item.dokStatusDateAccepted != null)
                         {

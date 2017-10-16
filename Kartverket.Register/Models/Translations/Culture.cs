@@ -7,9 +7,15 @@ namespace Kartverket.Register.Models.Translations
 {
     public class Culture
     {
+        public const string EnglishCode = "en";
+        public const string EnglishName = "English";
+
+        public const string NorwegianCode = "no";
+        public const string NorwegianName = "Norsk";
+
         public static readonly Dictionary<string, string> Languages = new Dictionary<string, string>()
         {
-            {"en", "English"}
+            {EnglishCode, EnglishName}
         };
     }
 }

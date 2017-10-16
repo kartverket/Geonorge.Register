@@ -289,7 +289,7 @@
     <value>General</value>
   </data>
   <data name="DOK_MunicipalityNote" xml:space="preserve">
-    <value>Municipality note</value>
+    <value>Note</value>
   </data>
   <data name="DOK_Owner" xml:space="preserve">
     <value>Dataset owner</value>
@@ -477,5 +477,11 @@ As a data set quality and coverage can vary considerably from site to area, the 
   </data>
   <data name="RestrictedData" xml:space="preserve">
     <value>Restricted data</value>
+  </data>
+  <data name="TypeMunicipality" xml:space="preserve">
+    <value>Municipal</value>
+  </data>
+  <data name="TypeNational" xml:space="preserve">
+    <value>National</value>
   </data>
 </root>

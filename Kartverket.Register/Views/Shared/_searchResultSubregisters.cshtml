@@ -1,6 +1,5 @@
-﻿@model List<Kartverket.Register.Models.Register>
-@using PagedList;
-@using PagedList.Mvc;
+﻿@model List<Register>
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 ﻿@using Kartverket.Register.Helpers
 
@@ -13,9 +12,6 @@
         <th>
             @Registers.Name
         </th>
-        @*<th>
-                Beskrivelse
-            </th>*@
         <th>
             @Registers.Content
         </th>
@@ -26,107 +22,46 @@
 
     @foreach (var reg in Model)
     {
-        Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(reg);
-        Kartverket.Register.Models.Register parent = reg.parentRegister;
-
         <tr>
             <td width="20%">
-                @if (reg.parentRegister != null)
-                {
-                    <a class="" href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname/">
-                        <p class="role-button" style="font-size: 15px;">
-                            @reg.name
-                        </p>
-                    </a>
-                }
-                else
-                {
-                    <a class="" href="/register/@reg.seoname/">
-                        <h3 class="role-button" style="font-size: 15px;">
-                            @reg.name
-                        </h3>
-                    </a>
-                }
+                <a class="" href="@reg.GetObjectUrl()">
+                    <p class="role-button" style="font-size: 15px;">
+                        @reg.NameTranslated()
+                    </p>
+                </a>
             </td>
-            @*<td width="40%">
-                    @if (reg.description == null)
-                    {
-                        @reg.description
-                    }
-                </td>*@
             <td width="20%">
                 <span>@HtmlHelperExtensions.Type(reg.parentRegister.containedItemClass)</span>
             </td>
             <td width="60%">
-                @if (reg.parentRegisterId == null)
-                {
-                    <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Register</a></li>
-                        <li class=""><a href="/register/@reg.seoname">@reg.name</a></li>
-                    </ol>
-                }
-                else
-                {
-                    <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Register</a></li>
-                        <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-                        <li class="active pull-right"><a href="/subregister/@reg.parentRegister.seoname/@reg.parentRegister.owner.seoname/@reg.seoname">@reg.name</a></li>
-                        @while (parent != null && parent != mainRegister)
-                        {
-                            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-                            parent = parent.parentRegister;
-                        }
-                    </ol>
-                }
-
+                <ol class="breadcrumb pull-left" style="font-size: 12px; padding: 8px 0px; margin-top: -1px;">
+                    @foreach (var register in HtmlHelperExtensions.ParentRegisters(reg))
+                    {
+                        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
+                    }
+                </ol>
             </td>
 
         </tr>
 
-        foreach (Kartverket.Register.Models.RegisterItem item in reg.items)
+        foreach (RegisterItem item in reg.items)
         {
-            mainRegister = HtmlHelperExtensions.mainRegister(item.register);
-            parent = item.register.parentRegister;
-            
             <tr>
                 <td width="20%">
-                    @if (item.register.parentRegister != null)
-                    {
-                        <a class="" href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <p class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </p>
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="" href="/register/@item.register.seoname/@item.submitter.seoname/@item.seoname/">
-                            <h3 class="role-button" style="font-size: 15px;">
-                                @item.name
-                            </h3>
-                        </a>
-                    }
+                    <a class="" href="@item.GetObjectUrl()">
+                            @item.NameTranslated()
+                    </a>
                 </td>
-                @*<td width="20%">
-                        @if (item.description == null)
-                        {
-                            @item.description
-                        }
-                    </td>*@
                 <td width="20%">
                     <span>@HtmlHelperExtensions.Type(reg.containedItemClass)</span>
                 </td>
                 <td width="60%">
-                    <ol class="breadcrumb pull-left" style="font-size:12px; padding: 8px 0px; margin-top:-1px;">
-                        <li><a href="/">Register</a></li>
-                        <li class=""><a href="/register/@mainRegister.seoname">@mainRegister.name</a></li>
-                        <li class="active pull-right"><a href="/subregister/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@reg.seoname">@item.name</a></li>
-                        @while (parent != null && parent != mainRegister)
+                    <ol class="breadcrumb pull-left" style="font-size: 12px; padding: 8px 0px; margin-top: -1px;">
+                        @foreach (var register in HtmlHelperExtensions.ParentRegisters(item.register))
                         {
-                            <li class="pull-right"><a href="/subregister/@parent.parentRegister.seoname/@parent.parentRegister.owner.seoname/@parent.seoname">@parent.name</a></li>
-                            parent = parent.parentRegister;
+                            <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
                         }
-
+                        <li><a href="@item.register.GetObjectUrl()">@item.register.NameTranslated()</a></li>
                     </ol>
                 </td>
 

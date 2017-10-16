@@ -1,0 +1,218 @@
+﻿@model Kartverket.Register.Models.ViewModels.GeodatalovDatasetViewModel
+
+@{
+    ViewBag.Title = InspireDataSet.NewDataset;
+}
+
+@section breadcrumb {
+    <li>@InspireDataSet.NewDataset</li>
+}
+
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @InspireDataSet.NewDataset
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                @DataSet.GetInfoKartkatalog
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Create", "GeodatalovDatasets", FormMethod.Post, new { @class = "form-inline", @id = "suggestDataset" }))
+                {
+                    <input type="hidden" id="metadataUuid" name="metadataUuid" value="@ViewBag.uuId" />
+                    @Html.HiddenFor(model => model.RegisterId)
+                    <div class="form-group col-sm-12" style="margin:20px 0">
+                        <label for="@Model.SearchString" class="control-label col-md-2">@Shared.Search:</label>
+                        <div class="col-md-8">
+                            <input type="text" id="searchString" name="SearchString" value="@Model.SearchString" />
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" value="@Shared.Search" class="btn btn-primary" style="margin-bottom:0" />
+                        </div>
+                    </div>
+                }
+
+                @if (Model.SearchResultList != null)
+                {
+                    <h4>@DataSet.ListOfDatasets</h4>
+                    if (Model.SearchResultList.Count > 0)
+                    {
+                        <div class="search-results table-view">
+                            @foreach (var metadata in Model.SearchResultList)
+                            {
+                                <div class="row result-row">
+                                    <div class="col-sm-11">
+                                        @metadata.Title
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <input type="button" value="Velg" class="btn" name="metadataUuid" id="metadataUuid" onclick="$(this).selectMetadata('@metadata.Uuid');" />
+                                    </div>
+                                </div>
+                                <hr>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>@Shared.NoHits...</p>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Name != null)
+{
+    using (Html.BeginForm("Create", "GeodatalovDatasets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.HiddenFor(model => model.RegisterId)
+        @Html.HiddenFor(model => model.OwnerId)
+        @Html.HiddenFor(model => model.UuidService)
+        @Html.HiddenFor(model => model.InspireTheme)
+        @Html.HiddenFor(model => model.Dok)
+        @Html.HiddenFor(model => model.NationalDataset)
+        @Html.HiddenFor(model => model.Plan)
+        @Html.HiddenFor(model => model.Geodatalov)
+        <div class="form-horizontal row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessage("ErrorMessage")
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ThemeGroupId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductSheetUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ProductSheetUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PresentationRulesUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PresentationRulesUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.PresentationRulesUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductSpecificationUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductSpecificationUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.ProductSpecificationUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MetadataUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MetadataUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.MetadataUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionFormat, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DistributionFormat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionFormat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DistributionUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DistributionArea, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DistributionArea, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DistributionArea, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WmsUrl, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.WmsUrl, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.WmsUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Uuid, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Uuid, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Uuid, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DatasetThumbnail, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DatasetThumbnail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.DatasetThumbnail, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group pull-right">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="@Shared.Add" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    <script>
+        $.fn.selectMetadata = function (uuid) {
+            $('#metadataUuid').val(uuid);
+            $('#searchString').val('');
+            $("#suggestDataset").submit();
+        };
+    </script>
+}

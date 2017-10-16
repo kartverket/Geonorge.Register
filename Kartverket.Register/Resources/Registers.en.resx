@@ -276,4 +276,19 @@
   <data name="Modified" xml:space="preserve">
     <value>Last changed</value>
   </data>
+  <data name="StatusAvailable" xml:space="preserve">
+    <value>Possible statuses</value>
+  </data>
+  <data name="Valid" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="MakeAllItemsValid" xml:space="preserve">
+    <value>Set status "Valid" on all codelist values</value>
+  </data>
+  <data name="MakeAllItemsValidMessage" xml:space="preserve">
+    <value>Set status of all values in code list. Individual values can still be set</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>

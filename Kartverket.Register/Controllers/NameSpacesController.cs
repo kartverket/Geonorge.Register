@@ -11,19 +11,24 @@ using System.Text.RegularExpressions;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Resources;
+using Kartverket.Register.Services.Translation;
 
 namespace Kartverket.Register.Controllers
 {
     public class NameSpacesController : Controller
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private readonly RegisterDbContext db;
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
-        public NameSpacesController()
+        private ITranslationService _translationService;
+
+        public NameSpacesController(RegisterDbContext dbContext, ITranslationService translationService)
         {
+            db = dbContext;
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
+            _translationService = translationService;
         }
 
         // GET: NameSpaces
@@ -55,6 +60,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult Create(string registername, string parentRegister)
         {
             NameSpace nameSpace = new NameSpace();
+            nameSpace.AddMissingTranslations();
             Models.Register register = GetRegister(registername, parentRegister);
 
             nameSpace.register = register;
@@ -181,6 +187,7 @@ namespace Kartverket.Register.Controllers
 
                 originalNameSpace.modified = DateTime.Now;
                 db.Entry(originalNameSpace).State = EntityState.Modified;
+                _translationService.UpdateTranslations(nameSpace, originalNameSpace);
                 db.SaveChanges();
 
                 Viewbags(originalNameSpace);
@@ -322,8 +329,8 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(NameSpace nameSpace)
         {
-            ViewBag.statusId = new SelectList(db.Statuses, "value", "description", nameSpace.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
+            ViewBag.statusId = new SelectList(db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", nameSpace.statusId);
+            ViewBag.submitterId = new SelectList(db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
         }
 
         private void ValidationName(NameSpace nameSpace, Models.Register register)

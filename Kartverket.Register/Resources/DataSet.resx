@@ -482,4 +482,13 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   <data name="RestrictedData" xml:space="preserve">
     <value>Skjermede data</value>
   </data>
+  <data name="Delivery_Common" xml:space="preserve">
+    <value>Felles/kombi</value>
+  </data>
+  <data name="TypeMunicipality" xml:space="preserve">
+    <value>Kommunalt</value>
+  </data>
+  <data name="TypeNational" xml:space="preserve">
+    <value>Nasjonalt</value>
+  </data>
 </root>

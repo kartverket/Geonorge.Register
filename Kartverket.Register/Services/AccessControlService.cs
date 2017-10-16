@@ -33,6 +33,10 @@ namespace Kartverket.Register.Services
             {
                 return AccessRegister(model);
             }
+            if (model is RegisterV2ViewModel)
+            {
+                return AccessRegister((RegisterV2ViewModel)model);
+            }
             if (model is Models.RegisterItem)
             {
                 return accessRegisterItem((Models.RegisterItem)model);
@@ -64,10 +68,15 @@ namespace Kartverket.Register.Services
                     }
                 }
                 else {
-                    return IsOwner(registerItem.submitter.name, user.name);
+                    return IsOwner(registerItem.submitter.name, user.name) || IsRegisterOwner(registerItem.register.owner.name, user.name) ;
                 }
             }
             return false;
+        }
+
+        private bool IsRegisterOwner(string registerOwner, string userName)
+        {
+            return registerOwner == userName || registerOwner == userName;
         }
 
         private bool accessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
@@ -105,14 +114,40 @@ namespace Kartverket.Register.Services
         private bool AccessRegister(object model)
         {
             Models.Register register = (Models.Register)model;
+            Organization user = _registerService.GetOrganizationByUserName();
             if (register.accessId == 2)
             {
                 if (IsEditor())
                 {
+                    if (register.ContainedItemClassIsCodelistValue())
+                    {
+                        return IsRegisterOwner(register.owner.name, user.name);
+                    }
                     return true;
                 }
             }
             else if (register.accessId == 4)
+            {
+                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
+            }
+            return false;
+        }
+
+        private bool AccessRegister(RegisterV2ViewModel register)
+        {
+            Organization user = _registerService.GetOrganizationByUserName();
+            if (register.Access == 2)
+            {
+                if (IsEditor())
+                {
+                    if (register.ContainedItemClassIsCodelistValue())
+                    {
+                        return IsRegisterOwner(register.Owner.name, user.name);
+                    }
+                    return true;
+                }
+            }
+            else if (register.Access == 4)
             {
                 return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
             }

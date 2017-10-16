@@ -8,19 +8,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
-using System.Globalization;
 using Resources;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
     public class Register
     {
+        private const string _geodatalovStatusRegister = "Geodatalov statusregister";
+        private const string _inspireStatusRegister = "Inspire statusregister";
+        private const string _DetOffentligeKartgrunnlagetKommunalt = "Det offentlige kartgrunnlaget - Kommunalt";
+
         public Register()
         {
             this.RegisterItems = new HashSet<RegisterItemV2>();
@@ -54,7 +55,7 @@ namespace Kartverket.Register.Models
         public DateTime? dateAccepted { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(Registers), ErrorMessageResourceName = "ContainedItemClassErrorMessage")]
-        [Display(Name = "ContainedItemClass", ResourceType = typeof(Registers))]     
+        [Display(Name = "ContainedItemClass", ResourceType = typeof(Registers))]
         public string containedItemClass { get; set; }
 
         public virtual ICollection<RegisterItem> items { get; set; }
@@ -75,11 +76,32 @@ namespace Kartverket.Register.Models
         public int? accessId { get; set; }
         public virtual accessType access { get; set; }
 
+        [Display(Name = "MakeAllItemsValid", ResourceType = typeof(Registers))]
+        public bool MakeAllItemsValid { get; set; }
+
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
 
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();
+        }
+
+        public string NameTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var nameTranslated = Translations[cultureName]?.Name;
+            if (string.IsNullOrEmpty(nameTranslated))
+                nameTranslated = name;
+            return nameTranslated;
+        }
+
+        public string DescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var descriptionTranslated = Translations[cultureName]?.Description;
+            if (string.IsNullOrEmpty(descriptionTranslated))
+                descriptionTranslated = description;
+            return descriptionTranslated;
         }
 
         /// <summary>
@@ -105,7 +127,7 @@ namespace Kartverket.Register.Models
 
         public bool IsDokMunicipal()
         {
-            return name == "Det offentlige kartgrunnlaget - Kommunalt";
+            return name == _DetOffentligeKartgrunnlagetKommunalt;
         }
 
         public Guid GetSystemId()
@@ -118,9 +140,14 @@ namespace Kartverket.Register.Models
             return "/register/det-offentlige-kartgrunnlaget-kommunalt";
         }
 
-        public bool IsInspireStatusregister()
+        public bool IsInspireStatusRegister()
         {
-            return name == "Inspire statusregister" && parentRegister == null; // TODO, flere registre kan potensielt hete "Inspire statusregister"
+            return name == _inspireStatusRegister && parentRegister == null;
+        }
+
+        public bool IsGeodatalovStatusRegister()
+        {
+            return name == _geodatalovStatusRegister && parentRegister == null;
         }
 
         public bool ContainedItemClassIsOrganization()
@@ -168,36 +195,30 @@ namespace Kartverket.Register.Models
             return containedItemClass == "InspireDataset";
         }
 
+        public bool ContainedItemClassIsGeodatalovDataset()
+        {
+            return containedItemClass == "GeodatalovDataset";
+        }
+
         public string GetObjectCreateUrl(string municipalityCode = null)
         {
             var url = parentRegister == null
                 ? seoname + "/ny"
                 : parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/ny";
 
-            switch (containedItemClass)
+            if (ContainedItemClassIsDocument()) return "/dokument/" + url;
+            if (ContainedItemClassIsCodelistValue()) return "/kodeliste/" + url;
+            if (ContainedItemClassIsRegister()) return "/subregister/" + url;
+            if (ContainedItemClassIsOrganization()) return "/organisasjoner/" + url;
+            if (ContainedItemClassIsEpsg()) return "/epsg/" + url;
+            if (ContainedItemClassIsNameSpace()) return "/navnerom/" + url;
+            if (ContainedItemClassIsServiceAlert()) return "/tjenestevarsler/" + url;
+            if (ContainedItemClassIsInspireDataset()) return "/inspire/" + url;
+            if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
+            if (ContainedItemClassIsDataset())
             {
-                case "Document":
-                    return "/dokument/" + url;
-                case "CodelistValue":
-                    return "/kodeliste/" + url;
-                case "Register":
-                    return "/subregister/" + url;
-                case "Organization":
-                    return "/organisasjoner/" + url;
-                case "EPSG":
-                    return "/epsg/" + url;
-                case "NameSpace":
-                    return "/navnerom/" + url;
-                case "ServiceAlert":
-                    return "/tjenestevarsler/" + url;
-                case "InspireDataset":
-                    return "/inspire/" + url;
-                case "Dataset":
-                    if (IsDokMunicipal())
-                    {
-                        return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
-                    }
-                    return "/dataset/" + url;
+                if (IsDokMunicipal()) return "/dataset/" + seoname + "/" + municipalityCode + "/ny";
+                return "/dataset/" + url;
             }
             return "#";
         }
@@ -207,6 +228,15 @@ namespace Kartverket.Register.Models
             return parentRegister == null
                 ? "/rediger/" + seoname
                 : "/subregister/" + parentRegister.seoname + "/" + owner.seoname + "/" + seoname + "/rediger";
+        }
+
+
+        
+        public bool CannotChangeName()
+        {
+            return name == _inspireStatusRegister ||
+                   name == _geodatalovStatusRegister ||
+                   name == _DetOffentligeKartgrunnlagetKommunalt;
         }
     }
 }

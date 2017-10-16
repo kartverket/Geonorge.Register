@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.Register
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.Register
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -8,7 +9,7 @@
 
 @section breadcrumb {
 
-@foreach (var register in HtmlHelperExtensions.registers(Model.parentRegister))
+@foreach (var register in HtmlHelperExtensions.ParentRegisters(Model))
 {
     <li><a href="@register.GetObjectUrl()">@register.name</a></li>
 }
@@ -113,7 +114,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("parentRegisterId", null, "Ingen", htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -147,10 +148,25 @@
                     <label class="col-md-4" for="editor">Admin + Editor</label>
                 </div>
             </div>
+            if (Model.ContainedItemClassIsCodelistValue())
+             {
+                 <div class="form-group">
+                     <div class="col-md-2"></div>
+                     <div class="col-md-10">
+                         @Html.LabelFor(model => model.MakeAllItemsValid)
+                     </div>
+                     <div class="col-md-2"></div>
+                     <div class="col-md-10">
+                         @Html.CheckBoxFor(m => m.MakeAllItemsValid, new {title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline"})
+                         <small>@Registers.MakeAllItemsValidMessage.</small>
+                     </div>
+                 </div>
+             }
         }
         else
         {
             @Html.HiddenFor(model => model.accessId)
+            @Html.HiddenFor(model => model.MakeAllItemsValid)
         }
     </div>
     <div class="form-group">

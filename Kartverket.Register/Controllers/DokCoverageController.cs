@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Controllers
 {
@@ -140,6 +142,15 @@ namespace Kartverket.Register.Controllers
                     var viewModel = new DatasetCoverageViewModel();
                     viewModel.ThemeGroupName = dataset.theme.description;
                     viewModel.DatasetName = dataset.name;
+                    if (!CultureHelper.IsNorwegian())
+                    {
+                        var theme = dataset.Translations.Where(l => l.CultureName == Culture.EnglishCode).FirstOrDefault();
+                        if (theme != null && !string.IsNullOrEmpty(theme.ThemeGroupId))
+                            viewModel.ThemeGroupName = theme.ThemeGroupId;
+                        var data = dataset.Translations.Where(l => l.CultureName == Culture.EnglishCode).FirstOrDefault();
+                        if (data != null && !string.IsNullOrEmpty(data.Name))
+                            viewModel.DatasetName = data.Name;
+                    }
                     viewModel.DatasetUrl = dataset.GetObjectUrl();
                     viewModel.DatasetUuid = dataset.Uuid;
                     viewModels.Add(viewModel);

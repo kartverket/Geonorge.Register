@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Felles/kombi.
+        /// </summary>
+        public static string Delivery_Common {
+            get {
+                return ResourceManager.GetString("Delivery_Common", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vis veiledning om registrering.
         /// </summary>
         public static string DisplayInfoRegistration {
@@ -1025,6 +1034,24 @@ namespace Resources {
         public static string ToEditMetadata {
             get {
                 return ResourceManager.GetString("ToEditMetadata", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kommunalt.
+        /// </summary>
+        public static string TypeMunicipality {
+            get {
+                return ResourceManager.GetString("TypeMunicipality", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nasjonalt.
+        /// </summary>
+        public static string TypeNational {
+            get {
+                return ResourceManager.GetString("TypeNational", resourceCulture);
             }
         }
         

@@ -1,8 +1,7 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.RegisterViewModel
-
+@model IEnumerable<Kartverket.Register.Models.Register>
 @{
-    ViewBag.Title = "Registrene";
+    ViewBag.Title = "Register";
 }
 @Html.Partial("_SearchBarPartial")
 
@@ -73,32 +72,24 @@
                 </td>
                 <td>Kartverket</td>
             </tr>
-            @foreach (var item in Model.Items)
+            @foreach (var item in Model)
             {
-                if (string.IsNullOrEmpty(item.ParentRegisterId))
+                if (item.parentRegisterId == null)
                 {
-                    if (item.Name == "Inspire statusregister")
+                    if (item.IsInspireStatusRegister() || item.IsGeodatalovStatusRegister())
                     {
                         if (HtmlHelperExtensions.IsAdmin())
                         {
                             <tr>
                                 <td>
-                                    <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a>
+                                    <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
                                     </p>
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
+                                    @item.DescriptionTranslated()
                                 </td>
-
-                                <td title="@Registers.Owner: @item.Owner">
-                                    @if (string.IsNullOrEmpty(item.Owner))
-                                    {
-                                        <span>@Registers.NotSet</span>
-                                    }
-                                    else
-                                    {
-                                        @Html.DisplayFor(modelItem => item.Owner)
-                                    }
+                                <td title="@Registers.Owner: @item.owner.NameTranslated()">
+                                    @item.owner.NameTranslated()
                                 </td>
                             </tr>
                         }
@@ -107,22 +98,14 @@
                     {
                         <tr>
                             <td>
-                                <p><a href="/register/@item.Seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.Name</a>
+                                <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
                                 </p>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => item.Description)
+                                @item.DescriptionTranslated()
                             </td>
-
-                            <td title="@Registers.Owner: @item.Owner">
-                                @if (string.IsNullOrEmpty(item.Owner))
-                                {
-                                    <span>@Registers.NotSet</span>
-                                }
-                                else
-                                {
-                                    @Html.DisplayFor(modelItem => item.Owner)
-                                }
+                            <td title="@Registers.Owner: @item.owner.NameTranslated()">
+                                @item.owner.NameTranslated()
                             </td>
 
                         </tr>

@@ -164,6 +164,15 @@ In all cases, it is also advisable to state the reason for the changes, as users
   <data name="NoteErrorMessage" xml:space="preserve">
     <value>The alert message is required</value>
   </data>
+  <data name="NoteTranslated" xml:space="preserve">
+    <value>The alert message in english</value>
+  </data>
+  <data name="SelectService" xml:space="preserve">
+    <value>Select service</value>
+  </data>
+  <data name="SelectServiceAlert" xml:space="preserve">
+    <value>Select service alert</value>
+  </data>
   <data name="Service" xml:space="preserve">
     <value>Service</value>
   </data>

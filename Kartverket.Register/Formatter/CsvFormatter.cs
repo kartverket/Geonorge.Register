@@ -164,9 +164,25 @@ namespace Kartverket.Register.Formatter
                         item.versionNumber + ";" + 
                         item.description + ";" + 
                         item.id + ";" + 
-                        GetInspireDaliveryStatus(item) + 
+                        GetInspireDeliveryStatus(item) + 
                         (isAdmin ? ";" + item.uuid : "") + ";" + 
                         item.MetadataUrl;
+            }
+            else if (item.itemclass == "GeodatalovDataset")
+            {
+                text = item.theme + ";" +
+                       item.label + ";" +
+                       item.owner + ";" +
+                       item.dokStatus + ";" +
+                       (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" +
+                       (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") +
+                       (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" +
+                       item.versionNumber + ";" +
+                       item.description + ";" +
+                       item.id + ";" +
+                       GetGeodatalovDeliveryStatus(item) +
+                       (isAdmin ? ";" + item.uuid : "") + ";" +
+                       item.MetadataUrl;
             }
             else if (item.itemclass == "Organization")
             {
@@ -193,7 +209,7 @@ namespace Kartverket.Register.Formatter
 
         }
 
-        private static string GetInspireDaliveryStatus(Registeritem item)
+        private static string GetInspireDeliveryStatus(Registeritem item)
         {
             return item.MetadataStatus + ";" + 
                    item.MetadataServiceStatus + ";" + 
@@ -205,6 +221,18 @@ namespace Kartverket.Register.Formatter
                    item.HarmonizedDataStatus + ";" + 
                    item.SpatialDataServiceStatus;
 
+        }
+
+        private static string GetGeodatalovDeliveryStatus(Registeritem item)
+        {
+            return item.MetadataStatus + ";" +
+                   item.ProductspesificationStatus + ";" +
+                   item.SosiStatus + ";" +
+                   item.GmlStatus + ";" +
+                   item.WmsStatus + ";" +
+                   item.WfsStatus + ";" +
+                   item.AtomFeedStatus + ";" +
+                   item.CommonStatus;
         }
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
@@ -231,7 +259,7 @@ namespace Kartverket.Register.Formatter
             }
             else
             {
-                description = "ikke angitt";
+                description = Registers.NotSet;
             }
 
             return description;
@@ -280,6 +308,25 @@ namespace Kartverket.Register.Formatter
                         InspireDataSet.HarmonizedDataStatus + ";" +
                         InspireDataSet.SpatialDataServiceStatus + (isAdmin ? ";Uuid" : "") + ";" +
                         DataSet.DisplayKartkatalogen;
+            }
+            if (containedItemClass == "GeodatalovDataset")
+            {
+                return DataSet.DOK_Delivery_Theme + ";" +
+                       Registers.Name + ";" +
+                       Registers.Owner + "; DOK-status;" +
+                       DataSet.DOK_StatusDateAccepted + ";" +
+                       DataSet.DOK_Kandidatdato + (isAdmin ? ";" + Registers.Updated : "") + ";" +
+                       Registers.VersionNumber + ";" +
+                       Registers.Description + "; ID" + ";" +
+                       DataSet.DOK_Delivery_Metadata + ";" +
+                       DataSet.DOK_Delivery_ProductSpesification + ";" +
+                       DataSet.DOK_Delivery_SosiRequirements + ";" +
+                       DataSet.DOK_Delivery_GmlRequirements + ";" +
+                       DataSet.DOK_Delivery_Wms + ";" +
+                       DataSet.DOK_Delivery_Wfs + ";" +
+                       DataSet.DOK_Delivery_AtomFeed + ";" +
+                       DataSet.Delivery_Common + ";" + (isAdmin ? ";Uuid" : "") + ";" +
+                       DataSet.DisplayKartkatalogen;
             }
             if (containedItemClass == "Organization")
             {

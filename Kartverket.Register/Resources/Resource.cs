@@ -1,4 +1,5 @@
-﻿using Resources;
+﻿using Kartverket.Register.Helpers;
+using Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace Kartverket.Register.Resources
         public static string MunicipalDOKConfirmedInfo(string confirmed)
         {
             return string.Format(DataSet.MunicipalDOKConfirmedInfoPlaceholder, confirmed);
+        }
+
+        public static string NameLabel(string lang)
+        {
+            return Shared.ResourceManager.GetString("NameFor_" + lang);
         }
     }
 }

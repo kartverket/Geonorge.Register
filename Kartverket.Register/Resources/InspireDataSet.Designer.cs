@@ -70,6 +70,24 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atom feed.
+        /// </summary>
+        public static string AtomStatus {
+            get {
+                return ResourceManager.GetString("AtomStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datadeling.
+        /// </summary>
+        public static string Distribution {
+            get {
+                return ResourceManager.GetString("Distribution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deling av data.
         /// </summary>
         public static string DistributionStatus {
@@ -84,6 +102,24 @@ namespace Resources {
         public static string HarmonizedDataStatus {
             get {
                 return ResourceManager.GetString("HarmonizedDataStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inspire tema.
+        /// </summary>
+        public static string InspireTheme {
+            get {
+                return ResourceManager.GetString("InspireTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Metadata.
+        /// </summary>
+        public static string Metadata {
+            get {
+                return ResourceManager.GetString("Metadata", resourceCulture);
             }
         }
         
@@ -129,6 +165,15 @@ namespace Resources {
         public static string WfsStatus {
             get {
                 return ResourceManager.GetString("WfsStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WMS.
+        /// </summary>
+        public static string WmsStatus {
+            get {
+                return ResourceManager.GetString("WmsStatus", resourceCulture);
             }
         }
     }

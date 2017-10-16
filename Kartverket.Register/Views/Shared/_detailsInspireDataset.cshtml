@@ -36,10 +36,10 @@
         <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.Owner.name</div>
     </div>
     }
-    @if (Model.Theme != null)
+    @if (Model.InspireTheme != null)
             {
     <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.Theme.description</div>
+        <div class="col-md-3">@Html.DisplayNameFor(model => Model.InspireTheme):</div><div class="col-md-9"> @Model.InspireTheme</div>
     </div>
     }
 </article>
@@ -57,48 +57,48 @@
         </div>
         <div class="menu-separator search-results-table-heading"></div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataStatus)</div>
-            <div class="col-md-2"> @Html.DisplayFor(model => Model.MetadataStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataStatusId)</div>
+            <div class="col-md-2"> @Html.DisplayFor(model => Model.MetadataStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.MetadataNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataServiceStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.MetadataServiceStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.MetadataServiceStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.MetadataServiceStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.MetadataServiceNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.DistributionStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.DistributionStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.DistributionStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.DistributionStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.DistributionNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WmsStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.WmsStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WmsStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.WmsStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.WmsNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.WfsStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.WfsStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.WfsNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.AtomFeedStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.AtomFeedStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.AtomFeedStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.AtomFeedStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.AtomFeedNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsOrAtomStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.WfsOrAtomStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.WfsOrAtomStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.WfsOrAtomStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.WfsOrAtomNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.HarmonizedDataStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.HarmonizedDataStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.HarmonizedDataStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.HarmonizedDataStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.HarmonizedDataNote)</div>
         </div>
         <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.SpatialDataServiceStatus)</div>
-            <div class="col-md-2">@Html.DisplayFor(model => Model.SpatialDataServiceStatus)</div>
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.SpatialDataServiceStatusId)</div>
+            <div class="col-md-2">@Html.DisplayFor(model => Model.SpatialDataServiceStatus.description)</div>
             <div class="col-md-7">@Html.DisplayFor(model => Model.SpatialDataServiceNote)</div>
         </div>
     </div>

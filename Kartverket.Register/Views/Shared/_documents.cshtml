@@ -33,13 +33,13 @@
                     @if (item.register.parentRegister != null)
                     {
                         <a href="/subregister/versjoner/@item.register.parentRegister.seoname/@item.register.parentRegister.owner.seoname/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @item.name
+                            @item.NameTranslated()
                         </a>
                     }
                     else
                     {
                         <a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @item.name
+                            @item.NameTranslated()
                         </a>
                     }
                     <a id="selectedOwner-@item.systemId" href="/register/@item.register.seoname/@item.documentowner.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
@@ -47,7 +47,7 @@
                     </a>
                     <div>
                         <a href="/register/@item.register.seoname/@item.documentowner.seoname" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
-                            @Html.DisplayFor(modelItem => item.documentowner.name)
+                            @item.documentowner.NameTranslated()
                         </a>
                     </div>
                     <p>
@@ -77,7 +77,7 @@
                     }
                     else
                     {
-                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.description <i class="statusIcon-@item.statusId"></i></p>
+                        <p class="pull-right" title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
                     }
                 </div>
             </div>

@@ -1,4 +1,5 @@
-﻿@model Kartverket.Register.Models.CodelistValue
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.CodelistValue
 ﻿@using Kartverket.Register.Helpers
 
 @{
@@ -19,7 +20,7 @@
 </section>
 
 @section breadcrumb {
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
@@ -90,7 +91,7 @@
                 <small>@CodelistValues.HierarchicalCodelistsSelectionText</small>
                 <br /><br />
                 <div class="form-group">
-                    @Html.LabelFor(model => model.broaderItem, "Mer generelt begrep", htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.broaderItem, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <div class="dropdown">
                             <select name="broader" class="form-control searchbar dropdown" data-toggle="dropdown">
@@ -112,7 +113,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.narrowerItems, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        <select name="narrower" data-placeholder="velg kodeverdier" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                        <select name="narrower" data-placeholder="@CodelistValues.SelectCodeValue" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
                             @foreach (var register in HtmlHelperExtensions.CodelistRegister())
                             {
                                 <optgroup label="@register.name">

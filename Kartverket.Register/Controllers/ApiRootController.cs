@@ -1,4 +1,4 @@
-﻿using Kartverket.Register.Helpers;
+﻿
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
@@ -7,34 +7,35 @@ using Kartverket.Register.Services.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
-using System.Net.Mail;
-using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Kartverket.DOK.Service;
 using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
+using Kartverket.Register.Helpers;
+using Kartverket.Register.Models.Translations;
+using System.Globalization;
+using System.Threading;
+using System.Net.Http.Headers;
 
 namespace Kartverket.Register.Controllers
 {
     public class ApiRootController : ApiController
     {
-        private RegisterDbContext db = new RegisterDbContext();
+        private RegisterDbContext db;
 
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
-        private string language = "nb-NO";
-
-        public ApiRootController(ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
+        
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
         {
             _registerItemService = registerItemService;
             _searchService = searchService;
             _registerService = registerService;
+            db = dbContext;
         }
 
         /// <summary>
@@ -245,6 +246,24 @@ namespace Kartverket.Register.Controllers
             return Ok();
         }
 
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireStatusregister()
+        {
+            new InspireDatasetService(db).SynchronizeInspireDatasets();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/geodatalov-statusregister")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeGeodatalovStatusregister()
+        {
+            new GeodatalovDatasetService(db).SynchronizeGeodatalovDatasets();
+            return Ok();
+        }
+
         /// <summary>
         /// DokCoverageMapping
         /// </summary>
@@ -296,7 +315,7 @@ namespace Kartverket.Register.Controllers
                     selectedDOKMunicipality = org.name;
                 }
             }
-            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality, language);
+            var tmp = new Models.Api.Register(item, registerId, selectedDOKMunicipality);
             return tmp;
         }
 
@@ -305,13 +324,15 @@ namespace Kartverket.Register.Controllers
         {
             var tmp = ConvertRegister(item, filter);
             tmp.containeditems = new List<Models.Api.Registeritem>();
-            if (item.name == "Inspire statusregister")
+            tmp.lang = CultureHelper.GetCurrentCulture();
+            if (!item.items.Any())
             {
-                foreach (var inspireDataset in item.RegisterItems)
+                foreach (var registerItem in item.RegisterItems)
                 {
-                    tmp.containeditems.Add(ConvertRegisterItem(inspireDataset, filter));
+                    tmp.containeditems.Add(ConvertRegisterItem(registerItem, filter));
                 }
             }
+
             else if (item.items.Any())
             {
                 foreach (var d in item.items)
@@ -349,14 +370,14 @@ namespace Kartverket.Register.Controllers
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item,registerId, filter, language);
+            var tmp = new Registeritem(item,registerId, filter);
             return tmp;
         }
         private Registeritem ConvertRegisterItem(RegisterItemV2 item, FilterParameters filter = null)
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item, registerId, filter, language);
+            var tmp = new Registeritem(item, registerId, filter);
             return tmp;
         }
 
@@ -447,11 +468,30 @@ namespace Kartverket.Register.Controllers
 
         private void SetLanguage(HttpRequestMessage request)
         {
-            IEnumerable<string> headerValues;
-            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            string language = Culture.NorwegianCode;
+
+            CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+            if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
             {
-                language = headerValues.FirstOrDefault();
+                language = cookie["_culture"].Value;
             }
+            else
+            { 
+            IEnumerable<string> headerValues;
+                if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+                {
+                    language = headerValues.FirstOrDefault();
+                    if (CultureHelper.IsNorwegian(language))
+                        language = Culture.NorwegianCode;
+                    else
+                        language = Culture.EnglishCode;
+                }
+            }
+
+            var culture = new CultureInfo(language);
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
         }
     }
 }

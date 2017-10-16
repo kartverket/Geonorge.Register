@@ -53,9 +53,9 @@
                 <li tabindex="0" onclick="registerName('Kartografi')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/kartografi">@Registers.Kartografi</a></li>
                 <li tabindex="0" onclick="registerName('Symbol')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/symbol">Symbol</a></li>
 
-                @foreach (var item in HtmlHelperExtensions.Registers().OrderBy(r => r.name))
+                @foreach (var item in HtmlHelperExtensions.Registers().OrderBy(r => r.NameTranslated()))
                 {
-                    <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/@item.seoname">@item.name</a></li>
+                    <li tabindex="0" onclick="registerName('@item.name')" class="left-edge-registre"><a href="@Html.RegistryUrl()register/@item.seoname">@item.NameTranslated()</a></li>
                 }
             </ul>
         </div><!-- /input-group-btn -->

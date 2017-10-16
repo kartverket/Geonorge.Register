@@ -1,32 +1,28 @@
-﻿@model Kartverket.Register.Models.RegisterItem
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.RegisterItem
 ﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = @Model.name;
-    Kartverket.Register.Models.Register mainRegister = HtmlHelperExtensions.mainRegister(Model.register);
-    Kartverket.Register.Models.Register parent = Model.register.parentRegister;
     var documentOwner = ViewBag.documentOwner;
-    string parentRegister = HtmlHelperExtensions.HasParent(Model.register);
-    string UrlEdit = RegisterUrls.EditRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
-    string UrlDelete = RegisterUrls.DeleteRegisterItemUrl(parentRegister, Model.register.owner.seoname, Model.register.seoname, Model.submitter.seoname, Model.seoname, Model.register.containedItemClass);
 }
 
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
     {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
+        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
     }
-    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li>@Model.name</li>
+    <li><a href="@Model.register.GetObjectUrl()">@Model.register.NameTranslated()</a></li>
+    <li>@Model.NameTranslated()</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h1>
-                @Html.DisplayFor(model => model.name)
+                @Model.NameTranslated()
             </h1>
         </div>
         <div class="col-sm-12">
@@ -40,7 +36,7 @@
             ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
 
             <p>
-                @Html.DisplayFor(model => model.description)
+                @Model.DescriptionTranslated()
             </p>
             @if (Model.status == null)
             {
@@ -48,7 +44,7 @@
             }
             else
             {
-                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Html.DisplayFor(model => model.status.description) <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
             }
             @if (Model.submitter == null)
             {
@@ -106,8 +102,8 @@
 
                 if (HtmlHelperExtensions.accessRegisterItem(Model))
                 {
-                    <a class="btn btn-default btn-space pull-right" href="@UrlEdit">@Shared.Edit</a>
-                    <a class="btn btn-default btn-space pull-right" href="@UrlDelete">@Shared.Delete</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
                 }
             }
         </div>

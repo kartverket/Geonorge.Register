@@ -13,11 +13,16 @@ using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Resources;
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Models
 {
     public class Document : RegisterItem
     {
+        public Document()
+        {
+            this.Translations = new TranslationCollection<DocumentTranslation>();
+        }
         // logos will be stored in this directory
         public const string DataDirectory = "documents/";
 
@@ -27,6 +32,22 @@ namespace Kartverket.Register.Models
         [ForeignKey("documentowner")]
         public Guid documentownerId { get; set; }
         public virtual Organization documentowner { get; set; }
+
+        public virtual TranslationCollection<DocumentTranslation> Translations { get; set; }
+        public void AddMissingTranslations()
+        {
+            Translations.AddMissingTranslations();
+        }
+
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
 
         public virtual string GetDocumentUrl()
         {

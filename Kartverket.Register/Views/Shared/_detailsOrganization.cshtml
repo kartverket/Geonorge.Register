@@ -1,103 +1,104 @@
-﻿@model Kartverket.Register.Models.Organization
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.Organization
 ﻿@using Kartverket.Register.Helpers
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        <h3>@Shared.GeneralInformation</h3>
-        <p>@Organizations.Organization_Number: @Model.number</p>
+<article class="col-md-8">
+    <h3>@Shared.GeneralInformation</h3>
+    <p><strong>@Organizations.Organization_Number:</strong> @Model.number</p>
+</article>
 
-        <h3>@Organizations.Documents</h3>
+<aside class="col-md-4">
+    <div class="row com-md-12 listblock">
+    <img src="@Url.Content("~/data/organizations/" + Model.logoFilename)" class="img-small pull-right" alt="Liten logo" title="Liten logo @Model.name"/>
+    <img src="@Url.Content("~/data/organizations/" + Model.largeLogo)" class="img-large pull-right" alt="Stor logo" title="Stor logo @Model.name"/>
+    </div>
+</aside>
+<article class="col-md-12">
+    <h3>@Organizations.Documents</h3>
+    
+        @if (!string.IsNullOrWhiteSpace(Model.agreementDocumentUrl))
+        {
+            <p><a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span> <strong>@Organizations.AgreementDocumentUrl</strong></a></p>
+        }
+        else
+        {
+            <p><strong>@Organizations.AgreementDocumentUrl:</strong> @Registers.NotSet</p>
+        }
+
+        <p class="pull-right" title="@Organizations.AgreementYear @Model.agreementYear"><strong>@Organizations.AgreementYear:</strong> @Html.DisplayFor(m => m.agreementYear)</p>
+
+    @if (HtmlHelperExtensions.accessRegisterItem(Model))
+    {
         <p>
-            @if (!string.IsNullOrWhiteSpace(Model.agreementDocumentUrl))
+            @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))
             {
-                <a href="@Model.agreementDocumentUrl"><span class="glyphicon glyphicon-file" title="Link til avtaledokument for @Model.name" style="font-size:15px"></span> @Organizations.AgreementDocumentUrl</a>
+                <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link @Organizations.PriceFormDocument for @Model.name" style="font-size:15px"></span> <strong>@Organizations.PriceFormDocument</strong></a>
             }
             else
             {
-                <span>@Organizations.AgreementDocumentUrl: @Registers.NotSet</span>
+                <span><strong>@Organizations.PriceFormDocument:</strong> @Registers.NotSet</span>
             }
+</p>
+    }
+</article>
 
-            <span class="pull-right" title="@Organizations.AgreementYear @Model.agreementYear">@Organizations.AgreementYear: @Html.DisplayFor(m => m.agreementYear)</span>
-        </p>
-        
-        @if (HtmlHelperExtensions.accessRegisterItem(Model))
-        {
-            <p>
-                @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))
-                {
-                    <a href="@Model.priceFormDocument"><span class="glyphicon glyphicon-file" title="Link @Organizations.PriceFormDocument for @Model.name" style="font-size:15px"></span> @Organizations.PriceFormDocument</a>
-                }
-                else
-                {
-                    <span>@Organizations.PriceFormDocument: @Registers.NotSet</span>
-                }
-            </p>
-        }
-        
-        <h3>@Organizations.Contact</h3>
-        <p>@Organizations.ContactName: @Html.DisplayFor(m => m.contact)</p>
-        <p>@Organizations.EmailAddress: @Html.DisplayFor(m => m.epost)</p>
-        <p>
-            @Organizations.Member:
-            @if (Model.member == true)
+<article class="col-md-12">
+    <h3>@Organizations.Contact</h3>
+    <p><strong>@Organizations.ContactName:</strong> @Html.DisplayFor(m => m.contact)</p>
+    <p><strong>@Organizations.EmailAddress:</strong> @Html.DisplayFor(m => m.epost)</p>
+    <p>
+        <strong>
+            @Organizations.Member:</strong>
+    @if (Model.member == true)
             {
-                <span>@Shared.Yes</span>
-            }
-            else if (Model.member == false)
-            {
-                <span>@Shared.No</span>
-            }
-            else
-            {
-                <span>@Registers.NotSet</span>
-            }
-        </p>
-
-        @if (Model.IsMunicipality())
-        {
-            <h3>@Organizations.MunicipalityInformation</h3>
-            <p>@Organizations.MunicipalityCode: @Html.DisplayFor(m => m.MunicipalityCode)</p>
+        <span>@Shared.Yes</span>
+    }
+    else if (Model.member == false)
+    {
+        <span>@Shared.No</span>
+    }
+    else
+    {
+        <span>@Registers.NotSet</span>
+    }
+</p>
+</article>
+<article class="col-md-12">
+    @if (Model.IsMunicipality())
+    {
+        <h3>@Organizations.MunicipalityInformation</h3>
+            <p><strong>@Organizations.MunicipalityCode:</strong> @Html.DisplayFor(m => m.MunicipalityCode)</p>
 
             <p>
-                @Organizations.GeographicCenterPoint:
-                @if (Model.HasGeographicCenter())
+                <strong>
+                    @Organizations.GeographicCenterPoint:</strong>
+    @if (Model.HasGeographicCenter())
                 {
-                    <text>@Html.DisplayFor(m => m.GeographicCenterX),@Html.DisplayFor(m => m.GeographicCenterY)</text>
-                }
-                else
+        <text>@Html.DisplayFor(m => m.GeographicCenterX),@Html.DisplayFor(m => m.GeographicCenterY)</text>
+    }
+    else
+    {
+        <text>@Registers.NotSet</text>
+    }
+</p>
+
+            <p>
+                <strong>
+                    @Organizations.GeographicExtent:</strong>
+    @if (Model.HasBoundingBox())
                 {
-                    <text>@Registers.NotSet</text>
-}
-            </p>
+        <ul>
+            <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxNorth)</li>
+            <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxWest)</li>
+            <li>@Organizations.South: @Html.DisplayFor(m => m.BoundingBoxSouth)</li>
+            <li>@Organizations.East: @Html.DisplayFor(m => m.BoundingBoxEast)</li>
+        </ul>
+    }
+    else
+    {
+        <text>@Registers.NotSet</text>
+    }
+</p>
+    }
 
-            <p>@Organizations.GeographicExtent:
-                @if (Model.HasBoundingBox())
-                {
-                    <ul>
-                        <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxNorth)</li>
-                        <li>@Organizations.North: @Html.DisplayFor(m => m.BoundingBoxWest)</li>
-                        <li>@Organizations.South: @Html.DisplayFor(m => m.BoundingBoxSouth)</li>
-                        <li>@Organizations.East: @Html.DisplayFor(m => m.BoundingBoxEast)</li>
-                    </ul>
-                }
-                else
-                {
-                    <text>@Registers.NotSet</text>
-}
-            </p>
-        }
-
-    </div>
-
-
-    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <img src="@Url.Content("~/data/organizations/" +  Model.logoFilename)" class="img-small pull-right" alt="Liten logo" title="Liten logo @Model.name" />
-            <br />
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <br/>
-            <img src="@Url.Content("~/data/organizations/" +  Model.largeLogo)" class="img-large pull-right" alt="Stor logo" title="Stor logo @Model.name" />
-        </div>
-    </div>
-</div>
+</article>

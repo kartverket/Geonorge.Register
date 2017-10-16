@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
 using System.Linq;
 using Resources;
+using Kartverket.Register.Models.Translations;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Models
 {
@@ -15,6 +17,7 @@ namespace Kartverket.Register.Models
         {
             AlertDate = DateTime.Now;
             EffectiveDate = DateTime.Now.AddMonths(3);
+            Translations = new TranslationCollection<ServiceAlertTranslation>();
         }
 
         [Required(ErrorMessageResourceType = typeof(ServiceAlerts), ErrorMessageResourceName = "AlertDateErrorMessage")]
@@ -53,24 +56,63 @@ namespace Kartverket.Register.Models
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
             name = metadata.Title;
+            Translations[0].Name = metadata.EnglishTitle;
             if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionDetails.Protocol;
-            if (metadata.ContactOwner != null) Owner = metadata.ContactOwner.Organization;
+            if (metadata.ContactOwner != null)
+            {
+                Owner = metadata.ContactOwner.Organization;
+                Translations[0].Owner = metadata.ContactOwner.OrganizationEnglish;
+            }
             ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }
 
-        public List<string> GetAlertTypes()
+        public virtual TranslationCollection<ServiceAlertTranslation> Translations { get; set; }
+        public void AddMissingTranslations()
         {
-            var typeList = 
-             new List<string>() {
-                "Endret URL",
-                "Endret datakvalitet",
-                "Endret datastruktur",
-                "Ny tjeneste",
-                "Fjernet tjeneste",
-                "Endret datainnhold",
-                "Endret kodelister"
-            };
-            return typeList.OrderBy(o => o).ToList();
+            Translations.AddMissingTranslations();
+        }
+
+        public new string NameTranslated()
+        {
+            return base.NameTranslated();
+        }
+
+        public new string DescriptionTranslated()
+        {
+            return base.DescriptionTranslated();
+        }
+
+        public string AlertTypeTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var alertTypeTranslated = AlertType;
+            alertTypeTranslated = this.Translations[cultureName]?.AlertType;
+            if (string.IsNullOrEmpty(alertTypeTranslated))
+                alertTypeTranslated = AlertType;
+
+            return alertTypeTranslated;
+        }
+
+        public string NoteTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var noteTranslated = Note;
+            noteTranslated = this.Translations[cultureName]?.Note;
+            if (string.IsNullOrEmpty(noteTranslated))
+                noteTranslated = Note;
+
+            return noteTranslated;
+        }
+
+        public string OwnerTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+            var ownerTranslated = Owner;
+            ownerTranslated = this.Translations[cultureName]?.Owner;
+            if (string.IsNullOrEmpty(ownerTranslated))
+                ownerTranslated = Owner;
+
+            return ownerTranslated;
         }
 
         public virtual string GetServiceAlertEditUrl()

@@ -55,6 +55,7 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "DOK_StatusDateAccepted", ResourceType = typeof(DataSet))]
         public DateTime? DokStatusDateAccepted { get; set; }
 
+        [Display(Name = "ServiceUuid", ResourceType = typeof(DataSet))]
         public string UuidService { get; set; }
 
         //Search for metadata
@@ -83,6 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
             DokStatusId = dataset.DokStatusId;
             DokStatus = dataset.DokStatus;
             DokStatusDateAccepted = dataset.DokStatusDateAccepted;
+            UuidService = dataset.UuidService;
 
             UpdateRegisterItem(dataset);
         }

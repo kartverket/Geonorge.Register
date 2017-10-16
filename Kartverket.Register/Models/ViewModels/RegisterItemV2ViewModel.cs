@@ -58,6 +58,7 @@ namespace Kartverket.Register.Models.ViewModels
         //TODO gjøre på samme måte som RegisteritemV2
         public RegisterItem RegisterItem { get; set; }
 
+
         public void UpdateRegisterItem(RegisterItemV2 item)
         {
             SystemId = item.SystemId;
@@ -82,7 +83,15 @@ namespace Kartverket.Register.Models.ViewModels
             VersionName = item.VersionName;
         }
 
+        public string NameTranslated(RegisterItem registerItem)
+        {
+            return registerItem != null ? registerItem.NameTranslated() : Name;
+        }
 
+        public string DescriptionTranslated(RegisterItem registerItem)
+        {
+            return registerItem != null ? registerItem.DescriptionTranslated() : Description;
+        }
 
         public string DetailPageUrl()
         {
@@ -110,9 +119,9 @@ namespace Kartverket.Register.Models.ViewModels
         public RegisterItemV2ViewModel(RegisterItem registerItem)
         {
             SystemId = registerItem.systemId;
-            Name = registerItem.name;
+            Name = NameTranslated(registerItem);
             Seoname = registerItem.seoname;
-            Description = registerItem.description;
+            Description = DescriptionTranslated(registerItem);
             SubmitterId = registerItem.submitterId;
             Submitter = registerItem.submitter;
             Owner = GetOwner(registerItem);
@@ -143,9 +152,12 @@ namespace Kartverket.Register.Models.ViewModels
 
         public virtual string GetObjectEditUrl()
         {
-            if (this is InspireDatasetViewModel inspireDatasetViewModel)
+            switch (this)
             {
-                return inspireDatasetViewModel.GetInspireDatasetEditUrl();
+                case InspireDatasetViewModel inspireDatasetViewModel:
+                    return inspireDatasetViewModel.GetInspireDatasetEditUrl();
+                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                    return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
             }
             switch (RegisterItem)
             {
@@ -176,9 +188,12 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string GetObjectDeleteUrl()
         {
-            if (this is InspireDatasetViewModel inspireDatasetViewModel)
+            switch (this)
             {
-                return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
+                case InspireDatasetViewModel inspireDatasetViewModel:
+                    return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
+                case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
+                    return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
             }
             switch (RegisterItem)
             {

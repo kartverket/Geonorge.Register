@@ -8,7 +8,7 @@
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.registers(Model.Register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.Register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
@@ -115,6 +115,13 @@
                 @Html.LabelFor(model => model.ThemeGroupId, new { @class = "control-label col-md-3" })
                 <div class="col-md-9">
                     @Html.EditorFor(model => model.ThemeGroupId, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.InspireTheme, new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.InspireTheme, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 </div>
             </div>
 
@@ -232,9 +239,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.MetadataStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.MetadataStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("MetadataStatus", null, new { @class = "form-control"})
+                        @Html.DropDownList("MetadataStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.MetadataNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -244,9 +251,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.MetadataServiceStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.MetadataServiceStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("MetadataServiceStatus", null, new { @class = "form-control"})
+                        @Html.DropDownList("MetadataServiceStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.MetadataServiceNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -256,9 +263,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.DistributionStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.DistributionStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("DistributionStatus", null, new { @class = "form-control"})
+                        @Html.DropDownList("DistributionStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.DistributionNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -268,9 +275,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.WmsStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.WmsStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("WmsStatus", null, new { @class = "form-control"})
+                        @Html.DropDownList("WmsStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.WmsNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -280,10 +287,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.WfsStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.WfsStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("WfsStatus", null, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.WfsStatus, "", new { @class = "text-danger" })
+                        @Html.DropDownList("WfsStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.WfsNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -293,10 +299,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.AtomFeedStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.AtomFeedStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("AtomFeedStatus", null, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.AtomFeedStatus, "", new { @class = "text-danger" })
+                        @Html.DropDownList("AtomFeedStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.AtomFeedNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -306,10 +311,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.WfsOrAtomStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.WfsOrAtomStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("WfsOrAtomStatus", null, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.WfsOrAtomStatus, "", new { @class = "text-danger" })
+                        @Html.DropDownList("WfsOrAtomStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.WfsOrAtomNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -319,10 +323,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.HarmonizedDataStatus,  new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.HarmonizedDataStatusId,  new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("HarmonizedDataStatus", null,  new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.HarmonizedDataStatus, "", new { @class = "text-danger" })
+                        @Html.DropDownList("HarmonizedDataStatusId", null,  new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.HarmonizedDataNote, new { htmlAttributes = new { @class = "form-control" } })
@@ -332,10 +335,9 @@
             </div>
             <div class="row">
                 <div class="form-group">
-                    @Html.LabelFor(model => model.SpatialDataServiceStatus, new { @class = "control-label col-md-3" })
+                    @Html.LabelFor(model => model.SpatialDataServiceStatusId, new { @class = "control-label col-md-3" })
                     <div class="col-md-2">
-                        @Html.DropDownList("SpatialDataServiceStatus", null, new { @class = "form-control"})
-                        @Html.ValidationMessageFor(model => model.SpatialDataServiceStatus, "", new { @class = "text-danger" })
+                        @Html.DropDownList("SpatialDataServiceStatusId", null, new { @class = "form-control"})
                     </div>
                     <div class="col-md-6">
                         @Html.EditorFor(model => model.SpatialDataServiceNote, new { htmlAttributes = new { @class = "form-control" } })

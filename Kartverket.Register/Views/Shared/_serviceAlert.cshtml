@@ -18,8 +18,8 @@
                 </div>
 
                 <div class="col-no-padding-xs col-information col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <p><span>@Registers.Owner: </span>@item.Owner</p>
-                    <p><span>@Html.DisplayNameFor(model => item.AlertType): </span>@item.AlertType</p>
+                    <p><span>@Registers.Owner: </span>@item.OwnerTranslated()</p>
+                    <p><span>@Html.DisplayNameFor(model => item.AlertType): </span>@item.AlertTypeTranslated()</p>
                     <p><span>@Html.DisplayNameFor(model => item.ServiceType): </span>@item.ServiceType</p>
                 </div>
 
@@ -28,7 +28,7 @@
                 </div>
 
                 <div class="col-no-padding-xs col-title col-sm-3 col-md-3 col-lg-3 pull-left">
-                    <a href="@item.ServiceMetadataUrl" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.name</a>
+                    <a href="@item.ServiceMetadataUrl" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
                 </div>
                 
             </div>

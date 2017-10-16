@@ -101,6 +101,112 @@ namespace Kartverket.Register.Models
 
         //end RegisterItem
 
+        public string NameTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var nameTranslated = name;
+
+            if (this is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)this;
+                nameTranslated = codelistValue.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is EPSG)
+            {
+                EPSG epsg = (EPSG)this;
+                nameTranslated = epsg.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is Organization)
+            {
+                Organization organization = (Organization)this;
+                nameTranslated = organization.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is Dataset)
+            {
+                Dataset dataset = (Dataset)this;
+                nameTranslated = dataset.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+
+            else if (this is Document)
+            {
+                Document document = (Document)this;
+                nameTranslated = document.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                nameTranslated = serviceAlert.Translations[cultureName]?.Name;
+                if (string.IsNullOrEmpty(nameTranslated))
+                    nameTranslated = name;
+            }
+
+            return nameTranslated;
+        }
+
+        public string DescriptionTranslated()
+        {
+            var cultureName = CultureHelper.GetCurrentCulture();
+
+            var descriptionTranslated = description;
+
+            if (this is CodelistValue)
+            {
+                CodelistValue codelistValue = (CodelistValue)this;
+                descriptionTranslated = codelistValue.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is EPSG)
+            {
+                EPSG epsg = (EPSG)this;
+                descriptionTranslated = epsg.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is Organization)
+            {
+                Organization organization = (Organization)this;
+                descriptionTranslated = organization.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is Dataset)
+            {
+                Dataset dataset = (Dataset)this;
+                descriptionTranslated = dataset.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+
+            else if (this is Document)
+            {
+                Document document = (Document)this;
+                descriptionTranslated = document.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+            else if (this is ServiceAlert)
+            {
+                ServiceAlert serviceAlert = (ServiceAlert)this;
+                descriptionTranslated = serviceAlert.Translations[cultureName]?.Description;
+                if (string.IsNullOrEmpty(descriptionTranslated))
+                    descriptionTranslated = description;
+            }
+
+            return descriptionTranslated;
+        }
+
 
         public virtual string GetObjectUrl()
         {
@@ -225,6 +331,91 @@ namespace Kartverket.Register.Models
                     return document.documentowner;
             }
             return submitter;
+        }
+
+        public virtual string GetObjectEditUrl()
+        {
+            switch (this)
+            {
+                case Document _:
+                    var document = (Document)this;
+                    return document.GetDocumentEditUrl();
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.GetDatasetEditUrl();
+                case EPSG _:
+                    var epsg = (EPSG)this;
+                    return epsg.GetEPSGEditUrl();
+                case CodelistValue _:
+                    var codelistValue = (CodelistValue)this;
+                    return codelistValue.GetCodelistValueEditUrl();
+                case NameSpace _:
+                    var nameSpace = (NameSpace)this;
+                    return nameSpace.GetNameSpaceEditUrl();
+                case Organization _:
+                    var organization = (Organization)this;
+                    return organization.GetOrganizationEditUrl();
+                case ServiceAlert _:
+                    var serviceAlert = (ServiceAlert)this;
+                    return serviceAlert.GetServiceAlertEditUrl();
+            }
+            return "#";
+        }
+
+        public string GetObjectDeleteUrl()
+        {
+            switch (this)
+            {
+                case Document _:
+                    var document = (Document)this;
+                    return document.GetDocumentDeleteUrl();
+                case Dataset _:
+                    var dataset = (Dataset)this;
+                    return dataset.GetDatasetDeleteUrl();
+                case EPSG _:
+                    var epsg = (EPSG)this;
+                    return epsg.GetEPSGDeleteUrl();
+                case CodelistValue _:
+                    var codelistValue = (CodelistValue)this;
+                    return codelistValue.GetCodelistValueDeleteUrl();
+                case NameSpace _:
+                    var nameSpace = (NameSpace)this;
+                    return nameSpace.GetNameSpaceDeleteUrl();
+                case Organization _:
+                    var organization = (Organization)this;
+                    return organization.GetOrganizationDeleteUrl();
+                case ServiceAlert _:
+                    var serviceAlert = (ServiceAlert)this;
+                    return serviceAlert.GetServiceAlertDeleteUrl();
+            }
+            return "#";
+        }
+
+        public string CreateNewRegisterItemVersionUrl(/*string parentRegister, string registerOwner, string register, string itemOwner, string item, string itemClass*/)
+        {
+            if (register.parentRegister == null)
+            {
+                string url = "versjon/" + register.seoname + "/" + submitter.seoname + "/" + seoname + "/ny";
+
+                if (this is Document) return "/dokument/" + url;
+                if (this is CodelistValue) return "/kodeliste/" + url;
+                if (this is Organization) return "/organisasjoner/" + url;
+                if (this is Dataset) return "/dataset/" + url;
+                if (this is EPSG) return "/epsg/" + url;
+                if (this is NameSpace) return "/navnerom/" + url;
+            }
+            else
+            {
+                string url = "versjon/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register + "/" + submitter.seoname + "/" + seoname + "/ny";
+
+                if (this is Document) return "/dokument/" + url;
+                if (this is CodelistValue) return "/kodeliste/" + url;
+                if (this is Organization) return "/organisasjoner/" + url;
+                if (this is Dataset) return "/dataset/" + url;
+                if (this is EPSG) return "/epsg/" + url;
+                if (this is NameSpace) return "/navnerom/" + url;
+            }
+            return "#";
         }
     }
 }//end namespace Datamodell

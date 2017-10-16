@@ -265,6 +265,7 @@
     <Compile Include="Controllers\DokCoverageController.cs" />
     <Compile Include="Controllers\EPSGsController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
@@ -733,6 +734,38 @@
     <Compile Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.Designer.cs">
       <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709260552344_AddGeodatalovdataset.cs" />
+    <Compile Include="Migrations\201709260552344_AddGeodatalovdataset.Designer.cs">
+      <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710020630209_AddMakeAllItemsValid.cs" />
+    <Compile Include="Migrations\201710020630209_AddMakeAllItemsValid.Designer.cs">
+      <DependentUpon>201710020630209_AddMakeAllItemsValid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710031248476_AddDatasetTranslation.cs" />
+    <Compile Include="Migrations\201710031248476_AddDatasetTranslation.Designer.cs">
+      <DependentUpon>201710031248476_AddDatasetTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710090833469_AddDocumentTranslation.cs" />
+    <Compile Include="Migrations\201710090833469_AddDocumentTranslation.Designer.cs">
+      <DependentUpon>201710090833469_AddDocumentTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710091039096_AddNamespaceTranslation.cs" />
+    <Compile Include="Migrations\201710091039096_AddNamespaceTranslation.Designer.cs">
+      <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710100636059_AddServiceAlertTranslation.cs" />
+    <Compile Include="Migrations\201710100636059_AddServiceAlertTranslation.Designer.cs">
+      <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710100928000_UpdateGeodatalovDataset.cs" />
+    <Compile Include="Migrations\201710100928000_UpdateGeodatalovDataset.Designer.cs">
+      <DependentUpon>201710100928000_UpdateGeodatalovDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.cs" />
+    <Compile Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.Designer.cs">
+      <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -753,6 +786,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
@@ -769,17 +803,23 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
+    <Compile Include="Models\Translations\DatasetTranslation.cs" />
+    <Compile Include="Models\Translations\DocumentTranslation.cs" />
     <Compile Include="Models\Translations\EPSGTranslation.cs" />
+    <Compile Include="Models\Translations\NamespaceTranslation.cs" />
     <Compile Include="Models\Translations\OrganizationTranslation.cs" />
     <Compile Include="Models\Translations\RegisterTranslation.cs" />
+    <Compile Include="Models\Translations\ServiceAlertTranslation.cs" />
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetCoverageViewModel.cs" />
@@ -816,6 +856,11 @@
     <Compile Include="Models\ViewModels\ShowDatasetCoverageViewModel.cs" />
     <Compile Include="Models\XmlResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\GeodatalovDataSet.Designer.cs">
+      <DependentUpon>GeodatalovDataSet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\InspireDataSet.Designer.cs">
       <DependentUpon>InspireDataSet.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -933,11 +978,13 @@
     <Compile Include="Services\DokCoverageWmsMapping.cs" />
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
+    <Compile Include="Services\IGeodatalovDatasetService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
     <Compile Include="Services\IInspireDatasetService.cs" />
     <Compile Include="Services\DatasetDeliveryService.cs" />
+    <Compile Include="Services\GeodatalovDatasetService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1398,6 +1445,11 @@
     <Content Include="Views\Shared\_Resources.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataset.cshtml" />
     <Content Include="Views\Shared\_pagedListPagerRegisterItemViewModel.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Create.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Delete.cshtml" />
+    <Content Include="Views\GeodatalovDatasets\Edit.cshtml" />
+    <Content Include="Views\Shared\_geodatalovDataset.cshtml" />
+    <Content Include="Views\Shared\_detailsGeodatalovDataset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1737,6 +1789,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709200638157_AddVersioningToRegisterItemV2.resx">
       <DependentUpon>201709200638157_AddVersioningToRegisterItemV2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709260552344_AddGeodatalovdataset.resx">
+      <DependentUpon>201709260552344_AddGeodatalovdataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710020630209_AddMakeAllItemsValid.resx">
+      <DependentUpon>201710020630209_AddMakeAllItemsValid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710031248476_AddDatasetTranslation.resx">
+      <DependentUpon>201710031248476_AddDatasetTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710090833469_AddDocumentTranslation.resx">
+      <DependentUpon>201710090833469_AddDocumentTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710091039096_AddNamespaceTranslation.resx">
+      <DependentUpon>201710091039096_AddNamespaceTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710100636059_AddServiceAlertTranslation.resx">
+      <DependentUpon>201710100636059_AddServiceAlertTranslation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710100928000_UpdateGeodatalovDataset.resx">
+      <DependentUpon>201710100928000_UpdateGeodatalovDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.resx">
+      <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeodatalovDataSet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\InspireDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -22,7 +22,7 @@ namespace Kartverket.Register.Models
         public DatasetDelivery(string statusId, string note, bool autoUpdate = true)
         {
             DatasetDeliveryId = Guid.NewGuid();
-            StatusId = statusId;
+            StatusId = string.IsNullOrWhiteSpace(statusId) ? "notset" : statusId;
             Note = note;
             AutoUpdate = autoUpdate;
         }

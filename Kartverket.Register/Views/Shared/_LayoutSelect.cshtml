@@ -2,7 +2,7 @@
 <div class="custom-select">
     <select onchange="changeLayout(this)" class="form-control" id="layoutSelectList">
         <option id="layout-tabell" title="Tabellvisning">@Shared.LayoutTable</option>
-        @if(Model.Register.name != "Det offentlige kartgrunnlaget - Kommunalt")
+        @if(!Model.IsDokMunicipal())
         { <option id="layout-liste" title="Listevisning">@Shared.LayoutList</option>}
     </select>
 </div>

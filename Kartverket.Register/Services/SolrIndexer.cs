@@ -5,6 +5,7 @@ using System.Web;
 using Microsoft.Practices.ServiceLocation;
 using SolrNet;
 using Kartverket.Register.Models;
+using System.Globalization;
 
 namespace Kartverket.Register.Services
 {
@@ -22,14 +23,16 @@ namespace Kartverket.Register.Services
         public void Index(IEnumerable<RegisterIndexDoc> docs)
         {
             try 
-            { 
-                Log.Info(string.Format("Indexing {0} docs", docs.Count()));
-                _solr.AddRange(docs);
-                _solr.Commit();
-            }
-            catch (SolrNet.Exceptions.SolrConnectionException)
             {
-                Log.Error("Connection to solr failed");
+                Log.Info(string.Format("Indexing {0} docs", docs.Count()));
+                foreach (var doc in docs)
+                {
+                    Index(doc);
+                }
+            }
+            catch (SolrNet.Exceptions.SolrConnectionException ex)
+            {
+                Log.Error("Connection to solr failed: " + ex);
             }
             catch (Exception ex)
             {
@@ -58,20 +61,23 @@ namespace Kartverket.Register.Services
 
         public void Index(RegisterIndexDoc doc)
         {
+            var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
             Log.Info(string.Format("Indexing single document systemID={0}", doc.SystemID));
             try
             {
                 _solr.Add(doc);
                 _solr.Commit();
             }
-            catch (SolrNet.Exceptions.SolrConnectionException)
+            catch (SolrNet.Exceptions.SolrConnectionException ex)
             {
-                Log.Error("Connection to solr failed");
+                Log.Error("Connection to solr failed" + ex);
             }
             catch (Exception ex)
             {
                 Log.Error("Error:" + ex.Message);
             }
+            System.Threading.Thread.CurrentThread.CurrentCulture = currentCulture;
         }
 
 

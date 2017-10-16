@@ -1,0 +1,42 @@
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.GeodatalovDataset
+﻿@using Kartverket.Register.Helpers
+
+@{
+    ViewBag.Title = Shared.Delete + " " + Model.Name;
+}
+
+@section breadcrumb {
+
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.Register))
+    {
+        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
+    }
+    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
+    <li><a href="@Model.DetailPageUrl()">@Model.Name</a></li>
+    <li>@Shared.Delete</li>
+}
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>
+                @DataSet.DeleteDataset
+            </h2>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+<h4>@Registers.DeleteConfirm <b>@Model.Name</b>?</h4>
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.Hidden("id", Model.SystemId)
+    <div class="form-actions no-color">
+        <input type="submit" value="@Shared.Delete" class="btn btn-default pull-right" />
+        <a href="@Model.DetailPageUrl()">@Shared.Back</a>
+    </div>
+}

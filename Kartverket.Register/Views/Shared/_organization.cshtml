@@ -1,36 +1,31 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 
-<div class="register organization search-results">
-    @foreach (Organization item in Model)
-    {
-        <div class="row result-row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                
-                <div class="hidden-xs col-sm- col-md-2 col-lg-2 top-padding col-img">
-                    <a href="@item.GetObjectUrl()" title="@item.name">
-                        <img src="@Url.Content("~/data/organizations/" +  item.logoFilename)" class="center-block img-small" alt="@item.name">
-                    </a>
-                </div>
-
-                <div class="col-no-padding-xs col-xs-8 col-sm-8 col-md-8 col-lg-8 col-title">
-                    <a href="@item.GetObjectUrl()">
-                        @item.NameTranslated()
-                    </a>
-
-                    <p class="col-title" title="@Organizations.Organization_Number: @item.number">
-                        @Html.DisplayFor(modelItem => item.number)
-                    </p>
-                    <p class="col-title">
-                        @item.DescriptionTranslated()
-                    </p>
-                </div>
-
-            </div>
-        </div>
-        <hr />
-    }
+<div class="table-heading col-md-12">
+    <div class="col-md-4 col-md-offset-2 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Organisasjonsnavn", "name")</div>
+    <div class="col-md-3 col-md-offset-3 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Organisasjonsnummer", "number")</div>
 </div>
+
+@foreach (Organization item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-2 col-sm-12 col">
+            <a href="@item.GetObjectUrl()" title="@item.name">
+                <img src="@Url.Content("~/data/organizations/" + item.logoFilename)" class="center-block" alt="@item.name">
+            </a>
+        </div>
+        <div class="col-md-4 col-sm-12 col">
+            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+        </div>
+        <div class="col-md-3 col-md-offset-3 col-sm-12 col">
+            <p title="@Organizations.Organization_Number: @item.number">
+                @Html.DisplayFor(modelItem => item.number)
+            </p>
+        </div>
+    </div>
+}
+
 
 
 

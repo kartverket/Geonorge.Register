@@ -71,9 +71,9 @@
 </section>
 
 <div class="row search-result-navigation">
-    <div class="col-md-4 row" >
+    <div class="col-md-4">
         @if (Model.ContainedItemClassIsRegister())
-            {
+        {
             @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
         }
         else if (Model.RegisterItemsV2.Any())
@@ -85,52 +85,56 @@
             @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
         }
     </div>
-    <div class="col-md-4 row pull-right">
+    <div class="col-md-4 pull-right">
         @Html.Partial("_otherformats")
     </div>
-    <div class="clearfix"></div>
+    
 </div>
+<div class="clearfix"></div>
+<span class="separator-small margin-bottom-10"></span>
 
     @if (Model.ContainedItemClassIsOrganization())
-            {
+    {
         @Html.Partial("_organization", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsCodelistValue())
-            {
+    {
         @Html.Partial("_codelistValue", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsDocument())
-            {
-        @Html.Partial("_documents", Model.RegisterItems.ToPagedList(pageNumber, pageSize));
-            }
+    {
+        @Html.Partial("_documents", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+        
+    }
     @if (Model.ContainedItemClassIsDataset())
-            {
+    {
         @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsEpsg())
-            {
+    {
         @Html.Partial("_epsg", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsNameSpace())
-            {
+    {
         @Html.Partial("_nameSpace", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsServiceAlert())
-            {
+    {
         @Html.Partial("_serviceAlert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsInspireDataset())
-            {
+    {
         @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsRegister())
-            {
+    {
         @Html.Partial("_subregister", Model.Subregisters.ToPagedList(pageNumber, pageSize))
     }
     @if (Model.ContainedItemClassIsGeodatalovDataset())
     {
         @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
     }
+
 <div class="clearfix"></div>
 <div class="col-sm-12 col-md-12 col-lg-12">
     @if (Model.ContainedItemClassIsRegister())
@@ -147,7 +151,7 @@
     }
 </div>
 
-
+<div class="clearfix"></div>
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-print">
     @if (Request.IsAuthenticated)
     {
@@ -160,7 +164,7 @@
                     if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
                     {
                         <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
-                            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
+                        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>
                     }
                 }
             }

@@ -473,7 +473,7 @@ namespace Kartverket.Register.Helpers
             {
                 sortTitle = DataSet.DOK_Delivery_Title;
             }
-            else if (sortingParam == "owner" || sortingParam == "owner_desc")
+            else if (sortingParam == "owner" || sortingParam == "owner_desc" || sortingParam == "datasetOwner" || sortingParam == "datasetOwner_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Owner;
             }
@@ -505,42 +505,52 @@ namespace Kartverket.Register.Helpers
             // *** DOK STATUS SORTERING
             else if (sortingParam == "dokDeliveryMetadataStatus" || sortingParam == "dokDeliveryMetadataStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_Metadata;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "dokDeliveryProductSheetStatus" || sortingParam == "dokDeliveryProductSheetStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_ProductSheet;
                 statusIcon += "custom-icon-produktark";
             }
             else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_PresentationRules;
                 statusIcon = "glyphicon glyphicon-picture";
             }
             else if (sortingParam == "dokDeliveryProductSpecificationStatus" || sortingParam == "dokDeliveryProductSpecificationStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_ProductSpesification;
                 statusIcon = "glyphicon glyphicon-list-alt";
             }
             else if (sortingParam == "dokDeliveryWmsStatus" || sortingParam == "dokDeliveryWmsStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_Wms;
                 statusIcon = "glyphicon glyphicon-globe";
             }
             else if (sortingParam == "dokDeliveryWfsStatus" || sortingParam == "dokDeliveryWfsStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_Wfs;
                 statusIcon += "custom-icon-wfs";
             }
             else if (sortingParam == "dokDeliverySosiRequirementsStatus" || sortingParam == "dokDeliverySosiRequirementsStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_SosiRequirements;
                 statusIcon += "custom-icon-sosi";
             }
             else if (sortingParam == "dokDeliveryGmlRequirementsStatus" || sortingParam == "dokDeliveryGmlRequirementsStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_GmlRequirements;
                 statusIcon += "custom-icon-gml";
             }
             else if (sortingParam == "dokDeliveryAtomFeedStatus" || sortingParam == "dokDeliveryAtomFeedStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_AtomFeed;
                 statusIcon = "fa fa-rss-square";
             }
             else if (sortingParam == "dokDeliveryDistributionStatus" || sortingParam == "dokDeliveryDistributionStatus_desc")
             {
+                sortTitle = DataSet.DOK_Delivery_Distribution;
                 statusIcon += "custom-icon-lastned";
             }
 

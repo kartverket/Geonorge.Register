@@ -717,12 +717,12 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.Theme.description).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
-                    case "dokStatus":
+                    case "dokstatus":
                         {
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderBy(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
-                    case "dokStatus_desc":
+                    case "dokstatus_desc":
                         {
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();

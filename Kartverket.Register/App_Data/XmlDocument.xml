@@ -1387,6 +1387,26 @@
               Looks up a localized string similar to Abonnere på tjenestevarsler.
             </summary>
         </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_alertDate">
+            <summary>
+              Looks up a localized string similar to Siste.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_description">
+            <summary>
+              Looks up a localized string similar to Detaljer.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_effektivedate">
+            <summary>
+              Looks up a localized string similar to Ikrafttredekse.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeder_alert">
+            <summary>
+              Looks up a localized string similar to Varsel.
+            </summary>
+        </member>
         <member name="P:Resources.ServiceAlerts.Title">
             <summary>
               Looks up a localized string similar to Foreslå nytt tjenestevarsel.

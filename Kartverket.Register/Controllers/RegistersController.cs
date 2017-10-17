@@ -105,6 +105,10 @@ namespace Kartverket.Register.Controllers
                         return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
                     }
                 }
+                if (viewModel.IsServiceAlertRegister() && string.IsNullOrWhiteSpace(sorting))
+                {
+                    sorting = "dateSubmitted_desc";
+                }
                 viewModel.RegisterItemsV2 = _registerItemService.OrderBy(viewModel.RegisterItemsV2, sorting); // Todo flytte sortering av register.registeritem 
                 viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting); // Todo midlertidig.. 
                 viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting); // Todo midlertidig.. 

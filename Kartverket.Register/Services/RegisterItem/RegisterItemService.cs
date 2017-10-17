@@ -1483,5 +1483,14 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             _dbContext.SaveChanges();
         }
+
+        public string GetDistributionType(string codeValue)
+        {
+            var queryResults = from d in _dbContext.CodelistValues
+                where d.value == codeValue
+                select d.name;
+
+            return queryResults.FirstOrDefault();
+        }
     }
 }

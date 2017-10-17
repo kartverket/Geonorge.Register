@@ -782,5 +782,10 @@ namespace Kartverket.Register.Helpers
             if (isChecked) className = "fa fa-check";
             return new HtmlString("<span data-toggle='tooltip' data-placement = 'bottom' title='" + type + "'><span class='" + className + "'></span></span>");
         }
+
+        public static string GetDistrbutionType(string codeValue)
+        {
+            return _registeritemService.GetDistributionType(codeValue);
+        }
     }
 }

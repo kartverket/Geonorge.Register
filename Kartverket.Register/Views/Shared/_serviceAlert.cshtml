@@ -2,37 +2,35 @@
 @using Kartverket.Register.Models
 @using Kartverket.Register.Helpers
 
-@{
-    var registerName = ViewBag.register;
-}
-
-<div class="register serviceAlert search-results">
-    @foreach (ServiceAlert item in Model)
-    {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-
-                <div class="col-no-padding-xs col-date col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <p><span>@Html.DisplayNameFor(model => item.AlertDate): </span>@Html.DisplayFor(model => item.AlertDate)</p>
-                    <p><span>@Html.DisplayNameFor(model => item.EffectiveDate): </span>@Html.DisplayFor(model => item.EffectiveDate)</p>
-                </div>
-
-                <div class="col-no-padding-xs col-information col-sm-3 col-md-3 col-lg-3 pull-right">
-                    <p><span>@Registers.Owner: </span>@item.OwnerTranslated()</p>
-                    <p><span>@Html.DisplayNameFor(model => item.AlertType): </span>@item.AlertTypeTranslated()</p>
-                    <p><span>@Html.DisplayNameFor(model => item.ServiceType): </span>@item.ServiceType</p>
-                </div>
-
-                <div class="col-no-padding-xs col-description col-sm-2 col-md-2 col-lg-2 pull-right">
-                    <span>@ServiceAlerts.ServiceDesription: </span> <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
-                </div>
-
-                <div class="col-no-padding-xs col-title col-sm-3 col-md-3 col-lg-3 pull-left">
-                    <a href="@item.ServiceMetadataUrl" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
-                </div>
-                
-            </div>
-        </div>
-        <hr />
-    }
+<div class="table-heading col-md-12">
+    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.ServiceName, "name")</div>
+    <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeder_alert, "servicealert")</div>
+    <div class="col-md-3 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+    <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_description, "description")</div>
+    <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_alertDate, "alertdate")</div>
+    <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], ServiceAlerts.TableHeader_effektivedate, "effektivedate")</div>
 </div>
+
+@foreach (ServiceAlert item in Model)
+{
+    <div class="resultItemRow col-md-12">
+        <div class="col-sm-12 col-md-3 col">
+            <a href="@item.ServiceMetadataUrl" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            <p>@item.AlertTypeTranslated()</p>
+        </div>
+        <div class="col-md-3 col-sm-12 col">
+            <p>@item.OwnerTranslated()</p>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <a href="@item.GetObjectUrl()" title="Beskrivelse av @item.NameTranslated()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Shared.Details</a>
+        </div>
+        <div class="col-md-1 col-sm-12 col">
+            <p>@Html.DisplayFor(model => item.AlertDate)</p>
+        </div>
+        <div class="col-md-2 col-sm-12 col text-right">
+            <p>@Html.DisplayFor(model => item.EffectiveDate)</p>
+        </div>
+    </div>
+}

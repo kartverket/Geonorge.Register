@@ -611,7 +611,7 @@ namespace Kartverket.Register.Helpers
             }
             else if (sortingParam == "dok" || sortingParam == "dok_desc")
             {
-                sortTitle = GeodatalovDataSet.dok;
+                sortTitle = GeodatalovDataSet.Dok;
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "nationalt_dataset" || sortingParam == "nationalt_dataset_desc")

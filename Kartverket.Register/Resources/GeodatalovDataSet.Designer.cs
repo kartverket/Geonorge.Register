@@ -72,9 +72,9 @@ namespace Resources {
         /// <summary>
         ///   Looks up a localized string similar to DOK i henhold til KMD-definisjon.
         /// </summary>
-        public static string dok {
+        public static string Dok {
             get {
-                return ResourceManager.GetString("dok", resourceCulture);
+                return ResourceManager.GetString("Dok", resourceCulture);
             }
         }
         

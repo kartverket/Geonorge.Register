@@ -120,9 +120,6 @@
   <data name="Common" xml:space="preserve">
     <value>Nedlastingskrav status</value>
   </data>
-  <data name="dok" xml:space="preserve">
-    <value>DOK i henhold til KMD-definisjon</value>
-  </data>
   <data name="Geodatalov" xml:space="preserve">
     <value>Underlagt Geodataloven</value>
   </data>
@@ -134,5 +131,8 @@
   </data>
   <data name="Plan" xml:space="preserve">
     <value>Arealplaner underlagt Pbl</value>
+  </data>
+  <data name="Dok" xml:space="preserve">
+    <value>DOK i henhold til KMD-definisjon</value>
   </data>
 </root>

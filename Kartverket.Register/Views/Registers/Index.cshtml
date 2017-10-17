@@ -17,113 +17,65 @@
         </div>
     </div>
 </section>
-<div class="row">
-    <div class="col-sm-12">
-        <table class="table table-responsive">
-            <tr>
-                <th>
-                    @Registers.Name
-                </th>
-                <th>
-                    @Registers.Content
-                </th>
-                <th>
-                    @Registers.Owner
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <p><a href="@Html.ObjektkatalogUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Objektregisteret</a></p>
-                </td>
-                <td>
-                    @Registers.ObjektregisteretContent
-                </td>
-                <td>
-
-                </td>
-
-            </tr>
-            <tr>
-                <td>
-                    <p><a href="/register/kartografi" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Kartografi</a></p>
-                </td>
-                <td>
-                    @Registers.KartografiContent
-                </td>
-                <td></td>
-
-            </tr>
-            <tr>
-                <td>
-                    <p><a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Symbol</a></p>
-                </td>
-                <td>
-                    @Registers.SymbolContent
-                </td>
-                <td></td>
-
-            </tr>
-            <tr>
-                <td>
-                    <p><a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a></p>
-                </td>
-                <td>
-                    @Registers.DOKCoverageContent
-                </td>
-                <td>Kartverket</td>
-            </tr>
-            @foreach (var item in Model)
-            {
-                if (item.parentRegisterId == null)
-                {
-                    if (item.IsInspireStatusRegister() || item.IsGeodatalovStatusRegister())
-                    {
-                        if (HtmlHelperExtensions.IsAdmin())
-                        {
-                            <tr>
-                                <td>
-                                    <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
-                                    </p>
-                                </td>
-                                <td>
-                                    @item.DescriptionTranslated()
-                                </td>
-                                <td title="@Registers.Owner: @item.owner.NameTranslated()">
-                                    @item.owner.NameTranslated()
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td>
-                                <p><a href="/register/@item.seoname" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@item.NameTranslated()</a>
-                                </p>
-                            </td>
-                            <td>
-                                @item.DescriptionTranslated()
-                            </td>
-                            <td title="@Registers.Owner: @item.owner.NameTranslated()">
-                                @item.owner.NameTranslated()
-                            </td>
-
-                        </tr>
-                    }
-                }
-            }
 
 
-        </table>
+<div class="table-heading col-md-12">
+    <div class="col-md-4 col-sm-12 col"><strong>@Registers.Name</strong></div>
+    <div class="col-md-8 col-sm-12 col"><strong>@Registers.Content</strong></div>
+</div>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            @if (Request.IsAuthenticated)
-            {
-                if (HtmlHelperExtensions.IsAdmin())
-                {
-                    @*<a class="btn btn-default pull-right" href="/ny">Nytt register</a>*@
-                }
-            }
-        </div>
+@*Objektregister*@
+<div class="resultItemRow col-md-12 ">
+    <div class="col-md-4 col-sm-12 col">
+        <a href="@Html.ObjektkatalogUrl()" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Objektregisteret</a>
+    </div>
+    <div class="col-md-8 col-sm-12 col">
+        <p>@Registers.ObjektregisteretContent</p>
     </div>
 </div>
+
+@*Kartografiregister*@
+<div class="resultItemRow col-md-12 ">
+    <div class="col-md-4 col-sm-12 col">
+        <a href="/register/kartografi" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.Kartografi</a>
+    </div>
+    <div class="col-md-8 col-sm-12 col">
+        <p>@Registers.KartografiContent</p>
+    </div>
+</div>
+
+@*Symbolregister*@
+<div class="resultItemRow col-md-12 ">
+    <div class="col-md-4 col-sm-12 col">
+        <a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Symbol</a>
+    </div>
+    <div class="col-md-8 col-sm-12 col">
+        <p>@Registers.SymbolContent</p>
+    </div>
+</div>
+
+@*Dekningskart*@
+<div class="resultItemRow col-md-12 ">
+    <div class="col-md-4 col-sm-12 col">
+        <a href="/register/det-offentlige-kartgrunnlaget/dekning" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Det offentlige kartgrunnlaget - dekningskart</a>
+    </div>
+    <div class="col-md-8 col-sm-12 col">
+        <p>@Registers.SymbolContent</p>
+    </div>
+</div>
+
+   
+@foreach (var item in Model)
+{
+    if (!item.IsInspireStatusRegister() && !item.IsGeodatalovStatusRegister() && !HtmlHelperExtensions.IsAdmin() && item.parentRegister == null)
+    {
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-4 col-sm-12 col">
+                <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+            </div>
+            <div class="col-md-8 col-sm-12 col">
+                <p>@item.DescriptionTranslated()</p>
+            </div>
+        </div>
+    }
+}

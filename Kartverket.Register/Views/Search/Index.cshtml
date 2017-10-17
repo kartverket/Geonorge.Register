@@ -1,5 +1,5 @@
-﻿@using Kartverket.Register.Models.ViewModels
-@using Resources
+﻿@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models.ViewModels
 ﻿@using Kartverket.Register.Helpers
 @model SearchViewModel
 
@@ -13,6 +13,70 @@
         ViewBag.Title = Shared.Search;
     }
 }
+
+
+@Html.Partial("_SearchBarPartial")
+
+<section class="heading">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>
+                @Shared.SearchFor "@Model.Text"
+            </h3>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+    </div>
+</section>
+
+
+@DisplayPagination()
+
+
+
+<div class="table-heading col-md-12">
+    <div class="col-md-4 col-sm-12 col"><strong>@Registers.Name</strong></div>
+    <div class="col-md-4 col-sm-12 col"><strong>@Registers.Description</strong></div>
+    <div class="col-md-2 col-sm-12 col"><strong>Type</strong></div>
+    <div class="col-md-2 col-sm-12 col"><strong>Register</strong></div>
+</div>
+
+@foreach (var item in Model.Result.Items)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-4 col-sm-12 col">
+            <a href="@item.ItemUrl()">@item.ItemName()</a>
+        </div>
+        <div class="col-md-4 col-sm-12 col">
+            <p>@item.ItemDescription()</p>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            <p>@item.ItemType()</p>
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            @if (item.Discriminator == "Objektregister")
+                {
+                <a href="@Html.ObjektkatalogUrl()">@item.RegisterName</a>
+            }
+            else if (item.ParentRegisterName == null)
+            {
+                <a href="/register/@item.RegisterSeoname">@item.RegisterName</a>
+            }
+            else
+            {
+                <p>
+                    <a href="@item.ParentRegisterUrl">@item.ParentRegisterName </a><span class="glyphicon glyphicon-chevron-right"></span>
+                    <a href="@item.SubregisterUrl">@item.RegisterName</a>
+                </p>
+
+            }
+        </div>
+    </div>
+}
+
+
+@DisplayPagination()
 
 @helper DisplayPagination()
 {
@@ -30,152 +94,6 @@
         </ul>
     </nav>
 }
-
-@Html.Partial("_SearchBarPartial")
-
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <div class="page-header">
-        <hr>
-    </div>
-    @if (Model.Result != null)
-    {
-        @DisplayPagination()
-    }
-
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <table class="table table-responsive">
-            <tr>
-                <th>
-                    @Registers.Name
-                </th>
-                <th>
-                    @Registers.Description
-                </th>
-                <th>
-                    Type
-                </th>
-                <th>
-                    Register
-                </th>
-            </tr>
-
-            @if (Model.Result != null)
-            {
-                foreach (var item in Model.Result.Items)
-                {
-                    if (item.currentVersion == item.SystemID || item.currentVersion == null)
-                    {
-                        <tr>
-                            <td width="20%">
-
-                                @if (item.RegisterItemName == null)
-                                {
-                                    <b><a href="@item.SubregisterUrl">@item.RegisterName</a></b>
-                                }
-                                else
-                                {
-                                    if (item.ParentRegisterName == null)
-                                    {
-                                        if (item.Discriminator == "Document")
-                                        {
-                                            <b><a href="@item.RegisteItemUrlDocument">@item.RegisterItemName</a></b>
-                                        }
-                                        else if (item.Discriminator == "Dataset")
-                                        {
-                                            <b><a href="@item.RegisteItemUrlDataset">@item.RegisterItemName</a></b>
-                                        }
-                                        else if (item.Discriminator == "Objektregister")
-                                        {
-                                            <b><a href="@item.ObjektkatalogUrl">@item.RegisterItemName</a></b>
-                                        }
-                                        else
-                                        {
-                                            <b><a href="@item.RegisteItemUrl">@item.RegisterItemName</a></b>
-                                        }
-                                    }
-                                    else
-                                    {
-                                        <b><a href="@item.subregisterItemUrl">@item.RegisterItemName</a></b>
-                                    }
-                                }
-                            </td>
-                            <td width="50%">
-                                @if (item.RegisterItemName == null)
-                                {
-                                    @item.RegisterDescription
-                                }
-                                else
-                                {
-                                    @item.RegisterItemDescription
-                                }
-                            </td>
-                            <td width="10%">
-                                @if (item.Discriminator == "Organization" && item.RegisterItemName != null)
-                                {
-                                    <span>@Organizations.Organization</span>
-                                }
-                                @if (item.Discriminator == "Dataset" && item.RegisterItemName != null)
-                                {
-                                    <span>@DataSet.Dataset</span>
-                                }
-                                @if (item.Discriminator == "Document" && item.RegisterItemName != null)
-                                {
-                                    <span>@Documents.Document</span>
-                                }
-                                @if (item.Discriminator == "CodelistValue" && item.RegisterItemName != null)
-                                {
-                                    <span>@CodelistValues.CodeValue</span>
-                                }
-                                @if (item.Discriminator == "EPSG" && item.RegisterItemName != null)
-                                {
-                                    <span>@EPSGs.EpsgCode</span>
-                                }
-                                @if (item.Discriminator == "Objektregister")
-                                {
-                                    <span>@item.Type</span>
-                                }
-                                @if (item.RegisterItemName == null)
-                                {
-                                    <span>Register</span>
-                                }
-                                @if (item.Discriminator == "NameSpace")
-                                {
-                                    <span>@Namespace.NamespaceName</span>
-                                }
-
-                            </td>
-                            <td width="20%">
-                                @if (item.Discriminator == "Objektregister")
-                                {
-                                    <a href="@Html.ObjektkatalogUrl()">@item.RegisterName</a>
-                                }
-                                else if (item.ParentRegisterName == null)
-                                {
-                                    <a href="/register/@item.RegisterSeoname">@item.RegisterName</a>
-                                }
-                                else
-                                {
-                                    <p>
-                                        <a href="@item.ParentRegisterUrl">@item.ParentRegisterName </a><span class="glyphicon glyphicon-chevron-right"></span>
-                                        <a href="@item.SubregisterUrl">@item.RegisterName</a>
-                                    </p>
-
-                                }
-                            </td>
-
-                        </tr>
-                    }
-                }
-            }
-        </table>
-
-        <i class="glyphicon dropdown-menu-right"> </i>
-
-    </div>
-</div>
-@DisplayPagination()
-
 
 
 

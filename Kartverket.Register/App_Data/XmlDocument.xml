@@ -1138,6 +1138,11 @@
               Looks up a localized string similar to Dokumenteier.
             </summary>
         </member>
+        <member name="P:Resources.Documents.Download">
+            <summary>
+              Looks up a localized string similar to Last ned.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.Expired">
             <summary>
               Looks up a localized string similar to Utgått.
@@ -2998,6 +3003,11 @@
         <member name="P:Resources.Shared.Select">
             <summary>
               Looks up a localized string similar to Velg.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Status">
+            <summary>
+              Looks up a localized string similar to Status.
             </summary>
         </member>
         <member name="P:Resources.Shared.Text">

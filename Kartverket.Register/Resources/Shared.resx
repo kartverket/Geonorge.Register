@@ -250,4 +250,7 @@
   <data name="NameFor_en" xml:space="preserve">
     <value>Navn engelsk</value>
   </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
 </root>

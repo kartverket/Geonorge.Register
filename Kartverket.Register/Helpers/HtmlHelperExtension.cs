@@ -502,6 +502,48 @@ namespace Kartverket.Register.Helpers
 ;                statusIcon = "statusIcon-Accepted";
             }
 
+            // *** DOK STATUS SORTERING
+            else if (sortingParam == "dokDeliveryMetadataStatus" || sortingParam == "dokDeliveryMetadataStatus_desc")
+            {
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "dokDeliveryProductSheetStatus" || sortingParam == "dokDeliveryProductSheetStatus_desc")
+            {
+                statusIcon += "custom-icon-produktark";
+            }
+            else if (sortingParam == "dokDeliveryPresentationRulesStatus" || sortingParam == "dokDeliveryPresentationRulesStatus_desc")
+            {
+                statusIcon = "glyphicon glyphicon-picture";
+            }
+            else if (sortingParam == "dokDeliveryProductSpecificationStatus" || sortingParam == "dokDeliveryProductSpecificationStatus_desc")
+            {
+                statusIcon = "glyphicon glyphicon-list-alt";
+            }
+            else if (sortingParam == "dokDeliveryWmsStatus" || sortingParam == "dokDeliveryWmsStatus_desc")
+            {
+                statusIcon = "glyphicon glyphicon-globe";
+            }
+            else if (sortingParam == "dokDeliveryWfsStatus" || sortingParam == "dokDeliveryWfsStatus_desc")
+            {
+                statusIcon += "custom-icon-wfs";
+            }
+            else if (sortingParam == "dokDeliverySosiRequirementsStatus" || sortingParam == "dokDeliverySosiRequirementsStatus_desc")
+            {
+                statusIcon += "custom-icon-sosi";
+            }
+            else if (sortingParam == "dokDeliveryGmlRequirementsStatus" || sortingParam == "dokDeliveryGmlRequirementsStatus_desc")
+            {
+                statusIcon += "custom-icon-gml";
+            }
+            else if (sortingParam == "dokDeliveryAtomFeedStatus" || sortingParam == "dokDeliveryAtomFeedStatus_desc")
+            {
+                statusIcon = "fa fa-rss-square";
+            }
+            else if (sortingParam == "dokDeliveryDistributionStatus" || sortingParam == "dokDeliveryDistributionStatus_desc")
+            {
+                statusIcon += "custom-icon-lastned";
+            }
+
             // *** INSPIRE SORTERING
 
             else if (sortingParam == "inspire_metadata_status" || sortingParam == "inspire_metadata_status_desc")

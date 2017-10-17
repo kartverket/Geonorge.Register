@@ -323,6 +323,9 @@ a.link-unstyled {
 }
 
 .col {
-    padding-right: 0;
     padding-left: 0;
+}
+
+.status-icons {
+    text-align: right;
 }

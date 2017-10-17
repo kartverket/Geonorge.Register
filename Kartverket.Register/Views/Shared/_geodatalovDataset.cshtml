@@ -2,126 +2,53 @@
 @using Kartverket.Register.Models.ViewModels
 @using Kartverket.Register.Helpers
 
+<div class="table-heading col-md-12">
+    <div class="col-md-3">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
+    <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+    <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
+    <div class="col-md-5 col-sm-2 status-icons pull-right">
 
-<div id="tableView" class="register dataset search-results-table-heading">
-    <div class="row">
-        <div class="col-md-3">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
-        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
-        <div class="col-md-2">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "theme") </div>
-        <div class="col-md-5 col-sm-2 status-icons pull-right">
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dok")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "nationalt_dataset")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "plan")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov")
 
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dok")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "nationalt_dataset")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "plan")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov")
-            
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status")
-            @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_metadata_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_productspecification_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_sosi_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_gml_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wms_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_wfs_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_atom_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "geodatalov_common_status")
+        @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "dokstatus")
+    </div>
+</div>
+
+@foreach (GeodatalovDatasetViewModel item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+        <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
+        <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
+        <div class="col-md-5 col-sm-5 status-icons pull-right">
+            @HtmlHelperExtensions.Checked(item.InspireTheme, GeodatalovDataSet.InspireTheme)
+            @HtmlHelperExtensions.Checked(item.Dok, GeodatalovDataSet.Dok)
+            @HtmlHelperExtensions.Checked(item.NationalDataset, GeodatalovDataSet.NationalDataset)
+            @HtmlHelperExtensions.Checked(item.Plan, GeodatalovDataSet.Plan)
+            @HtmlHelperExtensions.Checked(item.Geodatalov, GeodatalovDataSet.Geodatalov)
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.GmlDataStatusId, false, "gml")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, "wms")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, "common")
+            <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
+                <i class="statusIcon-@item.DokStatusId"></i>
+            </span>
         </div>
     </div>
-    <div class="menu-separator search-results-table-heading"></div>
-   
-    @foreach (GeodatalovDatasetViewModel item in Model)
-    {
-        <div class="row result-row">
-            <div class="col-md-3 col-sm-2"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
-            <div class="col-md-2"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
-            <div class="col-md-2"><span>@item.GetThemeGroupDescription()</span></div>
-            <div class="col-md-5 col-sm-5 status-icons pull-right">
-                @HtmlHelperExtensions.Checked(item.InspireTheme, GeodatalovDataSet.InspireTheme)
-                @HtmlHelperExtensions.Checked(item.Dok, GeodatalovDataSet.Dok)
-                @HtmlHelperExtensions.Checked(item.NationalDataset, GeodatalovDataSet.NationalDataset)
-                @HtmlHelperExtensions.Checked(item.Plan, GeodatalovDataSet.Plan)
-                @HtmlHelperExtensions.Checked(item.Geodatalov, GeodatalovDataSet.Geodatalov)
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "metadata")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ProductSpesificationStatusId, false, "productspecification")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.SosiDataStatusId, false, "sosi")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.GmlDataStatusId, false, "gml")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WmsStatusId, false, "wms")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.WfsStatusId, false, "wfs")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.AtomFeedStatusId, false, "atom")
-                @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.CommonStatusId, false, "common")
-                <span class="status-icon-link" data-toggle='tooltip' data-placement='bottom' title='@item.DokStatus.description'>
-                    <i class="statusIcon-@item.DokStatusId"></i>
-                </span>
-            </div>
-        </div>
-        <hr />
-    }
-</div>
-<div id="listView">
-    @foreach (GeodatalovDatasetViewModel item in Model)
-    {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-                <div class="col-img col-xs-12 col-sm-12 col-md-2 col-lg-2">
-                    <a href="@item.DetailPageUrl()">
-                        <img src="@item.DatasetThumbnail" class="img-responsive pull-left" alt="Thumbnail for @item.Name"/>
-                    </a>
-                </div>
-                <div class="col-title col-xs-12 col-sm-12 col-md-5 col-lg-5">
-                    <a href="@item.DetailPageUrl()">
-                        @item.Name
-                    </a>
-
-                    <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
-                        <img src="@Url.Content(item.LogoSrc())" class="img-responsive img-small-logo hidden-print" alt="@Html.DisplayFor(modelItem => item.Owner.name)"/>
-                    </a>
-                    <div class="orglogo">
-                        <a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
-                            @Html.DisplayFor(modelItem => item.Owner.name)
-                        </a>
-                    </div>
-
-                    <a class="beskrivelse-print visible-print" href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name">
-                        <p>Eier: @Html.DisplayFor(modelItem => item.Owner.name)</p>
-                    </a>
-
-                    <br class="hidden-print"/>
-                    <div class="hidden-print">
-                        <p>
-                            @item.GetDescriptionAsSubstring();
-                            <a class="hidden-print" href="@item.DetailPageUrl()" title="Vis mer info om @item.Name"> @Shared.DisplayMoreInfo</a>
-                        </p>
-                    </div>
-                    <p class="visible-print">@item.Description</p>
-                </div>
-                <div class="col-information col-xs-8 col-sm-5 col-md-5 col-lg-5">
-                    <ul style="list-style-type: none;">
-                        @if (item.DokStatusId != null)
-                        {
-                            <li title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><span>DOK-status: </span>@item.DokStatus.description <i class="statusIcon-@item.DokStatusId"></i></li>
-                        }
-                        @if (item.DokStatusDateAccepted != null)
-                        {
-                            <li><span>@DataSet.DOK_StatusDateAccepted: </span>@item.DokStatusDateAccepted </li>
-                        }
-                        <li><span>@Registers.DateSubmitted: </span>@item.DateSubmitted </li>
-                        <li><span>@Registers.Modified: </span>@item.Modified </li>
-
-
-                        @if (item.ThemeGroupId != null)
-                        {
-                            <li title="@DataSet.DOK_Delivery_Theme: @item.Theme.description">
-                                <span>@DataSet.DOK_Delivery_Theme: </span>@item.Theme.description
-                            </li>
-                        }
-                        else
-                        {
-                            <li title="@DataSet.DOK_Delivery_Theme: @Registers.NotSet"><span>@DataSet.DOK_Delivery_Theme: </span>@Registers.NotSet</li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <hr/>
-    }
-</div>
+}

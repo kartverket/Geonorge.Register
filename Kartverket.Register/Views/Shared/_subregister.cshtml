@@ -10,8 +10,8 @@
 <div class="table-heading col-md-12">
     <div class="col-md-3 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Name, "name")</div>
     <div class="col-md-5 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Description, "description")</div>
-    <div class="col-md-2 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.ContainedItemClass, "containedItemClass")</div>
     <div class="col-md-2 col-sm-6 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
+    <div class="col-md-2 col-sm-6 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.ContainedItemClass, "containedItemClass")</div>
 </div>
 @if (string.IsNullOrWhiteSpace(search))
 {
@@ -24,11 +24,11 @@
             <div class="col-md-5 col-sm-12 col">
                 <p>@item.DescriptionTranslated()</p>
             </div>
-            <div class="col-md-2 col-sm-12 col">
-                <p title="Innhold: @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)">@HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</p>
-            </div>
-            <div class="col-md-2 col-sm-12 col">
+            <div class="col-md-3 col-sm-12 col">
                 <p title="@Registers.Owner: @item.owner.name">@item.owner.NameTranslated()</p>
+            </div>
+            <div class="col-md-1 col-sm-12 col text-right">
+                <p title="Innhold: @HtmlHelperExtensions.lovligInnhold(item.containedItemClass)">@HtmlHelperExtensions.lovligInnhold(item.containedItemClass)</p>
             </div>
         </div>
     }

@@ -9,7 +9,7 @@
     <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
     <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
     <div class="col-md-2 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
-    <div class="col-md-1 col-sm-2 col">@EPSGs.TableHeaderEksternalReference</div>
+    <div class="col-md-1 col-sm-2 col text-right">@EPSGs.TableHeaderEksternalReference</div>
 </div>
 
 @foreach (EPSG item in Model)
@@ -35,13 +35,8 @@
             {
                 <span title="@EPSGs.Dimension: @item.dimension.DescriptionTranslated()">@item.dimension.DescriptionTranslated()</span>
             }
-            else
-            {
-                <span></span>
-            }
-            
         </div>
-        <div class="col-md-1 col-sm-12 col">
+        <div class="col-md-1 col-sm-12 col text-right">
             <a href="@item.externalReference" title="@EPSGs.ExternalReference @item.name"><i class="custom-icon-sm custom-icon-eksternlink"></i></a>
         </div>
 

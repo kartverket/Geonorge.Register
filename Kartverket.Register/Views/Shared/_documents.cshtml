@@ -8,9 +8,9 @@
 
 <div class="table-heading col-md-12">
     <div class="col-md-5 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
-    <div class="col-md-5 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Documents.DocumentOwner, "documentOwner")</div>
+    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Documents.DocumentOwner, "documentOwner")</div>
     <div class="col-md-1 col-sm-12 col">@Documents.Download</div>
-    <div class="col-md-1 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Status, "status")</div>
+    <div class="col-md-2 col-sm-12 col text-right">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Status, "status")</div>
 </div>
 
 @foreach (Document item in Model)
@@ -19,7 +19,7 @@
         <div class="col-md-5 col-sm-12 col">
             <a href="@item.GetObjectUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.NameTranslated()</a>
         </div>
-        <div class="col-md-5 col-sm-12 col">
+        <div class="col-md-4 col-sm-12 col">
             <a href="@item.ItemsByOwnerUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">
                 @item.documentowner.NameTranslated()
             </a>
@@ -31,7 +31,7 @@
                 </a>
             }
         </div>
-        <div class="col-sm-6 col-md-1 col">
+        <div class="col-sm-6 col-md-2 col text-right">
             <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>    
         </div>
     </div>

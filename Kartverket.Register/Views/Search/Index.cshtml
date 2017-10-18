@@ -3,6 +3,10 @@
 ﻿@using Kartverket.Register.Helpers
 @model SearchViewModel
 
+@section breadcrumb {
+    <li>@Shared.SearchFor</li>
+}
+
 @{
     if (!string.IsNullOrWhiteSpace(Model.Text))
     {

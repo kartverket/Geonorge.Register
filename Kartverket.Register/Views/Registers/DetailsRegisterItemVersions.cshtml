@@ -15,6 +15,7 @@
     <li><a href="@Model.currentVersion.register.GetObjectUrl()">@Model.currentVersion.register.NameTranslated()</a></li>
     <li>@Model.currentVersion.NameTranslated()</li>
 }
+
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
@@ -27,17 +28,13 @@
         </div>
     </div>
 </section>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <ul class="page-header nav nav-tabs nav-tabs-topp" style="display:block; padding-bottom:0px;">
-                <li class="tab active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
 
-                <li class="tab pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
-
-                <li class="tab pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
+        <div class="col-sm-12 row">
+            <ul class="nav nav-tabs nav-tabs-version">
+                <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
+                <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
+                <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
             </ul>
-            <br />
         </div>
 
         @if (Model.currentVersion.register.containedItemClass == "Organization")
@@ -71,9 +68,7 @@
             @Html.Partial("_detailsCodelistValue")
         }
 
-    </div>
-
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="col-sm-12 row">
         <hr />
         @if (Request.IsAuthenticated)
         {
@@ -87,4 +82,3 @@
         }
         <a href="@Model.currentVersion.register.GetObjectUrl()">@Shared.Back</a>
     </div>
-</div>

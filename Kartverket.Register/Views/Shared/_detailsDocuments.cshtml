@@ -1,17 +1,16 @@
 ﻿@model Kartverket.Register.Models.Document
 ﻿@using Kartverket.Register.Helpers
 
-<div class="row result-row metadata">
-    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
-            @{
+@{
+    var thumb = "/Content/pdf.jpg";
+    if (Model.thumbnail != null)
+    {
+        thumb = Model.thumbnail;
+    }
+}
 
-                string thumb = "/Content/pdf.jpg";
-                if (Model.thumbnail != null)
-                {
-                    thumb = Model.thumbnail;
-                }
-            }
+<div class="col-sm-12">
+        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
             @if (Model.documentUrl.Contains("ikke angitt"))
             {
                 <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
@@ -74,4 +73,4 @@
 
         </div>
     </div>
-</div>
+

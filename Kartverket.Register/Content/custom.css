@@ -329,3 +329,8 @@ a.link-unstyled {
 .status-icons {
     text-align: right;
 }
+
+.nav-tabs-version {
+    padding-bottom: 0;
+    margin-bottom: 30px;
+}

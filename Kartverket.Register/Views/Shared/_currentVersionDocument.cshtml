@@ -1,89 +1,87 @@
-﻿@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
 ﻿@using Kartverket.Register.Helpers
 
 <div>
     @{
         Kartverket.Register.Models.Document item = null;
-
         if (Model.currentVersion is Kartverket.Register.Models.Document)
         {
             item = (Kartverket.Register.Models.Document)Model.currentVersion;
         }
     }
-
 </div>
 
-<div class="row result-row metadata">
-    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
-            @{
-                string thumb = "/Content/pdf.jpg";
-                if (item.thumbnail != null)
-                {
-                    thumb = item.thumbnail;
-                }
-            }
-            @if (item.documentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(item.ApplicationSchema))
+<div class="col-sm-12 row">
+    <div class="col-sm-12 col-md-2 col">
+        @{
+            string thumb = "/Content/pdf.jpg";
+            if (item.thumbnail != null)
             {
-                <span class="custom-icon custom-icon-l custom-icon-file-xml"></span>
+                thumb = item.thumbnail;
             }
-            else if (item.documentUrl.Contains("ikke angitt"))
-            {
-                <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
-            }
-            else
-            {
-                <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
-            }
-        </div>
-        <div class="col-no-padding-xs col-title col-sm-4 col-md-4 col-lg-4">
-            <p>
-                @item.NameTranslated()
-            </p>
+        }
+        @if (item.documentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(item.ApplicationSchema))
+        {
+            <span class="custom-icon custom-icon-l custom-icon-file-xml"></span>
+        }
+        else if (item.documentUrl.Contains("ikke angitt"))
+        {
+            <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+        }
+        else
+        {
+            <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+        }
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <p>
+            @item.NameTranslated()
+        </p>
 
-            <a id="selectedOwner-@item.systemId" @*onclick="this.form.submit()"*@ href="/register/@item.register.seoname/@item.documentowner.seoname">
-                <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive img-small-logo" alt="@item.documentowner.NameTranslated()" />
-            </a>
-            <p class=" ">
-                @item.DescriptionTranslated()
-            </p>
-        </div>
-        <div class="col-no-padding-xs col-actions col-xs-12 col-sm-3 col-md-3 col-lg-3">
-            @if (item.documentUrl.Contains("ikke angitt"))
+        <a id="selectedOwner-@item.systemId" href="@item.ItemsByDocumentOwnerUrl()">
+            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@item.documentowner.NameTranslated()" />
+        </a>
+        <p class=" ">
+            @item.DescriptionTranslated()
+        </p>
+    </div>
+    <div class="col-sm-12 col-md-3 col-lg-3">
+        @if (item.documentUrl.Contains("ikke angitt"))
             {
-                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
-                </a><br />
-            }
-            else
-            {
-                <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
-                </a><br />
-            }
+            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @item.name">
+                <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
+            </a><br />
+        }
+        else
+        {
+            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
+                <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
+            </a><br />
+        }
 
-            @if (!string.IsNullOrEmpty(item.ApplicationSchema))
+        @if (!string.IsNullOrEmpty(item.ApplicationSchema))
             {
-                <a href="@Html.DisplayFor(modelItem => item.ApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
-                    <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
-                </a><br />
-            }
+            <a href="@Html.DisplayFor(modelItem => item.ApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
+                <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
+            </a><br />
+        }
 
-            @if (!string.IsNullOrEmpty(item.GMLApplicationSchema))
+        @if (!string.IsNullOrEmpty(item.GMLApplicationSchema))
             {
-                <a href="@Html.DisplayFor(modelItem => item.GMLApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
-                    <span class="custom-icon custom-icon-eksternlink"> </span> Vis GML-skjema
-                </a><br />
-            }
+            <a href="@Html.DisplayFor(modelItem => item.GMLApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
+                <span class="custom-icon custom-icon-eksternlink"> </span> Vis GML-skjema
+            </a><br />
+        }
 
-            @if (!string.IsNullOrEmpty(item.CartographyFile))
+        @if (!string.IsNullOrEmpty(item.CartographyFile))
             {
-                <a href="@Html.DisplayFor(modelItem => item.CartographyFile)" class="btn" title="Vis kartografi-fil for @item.name" target="_blank">
-                    <span class="custom-icon custom-icon-eksternlink"> </span> Vis kartografi-fil
-                </a><br />
-            }
+            <a href="@Html.DisplayFor(modelItem => item.CartographyFile)" class="btn" title="Vis kartografi-fil for @item.name" target="_blank">
+                <span class="custom-icon custom-icon-eksternlink"> </span> Vis kartografi-fil
+            </a><br />
+        }
 
-            @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated)
             {
                 if (HtmlHelperExtensions.accessRegisterItem(item))
                 {
@@ -93,71 +91,53 @@
                         {
                             if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
                             {
-                                <a href="/dokument/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">@Shared.Edit</a>
-                            }
-                            <a href="/dokument/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Slett @item.name">@Shared.Delete</a>
+                            <a href="/dokument/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Rediger @item.name">@Shared.Edit</a>
                         }
-                        else
+                        <a href="/dokument/@Model.currentVersion.register.parentRegister.seoname/@Model.currentVersion.register.parentRegister.owner.seoname/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn btn-default btn-sm" title="Slett @item.name">@Shared.Delete</a>
+                    }
+                    else
+                    {
+                        if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
                         {
-                            if (Model.currentVersion.statusId != "Retired" && Model.currentVersion.statusId != "Superseded")
-                            {
-                                <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">@Shared.Edit</a>
-                            }
-                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">@Shared.Delete</a>
+                            <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/rediger?vnr=@item.versionNumber" class="btn" title="Rediger @item.name">@Shared.Edit</a>
                         }
+                        <a href="/dokument/@Model.currentVersion.register.seoname/@item.documentowner.seoname/@item.seoname/slett?vnr=@item.versionNumber" class="btn" title="Slett @item.name">@Shared.Delete</a>
                     }
                 }
             }
-        </div>
-        <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3 col-information pull-right">
-
-            @if (item.status == null)
+        }
+    </div>
+    <div class="col-sm-12 col-md-3">
+        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
+        <p><span>@Html.DisplayNameFor(i => item.versionNumber) : </span>@item.versionNumber</p>
+        @if (!string.IsNullOrWhiteSpace(item.versionName))
             {
-                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@Registers.NotSet</p>
-            }
-            else
+            <p><span>@Registers.VersionName: </span>@item.versionName</p>
+        }
+        <p>@Registers.Updated: @Html.DisplayFor(modelItem => item.modified)</p>
+        @if (item.approvalDocument != null)
             {
-                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
-            }
-            
-            <p><span>@Html.DisplayNameFor(i => item.versionNumber) : </span>@item.versionNumber</p>
-            @if (!string.IsNullOrWhiteSpace(item.versionName))
+            <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
+        }
+        @if (item.approvalReference != null)
             {
-                <p><span>@Registers.VersionName: </span>@item.versionName</p>
-            }            
-            @if (item.dateSubmitted != null)
+            <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+        }
+        @if (item.dateAccepted != null)
             {
-                @*<p>Innsendt: @Html.DisplayFor(modelItem => item.dateSubmitted)</p>*@
-            }
-            @if (item.modified != null)
+            <p>@Registers.Accepted: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+        }
+        @if (item.dateSuperseded != null)
             {
-                <p>@Registers.Updated: @Html.DisplayFor(modelItem => item.modified)</p>
-            }
-            @if (item.approvalDocument != null)
+            <p>@Registers.Superseded: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
+        }
+        @if (item.DateRetired != null)
             {
-                <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
-            }
-            @if (item.approvalReference != null)
+            <p>@Registers.Retired: @Html.DisplayFor(modelItem => item.DateRetired)</p>
+        }
+        @if (item.dateNotAccepted != null)
             {
-                <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-            }
-            @if (item.dateAccepted != null)
-            {
-                <p>@Registers.Accepted: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
-            }                    
-            @if (item.dateSuperseded != null)
-            {
-                <p>@Registers.Superseded: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
-            }
-            @if (item.DateRetired != null)
-            {
-                <p>@Registers.Retired: @Html.DisplayFor(modelItem => item.DateRetired)</p>
-            }            
-            @if (item.dateNotAccepted != null)
-            {
-                <p>@Registers.Draft: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
-            }        
-            
-        </div>
+            <p>@Registers.Draft: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
+        }
     </div>
 </div>

@@ -33,17 +33,19 @@ namespace Kartverket.Register.Controllers
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public RegistersController(ITranslationService translationService, RegisterDbContext dbContext)
+        public RegistersController(ITranslationService translationService, 
+            RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService )
         {
             db = dbContext;
-            _registerItemService = new RegisterItemService(db);
-            _searchService = new SearchService(db);
-            _versioningService = new VersioningService(db);
-            _registerService = new RegisterService(db);
-            _accessControlService = new AccessControlService();
+            _registerItemService = registerItemService;
+            _searchService = searchService;
+            _versioningService = versioningService;
+            _registerService = registerService;
+            _accessControlService = accessControlService;
             _translationService = translationService;
-            _inspireDatasetService = new InspireDatasetService(db);
-            _geodatalovDatasetService = new GeodatalovDatasetService(db);
+            _inspireDatasetService = inspireDatasetService;
+            _geodatalovDatasetService = geodatalovService;
         }
 
         // GET: Registers

@@ -986,7 +986,7 @@
               Looks up a localized string similar to Nedlastingskrav status.
             </summary>
         </member>
-        <member name="P:Resources.GeodatalovDataSet.dok">
+        <member name="P:Resources.GeodatalovDataSet.Dok">
             <summary>
               Looks up a localized string similar to DOK i henhold til KMD-definisjon.
             </summary>

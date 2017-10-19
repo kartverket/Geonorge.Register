@@ -172,6 +172,7 @@
     <Compile Include="Controllers\DatasetsControllerTest.cs" />
     <Compile Include="Controllers\OrganizationsApiControllerTest.cs" />
     <Compile Include="Controllers\ApiControllerTest.cs" />
+    <Compile Include="Controllers\RegistersControllerTest.cs" />
     <Compile Include="MvcMockHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\OrganizationServiceTest.cs" />

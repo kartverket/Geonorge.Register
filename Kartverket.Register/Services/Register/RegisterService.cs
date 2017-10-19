@@ -113,7 +113,6 @@ namespace Kartverket.Register.Services.Register
 
         private void GetMunicipalDatasetsByUser(Models.Register register, List<Models.RegisterItem> registerItems)
         {
-            AccessControlService access = new AccessControlService();
             Organization municipalityOrganization = GetOrganizationByUserName();
             GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipalityOrganization);
         }

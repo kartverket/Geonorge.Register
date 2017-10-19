@@ -78,13 +78,13 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 if (register.accessId != null) Access = register.accessId.Value;
-            }
 
-            if (register.IsServiceAlertRegister())
-            {
-                if (string.IsNullOrWhiteSpace(OrderBy))
+                if (register.IsServiceAlertRegister())
                 {
-                    OrderBy = "dateSubmitted_desc";
+                    if (string.IsNullOrWhiteSpace(OrderBy))
+                    {
+                        OrderBy = "dateSubmitted_desc";
+                    }
                 }
             }
         }

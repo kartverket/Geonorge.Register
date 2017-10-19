@@ -88,32 +88,18 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{parentRegister}/{owner}/{registername}")]
         public ActionResult Details(string parentRegister, string owner, string registername, string sorting, int? page, string format, FilterParameters filter)
         {
-            CheckReferrer();
-            DokOrderBy(sorting);
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register != null)
             {
-                register = RegisterItems(register, filter, page);
+                register = FilterRegisterItems(register, filter);
                 var viewModel = new RegisterV2ViewModel(register);
-                if (viewModel.IsDokMunicipal() && string.IsNullOrEmpty(filter.municipality))
-                {
-                    var municipality = _accessControlService.GetMunicipality();
-                    if (municipality != null)
-                    {
-                        ViewBagOrganizationMunizipality(municipality.value);
-                        return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipality.value);
-                    }
-                }
-                if (viewModel.IsServiceAlertRegister() && string.IsNullOrWhiteSpace(sorting))
-                {
-                    sorting = "dateSubmitted_desc";
-                }
-                viewModel.RegisterItemsV2 = _registerItemService.OrderBy(viewModel.RegisterItemsV2, sorting); // Todo flytte sortering av register.registeritem 
-                viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting); // Todo midlertidig.. 
-                viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting); // Todo midlertidig.. 
+                viewModel.RegisterItemsV2 = _registerItemService.OrderBy(viewModel.RegisterItemsV2, sorting); 
+                viewModel.RegisterItems = _registerItemService.OrderBy(viewModel.RegisterItems, sorting);
+                viewModel.Subregisters = _registerService.OrderBy(viewModel.Subregisters, sorting);
                 ViewBagOrganizationMunizipality(filter.municipality);
                 ViewbagsRegisterDetails(owner, sorting, page, filter, viewModel);
                 return View(viewModel);
@@ -501,30 +487,8 @@ namespace Kartverket.Register.Controllers
             return coverage;
         }
 
-        private string GetOwner(RegisterItem registerItem)
-        {
-            if (registerItem.register.containedItemClass == "Document")
-            {
-                Document document = db.Documents.Find(registerItem.systemId);
-                return document.documentowner.name;
-            }
-            else if (registerItem.register.containedItemClass == "Dataset")
-            {
-                Dataset dataset = db.Datasets.Find(registerItem.systemId);
-                return dataset.datasetowner.name;
-            }
-            else if (registerItem.register.containedItemClass == "ServiceAlert")
-            {
-                ServiceAlert serviceAlert = db.ServiceAlerts.Find(registerItem.systemId);
-                return serviceAlert.Owner;
-            }
-            else
-            {
-                return registerItem.submitter.seoname;
-            }
-        }
 
-        private string RedirectToApiIfFormatIsNotNull(string format)
+        public string RedirectToApiIfFormatIsNotNull(string format)
         {
             if (!string.IsNullOrWhiteSpace(format))
             {
@@ -541,7 +505,7 @@ namespace Kartverket.Register.Controllers
             return null;
         }
 
-        private Models.Register RegisterItems(Models.Register register, FilterParameters filter, int? page)
+        private Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);
             register = _registerService.FilterRegisterItems(register, filter);
@@ -573,17 +537,12 @@ namespace Kartverket.Register.Controllers
         {
             ViewBag.search = filter.text;
             ViewBag.page = page;
-            ViewBag.SortOrder = sorting != null ? sorting : "";
+            ViewBag.SortOrder = sorting ?? "";
             ViewBag.selectedMunicipalityCode = filter.municipality;
-            ViewBag.sorting = new SelectList(db.Sorting.ToList(), "value", "description");
             ViewBag.municipality = _registerItemService.GetMunicipalityList();
             ViewBag.registerId = register.SystemId;
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
-            ViewBag.InspireRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.nationalSeaRequirement = new SelectList(db.requirements, "value", "description", null);
-            ViewBag.ownerSEO = owner;
         }
 
         private static bool Search(FilterParameters filter)
@@ -596,32 +555,6 @@ namespace Kartverket.Register.Controllers
             return _accessControlService.IsAdmin();
         }
 
-        private static string DefaultSortingServiceAlertRegister(string sorting, Models.Register register)
-        {
-            if (register.IsServiceAlertRegister())
-            {
-                if (string.IsNullOrWhiteSpace(sorting))
-                {
-                    sorting = "dateSubmitted_desc";
-                }
-            }
-
-            return sorting;
-        }
-
-        private void DokOrderBy(string sorting)
-        {
-            if (sorting != null)
-            {
-                if (sorting.Contains("_desc"))
-                {
-                    ViewBag.DokOrderBy = "";
-                }
-                else {
-                    ViewBag.DokOrderBy = "_desc";
-                }
-            }
-        }
 
         /// <summary>
         /// Creates a list of statuses for DOK Municipal register. 
@@ -663,9 +596,9 @@ namespace Kartverket.Register.Controllers
             return false;
         }
 
-        private void CheckReferrer()
+        public void RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer()
         {
-            if (Request.UrlReferrer != null)
+            if (Request?.UrlReferrer != null)
             {
                 string registerNameReferer = "";
                 var pathReferer = Request.UrlReferrer.AbsolutePath;
@@ -675,7 +608,6 @@ namespace Kartverket.Register.Controllers
                     if(registerNameRefererObject.Count() > 2)
                         registerNameReferer = registerNameRefererObject[2].ToString();
                 }
-                    
 
                 string registerNameCurrent = "";
                 var pathCurrent = Request.Url.AbsolutePath;
@@ -689,7 +621,6 @@ namespace Kartverket.Register.Controllers
                 if (Request.UrlReferrer.Host != null && (Request.UrlReferrer.Host != Request.Url.Host))
                     removeSessionSearchParams();
 
-                if (!registerNameReferer.StartsWith("search") && registerNameReferer != registerNameCurrent)
                 if (!registerNameReferer.StartsWith("search") && registerNameReferer != registerNameCurrent && registerNameReferer != "versjoner")
                     removeSessionSearchParams();
             }

@@ -749,7 +749,7 @@
             Get organization by number
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDOKMunicipalList">
+        <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDokMunicipalList">
             <summary>
             Creates a list of statuses for DOK Municipal register. 
             </summary>

@@ -690,6 +690,7 @@ namespace Kartverket.Register.Controllers
                     removeSessionSearchParams();
 
                 if (!registerNameReferer.StartsWith("search") && registerNameReferer != registerNameCurrent)
+                if (!registerNameReferer.StartsWith("search") && registerNameReferer != registerNameCurrent && registerNameReferer != "versjoner")
                     removeSessionSearchParams();
             }
         }

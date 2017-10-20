@@ -107,7 +107,7 @@
 .table-heading {
     border-bottom: 2px solid #FE5000;
     height: 27px;
-    margin-bottom: 8px !important;
+    margin: 20px 0 5px;
     padding: 0;
 }
 

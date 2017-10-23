@@ -145,9 +145,10 @@ namespace Kartverket.Register.Tests.Services
         [Fact]
         public void AccessRegisterIfUserIsRegisterOwner()
         {
-            SetClaims(Role, Editor);
+            SetClaims(Role, Editor, "organization", "Kartverket");
 
             _register.accessId = 2;
+            _register.containedItemClass = "CodelistValue";
             _register.owner = _owner;
 
             _accessControlService.AccessRegister(_register).Should().BeTrue();
@@ -182,8 +183,6 @@ namespace Kartverket.Register.Tests.Services
 
             _accessControlService.AccessRegister(_register).Should().BeTrue();
         }
-
-        // TODO teste at bruker er eier av registere...
 
         private static void SetClaims(params string[] typeAndValues)
         {

@@ -38,14 +38,6 @@ namespace Kartverket.Register.Controllers
             _translationService = translationService;
         }
 
-        public DatasetsController()
-        {
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
-            _accessControlService = new AccessControlService();
-            _datasetDeliveryService = new DatasetDeliveryService(db);
-        }
-
         // GET: Datasets/Create
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]

@@ -17,40 +17,16 @@ namespace Kartverket.Register.Controllers
 {
     public class NameSpacesController : Controller
     {
-        private readonly RegisterDbContext db;
+        private readonly RegisterDbContext _db;
 
-        private IRegisterService _registerService;
-        private IRegisterItemService _registerItemService;
-        private ITranslationService _translationService;
+        private readonly IRegisterItemService _registerItemService;
+        private readonly ITranslationService _translationService;
 
-        public NameSpacesController(RegisterDbContext dbContext, ITranslationService translationService)
+        public NameSpacesController(RegisterDbContext dbContext, ITranslationService translationService, IRegisterItemService registerItemService)
         {
-            db = dbContext;
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
+            _db = dbContext;
+            _registerItemService = registerItemService;
             _translationService = translationService;
-        }
-
-        // GET: NameSpaces
-        public ActionResult Index()
-        {
-            var registerItems = db.RegisterItems.Include(n => n.register).Include(n => n.status).Include(n => n.submitter).Include(n => n.versioning);
-            return View(registerItems.ToList());
-        }
-
-        // GET: NameSpaces/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            NameSpace nameSpace = db.NameSpases.Find(id);
-            if (nameSpace == null)
-            {
-                return HttpNotFound();
-            }
-            return View(nameSpace);
         }
 
         // GET: NameSpaces/Create
@@ -114,8 +90,8 @@ namespace Kartverket.Register.Controllers
                 Organization organization = GetSubmitter(nameSpace);
                 nameSpace.submitterId = organization.systemId;
 
-                db.RegisterItems.Add(nameSpace);
-                db.SaveChanges();
+                _db.RegisterItems.Add(nameSpace);
+                _db.SaveChanges();
 
                 if (!String.IsNullOrWhiteSpace(parentRegister))
                 {
@@ -186,9 +162,9 @@ namespace Kartverket.Register.Controllers
                 }
 
                 originalNameSpace.modified = DateTime.Now;
-                db.Entry(originalNameSpace).State = EntityState.Modified;
+                _db.Entry(originalNameSpace).State = EntityState.Modified;
                 _translationService.UpdateTranslations(nameSpace, originalNameSpace);
-                db.SaveChanges();
+                _db.SaveChanges();
 
                 Viewbags(originalNameSpace);
                 if (!String.IsNullOrWhiteSpace(parentRegister))
@@ -240,8 +216,8 @@ namespace Kartverket.Register.Controllers
                 parent = nameSpace.register.parentRegister.seoname;
             }
 
-            db.RegisterItems.Remove(nameSpace);
-            db.SaveChanges();
+            _db.RegisterItems.Remove(nameSpace);
+            _db.SaveChanges();
 
             if (parent != null)
             {
@@ -254,7 +230,7 @@ namespace Kartverket.Register.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -282,7 +258,7 @@ namespace Kartverket.Register.Controllers
 
         private Models.Register GetRegister(string registername, string parentRegister)
         {
-            var queryResultsRegister = from o in db.Registers
+            var queryResultsRegister = from o in _db.Registers
                                        where o.seoname == registername && o.parentRegister.seoname == parentRegister
                                        select o;
 
@@ -293,7 +269,7 @@ namespace Kartverket.Register.Controllers
         private Organization GetSubmitter(NameSpace nameSpace)
         {
             string organizationLogin = GetSecurityClaim("organization");
-            var queryResults = from o in db.Organizations
+            var queryResults = from o in _db.Organizations
                                where o.name == organizationLogin
                                select o;
 
@@ -302,7 +278,7 @@ namespace Kartverket.Register.Controllers
 
         private NameSpace GetRegisterItem(string registername, string itemname, string parentRegister)
         {
-            var queryResultsNS = from o in db.NameSpases
+            var queryResultsNS = from o in _db.NameSpases
                                  where o.seoname == itemname &&
                                  o.register.seoname == registername &&
                                  o.register.parentRegister.seoname == parentRegister
@@ -329,13 +305,13 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(NameSpace nameSpace)
         {
-            ViewBag.statusId = new SelectList(db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", nameSpace.statusId);
-            ViewBag.submitterId = new SelectList(db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
+            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new { value = s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", nameSpace.statusId);
+            ViewBag.submitterId = new SelectList(_db.Organizations.ToList().Select(s => new { systemId = s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", nameSpace.submitterId);
         }
 
         private void ValidationName(NameSpace nameSpace, Models.Register register)
         {
-            var queryResultsDataset = from o in db.NameSpases
+            var queryResultsDataset = from o in _db.NameSpases
                                       where o.name == nameSpace.name &&
                                       o.systemId != nameSpace.systemId &&
                                       o.register.name == register.name &&

@@ -22,14 +22,14 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterService _registerService;
         private readonly ITranslationService _translationService;
         private readonly IRegisterItemService _registerItemService;
-        private IAccessControlService _accessControlService;
+        private readonly IAccessControlService _accessControlService;
 
-        public SubregisterController(ITranslationService translationService, RegisterDbContext dbContex)
+        public SubregisterController(ITranslationService translationService, RegisterDbContext dbContex, IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService)
         {
             _db = dbContex;
-            _registerService = new RegisterService(_db);
-            _registerItemService = new RegisterItemService(_db);
-            _accessControlService = new AccessControlService();
+            _registerService = registerService;
+            _registerItemService = registerItemService;
+            _accessControlService = accessControlService;
             _translationService = translationService;
         }
 

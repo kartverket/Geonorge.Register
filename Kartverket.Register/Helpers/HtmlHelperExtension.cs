@@ -21,7 +21,7 @@ namespace Kartverket.Register.Helpers
     {
         private static readonly RegisterDbContext db = new RegisterDbContext();
         private static IRegisterItemService _registeritemService = new RegisterItemService(db);
-        private static IAccessControlService _accessControl = new AccessControlService();
+        private static IAccessControlService _accessControl = new AccessControlService(db);
         private static IRegisterService _registerService = new RegisterService(db);
 
         public static string EnvironmentName(this HtmlHelper helper)

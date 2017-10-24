@@ -597,7 +597,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDocumentOwnerId = null)
         {
-            AccessControlService _accessControlService = new AccessControlService();
+            AccessControlService _accessControlService = new AccessControlService(_dbContext);
             Organization municipality = new Organization();
             if (dataset.IsNationalDataset())
             {

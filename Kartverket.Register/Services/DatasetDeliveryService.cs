@@ -13,11 +13,11 @@ namespace Kartverket.Register.Services
     {
         private readonly RegisterDbContext _dbContext;
         private XmlDocument _atomFeedDoc;
-        XmlNamespaceManager _nsmgr;
-        const string Useable = "useable";
-        const string Good = "good";
-        const string Notset = "notset";
-        const string Deficient = "deficient";
+        private XmlNamespaceManager _nsmgr;
+        private const string Useable = "useable";
+        private const string Good = "good";
+        public const string Notset = "notset";
+        private const string Deficient = "deficient";
 
 
         public DatasetDeliveryService(RegisterDbContext dbContext)

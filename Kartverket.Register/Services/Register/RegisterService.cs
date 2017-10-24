@@ -76,7 +76,7 @@ namespace Kartverket.Register.Services.Register
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
-            AccessControlService access = new AccessControlService();
+            AccessControlService access = new AccessControlService(_dbContext);
             if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
             {
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
@@ -898,7 +898,7 @@ namespace Kartverket.Register.Services.Register
         {
             string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
             var queryResults = from o in _dbContext.Organizations
-                               where organizationLogin.Contains(o.name)
+                               where organizationLogin == o.name
                                select o;
 
             Organization organization = queryResults.FirstOrDefault();
@@ -1045,7 +1045,7 @@ namespace Kartverket.Register.Services.Register
 
         public Organization GetOrganizationByUserName()
         {
-            AccessControlService access = new AccessControlService();
+            AccessControlService access = new AccessControlService(_dbContext);
             if (access.IsMunicipalUser())
             {
                 string organizationNr = access.GetOrganizationNumber();

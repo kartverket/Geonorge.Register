@@ -121,7 +121,7 @@ namespace Kartverket.Register.Controllers
 
                 if (!ServiceList.ContainsKey(ServiceUuid))
                 {
-                    if(_accessControlService.IsAdmin() || _accessControlService.IsOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
+                    if(_accessControlService.IsAdmin() || _accessControlService.IsItemOwner(Organization, _accessControlService.GetSecurityClaim("organization")[0]))
                     ServiceList.Add(ServiceUuid, service["Title"].ToString());
                 }
             }

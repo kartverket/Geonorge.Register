@@ -5,7 +5,7 @@
 }
 @Html.Partial("_SearchBarPartial")
 
-<section class="heading">
+<section>
     <div class="row">
         <div class="col-sm-12">
             <h1>
@@ -64,21 +64,18 @@
     </div>
 </div>
 
-   
+
 @foreach (var item in Model)
 {
-    if (item.parentRegister == null)
+    if (!item.IsInspireStatusRegister() && !item.IsGeodatalovStatusRegister() || HtmlHelperExtensions.IsAdmin())
     {
-        if (!item.IsInspireStatusRegister() && !item.IsGeodatalovStatusRegister() || HtmlHelperExtensions.IsAdmin())
-        {
-            <div class="resultItemRow col-md-12 ">
-                <div class="col-md-4 col-sm-12 col">
-                    <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
-                </div>
-                <div class="col-md-8 col-sm-12 col">
-                    <p>@item.DescriptionTranslated()</p>
-                </div>
+        <div class="resultItemRow col-md-12 ">
+            <div class="col-md-4 col-sm-12 col">
+                <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
             </div>
-        }
+            <div class="col-md-8 col-sm-12 col">
+                <p>@item.DescriptionTranslated()</p>
+            </div>
+        </div>
     }
 }

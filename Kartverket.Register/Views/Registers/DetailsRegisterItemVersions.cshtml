@@ -72,7 +72,7 @@
         <hr />
         @if (Request.IsAuthenticated)
         {
-            if (HtmlHelperExtensions.accessRegisterItem(Model.currentVersion))
+            if (HtmlHelperExtensions.AccessRegisterItem(Model.currentVersion))
             {
                 if (Model.currentVersion.register.containedItemClass == "Document")
                 {

@@ -194,7 +194,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (item.isCurrentVersion())
                     {
-                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                         {
                             registerItems.Add(item);
                         }
@@ -750,7 +750,7 @@ namespace Kartverket.Register.Services.Register
 
                 if (item.isCurrentVersion())
                 {
-                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                     {
                         if (item.documentowner.seoname == filter.filterOrganization)
                         {
@@ -1135,6 +1135,22 @@ namespace Kartverket.Register.Services.Register
                 select o.systemId;
 
             return queryResults.FirstOrDefault();
+        }
+
+        public List<Models.Register> GetCodelistRegisters()
+        {
+            var queryResults = from o in _dbContext.Registers
+                where o.containedItemClass == "CodelistValue"
+                select o;
+
+            var codelistRegisters = new List<Models.Register>();
+            foreach (var item in queryResults)
+            {
+                codelistRegisters.Add(item);
+            }
+            codelistRegisters.OrderBy(r => r.NameTranslated());
+
+            return codelistRegisters;
         }
     }
 }

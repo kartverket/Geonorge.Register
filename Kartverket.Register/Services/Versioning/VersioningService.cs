@@ -77,7 +77,7 @@ namespace Kartverket.Register.Services.Versioning
 
             foreach (Models.RegisterItem item in queryResults.ToList())
             {
-                if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                 {
                     suggestionsItems.Add(item);
                 }

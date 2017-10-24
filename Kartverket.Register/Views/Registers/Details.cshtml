@@ -160,7 +160,7 @@
             {
                 if (municipalityCode != null)
                 {
-                    if (HtmlHelperExtensions.AccessEditDOKMunicipalBySelectedMunicipality(municipalityCode))
+                    if (HtmlHelperExtensions.AccessEditDokMunicipalBySelectedMunicipality(municipalityCode))
                     {
                         <a href="/dok/kommunalt/@municipalityCode/rediger" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
                         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl(municipalityCode)">@Shared.Add</a>

@@ -93,7 +93,7 @@
 
     @if (Request.IsAuthenticated)
     {
-        if (HtmlHelperExtensions.accessRegisterItem(Model))
+        if (HtmlHelperExtensions.AccessRegisterItem(Model))
         {
             <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
             <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

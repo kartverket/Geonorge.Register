@@ -5,10 +5,8 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using translation = Resources;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
@@ -19,10 +17,12 @@ namespace Kartverket.Register.Helpers
 {
     public static class HtmlHelperExtensions
     {
-        private static readonly RegisterDbContext db = new RegisterDbContext();
-        private static IRegisterItemService _registeritemService = new RegisterItemService(db);
-        private static IAccessControlService _accessControl = new AccessControlService(db);
-        private static IRegisterService _registerService = new RegisterService(db);
+        private static readonly RegisterDbContext Db = new RegisterDbContext();
+        private static readonly IRegisterItemService RegisteritemService = new RegisterItemService(Db);
+        private static readonly IAccessControlService AccessControl = new AccessControlService(Db);
+        private static readonly IRegisterService RegisterService = new RegisterService(Db);
+
+
 
         public static string EnvironmentName(this HtmlHelper helper)
         {
@@ -45,53 +45,28 @@ namespace Kartverket.Register.Helpers
             return Boolean.Parse(WebConfigurationManager.AppSettings["SupportsMultiCulture"]); ;
         }
 
+
+
         public static bool Access(object model)
         {
-            return _accessControl.Access(model);
+            return AccessControl.Access(model);
         }
 
         public static bool IsAdmin()
         {
-            return _accessControl.IsAdmin();
+            return AccessControl.IsAdmin();
         }
 
-        public static bool accessRegisterItem(RegisterItem item)
+        public static bool AccessRegisterItem(RegisterItem item)
         {
-            return _accessControl.Access(item);
+            return AccessControl.Access(item);
         }
 
-        public static string lovligInnhold(string containedItemClass)
+        public static bool AccessEditDokMunicipalBySelectedMunicipality(string selectedMunicipalityCode)
         {
-            if (containedItemClass == "Document")
-            {
-                return Documents.Document;
-            }
-            else if (containedItemClass == "Dataset")
-            {
-                return DataSet.Dataset;
-            }
-            else if (containedItemClass == "EPSG")
-            {
-                return EPSGs.EpsgCode;
-            }
-            else if (containedItemClass == "Organization")
-            {
-                return Organizations.Organization;
-            }
-            else if (containedItemClass == "CodelistValue")
-            {
-                return CodelistValues.CodeValue;
-            }
-            else if (containedItemClass == "Register")
-            {
-                return "Register";
-            }
-            else if (containedItemClass == "NameSpace")
-            {
-                return Namespace.NamespaceName;
-            }
-            return "";
+            return AccessControl.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(selectedMunicipalityCode);
         }
+
 
         public static string Type(string containedItemClass)
         {
@@ -99,65 +74,49 @@ namespace Kartverket.Register.Helpers
             {
                 return Documents.Document;
             }
-            else if (containedItemClass == "Dataset")
+            if (containedItemClass == "Dataset")
             {
                 return DataSet.Dataset;
             }
-            else if (containedItemClass == "EPSG")
+            if (containedItemClass == "EPSG")
             {
                 return EPSGs.EpsgCode;
             }
-            else if (containedItemClass == "Organization")
+            if (containedItemClass == "Organization")
             {
                 return Organizations.Organization;
             }
-            else if (containedItemClass == "CodelistValue")
+            if (containedItemClass == "CodelistValue")
             {
                 return CodelistValues.CodeValue;
             }
-            else if (containedItemClass == "Register")
+            if (containedItemClass == "Register")
             {
                 return "Register";
             }
-            else if (containedItemClass == "NameSpace")
+            if (containedItemClass == "NameSpace")
             {
                 return Namespace.NamespaceName;
             }
             return "";
         }
 
+
+
         public static List<Models.Register> Registers()
         {
-            var queryResults = from o in db.Registers
-                               where o.parentRegisterId == null
-                               select o;
-
-            List<Models.Register> RegistersList = new List<Models.Register>();
-            foreach (var item in queryResults)
+            var registersList = RegisterService.GetRegisters();
+            if (registersList.Any())
             {
-                RegistersList.Add(item);
+                registersList.OrderBy(r => r.NameTranslated());
             }
-            RegistersList.OrderBy(r => r.name);
-
-            return RegistersList;
+            return registersList;
         }
 
         public static List<Models.Register> CodelistRegister()
         {
-            RegisterDbContext db = new RegisterDbContext();
-
-            var queryResults = from o in db.Registers
-                               where o.containedItemClass == "CodelistValue"
-                               select o;
-
-            List<Models.Register> RegistersList = new List<Models.Register>();
-            foreach (var item in queryResults)
-            {
-                RegistersList.Add(item);
-            }
-            RegistersList.OrderBy(r => r.name);
-
-            return RegistersList;
+            var registersList = RegisterService.GetCodelistRegisters();
+            return registersList;
         }
 
         public static string GetSecurityClaim(string type)
@@ -242,33 +201,28 @@ namespace Kartverket.Register.Helpers
         {
             if (selectedMunicipalityCode == null)
             {
-                return _accessControl.GetMunicipality();
+                return AccessControl.GetMunicipality();
             }
-            else
-            {
-                return _registeritemService.GetMunicipalityByNr(selectedMunicipalityCode.ToString());
-            }
+            return RegisteritemService.GetMunicipalityByNr(selectedMunicipalityCode.ToString());
         }
 
         public static string GetDokStatusFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            if (item.register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            if (item.register.IsDokMunicipal())
             {
                 return item.dokStatus.DescriptionTranslated();
             }
-            else
+            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            if (coverage != null)
             {
-                CoverageDataset coverage = Coverage(item, selectedMunicipality);
-                if (coverage != null)
+                if (coverage.CoverageDOKStatusId != null)
                 {
-                    if (coverage.CoverageDOKStatusId != null)
-                    {
-                        return coverage.CoverageDOKStatus.description;
-                    }
-                    else return "Forslag";
+                    return coverage.CoverageDOKStatus.description;
                 }
                 else return "Forslag";
             }
+            else return "Forslag";
+
         }
 
         public static string GetNationalDokStatus(Dataset item)
@@ -277,13 +231,12 @@ namespace Kartverket.Register.Helpers
             {
                 return " ";
             }
-            else
-                return item.dokStatus.DescriptionTranslated();
+            return item.dokStatus.DescriptionTranslated();
         }
 
         private static CoverageDataset Coverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            Organization municipality = _registerService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
+            var municipality = RegisterService.GetOrganizationByMunicipalityCode(selectedMunicipality.value);
             if (municipality != null)
             {
                 foreach (CoverageDataset coverage in item.Coverage)
@@ -299,17 +252,14 @@ namespace Kartverket.Register.Helpers
 
         public static string GetConfirmedFromCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            var coverage = Coverage(item, selectedMunicipality);
             if (coverage != null)
             {
                 if (coverage.ConfirmedDok)
                 {
                     return Shared.Yes;
                 }
-                else
-                {
-                    return Shared.No;
-                }
+                return Shared.No;
             }
             else return Shared.No;
 
@@ -317,17 +267,14 @@ namespace Kartverket.Register.Helpers
 
         public static string GetCoverage(Dataset item, CodelistValue selectedMunicipality)
         {
-            CoverageDataset coverage = Coverage(item, selectedMunicipality);
+            var coverage = Coverage(item, selectedMunicipality);
             if (coverage != null)
             {
                 if (coverage.Coverage)
                 {
                     return Shared.Yes;
                 }
-                else
-                {
-                    return Shared.No;
-                }
+                return Shared.No;
             }
             else return Shared.No;
 
@@ -339,15 +286,9 @@ namespace Kartverket.Register.Helpers
             {
                 return item.Notes;
             }
-            else
-            {
-                CoverageDataset coverage = Coverage(item, selectedMunicipality);
-                if (coverage != null)
-                {
-                    return coverage.Note;
-                }
-                else return null;
-            }
+
+            var coverage = Coverage(item, selectedMunicipality);
+            return coverage?.Note;
         }
 
         public static bool SosiIsChecked(string statusId)
@@ -356,15 +297,7 @@ namespace Kartverket.Register.Helpers
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
-        }
-
-        public static bool AccessEditDOKMunicipalBySelectedMunicipality(string selectedMunicipalityCode)
-        {
-            return _accessControl.AccessEditOrCreateDOKMunicipalBySelectedMunicipality(selectedMunicipalityCode);
+            return false;
         }
 
         public static string GetSelectedMunicipalityName(CodelistValue selectedMunicipal)
@@ -373,9 +306,8 @@ namespace Kartverket.Register.Helpers
             {
                 return selectedMunicipal.name;
             }
-            return translation.DataSet.DOK_Nasjonalt_SelectMunicipality;
+            return DataSet.DOK_Nasjonalt_SelectMunicipality;
         }
-
 
         public static string GetDOKMunicipalConfirmationText(Organization municipality)
         {
@@ -392,7 +324,7 @@ namespace Kartverket.Register.Helpers
                 {
                     status = "warning";
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
-                    return "<label class='label-" + status + " label auto-width'>"+ translation.DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                    return "<label class='label-" + status + " label auto-width'>" + translation.DataSet.MunicipalDOKStatusDraft + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
                 }
                 else if (municipality.StatusConfirmationMunicipalDOK == "valid")
                 {
@@ -401,7 +333,7 @@ namespace Kartverket.Register.Helpers
                     lastDateConfirmedText = GetlastDayConfirmed(municipality);
                 }
 
-                return "<label class='label-" + status + " label auto-width'>" + Resource.MunicipalDOKConfirmedInfo(confirmed) + " "  + DateTime.Now.Year + lastDateConfirmedText + "</label>";
+                return "<label class='label-" + status + " label auto-width'>" + Resource.MunicipalDOKConfirmedInfo(confirmed) + " " + DateTime.Now.Year + lastDateConfirmedText + "</label>";
             }
             return "";
         }
@@ -433,6 +365,7 @@ namespace Kartverket.Register.Helpers
             }
             return 0;
         }
+
         public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort)
         {
 
@@ -499,7 +432,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "dokstatus" || sortingParam == "dokstatus_desc")
             {
                 sortTitle = "DOK-Status";
-;                statusIcon = "statusIcon-Accepted";
+                ; statusIcon = "statusIcon-Accepted";
             }
 
             // *** DOK STATUS SORTERING
@@ -676,7 +609,7 @@ namespace Kartverket.Register.Helpers
                 linkSort = linkSort + "&text=" + text;
             if (string.IsNullOrWhiteSpace(tittel))
                 tittel = "<span class='" + statusIcon + "'></span>";
-            
+
             linkSort = linkSort + "'>" + tittel + "</a>";
 
             return new HtmlString(linkSort);
@@ -769,12 +702,10 @@ namespace Kartverket.Register.Helpers
 
         }
 
-
         public static Models.Register ParentRegister(Models.Register register)
         {
             return register;
         }
-
 
         public static HtmlString Checked(bool isChecked, string type)
         {
@@ -785,7 +716,7 @@ namespace Kartverket.Register.Helpers
 
         public static string GetDistrbutionType(string codeValue)
         {
-            return _registeritemService.GetDistributionType(codeValue);
+            return RegisteritemService.GetDistributionType(codeValue);
         }
     }
 }

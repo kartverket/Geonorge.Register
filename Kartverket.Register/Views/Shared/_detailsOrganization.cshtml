@@ -32,7 +32,7 @@
 
         <p class="pull-right" title="@Organizations.AgreementYear @Model.agreementYear"><strong>@Organizations.AgreementYear:</strong> @Html.DisplayFor(m => m.agreementYear)</p>
 
-    @if (HtmlHelperExtensions.accessRegisterItem(Model))
+    @if (HtmlHelperExtensions.AccessRegisterItem(Model))
     {
         <p>
             @if (!string.IsNullOrWhiteSpace(Model.priceFormDocument))

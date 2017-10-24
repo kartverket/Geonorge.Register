@@ -83,7 +83,7 @@
 
         @if (Request.IsAuthenticated)
             {
-                if (HtmlHelperExtensions.accessRegisterItem(item))
+                if (HtmlHelperExtensions.AccessRegisterItem(item))
                 {
                     if ((Model.currentVersion.statusId == "Submitted" || Model.currentVersion.statusId == "Draft" || HtmlHelperExtensions.IsAdmin()))
                     {

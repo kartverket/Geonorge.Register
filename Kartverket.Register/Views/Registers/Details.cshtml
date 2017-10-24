@@ -32,7 +32,8 @@
 }
 
 @Html.Partial("_SearchBarPartial")
-<section class="heading">
+
+<section>
     <div class="row">
         <div class="col-sm-12">
             <h1 class="small-h1">
@@ -43,17 +44,14 @@
             <span class="separator-lg"></span>
         </div>
         <div class="col-sm-12 col-md-10 col-lg-10">
-            @if (Model.Description != null)
-            {
-                <p>
-                    @Model.Description
-                    @if (Model.IsDokMunicipal())
-                    {
-                        <br />
-                        @Html.Raw(HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality));
-                    }
-                </p>
-            }
+            <p>
+                @Model.Description
+                @if (Model.IsDokMunicipal())
+                {
+                    <p>@Html.Raw(HtmlHelperExtensions.GetDOKMunicipalConfirmationText(municipality))</p>
+                }
+            </p>
+
             @if (Model.IsServiceAlertRegister())
             {
                 if (!Request.IsAuthenticated)
@@ -88,51 +86,51 @@
     <div class="col-md-4 pull-right">
         @Html.Partial("_otherformats")
     </div>
-    
+
 </div>
 <div class="clearfix"></div>
 <span class="separator-small margin-bottom-10"></span>
 
-    @if (Model.ContainedItemClassIsOrganization())
-    {
-        @Html.Partial("_organization", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsCodelistValue())
-    {
-        @Html.Partial("_codelistValue", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsDocument())
-    {
-        @Html.Partial("_documents", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsDataset())
-    {
-        @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsEpsg())
-    {
-        @Html.Partial("_epsg", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsNameSpace())
-    {
-        @Html.Partial("_nameSpace", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsServiceAlert())
-    {
-        @Html.Partial("_serviceAlert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsInspireDataset())
-    {
-        @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsRegister())
-    {
-        @Html.Partial("_subregister", Model.Subregisters.ToPagedList(pageNumber, pageSize))
-    }
-    @if (Model.ContainedItemClassIsGeodatalovDataset())
-    {
-        @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-    }
+@if (Model.ContainedItemClassIsOrganization())
+{
+    @Html.Partial("_organization", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsCodelistValue())
+{
+    @Html.Partial("_codelistValue", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsDocument())
+{
+    @Html.Partial("_documents", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsDataset())
+{
+    @Html.Partial("_dataset", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsEpsg())
+{
+    @Html.Partial("_epsg", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsNameSpace())
+{
+    @Html.Partial("_nameSpace", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsServiceAlert())
+{
+    @Html.Partial("_serviceAlert", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsInspireDataset())
+{
+    @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsRegister())
+{
+    @Html.Partial("_subregister", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+}
+@if (Model.ContainedItemClassIsGeodatalovDataset())
+{
+    @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+}
 
 <div class="clearfix"></div>
 <div class="col-sm-12 col-md-12 col-lg-12 row">

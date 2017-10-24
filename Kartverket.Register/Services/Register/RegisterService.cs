@@ -77,7 +77,7 @@ namespace Kartverket.Register.Services.Register
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
             AccessControlService access = new AccessControlService(_dbContext);
-            if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            if (register.IsDokMunicipal())
             {
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
@@ -93,6 +93,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     GetNationalDatasets(registerItems);
                     GetMunicipalDatasetsByUser(register, registerItems);
+                    filter.municipality = GetOrganizationByUserName().MunicipalityCode;
                 }
 
                 register.items.Clear();

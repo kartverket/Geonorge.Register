@@ -293,7 +293,7 @@ namespace Kartverket.Register.Services
             if (originalDataset.InspireDeliveryDistribution != null)
             {
                 originalDataset.InspireDeliveryDistribution.StatusId =
-                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, inspireDatasetFromKartkatalogen.Uuid, true,
+                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, inspireDatasetFromKartkatalogen.DistributionUrl, true,
                         originalDataset.InspireDeliveryDistribution.StatusId);
             }
             if (originalDataset.InspireDeliveryWms != null)

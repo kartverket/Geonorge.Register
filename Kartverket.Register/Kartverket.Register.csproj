@@ -816,6 +816,7 @@
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
+    <Compile Include="Models\ViewModels\AccessViewModel.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />

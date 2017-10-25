@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Kartverket.Register.Models.Translations;
 using Resources;
 
@@ -53,8 +52,13 @@ namespace Kartverket.Register.Models.ViewModels
         public TranslationCollection<RegisterTranslation> Translations { get; set; }
 
         public string OrderBy { get; set; }
-        public int Access { get; set; }
+        public int AccessId { get; set; }
 
+
+        public string MunicipalityCode { get; set; }
+        public Organization Municipality { get; set; }
+
+        public AccessViewModel AccessRegister { get; set; }
 
         public RegisterV2ViewModel(Register register)
         {
@@ -77,7 +81,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
-                if (register.accessId != null) Access = register.accessId.Value;
+                if (register.accessId != null) AccessId = register.accessId.Value;
 
                 if (register.IsServiceAlertRegister())
                 {
@@ -170,7 +174,7 @@ namespace Kartverket.Register.Models.ViewModels
             return ContainedItemClass == "GeodatalovDataset";
         }
 
-        public string GetObjectCreateUrl(string municipalityCode = null)
+        public string GetObjectCreateUrl()
         {
             var url = ParentRegister == null
                 ? Seoname + "/ny"
@@ -187,7 +191,7 @@ namespace Kartverket.Register.Models.ViewModels
             if (ContainedItemClassIsGeodatalovDataset()) return "/geodatalov/" + url;
             if (ContainedItemClassIsDataset())
             {
-                if (IsDokMunicipal()) return "/dataset/" + Seoname + "/" + municipalityCode + "/ny";
+                if (IsDokMunicipal()) return "/dataset/" + Seoname + "/" + MunicipalityCode + "/ny";
                 return "/dataset/" + url;
             }
             return "#";
@@ -205,6 +209,11 @@ namespace Kartverket.Register.Models.ViewModels
             return ParentRegister == null
                 ? "/register/" + Seoname
                 : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname;
+        }
+
+        public string GetEditListUrl()
+        {
+            return "/dok/kommunalt/" + MunicipalityCode + "/rediger";
         }
     }
 }

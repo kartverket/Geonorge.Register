@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Web.Mvc;
 using FluentAssertions;
 using Helpers;
 using Kartverket.Register.Controllers;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
+using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
 using Moq;
@@ -15,7 +17,7 @@ namespace Kartverket.Register.Tests.Controllers
     public class RegistersControllerTest
     {
         public static Models.Register _register = new Models.Register { name = "RegisterName" };
-        public static FilterParameters _filter = new Models.FilterParameters();
+        public static FilterParameters _filter = new FilterParameters();
         public static RegisterV2ViewModel _viewModel = new RegisterV2ViewModel(_register);
 
 
@@ -41,6 +43,13 @@ namespace Kartverket.Register.Tests.Controllers
             registerItemServiceMock.Setup(m => m.OrderBy(registerItems, null)).Returns(registerItems);
             registerItemServiceMock.Setup(m => m.OrderBy(registerItemsV2ViewModel, null)).Returns(registerItemsV2ViewModel);
             return registerItemServiceMock;
+        }
+
+        private static Mock<IAccessControlService> CreateAccessControlServiceMock()
+        {
+            var accessControlServiceMock = new Mock<IAccessControlService>();
+            accessControlServiceMock.Setup(m => m.AccessViewModel(_viewModel)).Returns(new AccessViewModel());
+            return accessControlServiceMock;
         }
 
         /*
@@ -92,9 +101,12 @@ namespace Kartverket.Register.Tests.Controllers
         {
             var registerService = CreateRegisterServiceMock();
             var registerItemService = CreateRegisterItemMock();
+            var accessControlService = CreateAccessControlServiceMock();
             registerService.Setup(r => r.GetRegister(null, "RegisterName")).Returns(_register);
+            registerItemService.Setup(m => m.GetMunicipalityOrganizationByNr(_viewModel.MunicipalityCode));
 
-            var controller = new RegistersController(null, null, registerItemService.Object, null, null, registerService.Object, null, null, null);
+
+            var controller = new RegistersController(null, null, registerItemService.Object, null, null, registerService.Object, accessControlService.Object, null, null);
 
             var result = controller.Details(null,null, "RegisterName", null, null, null, _filter) as ViewResult;
             result.Should().NotBeNull();

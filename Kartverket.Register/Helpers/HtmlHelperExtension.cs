@@ -313,7 +313,7 @@ namespace Kartverket.Register.Helpers
         {
             if (municipality != null)
             {
-                string confirmed = translation.DataSet.NotConfirmedMunicipalDOK;
+                string confirmed = DataSet.NotConfirmedMunicipalDOK;
                 string lastDateConfirmedText = "";
                 string status = "danger";
                 if (lastDateConfirmedIsNotFromThisYear(municipality.DateConfirmedMunicipalDOK))

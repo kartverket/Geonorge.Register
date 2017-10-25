@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
+using System.Web.UI.WebControls;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 
@@ -46,6 +47,35 @@ namespace Kartverket.Register.Services
             return false;
         }
 
+        public AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel)
+        {
+            var accessViewModel = new AccessViewModel();
+            accessViewModel.EditRegister = EditRegister(registerViewModel);
+            accessViewModel.AddToRegister = AddToRegister(registerViewModel);
+            accessViewModel.EditRegisterItems = EditRegisterItemsList(registerViewModel);
+            accessViewModel.DeleteRegister = IsAdmin();
+            return accessViewModel;
+        }
+
+        private bool AddToRegister(RegisterV2ViewModel registerViewModel)
+        {
+            if (registerViewModel.IsDokMunicipal())
+            {
+                return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
+            }
+            return AccessRegister(registerViewModel);
+        }
+
+        private bool EditRegisterItemsList(RegisterV2ViewModel registerViewModel)
+        {
+            return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
+        }
+
+        private bool EditRegister(RegisterV2ViewModel registerViewModel)
+        {
+            return IsAdmin() && !registerViewModel.IsServiceAlertRegister();
+        }
+
         public bool AccessRegister(Models.Register register)
         {
             if (IsAdmin()) return true;
@@ -64,23 +94,23 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool AccessRegister(RegisterV2ViewModel register)
+        private bool AccessRegister(RegisterV2ViewModel registerViewModel)
         {
             if (IsAdmin()) return true;
-            if (register.Access == 2)
+            if (registerViewModel.AccessId == 2)
             {
                 if (IsEditor())
                 {
-                    if (register.ContainedItemClassIsCodelistValue())
+                    if (registerViewModel.ContainedItemClassIsCodelistValue())
                     {
-                        return IsRegisterOwner(register.Owner.name, UserName());
+                        return IsRegisterOwner(registerViewModel.Owner.name, UserName());
                     }
                     return true;
                 }
             }
-            else if (register.Access == 4)
+            else if (registerViewModel.AccessId == 4)
             {
-                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
+                return UserIsSelectedMunicipality(registerViewModel.MunicipalityCode) || IsDokEditor() || IsDokAdmin();
             }
             return false;
         }
@@ -193,6 +223,11 @@ namespace Kartverket.Register.Services
         {
             Claim orgnrClaim = ClaimsPrincipal.Current.FindFirst("orgnr");
             return orgnrClaim?.Value;
+        }
+
+        public bool AccessEdit(object model)
+        {
+            throw new System.NotImplementedException();
         }
 
         public CodelistValue GetMunicipality()

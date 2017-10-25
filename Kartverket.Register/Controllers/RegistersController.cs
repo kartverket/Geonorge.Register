@@ -13,6 +13,7 @@ using Kartverket.Register.Services;
 using System.Collections.Generic;
 using Kartverket.Register.Services.Translation;
 using System.Web;
+using System.Web.UI.WebControls;
 using Resources;
 
 namespace Kartverket.Register.Controllers
@@ -95,6 +96,10 @@ namespace Kartverket.Register.Controllers
 
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register);
+            viewModel.MunicipalityCode = filter.municipality;
+            viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);

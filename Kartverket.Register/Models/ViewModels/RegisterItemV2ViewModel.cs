@@ -58,6 +58,8 @@ namespace Kartverket.Register.Models.ViewModels
         //TODO gjøre på samme måte som RegisteritemV2
         public RegisterItem RegisterItem { get; set; }
 
+        public bool AccessRegisterItem { get; set; }
+
 
         public void UpdateRegisterItem(RegisterItemV2 item)
         {

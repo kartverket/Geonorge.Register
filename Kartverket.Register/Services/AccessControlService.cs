@@ -50,10 +50,10 @@ namespace Kartverket.Register.Services
         public AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel)
         {
             var accessViewModel = new AccessViewModel();
-            accessViewModel.EditRegister = EditRegister(registerViewModel);
-            accessViewModel.AddToRegister = AddToRegister(registerViewModel);
-            accessViewModel.EditRegisterItems = EditRegisterItemsList(registerViewModel);
-            accessViewModel.DeleteRegister = IsAdmin();
+            accessViewModel.Edit = EditRegister(registerViewModel);
+            accessViewModel.Add = AddToRegister(registerViewModel);
+            accessViewModel.EditListOfRegisterItems = EditRegisterItemsList(registerViewModel);
+            accessViewModel.Delete = IsAdmin();
             return accessViewModel;
         }
 
@@ -140,7 +140,11 @@ namespace Kartverket.Register.Services
 
         private bool AccessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
         {
-            return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName());
+            if (!registerItemViewModel.Register.IsServiceAlertRegister() && !registerItemViewModel.Register.ContainedItemClassIsDocument())
+            {
+                return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName());
+            }
+            return false;
         }
 
         

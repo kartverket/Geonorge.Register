@@ -7,9 +7,9 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class AccessViewModel
     {
-        public bool EditRegister { get; set; }
-        public bool DeleteRegister { get; set; }
-        public bool AddToRegister { get; set; }
-        public bool EditRegisterItems { get; set; }
+        public bool Edit { get; set; }
+        public bool Delete { get; set; }
+        public bool Add { get; set; }
+        public bool EditListOfRegisterItems { get; set; }
     }
 }

@@ -105,24 +105,15 @@
     }
 </div>
 
-<div class="hidden-print">
-    <hr />
 
-    @if (Request.IsAuthenticated)
+<div class="clearfix"></div>
+<div class="hidden-print">
+    @if (Request.IsAuthenticated && Model.AccessRegisterItem)
     {
-        if (!Model.Register.IsServiceAlertRegister())
-        {
-            if (HtmlHelperExtensions.Access(Model))
-            {
-                if (!Model.Register.ContainedItemClassIsDocument())
-                {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
-                }
-            }
-        }
+        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
     }
 
-    <a class="hidden-print" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
+    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>
 
 </div>

@@ -122,7 +122,6 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             RegisterItemV2ViewModel viewModel;
-
             if (string.IsNullOrWhiteSpace(systemId))
             {
                 viewModel = GetRegisterItem(null, registername, itemowner, itemname);
@@ -130,6 +129,7 @@ namespace Kartverket.Register.Controllers
             else {
                 viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
             }
+            viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             return View(viewModel);
         }
 

@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Services;
+﻿using System;
+using Kartverket.Register.Services;
 using FluentAssertions;
 using System.Security.Claims;
 using System.Threading;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Kartverket.Register.Models;
+using Kartverket.Register.Models.ViewModels;
 using Moq;
 using Xunit;
 
@@ -24,6 +26,7 @@ namespace Kartverket.Register.Tests.Services
         private Document _document;
         private Dataset _dataset;
         private readonly Organization _organization;
+        private readonly Organization _municipality;
         private readonly AccessControlService _accessControlService;
 
 
@@ -37,6 +40,7 @@ namespace Kartverket.Register.Tests.Services
             _organization = new Organization { name = "Kartverket" };
             _document = CreateDocument();
             _dataset = CreateDataset();
+            _municipality = CreateMunicipality();
         }
 
 
@@ -172,6 +176,58 @@ namespace Kartverket.Register.Tests.Services
             _accessControlService.AccessRegister(_register).Should().BeTrue();
         }
 
+        [Fact]
+        public void AccessEditRegisterWhenUserIsAdminAndRegisterIsNotServiceAlertRegister()
+        {
+            SetClaims(Role, Admin);
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            _accessControlService.EditRegister(registerViewModel).Should().BeTrue();
+        }
+
+        [Fact]
+        public void NotAccessEditRegisterWhenUserIsAdminAndRegisterIsServiceAlertRegister()
+        {
+            SetClaims(Role, Admin);
+            _register.systemId = Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            _accessControlService.EditRegister(registerViewModel).Should().BeFalse();
+        }
+
+        [Fact]
+        public void AccessAddToRegisterWhenRegisterIsDokMunicipalAndMunicipalityIsNotNull()
+        {
+            SetClaims(Role, Admin);
+            _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            registerViewModel.Municipality = _municipality;
+            _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
+        }
+        [Fact]
+        public void NotAccessAddToRegisterWhenRegisterIsDokMunicipalAndMunicipalityIsNull()
+        {
+            SetClaims(Role, Admin);
+            _register.name = "Det offentlige kartgrunnlaget - Kommunalt";
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            _accessControlService.AddToRegister(registerViewModel).Should().BeFalse();
+        }
+
+        [Fact]
+        public void AccessAddToRegisterWhenRegisterIsNotDokMunicipal()
+        {
+            SetClaims(Role, Admin);
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            _accessControlService.AddToRegister(registerViewModel).Should().BeTrue();
+        }
+
+        [Fact]
+        public void AccessEditRegisterItemListWhenMunicipalityIsNotNull()
+        {
+            SetClaims(Role, Admin);
+            var registerViewModel = new RegisterV2ViewModel(_register);
+            registerViewModel.Municipality = _municipality;
+            _accessControlService.EditRegisterItemsList(registerViewModel).Should().BeTrue();
+        }
+
         // Test access registerItem
         [Fact]
         public void AccessRegisterItemIfUserIsAdmin()
@@ -284,6 +340,20 @@ namespace Kartverket.Register.Tests.Services
             _accessControlService.IsMunicipalUser().Should().BeTrue();
         }
 
+        [Fact]
+        public void ReturnTrueIfUserIsSelectedMunicipality()
+        {
+            SetClaims(Orgnr, "840098222");
+            _accessControlService.UserIsSelectedMunicipality("1622").Should().BeTrue();
+        }
+
+        [Fact]
+        public void ReturnFalseIfUserIsNotSelectedMunicipality()
+        {
+            SetClaims(Orgnr, "840098222");
+            _accessControlService.UserIsSelectedMunicipality("1212").Should().BeFalse();
+        }
+
 
         // Help methods
 
@@ -317,6 +387,16 @@ namespace Kartverket.Register.Tests.Services
             dataset.datasetowner = _organization;
             dataset.DatasetType = "Kommunalt";
             return dataset;
+        }
+
+        private Organization CreateMunicipality()
+        {
+            return new Organization
+            {
+                name = "Agdenes kommune",
+                MunicipalityCode = "1622",
+                number = "840098222"
+            };
         }
 
         private IEnumerable<Organization> OrganizationList()

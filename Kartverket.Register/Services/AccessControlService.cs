@@ -3,7 +3,6 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
-using System.Web.UI.WebControls;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
 
@@ -57,7 +56,7 @@ namespace Kartverket.Register.Services
             return accessViewModel;
         }
 
-        private bool AddToRegister(RegisterV2ViewModel registerViewModel)
+        public bool AddToRegister(RegisterV2ViewModel registerViewModel)
         {
             if (registerViewModel.IsDokMunicipal())
             {
@@ -66,12 +65,12 @@ namespace Kartverket.Register.Services
             return AccessRegister(registerViewModel);
         }
 
-        private bool EditRegisterItemsList(RegisterV2ViewModel registerViewModel)
+        public bool EditRegisterItemsList(RegisterV2ViewModel registerViewModel)
         {
             return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
         }
 
-        private bool EditRegister(RegisterV2ViewModel registerViewModel)
+        public bool EditRegister(RegisterV2ViewModel registerViewModel)
         {
             return IsAdmin() && !registerViewModel.IsServiceAlertRegister();
         }
@@ -147,8 +146,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        
-
+       
         public bool IsAdmin()
         {
             List<string> roles = GetSecurityClaim("role");
@@ -299,14 +297,13 @@ namespace Kartverket.Register.Services
             return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
 
-        private bool UserIsSelectedMunicipality(string municipalityCode)
+        public bool UserIsSelectedMunicipality(string municipalityCode)
         {
-            string currentUserMunicipalityCode = GetMunicipalityCode();
+            var currentUserMunicipalityCode = GetMunicipalityCode();
             if (municipalityCode == null || currentUserMunicipalityCode == null)
             {
                 return false;
             }
-
             return currentUserMunicipalityCode == municipalityCode;
         }
 

@@ -62,16 +62,25 @@ namespace Kartverket.Register.Services
             }
         }
 
-        public string GetDeliveryDistributionStatus(string distributionUrl, bool autoupdate, string currentStatus)
+        public string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoupdate, string currentStatus)
         {
             var status = currentStatus;
             try
             {
-                var hasDistributionUrl = distributionUrl != null;
-                if (autoupdate)
+                var metadata = GetMetadataFromKartkatalogen(metadataUuid);
+                if (metadata != null)
                 {
-                    status = hasDistributionUrl ? Good : Deficient;
+                    if (metadata.DistributionDetails != null &&
+                        metadata.DistributionDetails.Protocol.Value == "GEONORGE:OFFLINE" && distributionUrl != null)
+                    {
+                        status = Good;
+                    }
+                    else
+                    {
+                        status = Deficient;
+                    }
                 }
+
             }
             catch (Exception)
             {
@@ -185,7 +194,7 @@ namespace Kartverket.Register.Services
             return status;
         }
 
-        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
+        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus = Deficient)
         {
             var statusValue = currentStatus;
 

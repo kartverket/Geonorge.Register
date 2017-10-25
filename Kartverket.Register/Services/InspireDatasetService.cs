@@ -97,7 +97,7 @@ namespace Kartverket.Register.Services
             //GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
             var metadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid);
             var metadataServiceStatus = "good";
-            var distributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.DistributionUrl);
+            var distributionStatus = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, inspireDataset.DistributionUrl);
             var wmsStatus = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, "deficient", inspireDataset.UuidService);
             var wfsStatus = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid);
             var atomFeedStatus = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid);
@@ -123,7 +123,7 @@ namespace Kartverket.Register.Services
         {
             inspireDatasetViewModel.MetadataStatusId = _datasetDeliveryService.GetMetadataStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.MetadataStatusId);
             inspireDatasetViewModel.MetadataServiceStatusId = "good"; // skal alltid være ok.... inspireDatasetViewModel.InspireDeliveryMetadataStatus;
-            inspireDatasetViewModel.DistributionStatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.DistributionStatusId);
+            inspireDatasetViewModel.DistributionStatusId = _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDataset.Uuid, inspireDataset.DistributionUrl, true, inspireDatasetViewModel.DistributionStatusId);
             inspireDatasetViewModel.WmsStatusId = _datasetDeliveryService.GetDokDeliveryServiceStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WmsStatusId, inspireDataset.UuidService);
             inspireDatasetViewModel.WfsStatusId = _datasetDeliveryService.GetWfsStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.WfsStatusId);
             inspireDatasetViewModel.AtomFeedStatusId = _datasetDeliveryService.GetAtomFeedStatus(inspireDataset.Uuid, true, inspireDatasetViewModel.AtomFeedStatusId);
@@ -293,7 +293,7 @@ namespace Kartverket.Register.Services
             if (originalDataset.InspireDeliveryDistribution != null)
             {
                 originalDataset.InspireDeliveryDistribution.StatusId =
-                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, true,
+                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, inspireDatasetFromKartkatalogen.Uuid, true,
                         originalDataset.InspireDeliveryDistribution.StatusId);
             }
             if (originalDataset.InspireDeliveryWms != null)

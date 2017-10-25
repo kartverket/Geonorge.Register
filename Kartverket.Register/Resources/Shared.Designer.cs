@@ -224,6 +224,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string HeadingText {
+            get {
+                return ResourceManager.GetString("HeadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Skjul tekst.
         /// </summary>
         public static string HideText {

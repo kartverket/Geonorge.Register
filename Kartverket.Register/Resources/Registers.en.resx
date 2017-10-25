@@ -142,10 +142,10 @@
     <value>of</value>
   </data>
   <data name="Kartografi" xml:space="preserve">
-    <value>Cartography</value>
+    <value>Cartography – specifications (SLD)</value>
   </data>
   <data name="KartografiContent" xml:space="preserve">
-    <value>The registry contains data sets that have registered digital cartography</value>
+    <value>Norwegian NSDI register of cartography definitions – SLD and other formats</value>
   </data>
   <data name="LoadingMessage" xml:space="preserve">
     <value>Retrieves register</value>
@@ -157,16 +157,16 @@
     <value>Not set</value>
   </data>
   <data name="Objektregisteret" xml:space="preserve">
-    <value>Object registry</value>
+    <value>Feature Catalogue</value>
   </data>
   <data name="ObjektregisteretContent" xml:space="preserve">
-    <value>Contains a collection of central object catalogs from SOSI, Inspire and from parties in Norway digitally. There are data specifications that are useful in the production of datasets, or as documentation of how the content and structure of a dataset should be interpreted.</value>
+    <value>Norwegian NSDI Feature Catalogue with UML-models and definitions</value>
   </data>
   <data name="Owner" xml:space="preserve">
     <value>Owner</value>
   </data>
   <data name="SymbolContent" xml:space="preserve">
-    <value>This registry contains symbols used for styling digital cartography and for use in the graphics industry.</value>
+    <value>Norwegian NSDI register of pictograms and symbols used in cartography</value>
   </data>
   <data name="Updated" xml:space="preserve">
     <value>Updated</value>
@@ -290,5 +290,8 @@
   </data>
   <data name="None" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="SymbolName" xml:space="preserve">
+    <value>Cartography - symbols</value>
   </data>
 </root>

@@ -2788,6 +2788,11 @@
               Looks up a localized string similar to Dette registeret inneholder symboler som brukes til styling av digital kartografi, og til bruk i grafisk bransje..
             </summary>
         </member>
+        <member name="P:Resources.Registers.SymbolName">
+            <summary>
+              Looks up a localized string similar to Symbol.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Updated">
             <summary>
               Looks up a localized string similar to Oppdatert.
@@ -2913,6 +2918,11 @@
         <member name="P:Resources.Shared.Heading">
             <summary>
               Looks up a localized string similar to Registrene.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.HeadingText">
+            <summary>
+              Looks up a localized string similar to .
             </summary>
         </member>
         <member name="P:Resources.Shared.HideText">

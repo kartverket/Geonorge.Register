@@ -17,7 +17,11 @@
         </div>
     </div>
 </section>
-
+<div class="row">
+    <div class="col-sm-12">
+        <p>@Shared.HeadingText</p>
+    </div>
+</div>
 
 <div class="table-heading col-md-12">
     <div class="col-md-4 col-sm-12 col"><strong>@Registers.Name</strong></div>
@@ -47,7 +51,7 @@
 @*Symbolregister*@
 <div class="resultItemRow col-md-12 ">
     <div class="col-md-4 col-sm-12 col">
-        <a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">Symbol</a>
+        <a href="/register/symbol" data-loading-message="@Registers.LoadingMessage" class="show-loading-animation">@Registers.SymbolName</a>
     </div>
     <div class="col-md-8 col-sm-12 col">
         <p>@Registers.SymbolContent</p>

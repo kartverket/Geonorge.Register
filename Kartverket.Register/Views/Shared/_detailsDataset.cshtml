@@ -17,9 +17,9 @@
 
     @if (Model.dokStatus != null)
     {
-    <div class="row">
-        <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.dokStatus.DescriptionTranslated() <i class="statusIcon-@Model.dokStatusId"></i></div>
-    </div>
+        <div class="row">
+            <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.dokStatus.DescriptionTranslated() <i class="statusIcon-@Model.dokStatusId"></i></div>
+        </div>
     }
     <div class="row">
         <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => Model.dokStatusDateAccepted)</div>
@@ -35,103 +35,100 @@
     </div>
     @if (Model.datasetowner != null)
             {
-    <div class="row">
-        <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.datasetowner.NameTranslated()</div>
-    </div>
+        <div class="row">
+            <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.datasetowner.NameTranslated()</div>
+        </div>
     }
     @if (Model.DatasetType != null)
             {
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.DatasetType):</div><div class="col-md-9"> @Model.GetDatasetType()</div>
-    </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.DatasetType):</div><div class="col-md-9"> @Model.GetDatasetType()</div>
+        </div>
     }
     @if (Model.theme != null)
             {
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.ThemeGroupIdTranslated()</div>
-    </div>
+        <div class="row">
+            <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.ThemeGroupIdTranslated()</div>
+        </div>
     }
 </article>
 
 <article class="col-md-12">
     <h3>@DataSet.DOK_DeliveryStatusHeading</h3>
     <div class="row">
-        <div class="col-md-12"><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></div>
+        <div class="col-md-12"><p><a href="@Html.DokEvaluationCriteriaUrl()" target="_blank">@DataSet.DOK_EvaluationCriteria</a></p></div>
     </div>
-    <p></p>
-    <div class="register dataset search-results-table-heading">
-        <div class="row">
-            <div class="col-md-3">@DataSet.DOK_AssessmentPoint.ToUpper()</div><div class="col-md-2">@DataSet.DOK_StatusValueHeader.ToUpper()</div><div class="col-md-7">@DataSet.Comment.ToUpper()</div>
-        </div>
-        <div class="menu-separator search-results-table-heading"></div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryMetadataStatusId)</div><div class="col-md-2"> @Model.dokDeliveryMetadataStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryMetadataStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryProductSheetStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliveryProductSheetStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryProductSheetStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryPresentationRulesStatusId) </div>
-            <div class="col-md-2">@Model.dokDeliveryPresentationRulesStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryPresentationRulesStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryProductSpecificationStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliveryProductSpecificationStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryProductSpecificationStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryWmsStatusId)</div>
-            <div class="col-md-2">
-                @if (Model.restricted == true)
-                {
+    <div class="table-heading col-md-12">
+        <div class="col-md-3 col">@DataSet.DOK_AssessmentPoint.ToUpper()</div>
+        <div class="col-md-2 col">@DataSet.DOK_StatusValueHeader.ToUpper()</div>
+        <div class="col-md-7 col">@DataSet.Comment.ToUpper()</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryMetadataStatusId)</div><div class="col-md-2"> @Model.dokDeliveryMetadataStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryMetadataStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryProductSheetStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliveryProductSheetStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryProductSheetStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryPresentationRulesStatusId) </div>
+        <div class="col-md-2 col">@Model.dokDeliveryPresentationRulesStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryPresentationRulesStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryProductSpecificationStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliveryProductSpecificationStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryProductSpecificationStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryWmsStatusId)</div>
+        <div class="col-md-2 col">
+            @if (Model.restricted == true)
+            {
                 <span data-toggle='tooltip' data-placement='bottom' title="Skjermede data" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-                }
-                else
-                {
+            }
+            else
+            {
                 @Model.dokDeliveryWmsStatus.DescriptionTranslated()
-                }
-            </div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryWmsStatusNote)</div>
+            }
         </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryWfsStatusId)</div>
-            <div class="col-md-2">
-                @if (Model.restricted == true)
-                {
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryWmsStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryWfsStatusId)</div>
+        <div class="col-md-2 col">
+            @if (Model.restricted == true)
+            {
                 <span data-toggle='tooltip' data-placement='bottom' title="@DataSet.RestrictedData" class="custom-icon custom-icon-hengelaas-closed-red"></span>
-                }
-                else
-                {
+            }
+            else
+            {
                 @Model.dokDeliveryWfsStatus.DescriptionTranslated()
-                }
-            </div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryWfsStatusNote)</div>
+            }
         </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliverySosiRequirementsStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliverySosiRequirementsStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliverySosiRequirementsStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryDistributionStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliveryDistributionStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryDistributionStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryGmlRequirementsStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliveryGmlRequirementsStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryGmlRequirementsStatusNote)</div>
-        </div>
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokDeliveryAtomFeedStatusId)</div>
-            <div class="col-md-2">@Model.dokDeliveryAtomFeedStatus.DescriptionTranslated()</div>
-            <div class="col-md-7">@Html.DisplayFor(model => Model.dokDeliveryAtomFeedStatusNote)</div>
-        </div>
-
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryWfsStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliverySosiRequirementsStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliverySosiRequirementsStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliverySosiRequirementsStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryDistributionStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliveryDistributionStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryDistributionStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryGmlRequirementsStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliveryGmlRequirementsStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryGmlRequirementsStatusNote)</div>
+    </div>
+    <div class="resultItemRow col-md-12">
+        <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.dokDeliveryAtomFeedStatusId)</div>
+        <div class="col-md-2 col">@Model.dokDeliveryAtomFeedStatus.DescriptionTranslated()</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.dokDeliveryAtomFeedStatusNote)</div>
     </div>
 </article>
 

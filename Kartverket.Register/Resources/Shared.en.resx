@@ -151,7 +151,7 @@
     <value>Search for registerdata</value>
   </data>
   <data name="Heading" xml:space="preserve">
-    <value>Registers</value>
+    <value>Norwegian NSDI registers</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Add</value>
@@ -249,5 +249,8 @@
   </data>
   <data name="NameFor_en" xml:space="preserve">
     <value>Name english</value>
+  </data>
+  <data name="HeadingText" xml:space="preserve">
+    <value>The registers contain technical and formal documentation used in the Norwegian Spatial Data Infrastructure. The documentation can be viewed in the registers modules of the geoportal, and are also available through APIs.</value>
   </data>
 </root>

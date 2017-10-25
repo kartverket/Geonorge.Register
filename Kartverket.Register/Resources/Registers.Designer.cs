@@ -547,6 +547,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Symbol.
+        /// </summary>
+        public static string SymbolName {
+            get {
+                return ResourceManager.GetString("SymbolName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oppdatert.
         /// </summary>
         public static string Updated {

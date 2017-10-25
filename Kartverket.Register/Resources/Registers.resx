@@ -291,4 +291,7 @@
   <data name="None" xml:space="preserve">
     <value>Ingen</value>
   </data>
+  <data name="SymbolName" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
 </root>

@@ -29,48 +29,42 @@ namespace Kartverket.Register.Services.Register
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
         {
-            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            var registerItems = new List<Models.RegisterItem>();
+            var registerItemsv2 = new List<RegisterItemV2>();
 
-            if (register.containedItemClass == "EPSG")
-            {
-                FilterEPSGkode(register, filter, registerItems);
-            }
-            else if (register.containedItemClass == "Document")
+            if (register.containedItemClass == "Document")
             {
                 FilterDocument(register, filter, registerItems);
             }
             else if (register.containedItemClass == "Dataset")
             {
                 FilterDataset(register, filter, registerItems);
-
-            }
-            else if (register.containedItemClass == "CodelistValue")
-            {
-                foreach (CodelistValue item in register.items)
-                {
-                    registerItems.Add(item);
-                }
-            }
-            else if (register.containedItemClass == "Organization")
-            {
-                foreach (Organization item in register.items)
-                {
-                    registerItems.Add(item);
-                }
-            }
-            else if (register.containedItemClass == "NameSpace")
-            {
-                foreach (NameSpace item in register.items)
-                {
-                    registerItems.Add(item);
-                }
             }
             else
             {
-                registerItems = register.items.ToList();
+                foreach (var item in register.items)
+                {
+                    registerItems.Add(item);
+                }
+            }
+
+            if (register.RegisterItems.Any())
+            {
+                    foreach (var item in register.RegisterItems)
+                    {
+                        if (filter.filterOrganization != null)
+                        {
+                            if (item.Owner.seoname == filter.filterOrganization)
+                            {
+                                registerItemsv2.Add(item);
+                            }
+                        }
+                        else registerItemsv2.Add(item);
+                }
             }
 
             register.items = registerItems;
+            register.RegisterItems = registerItemsv2;
             return register;
         }
 
@@ -190,9 +184,6 @@ namespace Kartverket.Register.Services.Register
             {
                 foreach (Document item in register.items)
                 {
-                    string role = HtmlHelperExtensions.GetSecurityClaim("role");
-                    string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
                     if (item.isCurrentVersion())
                     {
                         if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
@@ -746,9 +737,6 @@ namespace Kartverket.Register.Services.Register
         {
             foreach (Document item in register.items)
             {
-                string role = HtmlHelperExtensions.GetSecurityClaim("role");
-                string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
                 if (item.isCurrentVersion())
                 {
                     if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
@@ -804,19 +792,6 @@ namespace Kartverket.Register.Services.Register
                     }
                 }
 
-                //if (filterInspire == null)
-                //{
-                //    filterInspire = item.inspireRequirement.value;
-                //}
-                //if (filterNational == null)
-                //{
-                //    filterNational = item.nationalRequirement.value;
-                //}
-                //if (filterNationalSea == null)
-                //{
-                //    filterNationalSea = item.nationalSeasRequirement.value;
-                //}
-
                 var queryResult = from e in _dbContext.EPSGs
                                   where e.dimensionId == filterDimensjon
                                   && e.systemId == item.systemId
@@ -829,9 +804,6 @@ namespace Kartverket.Register.Services.Register
                 }
                 filterHorisontalt = filter.filterHorisontalt;
                 filterVertikalt = filter.filterVertikalt;
-                filterInspire = filter.InspireRequirement;
-                filterNational = filter.nationalRequirement;
-                filterNationalSea = filter.nationalSeaRequirement;
             }
         }
 

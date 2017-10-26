@@ -13,7 +13,6 @@ using Kartverket.Register.Services;
 using System.Collections.Generic;
 using Kartverket.Register.Services.Translation;
 using System.Web;
-using System.Web.UI.WebControls;
 using Resources;
 
 namespace Kartverket.Register.Controllers

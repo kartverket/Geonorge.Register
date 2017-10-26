@@ -258,7 +258,6 @@ namespace Kartverket.Register.Tests.Services
             _accessControlService.AccessRegisterItem(registerItem).Should().BeTrue();
         }
 
-
         // Test access registerItem document
         [Fact]
         public void AccessRegisterItemDocumentIfUserIsItemOwner()

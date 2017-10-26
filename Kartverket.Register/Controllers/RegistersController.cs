@@ -130,6 +130,10 @@ namespace Kartverket.Register.Controllers
                 viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
+            if (string.IsNullOrWhiteSpace(viewModel.Name))
+            {
+                return HttpNotFound();
+            }
             return View(viewModel);
         }
 
@@ -523,7 +527,8 @@ namespace Kartverket.Register.Controllers
 
             if (register.IsInspireStatusRegister())
             {
-                return new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(registername, itemname));
+                var viewModel = new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(registername, itemname));
+                return viewModel;
             }
             if (register.IsGeodatalovStatusRegister())
             {

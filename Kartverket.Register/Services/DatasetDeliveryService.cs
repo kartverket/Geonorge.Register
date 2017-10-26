@@ -194,9 +194,9 @@ namespace Kartverket.Register.Services
             return status;
         }
 
-        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus = Deficient)
+        public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
         {
-            var statusValue = currentStatus;
+            var statusValue = Deficient;
 
             if (!autoupdate) return statusValue;
             try

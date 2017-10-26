@@ -1,92 +1,23 @@
 ﻿@model Kartverket.Register.Models.EPSG
 
-<div class="row result-row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="hidden-xs col-sm-3 col-md-3 col-lg-3 top-padding">
-            @if (Model.epsgcode == null)
-            {
-                <p title="@EPSGs.EpsgCode: @Model.epsgcode"><span>EPSG: </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.EpsgCode: @Model.epsgcode"><b><span>EPSG: </span>@Html.DisplayFor(modelItem => Model.epsgcode)</b></p>
-            }
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-actions">
+<article class="col-md-12">
+    <h3>@EPSGs.EpsgCode</h3>
+    <p><strong>EPSG: </strong>@Html.DisplayFor(modelItem => Model.epsgcode)</p>
+    <p><strong>@Html.DisplayNameFor(m => m.externalReference): </strong><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+</article>
 
-            @if (Model.sosiReferencesystem == null)
-            {
-                <p title="@EPSGs.SosiReferencesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.SosiReferencesystem: @Model.sosiReferencesystem"><span>@Html.DisplayNameFor(m => m.sosiReferencesystem): </span>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
-            }
+<article class="col-sm-12 col-md-6">
+    <h3>Referansesystem</h3>
+    <p><strong>@Html.DisplayNameFor(m => m.sosiReferencesystem): </strong>@Html.DisplayFor(modelItem => Model.sosiReferencesystem)</p>
+    <p><strong>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </strong>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
+    <p><strong>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </strong>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
+    <p><strong>@Html.DisplayNameFor(m => m.dimensionId): </strong>@Model.dimension.DescriptionTranslated()</p>
+</article>
 
-            @if (Model.verticalReferenceSystem == null)
-            {
-                <p title="@EPSGs.VerticalReferenceSystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.VerticalReferenceSystem: @Model.verticalReferenceSystem"><span>@Html.DisplayNameFor(m => m.verticalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.verticalReferenceSystem)</p>
-            }
+<article class="col-sm-12 col-md-6">
+    <h3>Krav</h3>
+    <p><strong>@Html.DisplayNameFor(m => m.inspireRequirementId): </strong>@Model.inspireRequirement.DescriptionTranslated()</p>
+    <p><strong>@Html.DisplayNameFor(m => m.nationalRequirementId): </strong>@Model.nationalRequirement.DescriptionTranslated()</p>
+    <p><strong>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </strong>@Model.nationalSeasRequirement.DescriptionTranslated()</p>
+</article>
 
-            @if (Model.horizontalReferenceSystem == null)
-            {
-                <p title="@EPSGs.HorizontalReferenceSystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.HorizontalReferenceSystem: @Model.horizontalReferenceSystem"><span>@Html.DisplayNameFor(m => m.horizontalReferenceSystem): </span>@Html.DisplayFor(modelItem => Model.horizontalReferenceSystem)</p>
-            }
-
-            @if (Model.dimensionId == null)
-            {
-                <p title="@EPSGs.Dimension: "><span>@EPSGs.Dimension: </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.Dimension: @Model.dimension.DescriptionTranslated()"><span>@Html.DisplayNameFor(m => m.dimensionId): </span>@Model.dimension.DescriptionTranslated()</p>
-            }
-
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-information">
-            @if (Model.inspireRequirement == null)
-            {
-                <p title="@EPSGs.InspireRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Registers.NotSet</p>
-            }
-            else
-            {
-                <p title="@EPSGs.InspireRequirement: @Model.inspireRequirement.description"><span>@Html.DisplayNameFor(m => m.inspireRequirementId): </span>@Model.inspireRequirement.DescriptionTranslated()</p>
-            }
-
-            @if (Model.nationalRequirement == null)
-            {
-                <p title="@EPSGs.NationalRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Registers.NotSet</p>
-            }
-            else
-            {
-                <p title="@EPSGs.NationalRequirement: @Model.nationalRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalRequirementId): </span>@Model.nationalRequirement.DescriptionTranslated()</p>
-            }
-
-            @if (Model.nationalSeasRequirement == null)
-            {
-                <p title="@EPSGs.NationalSeasRequirement: @Registers.NotSet"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Registers.NotSet</p>
-            }
-            else
-            {
-                <p title="@EPSGs.NationalSeasRequirement: @Model.nationalSeasRequirement.description"><span>@Html.DisplayNameFor(m => m.nationalSeasRequirementId): </span>@Model.nationalSeasRequirement.DescriptionTranslated()</p>
-            }
-
-            @if (Model.externalReference == null)
-            {
-                <p title="@EPSGs.ExternalReference @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span> - </p>
-            }
-            else
-            {
-                <p title="@EPSGs.ExternalReference @Model.name"><span>@Html.DisplayNameFor(m => m.externalReference): </span><a href="@Model.externalReference">@Shared.Details<i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-            }
-        </div>
-    </div>
-</div>

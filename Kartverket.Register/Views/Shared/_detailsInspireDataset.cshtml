@@ -9,40 +9,18 @@
         <p> @Model.SpecificUsage</p>
     </article>
 }
+
+<article class="col-md-12">
+    <p><strong>@Html.DisplayNameFor(model => Model.InspireTheme): </strong>@Model.InspireTheme</p>
+</article>
+
 <article class="col-md-12">
     <h3>DOK-status</h3>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(m => m.VersionNumber) </div><div class="col-md-9">@Model.VersionNumber</div>
-    </div>
-
-    @if (Model.DokStatus != null)
-    {
-        <div class="row">
-            <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></div>
-        </div>
-    }
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.DokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.Modified)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.Submitter.name</div>
-    </div>
-    @if (Model.Owner != null)
-            {
-        <div class="row">
-            <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.Owner.name</div>
-        </div>
-    }
-    @if (Model.InspireTheme != null)
-            {
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.InspireTheme):</div><div class="col-md-9"> @Model.InspireTheme</div>
-        </div>
-    }
+    <p title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><strong>DOK-status: </strong>@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></p>
+    <p><strong>@Html.DisplayNameFor(model => Model.DokStatusDateAccepted): </strong>@Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</p>
+    <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.Modified)</p>
 </article>
+
 
 <article class="col-md-12">
     <h3>Inspire status</h3>

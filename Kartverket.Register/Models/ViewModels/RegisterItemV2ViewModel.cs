@@ -85,6 +85,36 @@ namespace Kartverket.Register.Models.ViewModels
             VersionName = item.VersionName;
         }
 
+        public void UpdateRegisterItem(RegisterItem item)
+        {
+            SystemId = item.systemId;
+            Name = item.name;
+            Seoname = item.seoname;
+            Submitter = item.submitter;
+            SubmitterId = item.submitterId;
+            //Owner = item.Owner;
+            //OwnerId = item.OwnerId;
+            Description = item.description;
+            DateSubmitted = item.dateSubmitted;
+            Modified = item.modified;
+            Status = item.status;
+            StatusId = item.statusId;
+            Register = item.register;
+            RegisterId = item.registerId;
+            DateAccepted = item.dateAccepted;
+            DateNotAccepted = item.dateNotAccepted;
+            DateSuperseded = item.dateSuperseded;
+            DateRetired = item.DateRetired;
+            VersionNumber = item.versionNumber;
+            VersionName = item.versionName;
+
+            if (item is Document document)
+            {
+                Owner = document.documentowner;
+                OwnerId = document.documentownerId;
+            }
+        }
+
         public string NameTranslated(RegisterItem registerItem)
         {
             return registerItem != null ? registerItem.NameTranslated() : Name;

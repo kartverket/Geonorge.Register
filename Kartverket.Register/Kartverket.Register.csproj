@@ -820,6 +820,8 @@
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
+    <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />

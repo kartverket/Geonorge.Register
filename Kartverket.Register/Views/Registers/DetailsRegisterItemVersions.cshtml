@@ -1,84 +1,66 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+@using Kartverket.Register.Models.ViewModels
+@model Kartverket.Register.Models.ViewModels.VersionsViewModel
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = @Model.currentVersion.name;
+    ViewBag.Title = @Model.CurrentVersion.Name;
 }
 
 @section breadcrumb {
 
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.currentVersion.register))
+    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.CurrentVersion.Register))
     {
         <li><a href="@register.GetObjectUrl()">@register.name</a></li>
     }
-    <li><a href="@Model.currentVersion.register.GetObjectUrl()">@Model.currentVersion.register.NameTranslated()</a></li>
-    <li>@Model.currentVersion.NameTranslated()</li>
+    <li><a href="@Model.CurrentVersion.Register.GetObjectUrl()">@Model.CurrentVersion.Register.NameTranslated()</a></li>
+    <li>@Model.CurrentVersion.Name</li>
 }
 
-<section class="heading">
-    <div class="row">
+<section>
+    <article class="row">
         <div class="col-sm-12">
             <h1 class="small-h1">
-                @Model.currentVersion.NameTranslated()
+                @Model.CurrentVersion.Name
             </h1>
         </div>
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
-    </div>
+        <div class="col-sm-12 col-md-10">
+            <p>@Model.CurrentVersion.Description</p>
+            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.CurrentVersion.Register))"><strong>Status:</strong> @Model.CurrentVersion.Status.DescriptionTranslated() <i class="statusIcon-@Model.CurrentVersion.StatusId"></i></p>
+            <p><strong>@Registers.Submitter:</strong> @Model.CurrentVersion.Submitter.NameTranslated()</p>
+            <p><strong>@Registers.Owner:</strong> @Model.CurrentVersion.Owner.NameTranslated()</p>
+            <p><strong>@Html.DisplayNameFor(m => m.CurrentVersion.VersionNumber)</strong> @Model.CurrentVersion.VersionNumber</p>
+            <p><strong>@Html.DisplayNameFor(m => m.CurrentVersion.VersionName)</strong> @Model.CurrentVersion.VersionName</p>
+        </div>
+    </article>
 </section>
 
-        <div class="col-sm-12 row">
-            <ul class="nav nav-tabs nav-tabs-version">
-                <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
-                <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
-                <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
-            </ul>
-        </div>
+@Html.Partial("_currentVersionDocument", (DocumentViewModel)Model.CurrentVersion)
 
-        @if (Model.currentVersion.register.containedItemClass == "Organization")
-        {
-            @Html.Partial("_detailsOrganization")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "Document")
-        {
-            <div class="tab-content">
-                <div class="tab-pane active" id="gjeldende">
-                    @Html.Partial("_currentVersionDocument", Model)
-                </div>
-                <div class="tab-pane" id="historiske">
-                    @Html.Partial("_histroicalDocuments", Model)
-                </div>
-                <div class="tab-pane" id="forslag">
-                    @Html.Partial("_suggestedDocuments", Model)
-                </div>
-            </div>
-        }
-        @if (Model.currentVersion.register.containedItemClass == "Dataset")
-        {
-            @Html.Partial("_detailsDataset")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "EPSG")
-        {
-            @Html.Partial("_detailsEpsg")
-        }
-        @if (Model.currentVersion.register.containedItemClass == "CodelistValue")
-        {
-            @Html.Partial("_detailsCodelistValue")
-        }
+<div class="col-sm-12 row">
+    <ul class="nav nav-tabs nav-tabs-version">
+        <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
+        <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
+        <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
+    </ul>
+</div>
 
-    <div class="col-sm-12 row">
-        <hr />
-        @if (Request.IsAuthenticated)
+
+
+@*<div class="col-sm-12 row">
+    <hr />
+    @if (Request.IsAuthenticated)
+    {
+        if (HtmlHelperExtensions.AccessRegisterItem(Model.CurrentVersion))
         {
-            if (HtmlHelperExtensions.AccessRegisterItem(Model.currentVersion))
+            if (Model.currentVersion.register.containedItemClass == "Document")
             {
-                if (Model.currentVersion.register.containedItemClass == "Document")
-                {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.currentVersion.CreateNewRegisterItemVersionUrl()">@Registers.SuggestNewVersionOf @Model.currentVersion.NameTranslated()</a>
-                }
+                <a class="btn btn-default btn-space pull-right" href="@Model.currentVersion.CreateNewRegisterItemVersionUrl()">@Registers.SuggestNewVersionOf @Model.currentVersion.NameTranslated()</a>
             }
         }
-        <a href="@Model.currentVersion.register.GetObjectUrl()">@Shared.Back</a>
-    </div>
+    }
+    <a href="@Model.currentVersion.register.GetObjectUrl()">@Shared.Back</a>
+</div>*@

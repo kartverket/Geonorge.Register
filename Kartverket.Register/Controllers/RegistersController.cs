@@ -155,10 +155,11 @@ namespace Kartverket.Register.Controllers
         [Route("register/versjoner/{registername}/{registerItemOwner}/{itemname}")]
         public ActionResult DetailsRegisterItemVersions(string registername, string parentRegister, string itemname, string registerItemOwner, string format)
         {
-            string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-            VersionsItem versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
-            RegisterItemVeiwModel model = new RegisterItemVeiwModel(versionsItem);
+
+            var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
+            var model = new VersionsViewModel(versionsItem);
 
             ViewBag.registerItemOwner = registerItemOwner;
             return View(model);

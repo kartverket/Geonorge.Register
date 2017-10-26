@@ -1,87 +1,80 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
+@model Kartverket.Register.Models.ViewModels.DocumentViewModel
 ﻿@using Kartverket.Register.Helpers
 
-<div>
-    @{
-        Kartverket.Register.Models.Document item = null;
-        if (Model.currentVersion is Kartverket.Register.Models.Document)
-        {
-            item = (Kartverket.Register.Models.Document)Model.currentVersion;
-        }
-    }
-</div>
+
+
+
+<article class="col-md-12">
+    <h3>Gjeldende versjon</h3>
+</article>
+
 
 <div class="col-sm-12 row">
     <div class="col-sm-12 col-md-2 col">
         @{
-            string thumb = "/Content/pdf.jpg";
-            if (item.thumbnail != null)
-            {
-                thumb = item.thumbnail;
-            }
+            string thumb;
+            thumb = Model.Thumbnail ?? "/Content/pdf.jpg";
         }
-        @if (item.documentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(item.ApplicationSchema))
+        @if (Model.DocumentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(Model.ApplicationSchema))
         {
             <span class="custom-icon custom-icon-l custom-icon-file-xml"></span>
         }
-        else if (item.documentUrl.Contains("ikke angitt"))
+        else if (Model.DocumentUrl.Contains("ikke angitt"))
         {
-            <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+            <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail)" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
         }
         else
         {
-            <a href="@Html.DisplayFor(model => item.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+            <a href="@Html.DisplayFor(model => Model.DocumentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
         }
     </div>
     <div class="col-sm-12 col-md-4">
         <p>
-            @item.NameTranslated()
+            @Model.Name
         </p>
 
-        <a id="selectedOwner-@item.systemId" href="@item.ItemsByDocumentOwnerUrl()">
-            <img src="@Url.Content("~/data/organizations/" +  item.documentowner.logoFilename)" class="img-responsive" alt="@item.documentowner.NameTranslated()" />
-        </a>
-        <p class=" ">
-            @item.DescriptionTranslated()
+        
+        <p>
+            @Model.Description
         </p>
     </div>
     <div class="col-sm-12 col-md-3 col-lg-3">
-        @if (item.documentUrl.Contains("ikke angitt"))
+        @if (Model.DocumentUrl.Contains("ikke angitt"))
             {
-            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @item.name">
+            <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @Model.Name">
                 <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
             </a><br />
         }
         else
         {
-            <a href="@Html.DisplayFor(modelItem => item.documentUrl)" class="btn" title="Last ned dokument for @item.name">
+            <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn" title="Last ned dokument for @Model.Name">
                 <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
             </a><br />
         }
 
-        @if (!string.IsNullOrEmpty(item.ApplicationSchema))
+        @if (!string.IsNullOrEmpty(Model.ApplicationSchema))
             {
-            <a href="@Html.DisplayFor(modelItem => item.ApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
+            <a href="@Html.DisplayFor(modelItem => Model.ApplicationSchema)" class="btn" title="Vis UML-modell for @Model.Name" target="_blank">
                 <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
             </a><br />
         }
 
-        @if (!string.IsNullOrEmpty(item.GMLApplicationSchema))
+        @if (!string.IsNullOrEmpty(Model.GmlApplicationSchema))
             {
-            <a href="@Html.DisplayFor(modelItem => item.GMLApplicationSchema)" class="btn" title="Vis UML-modell for @item.name" target="_blank">
+            <a href="@Html.DisplayFor(modelItem => Model.GmlApplicationSchema)" class="btn" title="Vis UML-modell for @Model.Name" target="_blank">
                 <span class="custom-icon custom-icon-eksternlink"> </span> Vis GML-skjema
             </a><br />
         }
 
-        @if (!string.IsNullOrEmpty(item.CartographyFile))
+        @if (!string.IsNullOrEmpty(Model.CartographyFile))
             {
-            <a href="@Html.DisplayFor(modelItem => item.CartographyFile)" class="btn" title="Vis kartografi-fil for @item.name" target="_blank">
+            <a href="@Html.DisplayFor(modelItem => Model.CartographyFile)" class="btn" title="Vis kartografi-fil for @Model.Name" target="_blank">
                 <span class="custom-icon custom-icon-eksternlink"> </span> Vis kartografi-fil
             </a><br />
         }
 
-        @if (Request.IsAuthenticated)
+        @*@if (Request.IsAuthenticated)
             {
                 if (HtmlHelperExtensions.AccessRegisterItem(item))
                 {
@@ -105,39 +98,39 @@
                     }
                 }
             }
-        }
+        }*@
     </div>
     <div class="col-sm-12 col-md-3">
-        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.currentVersion.register))"><span>Status: </span>@item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i></p>
-        <p><span>@Html.DisplayNameFor(i => item.versionNumber) : </span>@item.versionNumber</p>
-        @if (!string.IsNullOrWhiteSpace(item.versionName))
+        <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><span>Status: </span>@Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>
+        <p><span>@Html.DisplayNameFor(i => Model.VersionNumber) : </span>@Model.VersionNumber</p>
+        @if (!string.IsNullOrWhiteSpace(Model.VersionName))
             {
-            <p><span>@Registers.VersionName: </span>@item.versionName</p>
+            <p><span>@Registers.VersionName: </span>@Model.VersionName</p>
         }
-        <p>@Registers.Updated: @Html.DisplayFor(modelItem => item.modified)</p>
-        @if (item.approvalDocument != null)
+        <p>@Registers.Updated: @Html.DisplayFor(modelItem => Model.Modified)</p>
+        @if (Model.ApprovalDocument != null)
             {
-            <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => item.approvalDocument)</p>
+            <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => Model.ApprovalDocument)</p>
         }
-        @if (item.approvalReference != null)
+        @if (Model.ApprovalReference != null)
             {
-            <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => item.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+            <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => Model.ApprovalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
         }
-        @if (item.dateAccepted != null)
+        @if (Model.DateAccepted != null)
             {
-            <p>@Registers.Accepted: @Html.DisplayFor(modelItem => item.dateAccepted)</p>
+            <p>@Registers.Accepted: @Html.DisplayFor(modelItem => Model.DateAccepted)</p>
         }
-        @if (item.dateSuperseded != null)
+        @if (Model.DateSuperseded != null)
             {
-            <p>@Registers.Superseded: @Html.DisplayFor(modelItem => item.dateSuperseded)</p>
+            <p>@Registers.Superseded: @Html.DisplayFor(modelItem => Model.DateSuperseded)</p>
         }
-        @if (item.DateRetired != null)
+        @if (Model.DateRetired != null)
             {
-            <p>@Registers.Retired: @Html.DisplayFor(modelItem => item.DateRetired)</p>
+            <p>@Registers.Retired: @Html.DisplayFor(modelItem => Model.DateRetired)</p>
         }
-        @if (item.dateNotAccepted != null)
+        @if (Model.DateNotAccepted != null)
             {
-            <p>@Registers.Draft: @Html.DisplayFor(modelItem => item.dateNotAccepted)</p>
+            <p>@Registers.Draft: @Html.DisplayFor(modelItem => Model.DateNotAccepted)</p>
         }
     </div>
 </div>

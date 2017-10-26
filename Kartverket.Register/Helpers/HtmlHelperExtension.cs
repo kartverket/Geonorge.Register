@@ -718,5 +718,10 @@ namespace Kartverket.Register.Helpers
         {
             return RegisteritemService.GetDistributionType(codeValue);
         }
+
+        public static string TranslateBool(bool value)
+        {
+            return value ? "Ja" : "Nei";
+        }
     }
 }

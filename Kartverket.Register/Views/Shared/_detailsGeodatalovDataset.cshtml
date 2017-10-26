@@ -9,54 +9,22 @@
         <p> @Model.SpecificUsage</p>
     </article>
 }
+
+<article class="col-md-12">
+    <p><strong>@Html.DisplayNameFor(model => Model.ThemeGroupId): </strong>@Model.Theme?description</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.InspireTheme): </strong>@HtmlHelperExtensions.TranslateBool(Model.InspireTheme)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.Dok): </strong>@HtmlHelperExtensions.TranslateBool(Model.Dok)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.NationalDataset): </strong>@HtmlHelperExtensions.TranslateBool(Model.NationalDataset)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.Plan): </strong>@HtmlHelperExtensions.TranslateBool(Model.Plan)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.Geodatalov): </strong>@HtmlHelperExtensions.TranslateBool(Model.Dok)</p>
+
+</article>
+
 <article class="col-md-12">
     <h3>DOK-status</h3>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(m => m.VersionNumber) </div><div class="col-md-9">@Model.VersionNumber</div>
-    </div>
-
-    @if (Model.DokStatus != null)
-    {
-    <div class="row">
-        <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></div>
-    </div>
-    }
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.DokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.Modified)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.Submitter.name</div>
-    </div>
-    @if (Model.Owner != null)
-            {
-    <div class="row">
-        <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.Owner.name</div>
-    </div>
-    }
-    @if (Model.Theme != null)
-            {
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.Theme.description</div>
-    </div>
-    }
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.InspireTheme):</div><div class="col-md-9"> @Model.InspireTheme</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.Dok):</div><div class="col-md-9"> @Model.Dok</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.NationalDataset):</div><div class="col-md-9"> @Model.NationalDataset</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.Plan):</div><div class="col-md-9"> @Model.Plan</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.Geodatalov):</div><div class="col-md-9"> @Model.Geodatalov</div>
-    </div>
+    <p title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><strong>DOK-status: </strong>@Model.DokStatus.description <i class="statusIcon-@Model.DokStatusId"></i></p>
+    <p><strong>@Html.DisplayNameFor(model => Model.DokStatusDateAccepted): </strong>@Html.DisplayFor(modelItem => Model.DokStatusDateAccepted)</p>
+    <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.Modified)</p>
 </article>
 
 <article class="col-md-12">

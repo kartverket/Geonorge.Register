@@ -9,48 +9,20 @@
         <p> @Model.SpecificUsage</p>
     </article>
 }
+
+<article class="col-md-12">
+    <p><strong>@Html.DisplayNameFor(model => Model.DatasetType): </strong>@Model.GetDatasetType()</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.ThemeGroupId): </strong>@Model.ThemeGroupIdTranslated()</p>
+</article>
+
 <article class="col-md-12">
     <h3>DOK-status</h3>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(m => m.versionNumber) </div><div class="col-md-9">@Model.versionNumber</div>
-    </div>
-
-    @if (Model.dokStatus != null)
-    {
-        <div class="row">
-            <div class="col-md-3" title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())">DOK-status:</div> <div class="col-md-9">@Model.dokStatus.DescriptionTranslated() <i class="statusIcon-@Model.dokStatusId"></i></div>
-        </div>
-    }
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.dokStatusDateAccepted):</div><div class="col-md-9"> @Html.DisplayFor(modelItem => Model.dokStatusDateAccepted)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Html.DisplayNameFor(model => Model.Kandidatdato):</div><div class="col-md-9"> @Html.DisplayFor(model => Model.Kandidatdato)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Updated:</div><div class="col-md-9"> @Html.DisplayFor(model => model.modified)</div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">@Registers.Submitter:</div><div class="col-md-9"> @Model.submitter.NameTranslated()</div>
-    </div>
-    @if (Model.datasetowner != null)
-            {
-        <div class="row">
-            <div class="col-md-3">@Registers.Owner:</div><div class="col-md-9"> @Model.datasetowner.NameTranslated()</div>
-        </div>
-    }
-    @if (Model.DatasetType != null)
-            {
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.DatasetType):</div><div class="col-md-9"> @Model.GetDatasetType()</div>
-        </div>
-    }
-    @if (Model.theme != null)
-            {
-        <div class="row">
-            <div class="col-md-3">@Html.DisplayNameFor(model => Model.ThemeGroupId):</div><div class="col-md-9"> @Model.ThemeGroupIdTranslated()</div>
-        </div>
-    }
+    <p title="@Html.Raw(HtmlHelperExtensions.DokStatusBeskrivelse())"><strong>DOK-status: </strong>@Model.dokStatus.DescriptionTranslated() <i class="statusIcon-@Model.dokStatusId"></i></p>
+    <p><strong>@Html.DisplayNameFor(model => Model.dokStatusDateAccepted): </strong>@Html.DisplayFor(modelItem => Model.dokStatusDateAccepted)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.Kandidatdato): </strong>@Html.DisplayFor(model => Model.Kandidatdato)</p>
+    <p><strong>@Registers.Updated: </strong>@Html.DisplayFor(model => model.modified)</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.DatasetType): </strong>@Model.GetDatasetType()</p>
+    <p><strong>@Html.DisplayNameFor(model => Model.ThemeGroupId): </strong>@Model.ThemeGroupIdTranslated()</p>
 </article>
 
 <article class="col-md-12">

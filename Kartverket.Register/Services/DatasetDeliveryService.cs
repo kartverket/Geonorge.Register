@@ -71,7 +71,7 @@ namespace Kartverket.Register.Services
                 if (metadata != null)
                 {
                     if (metadata.DistributionDetails != null &&
-                        metadata.DistributionDetails.Protocol.Value == "GEONORGE:OFFLINE" && distributionUrl != null)
+                        metadata.DistributionDetails.Protocol.Value != "GEONORGE:OFFLINE" && distributionUrl != null)
                     {
                         status = Good;
                     }
@@ -288,8 +288,7 @@ namespace Kartverket.Register.Services
                             var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid.ToString());
                             status = relatedService.DistributionDetails != null &&
                                      (relatedService.DistributionDetails.Protocol == "W3C:REST"
-                                      || relatedService.DistributionDetails.Protocol == "W3C:WS"
-                                      || relatedService.DistributionDetails.Protocol == "OGC:WPS")
+                                      || relatedService.DistributionDetails.Protocol == "W3C:WS")
                                 ? Good
                                 : Deficient;
                         }

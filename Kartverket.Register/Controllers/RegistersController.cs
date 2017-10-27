@@ -160,6 +160,8 @@ namespace Kartverket.Register.Controllers
 
             var versionsItem = _versioningService.Versions(registername, parentRegister, itemname);
             var model = new VersionsViewModel(versionsItem);
+            model.AccessCreateNewVersions = _accessControlService.AccessCreateNewVersion(model.CurrentVersion);
+            model.CurrentVersion.AccessRegisterItem = _accessControlService.Access(model.CurrentVersion);
 
             ViewBag.registerItemOwner = registerItemOwner;
             return View(model);

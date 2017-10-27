@@ -334,3 +334,7 @@ a.link-unstyled {
     padding-bottom: 0;
     margin-bottom: 30px;
 }
+
+.navbar-bottom {
+    margin-top: 30px;
+}

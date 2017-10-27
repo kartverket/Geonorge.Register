@@ -12,6 +12,8 @@ namespace Kartverket.Register.Models.ViewModels
         public ICollection<RegisterItemV2ViewModel> HistoricalVersions { get; set; }
         public ICollection<RegisterItemV2ViewModel> SuggestedVersions { get; set; }
 
+        public bool AccessCreateNewVersions { get; set; }
+
         public VersionsViewModel(VersionsItem versionsItem)
         {
             HistoricalVersions = new List<RegisterItemV2ViewModel>();
@@ -41,6 +43,26 @@ namespace Kartverket.Register.Models.ViewModels
                     SuggestedVersions.Add(new RegisterItemV2ViewModel(suggestedVersion));
                 }
             }
+        }
+
+        public string CreateNewRegisterItemVersionUrl()
+        {
+            if (CurrentVersion.Register.parentRegister == null)
+            {
+                var url = "versjon/" + CurrentVersion.Register.seoname + "/" + CurrentVersion.Owner.seoname + "/" +
+                          CurrentVersion.Seoname + "/ny";
+
+                if (CurrentVersion is DocumentViewModel) return "/dokument/" + url;
+            }
+            else
+            {
+                var url = "versjon/" + CurrentVersion.Register.parentRegister.seoname + "/" +
+                          CurrentVersion.Register.owner.seoname + "/" + CurrentVersion.Register + "/" +
+                          CurrentVersion.Owner.seoname + "/" + CurrentVersion.Seoname + "/ny";
+
+                if (CurrentVersion is DocumentViewModel) return "/dokument/" + url;
+            }
+            return "#";
         }
     }
 }

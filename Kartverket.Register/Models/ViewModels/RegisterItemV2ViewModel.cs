@@ -253,5 +253,32 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return "#";
         }
+
+        public string EditVersionRegisterItemUrl()
+        {
+            switch (this)
+            {
+                case DocumentViewModel _:
+                    var document = (DocumentViewModel)this;
+                    return document.EditVersionOfDocumentUrl();
+            }
+            return "";
+        }
+
+        public string DeleteVersionRegisterItemUrl()
+        {
+            switch (this)
+            {
+                case DocumentViewModel _:
+                    var document = (DocumentViewModel)this;
+                    return document.DeleteVersionOfDocumentUrl();
+            }
+            return "";
+        }
+
+        public string DeleteVersionOfDocumentUrl()
+        {
+            return "/dokument/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett?vnr=" + VersionNumber;
+        }
     }
 }

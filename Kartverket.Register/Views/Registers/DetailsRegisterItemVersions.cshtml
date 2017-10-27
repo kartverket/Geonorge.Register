@@ -1,10 +1,10 @@
 ﻿@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
-@model Kartverket.Register.Models.ViewModels.VersionsViewModel
+@model VersionsViewModel
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = @Model.CurrentVersion.Name;
+    ViewBag.Title = Model.CurrentVersion.Name;
 }
 
 @section breadcrumb {
@@ -17,8 +17,8 @@
     <li>@Model.CurrentVersion.Name</li>
 }
 
-<section>
-    <article class="row">
+<article>
+    <div class="row">
         <div class="col-sm-12">
             <h1 class="small-h1">
                 @Model.CurrentVersion.Name
@@ -27,40 +27,38 @@
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
-        <div class="col-sm-12 col-md-10">
+        <div class="col-md-12">
             <p>@Model.CurrentVersion.Description</p>
-            <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.CurrentVersion.Register))"><strong>Status:</strong> @Model.CurrentVersion.Status.DescriptionTranslated() <i class="statusIcon-@Model.CurrentVersion.StatusId"></i></p>
             <p><strong>@Registers.Submitter:</strong> @Model.CurrentVersion.Submitter.NameTranslated()</p>
             <p><strong>@Registers.Owner:</strong> @Model.CurrentVersion.Owner.NameTranslated()</p>
-            <p><strong>@Html.DisplayNameFor(m => m.CurrentVersion.VersionNumber)</strong> @Model.CurrentVersion.VersionNumber</p>
-            <p><strong>@Html.DisplayNameFor(m => m.CurrentVersion.VersionName)</strong> @Model.CurrentVersion.VersionName</p>
         </div>
-    </article>
-</section>
+    </div>
+</article>
 
 @Html.Partial("_currentVersionDocument", (DocumentViewModel)Model.CurrentVersion)
-
-<div class="col-sm-12 row">
-    <ul class="nav nav-tabs nav-tabs-version">
-        <li class="active"><a aria-expanded="false" href="#gjeldende" id="gjeldendeLink" data-toggle="tab">@Registers.Current</a></li>
-        <li class="pull-right"><a aria-expanded="false" href="#forslag" id="forslagLink" data-toggle="tab">@Registers.Proposal</a></li>
-        <li class="pull-right"><a aria-expanded="false" href="#historiske" id="historiskeLink" data-toggle="tab">@Registers.Historical</a></li>
-    </ul>
-</div>
+@Html.Partial("_suggestedDocuments", Model.SuggestedVersions)
+@Html.Partial("_histroicalDocuments", Model.HistoricalVersions)
 
 
 
-@*<div class="col-sm-12 row">
-    <hr />
-    @if (Request.IsAuthenticated)
-    {
-        if (HtmlHelperExtensions.AccessRegisterItem(Model.CurrentVersion))
-        {
-            if (Model.currentVersion.register.containedItemClass == "Document")
+<div class="row">
+    <div class="col-sm-12 navbar-bottom">
+
+        <div class="hidden-print">
+            @if (Request.IsAuthenticated)
             {
-                <a class="btn btn-default btn-space pull-right" href="@Model.currentVersion.CreateNewRegisterItemVersionUrl()">@Registers.SuggestNewVersionOf @Model.currentVersion.NameTranslated()</a>
+                if (Model.AccessCreateNewVersions)
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@Model.CreateNewRegisterItemVersionUrl()">@Registers.SuggestNewVersionOf @Model.CurrentVersion.Name</a>
+                }
+
+                if (Model.CurrentVersion.AccessRegisterItem)
+                {
+                    <a href="@Model.CurrentVersion.EditVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" title="Rediger @Model.CurrentVersion.Name">@Shared.Edit</a>
+                    <a href="@Model.CurrentVersion.DeleteVersionRegisterItemUrl()" class="btn btn-default btn-space pull-right" title="Slett @Model.CurrentVersion.Name">@Shared.Delete</a>
+                }
             }
-        }
-    }
-    <a href="@Model.currentVersion.register.GetObjectUrl()">@Shared.Back</a>
-</div>*@
+            <a href="@Model.CurrentVersion.Register.GetObjectUrl()">@Shared.Back</a>
+        </div>
+    </div>
+</div>

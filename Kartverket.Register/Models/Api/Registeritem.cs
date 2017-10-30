@@ -509,7 +509,7 @@ namespace Kartverket.Register.Models.Api
             var culture = CultureHelper.GetCurrentCulture();
             var description = item.Translations[culture].Description;
             if (string.IsNullOrEmpty(description))
-                description = item.name;
+                description = item.description;
 
             return description;
         }

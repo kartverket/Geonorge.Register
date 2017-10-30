@@ -70,6 +70,7 @@ namespace Kartverket.Register
             if (cookie == null)
             {
                 cookie = new HttpCookie("_culture", Culture.NorwegianCode);
+                HttpContext.Current.Response.Cookies.Add(cookie);
             }
 
             if (cookie != null && !string.IsNullOrEmpty(cookie.Value))

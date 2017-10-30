@@ -143,7 +143,8 @@ namespace Kartverket.Register.Controllers
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-            var viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(null, registername, itemname, version));
+            var viewModel = GetRegisterItem(null, registername, itemowner, itemname, version);
+            viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
 
             return View(viewModel);
         }
@@ -227,7 +228,7 @@ namespace Kartverket.Register.Controllers
         [Route("rediger/{registername}")]
         public ActionResult Edit(string registername)
         {
-            Models.Register register = _registerService.GetRegister(null, registername);
+            var register = _registerService.GetRegister(null, registername);
 
             if (register == null) return HttpNotFound();
 
@@ -523,7 +524,7 @@ namespace Kartverket.Register.Controllers
             return register;
         }
 
-        private RegisterItemV2ViewModel GetRegisterItem(string parentregister, string registername, string itemowner, string itemname)
+        private RegisterItemV2ViewModel GetRegisterItem(string parentregister, string registername, string itemowner, string itemname, int version = 1)
         {
             var register = _registerService.GetRegister(parentregister, registername);
 
@@ -538,10 +539,14 @@ namespace Kartverket.Register.Controllers
             }
             if (register.IsDokMunicipal())
             {
-                return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1, itemowner));
+                return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
+            }
+            if (register.ContainedItemClassIsDocument())
+            {
+                return new DocumentViewModel((Document)_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
             }
 
-            return new RegisterItemV2ViewModel(_registerItemService.GetCurrentRegisterItem(parentregister, registername, itemname));
+            return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
             
         }
 

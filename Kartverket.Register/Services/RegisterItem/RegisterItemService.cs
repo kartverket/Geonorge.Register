@@ -294,7 +294,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null)
         {
-            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            var registerItems = new List<Models.RegisterItem>();
             if (string.IsNullOrWhiteSpace(parentregister))
             {
                 vnr = getVnr(parentregister, register, item, vnr);

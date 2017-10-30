@@ -26,11 +26,10 @@
                 <div class="col-md-2 col">@Html.DisplayFor(modelItem => historicalDocument.VersionName)</div>
                 <div class="col-md-2 col">
                     @historicalDocument.Status.DescriptionTranslated() <i class="statusIcon-@historicalDocument.StatusId"></i>
+                </div>
+                <div class="col-md-1 col">@historicalDocument.Accepted</div>
+                <div class="col-md-2 col text-right">@Html.DisplayFor(modelItem => historicalDocument.DateAccepted)</div>
             </div>
-            <div class="col-md-1 col">@historicalDocument.Accepted</div>
-            <div class="col-md-2 col text-right">@Html.DisplayFor(modelItem => historicalDocument.DateAccepted)</div>
-        </div>
         }
     </article>
 }
-

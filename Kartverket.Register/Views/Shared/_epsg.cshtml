@@ -3,13 +3,13 @@
 @using Kartverket.Register.Models
 
 <div class="table-heading col-md-12">
-    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
-    <div class="col-md-2 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderEpsg, "epsg")</div>
-    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderSosi, "sosi")</div>
-    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
-    <div class="col-md-1 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
-    <div class="col-md-2 col-sm-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
-    <div class="col-md-1 col-sm-2 col text-right">@EPSGs.TableHeaderEksternalReference</div>
+    <div class="col-md-4 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Tittel", "name")</div>
+    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderEpsg, "epsg")</div>
+    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderSosi, "sosi")</div>
+    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderVertikalReferenceSystem, "vertical")</div>
+    <div class="col-md-1 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderHorizontalReferenceSystem, "horizontal")</div>
+    <div class="col-md-2 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], EPSGs.TableHeaderDimension, "dimension")</div>
+    <div class="col-md-1 col text-right">@EPSGs.TableHeaderEksternalReference</div>
 </div>
 
 @foreach (EPSG item in Model)

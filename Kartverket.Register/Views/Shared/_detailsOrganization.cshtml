@@ -9,15 +9,16 @@
 
 <aside class="col-md-4">
     <div class="row com-md-12 listblock">
-    @if(!string.IsNullOrEmpty(Model.logoFilename))
-    { 
-        <img src="@Url.Content("~/data/organizations/" + Model.logoFilename)" class="img-small pull-right" alt="Liten logo" title="Liten logo @Model.name"/>
-    }
-    @if (!string.IsNullOrEmpty(Model.largeLogo)) { 
-        <img src="@Url.Content("~/data/organizations/" + Model.largeLogo)" class="img-large pull-right" alt="Stor logo" title="Stor logo @Model.name"/>
-    }
+        @if(!string.IsNullOrEmpty(Model.logoFilename))
+        { 
+            <img src="@Url.Content("~/data/organizations/" + Model.logoFilename)" class="img-small pull-right" alt="Liten logo" title="Liten logo @Model.name"/>
+        }
+        @if (!string.IsNullOrEmpty(Model.largeLogo)) { 
+            <img src="@Url.Content("~/data/organizations/" + Model.largeLogo)" class="img-large pull-right" alt="Stor logo" title="Stor logo @Model.name"/>
+        }
     </div>
 </aside>
+
 <article class="col-md-12">
     <h3>@Organizations.Documents</h3>
     
@@ -30,7 +31,7 @@
             <p><strong>@Organizations.AgreementDocumentUrl:</strong> @Registers.NotSet</p>
         }
 
-        <p class="pull-right" title="@Organizations.AgreementYear @Model.agreementYear"><strong>@Organizations.AgreementYear:</strong> @Html.DisplayFor(m => m.agreementYear)</p>
+        <p title="@Organizations.AgreementYear @Model.agreementYear"><strong>@Organizations.AgreementYear:</strong> @Html.DisplayFor(m => m.agreementYear)</p>
 
     @if (HtmlHelperExtensions.AccessRegisterItem(Model))
     {

@@ -110,6 +110,14 @@ namespace Kartverket.Register.Models
             }
         }
 
-    }//end EPSG
+	    public string DimensionDescription()
+	    {
+	        if (dimension != null)
+	        {
+	            return dimension.DescriptionTranslated();
+	        }
+	        return Registers.NotSet;
+	    }
+	}//end EPSG
 
 }//end namespace Datamodell

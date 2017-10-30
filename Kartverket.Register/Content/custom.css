@@ -109,6 +109,8 @@
     height: 27px;
     margin: 20px 0 5px;
     padding: 0;
+    text-transform: uppercase;
+    display: table;
 }
 
     .table-heading h4 {
@@ -117,6 +119,14 @@
         color: #414042;
         line-height: 14pt;
     }
+
+    .table-heading [class*="col-"] {
+        float: none;
+        display: table-cell;
+        vertical-align: bottom;
+    }
+
+
 
 
 .search-results.table-view .btn {

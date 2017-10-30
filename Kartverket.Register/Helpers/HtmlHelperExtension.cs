@@ -366,7 +366,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null)
         {
 
             var sortingClass = "";
@@ -605,8 +605,12 @@ namespace Kartverket.Register.Helpers
 
             var linkSort = "<a data-toggle='tooltip' class='show-loading-animation' data-loading-message='Sorterer innhold' data-placement = 'bottom' title='" + sortTitle + "' class='" + sortingClass + "' href='?sorting=" + sortingParam;
 
+            if (municipality != null)
+            {
+                linkSort += "&municipality=" + municipality;
+            }
             if (text != null)
-                linkSort = linkSort + "&text=" + text;
+                linkSort += "&text=" + text;
             if (string.IsNullOrWhiteSpace(tittel))
                 tittel = "<span class='" + statusIcon + "'></span>";
 

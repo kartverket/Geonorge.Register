@@ -1,54 +1,32 @@
-﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.ViewModels.RegisterItemVeiwModel
-﻿@using Kartverket.Register.Helpers
+﻿@model ICollection<RegisterItemV2ViewModel>
+@using Kartverket.Register.Models.ViewModels
 
+@if (Model.Any())
+{
 
-<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    @if (Model.suggestions.Count() == 0)
-    {
-        <p>@Documents.NoSuggestedDocuments @Model.currentVersion.name</p>
+        <div class="table-heading col-md-12">
+            <div class="col-md-3 col">@Shared.Title</div>
+            <div class="col-md-2 col">@Registers.Owner</div>
+            <div class="col-md-2 col">@Registers.VersionName</div>
+            <div class="col-md-5 col">Status</div>
+        </div>
+
+        foreach (DocumentViewModel suggestedDocument in Model)
+        {
+            <div class="resultItemRow col-md-12">
+                <div class="col-md-3 col">
+                    <a href="@suggestedDocument.VersionUrl()">@suggestedDocument.Name</a>
+                </div>
+                <div class="col-md-2 col"> @suggestedDocument.Owner.NameTranslated()</div>
+                <div class="col-md-2 col">@Html.DisplayFor(modelItem => suggestedDocument.VersionName)</div>
+                <div class="col-md-5 col">
+                    @suggestedDocument.Status.DescriptionTranslated() <i class="statusIcon-@suggestedDocument.StatusId"></i>
+                </div>
+            </div>
     }
-    else
-    {
-        <table class="table table-responsive">
-            <tr>
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    @Shared.Title
-                </th>
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    @Registers.Owner
-                </th>
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    @Registers.VersionName
-                </th>
-                @*<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Innsendt
-                </th>*@
-                <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    Status
-                </th>
-            </tr>
 
-            @foreach (Kartverket.Register.Models.Document item in Model.suggestions)
-            {
-                <tr>
-                    <td>
-                        <strong><a href="/register/versjoner/@item.register.seoname/@item.documentowner.seoname/@item.seoname/@item.versionNumber/no">@item.NameTranslated()</a></strong>
-                    </td>
-                    <td title="@Registers.Owner: @item.documentowner.NameTranslated()">
-                        @item.documentowner.NameTranslated()
-                    </td>
-                    <td title="@Registers.VersionName: @item.versionName">
-                        @Html.DisplayFor(modelItem => item.versionName)
-                    </td>
-                    @*<td title="Innsendt: @item.dateSubmitted">
-                        @Html.DisplayFor(modelItem => item.dateSubmitted)
-                    </td>*@
-                    <td title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(item.register))">
-                        @item.status.DescriptionTranslated() <i class="statusIcon-@item.statusId"></i>
-                    </td>
-                </tr>
-            }
-        </table>
-    }
-</div>
+}
+else
+{
+    <p>@Documents.NoHistoricalDocuments </p>
+}

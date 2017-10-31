@@ -124,6 +124,10 @@
         vertical-align: bottom;
     }
 
+.tab-pane .table-heading {
+    margin: 0 0 5px;
+}
+
 @media only screen and (min-width : 768px) {
     .table-heading {
         display: table;
@@ -353,4 +357,8 @@ a.link-unstyled {
 .nav-tabs-version {
     padding-bottom: 0;
     margin-bottom: 30px;
+}
+
+.navbar-bottom {
+    margin-top: 30px;
 }

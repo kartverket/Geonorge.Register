@@ -727,5 +727,10 @@ namespace Kartverket.Register.Helpers
         {
             return value ? "Ja" : "Nei";
         }
+
+        public static string GetThumbnail(string thumbnailSrc)
+        {
+            return thumbnailSrc ?? "/Content/pdf.jpg";
+        }
     }
 }

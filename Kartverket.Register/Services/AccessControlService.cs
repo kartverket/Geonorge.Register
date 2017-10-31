@@ -3,8 +3,10 @@ using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
+using Resources;
 
 namespace Kartverket.Register.Services
 {
@@ -121,7 +123,7 @@ namespace Kartverket.Register.Services
             {
                 if (registerItem is Document document)
                 {
-                    return IsItemOwner(document.documentowner.name, UserName());
+                    return IsItemOwner(document.documentowner.name, UserName()) && VersionIsEditable(registerItem.statusId);
                 }
                 if (registerItem is Dataset dataset)
                 {
@@ -137,16 +139,33 @@ namespace Kartverket.Register.Services
             return false;
         }
 
+        private bool VersionIsEditable(string statusId)
+        {
+            return statusId == "Submitted" || statusId == "Draft" || IsAdmin();
+        }
+
         private bool AccessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
         {
-            if (!registerItemViewModel.Register.IsServiceAlertRegister() && !registerItemViewModel.Register.ContainedItemClassIsDocument())
+            if (!registerItemViewModel.Register.IsServiceAlertRegister())
             {
-                return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName());
+                if (AccessRegister(registerItemViewModel.Register))
+                {
+                    if (registerItemViewModel is DocumentViewModel docuementViewModel)
+                    {
+                        return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
+                    }
+                }
+
             }
             return false;
         }
 
-       
+        public bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel)
+        {
+            return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
+        }
+
+
         public bool IsAdmin()
         {
             List<string> roles = GetSecurityClaim("role");

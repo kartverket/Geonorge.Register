@@ -151,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingen historiske dokumenter av.
+        ///   Looks up a localized string similar to Ingen historiske dokumenter.
         /// </summary>
         public static string NoHistoricalDocuments {
             get {
@@ -160,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+        ///   Looks up a localized string similar to Ingen foreslåtte dokumenter.
         /// </summary>
         public static string NoSuggestedDocuments {
             get {

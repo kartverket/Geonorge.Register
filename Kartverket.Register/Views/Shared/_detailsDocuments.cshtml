@@ -1,77 +1,58 @@
 ﻿@using Kartverket.Register.Helpers
-@model Kartverket.Register.Models.Document
-﻿@using Kartverket.Register.Helpers
+@model Kartverket.Register.Models.ViewModels.DocumentViewModel
 
 @{
-    var thumb = "/Content/pdf.jpg";
-    if (Model.thumbnail != null)
-    {
-        thumb = Model.thumbnail;
-    }
+    string thumb;
+    thumb = Model.Thumbnail ?? "/Content/pdf.jpg";
 }
 
-<div class="col-sm-12">
-        <div class="col-img col-xs-6 col-sm-2 col-md-2 col-lg-2">
-            @if (Model.documentUrl.Contains("ikke angitt"))
-            {
-                <img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
-            }
-            else
-            {
-                <a href="@Html.DisplayFor(model => Model.documentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
-            }
-        </div>
-        <div class="col-no-padding-xs col-title col-sm-4 col-md-4 col-lg-4">
-            @if (Model.documentUrl.Contains("ikke angitt"))
-            {
-                <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn disabled" title="@Documents.NoDocumentFor @Model.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
-                </a><br />
-            }
-            else
-            {
-                <a href="@Html.DisplayFor(modelItem => Model.documentUrl)" class="btn" title="Last ned dokument for @Model.name">
-                    <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
-                </a><br />
-            }
-            @if (Request.IsAuthenticated)
-            {
-                if (HtmlHelperExtensions.AccessRegisterItem(Model))
+<article>
+        <div class="col-md-12">
+            <div class="col-sm-12 col-md-2 col">
+                @if (Model.DocumentUrl.Contains("ikke angitt") && !string.IsNullOrEmpty(Model.ApplicationSchema))
                 {
-                    if ((Model.statusId == "Submitted" || Model.statusId == "Draft" || HtmlHelperExtensions.IsAdmin()))
-                    {
-                        if (Model.register.parentRegisterId != null)
-                        {
-                            if (Model.statusId != "Retired" && Model.statusId != "Superseded")
-                            {
-                                <a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="Rediger @Model.name">@Shared.Edit</a>
-                            }
-                            <a href="/dokument/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">@Shared.Delete</a>
-                        }
-                        else
-                        {
-                            if (Model.statusId != "Retired" && Model.statusId != "Superseded")
-                            {
-                                <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/rediger?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="@Shared.Edit @Model.name">@Shared.Edit</a>
-                            }
-                            <a href="/dokument/@Model.register.seoname/@Model.documentowner.seoname/@Model.seoname/slett?vnr=@Model.versionNumber" class="btn btn-default btn-sm" title="slett @Model.name">@Shared.Delete</a>
-                        }
-                    }
+                    <span class="custom-icon custom-icon-l custom-icon-file-xml"></span>
                 }
-            }
+                else if (Model.DocumentUrl.Contains("ikke angitt"))
+                {
+                    <img src="@HtmlHelperExtensions.GetThumbnail(Model.Thumbnail)" class="img-thumbnail img-responsive pull-left" alt="forside pdf" />
+                }
+                else
+                {
+                    <a href="@Html.DisplayFor(model => Model.DocumentUrl)"><img src="@thumb" class="img-thumbnail img-responsive pull-left" alt="forside pdf" /></a>
+                }
+            </div>
+            <div class="col-sm-12 col-md-2 col">
+                @if (Model.DocumentUrl.Contains("ikke angitt"))
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn disabled btn-block" title="@Documents.NoDocumentFor @Model.Name">
+                        <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
+                    </a>
+                }
+                else
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.DocumentUrl)" class="btn btn-block" title="Last ned dokument for @Model.Name">
+                        <span class="glyphicon glyphicon-download-alt"> </span>@Shared.Download
+                    </a><br />
+                }
+                @if (!string.IsNullOrEmpty(Model.ApplicationSchema))
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.ApplicationSchema)" class="btn btn-block" title="Vis UML-modell for @Model.Name" target="_blank">
+                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis UML-modell
+                    </a><br />
+                }
+                @if (!string.IsNullOrEmpty(Model.GmlApplicationSchema))
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.GmlApplicationSchema)" class="btn btn-block" title="Vis UML-modell for @Model.Name" target="_blank">
+                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis GML-skjema
+                    </a><br />
+                }
+                @if (!string.IsNullOrEmpty(Model.CartographyFile))
+                {
+                    <a href="@Html.DisplayFor(modelItem => Model.CartographyFile)" class="btn btn-block" title="Vis kartografi-fil for @Model.Name" target="_blank">
+                        <span class="custom-icon custom-icon-eksternlink"> </span> Vis kartografi-fil
+                    </a><br />
+                }
+            </div>
         </div>
-
-        <div class="col-no-padding-xs col-xs-12 col-sm-6 col-md-6 col-lg-y pull-right">
-
-            @if (Model.approvalDocument != null)
-            {
-                <p>@Registers.ApprovalDocument: @Html.DisplayFor(modelItem => Model.approvalDocument)</p>
-            }
-            @if (Model.approvalReference != null)
-            {
-                <p>@Registers.ApprovalReference: <a href="@Html.DisplayFor(modelItem => Model.approvalReference)">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-            }
-
-        </div>
-    </div>
-
+</article>

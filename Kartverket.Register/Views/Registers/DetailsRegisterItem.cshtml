@@ -1,4 +1,4 @@
-﻿@using System.Activities.Expressions
+﻿
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
@@ -23,7 +23,7 @@
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-10 col-lg-10">
+        <div class="col-sm-12 col-md-10">
             @if (Model.Register.containedItemClass != "NameSpace")
             { <p> @Model.Description</p>}
             @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
@@ -83,9 +83,9 @@
     {
         @Html.Partial("_detailsOrganization", (Organization)Model.RegisterItem)
     }
-    else if (Model.RegisterItem is Document)
+    else if (Model is DocumentViewModel)
     {
-        @Html.Partial("_detailsDocuments", (Document)Model.RegisterItem)
+        @Html.Partial("_detailsDocuments")
     }
     else if (Model.RegisterItem is EPSG)
     {
@@ -107,7 +107,7 @@
 
 
 <div class="clearfix"></div>
-<div class="hidden-print">
+<div class="hidden-print navbar-bottom">
     @if (Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>

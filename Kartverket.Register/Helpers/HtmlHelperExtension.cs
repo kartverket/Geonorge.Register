@@ -540,7 +540,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire" || sortingParam == "inspire_desc")
             {
                 sortTitle = GeodatalovDataSet.InspireTheme;
-                statusIcon += "custom-icon-info";
+                statusIcon += "inspire";
             }
             else if (sortingParam == "dok" || sortingParam == "dok_desc")
             {
@@ -550,7 +550,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "nationalt_dataset" || sortingParam == "nationalt_dataset_desc")
             {
                 sortTitle = GeodatalovDataSet.NationalDataset;
-                statusIcon += "custom-icon-info";
+                statusIcon += "norge-digitalt";
             }
             else if (sortingParam == "plan" || sortingParam == "plan_desc")
             {

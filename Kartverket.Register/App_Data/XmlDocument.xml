@@ -1160,12 +1160,12 @@
         </member>
         <member name="P:Resources.Documents.NoHistoricalDocuments">
             <summary>
-              Looks up a localized string similar to Ingen historiske dokumenter av.
+              Looks up a localized string similar to Ingen historiske dokumenter.
             </summary>
         </member>
         <member name="P:Resources.Documents.NoSuggestedDocuments">
             <summary>
-              Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+              Looks up a localized string similar to Ingen foreslåtte dokumenter.
             </summary>
         </member>
         <member name="P:Resources.Documents.Thumbnail">

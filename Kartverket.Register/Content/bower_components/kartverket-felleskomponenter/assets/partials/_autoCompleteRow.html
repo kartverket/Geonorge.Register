@@ -12,15 +12,17 @@
             </a>
         </div>
         <div>
-            <a data-ng-href="{{result.url}}?text={{$root.searchQuery}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner show-loading-animation" href="{{result.url}}?text={{$root.searchQuery}}" data-loading-message="Henter søkeresultater">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Vis alle treff...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </a>
+            <div ng-if="$root.activePageUrl != result.showAllUrl"> 
+                <a data-ng-href="{{result.showAllUrl}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner show-loading-animation" href="{{result.showAllUrl}}" data-loading-message="Henter søkeresultater"> 
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Vis alle treff...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </a>
+            </div>
         </div>
     </div>
 </div>

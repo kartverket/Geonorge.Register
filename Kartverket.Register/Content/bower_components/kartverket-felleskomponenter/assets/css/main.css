@@ -2462,6 +2462,12 @@ input[type="submit"].btn {
 .custom-icon.custom-icon-gml {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/gml.svg"); }
 
+.custom-icon.inspire {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/inspire.svg"); }
+
+.custom-icon.norge-digitalt {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/norge-digitalt.svg"); }
+
 /* Open data */
 .custom-icon.custom-icon-hengelaas-open-green {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-aapen-green.svg");
@@ -3458,9 +3464,10 @@ img {
   border-left: 4px solid #efeeed;
   background-color: #efeeed;
   color: #414042;
-  height: 25px;
   width: 100px;
-  padding-left: 5px; }
+  padding-left: 5px;
+  white-space: normal;
+  height: auto; }
 
 h1 .label {
   font-size: 20pt;

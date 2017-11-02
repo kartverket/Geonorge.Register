@@ -375,6 +375,7 @@ namespace Kartverket.Register.Tests.Services
             document.register = _register;
             document.register.accessId = 2;
             document.documentowner = _organization;
+            document.statusId = "Submitted";
             return document;
         }
 

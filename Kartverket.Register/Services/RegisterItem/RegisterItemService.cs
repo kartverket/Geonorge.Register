@@ -1336,22 +1336,22 @@ namespace Kartverket.Register.Services.RegisterItem
                 }
 
                 // ***** EPSG
-                else if (sorting == "verticalReferenceSystem")
+                else if (sorting == "vertical")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "verticalReferenceSystem_desc")
+                else if (sorting == "vertical_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "horizontalReferenceSystem")
+                else if (sorting == "horizontal")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "horizontalReferenceSystem_desc")
+                else if (sorting == "horizontal_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
@@ -1376,12 +1376,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "sosiReferencesystem")
+                else if (sorting == "sosi")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "sosiReferencesystem_desc")
+                else if (sorting == "sosi_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();

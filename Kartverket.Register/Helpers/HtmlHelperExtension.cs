@@ -497,17 +497,17 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire_metadataservice_status" || sortingParam == "inspire_metadataservice_status_desc")
             {
                 sortTitle = InspireDataSet.MetadataServiceStatus;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-metadatatjeneste";
             }
             else if (sortingParam == "inspire_distribution_status" || sortingParam == "inspire_distribution_status_desc")
             {
                 sortTitle = InspireDataSet.Distribution;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-datadeling";
             }
             else if (sortingParam == "inspire_wms_status" || sortingParam == "inspire_wms_status_desc")
             {
                 sortTitle = InspireDataSet.WmsStatus;
-                statusIcon += "custom-icon-wfs";
+                statusIcon += "glyphicon glyphicon-globe";
             }
             else if (sortingParam == "inspire_wfs_status" || sortingParam == "inspire_wfs_status_desc")
             {
@@ -527,7 +527,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire_harmonizeddata_status" || sortingParam == "inspire_harmonizeddata_status_desc")
             {
                 sortTitle = InspireDataSet.HarmonizedDataStatus;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-gml";
             }
             else if (sortingParam == "inspire_spatialdataservice_status" || sortingParam == "inspire_spatialdataservice_status_desc")
             {
@@ -540,17 +540,17 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire" || sortingParam == "inspire_desc")
             {
                 sortTitle = GeodatalovDataSet.InspireTheme;
-                statusIcon += "inspire";
+                statusIcon += "custom-icon-inspire";
             }
             else if (sortingParam == "dok" || sortingParam == "dok_desc")
             {
                 sortTitle = GeodatalovDataSet.Dok;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-dok";
             }
             else if (sortingParam == "nationalt_dataset" || sortingParam == "nationalt_dataset_desc")
             {
                 sortTitle = GeodatalovDataSet.NationalDataset;
-                statusIcon += "norge-digitalt";
+                statusIcon += "custom-icon-norge-digitalt";
             }
             else if (sortingParam == "plan" || sortingParam == "plan_desc")
             {
@@ -560,7 +560,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "geodatalov" || sortingParam == "geodatalov_desc")
             {
                 sortTitle = GeodatalovDataSet.Geodatalov;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-seksjonstegn";
             }
             else if (sortingParam == "geodatalov_metadata_status" || sortingParam == "geodatalov_metadata_status_desc")
             {
@@ -570,7 +570,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "geodatalov_productspecification_status" || sortingParam == "geodatalov_productspecification_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_ProductSpesification;
-                statusIcon += "glyphicon-list-alt";
+                statusIcon += "glyphicon glyphicon-list-alt";
             }
             else if (sortingParam == "geodatalov_sosi_status" || sortingParam == "geodatalov_sosi_status_desc")
             {
@@ -585,7 +585,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "geodatalov_wms_status" || sortingParam == "geodatalov_wms_status_desc")
             {
                 sortTitle = DataSet.DOK_Delivery_Wms;
-                statusIcon += "custom-icon-wfs";
+                statusIcon += "glyphicon glyphicon-globe";
             }
             else if (sortingParam == "geodatalov_wfs_status" || sortingParam == "geodatalov_wfs_status_desc")
             {

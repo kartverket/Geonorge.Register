@@ -555,7 +555,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "plan" || sortingParam == "plan_desc")
             {
                 sortTitle = GeodatalovDataSet.Plan;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-arealplan";
             }
             else if (sortingParam == "geodatalov" || sortingParam == "geodatalov_desc")
             {

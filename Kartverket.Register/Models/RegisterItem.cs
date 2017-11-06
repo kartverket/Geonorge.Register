@@ -417,5 +417,17 @@ namespace Kartverket.Register.Models
             }
             return "#";
         }
+
+        public string ItemsByOwnerUrl()
+        {
+            switch (this)
+            {
+                case Document document:
+                    return document.ItemsByDocumentOwnerUrl();
+                case Dataset dataset:
+                    return dataset.ItemsByDatasetOwnerUrl();
+            }
+            return register.GetObjectUrl() + "/" + submitter.seoname;
+        }
     }
 }//end namespace Datamodell

@@ -27,12 +27,12 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private ITranslationService _translationService;
 
-        public EPSGsController(ITranslationService translationService, RegisterDbContext dbContext)
+        public EPSGsController(ITranslationService translationService, RegisterDbContext dbContext, IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControlService)
         {
             db = dbContext;
-            _registerItemService = new RegisterItemService(db);
-            _registerService = new RegisterService(db);
-            _accessControlService = new AccessControlService();
+            _registerItemService = registerItemService;
+            _registerService = registerService;
+            _accessControlService = accessControlService;
             _translationService = translationService;
         }
 

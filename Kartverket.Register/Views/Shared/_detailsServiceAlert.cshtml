@@ -1,15 +1,18 @@
 ﻿@model Kartverket.Register.Models.ServiceAlert
 
-<div class="row result-row metadata">
-    <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
-        <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12">
-            <p><b>@Html.DisplayNameFor(model => model.AlertType): </b>@Model.AlertTypeTranslated()</p>
-            <p><b>@Html.DisplayNameFor(model => model.ServiceType): </b>@Model.ServiceType</p>
-            <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
-            <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
-            <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.NoteTranslated()</p>
-            <p><b>@ServiceAlerts.ServiceDesription: </b> <a href="@Model.ServiceMetadataUrl" title="@Registers.Description @Model.name">@Shared.Details</a></p>
-        </div>
-    </div>
-</div>
+<article class="col-sm-12 col-md-12">
+    <h3>@ServiceAlerts.Service</h3>
+    <p><b>@Html.DisplayNameFor(model => model.AlertType): </b>@Model.AlertTypeTranslated()</p>
+    <p><b>@Html.DisplayNameFor(model => model.ServiceType): </b>@Model.ServiceType</p>
+    <p><b>@Html.DisplayNameFor(model => model.AlertDate): </b>@Html.DisplayFor(model => model.AlertDate)</p>
+    <p><b>@Html.DisplayNameFor(model => model.EffectiveDate): </b>@Html.DisplayFor(model => model.EffectiveDate)</p>
+    <p><b>@Html.DisplayNameFor(model => model.Note):</b> @Model.NoteTranslated()</p>
+</article>
 
+@if (!string.IsNullOrWhiteSpace(Model.ServiceMetadataUrl))
+{
+    <article class="col-md-12">
+        <h3>@ServiceAlerts.ServiceDesription</h3>
+        <p><a href="@Model.ServiceMetadataUrl" class="btn"><span class="glyphicon glyphicon-globe"></span> @DataSet.DisplayKartkatalogen</a></p>
+    </article>
+}

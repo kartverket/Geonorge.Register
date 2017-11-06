@@ -1,22 +1,22 @@
 ﻿
-using System;
 using System.Security.Claims;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System.Collections.Generic;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.Register;
+using Resources;
 
 namespace Kartverket.Register.Services
 {
     public class AccessControlService : IAccessControlService
     {
-        private readonly RegisterDbContext db = new RegisterDbContext();
         private readonly IRegisterItemService _registerItemService;
         private readonly IRegisterService _registerService;
         private readonly IOrganizationService _organizationService;
 
-        public AccessControlService()
+        public AccessControlService(RegisterDbContext db)
         {
             _registerItemService = new RegisterItemService(db);
             _registerService = new RegisterService(db);
@@ -29,74 +29,142 @@ namespace Kartverket.Register.Services
             {
                 return true;
             }
-            if (model is Models.Register)
+            if (model is Models.Register register)
             {
-                return AccessRegister(model);
+                return AccessRegister(register);
             }
-            if (model is RegisterV2ViewModel)
+            if (model is RegisterV2ViewModel registerViewModel)
             {
-                return AccessRegister((RegisterV2ViewModel)model);
+                return AccessRegister(registerViewModel);
             }
-            if (model is Models.RegisterItem)
+            if (model is Models.RegisterItem registerItem)
             {
-                return accessRegisterItem((Models.RegisterItem)model);
+                return AccessRegisterItem(registerItem);
             }
-            if (model is RegisterItemV2ViewModel)
+            if (model is RegisterItemV2ViewModel registerItemViewModel)
             {
-                return accessRegisterItem((RegisterItemV2ViewModel)model);
+                return AccessRegisterItem(registerItemViewModel);
             }
             return false;
         }
 
-        private bool accessRegisterItem(Models.RegisterItem registerItem)
+        public AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel)
         {
-            Organization user = _registerService.GetOrganizationByUserName();
+            var accessViewModel = new AccessViewModel();
+            accessViewModel.Edit = EditRegister(registerViewModel);
+            accessViewModel.Add = AddToRegister(registerViewModel);
+            accessViewModel.EditListOfRegisterItems = EditRegisterItemsList(registerViewModel);
+            accessViewModel.Delete = IsAdmin();
+            return accessViewModel;
+        }
 
-            if (AccessRegister(registerItem.register))
+        public bool AddToRegister(RegisterV2ViewModel registerViewModel)
+        {
+            if (registerViewModel.IsDokMunicipal())
             {
-                if (registerItem is Document)
+                return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
+            }
+            return AccessRegister(registerViewModel);
+        }
+
+        public bool EditRegisterItemsList(RegisterV2ViewModel registerViewModel)
+        {
+            return registerViewModel.Municipality != null && AccessRegister(registerViewModel);
+        }
+
+        public bool EditRegister(RegisterV2ViewModel registerViewModel)
+        {
+            return IsAdmin() && !registerViewModel.IsServiceAlertRegister();
+        }
+
+        public bool AccessRegister(Models.Register register)
+        {
+            if (IsAdmin()) return true;
+            if (register.RegisterAccessAdminAndEditor())
+            {
+                if (IsEditor())
                 {
-                    Document document = (Document)registerItem;
-                    return IsOwner(document.documentowner.name, user.name);
+                    return !register.ContainedItemClassIsCodelistValue() ||
+                           IsRegisterOwner(register.owner.name, UserName());
                 }
-                if (registerItem is Dataset)
+            }
+            else if (register.RegisterAccessAdminMunicipalUserDokEditorAndDocAdmin())
+            {
+                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
+            }
+            return false;
+        }
+
+        private bool AccessRegister(RegisterV2ViewModel registerViewModel)
+        {
+            if (IsAdmin()) return true;
+            if (registerViewModel.AccessId == 2)
+            {
+                if (IsEditor())
                 {
-                    Dataset dataset = (Dataset)registerItem;
-                    if (dataset.IsMunicipalDataset())
+                    if (registerViewModel.ContainedItemClassIsCodelistValue())
                     {
-                        return IsOwner(dataset.datasetowner.name, user.name) || IsDokAdmin();
+                        return IsRegisterOwner(registerViewModel.Owner.name, UserName());
                     }
-                }
-                else {
-                    return IsOwner(registerItem.submitter.name, user.name) || IsRegisterOwner(registerItem.register.owner.name, user.name) ;
-                }
-            }
-            return false;
-        }
-
-        private bool IsRegisterOwner(string registerOwner, string userName)
-        {
-            return registerOwner == userName || registerOwner == userName;
-        }
-
-        private bool accessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
-        {
-            var user = _registerService.GetOrganizationByUserName();
-            return AccessRegister(registerItemViewModel.Register) && IsOwner(registerItemViewModel.Owner.name, user.name);
-        }
-
-        private bool IsDokEditor()
-        {
-            List<string> roles = GetSecurityClaim("role");
-            foreach (string role in roles)
-            {
-                if (role == "nd.dok_editor")
-                {
                     return true;
                 }
             }
+            else if (registerViewModel.AccessId == 4)
+            {
+                return UserIsSelectedMunicipality(registerViewModel.MunicipalityCode) || IsDokEditor() || IsDokAdmin();
+            }
             return false;
         }
+
+        public bool AccessRegisterItem(Models.RegisterItem registerItem)
+        {
+            if (IsAdmin()) return true;
+            if (AccessRegister(registerItem.register))
+            {
+                if (registerItem is Document document)
+                {
+                    return IsItemOwner(document.documentowner.name, UserName()) && VersionIsEditable(registerItem.statusId);
+                }
+                if (registerItem is Dataset dataset)
+                {
+                    if (dataset.IsMunicipalDataset())
+                    {
+                        return IsItemOwner(dataset.datasetowner.name, UserName()) || IsDokAdmin();
+                    }
+                }
+                else {
+                    return IsItemOwner(registerItem.submitter.name, UserName()) || IsRegisterOwner(registerItem.register.owner.name, UserName()) ;
+                }
+            }
+            return false;
+        }
+
+        private bool VersionIsEditable(string statusId)
+        {
+            return statusId == "Submitted" || statusId == "Draft" || IsAdmin();
+        }
+
+        private bool AccessRegisterItem(RegisterItemV2ViewModel registerItemViewModel)
+        {
+            if (!registerItemViewModel.Register.IsServiceAlertRegister())
+            {
+                if (AccessRegister(registerItemViewModel.Register))
+                {
+                    if (registerItemViewModel is DocumentViewModel docuementViewModel)
+                    {
+                        return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
+                    }
+                }
+
+            }
+            return false;
+        }
+
+        public bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel)
+        {
+            return AccessRegister(registerItemViewModel.Register) && IsItemOwner(registerItemViewModel.Owner.name, UserName()) || IsAdmin();
+        }
+
 
         public bool IsAdmin()
         {
@@ -111,50 +179,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool AccessRegister(object model)
-        {
-            Models.Register register = (Models.Register)model;
-            Organization user = _registerService.GetOrganizationByUserName();
-            if (register.accessId == 2)
-            {
-                if (IsEditor())
-                {
-                    if (register.ContainedItemClassIsCodelistValue())
-                    {
-                        return IsRegisterOwner(register.owner.name, user.name);
-                    }
-                    return true;
-                }
-            }
-            else if (register.accessId == 4)
-            {
-                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
-            }
-            return false;
-        }
-
-        private bool AccessRegister(RegisterV2ViewModel register)
-        {
-            Organization user = _registerService.GetOrganizationByUserName();
-            if (register.Access == 2)
-            {
-                if (IsEditor())
-                {
-                    if (register.ContainedItemClassIsCodelistValue())
-                    {
-                        return IsRegisterOwner(register.Owner.name, user.name);
-                    }
-                    return true;
-                }
-            }
-            else if (register.Access == 4)
-            {
-                return IsMunicipalUser() || IsDokEditor() || IsDokAdmin();
-            }
-            return false;
-        }
-
-        private bool IsEditor()
+        public bool IsEditor()
         {
             List<string> roles = GetSecurityClaim("role");
             foreach (string role in roles)
@@ -167,7 +192,7 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        private bool IsDokAdmin()
+        public bool IsDokAdmin()
         {
             List<string> roles = GetSecurityClaim("role");
             foreach (string role in roles)
@@ -180,15 +205,35 @@ namespace Kartverket.Register.Services
             return false;
         }
 
-        public bool IsOwner(string owner, string user)
+        public bool IsDokEditor()
         {
-            return (!string.IsNullOrEmpty(owner) && !string.IsNullOrEmpty(user)) && (owner.ToLower() == user.ToLower());
+            List<string> roles = GetSecurityClaim("role");
+            foreach (string role in roles)
+            {
+                if (role == "nd.dok_editor")
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool IsMunicipalUser()
         {
             return GetMunicipalityCode() != null;
         }
+
+
+        public bool IsItemOwner(string owner, string user)
+        {
+            return owner.ToLower() == user.ToLower();
+        }
+
+        public bool IsRegisterOwner(string registerOwner, string userName)
+        {
+            return registerOwner == userName;
+        }
+
 
         public Organization MunicipalUserOrganization()
         {
@@ -199,6 +244,11 @@ namespace Kartverket.Register.Services
         {
             Claim orgnrClaim = ClaimsPrincipal.Current.FindFirst("orgnr");
             return orgnrClaim?.Value;
+        }
+
+        public bool AccessEdit(object model)
+        {
+            throw new System.NotImplementedException();
         }
 
         public CodelistValue GetMunicipality()
@@ -222,19 +272,19 @@ namespace Kartverket.Register.Services
 
         private string GetMunicipalityCode()
         {
-            string organizationNumber = GetOrganizationNumber();
+            var organizationNumber = GetOrganizationNumber();
             if (organizationNumber == null)
             {
                 return null;
             }
 
             var org = _organizationService.GetOrganizationByNumber(organizationNumber);
-            return org != null ? org.MunicipalityCode : null;
+            return org?.MunicipalityCode;
         }
 
         public List<string> GetSecurityClaim(string type)
         {
-            List<string> result = new List<string>();
+            var result = new List<string>();
             foreach (var claim in ClaimsPrincipal.Current.Claims)
             {
                 if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
@@ -242,13 +292,6 @@ namespace Kartverket.Register.Services
                     result.Add(claim.Value);
                 }
             }
-
-            // bad hack, must fix BAAT
-            if (result.Count == 0 && type.Equals("organization") && result.Equals("Statens kartverk"))
-            {
-                result.Add("Kartverket");
-            }
-
             return result;
         }
 
@@ -273,15 +316,20 @@ namespace Kartverket.Register.Services
             return IsAdmin() || UserIsSelectedMunicipality(municipalityCode) || IsDokAdmin();
         }
 
-        private bool UserIsSelectedMunicipality(string municipalityCode)
+        public bool UserIsSelectedMunicipality(string municipalityCode)
         {
-            string currentUserMunicipalityCode = GetMunicipalityCode();
+            var currentUserMunicipalityCode = GetMunicipalityCode();
             if (municipalityCode == null || currentUserMunicipalityCode == null)
             {
                 return false;
             }
-
             return currentUserMunicipalityCode == municipalityCode;
+        }
+
+        public string UserName()
+        {
+            var user = _registerService.GetOrganizationByUserName();
+            return user.name;
         }
     }
 }

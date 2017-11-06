@@ -135,4 +135,7 @@
   <data name="Plan" xml:space="preserve">
     <value>Arealplaner underlagt Pbl</value>
   </data>
+  <data name="Dok" xml:space="preserve">
+    <value>DOK i henhold til KMD-definisjon</value>
+  </data>
 </root>

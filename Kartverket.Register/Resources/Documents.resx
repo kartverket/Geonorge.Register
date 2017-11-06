@@ -135,6 +135,9 @@
   <data name="DocumentOwner" xml:space="preserve">
     <value>Dokumenteier</value>
   </data>
+  <data name="Download" xml:space="preserve">
+    <value>Last ned</value>
+  </data>
   <data name="Expired" xml:space="preserve">
     <value>Utgått</value>
   </data>
@@ -145,10 +148,10 @@
     <value>Ingen dokument er angitt for</value>
   </data>
   <data name="NoHistoricalDocuments" xml:space="preserve">
-    <value>Ingen historiske dokumenter av</value>
+    <value>Ingen historiske dokumenter</value>
   </data>
   <data name="NoSuggestedDocuments" xml:space="preserve">
-    <value>Ingen foreslåtte dokumenter av</value>
+    <value>Ingen foreslåtte dokumenter</value>
   </data>
   <data name="Thumbnail" xml:space="preserve">
     <value>Miniatyrbilde</value>

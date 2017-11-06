@@ -145,10 +145,10 @@
     <value>No document is specified for</value>
   </data>
   <data name="NoHistoricalDocuments" xml:space="preserve">
-    <value>No historical documents of</value>
+    <value>No historical documents</value>
   </data>
   <data name="NoSuggestedDocuments" xml:space="preserve">
-    <value>No suggested documents of</value>
+    <value>No suggested documents</value>
   </data>
   <data name="Thumbnail" xml:space="preserve">
     <value>Thumbnail</value>

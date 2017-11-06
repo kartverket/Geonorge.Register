@@ -374,6 +374,7 @@ var baseurl_local = searchOption.baseUrl;
     $scope.searchString = "";
     $rootScope.selectedSearch = searchOption;
     $rootScope.searchQuery = parseLocation(window.location.search).text;
+    $rootScope.activePageUrl = "//" + window.location.host + window.location.pathname + window.location.search; 
     $scope.autoCompleteResult = [];
 
     $scope.autoCompletePartial = '/Content/bower_components/kartverket-felleskomponenter/assets/partials/_autoCompleteRow.html';
@@ -602,11 +603,10 @@ var baseurl_local = searchOption.baseUrl;
                         var item = {};
                         var curr = list[x];
                         if (curr.data == null || curr.data.Results.length === 0) continue;
-                        item.type = curr.Section;
 
-                        item.title = curr.SectionName;
-
+                        item.showAllUrl = getUrl(curr.data.Results[0].Type) + '?text=' + $rootScope.searchQuery;
                         item.list = [];
+                        
                         for (var y = 0; y < curr.data.Results.length; y++) {
                           var currResult = curr.data.Results[y];
 
@@ -1161,7 +1161,7 @@ $(document).on('keyup', '.custom-select-list', function(){
   filterDropdownList(inputElement, $(this));
 });
 
-$("document").ready(function () {
+function initCustomSelectList(){
   if ($('.custom-select-list').length){
     $(document).on('click', function(e){
       var insideContainer = false;
@@ -1187,5 +1187,9 @@ $("document").ready(function () {
       });
     });
   }
+}
+
+$("document").ready(function () {
+  initCustomSelectList();
 });
 

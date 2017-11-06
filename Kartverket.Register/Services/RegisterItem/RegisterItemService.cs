@@ -294,7 +294,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null)
         {
-            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            var registerItems = new List<Models.RegisterItem>();
             if (string.IsNullOrWhiteSpace(parentregister))
             {
                 vnr = getVnr(parentregister, register, item, vnr);
@@ -597,7 +597,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public CoverageDataset GetMunicipalityCoverage(Dataset dataset, Guid? originalDocumentOwnerId = null)
         {
-            AccessControlService _accessControlService = new AccessControlService();
+            AccessControlService _accessControlService = new AccessControlService(_dbContext);
             Organization municipality = new Organization();
             if (dataset.IsNationalDataset())
             {
@@ -717,12 +717,12 @@ namespace Kartverket.Register.Services.RegisterItem
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.Theme.description).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
-                    case "dokStatus":
+                    case "dokstatus":
                         {
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderBy(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
-                    case "dokStatus_desc":
+                    case "dokstatus_desc":
                         {
                             var sortedList = registerItems.OfType<DatasetViewModel>().OrderByDescending(o => o.DokStatusId).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
@@ -1336,22 +1336,22 @@ namespace Kartverket.Register.Services.RegisterItem
                 }
 
                 // ***** EPSG
-                else if (sorting == "verticalReferenceSystem")
+                else if (sorting == "vertical")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.verticalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "verticalReferenceSystem_desc")
+                else if (sorting == "vertical_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.verticalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "horizontalReferenceSystem")
+                else if (sorting == "horizontal")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.horizontalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "horizontalReferenceSystem_desc")
+                else if (sorting == "horizontal_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.horizontalReferenceSystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
@@ -1376,12 +1376,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.epsgcode);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "sosiReferencesystem")
+                else if (sorting == "sosi")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderBy(o => o.sosiReferencesystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "sosiReferencesystem_desc")
+                else if (sorting == "sosi_desc")
                 {
                     var epsgSorting = registerItems.OfType<EPSG>().OrderByDescending(o => o.sosiReferencesystem);
                     sortedList = epsgSorting.Cast<Models.RegisterItem>().ToList();
@@ -1482,6 +1482,15 @@ namespace Kartverket.Register.Services.RegisterItem
                 _dbContext.Entry(item).State = EntityState.Modified;
             }
             _dbContext.SaveChanges();
+        }
+
+        public string GetDistributionType(string codeValue)
+        {
+            var queryResults = from d in _dbContext.CodelistValues
+                where d.value == codeValue
+                select d.name;
+
+            return queryResults.FirstOrDefault();
         }
     }
 }

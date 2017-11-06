@@ -8,7 +8,7 @@ namespace Kartverket.Register.Services
         Guid CreateDatasetDelivery(string deliveryStatusId = "notset", string note = null, bool autoUpdate = true);
         SelectList GetDokDeliveryStatusesAsSelectlist(string modelInspireDeliveryMetadataStatus);
         string GetMetadataStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
-        string GetDeliveryDistributionStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
+        string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoUpdate = true, string currentStatus = "deficient");
         string GetDokDeliveryServiceStatus(string metadataUuid, bool autoUpdate, string currentStatus, string serviceUuid);
         string GetWfsStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetAtomFeedStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");

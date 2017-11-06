@@ -40,5 +40,6 @@ namespace Kartverket.Register.Services.Register
         ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string sorting);
         Guid GetInspireStatusRegisterId();
         Guid GetGeodatalovStatusRegisterId();
+        List<Models.Register> GetCodelistRegisters();
     }
 }

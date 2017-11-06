@@ -93,5 +93,10 @@ namespace Kartverket.Register.Models
             }
             return false;
         }
+
+        public string ItemsByDocumentOwnerUrl()
+        {
+            return register.GetObjectUrl() + "/" + documentowner.seoname;
+        }
     }//end Document
 }//end namespace Datamodell

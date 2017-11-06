@@ -19,93 +19,84 @@
 }
 
 <section class="heading">
-    <div class="row">
+    <article class="row">
         <div class="col-sm-12">
-            <h1>
+            <h1 class="small-h1">
                 @Model.NameTranslated()
             </h1>
         </div>
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
-    </div>
-</section>
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="col-no-padding-xs col-xs-12 col-sm-9 col-md-9 col-lg-9">
-            ID: <a href="@Request.Url.AbsoluteUri">@Request.Url.AbsoluteUri</a>
-
+        <div class="col-sm-12 col-md-10 col-lg-10">
             <p>
                 @Model.DescriptionTranslated()
             </p>
             @if (Model.status == null)
             {
-                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Registers.NotSet</span><br />
+                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))"><strong>Status:</strong> @Registers.NotSet</p>
             }
             else
             {
-                <span title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))">Status: @Model.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></span><br />
+                <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.register))"><strong>Status:</strong> @Model.status.DescriptionTranslated() <i class="statusIcon-@Html.DisplayFor(model => model.statusId)"></i></p>
             }
             @if (Model.submitter == null)
             {
-                <span>@Registers.Submitter: @Registers.NotSet</span><br />
+                <p><strong>@Registers.Submitter:</strong> @Registers.NotSet</p>
             }
             else
             {
-                <span>@Registers.Submitter: @Html.DisplayFor(model => model.submitter.name)</span><br />
+                <p><strong>@Registers.Submitter:</strong> @Html.DisplayFor(model => model.submitter.name)</p>
             }
             @if (@documentOwner != null)
             {
-                <span>@Registers.Owner: @documentOwner </span><br />
+                <p><strong>@Registers.Owner:</strong> @documentOwner </p>
             }
-
         </div>
-        <div class="col-no-padding-xs col-xs-12 col-sm-3 col-md-3 col-lg-3">
-            @*<span class="small">Registrert: @Html.DisplayFor(model => model.dateSubmitted)</span><br />*@
+
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 text-right">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.modified)</span>
         </div>
+    </article>
+</section>
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="page-header">
-                <hr>
-            </div>
+<div class="clearfix"></div>
 
-            @if (Model.register.containedItemClass == "Organization")
-            {
-                @Html.Partial("_detailsOrganization")
-            }
-            @if (Model.register.containedItemClass == "Document")
-            {
-                @Html.Partial("_detailsDocuments")
-            }
-            @if (Model.register.containedItemClass == "Dataset")
-            {
-                @Html.Partial("_detailsDataset")
-            }
-            @if (Model.register.containedItemClass == "EPSG")
-            {
-                @Html.Partial("_detailsEpsg")
-            }
-            @if (Model.register.containedItemClass == "CodelistValue")
-            {
-                @Html.Partial("_detailsCodelistValue")
-            }
 
-        </div>
+<div class="row">
+    @if (Model.register.containedItemClass == "Organization")
+    {
+        @Html.Partial("_detailsOrganization")
+    }
+    @if (Model.register.containedItemClass == "Document")
+    {
+        @Html.Partial("_detailsDocuments")
+    }
+    @if (Model.register.containedItemClass == "Dataset")
+    {
+        @Html.Partial("_detailsDataset")
+    }
+    @if (Model.register.containedItemClass == "EPSG")
+    {
+        @Html.Partial("_detailsEpsg")
+    }
+    @if (Model.register.containedItemClass == "CodelistValue")
+    {
+        @Html.Partial("_detailsCodelistValue")
+    }
 
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <hr />
-            <a href="/subregister/@Model.register.parentRegister.seoname/@Model.register.parentRegister.owner.seoname/@Model.register.seoname">@Shared.Back</a>
+</div>
 
-            @if (Request.IsAuthenticated)
-            {
+<hr/>
+<div class="col-md-12 row">
+    <a href="@Model.register.GetObjectUrl()">@Shared.Back</a>
 
-                if (HtmlHelperExtensions.accessRegisterItem(Model))
-                {
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
-                    <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
-                }
-            }
-        </div>
-    </div>
+    @if (Request.IsAuthenticated)
+    {
+        if (HtmlHelperExtensions.AccessRegisterItem(Model))
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
+        }
+    }
 </div>

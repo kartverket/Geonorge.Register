@@ -816,9 +816,12 @@
     <Compile Include="Models\Translations\Translation.cs" />
     <Compile Include="Models\Translations\TranslationCollection.cs" />
     <Compile Include="Models\VersionsItem.cs" />
+    <Compile Include="Models\ViewModels\AccessViewModel.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
+    <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\CreateDokMunicipalViewModel.cs" />
@@ -1053,6 +1056,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\geonorge.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\kartverket.png" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\png\norgeskart-marker.png" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arealplan.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-down.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-right.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\arrow-up.svg" />
@@ -1079,7 +1083,10 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checkbox-unchecked.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\checked.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\danger.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\datadeling.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dekningskart.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\den-norske-loeve.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dok.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink.svg" />
@@ -1117,6 +1124,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\info.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\inspire.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-needs-permission-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\kartmarkoer-needs-permission-white.svg" />
@@ -1133,6 +1141,8 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lukk_968c83_50px-01-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\metadatatjeneste.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\norge-digitalt.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\open_fe5000_50px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\produktark.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\projection-checked-disabled.svg" />
@@ -1145,6 +1155,7 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-checked.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-unchecked-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\radio-unchecked.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\seksjonstegn-circle.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\seksjonstegn.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-green.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-red.svg" />
@@ -1348,7 +1359,6 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tabs.js" />
-    <Content Include="Scripts\visninger.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

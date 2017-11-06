@@ -1,46 +1,43 @@
 ﻿@model PagedList.IPagedList<RegisterItem>
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models
 
-<div class="register namespace search-results">
-    @foreach (NameSpace item in Model)
-    {
-        <div class="row result-row metadata">
-            <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="height: auto; border: medium none; box-shadow: none;">
 
-                <div class="col-title col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                    <a href="@item.GetObjectUrl()">
-                        @item.name
-                    </a>
-                </div>
-                
-                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 col-information">
-                    @Html.DisplayFor(modelItem => item.submitter.name)
-                </div>
-                
-                <div class="col-xs-6 col-sm-6 col-md-2 col-lg-2 col-descripton">
-                    @if (item.description == null)
-                    {
-                        <p title="@Namespace.NoContentFor @item.name."><span>@Namespace.Service: </span>@Registers.NotSet</p>
-                    }
-                    else
-                    {
-                        <p title="@Namespace.LinkToContentOf @item.name"><span>@Namespace.Content: </span><a href="@item.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-                    }
-                </div>
-                
-                <div class="col-actions col-xs-6 col-sm-6 col-md-2 col-lg-2">
-                    @if (item.serviceUrl == null)
-                    {
-                        <p title="@Namespace.UrlOfServiceNotSpecified"><span>@Namespace.Service: </span>@Registers.NotSet</p>
-                    }
-                    else
-                    {
-                        <p title="@Namespace.URLForServiceInNamespace @item.name"><span>@Namespace.Service: </span><a href="@item.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
-                    }
-                </div>
-
-            </div>
-        </div>
-        <hr />
-    }
+<div class="table-heading col-md-12">
+    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Namespace.NamespaceName, "name")</div>
+    <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "submitter")</div>
+    <div class="col-md-2 col-sm-12 col">@Namespace.Content</div>
+    <div class="col-md-2 col-sm-12 col">@Namespace.Service</div>
 </div>
+
+@foreach (NameSpace item in Model)
+{
+    <div class="resultItemRow col-md-12 ">
+        <div class="col-md-4 col-sm-12 col">
+            <a href="@item.GetObjectUrl()">@item.NameTranslated()</a>
+        </div>
+        <div class="col-md-4 col-sm-12 col">
+            @Html.DisplayFor(modelItem => item.submitter.name)
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            @if (item.description == null)
+            {
+                <p title="@Namespace.NoContentFor @item.name.">@Registers.NotSet</p>
+            }
+            else
+            {
+                <p title="@Namespace.LinkToContentOf @item.name"><a href="@item.description">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+            }
+        </div>
+        <div class="col-md-2 col-sm-12 col">
+            @if (item.serviceUrl == null)
+            {
+                <p title="@Namespace.UrlOfServiceNotSpecified">@Registers.NotSet</p>
+            }
+            else
+            {
+                <p title="@Namespace.URLForServiceInNamespace @item.name"><a href="@item.serviceUrl">@Shared.Details <i class="custom-icon-sm custom-icon-eksternlink"></i></a></p>
+            }
+        </div>
+    </div>
+}

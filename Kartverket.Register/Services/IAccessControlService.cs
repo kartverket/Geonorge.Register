@@ -1,11 +1,13 @@
 ﻿using Kartverket.Register.Models;
 using System.Collections.Generic;
+using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services
 {
     public interface IAccessControlService
     {
         bool Access(object model);
+        AccessViewModel AccessViewModel(RegisterV2ViewModel registerViewModel);
         List<string> GetSecurityClaim(string type);
         bool IsAdmin();
         bool EditDOK(Dataset dataset);
@@ -18,6 +20,9 @@ namespace Kartverket.Register.Services
         /// <param name="municipalityCode">Selected municipality code</param>
         /// <returns>bool</returns>
         bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode);
-        bool IsOwner(string owner, string user);
+        bool IsItemOwner(string owner, string user);
+        string GetOrganizationNumber();
+        bool AccessEdit(object model);
+        bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel);
     }
 }

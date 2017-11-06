@@ -40,7 +40,8 @@ namespace Kartverket.Register.Services.Versioning
 
                 versjonsGruppe = queryResultsRegisteritem.FirstOrDefault();
             }
-            else {
+            else
+            {
                 var queryResultsRegisteritem = from ri in _dbContext.RegisterItems
                                                where ri.register.seoname == registername && ri.register.parentRegister == null
                                                && ri.seoname == itemname
@@ -76,7 +77,7 @@ namespace Kartverket.Register.Services.Versioning
 
             foreach (Models.RegisterItem item in queryResults.ToList())
             {
-                if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                 {
                     suggestionsItems.Add(item);
                 }
@@ -92,9 +93,12 @@ namespace Kartverket.Register.Services.Versioning
                                          //ri.status.value == "Deprecated"                                          
                                          select ri;
 
-            foreach (Models.RegisterItem item in queryResultsHistorical)
+            if (queryResultsHistorical.Any())
             {
-                historicalItems.Add(item);
+                foreach (Models.RegisterItem item in queryResultsHistorical.ToList())
+                {
+                    historicalItems.Add(item);
+                }
             }
 
             return new VersionsItem

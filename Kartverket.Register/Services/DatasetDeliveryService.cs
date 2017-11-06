@@ -13,11 +13,11 @@ namespace Kartverket.Register.Services
     {
         private readonly RegisterDbContext _dbContext;
         private XmlDocument _atomFeedDoc;
-        XmlNamespaceManager _nsmgr;
-        const string Useable = "useable";
-        const string Good = "good";
-        const string Notset = "notset";
-        const string Deficient = "deficient";
+        private XmlNamespaceManager _nsmgr;
+        private const string Useable = "useable";
+        private const string Good = "good";
+        public const string Notset = "notset";
+        private const string Deficient = "deficient";
 
 
         public DatasetDeliveryService(RegisterDbContext dbContext)
@@ -62,16 +62,25 @@ namespace Kartverket.Register.Services
             }
         }
 
-        public string GetDeliveryDistributionStatus(string distributionUrl, bool autoupdate, string currentStatus)
+        public string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoupdate, string currentStatus)
         {
             var status = currentStatus;
             try
             {
-                var hasDistributionUrl = distributionUrl != null;
-                if (autoupdate)
+                var metadata = GetMetadataFromKartkatalogen(metadataUuid);
+                if (metadata != null)
                 {
-                    status = hasDistributionUrl ? Good : Deficient;
+                    if (metadata.DistributionDetails != null &&
+                        metadata.DistributionDetails.Protocol.Value != "GEONORGE:OFFLINE" && distributionUrl != null)
+                    {
+                        status = Good;
+                    }
+                    else
+                    {
+                        status = Deficient;
+                    }
                 }
+
             }
             catch (Exception)
             {
@@ -187,7 +196,7 @@ namespace Kartverket.Register.Services
 
         public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
         {
-            var statusValue = currentStatus;
+            var statusValue = Deficient;
 
             if (!autoupdate) return statusValue;
             try
@@ -279,8 +288,7 @@ namespace Kartverket.Register.Services
                             var relatedService = GetMetadataFromKartkatalogen(metadata.ServiceUuid.ToString());
                             status = relatedService.DistributionDetails != null &&
                                      (relatedService.DistributionDetails.Protocol == "W3C:REST"
-                                      || relatedService.DistributionDetails.Protocol == "W3C:WS"
-                                      || relatedService.DistributionDetails.Protocol == "OGC:WPS")
+                                      || relatedService.DistributionDetails.Protocol == "W3C:WS")
                                 ? Good
                                 : Deficient;
                         }

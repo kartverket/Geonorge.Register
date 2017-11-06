@@ -749,7 +749,7 @@
             Get organization by number
             </summary>
         </member>
-        <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDOKMunicipalList">
+        <member name="M:Kartverket.Register.Controllers.RegistersController.CreateStatusDokMunicipalList">
             <summary>
             Creates a list of statuses for DOK Municipal register. 
             </summary>
@@ -1138,6 +1138,11 @@
               Looks up a localized string similar to Dokumenteier.
             </summary>
         </member>
+        <member name="P:Resources.Documents.Download">
+            <summary>
+              Looks up a localized string similar to Last ned.
+            </summary>
+        </member>
         <member name="P:Resources.Documents.Expired">
             <summary>
               Looks up a localized string similar to Utgått.
@@ -1155,12 +1160,12 @@
         </member>
         <member name="P:Resources.Documents.NoHistoricalDocuments">
             <summary>
-              Looks up a localized string similar to Ingen historiske dokumenter av.
+              Looks up a localized string similar to Ingen historiske dokumenter.
             </summary>
         </member>
         <member name="P:Resources.Documents.NoSuggestedDocuments">
             <summary>
-              Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+              Looks up a localized string similar to Ingen foreslåtte dokumenter.
             </summary>
         </member>
         <member name="P:Resources.Documents.Thumbnail">
@@ -1380,6 +1385,26 @@
         <member name="P:Resources.ServiceAlerts.SubscribeServiceAlert">
             <summary>
               Looks up a localized string similar to Abonnere på tjenestevarsler.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_alertDate">
+            <summary>
+              Looks up a localized string similar to Siste.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_description">
+            <summary>
+              Looks up a localized string similar to Detaljer.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeader_effektivedate">
+            <summary>
+              Looks up a localized string similar to Ikrafttredekse.
+            </summary>
+        </member>
+        <member name="P:Resources.ServiceAlerts.TableHeder_alert">
+            <summary>
+              Looks up a localized string similar to Varsel.
             </summary>
         </member>
         <member name="P:Resources.ServiceAlerts.Title">
@@ -2191,6 +2216,36 @@
               Looks up a localized string similar to Foreslå ny EPSG-kode.
             </summary>
         </member>
+        <member name="P:Resources.EPSGs.TableHeaderDimension">
+            <summary>
+              Looks up a localized string similar to Dimensjon.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderEksternalReference">
+            <summary>
+              Looks up a localized string similar to Referanser.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderEpsg">
+            <summary>
+              Looks up a localized string similar to EPSG.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderHorizontalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Horisontalt.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderSosi">
+            <summary>
+              Looks up a localized string similar to SOSI.
+            </summary>
+        </member>
+        <member name="P:Resources.EPSGs.TableHeaderVertikalReferenceSystem">
+            <summary>
+              Looks up a localized string similar to Vertikal.
+            </summary>
+        </member>
         <member name="P:Resources.EPSGs.Vertical">
             <summary>
               Looks up a localized string similar to Vertikalt.
@@ -2978,6 +3033,11 @@
         <member name="P:Resources.Shared.Select">
             <summary>
               Looks up a localized string similar to Velg.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.Status">
+            <summary>
+              Looks up a localized string similar to Status.
             </summary>
         </member>
         <member name="P:Resources.Shared.Text">

@@ -115,6 +115,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Last ned.
+        /// </summary>
+        public static string Download {
+            get {
+                return ResourceManager.GetString("Download", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Utgått.
         /// </summary>
         public static string Expired {
@@ -142,7 +151,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingen historiske dokumenter av.
+        ///   Looks up a localized string similar to Ingen historiske dokumenter.
         /// </summary>
         public static string NoHistoricalDocuments {
             get {
@@ -151,7 +160,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ingen foreslåtte dokumenter av.
+        ///   Looks up a localized string similar to Ingen foreslåtte dokumenter.
         /// </summary>
         public static string NoSuggestedDocuments {
             get {

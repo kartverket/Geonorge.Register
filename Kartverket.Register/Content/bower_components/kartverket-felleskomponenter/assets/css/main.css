@@ -2447,6 +2447,9 @@ input[type="submit"].btn {
 .custom-icon.custom-icon-dekningskart {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/dekningskart.svg"); }
 
+.custom-icon.custom-icon-dok {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/dok.svg"); }
+
 .custom-icon.custom-icon-produktark {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/produktark.svg"); }
 
@@ -2456,11 +2459,32 @@ input[type="submit"].btn {
 .custom-icon.custom-icon-seksjonstegn {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/seksjonstegn.svg"); }
 
+.custom-icon.custom-icon-seksjonstegn-circle {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/seksjonstegn-circle.svg"); }
+
 .custom-icon.custom-icon-sosi {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/sosi.svg"); }
 
 .custom-icon.custom-icon-gml {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/gml.svg"); }
+
+.custom-icon.custom-icon-inspire {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/inspire.svg"); }
+
+.custom-icon.custom-icon-norge-digitalt {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/norge-digitalt.svg"); }
+
+.custom-icon.custom-icon-arealplan {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/arealplan.svg"); }
+
+.custom-icon.custom-icon-den-norske-loeve {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/den-norske-loeve.svg"); }
+
+.custom-icon.custom-icon-metadatatjeneste {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/metadatatjeneste.svg"); }
+
+.custom-icon.custom-icon-datadeling {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/datadeling.svg"); }
 
 /* Open data */
 .custom-icon.custom-icon-hengelaas-open-green {
@@ -3458,9 +3482,10 @@ img {
   border-left: 4px solid #efeeed;
   background-color: #efeeed;
   color: #414042;
-  height: 25px;
   width: 100px;
-  padding-left: 5px; }
+  padding-left: 5px;
+  white-space: normal;
+  height: auto; }
 
 h1 .label {
   font-size: 20pt;

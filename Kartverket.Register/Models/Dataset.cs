@@ -542,6 +542,11 @@ namespace Kartverket.Register.Models
                 new SelectListItem { Selected = false, Text = "5", Value = "5"},
             };
         }
+
+        public string ItemsByDatasetOwnerUrl()
+        {
+            return register.GetObjectUrl() + "/" + datasetowner.seoname;
+        }
     }//end Dataset
 
 }//end namespace Datamodell

@@ -238,5 +238,15 @@ namespace Kartverket.Register.Models
                    name == _geodatalovStatusRegister ||
                    name == _DetOffentligeKartgrunnlagetKommunalt;
         }
+
+        public bool RegisterAccessAdminAndEditor()
+        {
+            return accessId is 2;
+        }
+
+        public bool RegisterAccessAdminMunicipalUserDokEditorAndDocAdmin()
+        {
+            return accessId is 4;
+        }
     }
 }

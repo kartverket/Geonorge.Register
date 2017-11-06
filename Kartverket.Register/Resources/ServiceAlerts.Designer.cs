@@ -279,6 +279,42 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Siste.
+        /// </summary>
+        public static string TableHeader_alertDate {
+            get {
+                return ResourceManager.GetString("TableHeader_alertDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detaljer.
+        /// </summary>
+        public static string TableHeader_description {
+            get {
+                return ResourceManager.GetString("TableHeader_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ikrafttredekse.
+        /// </summary>
+        public static string TableHeader_effektivedate {
+            get {
+                return ResourceManager.GetString("TableHeader_effektivedate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Varsel.
+        /// </summary>
+        public static string TableHeder_alert {
+            get {
+                return ResourceManager.GetString("TableHeder_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Foreslå nytt tjenestevarsel.
         /// </summary>
         public static string Title {

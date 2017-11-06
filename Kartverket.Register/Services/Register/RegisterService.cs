@@ -29,55 +29,49 @@ namespace Kartverket.Register.Services.Register
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
         {
-            List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            var registerItems = new List<Models.RegisterItem>();
+            var registerItemsv2 = new List<RegisterItemV2>();
 
-            if (register.containedItemClass == "EPSG")
-            {
-                FilterEPSGkode(register, filter, registerItems);
-            }
-            else if (register.containedItemClass == "Document")
+            if (register.containedItemClass == "Document")
             {
                 FilterDocument(register, filter, registerItems);
             }
             else if (register.containedItemClass == "Dataset")
             {
                 FilterDataset(register, filter, registerItems);
-
-            }
-            else if (register.containedItemClass == "CodelistValue")
-            {
-                foreach (CodelistValue item in register.items)
-                {
-                    registerItems.Add(item);
-                }
-            }
-            else if (register.containedItemClass == "Organization")
-            {
-                foreach (Organization item in register.items)
-                {
-                    registerItems.Add(item);
-                }
-            }
-            else if (register.containedItemClass == "NameSpace")
-            {
-                foreach (NameSpace item in register.items)
-                {
-                    registerItems.Add(item);
-                }
             }
             else
             {
-                registerItems = register.items.ToList();
+                foreach (var item in register.items)
+                {
+                    registerItems.Add(item);
+                }
+            }
+
+            if (register.RegisterItems.Any())
+            {
+                    foreach (var item in register.RegisterItems)
+                    {
+                        if (filter.filterOrganization != null)
+                        {
+                            if (item.Owner.seoname == filter.filterOrganization)
+                            {
+                                registerItemsv2.Add(item);
+                            }
+                        }
+                        else registerItemsv2.Add(item);
+                }
             }
 
             register.items = registerItems;
+            register.RegisterItems = registerItemsv2;
             return register;
         }
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
         {
-            AccessControlService access = new AccessControlService();
-            if (register.name == "Det offentlige kartgrunnlaget - Kommunalt")
+            AccessControlService access = new AccessControlService(_dbContext);
+            if (register.IsDokMunicipal())
             {
                 if (!string.IsNullOrWhiteSpace(filter.municipality))
                 {
@@ -93,6 +87,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     GetNationalDatasets(registerItems);
                     GetMunicipalDatasetsByUser(register, registerItems);
+                    filter.municipality = GetOrganizationByUserName().MunicipalityCode;
                 }
 
                 register.items.Clear();
@@ -113,7 +108,6 @@ namespace Kartverket.Register.Services.Register
 
         private void GetMunicipalDatasetsByUser(Models.Register register, List<Models.RegisterItem> registerItems)
         {
-            AccessControlService access = new AccessControlService();
             Organization municipalityOrganization = GetOrganizationByUserName();
             GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipalityOrganization);
         }
@@ -190,12 +184,9 @@ namespace Kartverket.Register.Services.Register
             {
                 foreach (Document item in register.items)
                 {
-                    string role = HtmlHelperExtensions.GetSecurityClaim("role");
-                    string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
                     if (item.isCurrentVersion())
                     {
-                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                        if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                         {
                             registerItems.Add(item);
                         }
@@ -746,12 +737,9 @@ namespace Kartverket.Register.Services.Register
         {
             foreach (Document item in register.items)
             {
-                string role = HtmlHelperExtensions.GetSecurityClaim("role");
-                string user = HtmlHelperExtensions.GetSecurityClaim("organization");
-
                 if (item.isCurrentVersion())
                 {
-                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                    if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                     {
                         if (item.documentowner.seoname == filter.filterOrganization)
                         {
@@ -804,19 +792,6 @@ namespace Kartverket.Register.Services.Register
                     }
                 }
 
-                //if (filterInspire == null)
-                //{
-                //    filterInspire = item.inspireRequirement.value;
-                //}
-                //if (filterNational == null)
-                //{
-                //    filterNational = item.nationalRequirement.value;
-                //}
-                //if (filterNationalSea == null)
-                //{
-                //    filterNationalSea = item.nationalSeasRequirement.value;
-                //}
-
                 var queryResult = from e in _dbContext.EPSGs
                                   where e.dimensionId == filterDimensjon
                                   && e.systemId == item.systemId
@@ -829,9 +804,6 @@ namespace Kartverket.Register.Services.Register
                 }
                 filterHorisontalt = filter.filterHorisontalt;
                 filterVertikalt = filter.filterVertikalt;
-                filterInspire = filter.InspireRequirement;
-                filterNational = filter.nationalRequirement;
-                filterNationalSea = filter.nationalSeaRequirement;
             }
         }
 
@@ -899,7 +871,7 @@ namespace Kartverket.Register.Services.Register
         {
             string organizationLogin = HtmlHelperExtensions.GetSecurityClaim("organization");
             var queryResults = from o in _dbContext.Organizations
-                               where organizationLogin.Contains(o.name)
+                               where organizationLogin == o.name
                                select o;
 
             Organization organization = queryResults.FirstOrDefault();
@@ -1046,7 +1018,7 @@ namespace Kartverket.Register.Services.Register
 
         public Organization GetOrganizationByUserName()
         {
-            AccessControlService access = new AccessControlService();
+            AccessControlService access = new AccessControlService(_dbContext);
             if (access.IsMunicipalUser())
             {
                 string organizationNr = access.GetOrganizationNumber();
@@ -1136,6 +1108,22 @@ namespace Kartverket.Register.Services.Register
                 select o.systemId;
 
             return queryResults.FirstOrDefault();
+        }
+
+        public List<Models.Register> GetCodelistRegisters()
+        {
+            var queryResults = from o in _dbContext.Registers
+                where o.containedItemClass == "CodelistValue"
+                select o;
+
+            var codelistRegisters = new List<Models.Register>();
+            foreach (var item in queryResults)
+            {
+                codelistRegisters.Add(item);
+            }
+            codelistRegisters.OrderBy(r => r.NameTranslated());
+
+            return codelistRegisters;
         }
     }
 }

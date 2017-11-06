@@ -165,10 +165,28 @@
   <data name="SuggestNewEpsgCode" xml:space="preserve">
     <value>Foreslå ny EPSG-kode</value>
   </data>
+  <data name="TableHeaderDimension" xml:space="preserve">
+    <value>Dimensjon</value>
+  </data>
+  <data name="TableHeaderEksternalReference" xml:space="preserve">
+    <value>Referanser</value>
+  </data>
+  <data name="TableHeaderHorizontalReferenceSystem" xml:space="preserve">
+    <value>Horisontalt</value>
+  </data>
+  <data name="TableHeaderSosi" xml:space="preserve">
+    <value>SOSI</value>
+  </data>
+  <data name="TableHeaderVertikalReferenceSystem" xml:space="preserve">
+    <value>Vertikal</value>
+  </data>
   <data name="Vertical" xml:space="preserve">
     <value>Vertikalt</value>
   </data>
   <data name="VerticalReferenceSystem" xml:space="preserve">
     <value>Vertikalt referansesystem</value>
+  </data>
+  <data name="TableHeaderEpsg" xml:space="preserve">
+    <value>EPSG</value>
   </data>
 </root>

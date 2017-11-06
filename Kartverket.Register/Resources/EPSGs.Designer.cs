@@ -205,6 +205,60 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dimensjon.
+        /// </summary>
+        public static string TableHeaderDimension {
+            get {
+                return ResourceManager.GetString("TableHeaderDimension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Referanser.
+        /// </summary>
+        public static string TableHeaderEksternalReference {
+            get {
+                return ResourceManager.GetString("TableHeaderEksternalReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EPSG.
+        /// </summary>
+        public static string TableHeaderEpsg {
+            get {
+                return ResourceManager.GetString("TableHeaderEpsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horisontalt.
+        /// </summary>
+        public static string TableHeaderHorizontalReferenceSystem {
+            get {
+                return ResourceManager.GetString("TableHeaderHorizontalReferenceSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SOSI.
+        /// </summary>
+        public static string TableHeaderSosi {
+            get {
+                return ResourceManager.GetString("TableHeaderSosi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vertikal.
+        /// </summary>
+        public static string TableHeaderVertikalReferenceSystem {
+            get {
+                return ResourceManager.GetString("TableHeaderVertikalReferenceSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Vertikalt.
         /// </summary>
         public static string Vertical {

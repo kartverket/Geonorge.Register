@@ -470,21 +470,21 @@ namespace Kartverket.Register.Controllers
         {
             string language = Culture.NorwegianCode;
 
-            CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
-            if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
+            IEnumerable<string> headerValues;
+            if (request.Headers.TryGetValues("Accept-Language", out headerValues))
             {
-                language = cookie["_culture"].Value;
+                language = headerValues.FirstOrDefault();
+                if (CultureHelper.IsNorwegian(language))
+                    language = Culture.NorwegianCode;
+                else
+                    language = Culture.EnglishCode;
             }
             else
-            { 
-            IEnumerable<string> headerValues;
-                if (request.Headers.TryGetValues("Accept-Language", out headerValues))
+            {
+                CookieHeaderValue cookie = request.Headers.GetCookies("_culture").FirstOrDefault();
+                if (cookie != null && !string.IsNullOrEmpty(cookie["_culture"].Value))
                 {
-                    language = headerValues.FirstOrDefault();
-                    if (CultureHelper.IsNorwegian(language))
-                        language = Culture.NorwegianCode;
-                    else
-                        language = Culture.EnglishCode;
+                    language = cookie["_culture"].Value;
                 }
             }
 

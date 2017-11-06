@@ -137,7 +137,7 @@ namespace Kartverket.Register.Services.Search
                     {
                         if (item.isCurrentVersion())
                         {
-                            if ((item.statusId != "Submitted") || HtmlHelperExtensions.accessRegisterItem(item))
+                            if ((item.statusId != "Submitted") || HtmlHelperExtensions.AccessRegisterItem(item))
                             {
                                 Document document = item;
                                 registerItems.Add(document);

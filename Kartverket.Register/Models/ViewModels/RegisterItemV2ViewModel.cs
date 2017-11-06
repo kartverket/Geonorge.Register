@@ -58,6 +58,8 @@ namespace Kartverket.Register.Models.ViewModels
         //TODO gjøre på samme måte som RegisteritemV2
         public RegisterItem RegisterItem { get; set; }
 
+        public bool AccessRegisterItem { get; set; }
+
 
         public void UpdateRegisterItem(RegisterItemV2 item)
         {
@@ -81,6 +83,36 @@ namespace Kartverket.Register.Models.ViewModels
             DateRetired = item.DateRetired;
             VersionNumber = item.VersionNumber;
             VersionName = item.VersionName;
+        }
+
+        public void UpdateRegisterItem(RegisterItem item)
+        {
+            SystemId = item.systemId;
+            Name = item.name;
+            Seoname = item.seoname;
+            Submitter = item.submitter;
+            SubmitterId = item.submitterId;
+            //Owner = item.Owner;
+            //OwnerId = item.OwnerId;
+            Description = item.description;
+            DateSubmitted = item.dateSubmitted;
+            Modified = item.modified;
+            Status = item.status;
+            StatusId = item.statusId;
+            Register = item.register;
+            RegisterId = item.registerId;
+            DateAccepted = item.dateAccepted;
+            DateNotAccepted = item.dateNotAccepted;
+            DateSuperseded = item.dateSuperseded;
+            DateRetired = item.DateRetired;
+            VersionNumber = item.versionNumber;
+            VersionName = item.versionName;
+
+            if (item is Document document)
+            {
+                Owner = document.documentowner;
+                OwnerId = document.documentownerId;
+            }
         }
 
         public string NameTranslated(RegisterItem registerItem)
@@ -158,6 +190,9 @@ namespace Kartverket.Register.Models.ViewModels
                     return inspireDatasetViewModel.GetInspireDatasetEditUrl();
                 case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
+                case DocumentViewModel documentViewModel:
+                    return documentViewModel.EditVersionOfDocumentUrl();
+
             }
             switch (RegisterItem)
             {
@@ -194,6 +229,8 @@ namespace Kartverket.Register.Models.ViewModels
                     return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
                 case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
+                case DocumentViewModel documentViewModel:
+                    return documentViewModel.DeleteVersionOfDocumentUrl();
             }
             switch (RegisterItem)
             {
@@ -220,6 +257,33 @@ namespace Kartverket.Register.Models.ViewModels
                     return serviceAlert.GetServiceAlertDeleteUrl();
             }
             return "#";
+        }
+
+        public string EditVersionRegisterItemUrl()
+        {
+            switch (this)
+            {
+                case DocumentViewModel _:
+                    var document = (DocumentViewModel)this;
+                    return document.EditVersionOfDocumentUrl();
+            }
+            return "";
+        }
+
+        public string DeleteVersionRegisterItemUrl()
+        {
+            switch (this)
+            {
+                case DocumentViewModel _:
+                    var document = (DocumentViewModel)this;
+                    return document.DeleteVersionOfDocumentUrl();
+            }
+            return "";
+        }
+
+        public string DeleteVersionOfDocumentUrl()
+        {
+            return "/dokument/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett?vnr=" + VersionNumber;
         }
     }
 }

@@ -64,20 +64,14 @@
 }
 
 @section breadcrumb {
-
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-    }
-    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
     <li>@Shared.Edit</li>
 }
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @Shared.Edit @Model.name
+                @Shared.Edit @Model.NameTranslated()
             </h2>
         </div>
         <div class="col-sm-12">
@@ -85,7 +79,7 @@
         </div>
     </div>
 </section>
-<p id="registerName">Register: @Model.register.name</p>
+<p id="registerName">Register: @Model.register.NameTranslated()</p>
 <p>Versjons id: @Model.versionNumber</p>
 
 <form action="@Request.Url.LocalPath" method="post" enctype="multipart/form-data">

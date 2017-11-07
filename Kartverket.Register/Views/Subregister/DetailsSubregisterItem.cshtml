@@ -9,12 +9,6 @@
 
 
 @section breadcrumb {
-
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
-    }
-    <li><a href="@Model.register.GetObjectUrl()">@Model.register.NameTranslated()</a></li>
     <li>@Model.NameTranslated()</li>
 }
 

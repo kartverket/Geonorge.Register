@@ -7,11 +7,6 @@
 }
 
 @section breadcrumb {
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.Register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-    }
-    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
     <li>@DataSet.SuggestNewDataset</li>
 }
 
@@ -30,7 +25,7 @@
 
 <h3>@Shared.Search</h3>
 <p>@DataSet.SuggestMunicipalitySearchInfo</p>
-<p>@DataSet.SuggestMunicipalitySearchInfo. <a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">@DataSet.SuggestMunicipalitySearchInfoRegisterMetadata</a></p>
+<p><a href="@Html.EditorUrl()SimpleMetadata/Create" target="_blank">@DataSet.SuggestMunicipalitySearchInfoRegisterMetadata</a></p>
 
 @using (Html.BeginForm("CreateMunicipalDataset", "Datasets", FormMethod.Post, new { @class = "form-inline", @id = "searchDataset" }))
 {

@@ -670,17 +670,19 @@ namespace Kartverket.Register.Helpers
             return new HtmlString(html);
         }
 
-        public static IEnumerable<Models.Register> ParentRegisters(RegisterV2ViewModel currentRegister)
+        
+
+        public static IEnumerable<Models.Register> ParentRegisters(Object model)
         {
+            var parentRegister = GetRegister(model);
             var registerList = new List<Models.Register>();
-            var parentRegister = ParentRegister(currentRegister.ParentRegister);
             if (parentRegister != null)
             {
                 while (parentRegister != null)
                 {
                     if (!registerList.Contains(parentRegister))
                         registerList.Add(parentRegister);
-                    parentRegister = ParentRegister(parentRegister.parentRegister);
+                    parentRegister = parentRegister.parentRegister;
                 }
             }
             registerList.Reverse();
@@ -688,28 +690,31 @@ namespace Kartverket.Register.Helpers
 
         }
 
-        public static IEnumerable<Models.Register> ParentRegisters(Models.Register currentRegister)
+        private static Models.Register GetRegister(object model)
         {
-            var registerList = new List<Models.Register>();
-            var parentRegister = ParentRegister(currentRegister.parentRegister);
-            if (parentRegister != null)
+            Models.Register parentRegister = null;
+            switch (model)
             {
-                while (parentRegister != null)
-                {
-                    if (!registerList.Contains(parentRegister))
-                        registerList.Add(parentRegister);
-                    parentRegister = ParentRegister(parentRegister.parentRegister);
-                }
+                case RegisterV2ViewModel registerViewModel:
+                    parentRegister = registerViewModel.ParentRegister;
+                    break;
+                case Models.Register register:
+                    parentRegister = register.parentRegister;
+                    break;
+                case RegisterItem registerItem:
+                    parentRegister = registerItem.register;
+                    break;
+                case RegisterItemV2 registerItemV2:
+                    parentRegister = registerItemV2.Register;
+                    break;
+                case RegisterItemV2ViewModel registerItemV2:
+                    parentRegister = registerItemV2.Register;
+                    break;
             }
-            registerList.Reverse();
-            return registerList;
 
+            return parentRegister;
         }
 
-        public static Models.Register ParentRegister(Models.Register register)
-        {
-            return register;
-        }
 
         public static HtmlString Checked(bool isChecked, string type)
         {

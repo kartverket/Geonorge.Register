@@ -1,12 +1,11 @@
 ﻿@model Kartverket.Register.Models.Document
 
 @{
-    ViewBag.Title = Registers.SuggestNewVersionOf + " " + Model.name;
+    ViewBag.Title = Registers.SuggestNewVersionOf + " " + Model.NameTranslated();
 }
 
 @section breadcrumb {
-    <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
-    <li><a href="@Model.GetObjectUrl()">@Model.name</a></li>
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
     <li>@Registers.NewVersion</li>
 }
 
@@ -14,7 +13,7 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @Registers.SuggestNewVersionOf @Model.name
+                @Registers.SuggestNewVersionOf @Model.NameTranslated()
             </h2>
         </div>
         <div class="col-sm-12">

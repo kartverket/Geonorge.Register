@@ -1,18 +1,11 @@
-﻿@using Kartverket.Register.Helpers
-@using Kartverket.Register.Models.ViewModels
-@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Models.ViewModels
+@model Kartverket.Register.Models.Dataset
 ﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = DataSet.SuggestNewDataset;
 }
 @section breadcrumb {
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-    }
-    <li><a href="@Model.register.GetObjectUrl()">@Model.register.name</a></li>
     <li>@DataSet.SuggestNewDataset</li>
 }
 

@@ -42,5 +42,18 @@ namespace Kartverket.Register.Services
             List<Organization> organizations = queryResults.ToList();
             return organizations;
         }
+
+        public Organization GetOrganizationTranslatedByName(string name, string culture)
+        {
+            var organization = _dbContext.Organizations.SingleOrDefault(o => o.name == name && o.Translations.Any(oo => oo.CultureName == culture));
+            if (organization != null)
+            {
+                var translated = organization.Translations.Where(t => t.CultureName == culture).FirstOrDefault();
+                organization.name = translated.Name;
+                organization.description = translated.Description;
+            }
+
+            return organization;
+        }
     }
 }

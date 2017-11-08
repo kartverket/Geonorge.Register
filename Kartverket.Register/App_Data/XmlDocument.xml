@@ -729,6 +729,11 @@
             Get organization by name
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationTranslatedByName(System.String,System.String)">
+            <summary>
+            Get organization by name translated
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNumber(System.String)">
             <summary>
             Get organization by number

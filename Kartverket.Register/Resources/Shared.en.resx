@@ -214,7 +214,7 @@
     <value>Text</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Forside</value>
+    <value>Home</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>Next</value>
@@ -252,5 +252,8 @@
   </data>
   <data name="HeadingText" xml:space="preserve">
     <value>The registers contain technical and formal documentation used in the Norwegian Spatial Data Infrastructure. The documentation can be viewed in the registers modules of the geoportal, and are also available through APIs.</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log in</value>
   </data>
 </root>

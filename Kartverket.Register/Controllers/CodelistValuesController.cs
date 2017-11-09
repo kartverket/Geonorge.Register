@@ -120,6 +120,7 @@ namespace Kartverket.Register.Controllers
             codelistValue.register = _registerService.GetRegister(parentregister, registername);
             if (codelistValue.register != null)
             {
+                codelistValue.registerId = codelistValue.register.systemId;
                 if (_accessControlService.Access(codelistValue.register))
                 {
                     if (!_registerItemService.ItemNameAlredyExist(codelistValue))

@@ -11,6 +11,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Xml;
+using Kartverket.Register.Migrations;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -1124,6 +1125,22 @@ namespace Kartverket.Register.Services.Register
             codelistRegisters.OrderBy(r => r.NameTranslated());
 
             return codelistRegisters;
+        }
+
+        public void DeleteRegister(Models.Register register)
+        {
+            _registerItemService.DeleteRegisterItems(register.items);
+            DeleteSubregisters(register.subregisters);
+            _dbContext.Registers.Remove(register);
+            _dbContext.SaveChanges();
+        }
+
+        private void DeleteSubregisters(ICollection<Models.Register> subregisters)
+        {
+            foreach (var subregister in subregisters.ToList())
+            {
+                DeleteRegister(subregister);
+            }       
         }
     }
 }

@@ -204,6 +204,13 @@ namespace Kartverket.Register.Models.ViewModels
                 : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
         }
 
+        public string GetDeleteObjectUrl()
+        {
+            return ParentRegister == null
+                ? "/slett/" + Seoname
+                : "/subregister/" + ParentRegister.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+        }
+
         public virtual string GetObjectUrl()
         {
             return ParentRegister == null

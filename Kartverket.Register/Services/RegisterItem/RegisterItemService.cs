@@ -1492,5 +1492,20 @@ namespace Kartverket.Register.Services.RegisterItem
 
             return queryResults.FirstOrDefault();
         }
+
+        public void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems)
+        {
+            foreach (var registerItem in registerItems.ToList())
+            {
+                if (registerItem is CodelistValue codelistValue)
+                {
+                    RemoveBroaderAndNarrower(codelistValue);
+                    //codelistValue.broaderItemId = null;
+                    //codelistValue.narrowerItems.Clear();
+
+                }
+                    _dbContext.RegisterItems.Remove(registerItem);
+            }
+        }
     }
 }

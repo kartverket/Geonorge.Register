@@ -54,8 +54,21 @@ namespace Kartverket.Register.Services
             accessViewModel.Edit = EditRegister(registerViewModel);
             accessViewModel.Add = AddToRegister(registerViewModel);
             accessViewModel.EditListOfRegisterItems = EditRegisterItemsList(registerViewModel);
-            accessViewModel.Delete = IsAdmin();
+            accessViewModel.Delete = DeleteRegister(registerViewModel);
             return accessViewModel;
+        }
+
+        private bool DeleteRegister(RegisterV2ViewModel registerViewModel)
+        {
+            if (IsAdmin())
+            {
+                if (registerViewModel.ParentRegister == null)
+                {
+                    return registerViewModel.RegisterItems == null && registerViewModel.RegisterItemsV2 == null;
+                }
+                return true;
+            }
+            return false;
         }
 
         public bool AddToRegister(RegisterV2ViewModel registerViewModel)

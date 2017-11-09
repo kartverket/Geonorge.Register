@@ -164,6 +164,10 @@
             {
                 <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
             }
+            if (Model.AccessRegister.Delete)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
+            }
     }
     <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.GetObjectUrl()">@Shared.Back</a>
 </div>

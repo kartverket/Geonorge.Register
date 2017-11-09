@@ -57,5 +57,6 @@ namespace Kartverket.Register.Services.RegisterItem
         ICollection<Models.RegisterItem> OrderBy(ICollection<Models.RegisterItem> registerItems, string sorting);
         void MakeAllRegisterItemsValid(Models.Register register);
         string GetDistributionType(string codeValue);
+        void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems);
     }
 }

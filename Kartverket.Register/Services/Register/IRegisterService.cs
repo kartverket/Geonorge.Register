@@ -41,5 +41,6 @@ namespace Kartverket.Register.Services.Register
         Guid GetInspireStatusRegisterId();
         Guid GetGeodatalovStatusRegisterId();
         List<Models.Register> GetCodelistRegisters();
+        void DeleteRegister(Models.Register register);
     }
 }

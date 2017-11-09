@@ -86,7 +86,7 @@ namespace Kartverket.Register.Controllers
             return HttpNotFound();
         }
 
-        
+
 
         // POST: subregister/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -147,8 +147,8 @@ namespace Kartverket.Register.Controllers
 
             }
             ViewBagSubregister(register, registerparant);
-            
-            
+
+
             return View(subRegister);
         }
 
@@ -277,47 +277,12 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/{owner}/{subregister}/slett")]
         public ActionResult DeleteConfirmed(string registername, string owner, string subregister)
         {
-            var queryResults = from o in _db.Registers
-                               where o.seoname == subregister && o.parentRegister.seoname == registername
-                               select o.systemId;
+            var register = _registerService.GetRegister(registername, subregister);
+            var parentRegisterUrl = register.parentRegister.GetObjectUrl();
 
-            Guid systId = queryResults.FirstOrDefault();
-            Models.Register register = _db.Registers.Find(systId);
+            _registerService.DeleteRegister(register);
 
-            var queryResultsRegisterItem = ((from o in _db.RegisterItems
-                                             where (o.register.seoname == subregister && o.register.parentRegister.seoname == registername)
-                                             || (o.register.parentRegister.seoname == subregister && o.register.parentRegister.parentRegister.seoname == registername)
-                                             select o.systemId).Union(
-                                           from r in _db.Registers
-                                           where r.parentRegister.seoname == subregister && r.parentRegister.parentRegister.seoname == registername
-                                           select r.systemId));
-
-            if (queryResultsRegisterItem.Count() > 0)
-            {
-                ModelState.AddModelError("ErrorMessageDelete", Registers.ErrorMessageDelete);
-                return View(register);
-            }
-            else
-            {
-                string parentParentRegisterName = null;
-                string parentParentRegisterOwner = null;
-
-                if (register.parentRegister.parentRegisterId != null)
-                {
-                    parentParentRegisterName = register.parentRegister.parentRegister.seoname;
-                    parentParentRegisterOwner = register.parentRegister.parentRegister.owner.seoname;
-                }
-
-                _db.Registers.Remove(register);
-                _db.SaveChanges();
-
-                if (parentParentRegisterName != null)
-                {
-                    return Redirect("/subregister/" + parentParentRegisterName + "/" + parentParentRegisterOwner + "/" + registername);
-                }
-
-                return Redirect("/register/" + registername);
-            }
+            return Redirect(parentRegisterUrl);
         }
 
         protected override void Dispose(bool disposing)
@@ -336,15 +301,16 @@ namespace Kartverket.Register.Controllers
         private void ViewBagSubregister(Models.Register register, string parentRegister)
         {
             if (register.name == "Kodelister" || register.name == "Metadata kodelister" || parentRegister == "kodelister" || parentRegister == "metadata-kodelister")
-            {               
-                ViewBag.containedItemClass = new SelectList( new List<SelectListItem>
+            {
+                ViewBag.containedItemClass = new SelectList(new List<SelectListItem>
                 {
                     new SelectListItem() {  Value = "CodelistValue", Text= "Kodeverdier" },
                     new SelectListItem() { Value = "Register", Text = "Subregister" }
                 }, "Value", "Text", String.Empty);
             }
-            else { 
-            ViewBag.containedItemClass = new SelectList(_db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
+            else
+            {
+                ViewBag.containedItemClass = new SelectList(_db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
             }
             if (parentRegister != null)
             {
@@ -355,7 +321,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;
         }
-        
+
         private void ValidationName(Models.Register subRegister, string register)
         {
             var queryResultsDataset = from o in _db.Registers

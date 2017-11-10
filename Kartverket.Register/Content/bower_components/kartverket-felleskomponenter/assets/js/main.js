@@ -302,7 +302,8 @@ var baseurl_local = searchOption.baseUrl;
         url: menuService,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'accept': '*/*'
+          'accept': '*/*',
+          'Cookie:': '_culture=' + cultureData.currentCulture
         },
         data: {}
       });

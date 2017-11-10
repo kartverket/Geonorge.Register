@@ -64,6 +64,7 @@ namespace Kartverket.Register.Controllers
             if (cookie != null)
             {
                 cookie.Value = culture;   // update cookie value
+                cookie.Expires = DateTime.Now.AddYears(1);
                 cookie.Domain = ".geonorge.no";
             }
             else

@@ -70,6 +70,7 @@ namespace Kartverket.Register
             if (cookie == null)
             {
                 cookie = new HttpCookie("_culture", Culture.NorwegianCode);
+                cookie.Domain = ".geonorge.no";
                 HttpContext.Current.Response.Cookies.Add(cookie);
             }
 

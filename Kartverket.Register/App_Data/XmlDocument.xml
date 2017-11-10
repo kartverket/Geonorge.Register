@@ -2955,6 +2955,11 @@
               Looks up a localized string similar to Liste.
             </summary>
         </member>
+        <member name="P:Resources.Shared.LogIn">
+            <summary>
+              Looks up a localized string similar to Logg inn.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.NameFor_en">
             <summary>
               Looks up a localized string similar to Navn engelsk.

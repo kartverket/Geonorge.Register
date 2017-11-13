@@ -65,14 +65,16 @@ namespace Kartverket.Register.Controllers
             {
                 cookie.Value = culture;   // update cookie value
                 cookie.Expires = DateTime.Now.AddYears(1);
-                cookie.Domain = ".geonorge.no";
+                if (!Request.IsLocal)
+                    cookie.Domain = ".geonorge.no";
             }
             else
             {
                 cookie = new HttpCookie("_culture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
-                cookie.Domain = ".geonorge.no";
+                if (!Request.IsLocal)
+                    cookie.Domain = ".geonorge.no";
             }
             Response.Cookies.Add(cookie);
 

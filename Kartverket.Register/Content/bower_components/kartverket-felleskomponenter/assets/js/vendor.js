@@ -16917,7 +16917,7 @@ function $ParseProvider() {
  * @description
  */
 function $QProvider() {
-  var errorOnUnhandledRejections = true;
+  var errorOnUnhandledRejections = false;
   this.$get = ['$rootScope', '$exceptionHandler', function($rootScope, $exceptionHandler) {
     return qFactory(function(callback) {
       $rootScope.$evalAsync(callback);
@@ -16949,7 +16949,7 @@ function $QProvider() {
 
 /** @this */
 function $$QProvider() {
-  var errorOnUnhandledRejections = true;
+  var errorOnUnhandledRejections = false;
   this.$get = ['$browser', '$exceptionHandler', function($browser, $exceptionHandler) {
     return qFactory(function(callback) {
       $browser.defer(callback);

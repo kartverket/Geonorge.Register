@@ -300,10 +300,10 @@ var baseurl_local = searchOption.baseUrl;
       var request = $http({
         method: 'GET',
         url: menuService,
+        withCredentials: true,
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
-          'accept': '*/*',
-          'Cookie:': '_culture=' + cultureData.currentCulture
+          'accept': '*/*'
         },
         data: {}
       });

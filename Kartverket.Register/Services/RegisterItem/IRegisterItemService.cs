@@ -58,5 +58,6 @@ namespace Kartverket.Register.Services.RegisterItem
         void MakeAllRegisterItemsValid(Models.Register register);
         string GetDistributionType(string codeValue);
         void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems);
+        void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file);
     }
 }

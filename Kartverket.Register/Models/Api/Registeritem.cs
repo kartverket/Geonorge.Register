@@ -30,6 +30,7 @@ namespace Kartverket.Register.Models.Api
         public string description { get; set; }
         [DataMemberAttribute]
         public string seoname { get; set; }
+        [DataMemberAttribute]
         public string owner { get; set; }
         [DataMemberAttribute]
         public string versionName { get; set; }

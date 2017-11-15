@@ -13,6 +13,39 @@ namespace Kartverket.Register.Tests.Services.Register
 {
     public class RegisterServiceTest
     {
+
+        [Fact]
+        public void GetGegisterIfParentregisterIsNull()
+        {
+            var r1 = NewRegister("Register 1");
+            var r2 = NewRegister("Register 2");
+            var r3 = NewRegister("Register 3");
+            var registerList = new List<Models.Register> { r1, r2, r3 };
+
+            var registerService = new RegisterService(CreateTestDbContext(registerList));
+
+            var register = registerService.GetRegister(null, "register-1");
+            register.Should().Be(r1);
+        }
+
+        [Fact]
+        public void GetGegisterIfParentregisterIsNotNull()
+        {
+            var r1 = NewRegister("Register 1");
+            var r2 = NewRegister("Register 2");
+            var r3 = NewRegister("Register 3");
+
+            r1.parentRegister = r2;
+
+            var registerList = new List<Models.Register> { r1, r2, r3 };
+
+            var registerService = new RegisterService(CreateTestDbContext(registerList));
+
+            var register = registerService.GetRegister("register-2", "register-1");
+            register.Should().Be(r1);
+        }
+
+
         [Fact]
         public void GetTopLevelRegisters()
         {            

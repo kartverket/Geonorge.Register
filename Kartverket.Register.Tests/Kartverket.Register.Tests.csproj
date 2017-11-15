@@ -169,6 +169,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\CodelistValueControllerTest.cs" />
     <Compile Include="Controllers\DatasetsControllerTest.cs" />
     <Compile Include="Controllers\OrganizationsApiControllerTest.cs" />
     <Compile Include="Controllers\ApiControllerTest.cs" />

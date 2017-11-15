@@ -1512,23 +1512,21 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file)
         {
-            StreamReader csvreader = new StreamReader(file.InputStream);
+            var csvreader = new StreamReader(file.InputStream);
 
-            if (!csvreader.EndOfStream)
+            if (csvreader.EndOfStream) return;
+            csvreader.ReadLine(); // Overskift
+            if (register.ContainedItemClassIsCodelistValue())
             {
-                csvreader.ReadLine(); // Overskift
-                if (register.ContainedItemClassIsCodelistValue())
+                while (!csvreader.EndOfStream)
                 {
-                    while (!csvreader.EndOfStream)
-                    {
-                        var line = csvreader.ReadLine();
-                        var codeListValueImport = line.Split(';');
+                    var line = csvreader.ReadLine();
+                    var codeListValueImport = line.Split(';');
 
-                        var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
-                        if (!ItemNameAlredyExist(codelistValue)) return;
-                        codelistValue.versioningId = NewVersioningGroup(codelistValue);
-                        SaveNewRegisterItem(codelistValue);
-                    }
+                    var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
+                    if (!ItemNameAlredyExist(codelistValue)) return;
+                    codelistValue.versioningId = NewVersioningGroup(codelistValue);
+                    SaveNewRegisterItem(codelistValue);
                 }
             }
         }

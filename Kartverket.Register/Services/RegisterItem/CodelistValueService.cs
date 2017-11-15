@@ -62,7 +62,6 @@ namespace Kartverket.Register.Services.RegisterItem
                 Name = codeListValue[3],
                 Description = codeListValue[4],
                 RegisterItemId = codelistValue.systemId
-                
             };
            
         }

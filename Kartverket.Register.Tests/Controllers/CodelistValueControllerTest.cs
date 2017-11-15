@@ -40,7 +40,7 @@ namespace Kartverket.Register.Tests.Controllers
             RegisterService.Setup(r => r.GetRegister(null, "null")).Returns(Register);
 
             var controller = new CodelistValuesController(null, RegisterService.Object, null, null, null);
-            var result = controller.Import("testregister", null) as HttpNotFoundResult;
+            var result = controller.Import("", null) as HttpNotFoundResult;
             result.StatusCode.Should().Be(404);
         }
 

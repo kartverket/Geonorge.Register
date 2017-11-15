@@ -46,12 +46,12 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentregister, registername);
             if (register != null)
             {
-                ViewbagImport(register);
                 if (_accessControlService.Access(register))
                 {
+                    ViewbagImport(register);
                     return View();
                 }
-                throw new HttpException(401, "Access Denied");                
+                throw new HttpException(401, "Access Denied");
             }
             return HttpNotFound("Fant ikke register");
         }
@@ -61,21 +61,26 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner,
+            string parentregister)
         {
             var register = _registerService.GetRegister(parentregister, registername);
             if (register == null) return HttpNotFound();
-            if (csvfile != null)
+            if (_accessControlService.Access(register))
             {
-                if (ContentTypeIsCsv(csvfile))
+                if (csvfile != null)
                 {
-                    _registerItemService.ImportRegisterItemFromFile(register, csvfile);
-                    return Redirect(register.GetObjectUrl());
+                    if (ContentTypeIsCsv(csvfile))
+                    {
+                        _registerItemService.ImportRegisterItemFromFile(register, csvfile);
+                        return Redirect(register.GetObjectUrl());
+                    }
+                    ModelState.AddModelError("ErrorMessagefile", CodelistValues.ErrorMessagefile);
                 }
-                ModelState.AddModelError("ErrorMessagefile", CodelistValues.ErrorMessagefile);
+                ViewbagImport(register);
+                return View();
             }
-            ViewbagImport(register);
-            return View();
+            throw new HttpException(401, "Access Denied");
         }
 
         private static bool ContentTypeIsCsv(HttpPostedFileBase csvfile)
@@ -205,7 +210,7 @@ namespace Kartverket.Register.Controllers
                 else
                 {
                     throw new HttpException(401, "Access Denied");
-                }            
+                }
             }
             Viewbags(originalCodelistValue);
             return View(originalCodelistValue);

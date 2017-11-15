@@ -31,9 +31,7 @@ namespace Kartverket.Register.Tests.Controllers
         }
 
         
-
         // IMPORT
-
         [Fact]
         public void GetHttpNotFoundIfRegisterIsNullWhenTryingToGetImportView()
         {
@@ -78,7 +76,7 @@ namespace Kartverket.Register.Tests.Controllers
             var controller = new CodelistValuesController(RegisterItemService.Object, RegisterService.Object, AccessControlService.Object, null, null);
             controller.Import(file.Object, "testregister", null, null);
             var modelstate = controller.ModelState;
-            modelstate.Values.ElementAt(0).Errors.ElementAt(0).ErrorMessage.Should().Be("Filen har feil innhold!");
+            modelstate.IsValid.Should().BeFalse();
         }
 
         [Fact]

@@ -60,7 +60,7 @@ namespace Kartverket.Register.Services
 
         private bool DeleteRegister(RegisterV2ViewModel registerViewModel)
         {
-            if (IsAdmin())
+            if (IsAdmin() || IsRegisterOwner(registerViewModel.Owner.name, UserName()))
             {
                 if (registerViewModel.ParentRegister == null)
                 {

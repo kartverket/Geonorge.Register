@@ -342,7 +342,7 @@ namespace Kartverket.Register.Services
         public string UserName()
         {
             var user = _registerService.GetOrganizationByUserName();
-            return user.name;
+            return user?.name;
         }
     }
 }

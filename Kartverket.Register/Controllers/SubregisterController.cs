@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
@@ -157,32 +158,13 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/{owner}/{subregister}/rediger")]
         public ActionResult Edit(string registername, string subregister)
         {
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-
-            var queryResults = from o in _db.Registers
-                               where o.seoname == subregister && o.parentRegister.seoname == registername
-                               select o.systemId;
-
-            Guid systId = queryResults.FirstOrDefault();
-            Models.Register register = _db.Registers.Find(systId);
+            var register = _registerService.GetRegister(registername, subregister);
+            if (register == null) return HttpNotFound("Fant ikke register");
 
             Viewbags(register);
-            if (register == null)
-            {
-                return HttpNotFound();
-            }
             register.AddMissingTranslations();
-            if (role == "nd.metadata_admin")
-            {
-                return View(register);
-            }
 
-            if ((role == "nd.metadata" || user == register.owner.name) && register.accessId == 2)
-            {
-                return View(register);
-            }
-            return HttpNotFound();
+            return _accessControlService.Access(register) ? View(register) : throw new HttpException(401, "Access Denied");
         }
 
         // POST: Subregister/Edit/5

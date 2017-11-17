@@ -66,23 +66,15 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
-            Models.Register nyttRegister = new Models.Register();
-            nyttRegister.AddMissingTranslations();
-            Models.Register register = _registerService.GetSubregisterByName(parentregister, registername);
-            nyttRegister.parentRegister = register;
+            var register = new Models.Register();
+            register.parentRegister = _registerService.GetSubregisterByName(parentregister, registername);
 
-            string role = GetSecurityClaim("role");
-            string user = GetSecurityClaim("organization");
-            ViewBagSubregister(register, parentregister);
-
-            if (register.parentRegister != null)
+            if (_accessControlService.Access(register.parentRegister))
             {
-                nyttRegister.parentRegister.parentRegister = register.parentRegister;
-            }
+                register.AddMissingTranslations();
+                ViewBagSubregister(register);
 
-            if (_accessControlService.Access(register))
-            {
-                return View(nyttRegister);
+                return View(register);
             }
             return HttpNotFound();
         }
@@ -98,58 +90,15 @@ namespace Kartverket.Register.Controllers
         [Route("subregister/{registerName}/ny")]
         public ActionResult Create(Models.Register subRegister, string registerName, string registerparant)
         {
-            var errors = ModelState.Select(x => x.Value.Errors)
-                          .Where(y => y.Count > 0)
-                          .ToList();
-
-            ValidationName(subRegister, registerName);
-
-            var queryResultsRegister = from o in _db.Registers
-                                       where o.seoname == registerName && o.parentRegister.seoname == registerparant
-                                       select o.systemId;
-            Guid regId = queryResultsRegister.FirstOrDefault();
-            Models.Register register = _db.Registers.Find(regId);
+            subRegister.parentRegister = _registerService.GetRegister(registerparant, registerName);
+            if (_registerService.RegisterNameAlredyExist(subRegister)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
             if (ModelState.IsValid)
             {
-                subRegister.systemId = Guid.NewGuid();
-                if (subRegister.name == null)
-                {
-                    subRegister.name = "ikke angitt";
-                }
-                subRegister.systemId = Guid.NewGuid();
-                subRegister.modified = DateTime.Now;
-                subRegister.dateSubmitted = DateTime.Now;
-                subRegister.statusId = "Submitted";
-                subRegister.seoname = Helpers.RegisterUrls.MakeSeoFriendlyString(subRegister.name);
-                subRegister.parentRegisterId = regId;
-
-                _db.Registers.Add(subRegister);
-                _db.SaveChanges();
-
-                string organizationLogin = GetSecurityClaim("organization");
-
-                var queryResults = from o in _db.Organizations
-                                   where o.name == organizationLogin
-                                   select o.systemId;
-
-                Guid orgId = queryResults.FirstOrDefault();
-                Organization submitterOrganisasjon = _db.Organizations.Find(orgId);
-
-                subRegister.ownerId = submitterOrganisasjon.systemId;
-                subRegister.managerId = submitterOrganisasjon.systemId;
-
-                _db.Entry(subRegister).State = EntityState.Modified;
-
-                _db.SaveChanges();
-                ViewBagSubregister(register, registerparant);
-
-                return Redirect("/subregister/" + subRegister.parentRegister.seoname + "/" + subRegister.parentRegister.owner.seoname + "/" + subRegister.seoname);
-
+                var register = _registerService.CreateNewRegister(subRegister);
+                return Redirect(register.GetObjectUrl());
             }
-            ViewBagSubregister(register, registerparant);
-
-
+            ViewBagSubregister(subRegister);
             return View(subRegister);
         }
 
@@ -280,25 +229,26 @@ namespace Kartverket.Register.Controllers
 
         // *********************** Hjelpemetoder
 
-        private void ViewBagSubregister(Models.Register register, string parentRegister)
+        private void ViewBagSubregister(Models.Register register)
         {
-            if (register.name == "Kodelister" || register.name == "Metadata kodelister" || parentRegister == "kodelister" || parentRegister == "metadata-kodelister")
+            // TODO, fiks!!
+            if (register.parentRegister != null)
             {
-                ViewBag.containedItemClass = new SelectList(new List<SelectListItem>
+                if (register.parentRegister.name == "Kodelister" || register.parentRegister.name == "Metadata kodelister" ||
+                    register.parentRegister.parentRegister?.name == "Kodelister" ||
+                    register.parentRegister.parentRegister?.name == "Metadata kodelister")
                 {
-                    new SelectListItem() {  Value = "CodelistValue", Text= "Kodeverdier" },
-                    new SelectListItem() { Value = "Register", Text = "Subregister" }
-                }, "Value", "Text", String.Empty);
-            }
-            else
-            {
-                ViewBag.containedItemClass = new SelectList(_db.ContainedItemClass.OrderBy(s => s.description), "value", "description", String.Empty);
-            }
-            if (parentRegister != null)
-            {
-                ViewBag.parentRegister = register.parentRegister.name;
-                ViewBag.parentRegisterSEO = register.parentRegister.seoname;
-                ViewBag.parentRegisterOwner = register.parentRegister.owner.seoname;
+                    ViewBag.containedItemClass = new SelectList(new List<SelectListItem>
+                    {
+                        new SelectListItem() {Value = "CodelistValue", Text = "Kodeverdier"},
+                        new SelectListItem() {Value = "Register", Text = "Subregister"}
+                    }, "Value", "Text", String.Empty);
+                }
+                else
+                {
+                    ViewBag.containedItemClass = new SelectList(_db.ContainedItemClass.OrderBy(s => s.description),
+                        "value", "description", String.Empty);
+                }
             }
             ViewBag.register = register.name;
             ViewBag.registerSEO = register.seoname;

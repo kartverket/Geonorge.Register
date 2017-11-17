@@ -42,5 +42,7 @@ namespace Kartverket.Register.Services.Register
         Guid GetGeodatalovStatusRegisterId();
         List<Models.Register> GetCodelistRegisters();
         void DeleteRegister(Models.Register register);
+        bool RegisterNameAlredyExist(Object register);
+        Models.Register CreateNewRegister(Models.Register register);
     }
 }

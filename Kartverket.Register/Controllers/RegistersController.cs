@@ -200,7 +200,7 @@ namespace Kartverket.Register.Controllers
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
+                if (_registerService.RegisterNameAlredyExist(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
                 if (ModelState.IsValid)
                 {

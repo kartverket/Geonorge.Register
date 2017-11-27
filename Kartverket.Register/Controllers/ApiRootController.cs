@@ -320,6 +320,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
+
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, FilterParameters filter = null)
         {
             var tmp = ConvertRegister(item, filter);
@@ -333,7 +334,7 @@ namespace Kartverket.Register.Controllers
                 }
             }
 
-            else if (item.items.Any())
+            if (item.items.Any())
             {
                 foreach (var d in item.items)
                 {
@@ -353,7 +354,7 @@ namespace Kartverket.Register.Controllers
             else
             {
                 tmp.containedSubRegisters = new List<Models.Api.Register>();
-                List<Models.Register> subregisters = _registerService.GetSubregistersOfRegister(item);
+                var subregisters = _registerService.GetSubregistersOfRegister(item);
                 if (subregisters != null)
                 {
                     foreach (var reg in subregisters)

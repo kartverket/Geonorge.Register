@@ -3,7 +3,10 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
+using System.Web;
 using FluentAssertions;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
@@ -14,26 +17,26 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
     public class RegisterItemServiceTest
     {
         [Fact]
-        public void getCurrentRegisterItem()
+        public void GetCurrentRegisterItem()
         {            
-            Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            var register = NewRegister("Register name");
+            var versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualCurrentVersion = registerItemService.GetCurrentRegisterItem(null, register.seoname, versions[1].seoname);
+            var actualCurrentVersion = registerItemService.GetCurrentRegisterItem(null, register.seoname, versions[1].seoname);
 
             actualCurrentVersion.Should().Be(versions[0]);
         }
 
         [Fact]
-        public void getVersionsOfItem()
+        public void GetVersionsOfItem()
         {
-            Models.Register register = NewRegister("Register name");
+            var register = NewRegister("Register name");
             register.parentRegister = NewRegister("Parentregister name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            var versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            List<Models.RegisterItem> actualListOfVersions = registerItemService.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, versions[1].seoname);
+            var actualListOfVersions = registerItemService.GetAllVersionsOfItem(register.parentRegister.seoname, register.seoname, versions[1].seoname);
 
             actualListOfVersions.Count.Should().Be(5);
         }
@@ -41,11 +44,11 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         [Fact]
         public void GetRegisterItemByVersionNr()
         {
-            Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "kartverket");
+            var register = NewRegister("Register name");
+            var versions = GetListOfVersions("itemName", register, "kartverket");
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            Models.RegisterItem actualVersion = registerItemService.GetRegisterItem(null,  register.seoname, "itemname", 2);
+            var actualVersion = registerItemService.GetRegisterItem(null,  register.seoname, "itemname", 2);
 
             actualVersion.Should().Be(versions[2]);
         }
@@ -53,17 +56,17 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         [Fact]
         public void GetRegisterItemByOrganization()
         {
-            Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
-            List<Models.RegisterItem> versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
+            var register = NewRegister("Register name");
+            var versions = GetListOfVersions("itemName", register, "Kartverket");
+            var versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
 
-            foreach (Models.RegisterItem item in versionsFromOtherOrganization)
+            foreach (var item in versionsFromOtherOrganization)
             {
                 versions.Add(item);
             }
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            List<Models.RegisterItem> actualVersion = registerItemService.GetRegisterItemsFromOrganization(null, register.seoname, "kartverket");
+            var actualVersion = registerItemService.GetRegisterItemsFromOrganization(null, register.seoname, "kartverket");
 
             actualVersion.Count.Should().Be(2);
         }
@@ -71,18 +74,18 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         [Fact]
         public void GetSubregisterItemByOrganization()
         {
-            Models.Register register = NewRegister("Register name");
+            var register = NewRegister("Register name");
             register.parentRegister = NewRegister("Parent name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
-            List<Models.RegisterItem> versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
+            var versions = GetListOfVersions("itemName", register, "Kartverket");
+            var versionsFromOtherOrganization = GetListOfVersions("itemName2", register, "Kartverket");
 
-            foreach (Models.RegisterItem item in versionsFromOtherOrganization)
+            foreach (var item in versionsFromOtherOrganization)
             {
                 versions.Add(item);
             }
 
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
-            List<Models.RegisterItem> actualVersion = registerItemService.GetRegisterItemsFromOrganization(register.parentRegister.seoname, register.seoname, "kartverket");
+            var actualVersion = registerItemService.GetRegisterItemsFromOrganization(register.parentRegister.seoname, register.seoname, "kartverket");
 
             actualVersion.Count.Should().Be(2);
         }
@@ -134,7 +137,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             return versions;
         }
 
-        private Models.Organization NewOrganization(string name)
+        private Organization NewOrganization(string name)
         {
             Models.Organization organization = new Models.Organization();
             organization.systemId = Guid.NewGuid();
@@ -144,18 +147,21 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             return organization;
         }
 
-        private RegisterDbContext CreateTestDbContext(IEnumerable<Models.RegisterItem> versions)
+        private RegisterDbContext CreateTestDbContext(IEnumerable<Models.RegisterItem> versions = null)
         {
-            var data = versions.AsQueryable();
-
-            var mockSet = new Mock<DbSet<Models.RegisterItem>>();
-            mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Provider).Returns(data.Provider);
-            mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Expression).Returns(data.Expression);
-            mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.ElementType).Returns(data.ElementType);
-            mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.GetEnumerator()).Returns(data.GetEnumerator());
-
             var mockContext = new Mock<RegisterDbContext>();
-            mockContext.Setup(c => c.RegisterItems).Returns(mockSet.Object);
+
+            if (versions.Any())
+            {
+                var data = versions.AsQueryable();
+                var mockSet = new Mock<DbSet<Models.RegisterItem>>();
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Provider).Returns(data.Provider);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Expression).Returns(data.Expression);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.ElementType).Returns(data.ElementType);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.GetEnumerator())
+                    .Returns(data.GetEnumerator());
+                mockContext.Setup(c => c.RegisterItems).Returns(mockSet.Object);
+            }
 
             return mockContext.Object;
         }

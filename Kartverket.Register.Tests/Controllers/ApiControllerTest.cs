@@ -10,7 +10,7 @@ using System.Web.Http.Results;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services.RegisterItem;
 using Xunit;
-
+using Kartverket.Register.Models.Translations;
 
 namespace Kartverket.Register.Tests.Controllers
 {    
@@ -269,6 +269,8 @@ namespace Kartverket.Register.Tests.Controllers
             register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
             register.description = "testbeskrivelse";
             register.owner = NewOrganization("Testorg");
+            register.Translations.Add(new Models.Translations.RegisterTranslation { CultureName = Culture.NorwegianCode });
+            register.AddMissingTranslations();
             return register;
         }
 
@@ -309,6 +311,8 @@ namespace Kartverket.Register.Tests.Controllers
                 document.versioning = versionGroup;
                 document.versioningId = versionGroup.systemId;
                 document.register = register;
+                document.Translations.Add( new Models.Translations.DocumentTranslation { CultureName = Culture.NorwegianCode });
+                document.AddMissingTranslations();
 
                 versions.Add(document);
                 versionGroup.lastVersionNumber++;

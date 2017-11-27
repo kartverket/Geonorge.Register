@@ -3,6 +3,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services.RegisterItem;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -20,12 +21,14 @@ namespace Kartverket.Register.Services.Register
         private readonly RegisterDbContext _dbContext;
         private IRegisterItemService _registerItemService;
         private IDatasetDeliveryService _datasetDeliveryService;
+        private readonly IUserService _userService;
 
         public RegisterService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
             _registerItemService = new RegisterItemService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
+            _userService = new UserService(_dbContext);
         }
 
         public Models.Register FilterRegisterItems(Models.Register register, FilterParameters filter)
@@ -1133,6 +1136,47 @@ namespace Kartverket.Register.Services.Register
             DeleteSubregisters(register.subregisters);
             _dbContext.Registers.Remove(register);
             _dbContext.SaveChanges();
+        }
+
+        public bool RegisterNameAlredyExist(object model)
+        {
+            if (model is Models.Register register)
+            {
+                var queryResults = from o in _dbContext.Registers
+                    where o.name == register.name &&
+                          o.systemId != register.systemId &&
+                          o.parentRegisterId == register.parentRegister.systemId
+                    select o.systemId;
+
+                if (queryResults.ToList().Any())
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Models.Register CreateNewRegister(Models.Register register)
+        {
+            register.systemId = Guid.NewGuid();
+            register.modified = DateTime.Now;
+            register.dateSubmitted = DateTime.Now;
+            register.statusId = "Submitted";
+            register.seoname = RegisterUrls.MakeSeoFriendlyString(register.name);
+            register.parentRegisterId = register.parentRegister?.systemId;
+            register.ownerId = _userService.GetUserOrganizationId();
+            register.managerId = _userService.GetUserOrganizationId();
+
+            foreach (var translation in register.Translations)
+            {
+                translation.RegisterId = register.systemId;
+            }
+
+            _dbContext.Entry(register).State = EntityState.Modified;
+            _dbContext.Registers.Add(register);
+            _dbContext.SaveChanges();
+
+            return register;
         }
 
         private void DeleteSubregisters(ICollection<Models.Register> subregisters)

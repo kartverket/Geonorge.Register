@@ -989,6 +989,7 @@
     <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\GeodatalovDatasetService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
     <Compile Include="Services\Notify\IEmailService.cs" />
@@ -996,7 +997,9 @@
     <Compile Include="Services\Notify\NotificationService.cs" />
     <Compile Include="Services\InspireDatasetService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
+    <Compile Include="Services\RegisterItem\ICodelistValueService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
+    <Compile Include="Services\RegisterItem\CodelistValueService.cs" />
     <Compile Include="Services\RegisterItem\RegisterItemService.cs" />
     <Compile Include="Services\RegisterIndexer.cs" />
     <Compile Include="Services\Report\DokReportService.cs" />
@@ -1013,6 +1016,7 @@
     <Compile Include="Services\SolrRegisterIndexer.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Services\Versioning\IVersioningService.cs" />
     <Compile Include="Services\Versioning\VersioningService.cs" />
   </ItemGroup>
@@ -1460,6 +1464,7 @@
     <Content Include="Views\GeodatalovDatasets\Edit.cshtml" />
     <Content Include="Views\Shared\_geodatalovDataset.cshtml" />
     <Content Include="Views\Shared\_detailsGeodatalovDataset.cshtml" />
+    <Content Include="Views\Shared\_breadcrumb.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

@@ -3,22 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
 using SolrNet.Impl.FieldSerializers;
+using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
     public class RegisterItemService : IRegisterItemService
     {
         private readonly RegisterDbContext _dbContext;
-        private IRegisterItemService _registerItemService;
+        private readonly ICodelistValueService _codelistValueService;
+        private readonly IUserService _userService;
 
         public RegisterItemService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
+            _codelistValueService = new CodelistValueService(_dbContext);
+            _userService = new UserService(_dbContext);
         }
 
         public void SetNarrowerItems(List<Guid> narrowerList, CodelistValue codelistValue)
@@ -1500,12 +1505,31 @@ namespace Kartverket.Register.Services.RegisterItem
                 if (registerItem is CodelistValue codelistValue)
                 {
                     RemoveBroaderAndNarrower(codelistValue);
-                    //codelistValue.broaderItemId = null;
-                    //codelistValue.narrowerItems.Clear();
-
                 }
                     _dbContext.RegisterItems.Remove(registerItem);
             }
         }
+
+        public void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file)
+        {
+            var csvreader = new StreamReader(file.InputStream);
+
+            if (csvreader.EndOfStream) return;
+            csvreader.ReadLine(); // Overskift
+            if (register.ContainedItemClassIsCodelistValue())
+            {
+                while (!csvreader.EndOfStream)
+                {
+                    var line = csvreader.ReadLine();
+                    var codeListValueImport = line.Split(';');
+
+                    var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
+                    if (!ItemNameAlredyExist(codelistValue)) return;
+                    codelistValue.versioningId = NewVersioningGroup(codelistValue);
+                    SaveNewRegisterItem(codelistValue);
+                }
+            }
+        }
+
     }
 }

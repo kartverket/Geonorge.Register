@@ -62,12 +62,19 @@ namespace Kartverket.Register.Controllers
             // Save culture in a cookie
             HttpCookie cookie = Request.Cookies["_culture"];
             if (cookie != null)
+            {
                 cookie.Value = culture;   // update cookie value
+                cookie.Expires = DateTime.Now.AddYears(1);
+                if (!Request.IsLocal)
+                    cookie.Domain = ".geonorge.no";
+            }
             else
             {
                 cookie = new HttpCookie("_culture");
                 cookie.Value = culture;
                 cookie.Expires = DateTime.Now.AddYears(1);
+                if (!Request.IsLocal)
+                    cookie.Domain = ".geonorge.no";
             }
             Response.Cookies.Add(cookie);
 
@@ -193,7 +200,7 @@ namespace Kartverket.Register.Controllers
         {
             if (IsAdmin())
             {
-                if (_registerService.validationName(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
+                if (_registerService.RegisterNameAlredyExist(register)) ModelState.AddModelError("ErrorMessage", Registers.ErrorMessageValidationName);
 
                 if (ModelState.IsValid)
                 {

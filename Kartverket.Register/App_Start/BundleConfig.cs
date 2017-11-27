@@ -36,6 +36,8 @@ namespace Kartverket.Register
                 "~/Scripts/geonorge-register.js",
                 "~/Scripts/proj4leaflet.js"));
 
+            BundleTable.EnableOptimizations = true;
+
         }        
     }
 }

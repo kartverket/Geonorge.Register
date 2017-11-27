@@ -3,26 +3,20 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = Shared.Edit + " " + Model.name;
+    ViewBag.Title = Shared.Edit + " " + Model.NameTranslated();
     var parentList = ViewBag.parentRegisterId;
 }
 
 @section breadcrumb {
-
-@foreach (var register in HtmlHelperExtensions.ParentRegisters(Model))
-{
-    <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-}
-<li><a href="@Model.parentRegister.GetObjectUrl()">@Html.DisplayFor(model => model.parentRegister.name)</a></li>
-<li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
-<li>@Shared.Edit</li>
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
+    <li>@Shared.Edit</li>
 }
 
 <section class="heading">
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @Shared.Edit @Model.name
+                @Shared.Edit @Model.NameTranslated()
             </h2>
         </div>
         <div class="col-sm-12">
@@ -86,87 +80,84 @@
             </div>
         </div>
 
-        @if (Request.IsAuthenticated)
-        {
-            if (HtmlHelperExtensions.IsAdmin())
-            {
-                <div class="form-group">
-                    @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            }
-        }
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.owner, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
 
         @if (HtmlHelperExtensions.IsAdmin())
         {
             <div class="form-group">
-                @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
+                    @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-2"></div>
-                <div class="col-md-10">
-                    @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
-                    <br /><small>@Registers.AccessText </small> <br /><br />
-                </div>
-                <div class="col-md-2"></div>
-                <div class="col-md-5">
-                    @if (Model.accessId == 1)
-                    {
-                        @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @checked = "checked", @class = "col-md-1", })
-                    }
-                    else
-                    {
-                        @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", })
-                    }
-                    <label class="col-md-4" for=" admin">Admin</label>
 
-                    @if (Model.accessId == 2)
-                    {
-                        @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @checked = "checked", @class = "col-md-1" })
-                    }
-                    else
-                    {
-                        @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
-                    }
-                    <label class="col-md-4" for="editor">Admin + Editor</label>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.owner, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ownerId", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.accessId, Registers.AccessLabel)
+                        <br /><small>@Registers.AccessText </small> <br /><br />
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">
+                        @if (Model.accessId == 1)
+                        {
+                            @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @checked = "checked", @class = "col-md-1", })
+                        }
+                        else
+                        {
+                            @Html.RadioButton("accessId", 1, htmlAttributes: new { @id = "admin", @title = "Administrator har full tilgang", @class = "col-md-1", })
+                        }
+                        <label class="col-md-4" for=" admin">Admin</label>
+
+                        @if (Model.accessId == 2)
+                        {
+                            @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @checked = "checked", @class = "col-md-1" })
+                        }
+                        else
+                        {
+                            @Html.RadioButton("accessId", 2, htmlAttributes: new { @id = "editor", @title = "Administrator har full tilgang og Editor kan foreslå, endre og slette egne oppføringer", @class = "col-md-1" })
+                        }
+                        <label class="col-md-4" for="editor">Admin + Editor</label>
+                    </div>
+                </div>
             if (Model.ContainedItemClassIsCodelistValue())
-             {
-                 <div class="form-group">
-                     <div class="col-md-2"></div>
-                     <div class="col-md-10">
-                         @Html.LabelFor(model => model.MakeAllItemsValid)
-                     </div>
-                     <div class="col-md-2"></div>
-                     <div class="col-md-10">
-                         @Html.CheckBoxFor(m => m.MakeAllItemsValid, new {title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline"})
-                         <small>@Registers.MakeAllItemsValidMessage.</small>
-                     </div>
-                 </div>
-             }
+            {
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.MakeAllItemsValid)
+                    </div>
+                    <div class="col-md-2"></div>
+                    <div class="col-md-10">
+                        @Html.CheckBoxFor(m => m.MakeAllItemsValid, new { title = Registers.MakeAllItemsValidMessage, @class = "checkbox-inline" })
+                        <small>@Registers.MakeAllItemsValidMessage.</small>
+                    </div>
+                </div>
+            }
         }
         else
         {
             @Html.HiddenFor(model => model.accessId)
             @Html.HiddenFor(model => model.MakeAllItemsValid)
+            @Html.HiddenFor(model => model.parentRegisterId)
+            @Html.HiddenFor(model => model.ownerId)
         }
     </div>
     <div class="form-group">

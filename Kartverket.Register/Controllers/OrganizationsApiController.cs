@@ -3,6 +3,7 @@ using System.Web.Http.Cors;
 using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
+using System.Web.Http.Description;
 
 namespace Kartverket.Register.Controllers
 {
@@ -30,6 +31,24 @@ namespace Kartverket.Register.Controllers
             externalModel.Convert(organization);
             return Ok(externalModel);
         }
+
+        /// <summary>
+        /// Get organization by name translated
+        /// </summary>
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/organisasjon/navn/{name}/{culture}")]
+        public IHttpActionResult GetOrganizationTranslatedByName(string name, string culture)
+        {
+            Organization organization = _organizationService.GetOrganizationTranslatedByName(name, culture);
+
+            if (organization == null)
+                return NotFound();
+
+            var externalModel = new Models.Api.Organization();
+            externalModel.Convert(organization);
+            return Ok(externalModel);
+        }
+
 
         /// <summary>
         /// Get organization by number

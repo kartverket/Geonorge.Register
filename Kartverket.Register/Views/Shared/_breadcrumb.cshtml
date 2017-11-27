@@ -1,0 +1,6 @@
+﻿@using Kartverket.Register.Helpers
+
+@foreach (var register in HtmlHelperExtensions.ParentRegisters(Model))
+ {
+     <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
+ }

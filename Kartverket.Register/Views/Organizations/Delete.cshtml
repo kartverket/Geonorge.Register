@@ -3,17 +3,11 @@
 ﻿@using Kartverket.Register.Helpers
 
 @{
-    ViewBag.Title = Shared.Delete + " " + Model.name;
+    ViewBag.Title = Shared.Delete + " " + Model.NameTranslated();
 }
 
 @section breadcrumb {
-
-@foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-{
-    <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-}
-<li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-<li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
+<li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
 <li>@Shared.Delete</li>
 }
 
@@ -22,14 +16,14 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>
-                @Shared.Delete  @Model.name
+                @Shared.Delete  @Model.NameTranslated()
             </h2>
         </div>
         <div class="col-sm-12">
             <span class="separator-lg"></span>
         </div>
     </div>
-</section><h4>@Registers.DeleteConfirm <b>@Model.name</b>?</h4>
+</section><h4>@Registers.DeleteConfirm <b>@Model.NameTranslated()</b>?</h4>
 <hr />
 
 @using (Html.BeginForm())

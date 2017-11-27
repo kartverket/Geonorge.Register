@@ -729,6 +729,11 @@
             Get organization by name
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationTranslatedByName(System.String,System.String)">
+            <summary>
+            Get organization by name translated
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.OrganizationsApiController.GetOrganizationByNumber(System.String)">
             <summary>
             Get organization by number
@@ -2948,6 +2953,11 @@
         <member name="P:Resources.Shared.List">
             <summary>
               Looks up a localized string similar to Liste.
+            </summary>
+        </member>
+        <member name="P:Resources.Shared.LogIn">
+            <summary>
+              Looks up a localized string similar to Logg inn.
             </summary>
         </member>
         <member name="P:Resources.Shared.NameFor_en">

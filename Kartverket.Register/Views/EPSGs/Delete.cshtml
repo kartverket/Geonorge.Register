@@ -7,13 +7,7 @@
 }
 
 @section breadcrumb {
-
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-    }
-    <li><a href="@Model.register.GetObjectUrl()">@Html.DisplayFor(model => model.register.name)</a></li>
-    <li><a href="@Model.GetObjectUrl()">@Html.DisplayFor(model => model.name)</a></li>
+    <li><a href="@Model.GetObjectUrl()">@Model.NameTranslated()</a></li>
     <li>@Shared.Delete</li>
 }
 
@@ -30,7 +24,7 @@
     </div>
 </section>
 
-<h4>@Registers.DeleteConfirm <b>@Model.name</b>?</h4>
+<h4>@Registers.DeleteConfirm <b>@Model.NameTranslated()</b>?</h4>
 <hr />
 
     @using (Html.BeginForm())

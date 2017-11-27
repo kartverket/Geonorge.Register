@@ -1,6 +1,5 @@
 ﻿@using Kartverket.Register.Helpers
 @model Kartverket.Register.Models.RegisterItem
-﻿@using Kartverket.Register.Helpers
 
 @{
     ViewBag.Title = @Model.name;
@@ -9,12 +8,6 @@
 
 
 @section breadcrumb {
-
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.NameTranslated()</a></li>
-    }
-    <li><a href="@Model.register.GetObjectUrl()">@Model.register.NameTranslated()</a></li>
     <li>@Model.NameTranslated()</li>
 }
 

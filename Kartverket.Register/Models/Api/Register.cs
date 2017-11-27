@@ -2,25 +2,41 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace Kartverket.Register.Models.Api
 {
+    [DataContractAttribute]
     public class Register
     {
+        [DataMemberAttribute]
         public string id { get; set; }
+        [DataMemberAttribute]
         public string label { get; set; }
+        [DataMemberAttribute]
         public string lang { get; set; } = Culture.NorwegianCode;
+        [DataMemberAttribute]
         public string contentsummary { get; set; }
+        [DataMemberAttribute]
         public string owner { get; set; }
+        [DataMemberAttribute]
         public string manager { get; set; }
+        [DataMemberAttribute]
         public string controlbody { get; set; }
+        [DataMemberAttribute]
         public string containedItemClass { get; set; }
+        [DataMemberAttribute]
         public Guid uuid { get; set; }
+        [DataMemberAttribute]
         public List<Registeritem> containeditems { get; set; }
+        [DataMemberAttribute]
         public List<Register> containedSubRegisters { get; set; }
+        [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
+        [DataMemberAttribute]
         public string targetNamespace { get; set; }
+        [DataMemberAttribute]
         public string SelectedDOKMunicipality { get; set; }
 
         public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = Culture.NorwegianCode) 
@@ -39,6 +55,8 @@ namespace Kartverket.Register.Models.Api
             SelectedDOKMunicipality = selectedDOKMunicipality;
             uuid = item.systemId;
         }
+
+        public Register() { }
 
         private string GetNameLocale(Models.Register item, string cultureName)
         {

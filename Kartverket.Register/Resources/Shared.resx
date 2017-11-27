@@ -256,4 +256,7 @@
   <data name="HeadingText" xml:space="preserve">
     <value />
   </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Logg inn</value>
+  </data>
 </root>

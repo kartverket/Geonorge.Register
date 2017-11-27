@@ -1,5 +1,12 @@
 ﻿@using  Kartverket.Register.Helpers
 
+<script>
+    function additionalView(buttonId) {
+        $("#saveButtons a").attr("class", "hidden");
+        $("#" + buttonId).attr("class", "btn");
+    }
+</script>
+
 <div class="save-as-menu pull-right">
     <label>@Shared.SaveAs:</label>
     <div class="no-padding-bottom save-as-dropdown">
@@ -27,3 +34,5 @@
         <a id="jsonUrl" href="@RegisterUrls.urlFormat(Request, "json")" class="hidden" title="Vis JSON(Beta)">@Shared.Save</a>
     </div>
 </div>
+
+

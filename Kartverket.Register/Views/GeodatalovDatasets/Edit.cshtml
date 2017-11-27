@@ -7,12 +7,6 @@
 }
 
 @section breadcrumb {
-
-    @foreach (var register in HtmlHelperExtensions.ParentRegisters(Model.Register))
-    {
-        <li><a href="@register.GetObjectUrl()">@register.name</a></li>
-    }
-    <li><a href="@Model.Register.GetObjectUrl()">@Model.Register.name</a></li>
     <li><a href="@Model.DetailPageUrl()">@Model.Name</a></li>
     <li>@Shared.Edit</li>
 }

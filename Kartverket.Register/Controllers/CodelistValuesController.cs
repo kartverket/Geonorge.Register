@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,6 +12,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Translation;
+using Microsoft.Ajax.Utilities;
 using Resources;
 
 namespace Kartverket.Register.Controllers
@@ -20,11 +20,11 @@ namespace Kartverket.Register.Controllers
     [HandleError]
     public class CodelistValuesController : Controller
     {
-        private readonly RegisterDbContext db;
-        private IRegisterService _registerService;
-        private IRegisterItemService _registerItemService;
-        private IAccessControlService _accessControlService;
-        private ITranslationService _translationService;
+        private readonly RegisterDbContext _db;
+        private readonly IRegisterService _registerService;
+        private readonly IRegisterItemService _registerItemService;
+        private readonly IAccessControlService _accessControlService;
+        private readonly ITranslationService _translationService;
 
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -34,7 +34,7 @@ namespace Kartverket.Register.Controllers
             _registerService = registerService;
             _accessControlService = accessControlService;
             _translationService = translationService;
-            db = dbContext;
+            _db = dbContext;
         }
 
 
@@ -43,18 +43,15 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/ny/import")]
         public ActionResult Import(string registername, string parentregister)
         {
-            Models.Register register = _registerService.GetRegister(parentregister, registername);
+            var register = _registerService.GetRegister(parentregister, registername);
             if (register != null)
             {
-                ViewbagImport(register);
                 if (_accessControlService.Access(register))
                 {
+                    ViewbagImport(register);
                     return View();
                 }
-                else
-                {
-                    throw new HttpException(401, "Access Denied");
-                }
+                throw new HttpException(401, "Access Denied");
             }
             return HttpNotFound("Fant ikke register");
         }
@@ -64,26 +61,31 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner,
+            string parentregister)
         {
-            Models.Register register = _registerService.GetRegister(parentregister, registername);
-
-            if (csvfile != null)
+            var register = _registerService.GetRegister(parentregister, registername);
+            if (register == null) return HttpNotFound();
+            if (_accessControlService.Access(register))
             {
-                if (csvfile.ContentType != "text/csv" && csvfile.ContentType != "application/vnd.ms-excel")
+                if (csvfile != null)
                 {
+                    if (ContentTypeIsCsv(csvfile))
+                    {
+                        _registerItemService.ImportRegisterItemFromFile(register, csvfile);
+                        return Redirect(register.GetObjectUrl());
+                    }
                     ModelState.AddModelError("ErrorMessagefile", CodelistValues.ErrorMessagefile);
-                    ViewbagImport(register);
-                    return View();
                 }
-                else
-                {
-                    NewCodelistValue(csvfile, register);
-                }
-                return Redirect(RegisterUrls.registerUrl(parentregister, register.owner.seoname, registername));
+                ViewbagImport(register);
+                return View();
             }
-            ViewbagImport(register);
-            return View();
+            throw new HttpException(401, "Access Denied");
+        }
+
+        private static bool ContentTypeIsCsv(HttpPostedFileBase csvfile)
+        {
+            return csvfile.ContentType == "text/csv" || csvfile.ContentType == "application/vnd.ms-excel";
         }
 
 
@@ -194,7 +196,7 @@ namespace Kartverket.Register.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        initialisationCodelistValue(codelistValue, narrower, broader, originalCodelistValue);
+                        InitialisationCodelistValue(codelistValue, narrower, broader, originalCodelistValue);
                         if (!NameIsValid(codelistValue))
                         {
                             ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
@@ -208,7 +210,7 @@ namespace Kartverket.Register.Controllers
                 else
                 {
                     throw new HttpException(401, "Access Denied");
-                }            
+                }
             }
             Viewbags(originalCodelistValue);
             return View(originalCodelistValue);
@@ -224,7 +226,7 @@ namespace Kartverket.Register.Controllers
             string role = GetSecurityClaim("role");
             string user = GetSecurityClaim("organization");
 
-            var queryResults = from o in db.CodelistValues
+            var queryResults = from o in _db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
@@ -234,7 +236,7 @@ namespace Kartverket.Register.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CodelistValue codelistValue = db.CodelistValues.Find(systId);
+            CodelistValue codelistValue = _db.CodelistValues.Find(systId);
             if (codelistValue == null)
             {
                 return HttpNotFound();
@@ -255,13 +257,13 @@ namespace Kartverket.Register.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(string registername, string itemname, string itemowner, string parentregister)
         {
-            var queryResults = from o in db.CodelistValues
+            var queryResults = from o in _db.CodelistValues
                                where o.seoname == itemname && o.register.seoname == registername && o.register.parentRegister.seoname == parentregister
                                select o.systemId;
 
             Guid systId = queryResults.FirstOrDefault();
 
-            CodelistValue codelistValue = db.CodelistValues.Find(systId);
+            CodelistValue codelistValue = _db.CodelistValues.Find(systId);
             string parent = null;
             if (codelistValue.register.parentRegisterId != null)
             {
@@ -273,11 +275,11 @@ namespace Kartverket.Register.Controllers
             codelistValue.narrowerItems.Clear();
 
 
-            db.Entry(codelistValue).State = EntityState.Modified;
-            db.SaveChanges();
+            _db.Entry(codelistValue).State = EntityState.Modified;
+            _db.SaveChanges();
 
-            db.RegisterItems.Remove(codelistValue);
-            db.SaveChanges();
+            _db.RegisterItems.Remove(codelistValue);
+            _db.SaveChanges();
             if (parent != null)
             {
                 return Redirect("/subregister/" + parentregister + "/" + itemowner + "/" + registername);
@@ -293,7 +295,7 @@ namespace Kartverket.Register.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -344,89 +346,13 @@ namespace Kartverket.Register.Controllers
             Log.Error("Error", filterContext.Exception);
         }
 
-        private void NewCodelistValue(HttpPostedFileBase csvfile, Models.Register register)
-        {
-            StreamReader csvreader = new StreamReader(csvfile.InputStream);
-
-            // Første rad er overskrift
-            if (!csvreader.EndOfStream)
-            {
-                csvreader.ReadLine();
-            }
-            while (!csvreader.EndOfStream)
-            {
-                var line = csvreader.ReadLine();
-                var code = line.Split(';');
-
-                if (code.Count() == 3)
-                {
-                    initialisationCodelistValueImport(register, code);
-                }
-            }
-        }
-
-        private void initialisationCodelistValueImport(Models.Register register, string[] code)
-        {
-            //kodenavn, kodeverdi, beskrivelse
-            CodelistValue codelistValue = new CodelistValue();
-            codelistValue.systemId = Guid.NewGuid();
-            codelistValue.name = code[0];
-            codelistValue.value = code[1];
-            codelistValue.description = code[2];
-            codelistValue.registerId = register.systemId;
-            codelistValue.register = register;
-
-            if (!string.IsNullOrWhiteSpace(codelistValue.value))
-            {
-                if (_registerItemService.ItemNameAlredyExist(codelistValue))
-                {
-                    SetCodelistValueSubmitter(codelistValue);
-                    codelistValue.modified = DateTime.Now;
-                    codelistValue.dateSubmitted = DateTime.Now;
-                    codelistValue.statusId = "Submitted";
-                    codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
-                    Guid version = _registerItemService.NewVersioningGroup(codelistValue);
-                    codelistValue.versioningId = version;
-                    _registerItemService.SaveNewRegisterItem(codelistValue);
-                }
-            }
-        }
-
-        private void initialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader)
-        {
-            codelistValue.systemId = Guid.NewGuid();
-            codelistValue.modified = DateTime.Now;
-            codelistValue.dateSubmitted = DateTime.Now;
-            codelistValue.registerId = codelistValue.register.systemId;
-            codelistValue.statusId = "Submitted";
-            codelistValue.versionNumber = 1;
-            codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
-            codelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(codelistValue.name);
-            if (narrower != null)
-            {
-                _registerItemService.SetNarrowerItems(narrower, codelistValue);
-            }
-            if (broader != null)
-            {
-                _registerItemService.SetBroaderItem(broader.Value, codelistValue);
-            }
-
-            SetCodelistValueSubmitter(codelistValue);
-        }
-
-        private void SetCodelistValueSubmitter(CodelistValue codelistValue)
-        {
-            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
-            codelistValue.submitterId = submitterOrganisasjon.systemId;
-            codelistValue.submitter = submitterOrganisasjon;
-        }
 
         private bool NameIsValid(CodelistValue codelistValue)
         {
             return _registerItemService.ItemNameAlredyExist(codelistValue);
         }
 
-        private void initialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader, CodelistValue originalCodelistValue)
+        private void InitialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader, CodelistValue originalCodelistValue)
         {
             originalCodelistValue.name = codelistValue.name;
             originalCodelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(originalCodelistValue.name);

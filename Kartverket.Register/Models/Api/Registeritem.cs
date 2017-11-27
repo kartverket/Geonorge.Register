@@ -5,122 +5,210 @@ using System.Web;
 using Resources;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
+using System.Runtime.Serialization;
 
 namespace Kartverket.Register.Models.Api
 {
+    [DataContractAttribute]
     public class Registeritem
     {
 
         // RegisterItem
+        [DataMemberAttribute]
         public string id { get; set; }
+        [DataMemberAttribute]
         public string label { get; set; }
+        [DataMemberAttribute]
         public string lang { get; set; } = Culture.NorwegianCode;
+        [DataMemberAttribute]
         public string itemclass { get; set; }
+        [DataMemberAttribute]
         public Guid uuid { get; set; }
+        [DataMemberAttribute]
         public string status { get; set; }
+        [DataMemberAttribute]
         public string description { get; set; }
+        [DataMemberAttribute]
         public string seoname { get; set; }
+        [DataMemberAttribute]
         public string owner { get; set; }
+        [DataMemberAttribute]
         public string versionName { get; set; }
+        [DataMemberAttribute]
         public int versionNumber { get; set; }
+        [DataMemberAttribute]
         public ICollection<Registeritem> versions { get; set; }
+        [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
+        [DataMemberAttribute]
         public DateTime dateSubmitted { get; set; }
+        [DataMemberAttribute]
         public DateTime dateAccepted { get; set; }
+        [DataMemberAttribute]
         public string ApplicationSchema { get; set; }
+        [DataMemberAttribute]
         public string GMLApplicationSchema { get; set; }
+        [DataMemberAttribute]
         public string CartographyFile { get; set; }
 
         // Organization
+        [DataMemberAttribute]
         public string number { get; set; }
+        [DataMemberAttribute]
         public string OrganizationNumber { get; set; }
+        [DataMemberAttribute]
         public string LogoFilename { get; set; }
+        [DataMemberAttribute]
         public string LogoLargeFilename { get; set; }
+        [DataMemberAttribute]
         public string ContactPerson { get; set; }
+        [DataMemberAttribute]
         public string Email { get; set; }
+        [DataMemberAttribute]
         public bool? NorgeDigitaltMember { get; set; }
+        [DataMemberAttribute]
         public int? AgreementYear { get; set; }
+        [DataMemberAttribute]
         public string AgreementDocumentUrl { get; set; }
+        [DataMemberAttribute]
         public string PriceFormDocument { get; set; }
+        [DataMemberAttribute]
         public string ShortName { get; set; }
         public string OrganizationType { get; set; }
+        [DataMemberAttribute]
         public string MunicipalityCode { get; set; }
+        [DataMemberAttribute]
         public string GeographicCenterX { get; set; }
+        [DataMemberAttribute]
         public string GeographicCenterY { get; set; }
+        [DataMemberAttribute]
         public string BoundingBoxNorth { get; set; }
+        [DataMemberAttribute]
         public string BoundingBoxSouth { get; set; }
+        [DataMemberAttribute]
         public string BoundingBoxEast { get; set; }
+        [DataMemberAttribute]
         public string BoundingBoxWest { get; set; }
 
 
         // EPSG
+        [DataMemberAttribute]
         public string documentreference { get; set; }
+        [DataMemberAttribute]
         public string epsgcode { get; set; }
+        [DataMemberAttribute]
         public string sosiReferencesystem { get; set; }
+        [DataMemberAttribute]
         public string inspireRequirement { get; set; }
+        [DataMemberAttribute]
         public string nationalRequirement { get; set; }
+        [DataMemberAttribute]
         public string nationalSeasRequirement { get; set; }
+        [DataMemberAttribute]
         public string verticalReferenceSystem { get; set; }
+        [DataMemberAttribute]
         public string horizontalReferenceSystem { get; set; }
+        [DataMemberAttribute]
         public string dimension { get; set; }
 
         // CodelistValue
+        [DataMemberAttribute]
         public string codevalue { get; set; }
+        [DataMemberAttribute]
         public string broader { get; set; }
+        [DataMemberAttribute]
         public ICollection<string> narrower { get; set; }
 
         //NameSpace
+        [DataMemberAttribute]
         public string serviceUrl { get; set; }
 
         // Dataset
+        [DataMemberAttribute]
         public string theme { get; set; }
+        [DataMemberAttribute]
         public string dokStatus { get; set; }
+        [DataMemberAttribute]
         public DateTime? dokStatusDateAccepted { get; set; }
+        [DataMemberAttribute]
         public DateTime? Kandidatdato { get; set; }
-
+        [DataMemberAttribute]
         public string dokDeliveryMetadataStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryProductSheetStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryPresentationRulesStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryProductSpecificationStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryWmsStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryWfsStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliverySosiRequirementsStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryDistributionStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryGmlRequirementsStatus { get; set; }
+        [DataMemberAttribute]
         public string dokDeliveryAtomFeedStatus { get; set; }
+        [DataMemberAttribute]
         public bool? restricted { get; set; }
-
+        [DataMemberAttribute]
         public string DatasetType { get; set; }
 
         //MunicipalDataset
+        [DataMemberAttribute]
         public string ConfirmedDok { get; set; }
+        [DataMemberAttribute]
         public string Coverage { get; set; }
+        [DataMemberAttribute]
         public string NoteMunicipal { get; set; }
 
         // ServiceAlert
+        [DataMemberAttribute]
         public string MetadataUrl { get; set; }
+        [DataMemberAttribute]
         public DateTime AlertDate { get; set; }
+        [DataMemberAttribute]
         public string AlertType { get; set; }
+        [DataMemberAttribute]
         public string ServiceType { get; set; }
+        [DataMemberAttribute]
         public DateTime EffectiveDate { get; set; }
+        [DataMemberAttribute]
         public string Note { get; set; }
+        [DataMemberAttribute]
         public string ServiceUuid { get; set; }
 
         // InspireDataset
+        [DataMemberAttribute]
         public string MetadataStatus { get; set; }
+        [DataMemberAttribute]
         public string MetadataServiceStatus { get; set; }
+        [DataMemberAttribute]
         public string DistributionStatus { get; set; }
+        [DataMemberAttribute]
         public string WmsStatus { get; set; }
+        [DataMemberAttribute]
         public string WfsStatus { get; set; }
+        [DataMemberAttribute]
         public string AtomFeedStatus { get; set; }
+        [DataMemberAttribute]
         public string WfsOrAtomStatus { get; set; }
+        [DataMemberAttribute]
         public string HarmonizedDataStatus { get; set; }
+        [DataMemberAttribute]
         public string SpatialDataServiceStatus { get; set; }
 
         // GeodatalovDataset
+        [DataMemberAttribute]
         public string CommonStatus { get; set; }
+        [DataMemberAttribute]
         public string GmlStatus { get; set; }
+        [DataMemberAttribute]
         public string SosiStatus { get; set; }
+        [DataMemberAttribute]
         public string ProductspesificationStatus { get; set; }
 
         public Registeritem(Object item, string baseUrl, FilterParameters filter = null)

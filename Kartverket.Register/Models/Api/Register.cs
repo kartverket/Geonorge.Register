@@ -60,9 +60,9 @@ namespace Kartverket.Register.Models.Api
 
         private string GetNameLocale(Models.Register item, string cultureName)
         {
-            var name = item.Translations[cultureName].Name;
+            var name = item.Translations[cultureName]?.Name;
             if (string.IsNullOrEmpty(name))
-                name = item.Translations[cultureName].Name;
+                name = item.Translations[cultureName]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -70,9 +70,9 @@ namespace Kartverket.Register.Models.Api
         }
         private string GetDescriptionLocale(Models.Register item, string cultureName)
         {
-            var description = item.Translations[cultureName].Description;
+            var description = item.Translations[cultureName]?.Description;
             if (string.IsNullOrEmpty(description))
-                description = item.Translations[cultureName].Description;
+                description = item.Translations[cultureName]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 

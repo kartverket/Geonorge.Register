@@ -487,7 +487,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.Register item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -497,7 +497,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.EPSG item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -507,7 +507,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.CodelistValue item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -517,7 +517,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.Organization item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -527,7 +527,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.Document item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -537,7 +537,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNameLocale(Models.ServiceAlert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Name;
+            var name = item.Translations[culture]?.Name;
             if (string.IsNullOrEmpty(name))
                 name = item.name;
 
@@ -547,7 +547,7 @@ namespace Kartverket.Register.Models.Api
         private string GetOwnerLocale(Models.ServiceAlert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Owner;
+            var name = item.Translations[culture]?.Owner;
             if (string.IsNullOrEmpty(name))
                 name = item.Owner;
 
@@ -557,7 +557,7 @@ namespace Kartverket.Register.Models.Api
         private string GetAlertTypeLocale(Models.ServiceAlert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].AlertType;
+            var name = item.Translations[culture]?.AlertType;
             if (string.IsNullOrEmpty(name))
                 name = item.AlertType;
 
@@ -567,7 +567,7 @@ namespace Kartverket.Register.Models.Api
         private string GetNoteLocale(Models.ServiceAlert item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var name = item.Translations[culture].Note;
+            var name = item.Translations[culture]?.Note;
             if (string.IsNullOrEmpty(name))
                 name = item.Note;
 
@@ -577,7 +577,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.Register item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
@@ -586,7 +586,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.EPSG item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
@@ -595,7 +595,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.CodelistValue item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
@@ -604,7 +604,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.Organization item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
@@ -613,7 +613,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.Document item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 
@@ -623,7 +623,7 @@ namespace Kartverket.Register.Models.Api
         private string GetDescriptionLocale(Models.NameSpace item)
         {
             var culture = CultureHelper.GetCurrentCulture();
-            var description = item.Translations[culture].Description;
+            var description = item.Translations[culture]?.Description;
             if (string.IsNullOrEmpty(description))
                 description = item.description;
 

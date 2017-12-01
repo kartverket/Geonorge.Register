@@ -167,7 +167,7 @@ namespace Kartverket.Register.Models
             {
                 DateRetired = DateTime.Now;
             }
-            GetDateAccepted();
+            dateAccepted = GetDateAccepted();
         }
 
         public bool IsAccepted()

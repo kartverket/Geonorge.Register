@@ -11,5 +11,11 @@ namespace Kartverket.Register.Services.Versioning
     {
         VersionsItem Versions(string registername, string parantRegister, string itemname);
         void DeleteVersionGroup(Guid versioningId);
+        List<Models.RegisterItem> GetVersionsByVersioningId(Guid versioningId);
+        void UpdateCurrentVersionOfVersionGroup(Guid versioningId, Guid systemId);
+        Document GetLatestSupersededVersion(Guid versioningId);
+        Document SetLatestDocumentWithStatusIdDraftAsCurrent(Guid versioningId);
+        Document SetLatestDocumentWithStatusIdSubmittedAsCurrent(Guid versioningId);
+        Document SetLatestDocumentWithStatusIdRetiredAsCurrent(Guid versioningId);
     }
 }

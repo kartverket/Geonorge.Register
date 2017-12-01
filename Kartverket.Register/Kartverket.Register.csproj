@@ -988,6 +988,7 @@
     <Compile Include="Services\IInspireDatasetService.cs" />
     <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\GeodatalovDatasetService.cs" />
+    <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
@@ -996,6 +997,7 @@
     <Compile Include="Services\Notify\INotificationService.cs" />
     <Compile Include="Services\Notify\NotificationService.cs" />
     <Compile Include="Services\InspireDatasetService.cs" />
+    <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\ICodelistValueService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />

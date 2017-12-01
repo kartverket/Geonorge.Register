@@ -2,6 +2,7 @@
 using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -25,6 +26,69 @@ namespace Kartverket.Register.Services.Versioning
             Models.Version versiongroup = queryResult.FirstOrDefault();
             _dbContext.Versions.Remove(versiongroup);
             _dbContext.SaveChanges();
+        }
+
+        public List<Models.RegisterItem> GetVersionsByVersioningId(Guid versioningId)
+        {
+            var queryResultsVersionsDocument = from o in _dbContext.RegisterItems
+                                               where o.versioningId == versioningId
+                                               select o;
+
+            var versions = queryResultsVersionsDocument.ToList();
+            return versions;
+
+        }
+
+        public void UpdateCurrentVersionOfVersionGroup(Guid versioningId, Guid systemId)
+        {
+            var queryResultsVersionsDocument = from o in _dbContext.Versions
+                where o.systemId == versioningId
+                select o;
+
+            var versionGroup = queryResultsVersionsDocument.FirstOrDefault();
+            versionGroup.currentVersion = systemId;
+
+            _dbContext.Entry(versionGroup).State = EntityState.Modified;
+        }
+
+        public Document GetLatestSupersededVersion(Guid versioningId)
+        {
+            var queryResults = from o in _dbContext.Documents
+                where o.versioningId == versioningId &&
+                          o.statusId == "Superseded"
+                      select o;
+
+            return queryResults.OrderByDescending(d => d.dateAccepted).FirstOrDefault();
+        }
+
+        public Document SetLatestDocumentWithStatusIdDraftAsCurrent(Guid versioningId)
+        {
+            var queryResults = from o in _dbContext.Documents
+                where o.versioningId == versioningId &&
+                      o.statusId == "Draft"
+                select o;
+
+            return queryResults.OrderByDescending(d => d.dateSubmitted).FirstOrDefault();
+        }
+
+        public Document SetLatestDocumentWithStatusIdSubmittedAsCurrent(Guid versioningId)
+        {
+            var queryResults = from o in _dbContext.Documents
+                where o.versioningId == versioningId &&
+                      o.statusId == "Submitted"
+                select o;
+
+            return queryResults.OrderByDescending(d => d.dateSubmitted).FirstOrDefault();
+        }
+
+        public Document SetLatestDocumentWithStatusIdRetiredAsCurrent(Guid versioningId)
+        {
+            var queryResults = from o in _dbContext.Documents
+                where o.versioningId == versioningId &&
+                      o.statusId == "Retired"
+                select o;
+
+            return queryResults.OrderByDescending(d => d.DateRetired).FirstOrDefault();
         }
 
         public VersionsItem Versions(string registername, string parantRegister, string itemname)

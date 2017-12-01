@@ -32,11 +32,12 @@ namespace Kartverket.Register.Controllers
 
         private IRegisterService _registerService;
         private IRegisterItemService _registerItemService;
+        private IDocumentService _documentService;
         private IAccessControlService _accessControlService;
         private INotificationService _notificationService;
         private ITranslationService _translationService;
 
-        public DocumentsController(RegisterDbContext dbContext, INotificationService notificationService, ITranslationService translationService, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService)
+        public DocumentsController(RegisterDbContext dbContext, INotificationService notificationService, ITranslationService translationService, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, IDocumentService documentService)
         {
             db = dbContext;
             _registerItemService = registerItemService;
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Controllers
             _accessControlService = accessControlService;
             _notificationService = notificationService;
             _translationService = translationService;
+            _documentService = documentService;
         }
 
 
@@ -108,7 +110,8 @@ namespace Kartverket.Register.Controllers
                     Viewbags(document);
                     return View(document);
                 }
-                else {
+                else
+                {
                     throw new HttpException(401, "Access Denied");
                 }
             }
@@ -146,9 +149,9 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("dokument/{parentregister}/{registerowner}/{registername}/{itemowner}/{documentname}/rediger")]
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
-        public ActionResult Edit(string parentregister, string registername, string documentname, int? vnr)
+        public ActionResult Edit(string parentregister, string registername, string documentname, int vnr)
         {
-            Document document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr.Value);
+            var document = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, vnr);
             if (document != null)
             {
                 if (_accessControlService.Access(document))
@@ -172,17 +175,23 @@ namespace Kartverket.Register.Controllers
         [Route("dokument/{registername}/{itemowner}/{documentname}/rediger")]
         public ActionResult Edit(Document document, string parentregister, string registerowner, string registername, string itemowner, string documentname, HttpPostedFileBase documentfile, HttpPostedFileBase thumbnail, bool retired, bool sosi)
         {
-            Document originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
+            var originalDocument = (Document)_registerItemService.GetRegisterItem(parentregister, registername, documentname, document.versionNumber);
             if (originalDocument != null)
             {
-                if (!NameIsValid(document))
+                if (!_registerItemService.ItemNameAlredyExist(document))
                 {
                     ModelState.AddModelError("ErrorMessage", HtmlHelperExtensions.ErrorMessageValidationName());
                 }
                 else if (ModelState.IsValid)
                 {
-                    document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
-                    return Redirect(document.GetObjectUrl());
+                    originalDocument = _documentService.UpdateDocument(originalDocument, document, documentfile,thumbnail, retired, sosi);
+                    var url = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Document.DataDirectory;
+                    document.documentUrl = documentUrl(url, documentfile, document.documentUrl, document.name, originalDocument.register.name, document.versionNumber);
+                    document.thumbnail = GetThumbnail(document, documentfile, url, thumbnail);
+
+
+                    //document = initialisationDocument(document, documentfile, thumbnail, retired, sosi, originalDocument);
+                    return Redirect(originalDocument.GetObjectUrl());
                 }
             }
             Viewbags(document);
@@ -204,7 +213,8 @@ namespace Kartverket.Register.Controllers
                     Viewbags(document);
                     return View(document);
                 }
-                else {
+                else
+                {
                     throw new HttpException(401, "Access Denied");
                 }
             }
@@ -467,10 +477,11 @@ namespace Kartverket.Register.Controllers
                 document.statusId = "Submitted";
                 db.Entry(document).State = EntityState.Modified;
                 db.RegisterItems.Add(document);
-                if(!_accessControlService.IsAdmin())
+                if (!_accessControlService.IsAdmin())
                     sendNotification = true;
             }
-            else {
+            else
+            {
                 ApprovalProcess(document, retired, inputDocument, sosi);
                 db.Entry(document).State = EntityState.Modified;
             }
@@ -495,7 +506,8 @@ namespace Kartverket.Register.Controllers
             {
                 return Guid.NewGuid();
             }
-            else {
+            else
+            {
                 return systemId;
             }
         }
@@ -512,7 +524,8 @@ namespace Kartverket.Register.Controllers
             {
                 return document.register.systemId;
             }
-            else {
+            else
+            {
                 document.register = inputDocument.register;
                 return inputDocument.register.systemId;
             }
@@ -524,7 +537,8 @@ namespace Kartverket.Register.Controllers
             {
                 return originalDocument;
             }
-            else {
+            else
+            {
                 return new Document();
             }
         }
@@ -533,7 +547,7 @@ namespace Kartverket.Register.Controllers
         {
             if (document.Accepted == true)
             {
-                document = SetStatusIdWhenDocumentIsAccepted(document, inputDocument, retired, sosi);
+                SetStatusIdWhenDocumentIsAccepted(document, inputDocument, retired, sosi);
             }
             else if (document.Accepted == false)
             {
@@ -603,7 +617,8 @@ namespace Kartverket.Register.Controllers
                 document.DateRetired = GetDateRetired(inputDocument.DateRetired);
                 document.dateAccepted = DateAccepted(document.dateAccepted, inputDocument.dateAccepted);
             }
-            else {
+            else
+            {
                 if (document.statusId == "Submitted" || document.statusId == "Draft")
                 {
                     document.dateAccepted = DateAccepted(document.dateAccepted, inputDocument.dateAccepted);
@@ -616,7 +631,8 @@ namespace Kartverket.Register.Controllers
                         document.statusId = SetDocumentStatusToValid(document, sosi);
                     }
                 }
-                else {
+                else
+                {
                     document.statusId = SetDocumentStatusToValid(document, sosi);
                 }
                 db.SaveChanges();
@@ -640,7 +656,8 @@ namespace Kartverket.Register.Controllers
             {
                 return DateTime.Now;
             }
-            else {
+            else
+            {
                 return dateRetired;
             }
         }
@@ -665,7 +682,8 @@ namespace Kartverket.Register.Controllers
                     return SetDocumentStatusToSuperseded(document);
                 }
             }
-            else {
+            else
+            {
                 return SetDocumentStatusToValid(document, sosi);
             }
         }
@@ -761,7 +779,8 @@ namespace Kartverket.Register.Controllers
             {
                 return DateTime.Now;
             }
-            else {
+            else
+            {
                 return inputDateAccepted;
             }
         }
@@ -830,8 +849,9 @@ namespace Kartverket.Register.Controllers
                         versionNumber = db.Documents.Where(v => v.versioningId == currentDocument.versioningId)
                        .Select(n => n.versionNumber).Max() + 1;
                     }
-                    else { 
-                    versionNumber++;
+                    else
+                    {
+                        versionNumber++;
                     }
                 }
             }
@@ -845,7 +865,8 @@ namespace Kartverket.Register.Controllers
                 Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
                 return submitterOrganisasjon.systemId;
             }
-            else {
+            else
+            {
                 return submitterId;
             }
         }
@@ -857,7 +878,8 @@ namespace Kartverket.Register.Controllers
                 Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
                 return submitterOrganisasjon.systemId;
             }
-            else {
+            else
+            {
                 return documentOwnerId;
             }
         }

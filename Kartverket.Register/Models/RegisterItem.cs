@@ -47,7 +47,7 @@ namespace Kartverket.Register.Models
         public virtual Status status { get; set; }
 
         [Display(Name = "DateAccepted", ResourceType = typeof(Registers))]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date) ,DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
         [Display(Name = "DateNotAccepted", ResourceType = typeof(Registers))]

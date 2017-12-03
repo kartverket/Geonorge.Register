@@ -29,6 +29,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.systemId)
         @Html.HiddenFor(model => Model.containedItemClass)
+        @Html.HiddenFor(model => Model.parentRegisterId)
 
         <div class="form-group">
             @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -90,13 +91,13 @@
             </div>
         </div>
         
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.parentRegister, "Parent register", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("parentRegisterId", null, Registers.None, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.parentRegisterId, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             <div class="col-md-2"></div>

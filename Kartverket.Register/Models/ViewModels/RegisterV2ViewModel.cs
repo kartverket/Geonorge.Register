@@ -222,5 +222,10 @@ namespace Kartverket.Register.Models.ViewModels
         {
             return "/dok/kommunalt/" + MunicipalityCode + "/rediger";
         }
+
+        public string StepBackUrl()
+        {
+            return ParentRegister == null ? "/" : ParentRegister.GetObjectUrl();
+        }
     }
 }

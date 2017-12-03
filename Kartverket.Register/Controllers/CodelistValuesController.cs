@@ -165,7 +165,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentregister)
         {
-            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1);
+            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (codelistValue != null)
             {
                 if (_accessControlService.Access(codelistValue))

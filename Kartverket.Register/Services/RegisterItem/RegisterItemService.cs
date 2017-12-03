@@ -1525,6 +1525,7 @@ namespace Kartverket.Register.Services.RegisterItem
 
                     var codelistValue = _codelistValueService.NewCodelistValueFromImport(register, codeListValueImport);
                     if (!ItemNameAlredyExist(codelistValue)) return;
+                    codelistValue.versionNumber = 1;
                     codelistValue.versioningId = NewVersioningGroup(codelistValue);
                     SaveNewRegisterItem(codelistValue);
                 }

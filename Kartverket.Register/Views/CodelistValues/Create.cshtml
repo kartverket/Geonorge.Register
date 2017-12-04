@@ -78,6 +78,22 @@
                 @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
             </div>
         </div>
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.ValidFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValidFromDate, new { type = "date", cssClass = "date" })
+                @Html.ValidationMessageFor(model => model.ValidFromDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ValidToDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ValidToDate, new { cssClass = "date", type = "date" })
+                @Html.ValidationMessageFor(model => model.ValidToDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         @if (HtmlHelperExtensions.IsAdmin())
             {

@@ -766,6 +766,10 @@
     <Compile Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.Designer.cs">
       <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712040910401_AddValidFromAndValidTo.cs" />
+    <Compile Include="Migrations\201712040910401_AddValidFromAndValidTo.Designer.cs">
+      <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1830,6 +1834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.resx">
       <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712040910401_AddValidFromAndValidTo.resx">
+      <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

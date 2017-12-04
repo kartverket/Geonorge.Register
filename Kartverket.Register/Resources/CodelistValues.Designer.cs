@@ -167,5 +167,23 @@ namespace Resources {
                 return ResourceManager.GetString("SelectCodeValue", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gyldig fra.
+        /// </summary>
+        public static string ValidFromDate {
+            get {
+                return ResourceManager.GetString("ValidFromDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gylig til.
+        /// </summary>
+        public static string ValidToDate {
+            get {
+                return ResourceManager.GetString("ValidToDate", resourceCulture);
+            }
+        }
     }
 }

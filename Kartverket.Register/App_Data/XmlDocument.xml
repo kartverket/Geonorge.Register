@@ -2133,6 +2133,16 @@
               Looks up a localized string similar to velg kodeverdi.
             </summary>
         </member>
+        <member name="P:Resources.CodelistValues.ValidFromDate">
+            <summary>
+              Looks up a localized string similar to Gyldig fra.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ValidToDate">
+            <summary>
+              Looks up a localized string similar to Gylig til.
+            </summary>
+        </member>
         <member name="T:Resources.EPSGs">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

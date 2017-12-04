@@ -319,6 +319,14 @@ namespace Kartverket.Register.Models
             if (register != null) registerId = register.systemId;
         }
 
+        public void UpdateRegisterItem(RegisterItem item)
+        {
+            name = item.name;
+            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            description = item.description;
+            submitterId = item.submitterId;
+        }
+
         public Organization GetOwner()
         {
             switch (this)

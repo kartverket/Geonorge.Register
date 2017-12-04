@@ -2,6 +2,7 @@
 @using System.Web.Http.Controllers
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
@@ -11,7 +12,12 @@
     // Group APIs by controller
     ILookup<HttpControllerDescriptor, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor);
 }
-
+@section breadcrumb {
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/">For utviklere</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/apier-for-registrene/">API-er for registrene</a></li>
+    <li class="active">API hjelp</li>
+}
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <header class="help-page">
     <div class="content-wrapper">

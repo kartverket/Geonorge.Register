@@ -1,9 +1,14 @@
 @using System.Web.Http
 @using Kartverket.Register.Areas.HelpPage.ModelDescriptions
+@using Kartverket.Register.Helpers
 @model ModelDescription
 
 @section breadcrumb {
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/">For utviklere</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/apier-for-kartkatalogen/">API-er for kartkatalogen</a></li>
     <li>@Html.ActionLink("API hjelp", "Index")</li>
+    <li>@Model.Name</li>
 }
 <link type="text/css" href="~/Areas/HelpPage/HelpPage.css" rel="stylesheet" />
 <div id="body" class="help-page">

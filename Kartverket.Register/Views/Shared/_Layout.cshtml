@@ -63,13 +63,19 @@
 
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
     @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_SharedMenu.min.cshtml")
+    @{
+        var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    }
 
     <div class="body-content">
         <div class="container container-breadcrumbs" id="navTabCont">
             <ul class="breadcrumbs col-md-12">
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
+                @if (controllerName != "Help")
+                {
                 <li><a href="/">@Shared.Heading</a></li>
                 @Html.Partial("_breadcrumb")
+                }
                 @RenderSection("breadcrumb", false)
             </ul>
         </div>

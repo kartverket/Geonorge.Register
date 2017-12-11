@@ -119,6 +119,11 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public ICollection<string> narrower { get; set; }
 
+        [DataMemberAttribute]
+        public DateTime? ValidFromDate { get; set; }
+        [DataMemberAttribute]
+        public DateTime? ValidToDate { get; set; }
+
         //NameSpace
         [DataMemberAttribute]
         public string serviceUrl { get; set; }
@@ -389,6 +394,8 @@ namespace Kartverket.Register.Models.Api
                 {
                     narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
                 }
+                ValidFromDate = c.ValidFromDate;
+                ValidToDate = c.ValidToDate;
             }
             else if (item is Document)
             {

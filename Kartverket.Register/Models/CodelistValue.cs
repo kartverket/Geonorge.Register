@@ -39,11 +39,11 @@ namespace Kartverket.Register.Models
         public virtual TranslationCollection<CodelistValueTranslation> Translations { get; set; }
 
 	    [Display(Name = "ValidFromDate", ResourceType = typeof(CodelistValues))]
-	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyy}", ApplyFormatInEditMode = true)]
+	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
 	    public DateTime? ValidFromDate { get; set; }
 
 	    [Display(Name = "ValidToDate", ResourceType = typeof(CodelistValues))]
-	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
 	    public DateTime? ValidToDate { get; set; }
 
         public void AddMissingTranslations()

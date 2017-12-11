@@ -8,4 +8,4 @@
         cssClass = (string)ViewData["cssClass"];
     }
 }
-@Html.TextBox("", String.Format("{0:dd/MM/yyy H:mm}", Model.HasValue ? Model : null), new { @class = "form-control " + cssClass })
+@Html.TextBox("", String.Format("{0:d}", Model.HasValue ? Model : null), new { @class = "form-control " + cssClass })

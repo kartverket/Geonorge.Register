@@ -142,7 +142,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "CodelistValue")
             {
-                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.id;
+                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.ValidFromDate + ";" + item.ValidToDate + ";" + item.id;
             }
             else if (item.itemclass == "EPSG")
             {
@@ -276,7 +276,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "CodelistValue")
             {
-                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + "; ID";
+                return Registers.Name + ";" + CodelistValues.CodeValue + ";" + Registers.Owner + "; Status;" + Registers.Updated + ";" + Registers.VersionNumber + ";" + Registers.Description + ";" + CodelistValues.ValidFromDate + ";" + CodelistValues.ValidToDate + "; ID";
             }
             if (containedItemClass == "EPSG")
             {

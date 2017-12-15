@@ -45,7 +45,6 @@ namespace Kartverket.Register.Services.RegisterItem
             codelistValue.registerId = register.systemId;
             codelistValue.register = register;
 
-            if (string.IsNullOrWhiteSpace(codelistValue.value)) return null;
             codelistValue.submitterId = _userService.GetUserOrganizationId();
             codelistValue.modified = DateTime.Now;
             codelistValue.dateSubmitted = DateTime.Now;

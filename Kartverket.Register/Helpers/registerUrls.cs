@@ -112,6 +112,28 @@ namespace Kartverket.Register.Helpers
                 return "/subregister/" + parentRegister + "/" + registerOwner + "/" + register + "/" + itemOwner + "/" + item;
             }
         }
-       
+
+        /// <summary>
+        /// Makes an SEO friendly document name
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="filtype"></param>
+        /// <param name="seofilename"></param>
+        public static string MakeSeoFriendlyDocumentName(HttpPostedFileBase file, out string filtype, out string seofilename)
+        {
+            var documentfilename = file.FileName.Split('.');
+            filtype = documentfilename.Last();
+            seofilename = null;
+            foreach (var item in documentfilename)
+            {
+                if (item == filtype)
+                {
+                    break;
+                }
+                seofilename += MakeSeoFriendlyString(item) + "_";
+            }
+            return seofilename;
+        }
+
     }
 }

@@ -47,7 +47,7 @@ namespace Kartverket.Register.Models
         public virtual Status status { get; set; }
 
         [Display(Name = "DateAccepted", ResourceType = typeof(Registers))]
-        [DataType(DataType.Date), DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date) ,DisplayFormat(DataFormatString = @"{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? dateAccepted { get; set; }
 
         [Display(Name = "DateNotAccepted", ResourceType = typeof(Registers))]
@@ -317,6 +317,14 @@ namespace Kartverket.Register.Models
             versionNumber = 1;
             if (submitter != null) submitterId = submitter.systemId;
             if (register != null) registerId = register.systemId;
+        }
+
+        public void UpdateRegisterItem(RegisterItem item)
+        {
+            name = item.name;
+            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            description = item.description;
+            submitterId = item.submitterId;
         }
 
         public Organization GetOwner()

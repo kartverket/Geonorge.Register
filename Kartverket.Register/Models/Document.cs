@@ -12,6 +12,9 @@ using System.Text;
 using System.IO;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
+using System.Web;
+using Kartverket.Register.Helpers;
 using Resources;
 using Kartverket.Register.Models.Translations;
 
@@ -58,7 +61,8 @@ namespace Kartverket.Register.Models
                 else
                     return "/register/versjoner/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
             }
-            else {
+            else
+            {
                 return "/subregister/versjoner/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname;
             }
         }
@@ -69,7 +73,8 @@ namespace Kartverket.Register.Models
             {
                 return "/dokument/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/rediger";
             }
-            else {
+            else
+            {
                 return "/dokument/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/rediger";
             }
         }
@@ -80,7 +85,8 @@ namespace Kartverket.Register.Models
             {
                 return "/dokument/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/slett";
             }
-            else {
+            else
+            {
                 return "/dokument/" + register.parentRegister.seoname + "/" + register.owner.seoname + "/" + register.seoname + "/" + documentowner.seoname + "/" + seoname + "/slett";
             }
         }
@@ -97,6 +103,96 @@ namespace Kartverket.Register.Models
         public string ItemsByDocumentOwnerUrl()
         {
             return register.GetObjectUrl() + "/" + documentowner.seoname;
+        }
+
+        public void Update(Document document)
+        {
+            systemId = document.systemId;
+            name = document.name;
+            seoname = RegisterUrls.MakeSeoFriendlyString(name);
+            modified = DateTime.Now;
+            description = document.description;
+            approvalDocument = document.approvalDocument;
+            approvalReference = document.approvalReference;
+            ApplicationSchema = document.ApplicationSchema;
+            GMLApplicationSchema = document.GMLApplicationSchema;
+            CartographyFile = document.CartographyFile;
+            versionName = document.versionName;
+            versionNumber = document.versionNumber;
+            Accepted = document.Accepted;
+            documentownerId = document.documentownerId;
+            submitterId = document.submitterId;
+            versioningId = document.versioningId;
+
+
+        }
+
+
+        private string SaveFileToDisk(HttpPostedFileBase file, string name, string register, int vnr)
+        {
+            string filtype;
+            string seofilename = RegisterUrls.MakeSeoFriendlyDocumentName(file, out filtype, out seofilename);
+
+            string filename = register + "_" + name + "_v" + vnr + "_" + seofilename + "." + filtype;
+            var path = Path.Combine("", filename);
+            file.SaveAs(path);
+            return filename;
+        }
+
+        public DateTime? GetDateRetired()
+        {
+            return DateRetired ?? DateTime.Now;
+        }
+
+        public DateTime? GetDateAccepted()
+        {
+            return dateAccepted ?? DateTime.Now;
+        }
+
+        public void SetStatusSuperseded()
+        {
+            statusId = "Superseded";
+
+            if (dateSuperseded == null)
+            {
+                dateSuperseded = DateTime.Now;
+            }
+        }
+
+        public void SetDocumentAsRetired()
+        {
+            statusId = "Retired";
+
+            if (DateRetired == null)
+            {
+                DateRetired = DateTime.Now;
+            }
+            dateAccepted = GetDateAccepted();
+        }
+
+        public bool IsAccepted()
+        {
+            return Accepted == true;
+        }
+
+        public bool IsNotAccepted()
+        {
+            return Accepted == false;
+        }
+
+        public bool IsCurrentVersion()
+        {
+            return versioning.currentVersion == systemId;
+        }
+
+        public bool IsRetired()
+        {
+            return statusId == "Retired";
+        }
+
+        public bool StatusIsValidOrSosiValid()
+        {
+            return statusId == "Valid" || statusId == "Sosi-valid";
         }
     }//end Document
 }//end namespace Datamodell

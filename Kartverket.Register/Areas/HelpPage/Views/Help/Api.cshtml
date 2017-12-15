@@ -1,5 +1,6 @@
 @using System.Web.Http
 @using Kartverket.Register.Areas.HelpPage.Models
+@using Kartverket.Register.Helpers
 @model HelpPageApiModel
 
 @{
@@ -8,7 +9,11 @@
 }
 
 @section breadcrumb {
-        <li>@Html.ActionLink("API hjelp", "Index")</li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/">For utviklere</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/">APIer og grensesnitt</a></li>
+    <li><a href="@Html.GeonorgeUrl()for-utviklere/APIer-og-grensesnitt/apier-for-registrene/">API-er for registrene</a></li>
+    <li>@Html.ActionLink("API hjelp", "Index")</li>
+    <li>@description.HttpMethod.Method  @description.RelativePath</li>
 }
 
 

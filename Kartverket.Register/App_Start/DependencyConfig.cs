@@ -46,6 +46,7 @@ namespace Kartverket.Register
             builder.RegisterType<TranslationService>().As<ITranslationService>();
             builder.RegisterType<DatasetDeliveryService>().As<IDatasetDeliveryService>();
             builder.RegisterType<GeodatalovDatasetService>().As<IGeodatalovDatasetService>();
+            builder.RegisterType<DocumentService>().As<IDocumentService>();
 
             var container = builder.Build();
 

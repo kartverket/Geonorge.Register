@@ -153,4 +153,10 @@
   <data name="SelectCodeValue" xml:space="preserve">
     <value>velg kodeverdi</value>
   </data>
+  <data name="ValidFromDate" xml:space="preserve">
+    <value>Gyldig fra</value>
+  </data>
+  <data name="ValidToDate" xml:space="preserve">
+    <value>Gylig til</value>
+  </data>
 </root>

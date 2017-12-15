@@ -38,6 +38,14 @@ namespace Kartverket.Register.Models
 
         public virtual TranslationCollection<CodelistValueTranslation> Translations { get; set; }
 
+	    [Display(Name = "ValidFromDate", ResourceType = typeof(CodelistValues))]
+	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+	    public DateTime? ValidFromDate { get; set; }
+
+	    [Display(Name = "ValidToDate", ResourceType = typeof(CodelistValues))]
+	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+	    public DateTime? ValidToDate { get; set; }
+
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();
@@ -91,6 +99,31 @@ namespace Kartverket.Register.Models
         {
             InitializeNew();
         }
-    }//end CodelistValue
+
+	    public void Update(CodelistValue codelistValue)
+	    {
+            UpdateRegisterItem(codelistValue);
+
+	        value = codelistValue.value;
+	        ValidFromDate = codelistValue.ValidFromDate;
+	        ValidToDate = codelistValue.ValidToDate;
+            statusId = codelistValue.statusId;
+	        dateAccepted = GetDateAccepted();
+	        register.MakeAllItemsValid = statusId != "Valid";
+	    }
+
+	    private DateTime? GetDateAccepted()
+	    {
+	        if (dateAccepted == null && statusId == "Valid")
+	        {
+	            return DateTime.Now;
+	        }
+	        if (dateAccepted != null && statusId != "Valid")
+	        {
+	            return null;
+	        }
+	        return dateAccepted;
+	    }
+	}//end CodelistValue
 
 }//end namespace Datamodell

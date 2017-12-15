@@ -766,6 +766,10 @@
     <Compile Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.Designer.cs">
       <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712040910401_AddValidFromAndValidTo.cs" />
+    <Compile Include="Migrations\201712040910401_AddValidFromAndValidTo.Designer.cs">
+      <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -988,6 +992,7 @@
     <Compile Include="Services\IInspireDatasetService.cs" />
     <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\GeodatalovDatasetService.cs" />
+    <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
@@ -996,6 +1001,7 @@
     <Compile Include="Services\Notify\INotificationService.cs" />
     <Compile Include="Services\Notify\NotificationService.cs" />
     <Compile Include="Services\InspireDatasetService.cs" />
+    <Compile Include="Services\DocumentService.cs" />
     <Compile Include="Services\OrganizationsService.cs" />
     <Compile Include="Services\RegisterItem\ICodelistValueService.cs" />
     <Compile Include="Services\RegisterItem\IRegisterItemService.cs" />
@@ -1828,6 +1834,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710130857324_AddInspireThemeToInspireDataset.resx">
       <DependentUpon>201710130857324_AddInspireThemeToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712040910401_AddValidFromAndValidTo.resx">
+      <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -61,6 +61,18 @@ namespace Kartverket.Register.Controllers
             culture = CultureHelper.GetImplementedCulture(culture);
             // Save culture in a cookie
             HttpCookie cookie = Request.Cookies["_culture"];
+
+            if (cookie != null)
+            {
+                if (cookie.Domain != ".geonorge.no")
+                {
+                    HttpCookie oldCookie = new HttpCookie("_culture");
+                    oldCookie.Domain = cookie.Domain;
+                    oldCookie.Expires = DateTime.Now.AddDays(-1d);
+                    Response.Cookies.Add(oldCookie);
+                }
+            }
+
             if (cookie != null)
             {
                 cookie.Value = culture;   // update cookie value

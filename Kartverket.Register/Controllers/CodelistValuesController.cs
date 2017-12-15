@@ -61,8 +61,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny/import")]
         [Route("kodeliste/{registername}/ny/import")]
         [Authorize]
-        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner,
-            string parentregister)
+        public ActionResult Import(HttpPostedFileBase csvfile, string registername, string registerowner, string parentregister)
         {
             var register = _registerService.GetRegister(parentregister, registername);
             if (register == null) return HttpNotFound();
@@ -95,7 +94,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{parentregister}/{registerowner}/{registername}/ny")]
         public ActionResult Create(string registername, string parentregister)
         {
-            CodelistValue codeListValue = new CodelistValue();
+            var codeListValue = new CodelistValue();
             codeListValue.AddMissingTranslations();
             codeListValue.register = _registerService.GetRegister(parentregister, registername);
             if (codeListValue.register != null)
@@ -165,7 +164,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/{submitter}/{itemname}/rediger")]
         public ActionResult Edit(string registername, string itemname, string parentregister)
         {
-            CodelistValue codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
+            var codelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (codelistValue != null)
             {
                 if (_accessControlService.Access(codelistValue))
@@ -189,7 +188,7 @@ namespace Kartverket.Register.Controllers
         [Route("kodeliste/{registername}/{itemowner}/{itemname}/rediger")]
         public ActionResult Edit(CodelistValue codelistValue, string itemowner, string registername, string itemname, string parentregister, List<Guid> narrower, Guid? broader, string registerowner)
         {
-            CodelistValue originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, 1);
+            var originalCodelistValue = (CodelistValue)_registerItemService.GetRegisterItem(parentregister, registername, itemname, null);
             if (originalCodelistValue != null)
             {
                 if (_accessControlService.Access(originalCodelistValue))
@@ -354,13 +353,8 @@ namespace Kartverket.Register.Controllers
 
         private void InitialisationCodelistValue(CodelistValue codelistValue, List<Guid> narrower, Guid? broader, CodelistValue originalCodelistValue)
         {
-            originalCodelistValue.name = codelistValue.name;
-            originalCodelistValue.seoname = RegisterUrls.MakeSeoFriendlyString(originalCodelistValue.name);
-            originalCodelistValue.description = codelistValue.description;
-            originalCodelistValue.submitterId = codelistValue.submitterId;
-            originalCodelistValue.value = codelistValue.value;
-
-            SetStatusId(codelistValue, originalCodelistValue);
+            originalCodelistValue.Update(codelistValue);
+            
             if (UpdateNarrowerItems(narrower, originalCodelistValue))
             {
                 _registerItemService.SetNarrowerItems(narrower, originalCodelistValue);
@@ -394,26 +388,6 @@ namespace Kartverket.Register.Controllers
         private static bool UpdateNarrowerItems(List<Guid> narrower, CodelistValue originalCodelistValue)
         {
             return (originalCodelistValue.narrowerItems != null && originalCodelistValue.narrowerItems.Count() != 0) || narrower != null;
-        }
-
-        private static void SetStatusId(CodelistValue codelistValue, CodelistValue originalCodelistValue)
-        {
-            if (codelistValue.statusId != null)
-            {
-                originalCodelistValue.statusId = codelistValue.statusId;
-                if (originalCodelistValue.statusId != "Valid" && codelistValue.statusId == "Valid")
-                {
-                    originalCodelistValue.dateAccepted = DateTime.Now;
-                }
-                if (originalCodelistValue.statusId == "Valid" && codelistValue.statusId != "Valid")
-                {
-                    originalCodelistValue.dateAccepted = null;
-                }
-                if (originalCodelistValue.statusId != "Valid")
-                {
-                    originalCodelistValue.register.MakeAllItemsValid = false;
-                }
-            }
         }
     }
 }

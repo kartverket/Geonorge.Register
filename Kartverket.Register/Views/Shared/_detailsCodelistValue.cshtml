@@ -1,7 +1,10 @@
 ﻿@model Kartverket.Register.Models.CodelistValue
 
 <article class="col-md-12">
+    <h3>@CodelistValues.CodeValue</h3>
     <p><strong>@CodelistValues.CodeValue:</strong> @Html.DisplayFor(c => c.value)</p>
+    <p><strong>@CodelistValues.ValidFromDate:</strong> @Html.DisplayFor(c => c.ValidFromDate)</p>
+    <p><strong>@CodelistValues.ValidToDate:</strong> @Html.DisplayFor(c => c.ValidToDate)</p>
 </article>
 
 <article class="col-sm-12">

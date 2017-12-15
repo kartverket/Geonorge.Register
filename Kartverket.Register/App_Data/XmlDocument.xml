@@ -786,6 +786,14 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Helpers.RegisterUrls.MakeSeoFriendlyDocumentName(System.Web.HttpPostedFileBase,System.String@,System.String@)">
+            <summary>
+            Makes an SEO friendly document name
+            </summary>
+            <param name="file"></param>
+            <param name="filtype"></param>
+            <param name="seofilename"></param>
+        </member>
         <member name="P:Kartverket.Register.Models.Api.Facet.FacetField">
             <summary>
             The name of the facet field
@@ -2123,6 +2131,16 @@
         <member name="P:Resources.CodelistValues.SelectCodeValue">
             <summary>
               Looks up a localized string similar to velg kodeverdi.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ValidFromDate">
+            <summary>
+              Looks up a localized string similar to Gyldig fra.
+            </summary>
+        </member>
+        <member name="P:Resources.CodelistValues.ValidToDate">
+            <summary>
+              Looks up a localized string similar to Gylig til.
             </summary>
         </member>
         <member name="T:Resources.EPSGs">

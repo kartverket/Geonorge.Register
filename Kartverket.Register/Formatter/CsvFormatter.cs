@@ -142,7 +142,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "CodelistValue")
             {
-                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.ValidFromDate + ";" + item.ValidToDate + ";" + item.id;
+                text = item.label + ";" + item.codevalue + ";" + item.owner + ";" + item.status + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.ValidFrom + ";" + item.ValidTo + ";" + item.id;
             }
             else if (item.itemclass == "EPSG")
             {

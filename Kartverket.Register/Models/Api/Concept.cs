@@ -16,6 +16,9 @@ namespace Kartverket.Register.Models.Api
         public string codevalue { get; set; }
         public string owner { get; set; }
         public string broader { get; set; }
+
+        public DateTime? ValidFromDate { get; set; }
+        public DateTime? ValidToDate { get; set; }
         //public List<Registeritem> narrower { get; set; }
 
         public Concept(object models)
@@ -72,6 +75,9 @@ namespace Kartverket.Register.Models.Api
                 else {
                     broader = "";
                 }
+
+                ValidFromDate = item.ValidFrom;
+                ValidToDate = item.ValidTo;
 
 
             }

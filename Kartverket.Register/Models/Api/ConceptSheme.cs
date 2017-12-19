@@ -19,6 +19,9 @@ namespace Kartverket.Register.Models.Api
         public virtual string broader { get; set; }
         public List<string> narrower { get; set; }
 
+        public DateTime? ValidFromDate { get; set; }
+        public DateTime? ValidToDate { get; set; }
+
         public ConceptSheme(object models)
         {
             concepts = new List<Concept>();
@@ -53,7 +56,10 @@ namespace Kartverket.Register.Models.Api
                 foreach (var nitem in item.narrower)    
 	            {
                     narrower.Add(nitem);
-	            }          
+	            }
+
+                ValidFromDate = item.ValidFrom;
+                ValidToDate = item.ValidTo;
             }
             if (models is Register)
             {

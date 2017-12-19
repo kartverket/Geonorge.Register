@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Resources;
@@ -120,9 +121,12 @@ namespace Kartverket.Register.Models.Api
         public ICollection<string> narrower { get; set; }
 
         [DataMemberAttribute]
-        public DateTime? ValidFromDate { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ValidFrom { get; set; }
+
         [DataMemberAttribute]
-        public DateTime? ValidToDate { get; set; }
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime? ValidTo { get; set; }
 
         //NameSpace
         [DataMemberAttribute]
@@ -394,8 +398,8 @@ namespace Kartverket.Register.Models.Api
                 {
                     narrower.Add(baseUrl + codelistvalue.GetObjectUrl());
                 }
-                ValidFromDate = c.ValidFromDate;
-                ValidToDate = c.ValidToDate;
+                ValidFrom = c.ValidFromDate;
+                ValidTo = c.ValidToDate;
             }
             else if (item is Document)
             {

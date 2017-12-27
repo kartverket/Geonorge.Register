@@ -26,6 +26,11 @@ function environmentIsProduction() {
 }
 
 var geonorgeUrl = environmentIsProduction() ? "https://www.geonorge.no/" : "https://www.test.geonorge.no/";
+if (cultureData !== {}) {
+    if (cultureData.currentCulture == 'en'){
+        geonorgeUrl += 'en';
+    }
+}
 
 // Check if string contains parameters
 function containsParameters(string) {
@@ -630,8 +635,10 @@ var baseurl_local = searchOption.baseUrl;
                         var item = {};
                         var curr = list[x];
                         if (curr.data == null || curr.data.Results.length === 0) continue;
+                        var showAllUrl = getUrl(curr.data.Results[0].Type); 
+                        var searchQuery = containsParameters(showAllUrl) ? '&text=' + $rootScope.searchQuery : '?text=' + $rootScope.searchQuery; 
 
-                        item.showAllUrl = getUrl(curr.data.Results[0].Type) + '?text=' + $rootScope.searchQuery;
+                        item.showAllUrl = showAllUrl + searchQuery; 
                         item.list = [];
                         
                         for (var y = 0; y < curr.data.Results.length; y++) {
@@ -690,15 +697,15 @@ var baseurl_local = searchOption.baseUrl;
                     var baseUrl = searchOption.baseUrl;
                     switch (type) {
                       case "dataset":
-                      return baseUrl + "/search";
+                      return baseUrl + "/search?Facets%5B0%5D.name=type&Facets%5B0%5D.value=dataset";
                       case "servicelayer":
-                      return baseUrl + "/apier-og-tjenester";
+                      return baseUrl + "/search?Facets%5B0%5D.name=type&Facets%5B0%5D.value=service&Facets%5B1%5D.name=type&Facets%5B1%5D.value=servicelayer";
                       case "service":
-                      return baseUrl + "/apier-og-tjenester";
+                      return baseUrl + "/search?Facets%5B0%5D.name=type&Facets%5B0%5D.value=service&Facets%5B1%5D.name=type&Facets%5B1%5D.value=servicelayer";
                       case "dimensionGroup":
                       return baseUrl + "/search";
                       case "software":
-                      return baseUrl + "/kartlosninger";
+                      return baseUrl + "/search?Facets%5B0%5D.name=type&Facets%5B0%5D.value=software";
                       default:
                     }
                   }

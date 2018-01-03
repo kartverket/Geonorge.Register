@@ -1158,12 +1158,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.datasetowner.NameTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokStatus")
+                else if (sorting == "dokstatus")
                 {
                     var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokStatus.DescriptionTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokStatus_desc")
+                else if (sorting == "dokstatus_desc")
                 {
                     var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokStatus.DescriptionTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
@@ -1267,7 +1267,7 @@ namespace Kartverket.Register.Services.RegisterItem
                     var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryWfsStatusId);
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokDeliveryWfsStatusId_desc")
+                else if (sorting == "dokDeliveryWfsStatus_desc")
                 {
                     var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWfsStatusId);
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();

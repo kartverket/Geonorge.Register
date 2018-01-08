@@ -1076,6 +1076,13 @@ namespace Kartverket.Register.Services.RegisterItem
                 HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
                 HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
 
+                List<string> dokStatusOrder = new List<string>();
+
+                dokStatusOrder.Add("good");
+                dokStatusOrder.Add("useable");
+                dokStatusOrder.Add("deficient");
+                dokStatusOrder.Add("notset");
+
 
                 var sortedList = registerItems.OrderBy(o => o.NameTranslated()).ToList();
 
@@ -1158,12 +1165,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.datasetowner.NameTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokStatus")
+                else if (sorting == "dokstatus")
                 {
                     var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokStatus.DescriptionTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokStatus_desc")
+                else if (sorting == "dokstatus_desc")
                 {
                     var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokStatus.DescriptionTranslated());
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
@@ -1211,105 +1218,106 @@ namespace Kartverket.Register.Services.RegisterItem
 
 
                 //DOK delivery status
+
                 else if (sorting == "dokDeliveryMetadataStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryMetadataStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryMetadataStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryMetadataStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryMetadataStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryMetadataStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
 
                 else if (sorting == "dokDeliveryProductSheetStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSheetStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryProductSheetStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryProductSheetStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSheetStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryProductSheetStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryPresentationRulesStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryPresentationRulesStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryPresentationRulesStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryPresentationRulesStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryPresentationRulesStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryPresentationRulesStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryProductSpecificationStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryProductSpecificationStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryProductSpecificationStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryProductSpecificationStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryProductSpecificationStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryProductSpecificationStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryWmsStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryWmsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryWmsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryWmsStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWmsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryWmsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryWfsStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryWfsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryWfsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
-                else if (sorting == "dokDeliveryWfsStatusId_desc")
+                else if (sorting == "dokDeliveryWfsStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryWfsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryWfsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliverySosiRequirementsStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliverySosiRequirementsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliverySosiRequirementsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliverySosiRequirementsStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliverySosiRequirementsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliverySosiRequirementsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryDistributionStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryDistributionStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryDistributionStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryDistributionStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryDistributionStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryDistributionStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryGmlRequirementsStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryGmlRequirementsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryGmlRequirementsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryGmlRequirementsStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryGmlRequirementsStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryGmlRequirementsStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryAtomFeedStatus")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => o.dokDeliveryAtomFeedStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderBy(o => dokStatusOrder.IndexOf(o.dokDeliveryAtomFeedStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
                 else if (sorting == "dokDeliveryAtomFeedStatus_desc")
                 {
-                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => o.dokDeliveryAtomFeedStatusId);
+                    var datasetSorted = registerItems.OfType<Dataset>().OrderByDescending(o => dokStatusOrder.IndexOf(o.dokDeliveryAtomFeedStatusId));
                     sortedList = datasetSorted.Cast<Models.RegisterItem>().ToList();
                 }
 

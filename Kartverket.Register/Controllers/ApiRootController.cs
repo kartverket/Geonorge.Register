@@ -10,7 +10,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using Kartverket.DOK.Service;
 using Kartverket.Register.Models.Api;
 using SearchParameters = Kartverket.Register.Models.SearchParameters;
 using SearchResult = Kartverket.Register.Models.SearchResult;
@@ -29,10 +28,12 @@ namespace Kartverket.Register.Controllers
         private readonly ISearchService _searchService;
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
+        private readonly IInspireDatasetService _inspireDatasetService;
         
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService) 
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService) 
         {
             _registerItemService = registerItemService;
+            _inspireDatasetService = inspireDatasetService;
             _searchService = searchService;
             _registerService = registerService;
             db = dbContext;
@@ -123,19 +124,37 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets current and historical versions of register item by register- organization- and registeritem-name 
         /// </summary>
-        /// <param name="register">The search engine optimized name of the register</param>
+        /// <param name="registerName">The search engine optimized name of the register</param>
         /// <param name="itemowner">The search engine optimized name of the register item owner</param>
         /// <param name="item">The search engine optimized name of the register item</param>
-        [Route("api/register/{register}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/{register}/{itemowner}/{item}")]
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}.{ext}")]
-        [Route("api/register/versjoner/{register}/{itemowner}/{item}")]
+        [Route("api/register/{registerName}/{itemowner}/{item}.{ext}")]
+        [Route("api/register/{registerName}/{itemowner}/{item}")]
+        [Route("api/register/versjoner/{registerName}/{itemowner}/{item}.{ext}")]
+        [Route("api/register/versjoner/{registerName}/{itemowner}/{item}")]
         [HttpGet]
-        public IHttpActionResult GetRegisterItemByName(string register, string itemowner, string item)
+        public IHttpActionResult GetRegisterItemByName(string registerName, string itemowner, string item)
         {
             SetLanguage(Request);
-            Models.Api.Registeritem currentVersion = ConvertCurrentAndVersions(null, register, item);
+            var register = _registerService.GetRegister(null, registerName);
+
+            Registeritem currentVersion;
+
+            if (register.IsInspireStatusRegister())
+            {
+                currentVersion = ConvertInspireRegister(registerName, item);
+            }
+            else
+            {
+                currentVersion = ConvertCurrentAndVersions(null, registerName, item);
+            }
+
             return Ok(currentVersion);
+        }
+
+        private Registeritem ConvertInspireRegister(string registerName, string item)
+        {
+            var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registerName, item);
+            return ConvertRegisterItem(inspireDataset);
         }
 
 
@@ -279,9 +298,9 @@ namespace Kartverket.Register.Controllers
 
         // **** HJELPEMETODER ****
 
-        private Models.Api.Registeritem ConvertCurrentAndVersions(string parent, string register, string item)
+        private Registeritem ConvertCurrentAndVersions(string parent, string register, string item)
         {
-            Models.Api.Registeritem currentVersion = null;
+            Registeritem currentVersion = null;
             var versjoner = _registerItemService.GetAllVersionsOfItem(parent, register, item);
             foreach (var v in versjoner)
             {

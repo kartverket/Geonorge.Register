@@ -102,11 +102,14 @@ namespace Kartverket.Register.Tests.Controllers
         [Fact]
         public void GetRegisterItemByName() {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
-
+            List<RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            var registerService = new Mock<IRegisterService>();
             var registerItemService = new Mock<IRegisterItemService>();
+
             registerItemService.Setup(s => s.GetAllVersionsOfItem(null, register.seoname, versions[0].seoname)).Returns(versions);
-            var controller = createController(url, null, registerItemService.Object);
+            registerService.Setup(r => r.GetRegister(null, register.seoname)).Returns(register);
+
+            var controller = createController(url, registerService.Object, registerItemService.Object);
             var result = controller.GetRegisterItemByName(register.seoname, versions[0].submitter.seoname, versions[0].seoname ) as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
             Models.Api.Registeritem actualVersions = result.Content;
@@ -165,11 +168,15 @@ namespace Kartverket.Register.Tests.Controllers
         public void GetCurrentAndOtherVersions()
         {
             Models.Register register = NewRegister("Register name");
-            List<Models.RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
+            List<RegisterItem> versions = GetListOfVersions("itemName", register, "Kartverket");
 
             var registerItemService = new Mock<IRegisterItemService>();
+            var registerService = new Mock<IRegisterService>();
+
             registerItemService.Setup(s => s.GetAllVersionsOfItem(null, register.seoname, versions[0].seoname)).Returns(versions);
-            var controller = createController(url, null, registerItemService.Object);
+            registerService.Setup(r => r.GetRegister(null, register.seoname)).Returns(register);
+
+            var controller = createController(url, registerService.Object, registerItemService.Object);
             var result = controller.GetRegisterItemByName(register.seoname, "kartverket", "itemname") as OkNegotiatedContentResult<Models.Api.Registeritem>;
 
             Models.Api.Registeritem actualCurrentVersion = result.Content;
@@ -286,7 +293,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         private ApiRootController createController(string uri, IRegisterService registerService, IRegisterItemService registerItemService)
         {
-            var controller = new ApiRootController(null, null, registerService, registerItemService);
+            var controller = new ApiRootController(null, null, registerService, registerItemService, null);
             controller.Request = new HttpRequestMessage(HttpMethod.Get, uri);
             return controller;
         }

@@ -50,7 +50,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
             var registerItemService = new RegisterItemService(CreateTestDbContext(versions));
             var actualVersion = registerItemService.GetRegisterItem(null,  register.seoname, "itemname", 2);
 
-            actualVersion.Should().Be(versions[2]);
+            actualVersion.Should().Be(versions[1]);
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Kartverket.Register.Tests.Services.RegisterItem
         {
             Models.Version versionGroup = new Models.Version();
             versionGroup.systemId = Guid.NewGuid();
-            versionGroup.lastVersionNumber = 0;
+            versionGroup.lastVersionNumber = 1;
             List<Models.RegisterItem> versions = new List<Models.RegisterItem>();
 
             for (int i = 0; i < 5; i++)

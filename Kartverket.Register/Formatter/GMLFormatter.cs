@@ -94,7 +94,6 @@ namespace Kartverket.Register.Formatter
                     using (XmlWriter writer = XmlWriter.Create(stream))
                     {
                         xdoc.WriteTo(writer);
-
                     }
                 }
         }

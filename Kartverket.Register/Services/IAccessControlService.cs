@@ -22,7 +22,6 @@ namespace Kartverket.Register.Services
         bool AccessEditOrCreateDOKMunicipalBySelectedMunicipality(string municipalityCode);
         bool IsItemOwner(string owner, string user);
         string GetOrganizationNumber();
-        bool AccessEdit(object model);
         bool AccessCreateNewVersion(RegisterItemV2ViewModel registerItemViewModel);
     }
 }

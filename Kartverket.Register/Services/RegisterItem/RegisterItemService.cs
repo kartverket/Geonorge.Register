@@ -1,15 +1,12 @@
 ﻿using Kartverket.Register.Models;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.Register.Models.ViewModels;
-using SolrNet.Impl.FieldSerializers;
-using Kartverket.Register.Helpers;
 
 namespace Kartverket.Register.Services.RegisterItem
 {
@@ -193,32 +190,18 @@ namespace Kartverket.Register.Services.RegisterItem
 
         public List<Models.RegisterItem> GetAllVersionsOfItem(string parent, string register, string item)
         {
-            Models.RegisterItem version = null;
-            if (string.IsNullOrWhiteSpace(parent))
-            {
-                var queryResultsItem = from o in _dbContext.RegisterItems
-                                       where o.register.seoname == register
-                                       && o.register.parentRegister == null
-                                       && o.seoname == item
-                                       select o;
+            var registerItem = GetRegisterItem(parent, register, item, null);
+            var versions = new List<Models.RegisterItem>();
 
-                version = queryResultsItem.FirstOrDefault();
-            }
-            else
+            if (registerItem != null)
             {
-                var queryResultsItem = from o in _dbContext.RegisterItems
-                                       where o.register.seoname == register
-                                       && o.seoname == item
-                                       && o.register.parentRegister.seoname == parent
-                                       select o;
-
-                version = queryResultsItem.FirstOrDefault();
-            }
-            var queryResultVersions = from r in _dbContext.RegisterItems
-                                      where r.versioningId == version.versioningId
+                var queryResultVersions = from r in _dbContext.RegisterItems
+                                      where r.versioningId == registerItem.versioningId
                                       select r;
+                versions = queryResultVersions.ToList();
+            }
+            return versions;
 
-            return queryResultVersions.ToList();
         }
 
         public List<Models.RegisterItem> GetRegisterItemsFromOrganization(string parentname, string registername, string itemowner)
@@ -300,13 +283,14 @@ namespace Kartverket.Register.Services.RegisterItem
         public virtual Models.RegisterItem GetRegisterItem(string parentregister, string register, string item, int? vnr, string itemowner = null)
         {
             var registerItems = new List<Models.RegisterItem>();
+
             if (string.IsNullOrWhiteSpace(parentregister))
             {
                 vnr = getVnr(parentregister, register, item, vnr);
                 var queryResults = from o in _dbContext.RegisterItems
                                    where (o.seoname == item || o.name == item) &&
                                    (o.register.seoname == register || o.register.name == register) &&
-                                   o.versionNumber == vnr
+                                   (o.versionNumber == vnr || o.versionNumber == 0)
                                    select o;
 
                 registerItems = queryResults.ToList();
@@ -350,7 +334,7 @@ namespace Kartverket.Register.Services.RegisterItem
                                    select o;
 
                 List<Models.RegisterItem> items = queryResults.ToList();
-                if (items.Count > 1)
+                if (items.Count >= 1)
                 {
                     foreach (Models.RegisterItem version in items)
                     {
@@ -365,7 +349,10 @@ namespace Kartverket.Register.Services.RegisterItem
                 }
                 else
                 {
-                    return queryResults.First().versionNumber;
+                    if (queryResults.Any())
+                    {
+                        return queryResults.First().versionNumber;
+                    }
                 }
             }
             else

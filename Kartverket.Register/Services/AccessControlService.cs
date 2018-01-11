@@ -168,7 +168,6 @@ namespace Kartverket.Register.Services
                         return IsItemOwner(registerItemViewModel.Owner.name, UserName()) && VersionIsEditable(docuementViewModel.StatusId);
                     }
                 }
-
             }
             return false;
         }
@@ -257,11 +256,6 @@ namespace Kartverket.Register.Services
         {
             Claim orgnrClaim = ClaimsPrincipal.Current.FindFirst("orgnr");
             return orgnrClaim?.Value;
-        }
-
-        public bool AccessEdit(object model)
-        {
-            throw new System.NotImplementedException();
         }
 
         public CodelistValue GetMunicipality()

@@ -1164,6 +1164,19 @@ $(document).on('focus', '.custom-select-list-input', function() {
   var customSelectListElement = $(this).closest('.custom-select-list');
   var dropdownElement = customSelectListElement.find('.custom-select-list-dropdown-container');
   dropdownElement.addClass('active');
+
+  // Add automatic scroll if dropdown element is outside window
+  var dropdownContentElement = dropdownElement.find('.custom-select-list-dropdown-content');
+  var dropdownAdditionalOptionsElement = dropdownElement.find('.custom-select-list-dropdown-additional-options');
+  var dropdownContentElementBottomPosition = dropdownContentElement.offset().top + dropdownContentElement.height();
+  if (dropdownAdditionalOptionsElement.length) {
+    dropdownContentElementBottomPosition += dropdownAdditionalOptionsElement.height();
+  }
+  var windowBottomPosition = window.innerHeight + window.scrollY;
+  if (dropdownContentElementBottomPosition > windowBottomPosition) {
+    var newWindowTopPosition = dropdownContentElementBottomPosition - window.innerHeight;
+    window.scroll(0, newWindowTopPosition, 'smooth'); 
+  }
 });
 
 $(document).on('click', '.custom-select-list-input-container', function() {

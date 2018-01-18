@@ -8,16 +8,18 @@ namespace Kartverket.Register.Models.ViewModels
     {
         public DocumentViewModel(Document document)
         {
-            DocumentUrl = document.documentUrl;
-            ApplicationSchema = document.ApplicationSchema;
-            GmlApplicationSchema = document.GMLApplicationSchema;
-            CartographyFile = document.CartographyFile;
-            ApprovalDocument = document.approvalDocument;
-            ApprovalReference = document.approvalReference;
-            Accepted = GetAcceptedStatus(document.Accepted);
+            if (document != null)
+            {
+                DocumentUrl = document.documentUrl;
+                ApplicationSchema = document.ApplicationSchema;
+                GmlApplicationSchema = document.GMLApplicationSchema;
+                CartographyFile = document.CartographyFile;
+                ApprovalDocument = document.approvalDocument;
+                ApprovalReference = document.approvalReference;
+                Accepted = GetAcceptedStatus(document.Accepted);
 
-            UpdateRegisterItem(document);
-            
+                UpdateRegisterItem(document);
+            }
         }
 
         private string GetAcceptedStatus(bool? documentAccepted)
@@ -27,7 +29,15 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string VersionUrl()
         {
-            return "/register/versjoner/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/" + VersionNumber + "/no";
+            if (Register.parentRegister == null)
+            {                
+                return "/register/versjoner/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/" + VersionNumber + "/no";
+            }
+            else
+            {
+                return "/subregister/versjoner/" + Register.parentRegister.seoname + "/" + Register.parentRegister.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/" + VersionNumber + "/no";
+
+            }
         }
 
         public string EditVersionOfDocumentUrl()

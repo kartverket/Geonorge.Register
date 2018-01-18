@@ -155,16 +155,21 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-
+        [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
+        [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("register/versjoner/{registername}/{itemowner}/{itemname}/{version}/no")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int version, string format)
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, int version, string format, string parentregister)
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-            var viewModel = GetRegisterItem(null, registername, itemowner, itemname, version);
+            var viewModel = GetRegisterItem(parentregister, registername, itemowner, itemname, version);
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
 
+            if (viewModel.SystemId == Guid.Empty)
+            {
+                return HttpNotFound();
+            }
             return View(viewModel);
         }
 

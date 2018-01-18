@@ -57,7 +57,7 @@ namespace Kartverket.Register.Models.ViewModels
             else
             {
                 var url = "versjon/" + CurrentVersion.Register.parentRegister.seoname + "/" +
-                          CurrentVersion.Register.owner.seoname + "/" + CurrentVersion.Register + "/" +
+                          CurrentVersion.Register.owner.seoname + "/" + CurrentVersion.Register.seoname + "/" +
                           CurrentVersion.Owner.seoname + "/" + CurrentVersion.Seoname + "/ny";
 
                 if (CurrentVersion is DocumentViewModel) return "/dokument/" + url;

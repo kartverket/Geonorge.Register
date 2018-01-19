@@ -79,6 +79,8 @@ namespace Kartverket.Register.Models
 
         public override int SaveChanges()
         {
+            Database.Log = s => System.Diagnostics.Trace.WriteLine(s);
+
             int result = 0;
 
             var entityList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();

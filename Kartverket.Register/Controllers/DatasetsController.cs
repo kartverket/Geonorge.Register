@@ -329,7 +329,7 @@ namespace Kartverket.Register.Controllers
         public ActionResult DeleteConfirmed(string registername, string itemname, string parentregister, string registerowner, string itemowner)
         {
             Dataset dataset = (Dataset)_registerItemService.GetCurrentRegisterItem(parentregister, registername, itemname);
-            DeleteCoverageDataset(dataset);
+            _registerItemService.DeleteCoverageByDatasetId(dataset.systemId);
             _registerItemService.SaveDeleteRegisterItem(dataset);
             return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
         }
@@ -502,19 +502,6 @@ namespace Kartverket.Register.Controllers
             return municipality.systemId;
         }
 
-        private void DeleteCoverageDataset(Dataset dataset)
-        {
-            if (dataset.Coverage != null)
-            {
-                for (int i = 0; i < dataset.Coverage.Count; i++)
-                {
-                    dataset.Coverage[i].DatasetId = Guid.Empty;
-                    dataset.Coverage[i].dataset = null;
-                    _registerItemService.DeleteCoverage(dataset.Coverage[i]);
-                }
-                dataset.Coverage.Clear();
-            }
-        }
 
         private Dataset initialisationDataset(Dataset inputDataset, Dataset originalDataset = null, CoverageDataset inputCoverage = null)
         {

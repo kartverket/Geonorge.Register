@@ -25,6 +25,7 @@ namespace Kartverket.Register.Services.Search
             string user = HtmlHelperExtensions.GetSecurityClaim("organization");
 
             List<Models.RegisterItem> registerItems = new List<Models.RegisterItem>();
+            List<Models.RegisterItemV2> registerItemsV2 = new List<Models.RegisterItemV2>();
             List<Models.Register> subregisters = new List<Models.Register>();
 
             if (register.containedItemClass == "Organization")
@@ -74,7 +75,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            if (register.containedItemClass == "ServiceAlert")
+            if (register.ContainedItemClassIsServiceAlert())
             {
                 var queryResults = (from o in _dbContext.ServiceAlerts
                                     where o.name.Contains(text)
@@ -118,7 +119,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "Document")
+            else if (register.ContainedItemClassIsDocument())
             {
                 var queryResults = (from d in _dbContext.Documents
                                     where (d.register.name.Contains(register.name)
@@ -175,7 +176,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "NameSpace")
+            else if (register.ContainedItemClassIsNameSpace())
             {
                 var queryResults = (from d in _dbContext.NameSpases
                                     where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
@@ -223,7 +224,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "Dataset")
+            else if (register.ContainedItemClassIsDataset())
             {
                 var queryResults = (from d in _dbContext.Datasets
                                     where (d.register.name.Contains(register.name) || d.register.seoname.Contains(register.seoname))
@@ -275,7 +276,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "EPSG")
+            else if (register.ContainedItemClassIsEpsg())
             {
                 var queryResults = (from e in _dbContext.EPSGs
                                     where e.name.Contains(text)
@@ -323,7 +324,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "CodelistValue")
+            else if (register.ContainedItemClassIsCodelistValue())
             {
                 var queryResults = (from e in _dbContext.CodelistValues
                                     where e.register.systemId == register.systemId && (e.name.Contains(text)
@@ -371,7 +372,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            else if (register.containedItemClass == "Register")
+            else if (register.ContainedItemClassIsRegister())
             {
                 //Finn alle subregistre
                 List<Models.Register> allSubregisters = GetSubregisters(register);
@@ -498,6 +499,96 @@ namespace Kartverket.Register.Services.Search
                     versionNumber = register.versionNumber
                 };
             }
+
+            else if (register.ContainedItemClassIsInspireDataset())
+            {
+                var queryResults = (from d in _dbContext.InspireDatasets
+                    where d.Name.Contains(text)
+                          || d.Description.Contains(text)
+                    select d);
+
+                if (queryResults.Any())
+                {
+                    foreach (var item in queryResults.ToList())
+                    {
+                        var dataset = item;
+                        registerItemsV2.Add(dataset);
+                    }
+                }
+
+                return new Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    RegisterItems = registerItemsV2,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+            else if (register.ContainedItemClassIsGeodatalovDataset())
+            {
+                var queryResults = (from d in _dbContext.GeodatalovDatasets
+                    where d.Name.Contains(text)
+                          || d.Description.Contains(text)
+                    select d);
+
+                if (queryResults.Any())
+                {
+                    foreach (var item in queryResults.ToList())
+                    {
+                        var dataset = item;
+                        registerItemsV2.Add(dataset);
+                    }
+                }
+
+                return new Models.Register
+                {
+                    systemId = register.systemId,
+                    name = register.name,
+                    containedItemClass = register.containedItemClass,
+                    dateAccepted = register.dateAccepted,
+                    dateSubmitted = register.dateSubmitted,
+                    description = register.description,
+                    items = registerItems,
+                    RegisterItems = registerItemsV2,
+                    manager = register.manager,
+                    managerId = register.managerId,
+                    modified = register.modified,
+                    owner = register.owner,
+                    ownerId = register.ownerId,
+                    parentRegister = register.parentRegister,
+                    parentRegisterId = register.parentRegisterId,
+                    seoname = register.seoname,
+                    status = register.status,
+                    statusId = register.statusId,
+                    subregisters = register.subregisters,
+                    replaces = register.replaces,
+                    targetNamespace = register.targetNamespace,
+                    versioning = register.versioning,
+                    versioningId = register.versioningId,
+                    versionNumber = register.versionNumber
+                };
+            }
+
             else { return register; }
         }
 

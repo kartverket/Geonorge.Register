@@ -640,7 +640,6 @@ namespace Kartverket.Register.Services.RegisterItem
         public void DeleteCoverage(CoverageDataset coverage)
         {
             _dbContext.CoverageDatasets.Remove(coverage);
-            _dbContext.SaveChanges();
         }
 
         public void Save()
@@ -1527,5 +1526,18 @@ namespace Kartverket.Register.Services.RegisterItem
             }
         }
 
+        public void DeleteCoverageByDatasetId(Guid datasetSystemId)
+        {
+            var queryResult = from c in _dbContext.CoverageDatasets
+                where c.DatasetId == datasetSystemId
+                select c;
+
+            var coverages = queryResult.ToList();
+            foreach (var coverage in coverages)
+            {
+                DeleteCoverage(coverage);
+            }
+            _dbContext.SaveChanges();
+        }
     }
 }

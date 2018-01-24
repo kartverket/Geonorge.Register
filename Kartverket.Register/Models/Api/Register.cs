@@ -78,10 +78,5 @@ namespace Kartverket.Register.Models.Api
 
             return description;
         }
-
-        public bool IsInspireDataset()
-        {
-            return containedItemClass == "InspireDataset";
-        }
     }
 }

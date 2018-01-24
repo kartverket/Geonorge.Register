@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -14,10 +13,6 @@ namespace Kartverket.Register.Models.Api
     [DataContractAttribute]
     public class Registeritem
     {
-
-        public Registeritem()
-        {
-        }
 
         // RegisterItem
         [DataMemberAttribute]
@@ -283,7 +278,7 @@ namespace Kartverket.Register.Models.Api
                 if (datasetV2.DokStatusDateAccepted != null) dateAccepted = datasetV2.DokStatusDateAccepted.Value;
                 MetadataUrl = datasetV2.MetadataUrl;
             }
-            if (item is Models.InspireDataset inspireDataset)
+            if (item is InspireDataset inspireDataset)
             {
                 if (inspireDataset.InspireDeliveryMetadata?.Status != null)
                 {

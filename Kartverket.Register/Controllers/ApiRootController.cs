@@ -73,18 +73,10 @@ namespace Kartverket.Register.Controllers
             {
                 register = RegisterItems(register, filter);
             }
-            if (register.IsInspireStatusRegister())
-            {
-                return Ok(ConvertInspireDatasetRegisterAndNextLevel(register, filter));
-            }
 
             return Ok(ConvertRegisterAndNextLevel(register, filter));
         }
 
-        private InspireDatasetRegistery ConvertInspireDatasetRegisterAndNextLevel(Models.Register register, FilterParameters filter)
-        {
-            return new InspireDatasetRegistery(register);
-        }
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {

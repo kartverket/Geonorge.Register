@@ -8,7 +8,6 @@ using Resources;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -44,7 +43,6 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public int versionNumber { get; set; }
         [DataMemberAttribute]
-        [XmlIgnore]
         public ICollection<Registeritem> versions { get; set; }
         [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
@@ -125,7 +123,6 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string broader { get; set; }
         [DataMemberAttribute]
-        [XmlIgnore]
         public ICollection<string> narrower { get; set; }
 
         [DataMemberAttribute]
@@ -501,11 +498,6 @@ namespace Kartverket.Register.Models.Api
                 Note = GetNoteLocale(s);
                 ServiceUuid = s.ServiceUuid;
             }
-        }
-
-        public bool IsInspireDataset()
-        {
-            return itemclass == "InspireDataset";
         }
 
         private string GetNameLocale(Models.Register item)

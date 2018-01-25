@@ -277,7 +277,6 @@
     <Compile Include="Controllers\ServiceAlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
-    <Compile Include="Formatter\XMLFormatter.cs" />
     <Compile Include="Formatter\GMLFormatter.cs" />
     <Compile Include="Formatter\SKOSFormatter .cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />

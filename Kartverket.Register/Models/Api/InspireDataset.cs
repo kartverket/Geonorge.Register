@@ -8,9 +8,12 @@ using WebGrease.Css.Extensions;
 
 namespace Kartverket.Register.Models.Api
 {
-    [XmlRoot("Person")]
+    [XmlRoot("Monitoring")]
     public class InspireDatasetRegistery
     {
+        [XmlAttributeAttribute(AttributeName = "schemaLocation", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
+        public string schemaLocation = "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring http://dd.eionet.europa.eu/schemas/inspire-monitoring/monitoring.xsd";
+
         public Date DocumentYear { get; set; }
         public string Memberstate { get; set; }
         public MonitoringMD MonitoringMD { get; set; }
@@ -25,20 +28,20 @@ namespace Kartverket.Register.Models.Api
             InspireDatasets = new List<InspireDataset>();
         }
 
-        public InspireDatasetRegistery(Models.Register register)
+        public InspireDatasetRegistery(Models.Api.Register register)
         {
             DocumentYear = new Date();
             Memberstate = "NO";
             MonitoringMD = new MonitoringMD();
             Indicators = new Indicators();
-            InspireDatasets = GetInspireDatasets(register.RegisterItems);
+            InspireDatasets = GetInspireDatasets(register.containeditems);
         }
 
-        private List<InspireDataset> GetInspireDatasets(ICollection<RegisterItemV2> registerItems)
+        private List<InspireDataset> GetInspireDatasets(ICollection<Registeritem> registerItems)
         {
             var inspireDatasets = new List<InspireDataset>();
 
-            foreach (Models.InspireDataset inspireDataset in registerItems)
+            foreach (var inspireDataset in registerItems)
             {
                 inspireDatasets.Add(new InspireDataset(inspireDataset));
             }
@@ -427,20 +430,21 @@ namespace Kartverket.Register.Models.Api
         }
     }
 
+    [XmlRoot("SpatialDataSet")]
     public class InspireDataset
     {
         public InspireDataset()
         {
         }
 
-        public InspireDataset(Models.InspireDataset inspireDataset)
+        public InspireDataset(Registeritem registerItem)
         {
-            if (inspireDataset != null)
+            if (registerItem != null)
             {
-                Name = inspireDataset.Name;
-                RespAuthority = inspireDataset.Owner?.name;
-                Uuid = inspireDataset.SystemId.ToString();
-                Theme = new InspireTheme(inspireDataset.Theme);
+                Name = registerItem.label;
+                RespAuthority = registerItem.owner;
+                Uuid = registerItem.uuid.ToString();
+                Theme = new InspireTheme(registerItem.theme);
                 Coverage = new InspireCoverage();
                 MdDataSetExistence = new MdDataSetExistence();
             }
@@ -463,9 +467,9 @@ namespace Kartverket.Register.Models.Api
         {
         }
 
-        public InspireTheme(DOKTheme theme)
+        public InspireTheme(string theme)
         {
-            AnnexI = theme.value;
+            AnnexI = theme;
         }
     }
 

@@ -365,7 +365,7 @@ namespace Kartverket.Register.Controllers
         {
             if (datasetownerId == null || datasetownerId == Guid.Empty)
             {
-                Organization datasetOwner = _registerService.GetUserOrganization();
+                Organization datasetOwner = _registerService.GetOrganizationByUserName();
                 return datasetOwner.systemId;
             }
             return datasetownerId;
@@ -498,7 +498,7 @@ namespace Kartverket.Register.Controllers
 
         private Guid SetMunicipality()
         {
-            Organization municipality = _registerService.GetUserOrganization();
+            Organization municipality = _registerService.GetOrganizationByUserName();
             return municipality.systemId;
         }
 
@@ -599,7 +599,7 @@ namespace Kartverket.Register.Controllers
         {
             if (submitterId == null || submitterId == Guid.Empty)
             {
-                Organization submitter = _registerService.GetUserOrganization();
+                Organization submitter = _registerService.GetOrganizationByUserName();
                 return submitter.systemId;
             }
             return submitterId;

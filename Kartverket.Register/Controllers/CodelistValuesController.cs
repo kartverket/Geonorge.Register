@@ -131,7 +131,7 @@ namespace Kartverket.Register.Controllers
                     }
                     if (ModelState.IsValid)
                     {
-                        codelistValue.submitter = _registerService.GetUserOrganization();
+                        codelistValue.submitter = _registerService.GetOrganizationByUserName();
                         codelistValue.InitializeNewCodelistValue();
                         codelistValue.versioningId = _registerItemService.NewVersioningGroup(codelistValue);
                         SetBroaderAndNarrowerItems(codelistValue, narrower, broader);

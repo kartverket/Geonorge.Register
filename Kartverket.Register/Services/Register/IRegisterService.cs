@@ -24,7 +24,7 @@ namespace Kartverket.Register.Services.Register
         Models.Register SetStatus(Models.Register register, Models.Register originalRegister);
         bool RegisterHasChildren(string parentname, string registername);
         bool validationName(Object model);
-        Organization GetUserOrganization();
+        Organization GetOrganizationByUserName();
         Guid GetOrganizationIdByUserName();
         Organization GetOrganizationByOrganizationNr(string number);
         Organization GetOrganizationByMunicipalityCode(string municipalityCode);

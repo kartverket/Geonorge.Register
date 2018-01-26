@@ -91,7 +91,7 @@ namespace Kartverket.Register.Services.Register
                 {
                     GetNationalDatasets(registerItems);
                     GetMunicipalDatasetsByUser(register, registerItems);
-                    filter.municipality = GetOrganizationByUserName().MunicipalityCode;
+                    filter.municipality = GetUserOrganization().MunicipalityCode;
                 }
 
                 register.items.Clear();
@@ -112,7 +112,7 @@ namespace Kartverket.Register.Services.Register
 
         private void GetMunicipalDatasetsByUser(Models.Register register, List<Models.RegisterItem> registerItems)
         {
-            Organization municipalityOrganization = GetOrganizationByUserName();
+            Organization municipalityOrganization = GetUserOrganization();
             GetMunicipalDatasetBySelectedMunicipality(register, registerItems, municipalityOrganization);
         }
 
@@ -1020,7 +1020,7 @@ namespace Kartverket.Register.Services.Register
             return false;
         }
 
-        public Organization GetOrganizationByUserName()
+        public Organization GetUserOrganization()
         {
             AccessControlService access = new AccessControlService(_dbContext);
             if (access.IsMunicipalUser())
@@ -1083,7 +1083,7 @@ namespace Kartverket.Register.Services.Register
 
         public Guid GetOrganizationIdByUserName()
         {
-            var user = GetOrganizationByUserName();
+            var user = GetUserOrganization();
             return user?.systemId ?? GetOrganizationKartverket();
         }
 

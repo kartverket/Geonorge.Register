@@ -233,7 +233,7 @@ namespace Kartverket.Register.Controllers
                     _db.Registers.Add(register);
                     _db.SaveChanges();
 
-                    Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
+                    Organization submitterOrganisasjon = _registerService.GetUserOrganization();
                     register.ownerId = submitterOrganisasjon.systemId;
                     register.managerId = submitterOrganisasjon.systemId;
 

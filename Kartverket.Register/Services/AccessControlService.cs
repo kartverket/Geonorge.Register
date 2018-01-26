@@ -249,7 +249,7 @@ namespace Kartverket.Register.Services
 
         public Organization MunicipalUserOrganization()
         {
-            return _registerService.GetOrganizationByUserName();
+            return _registerService.GetUserOrganization();
         }
 
         public string GetOrganizationNumber()
@@ -335,7 +335,7 @@ namespace Kartverket.Register.Services
 
         public string UserName()
         {
-            var user = _registerService.GetOrganizationByUserName();
+            var user = _registerService.GetUserOrganization();
             return user?.name;
         }
     }

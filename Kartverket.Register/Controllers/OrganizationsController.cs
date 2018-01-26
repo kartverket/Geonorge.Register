@@ -573,7 +573,7 @@ namespace Kartverket.Register.Controllers
 
         private void SetOrganizationOwnerAndSubmitter(Organization organization)
         {
-            Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
+            Organization submitterOrganisasjon = _registerService.GetUserOrganization();
             organization.submitterId = submitterOrganisasjon.systemId;
             organization.submitter = submitterOrganisasjon;
         }

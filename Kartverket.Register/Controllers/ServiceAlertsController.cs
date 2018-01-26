@@ -73,7 +73,7 @@ namespace Kartverket.Register.Controllers
                     {
                         var alertTranslation = new AlertTypes().GetAlertType(serviceAlert.AlertType);
                         serviceAlert.GetMetadataByUuid();
-                        serviceAlert.submitter = _registerService.GetOrganizationByUserName();
+                        serviceAlert.submitter = _registerService.GetUserOrganization();
                         serviceAlert.InitializeNewServiceAlert();
                         serviceAlert.AlertType = alertTranslation.Key.Value;
                         for (int t = 0; t < serviceAlert.Translations.Count; t++)

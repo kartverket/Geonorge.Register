@@ -277,6 +277,7 @@
     <Compile Include="Controllers\ServiceAlertsController.cs" />
     <Compile Include="Controllers\SubregisterController.cs" />
     <Compile Include="Formatter\CsvFormatter.cs" />
+    <Compile Include="Formatter\XMLFormatter.cs" />
     <Compile Include="Formatter\GMLFormatter.cs" />
     <Compile Include="Formatter\SKOSFormatter .cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
@@ -780,6 +781,7 @@
     <Compile Include="Models\Api\Facet.cs" />
     <Compile Include="Models\Api\FacetInput.cs" />
     <Compile Include="Models\Api\FieldValueModelBinder.cs" />
+    <Compile Include="Models\Api\InspireDataset.cs" />
     <Compile Include="Models\Api\OrganizationV2.cs" />
     <Compile Include="Models\Api\Register.cs" />
     <Compile Include="Models\Api\RegisterData.cs" />

@@ -558,6 +558,7 @@ namespace Kartverket.Register.Services.RegisterItem
         public CodelistValue GetMunicipalityByNr(string municipalNr)
         {
             var queryResult = from c in _dbContext.CodelistValues
+                              where c.register.name == "Kommunenummer"
                               where c.value == municipalNr
                               select c;
             return queryResult.FirstOrDefault();

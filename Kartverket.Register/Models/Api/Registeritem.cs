@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -7,12 +8,17 @@ using Resources;
 using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Kartverket.Register.Models.Api
 {
     [DataContractAttribute]
     public class Registeritem
     {
+
+        public Registeritem()
+        {
+        }
 
         // RegisterItem
         [DataMemberAttribute]
@@ -38,6 +44,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public int versionNumber { get; set; }
         [DataMemberAttribute]
+        [XmlIgnore]
         public ICollection<Registeritem> versions { get; set; }
         [DataMemberAttribute]
         public DateTime lastUpdated { get; set; }
@@ -118,6 +125,7 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string broader { get; set; }
         [DataMemberAttribute]
+        [XmlIgnore]
         public ICollection<string> narrower { get; set; }
 
         [DataMemberAttribute]
@@ -278,7 +286,7 @@ namespace Kartverket.Register.Models.Api
                 if (datasetV2.DokStatusDateAccepted != null) dateAccepted = datasetV2.DokStatusDateAccepted.Value;
                 MetadataUrl = datasetV2.MetadataUrl;
             }
-            if (item is InspireDataset inspireDataset)
+            if (item is Models.InspireDataset inspireDataset)
             {
                 if (inspireDataset.InspireDeliveryMetadata?.Status != null)
                 {
@@ -493,6 +501,11 @@ namespace Kartverket.Register.Models.Api
                 Note = GetNoteLocale(s);
                 ServiceUuid = s.ServiceUuid;
             }
+        }
+
+        public bool IsInspireDataset()
+        {
+            return itemclass == "InspireDataset";
         }
 
         private string GetNameLocale(Models.Register item)

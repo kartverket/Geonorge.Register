@@ -95,7 +95,7 @@ namespace Kartverket.Register.Services
             var hasServiceUrl = false;
             var status = Deficient;
 
-            if (!autoupdate) return status;
+            if (!autoupdate) return currentStatus;
             try
             {
                 dynamic metadata = GetMetadataFromKartkatalogen(metadataUuid);
@@ -198,7 +198,7 @@ namespace Kartverket.Register.Services
         {
             var statusValue = Deficient;
 
-            if (!autoupdate) return statusValue;
+            if (!autoupdate) return currentStatus;
             try
             {
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);

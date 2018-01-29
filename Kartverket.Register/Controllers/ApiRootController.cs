@@ -29,8 +29,8 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
         private readonly IInspireDatasetService _inspireDatasetService;
-        
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService) 
+
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
@@ -69,13 +69,14 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             var register = _registerService.GetRegisterByName(registerName);
-            if(filter != null || registerName == "det-offentlige-kartgrunnlaget-kommunalt")
+            if (filter != null || register.IsDokMunicipal())
             {
                 register = RegisterItems(register, filter);
             }
 
             return Ok(ConvertRegisterAndNextLevel(register, filter));
         }
+
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {
@@ -343,7 +344,7 @@ namespace Kartverket.Register.Controllers
         private Models.Api.Register ConvertRegisterAndNextLevel(Models.Register item, FilterParameters filter = null)
         {
             var tmp = ConvertRegister(item, filter);
-            tmp.containeditems = new List<Models.Api.Registeritem>();
+            tmp.containeditems = new List<Registeritem>();
             tmp.lang = CultureHelper.GetCurrentCulture();
             if (!item.items.Any())
             {
@@ -390,7 +391,7 @@ namespace Kartverket.Register.Controllers
         {
             string registerId = System.Web.Configuration.WebConfigurationManager.AppSettings["RegistryUrl"];  //uri.Scheme + "://" + uri.Authority;
             if (registerId.Substring(registerId.Length - 1, 1) == "/") registerId = registerId.Remove(registerId.Length - 1);
-            var tmp = new Registeritem(item,registerId, filter);
+            var tmp = new Registeritem(item, registerId, filter);
             return tmp;
         }
         private Registeritem ConvertRegisterItem(RegisterItemV2 item, FilterParameters filter = null)

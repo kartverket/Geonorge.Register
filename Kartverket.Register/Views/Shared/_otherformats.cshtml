@@ -15,13 +15,19 @@
                 @*<option value="helpUrl">API</option>*@
                 <option value="atomUrl">ATOM</option>
                 @if (ViewBag.Title != "Tjenestevarsler")
-                {
-                    <option value="rssUrl">RSS</option>
-                }
+    {
+            <option value="rssUrl">RSS</option>
+}
                 <option value="csvUrl" selected="selected">CSV</option>
                 <option value="gmlUrl">GML</option>
                 <option value="rdfUrl">RDF</option>
                 <option value="jsonUrl">JSON</option>
+                <option value="xmlUrl">XML</option>
+                @if (ViewBag.Title == "Inspire statusregister")
+                {
+                    <option value="inspireMonitoringUrl">Inspire rapport</option>
+                }
+
             </select>
         </div>
     </div>
@@ -32,6 +38,8 @@
         <a id="gmlUrl" href="@RegisterUrls.urlFormat(Request, "gml")" class="hidden" title="Vis GML Dictionary(Beta)">@Shared.Save</a>
         <a id="rdfUrl" href="@RegisterUrls.urlFormat(Request, "rdf")" class="hidden" title="Vis SKOS/RDF(Beta)">@Shared.Save</a>
         <a id="jsonUrl" href="@RegisterUrls.urlFormat(Request, "json")" class="hidden" title="Vis JSON(Beta)">@Shared.Save</a>
+        <a id="xmlUrl" href="@RegisterUrls.urlFormat(Request, "xml")" class="hidden" title="Vis XML(Beta)">@Shared.Save</a>
+        <a id="inspireMonitoringUrl" href="@RegisterUrls.InspireMonitoringReportUrl()" class="hidden" title="Vis inspire rapport(Beta)">@Shared.Save</a>
     </div>
 </div>
 

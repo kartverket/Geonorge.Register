@@ -989,6 +989,7 @@
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
+    <Compile Include="Services\IInspireMonitoringService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
@@ -996,6 +997,7 @@
     <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\GeodatalovDatasetService.cs" />
     <Compile Include="Services\IDocumentService.cs" />
+    <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />

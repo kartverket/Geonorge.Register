@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:basictype="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype" 
+	xmlns="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd" 
+	targetNamespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd" elementFormDefault="unqualified">
+	<xs:import namespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype" 
+		schemaLocation="http://dd.eionet.europa.eu/schemas/inspire-monitoring/basictype.xsd"/>
+	<xs:complexType name="MonitoringMD">
+		<xs:sequence>
+			<xs:element name="organizationName" type="xs:string"/>
+			<xs:element name="email" type="xs:string"/>
+			<xs:element name="monitoringDate" type="basictype:Date"/>
+			<xs:element name="language" type="basictype:LanguageCode"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

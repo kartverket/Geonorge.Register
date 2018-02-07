@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype"
+	targetNamespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype">
+	<xs:simpleType name="MD_CharacterSetCode">
+		<xs:annotation>
+			<xs:documentation>from ISO 19115</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UTF-8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Time" type="Time"/>
+	<xs:complexType name="Time">
+		<xs:sequence>
+			<xs:element name="hour" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="minute" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="second" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CountryCode">
+		<xs:restriction base="xs:string">
+			<!-- "HR", "IS", "LI", "NO", "CH" added 21/11/2014 -->
+			<xs:enumeration value="AT"/>
+			<xs:enumeration value="BE"/>
+			<xs:enumeration value="BG"/>
+			<xs:enumeration value="HR"/>
+			<xs:enumeration value="CY"/>
+			<xs:enumeration value="CZ"/>
+			<xs:enumeration value="DK"/>
+			<xs:enumeration value="EE"/>
+			<xs:enumeration value="FI"/>
+			<xs:enumeration value="FR"/>
+			<xs:enumeration value="DE"/>
+			<xs:enumeration value="EL"/>
+			<xs:enumeration value="HU"/>
+			<xs:enumeration value="IS"/>
+			<xs:enumeration value="IE"/>
+			<xs:enumeration value="IT"/>
+			<xs:enumeration value="LV"/>
+			<xs:enumeration value="LI"/>
+			<xs:enumeration value="LT"/>
+			<xs:enumeration value="LU"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="NL"/>
+			<xs:enumeration value="NO"/>
+			<xs:enumeration value="PL"/>
+			<xs:enumeration value="PT"/>
+			<xs:enumeration value="RO"/>
+			<xs:enumeration value="SK"/>
+			<xs:enumeration value="SI"/>
+			<xs:enumeration value="ES"/>
+			<xs:enumeration value="SE"/>
+			<xs:enumeration value="CH"/>
+			<xs:enumeration value="UK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Date" type="Date"/>
+	<xs:complexType name="Date">
+		<xs:sequence>
+			<xs:element name="day" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="month" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="year" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="LanguageCode">
+		<xs:annotation>
+			<xs:documentation>from ISO 639</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<!-- "hrv", "ice", "nor" added 21/11/2014 -->
+			<xs:enumeration value="bul"/>
+			<xs:enumeration value="cze"/>
+			<xs:enumeration value="dan"/>
+			<xs:enumeration value="dut"/>
+			<xs:enumeration value="eng"/>
+			<xs:enumeration value="est"/>
+			<xs:enumeration value="fin"/>
+			<xs:enumeration value="fre"/>
+			<xs:enumeration value="ger"/>
+			<xs:enumeration value="gre"/>
+			<xs:enumeration value="hrv"/>
+			<xs:enumeration value="hun"/>
+			<xs:enumeration value="ice"/>
+			<xs:enumeration value="gle"/>
+			<xs:enumeration value="ita"/>
+			<xs:enumeration value="lav"/>
+			<xs:enumeration value="lit"/>
+			<xs:enumeration value="mlt"/>
+			<xs:enumeration value="nor"/>
+			<xs:enumeration value="pol"/>
+			<xs:enumeration value="por"/>
+			<xs:enumeration value="rum"/>
+			<xs:enumeration value="slo"/>
+			<xs:enumeration value="slv"/>
+			<xs:enumeration value="spa"/>
+			<xs:enumeration value="swe"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DateTime" type="DateTime"/>
+	<xs:complexType name="DateTime">
+		<xs:sequence>
+			<xs:element name="day" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="month" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="year" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="hour" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="minute" type="xs:string" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="second" type="xs:string" minOccurs="1" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

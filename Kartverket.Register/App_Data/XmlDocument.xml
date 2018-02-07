@@ -978,6 +978,888 @@
             <param name="model"></param>
             <returns></returns>
         </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Time">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Time.hour">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Time.minute">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Time.second">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Date">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Date.day">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Date.month">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Date.year">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.DateTime">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.day">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.month">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.year">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.hour">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.minute">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DateTime.second">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Monitoring">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Monitoring.documentYear">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Monitoring.memberState">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Monitoring.MonitoringMD">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Monitoring.Indicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Monitoring.RowData">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.CountryCode">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.AT">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.BE">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.BG">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.HR">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.CY">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.CZ">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.DK">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.EE">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.FI">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.FR">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.DE">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.EL">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.HU">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.IS">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.IE">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.IT">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.LV">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.LI">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.LT">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.LU">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.MT">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.NL">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.NO">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.PL">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.PT">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.RO">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.SK">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.SI">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.ES">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.SE">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.CH">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.CountryCode.UK">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MonitoringMD">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MonitoringMD.organizationName">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MonitoringMD.email">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MonitoringMD.monitoringDate">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MonitoringMD.language">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.LanguageCode">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.bul">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.cze">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.dan">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.dut">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.eng">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.est">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.fin">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.fre">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.ger">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.gre">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.hrv">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.hun">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.ice">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.gle">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.ita">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.lav">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.lit">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.mlt">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.nor">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.pol">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.por">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.rum">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.slo">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.slv">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.spa">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.LanguageCode.swe">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Indicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.NnConformityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.GeoCoverageIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.UseNNindicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.MetadataExistenceIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.DiscoveryMetadataIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.ViewDownloadAccessibilityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.SpatialDataAndService">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.MetadataConformityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Indicators.SdsConformantIndicators">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi41">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi42">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi43">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi44">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi45">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NSi4">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformityIndicators.NnConformity">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.NnConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv41">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv42">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv43">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv44">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv45">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NnConformity.NSv4">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators.DSi11">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators.DSi12">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators.DSi13">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators.DSi1">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageIndicators.GeoCoverageSDS">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv11_ActArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv12_ActArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv13_ActArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv1_ActArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv11_RelArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv12_RelArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv13_RelArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.GeoCoverageSDS.DSv1_RelArea">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi31">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi32">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi33">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi34">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi35">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.NSi3">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNNindicators.UseNN">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.UseNN">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv31">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv32">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv33">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv34">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv35">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.UseNN.NSv3">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MDi11">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MDi12">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MDi13">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MDi14">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MDi1">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistenceIndicators.MetadataExistence">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence.MDv11">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence.MDv12">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence.MDv13">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence.MDv1_DS">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataExistence.MDv14">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadataIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadataIndicators.NSi11">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadataIndicators.NSi12">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadataIndicators.NSi1">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadataIndicators.DiscoveryMetadata">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadata">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadata.NSv11">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.DiscoveryMetadata.NSv12">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibilityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibilityIndicators.NSi21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibilityIndicators.NSi22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibilityIndicators.NSi2">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibility">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibility.NSv21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibility.NSv22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.ViewDownloadAccessibility.NSv23">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.DSv_Num1">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.DSv_Num2">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.DSv_Num3">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.DSv_Num">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.SDSv_Num">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumDiscServ">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumViewServ">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumDownServ">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumInvkServ">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumAllServ">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataAndService.NSv_NumTransfServ">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MDi21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MDi22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MDi23">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MDi24">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MDi2">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformityIndicators.MetadataConformity">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity.MDv21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity.MDv22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity.MDv23">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity.MDv2_DS">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MetadataConformity.MDv24">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators.DSi21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators.DSi22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators.DSi23">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators.DSi2">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformantIndicators.SdsConformant">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SdsConformant">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformant.DSv21">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformant.DSv22">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformant.DSv23">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SdsConformant.DSv2">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.RowData">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.RowData.SpatialDataService">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.RowData.SpatialDataSet">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SpatialDataService">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataService.MdServiceExistence">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataService.NetworkService">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MdServiceExistence">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdServiceExistence.mdConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdServiceExistence.discoveryAccessibility">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdServiceExistence.discoveryAccessibilityUuid">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.NetworkService">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NetworkService.directlyAccessible">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NetworkService.URL">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NetworkService.userRequest">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NetworkService.nnConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.NetworkService.NnServiceType">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.NnServiceType">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.NnServiceType.discovery">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.NnServiceType.view">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.NnServiceType.download">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.NnServiceType.transformation">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.NnServiceType.invoke">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SpatialResource">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialResource.name">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialResource.respAuthority">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialResource.uuid">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialResource.Themes">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Themes">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Themes.AnnexIII">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Themes.AnnexI">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Themes.AnnexII">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.AnnexIII">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.statisticalUnits">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.buildings">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.soil">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.landUse">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.humanHealthAndSafety">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.utilityAndGovernmentalServices">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.environmentalMonitoringFacilities">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.productionAndIndustrialFacilities">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.agriculturalAndAquacultureFacilities">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.populationDistributionDemography">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.areaManagementRestrictionRegulationZonesAndReportingUnits">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.naturalRiskZones">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.atmosphericConditions">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.meteorologicalGeographicalFeatures">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.oceanographicGeographicalFeatures">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.seaRegions">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.bioGeographicalRegions">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.habitatsAndBiotopes">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.speciesDistribution">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.energyResources">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexIII.mineralResources">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.AnnexI">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.coordinateReferenceSystems">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.geographicalGridSystems">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.geographicalNames">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.administrativeUnits">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.addresses">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.cadastralParcels">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.transportNetworks">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.hydrography">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexI.protectedSites">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.AnnexII">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexII.elevation">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexII.landCover">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexII.orthoimagery">
+            <remarks/>
+        </member>
+        <member name="F:Eu.Europa.Ec.Jrc.Inspire.AnnexII.geology">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.SpatialDataSet">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataSet.Coverage">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.SpatialDataSet.MdDataSetExistence">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.Coverage">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Coverage.relevantArea">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.Coverage.actualArea">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MdDataSetExistence">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdDataSetExistence.IRConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdDataSetExistence.MdAccessibility">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.IRConformity">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.IRConformity.structureCompliance">
+            <remarks/>
+        </member>
+        <member name="T:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.discovery">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.discoveryUuid">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.view">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.viewUuid">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.download">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.downloadUuid">
+            <remarks/>
+        </member>
+        <member name="P:Eu.Europa.Ec.Jrc.Inspire.MdAccessibility.viewDownload">
+            <remarks/>
+        </member>
         <member name="T:Resources.GeodatalovDataSet">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.

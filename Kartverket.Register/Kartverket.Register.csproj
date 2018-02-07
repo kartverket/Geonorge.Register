@@ -281,6 +281,7 @@
     <Compile Include="Formatter\GMLFormatter.cs" />
     <Compile Include="Formatter\SKOSFormatter .cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
+    <Compile Include="Formatter\XSD\basictype_indicators_monitoring_monitoringmd_rowdata.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1346,6 +1347,21 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <None Include="Formatter\XSD\basictype.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\indicators.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\monitoring.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\monitoringmd.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\rowdata.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />

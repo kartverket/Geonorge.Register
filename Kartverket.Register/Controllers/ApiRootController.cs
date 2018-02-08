@@ -181,7 +181,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             Models.InspireDataset inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registerName, item);
-            SpatialDataSet inspireDatasetMonitoring = _inspireMonitoringService.Mapping(inspireDataset);
+            SpatialDataSet inspireDatasetMonitoring = _inspireMonitoringService.MappingSpatialDataSet(inspireDataset);
 
             return Ok(inspireDatasetMonitoring);
         }

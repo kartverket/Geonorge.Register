@@ -11,6 +11,6 @@ namespace Kartverket.Register.Services
     public interface IInspireMonitoringService
     {
         Monitoring Mapping(Models.Register inspireStatusRegister);
-        SpatialDataSet Mapping(InspireDataset inspireDataset);
+        SpatialDataSet MappingSpatialDataSet(InspireDataset inspireDataset);
     }
 }

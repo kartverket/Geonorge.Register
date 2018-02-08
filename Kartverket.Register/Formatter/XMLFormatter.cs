@@ -65,7 +65,14 @@ namespace Kartverket.Register.Formatter
                 XmlSerializer s = new XmlSerializer(typeof(Monitoring));
                 using (XmlWriter writer = XmlWriter.Create(stream))
                 {
-                    s.Serialize(writer, monitoring);
+                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                    ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                    ns.Add("p4", "http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata");
+                    ns.Add("p3", "http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators");
+                    ns.Add("p2", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd");
+                    ns.Add("p1", "http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype");
+                    ns.Add("p", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring");
+                    s.Serialize(writer, monitoring, ns);
                 }
             }
             else if (models is Models.Api.Register register)

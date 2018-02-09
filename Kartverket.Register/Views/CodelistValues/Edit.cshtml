@@ -29,9 +29,8 @@
     @Html.HiddenFor(model => model.systemId)
     @Html.HiddenFor(model => model.registerId)
     @Html.HiddenFor(model => model.versioningId)
-    @Html.HiddenFor(model => model.statusId)
     @Html.HiddenFor(model => model.broaderItemId)
-    @Html.HiddenFor(model => model.submitterId)
+
     
     <div class="form-horizontal">
         <div class="form-group">
@@ -43,16 +42,16 @@
         </div>
 
         @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Name)
-                </div>
+    {
+        @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Translations[t].Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Translations[t].Name)
             </div>
-        }
+        </div>
+}
 
         <div class="form-group">
             @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -63,41 +62,46 @@
         </div>
 
         @for (int t = 0; t < Model.Translations.Count; t++)
-        {
-            @Html.HiddenFor(m => Model.Translations[t].CultureName)
-            <div class="form-group">
-                @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(m => Model.Translations[t].Description)
-                </div>
+    {
+        @Html.HiddenFor(m => Model.Translations[t].CultureName)
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => Model.Translations[t].Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(m => Model.Translations[t].Description)
             </div>
-        }
+        </div>
+}
 
 
         @if (Request.IsAuthenticated && HtmlHelperExtensions.IsAdmin())
-        {
+    {
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="custom-select">
-                        @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "chosen-select form-control" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.submitterId, Registers.Submitter + ":", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="custom-select">
+                    @Html.DropDownList("submitterId", null, htmlAttributes: new { @class = "chosen-select form-control" })
                 </div>
+                @Html.ValidationMessageFor(model => model.submitterId, "", new { @class = "text-danger" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new {@class = "control-label col-md-2"})
-                <div class="col-md-10 chosen-container-single chosen-container-single-nosearch">
-                    <div class="custom-select">
-                        @Html.DropDownList("statusId", null, htmlAttributes: new {@class = "form-control"})
-                    </div>
-                    @Html.ValidationMessageFor(model => model.statusId, "", new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.LabelFor(model => model.statusId, "Status", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 chosen-container-single chosen-container-single-nosearch">
+                <div class="custom-select">
+                    @Html.DropDownList("statusId", null, htmlAttributes: new { @class = "form-control" })
                 </div>
+                @Html.ValidationMessageFor(model => model.statusId, "", new { @class = "text-danger" })
             </div>
-        }
+        </div>
+}
+else
+{
+    @Html.HiddenFor(model => model.statusId)
+    @Html.HiddenFor(model => model.submitterId)
+}
 
         <div class="form-group">
             @Html.LabelFor(model => model.value, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -106,7 +110,7 @@
                 @Html.ValidationMessageFor(model => model.value, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.ValidFromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -125,78 +129,78 @@
 
 
         @if (HtmlHelperExtensions.IsAdmin())
-        {
-            <hr />
-            <h4>@CodelistValues.HierarchicalCodelists</h4>
-            <small>@CodelistValues.HierarchicalCodelistsSelectionText</small>
-            <br /><br />
-            <div class="form-group">
-                @Html.LabelFor(model => model.broaderItem, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="custom-select">
-                        <select name="broader" data-placeholder="@CodelistValues.SelectCodeValue" class="form-control chosen-select dropdown" data-toggle="dropdown">
-                            <option selected="selected"></option>
-                            @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+    {
+        <hr />
+        <h4>@CodelistValues.HierarchicalCodelists</h4>
+        <small>@CodelistValues.HierarchicalCodelistsSelectionText</small>
+        <br /><br />
+        <div class="form-group">
+            @Html.LabelFor(model => model.broaderItem, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="custom-select">
+                    <select name="broader" data-placeholder="@CodelistValues.SelectCodeValue" class="form-control chosen-select dropdown" data-toggle="dropdown">
+                        <option selected="selected"></option>
+                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                    {
+                        <optgroup label="@register.name">
+                            @foreach (var code in register.items.OrderBy(c => c.name))
+                        {
+                            if (Model.broaderItemId != null)
                             {
-                                <optgroup label="@register.name">
-                                    @foreach (var code in register.items.OrderBy(c => c.name))
-                                    {
-                                        if (Model.broaderItemId != null)
-                                        {
-                                            if (Model.broaderItem.systemId == code.systemId)
-                                            {
-                                                <option selected="selected" value="@code.systemId">@code.name</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@code.systemId">@code.name</option>
-                                            }
-                                        }
-                                        else
-                                        {
-                                            <option value="@code.systemId">@code.name</option>
-                                        }
-
-                                    }
-                                </optgroup>
+                                if (Model.broaderItem.systemId == code.systemId)
+                                {
+                                    <option selected="selected" value="@code.systemId">@code.name</option>
                             }
-                        </select>
-                    </div>
+                            else
+                            {
+                                <option value="@code.systemId">@code.name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="@code.systemId">@code.name</option>
+                }
+
+            }
+                        </optgroup>
+                }
+                    </select>
                 </div>
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.narrowerItems, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="custom-select">
-                        <select name="narrower" data-placeholder="@CodelistValues.SelectCodeValue" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
-                            @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+        <div class="form-group">
+            @Html.LabelFor(model => model.narrowerItems, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="custom-select">
+                    <select name="narrower" data-placeholder="@CodelistValues.SelectCodeValue" multiple class="chosen-select form-control" tabindex="18" id="multiple-label-example">
+                        @foreach (var register in HtmlHelperExtensions.CodelistRegister())
+                    {
+                        <optgroup label="@register.name">
+                            @foreach (var code in register.items.OrderBy(c => c.name))
+                        {
+                            Guid? narrower = null;
+                            foreach (var narrowerItem in Model.narrowerItems)
                             {
-                                <optgroup label="@register.name">
-                                    @foreach (var code in register.items.OrderBy(c => c.name))
-                                    {
-                                        Guid? narrower = null;
-                                        foreach (var narrowerItem in Model.narrowerItems)
-                                        {
-                                            if (code.systemId == narrowerItem.systemId)
-                                            {
-                                                <option selected="selected" value="@code.systemId">@code.name</option>
-                                                narrower = narrowerItem.systemId;
-                                                break;
-                                            }
-                                        }
-                                        if (narrower == null)
-                                        {
-                                            <option value="@code.systemId">@code.name</option>
-                                        }
-                                    }
-                                </optgroup>
+                                if (code.systemId == narrowerItem.systemId)
+                                {
+                                    <option selected="selected" value="@code.systemId">@code.name</option>
+                                narrower = narrowerItem.systemId;
+                                break;
                             }
-                        </select>
-                    </div>
+                        }
+                        if (narrower == null)
+                        {
+                            <option value="@code.systemId">@code.name</option>
+                    }
+                }
+                        </optgroup>
+                }
+                    </select>
                 </div>
             </div>
-        }
+        </div>
+}
 
     </div>
     <div class="form-group">

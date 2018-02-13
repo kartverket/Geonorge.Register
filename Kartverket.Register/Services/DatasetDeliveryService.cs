@@ -252,7 +252,7 @@ namespace Kartverket.Register.Services
                 {
                     if (metadata.QualitySpecifications != null)
                     {
-                        if (metadata.QualitySpecifications[0].Result == "true" || metadata.metadata.QualitySpecifications[0].Title?.Contains("COMMISSION REGULATION"))
+                        if (metadata.QualitySpecifications[0].Result == "true" && metadata.metadata.QualitySpecifications[0].Title?.Contains("COMMISSION REGULATION"))
                         {
                             return Good;
                         }

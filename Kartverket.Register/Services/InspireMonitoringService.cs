@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Eu.Europa.Ec.Jrc.Inspire;
+using Kartverket.DOK.Service;
 using Kartverket.Register.Models;
 using Microsoft.Ajax.Utilities;
 using DateTime = System.DateTime;
@@ -69,7 +71,11 @@ namespace Kartverket.Register.Services
             List<SpatialDataService> spatialDataService = new List<SpatialDataService>();
             foreach (InspireDataset item in registerItems)
             {
-                spatialDataService.Add(MappingSpatialDataService(item));
+                var listOfRelatedServices = FetchRelatedServicesFromKartkatalogen(item.Uuid);
+                foreach (var service in listOfRelatedServices)
+                {                    
+                    spatialDataService.Add(service);
+                }
             }
             return spatialDataService.ToArray();
         }
@@ -127,7 +133,7 @@ namespace Kartverket.Register.Services
             MdServiceExistence mdServiceExistence = new MdServiceExistence();
             mdServiceExistence.mdConformity = Accessibility(item.InspireDeliveryMetadata.StatusId);
             mdServiceExistence.discoveryAccessibility = Accessibility(item.InspireDeliveryMetadataService.StatusId);
-            
+
             return mdServiceExistence;
         }
 
@@ -145,7 +151,7 @@ namespace Kartverket.Register.Services
 
         private MdDataSetExistence MappingMdDatasetEcistence(InspireDataset inspireDataset)
         {
-            MdDataSetExistence mdDataSetExistence= new MdDataSetExistence();
+            MdDataSetExistence mdDataSetExistence = new MdDataSetExistence();
             mdDataSetExistence.MdAccessibility = MappingMdAccessibility(inspireDataset);
 
             return mdDataSetExistence;
@@ -178,7 +184,7 @@ namespace Kartverket.Register.Services
         {
             // TODO få tak i riktig theme...
             var themes = new Themes();
-            var themesArray = new[]{themes};
+            var themesArray = new[] { themes };
 
             var annexiList = new List<AnnexI>();
             if (inspireTheme == "Hydrografi")
@@ -189,6 +195,43 @@ namespace Kartverket.Register.Services
             themes.AnnexI = annexiList.ToArray();
 
             return themesArray;
+        }
+
+        public List<SpatialDataService> FetchRelatedServicesFromKartkatalogen(string uuid)
+        {
+            List<SpatialDataService> spatialDataServiceList = new List<SpatialDataService>();
+
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distribution-lists/" + uuid;
+            System.Net.WebClient c = new System.Net.WebClient();
+            c.Encoding = System.Text.Encoding.UTF8;
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    foreach (var services in data.RelatedViewServices)
+                    {
+                        var spatialDataService = new SpatialDataService();
+                        spatialDataService.name = services.Title;
+                        spatialDataService.respAuthority = services.Organization;
+                        spatialDataService.uuid = services.Uuid;
+                        //spatialDataService.Themes = MappingThemes(services.InspireTheme);
+                        //spatialDataService.MdServiceExistence = MappingServiceExistence(services);
+                        //spatialDataService.NetworkService = MappingNetworkService(services);
+                        spatialDataServiceList.Add(spatialDataService);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return spatialDataServiceList;
         }
     }
 }

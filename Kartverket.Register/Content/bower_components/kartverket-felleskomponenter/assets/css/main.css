@@ -1398,7 +1398,8 @@ iframe {
   .navbar-nav-container {
     -moz-box-shadow: none;
     -webkit-box-shadow: none;
-    box-shadow: none; }
+    box-shadow: none;
+    display: none; }
   .navbar-nav .dropdown .dropdown-menu > li > ul > li > a {
     font-size: 14pt; }
   .navbar-nav .dropdown .dropdown-menu ul {
@@ -1765,6 +1766,11 @@ a {
   a:hover {
     color: #3867C8;
     cursor: pointer; }
+  a.disabled {
+    color: #CFCFCF; }
+    a.disabled:hover {
+      color: #CFCFCF;
+      cursor: not-allowed; }
 
 .control-text {
   padding-top: 7px; }
@@ -1795,6 +1801,15 @@ aside ul li,
 .panel-default > .panel-heading .help-text-toggle.active {
   background-color: #fe5000;
   color: #fff; }
+
+/* Filter tabs */
+.nav-tabs > li > a .badge {
+  background-color: #fff;
+  color: #333; }
+
+.nav-tabs > li.active > a .badge {
+  background-color: #fe5000;
+  color: #FFF; }
 
 .btn,
 a.btn,
@@ -3492,20 +3507,30 @@ h1 .label {
   margin-left: 26px;
   vertical-align: middle; }
 
-.label-datasett {
+.heading .label {
+  margin-bottom: 8px; }
+
+.label-datasett,
+.label-dataset {
   border-color: #5d4777; }
 
-.label-applikasjon {
+.label-applikasjon,
+.label-application {
   border-color: #7da1c4; }
 
-.label-tjeneste {
+.label-tjeneste,
+.label-service {
   border-color: #a9c47f; }
 
-.label-tjenestelag {
+.label-tjenestelag,
+.label-servicelayer {
   border-color: #f0b323; }
 
 .label-datasettserie {
   border-color: #968c84; }
+
+.label-datapakke {
+  border-color: #5d4777; }
 
 .label-danger {
   border-color: #EE432a; }
@@ -3994,7 +4019,7 @@ header.main-header {
   line-height: 14pt; }
   #tableView .search-results-table-heading > div,
   .table-view .search-results-table-heading > div {
-    height: 60px; }
+    height: 40px; }
     #tableView .search-results-table-heading > div > p,
     .table-view .search-results-table-heading > div > p {
       position: absolute;
@@ -4002,8 +4027,7 @@ header.main-header {
       line-height: inherit;
       margin-bottom: 4px;
       font-size: 12pt;
-      line-height: 14pt;
-      width: 100%; }
+      line-height: 14pt; }
       #tableView .search-results-table-heading > div > p a,
       .table-view .search-results-table-heading > div > p a {
         font-size: 12pt;

@@ -853,6 +853,10 @@ $(document).ready(function () {
       function handleSuccess(respons) {
 
           $scope.menuItems = respons.data;
+          
+          // Show menu when loaded
+          var menuElement = document.getElementById('top-menu');
+          menuElement.firstChild.style.display = 'block';
 
       }
 

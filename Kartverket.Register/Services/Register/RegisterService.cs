@@ -1099,8 +1099,17 @@ namespace Kartverket.Register.Services.Register
         public Guid GetInspireStatusRegisterId()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.name == "Inspire statusregister"
+                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
                 select o.systemId;
+
+            return queryResults.FirstOrDefault();
+        }
+
+        public Models.Register GetInspireStatusRegister()
+        {
+            var queryResults = from o in _dbContext.Registers
+                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
+                select o;
 
             return queryResults.FirstOrDefault();
         }

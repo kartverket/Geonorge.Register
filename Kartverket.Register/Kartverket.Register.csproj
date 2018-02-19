@@ -98,8 +98,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Kartverket.ReportApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Kartverket.ReportApi.6.3.141\lib\net452\Kartverket.ReportApi.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Kartverket.ReportApi.8.3.169\lib\net452\Kartverket.ReportApi.dll</HintPath>
     </Reference>
     <Reference Include="Kentor.AuthServices, Version=0.17.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Kentor.AuthServices.0.17.2\lib\net45\Kentor.AuthServices.dll</HintPath>
@@ -281,6 +280,7 @@
     <Compile Include="Formatter\GMLFormatter.cs" />
     <Compile Include="Formatter\SKOSFormatter .cs" />
     <Compile Include="Formatter\SyndicationfeedFormatter.cs" />
+    <Compile Include="Formatter\XSD\basictype_indicators_monitoring_monitoringmd_rowdata.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -988,6 +988,7 @@
     <Compile Include="Services\IDatasetService.cs" />
     <Compile Include="Services\IDatasetDeliveryService.cs" />
     <Compile Include="Services\IGeodatalovDatasetService.cs" />
+    <Compile Include="Services\IInspireMonitoringService.cs" />
     <Compile Include="Services\IndexDocumentCreator.cs" />
     <Compile Include="Services\Indexer.cs" />
     <Compile Include="Services\IAccessControlService.cs" />
@@ -995,6 +996,7 @@
     <Compile Include="Services\DatasetDeliveryService.cs" />
     <Compile Include="Services\GeodatalovDatasetService.cs" />
     <Compile Include="Services\IDocumentService.cs" />
+    <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
@@ -1346,6 +1348,21 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <None Include="Formatter\XSD\basictype.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\indicators.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\monitoring.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\monitoringmd.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Formatter\XSD\rowdata.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />

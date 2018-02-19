@@ -14,6 +14,8 @@ using System.Web;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Eu.Europa.Ec.Jrc.Inspire;
+using Kartverket.Register.Services;
 
 namespace Kartverket.Register.Formatter
 {
@@ -29,7 +31,9 @@ namespace Kartverket.Register.Formatter
 
         Func<Type, bool> SupportedType = (type) =>
         {
-            if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) || type == typeof(List<InspireDatasetRegistery>))
+            if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) 
+            || type == typeof(Monitoring) 
+            || type == typeof(SpatialDataSet))
                 return true;
             else
                 return false;
@@ -49,72 +53,56 @@ namespace Kartverket.Register.Formatter
         {
             return Task.Factory.StartNew(() =>
             {
-                if (type == typeof(Models.Api.Register) || type == typeof(Kartverket.Register.Models.Api.Registeritem))
+                if (type == typeof(Models.Api.Register) || type == typeof(Registeritem) || type == typeof(Monitoring) || type == typeof(SpatialDataSet))
                     BuildXMLFeed(value, writeStream);
             });
         }
 
         private void BuildXMLFeed(object models, Stream stream)
         {
-
-            if (models is Models.Api.Register register)
+            if (models is Monitoring monitoring)
             {
-                if (register.IsInspireDataset())
+                XmlSerializer s = new XmlSerializer(typeof(Monitoring));
+                using (XmlWriter writer = XmlWriter.Create(stream))
                 {
-                    var inspireDatasetRegistery = new InspireDatasetRegistery(register);
-                    XmlSerializer s = new XmlSerializer(typeof(InspireDatasetRegistery));
-                    using (XmlWriter writer = XmlWriter.Create(stream))
-                    {
-                        XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                        ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                        ns.Add("p4", "http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata");
-                        ns.Add("p3", "http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators");
-                        ns.Add("p2", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd");
-                        ns.Add("p1", "http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype");
-                        ns.Add("p", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring");
-                        s.Serialize(writer, inspireDatasetRegistery, ns);
-                    }
+                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                    ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+                    ns.Add("p4", "http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata");
+                    ns.Add("p3", "http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators");
+                    ns.Add("p2", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd");
+                    ns.Add("p1", "http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype");
+                    ns.Add("p", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring");
+                    s.Serialize(writer, monitoring, ns);
                 }
-                else
-                {
-                    XmlSerializer s = new XmlSerializer(typeof(Models.Api.Register));
+            }
+            else if (models is Models.Api.Register register)
+            {
+                XmlSerializer s = new XmlSerializer(typeof(Models.Api.Register));
 
-                    using (XmlWriter writer = XmlWriter.Create(stream))
-                    {
-                        XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                        ns.Add("i", "http://www.w3.org/2001/XMLSchema-instance");
-                        s.Serialize(writer, register, ns);
-                    }
+                using (XmlWriter writer = XmlWriter.Create(stream))
+                {
+                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                    ns.Add("i", "http://www.w3.org/2001/XMLSchema-instance");
+                    s.Serialize(writer, register, ns);
                 }
             }
             else if (models is Registeritem registerItem)
             {
-                if (registerItem.IsInspireDataset())
-                {
-                    var inspireDataset = new Models.Api.InspireDataset(registerItem);
-                    XmlSerializer s = new XmlSerializer(typeof(Models.Api.InspireDataset));
-                    using (XmlWriter writer = XmlWriter.Create(stream))
-                    {
-                        XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                        ns.Add("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-                        ns.Add("p4", "http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata");
-                        ns.Add("p3", "http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators");
-                        ns.Add("p2", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd");
-                        ns.Add("p1", "http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype");
-                        ns.Add("p", "http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring");
-                        s.Serialize(writer, inspireDataset, ns);
-                    }
-                }
-                else
-                {
-                    XmlSerializer s = new XmlSerializer(typeof(Models.Api.Registeritem));
+                    XmlSerializer s = new XmlSerializer(typeof(Registeritem));
 
                     using (XmlWriter writer = XmlWriter.Create(stream))
                     {
                         XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
                         ns.Add("i", "http://www.w3.org/2001/XMLSchema-instance");
                         s.Serialize(writer, registerItem, ns);
-                    }
+                    }                
+            }
+            else if (models is SpatialDataSet spatialDataSet)
+            {
+                XmlSerializer s = new XmlSerializer(typeof(SpatialDataSet));
+                using (XmlWriter writer = XmlWriter.Create(stream))
+                {
+                    s.Serialize(writer, spatialDataSet);
                 }
             }
         }

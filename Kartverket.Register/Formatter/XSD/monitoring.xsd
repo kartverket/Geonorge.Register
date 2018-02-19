@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns:row="http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata" 
+	xmlns:ind="http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators" 
+	xmlns:basictype="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype" 
+	xmlns:mrmd="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd" 
+	xmlns="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring" 
+	targetNamespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoring">
+	<xs:import namespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/monitoringmd" 
+		schemaLocation="http://dd.eionet.europa.eu/schemas/inspire-monitoring/monitoringmd.xsd"/>
+	<xs:import namespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/basictype" 
+		schemaLocation="http://dd.eionet.europa.eu/schemas/inspire-monitoring/basictype.xsd"/>
+	<xs:import namespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/indicators" 
+		schemaLocation="http://dd.eionet.europa.eu/schemas/inspire-monitoring/indicators.xsd"/>
+	<xs:import namespace="http://inspire.jrc.ec.europa.eu/monitoringreporting/rowdata" 
+		schemaLocation="http://dd.eionet.europa.eu/schemas/inspire-monitoring/rowdata.xsd"/>
+	<xs:element name="Monitoring" type="Monitoring"/>
+	<xs:complexType name="Monitoring">
+		<xs:sequence>
+			<xs:element name="documentYear" type="basictype:Date"/>
+			<xs:element name="memberState" type="basictype:CountryCode"/>
+			<xs:element name="MonitoringMD" type="mrmd:MonitoringMD"/>
+			<xs:element name="Indicators" type="ind:Indicators"/>
+			<xs:element name="RowData" type="row:RowData"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

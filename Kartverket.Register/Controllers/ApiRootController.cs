@@ -18,6 +18,7 @@ using Kartverket.Register.Models.Translations;
 using System.Globalization;
 using System.Threading;
 using System.Net.Http.Headers;
+using Eu.Europa.Ec.Jrc.Inspire;
 
 namespace Kartverket.Register.Controllers
 {
@@ -29,13 +30,15 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterService _registerService;
         private readonly IRegisterItemService _registerItemService;
         private readonly IInspireDatasetService _inspireDatasetService;
+        private readonly IInspireMonitoringService _inspireMonitoringService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
             _searchService = searchService;
             _registerService = registerService;
+            _inspireMonitoringService = inspireMonitoringService;
             db = dbContext;
         }
 
@@ -75,6 +78,20 @@ namespace Kartverket.Register.Controllers
             }
 
             return Ok(ConvertRegisterAndNextLevel(register, filter));
+        }
+
+        /// <summary>
+        /// Gets inspiremonitoring xml
+        /// </summary>
+        /// <param name="registerName">The search engine optimized name of the register</param>
+        [Route("api/register/inspire-statusregister/monitoring-report")]
+        [HttpGet]
+        public IHttpActionResult InspireMonitoring()
+        {
+            SetLanguage(Request);
+            var inspireStatusRegister = _registerService.GetInspireStatusRegister();
+            Monitoring inspireMonitoring = _inspireMonitoringService.Mapping(inspireStatusRegister);
+            return Ok(inspireMonitoring);
         }
 
 
@@ -150,6 +167,23 @@ namespace Kartverket.Register.Controllers
             }
 
             return Ok(currentVersion);
+        }
+
+        /// <summary>
+        /// Gets current and historical versions of register item by register- organization- and registeritem-name 
+        /// </summary>
+        /// <param name="registerName">The search engine optimized name of the register</param>
+        /// <param name="itemowner">The search engine optimized name of the register item owner</param>
+        /// <param name="item">The search engine optimized name of the register item</param>
+        [Route("api/register/{registerName}/{itemowner}/{item}/monitoring-report")]
+        [HttpGet]
+        public IHttpActionResult InspireDatasetMonitoring(string registerName, string itemowner, string item)
+        {
+            SetLanguage(Request);
+            Models.InspireDataset inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registerName, item);
+            SpatialDataSet inspireDatasetMonitoring = _inspireMonitoringService.MappingSpatialDataSet(inspireDataset);
+
+            return Ok(inspireDatasetMonitoring);
         }
 
         private Registeritem ConvertInspireRegister(string registerName, string item)

@@ -63,6 +63,12 @@ namespace Kartverket.Register.Helpers
             return url;
         }
 
+        public static string InspireMonitoringReportUrl()
+        {
+            string url = "/api/register/inspire-statusregister/monitoring-report";
+            return url;
+        }
+
         public static string MakeSeoFriendlyString(string input)
         {
             string encodedUrl = (input ?? "").ToLower();

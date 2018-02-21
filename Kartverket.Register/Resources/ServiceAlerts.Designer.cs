@@ -297,7 +297,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ikrafttredekse.
+        ///   Looks up a localized string similar to Ikrafttredelse.
         /// </summary>
         public static string TableHeader_effektivedate {
             get {

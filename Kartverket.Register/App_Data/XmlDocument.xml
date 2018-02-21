@@ -2308,7 +2308,7 @@
         </member>
         <member name="P:Resources.ServiceAlerts.TableHeader_effektivedate">
             <summary>
-              Looks up a localized string similar to Ikrafttredekse.
+              Looks up a localized string similar to Ikrafttredelse.
             </summary>
         </member>
         <member name="P:Resources.ServiceAlerts.TableHeder_alert">

@@ -8,6 +8,11 @@ namespace Kartverket.Register.Models
 {
     public class DatasetDelivery
     {
+        public const string Useable = "useable";
+        public const string Good = "good";
+        public const string Notset = "notset";
+        public const string Deficient = "deficient";
+
         [Key]
         public Guid DatasetDeliveryId { get; set; }
 
@@ -22,7 +27,7 @@ namespace Kartverket.Register.Models
         public DatasetDelivery(string statusId, string note, bool autoUpdate = true)
         {
             DatasetDeliveryId = Guid.NewGuid();
-            StatusId = string.IsNullOrWhiteSpace(statusId) ? "notset" : statusId;
+            StatusId = string.IsNullOrWhiteSpace(statusId) ? Notset : statusId;
             Note = note;
             AutoUpdate = autoUpdate;
         }
@@ -30,6 +35,11 @@ namespace Kartverket.Register.Models
         public DatasetDelivery()
         {
             DatasetDeliveryId = Guid.NewGuid();
+        }
+
+        public bool IsSet()
+        {
+            return StatusId != Notset;
         }
     }
 

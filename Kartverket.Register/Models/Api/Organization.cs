@@ -14,6 +14,8 @@ namespace Kartverket.Register.Models.Api
 
         public string ShortName { get; set; }
 
+        public string Status { get; set; }
+
         public void Convert(Models.Organization input)
         {
             Number = input.number;
@@ -21,6 +23,7 @@ namespace Kartverket.Register.Models.Api
             LogoLargeUrl = WebConfigurationManager.AppSettings["RegistryUrl"] + "data/" + Models.Organization.DataDirectory + input.largeLogo;
             ShortName = input.shortname;
             Name = input.name;
+            Status = input.statusId;
         }
     }
 }

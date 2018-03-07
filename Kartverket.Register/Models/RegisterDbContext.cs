@@ -7,14 +7,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Kartverket.Register.Migrations.Configuration;
 using Kartverket.Register.Models.Translations;
+using System.Data.Entity.Infrastructure;
+using Kartverket.Geonorge.Utilities.LogEntry;
+using System.Web.Configuration;
+using System.Security.Claims;
 
 namespace Kartverket.Register.Models
 {
     public class RegisterDbContext : DbContext
     {
+        private ILogEntryService _logEntryService;
+
         public RegisterDbContext() : base("RegisterDbContext")
         {
-
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<RegisterDbContext, Kartverket.Register.Migrations.Configuration>("RegisterDbContext"));
         }
 
@@ -44,6 +49,17 @@ namespace Kartverket.Register.Models
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
+
+        public ILogEntryService LogEntryService
+        {
+            get {
+                if (_logEntryService == null)
+                    _logEntryService = new LogEntryService(WebConfigurationManager.AppSettings["LogApi"], WebConfigurationManager.AppSettings["LogApiKey"], new Kartverket.Geonorge.Utilities.Organization.HttpClientFactory());
+
+                return _logEntryService;
+            }
+            set { _logEntryService = value; }
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -84,29 +100,55 @@ namespace Kartverket.Register.Models
             int result = 0;
 
             var entityList = ChangeTracker.Entries().Where(p => p.State == EntityState.Added || p.State == EntityState.Deleted || p.State == EntityState.Modified).ToList();
+
             for (int c = 0; c < entityList.Count(); c++)
             {
+                string operation = "";
+                string uuid = "";
+                string title = "";
+                string description = "";
+
                 var entity = entityList[c];
-                if(entity.State != EntityState.Unchanged)
+
+                var reg = entity.Entity as Register;
+                var regItem = entity.Entity as RegisterItem;
+
+                if (reg != null)
                 {
-                    var reg = entity.Entity as Register;
-                    var regItem = entity.Entity as RegisterItem;
-
-                    if (reg != null)
-                    {
-                        result = Save();
-                        new Task(() => { Index(reg.systemId); }).Start();
-                    }
-                    else if (regItem != null)
-                    {
-                        if(regItem.register != null)
-                            regItem.register.modified = System.DateTime.Now;
-                        result = Save();
-                        new Task(() => { Index(regItem.systemId); }).Start();
-                    }
-                    else { result = Save(); }
+                    uuid = reg.systemId.ToString();
+                    title = reg.name;
+                    operation = entity.State.ToString();
+                    if (operation == EntityState.Unchanged.ToString())
+                        operation = Operation.Modified;
+                    description = "Saved register: " + title;
+                    result = Save();
+                    new Task(() => { Index(reg.systemId); }).Start();
                 }
+                else if (regItem != null)
+                {
+                    if(regItem.register != null)
+                    { 
+                        regItem.register.modified = System.DateTime.Now;
+                    }
 
+                    uuid = regItem.systemId.ToString();
+                    title = regItem.name;
+                    if (regItem.register != null)
+                        description = "Saved register item: " + title + " in register: " + regItem.register.name;
+                    else
+                        description = "Saved register item: " + title;
+
+                    operation = entity.State.ToString();
+                    if (operation == EntityState.Unchanged.ToString())
+                        operation = Operation.Modified;
+
+                    result = Save();
+                    new Task(() => { Index(regItem.systemId); }).Start();
+                }
+                else { result = Save(); }
+
+                if (!string.IsNullOrEmpty(uuid))
+                    Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = uuid, Title = title, Operation = operation, User = GetSecurityClaim("username"), Description = description }));
             }
 
             return result;
@@ -126,6 +168,18 @@ namespace Kartverket.Register.Models
         int Save()
         {
             return base.SaveChanges();
+        }
+
+        public string GetSecurityClaim(string type)
+        {
+            foreach (var claim in ClaimsPrincipal.Current.Claims)
+            {
+                if (claim.Type == type && !string.IsNullOrWhiteSpace(claim.Value))
+                {
+                    return claim.Value;
+                }
+            }
+            return null;
         }
     }
 }

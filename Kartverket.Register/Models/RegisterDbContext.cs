@@ -148,7 +148,7 @@ namespace Kartverket.Register.Models
                 else { result = Save(); }
 
                 if (!string.IsNullOrEmpty(uuid))
-                    Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = uuid, Title = title, Operation = operation, User = GetSecurityClaim("username"), Description = description }));
+                    Task.Run(() => LogEntryService.AddLogEntry(new LogEntry { ElementId = uuid, Operation = operation, User = GetSecurityClaim("username"), Description = description }));
             }
 
             return result;

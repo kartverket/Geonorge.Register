@@ -26,6 +26,7 @@ namespace Kartverket.Register.Models.Api
         public string BoundingBoxSouth { get; set; }
         public string BoundingBoxEast { get; set; }
         public string BoundingBoxWest { get; set; }
+        public string Status { get; set; }
 
         public static OrganizationV2 Convert(Models.Organization item)
         {
@@ -49,7 +50,8 @@ namespace Kartverket.Register.Models.Api
                 BoundingBoxNorth = item.BoundingBoxNorth,
                 BoundingBoxSouth = item.BoundingBoxSouth,
                 BoundingBoxEast = item.BoundingBoxEast,
-                BoundingBoxWest = item.BoundingBoxWest
+                BoundingBoxWest = item.BoundingBoxWest,
+                Status = item.statusId
             };
     }
 

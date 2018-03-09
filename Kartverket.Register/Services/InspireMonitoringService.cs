@@ -15,11 +15,28 @@ namespace Kartverket.Register.Services
             var monitoring = new Monitoring();
             monitoring.documentYear = GetReportingDate();
             monitoring.memberState = CountryCode.NO;
-            monitoring.Indicators = MappingIndicators();
-            monitoring.MonitoringMD = MappingMonitoringMd(inspireStatusRegister);
             monitoring.RowData = MappingRowData(inspireStatusRegister.RegisterItems);
+            monitoring.MonitoringMD = MappingMonitoringMd(inspireStatusRegister);
+            monitoring.Indicators = MappingIndicators(inspireStatusRegister.RegisterItems, monitoring.RowData);
 
             return monitoring;
+        }
+
+        private Indicators MappingIndicators(ICollection<RegisterItemV2> inspireDatasets, RowData rowData)
+        {
+            Indicators indicators = new Indicators();
+
+            indicators.NnConformityIndicators = new NnConformityIndicators();
+            indicators.GeoCoverageIndicators = new GeoCoverageIndicators();
+            indicators.UseNNindicators = new UseNNindicators();
+            indicators.MetadataExistenceIndicators = GetMetadataExsistensIndicators(inspireDatasets);
+            indicators.DiscoveryMetadataIndicators = new DiscoveryMetadataIndicators();
+            indicators.ViewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
+            indicators.SpatialDataAndService = GetSpatialDataAndService(rowData);
+            indicators.MetadataConformityIndicators = new MetadataConformityIndicators();
+            indicators.SdsConformantIndicators = new SdsConformantIndicators();
+
+            return indicators;
         }
 
         private Date GetReportingDate()
@@ -31,21 +48,45 @@ namespace Kartverket.Register.Services
             return date;
         }
 
-        private Indicators MappingIndicators()
+        private SpatialDataAndService GetSpatialDataAndService(RowData rowData)
         {
-            Indicators indicators = new Indicators();
+            SpatialDataAndService spatialDataAndService = new SpatialDataAndService();
+            spatialDataAndService.NSv_NumAllServ = rowData.SpatialDataService.Length;
 
-            indicators.NnConformityIndicators = new NnConformityIndicators();
-            indicators.GeoCoverageIndicators = new GeoCoverageIndicators();
-            indicators.UseNNindicators = new UseNNindicators();
-            indicators.MetadataExistenceIndicators = new MetadataExistenceIndicators();
-            indicators.DiscoveryMetadataIndicators = new DiscoveryMetadataIndicators();
-            indicators.ViewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
-            indicators.SpatialDataAndService = new SpatialDataAndService();
-            indicators.MetadataConformityIndicators = new MetadataConformityIndicators();
-            indicators.SdsConformantIndicators = new SdsConformantIndicators();
+            return spatialDataAndService;
+        }
 
-            return indicators;
+        private MetadataExistenceIndicators GetMetadataExsistensIndicators(ICollection<RegisterItemV2> inspireDatasets)
+        {
+            MetadataExistenceIndicators metadataExistenceIndicators = new MetadataExistenceIndicators();
+            metadataExistenceIndicators.MDi11 = 0;
+            metadataExistenceIndicators.MDi12 = 0;
+            metadataExistenceIndicators.MDi13 = 0;
+            metadataExistenceIndicators.MDi14 = 0;
+            metadataExistenceIndicators.MDi1 = 0;
+
+            metadataExistenceIndicators.MetadataExistence = new MetadataExistence();
+
+            metadataExistenceIndicators.MetadataExistence.MDv11 = 0;
+            metadataExistenceIndicators.MetadataExistence.MDv12 = 0;
+            metadataExistenceIndicators.MetadataExistence.MDv13 = 0;
+            metadataExistenceIndicators.MetadataExistence.MDv1_DS = GetNumberOfDatasetsThatHaveMetadata(inspireDatasets);
+            metadataExistenceIndicators.MetadataExistence.MDv14 = 0;
+
+            return metadataExistenceIndicators;
+        }
+
+        private int GetNumberOfDatasetsThatHaveMetadata(ICollection<RegisterItemV2> inspireDatasets)
+        {
+            int datasetsThatHaveMetadata = 0;
+            foreach (InspireDataset inspireDataset in inspireDatasets)
+            {
+                if (inspireDataset.HaveMetadata())
+                {
+                    datasetsThatHaveMetadata++;
+                }
+            }
+            return datasetsThatHaveMetadata;
         }
 
         private MonitoringMD MappingMonitoringMd(Models.Register inspireStatusRegister)
@@ -91,18 +132,6 @@ namespace Kartverket.Register.Services
             return spatialDataSetList.ToArray();
         }
 
-        private SpatialDataService MappingSpatialDataService(InspireDataset item)
-        {
-            var spatialDataService = new SpatialDataService();
-            spatialDataService.name = item.Name;
-            spatialDataService.respAuthority = item.Owner.shortname;
-            spatialDataService.uuid = item.Uuid;
-            spatialDataService.Themes = MappingThemes(item.InspireTheme);
-            spatialDataService.MdServiceExistence = MappingServiceExistence(item);
-            spatialDataService.NetworkService = MappingNetworkService(item);
-
-            return spatialDataService;
-        }
 
         private NetworkService MappingNetworkService(InspireDataset item)
         {

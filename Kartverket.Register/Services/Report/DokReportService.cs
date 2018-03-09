@@ -31,38 +31,41 @@ namespace Kartverket.Register.Services.Report
             var resultsSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                    where c.ConfirmedDok == true && ds.DatasetType != "Kommunalt"
-                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK } into grouped
+                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
                                    select new
                                    {
                                        name = grouped.Key.name,
                                        Count = grouped.Distinct().Count(),
                                        number = grouped.Key.number,
-                                       DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK
+                                       DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
+                                       MunicipalityCode = grouped.Key.MunicipalityCode
                                    }).OrderByDescending(x => x.Count).ToList();
 
             var resultsSelectedAdditional = (from c in _dbContext.CoverageDatasets
                                              join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                              where ds.DatasetType == "Kommunalt"
-                                             group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK } into grouped
+                                             group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
                                              select new
                                              {
                                                  name = grouped.Key.name,
                                                  Count = grouped.Count(),
                                                  number = grouped.Key.number,
-                                                 DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK
+                                                 DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
+                                                 MunicipalityCode = grouped.Key.MunicipalityCode
                                              }).ToList();
 
 
             var resultsNotSelected = (from c in _dbContext.CoverageDatasets
                                    join ds in _dbContext.Datasets on c.DatasetId equals ds.systemId
                                    where c.ConfirmedDok == false && ds.DatasetType != "Kommunalt"
-                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK } into grouped
+                                   group c by new { c.Municipality.name, c.Municipality.number, c.Municipality.DateConfirmedMunicipalDOK, c.Municipality.MunicipalityCode } into grouped
                                    select new
                                    {
                                        name = grouped.Key.name,
                                        Count = 0,
                                        number = grouped.Key.number,
-                                       DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK
+                                       DateConfirmedMunicipalDOK = grouped.Key.DateConfirmedMunicipalDOK,
+                                       MunicipalityCode = grouped.Key.MunicipalityCode
                                    })
                                    .OrderByDescending(x => x.Count)
                                    .ToList();
@@ -92,7 +95,7 @@ namespace Kartverket.Register.Services.Report
                                      select c)
                                           .Contains(r.MunicipalityCode.Substring(0, 2))
 
-                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK }).ToList();
+                               select new { r.name, r.Count, r.number, r.DateConfirmedMunicipalDOK, r.MunicipalityCode }).ToList();
 
 
                 }
@@ -132,6 +135,13 @@ namespace Kartverket.Register.Services.Report
                 reportResultDataValue.Value = result.DateConfirmedMunicipalDOK.HasValue ? result.DateConfirmedMunicipalDOK.Value.ToString("dd.MM.yyyy") : "";
                 reportResultDataValues.Add(reportResultDataValue);
                 //additional DateConfirmedMunicipalDOK end
+
+                //additional Number start
+                reportResultDataValue = new ReportResultDataValue();
+                reportResultDataValue.Key = "Number";
+                reportResultDataValue.Value = result.MunicipalityCode;
+                reportResultDataValues.Add(reportResultDataValue);
+                //additional Number end
 
 
                 reportResultData.Values = reportResultDataValues;
@@ -209,7 +219,7 @@ namespace Kartverket.Register.Services.Report
             var results = (from c in _dbContext.CoverageDatasets
                            join d in _dbContext.Datasets on c.DatasetId equals d.systemId
                            let datasetName = d.name
-                           select new { c.Municipality.name, datasetName, c.Coverage, c.ConfirmedDok,c.Municipality.number }).Distinct().OrderBy(o=>o.name).ThenBy(o2=>o2.datasetName).ToList();
+                           select new { c.Municipality.name, datasetName, c.Coverage, c.ConfirmedDok,c.Municipality.number, c.Municipality.MunicipalityCode }).Distinct().OrderBy(o=>o.name).ThenBy(o2=>o2.datasetName).ToList();
 
             var orgList = (from org in _dbContext.Organizations
                            where org.OrganizationType == Models.OrganizationType.Municipality
@@ -238,7 +248,7 @@ namespace Kartverket.Register.Services.Report
                                      select c)
                                           .Contains(r.MunicipalityCode.Substring(0, 2))
 
-                               select new { r.name, r.datasetName, r.Coverage, r.ConfirmedDok, r.number }).ToList();
+                               select new { r.name, r.datasetName, r.Coverage, r.ConfirmedDok, r.number, r.MunicipalityCode }).ToList();
 
 
                 }
@@ -266,6 +276,13 @@ namespace Kartverket.Register.Services.Report
                 reportResultDataValue.Key = "Valgt";
                 reportResultDataValue.Value = result.ConfirmedDok ? "JA" : "NEI";
                 reportResultDataValues.Add(reportResultDataValue);
+
+                //additional Number start
+                reportResultDataValue = new ReportResultDataValue();
+                reportResultDataValue.Key = "Number";
+                reportResultDataValue.Value = result.MunicipalityCode;
+                reportResultDataValues.Add(reportResultDataValue);
+                //additional Number end
 
                 reportResultData.Values = reportResultDataValues;
 

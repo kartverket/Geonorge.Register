@@ -54,6 +54,11 @@ namespace Kartverket.Register.Models
         [ForeignKey("InspireDeliverySpatialDataService"), Required, Display(Name = "Spatial data service:")]
         public Guid InspireDeliverySpatialDataServiceId { get; set; }
         public virtual DatasetDelivery InspireDeliverySpatialDataService { get; set; }
+
+        public bool HaveMetadata()
+        {
+            return InspireDeliveryMetadata.IsSet();
+        }
     }
 
 }//end namespace Datamodell

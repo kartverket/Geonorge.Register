@@ -107,7 +107,7 @@
 
 <div class="clearfix"></div>
 <div class="hidden-print navbar-bottom">
-    @if (Request.IsAuthenticated && Model.AccessRegisterItem)
+    @if (!(Model.RegisterItem is ServiceAlert) && Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>

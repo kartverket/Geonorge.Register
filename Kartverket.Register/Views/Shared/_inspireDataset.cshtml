@@ -3,6 +3,7 @@
 @using Kartverket.Register.Helpers
 
 
+
 <div class="table-heading col-md-12">
     <div class="col-md-4 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</div>
     <div class="col-md-2 col-sm-12 col">@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</div>
@@ -25,7 +26,7 @@
 {
     <div class="resultItemRow col-md-12 ">
         <div class="col-md-4 col-sm-12 col-sm-2 col"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
-        <div class="col-md-2 col-sm-12 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@Html.DisplayFor(modelItem => item.Owner.name)</a></div>
+        <div class="col-md-2 col-sm-12 col"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.name</a></div>
         <div class="col-md-2 col-sm-12 col"><span>@item.InspireTheme</span></div>
         <div class="col-md-4 col-sm-12 status-icons">
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, InspireDataSet.Metadata)

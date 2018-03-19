@@ -31,8 +31,6 @@
             document.getElementById(event.target.dataset.tab).style.display = 'block';
         }
     </script>
-    
-    
 }
 
 @Html.Partial("_SearchBarPartial")
@@ -148,7 +146,7 @@
             @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         </div>
         <div id="serviceDataset" class="tab-content">
-            Her kommer det en tabell med tjenester...
+            @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         </div>
 
     }

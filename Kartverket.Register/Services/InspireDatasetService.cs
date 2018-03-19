@@ -358,6 +358,25 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
+        public ICollection<InspireDataService> GetInspireDataService()
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                select i;
+
+            return queryResult.Any() ? queryResult.ToList() : new List<InspireDataService>();
+        }
+
+        public ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> inspireDataServices)
+        {
+            List<InspireDataServiceViewModel> inspireDataServiceViewModel = new List<InspireDataServiceViewModel>(); 
+            foreach (InspireDataService inspireDataService in inspireDataServices)
+            {
+                inspireDataServiceViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+            }
+
+            return inspireDataServiceViewModel;
+        }
+
         public void SynchronizeInspireDatasets()
         {
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen();

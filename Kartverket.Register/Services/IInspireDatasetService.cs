@@ -1,4 +1,5 @@
-﻿using Kartverket.Register.Models;
+﻿using System.Collections.Generic;
+using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 
 namespace Kartverket.Register.Services
@@ -11,5 +12,7 @@ namespace Kartverket.Register.Services
         InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel);
         InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset inspireDataset);
         void DeleteInspireDataset(InspireDataset inspireDataset);
+        ICollection<InspireDataService> GetInspireDataService();
+        ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> getInspireDataService);
     }
 }

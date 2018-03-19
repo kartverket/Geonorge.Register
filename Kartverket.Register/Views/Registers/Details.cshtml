@@ -2,6 +2,7 @@
 @using Kartverket.Register.Helpers
 @using PagedList
 @using Kartverket.Register.Models
+@using Kartverket.Register.Models.ViewModels
 @{
     ViewBag.Title = Model.Name;
     string municipalityCode = ViewBag.selectedMunicipalityCode;
@@ -146,7 +147,7 @@
             @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         </div>
         <div id="serviceDataset" class="tab-content">
-            @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+            @Html.Partial("_inspireDataService", Model.InspireDataService.ToPagedList(pageNumber, pageSize))
         </div>
 
     }

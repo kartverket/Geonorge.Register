@@ -23,9 +23,13 @@ namespace Kartverket.Register.Models
 
         public int Requests { get; set; } // Manuelt
         public bool NetworkService { get; set; } // view og download = true
-        public bool Sds { get; set; } // tjenester som ikke er WMS eller WFS
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
         public string Theme { get; set; } // Liste opp alle Annex tjenestene hører til..
+
+        public bool GetSds()
+        {
+            return ServiceType != "WFS" && ServiceType != "WMS";
+        }
 
     }
 

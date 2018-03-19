@@ -38,6 +38,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public ICollection<RegisterItem> RegisterItems { get; set; }
         public ICollection<RegisterItemV2ViewModel> RegisterItemsV2 { get; set; }
+        public ICollection<InspireDataServiceViewModel> InspireDataService { get; set; }
 
         public Register ParentRegister { get; set; }
 
@@ -81,6 +82,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+
                 if (register.accessId != null) AccessId = register.accessId.Value;
 
                 if (register.IsServiceAlertRegister())

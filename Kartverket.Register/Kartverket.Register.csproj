@@ -780,6 +780,10 @@
     <Compile Include="Migrations\201803191911471_RemoveSdsFromInspireDataServiceTable.Designer.cs">
       <DependentUpon>201803191911471_RemoveSdsFromInspireDataServiceTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803201417295_AddUuidToInspireDataService.cs" />
+    <Compile Include="Migrations\201803201417295_AddUuidToInspireDataService.Designer.cs">
+      <DependentUpon>201803201417295_AddUuidToInspireDataService.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1874,6 +1878,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803191911471_RemoveSdsFromInspireDataServiceTable.resx">
       <DependentUpon>201803191911471_RemoveSdsFromInspireDataServiceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201417295_AddUuidToInspireDataService.resx">
+      <DependentUpon>201803201417295_AddUuidToInspireDataService.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

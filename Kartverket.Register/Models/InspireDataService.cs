@@ -15,7 +15,7 @@ namespace Kartverket.Register.Models
 
         [ForeignKey("InspireDeliveryMetadataInSearchService"), Required, Display(Name = "Metadatatjeneste:")]
         public Guid InspireDeliveryMetadataInSearchServiceId { get; set; }
-        public virtual DatasetDelivery InspireDeliveryMetadataInSearchService { get; set; } // Godkjent på alle
+        public virtual DatasetDelivery InspireDeliveryMetadataInSearchService { get; set; } // Godkjent pï¿½ alle
 
         [ForeignKey("InspireDeliveryServiceStatus"), Required, Display(Name = "Metadatatjeneste:")]
         public Guid InspireDeliveryServiceStatusId { get; set; }
@@ -24,7 +24,10 @@ namespace Kartverket.Register.Models
         public int Requests { get; set; } // Manuelt
         public bool NetworkService { get; set; } // view og download = true
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
-        public string Theme { get; set; } // Liste opp alle Annex tjenestene hører til..
+        public string Theme { get; set; } // Liste opp alle Annex tjenestene hï¿½rer til..
+
+        [Display(Name = "Uuid:")]
+        public string Uuid { get; set; }
 
         public bool GetSds()
         {

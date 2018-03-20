@@ -306,6 +306,16 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             new InspireDatasetService(db).SynchronizeInspireDatasets();
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister/dataservices")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireDataServices()
+        {
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
             return Ok();
         }
 

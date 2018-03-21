@@ -61,6 +61,8 @@ namespace Kartverket.Register.Models.ViewModels
 
         public AccessViewModel AccessRegister { get; set; }
 
+        public string SelectedInspireRegisteryTab { get; set; }
+
         public RegisterV2ViewModel(Register register)
         {
             if (register != null)
@@ -82,7 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
-                InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
+                //InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
 
@@ -105,9 +107,14 @@ namespace Kartverket.Register.Models.ViewModels
                     
                     foreach (var inspireRegisterItem in registerItems)
                     {
-                        if (inspireRegisterItem is InspireDataset inspireDataset)
+                        switch (inspireRegisterItem)
                         {
-                            registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                            case InspireDataset inspireDataset:
+                                registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                                break;
+                            case InspireDataService inspireDataService:
+                                registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+                                break;
                         }
                     }
                     break;

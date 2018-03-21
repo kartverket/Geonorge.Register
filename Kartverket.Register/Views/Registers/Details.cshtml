@@ -28,7 +28,7 @@
         $(function () {
             var selectedTab = localStorage.getItem("InspireRegisteryTabSelected");
             document.getElementById(selectedTab).click();
-            }
+        }
         );
 
         function toggleTab(event) {
@@ -92,6 +92,13 @@
                                 Tjenester
                             </a>
                         </li>
+                        <li>
+                            @Html.ActionLink("Dataset", "Details", new { inspireRegisteryTab = "dataset" }, null)
+                        </li>
+                        <li>
+                            @Html.ActionLink("Tjenester", "Details", new { inspireRegisteryTab = "service" }, null)
+                        </li>
+
                     </ul>
                 }
             </div>
@@ -151,14 +158,17 @@
     }
     @if (Model.ContainedItemClassIsInspireDataset())
     {
-        <div id="inspireDataset" class="tab-content">
-            @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-        </div>
-        <div id="inspireService" class="tab-content">
-            @Html.Partial("_inspireDataService", Model.InspireDataService.ToPagedList(pageNumber, pageSize))
-        </div>
 
+        if (Model.SelectedInspireRegisteryTab == "dataset")
+        {
+            @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+        }
+        else if (Model.SelectedInspireRegisteryTab == "service")
+        {
+            @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+        }
     }
+
     @if (Model.ContainedItemClassIsRegister())
     {
         @Html.Partial("_subregister", Model.Subregisters.ToPagedList(pageNumber, pageSize))

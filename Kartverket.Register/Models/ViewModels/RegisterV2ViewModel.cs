@@ -38,7 +38,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public ICollection<RegisterItem> RegisterItems { get; set; }
         public ICollection<RegisterItemV2ViewModel> RegisterItemsV2 { get; set; }
-        public ICollection<InspireDataServiceViewModel> InspireDataService { get; set; }
+        public ICollection<RegisterItemV2ViewModel> InspireDataService { get; set; }
 
         public Register ParentRegister { get; set; }
 
@@ -82,6 +82,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+                InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
 
@@ -101,9 +102,13 @@ namespace Kartverket.Register.Models.ViewModels
             switch (containedItemClass)
             {
                 case "InspireDataset":
-                    foreach (InspireDataset inspireDataset in registerItems)
+                    
+                    foreach (var inspireRegisterItem in registerItems)
                     {
-                        registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                        if (inspireRegisterItem is InspireDataset inspireDataset)
+                        {
+                            registerItemsViewModel.Add(new InspireDatasetViewModel(inspireDataset));
+                        }
                     }
                     break;
                 case "GeodatalovDataset":
@@ -113,6 +118,21 @@ namespace Kartverket.Register.Models.ViewModels
                     }
                     break;
             }
+            return registerItemsViewModel;
+        }
+
+        private ICollection<RegisterItemV2ViewModel> GetInspireDataService(string containedItemClass, ICollection<RegisterItemV2> registerItems)
+        {
+            var registerItemsViewModel = new Collection<RegisterItemV2ViewModel>();
+            if (containedItemClass == "InspireDataset")
+                foreach (var inspireRegisterItem in registerItems)
+                {
+                    if (inspireRegisterItem is InspireDataService inspireDataService)
+                    {
+                        registerItemsViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+                    }
+                }
+
             return registerItemsViewModel;
         }
 

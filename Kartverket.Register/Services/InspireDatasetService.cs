@@ -562,8 +562,15 @@ namespace Kartverket.Register.Services
                     {
                         var inspireDataService = new InspireDataService();
                         inspireDataService.Name = service.Title;
+                        inspireDataService.Description = service.Abstract;
+                        inspireDataService.OwnerId = _registerItemService.GetOrganizationByName(service.Organization.ToString());
+
                         inspireDataService.Uuid = service.Uuid;
-                        inspireDataService.ServiceType = service.Protocol;
+                        inspireDataService.Theme = service.Theme;
+                        inspireDataService.Url = service.GetCapabilitiesUrl;
+
+                        inspireDataService.ServiceType = service.DistributionType;
+                        inspireDataServices.Add(inspireDataService);
                     }
                 }
                 return inspireDataServices;
@@ -572,7 +579,7 @@ namespace Kartverket.Register.Services
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
-                return null;
+                return inspireDataServices;
             }
         }
 
@@ -610,7 +617,6 @@ namespace Kartverket.Register.Services
                 originalDataService.InspireDeliveryServiceStatus.StatusId =  _datasetDeliveryService.GetServiceStatus(inspireDataServiceFromKartkatalogen.Uuid, originalDataService.InspireDeliveryServiceStatus.StatusId);
             }
 
-            originalDataService.NetworkService = inspireDataServiceFromKartkatalogen.NetworkService;
             originalDataService.Url = inspireDataServiceFromKartkatalogen.Url;
             originalDataService.Theme = inspireDataServiceFromKartkatalogen.Theme;
 

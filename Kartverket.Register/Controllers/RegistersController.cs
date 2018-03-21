@@ -117,10 +117,6 @@ namespace Kartverket.Register.Controllers
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
-            if (register.IsInspireStatusRegister())
-            {
-                viewModel.InspireDataService = _inspireDatasetService.ConvertToViewModel(_inspireDatasetService.GetInspireDataService());
-            }
 
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);

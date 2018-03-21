@@ -1540,5 +1540,14 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             _dbContext.SaveChanges();
         }
+
+        public Guid GetOrganizationByName(string organizationName)
+        {
+            var queryResult = from c in _dbContext.Organizations
+                where c.name == organizationName
+                              select c.systemId;
+
+            return queryResult.Any() ? queryResult.FirstOrDefault() : Organization.GetDefaultOrganizationId();
+        }
     }
 }

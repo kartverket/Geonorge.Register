@@ -62,6 +62,8 @@ namespace Kartverket.Register.Models.ViewModels
                 Sds = inspireDataService.GetSds();
                 Url = inspireDataService.Url;
                 Theme = inspireDataService.Theme;
+
+                UpdateRegisterItem(inspireDataService);
             }
         }
 

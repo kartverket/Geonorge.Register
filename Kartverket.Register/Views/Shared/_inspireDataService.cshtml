@@ -5,11 +5,11 @@
 <div class="table-view">
     <div class="search-results-table-heading row">
         <div class="col-md-3 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Shared.Title, "name")</p></div>
-        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Type", "name")</p></div>
         <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], Registers.Owner, "owner")</p></div>
+        <div class="col-md-2 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], DataSet.DOK_Delivery_Theme, "inspiretheme")</p></div>
+        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Type", "name")</p></div>
         <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Request", "inspire_metadata_status")</p></div>
-        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "URL", "inspire_metadata_status")</p></div>
-        <div class="col-md-1 col-sm-12"><p>@HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "Theme", "inspire_metadata_status")</p></div>
+        <div class="col-md-1 col-sm-12"><p>Url</p></div>
         <div class="col-md-2 col-sm-12 status-icons">
             <p style="right: 15px;">
                 @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadata_status")
@@ -19,7 +19,7 @@
                 @HtmlHelperExtensions.OrderByLink(Request.QueryString["sorting"], Request.QueryString["text"], "", "inspire_metadata_status")
             </p>
         </div>
-        </div>
+    </div>
 </div>
 
 <div class="menu-separator search-results-table-heading"></div>
@@ -29,18 +29,18 @@
 <div class="resultItemRow">
     <div class="row">
         <div class="col-md-3 col-sm-12"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
-        <div class="col-md-2 col-sm-12">@item.ServiceType</div>
         <div class="col-md-2 col-sm-12"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.name</a></div>
+        <div class="col-md-2 col-sm-12">@item.Theme</div>
+        <div class="col-md-1 col-sm-12">@item.ServiceType</div>
         <div class="col-md-1 col-sm-12">@item.Requests</div>
-        <div class="col-md-1 col-sm-12"><a href="@item.Url"><span class="custom-icon custom-icon-kartmarkoer"></span></a></div>
-        <div class="col-md-1 col-sm-12">@item.Theme</div>
+        <div class="col-md-1 col-sm-12"><a href="@item.Url"><span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Url til tjeneste"><span class="custom-icon custom-icon-kartmarkoer"></span></span></a></div>
 
         <div class="col-md-2 col-sm-5 status-icons pull-right">
             @HtmlHelperExtensions.Checked(item.Sds, "Sds")
             @HtmlHelperExtensions.Checked(item.NetworkService, "Nettverkstjeneste")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadata.StatusId, false, "Metadata")
             @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataInSearchService.StatusId, false, "Metadata i søketjeneste")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataInSearchService.StatusId, false, "Tjenestestatus")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryServiceStatus.StatusId, false, "Tjenestestatus")
         </div>
     </div>
 </div>

@@ -965,6 +965,12 @@
             If set to 'municipality' then the municipality specific attributes below should be populated
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Models.Organization.GetDefaultOrganizationId">
+            <summary>
+            Default organization is Kartverket
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Models.Register.GetObjectUrl">
             <summary>
             Gets Url to current object
@@ -983,6 +989,13 @@
             Returns the confirmation status of municipal dataset
             </summary>
             <param name="municipality"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.RegisterItem.IRegisterItemService.GetOrganizationByName(System.String)">
+            <summary>
+            Gets organizationId by nam, from Organization registry
+            </summary>
+            <param name="organizationName"></param>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Services.RegisterItem.RegisterItemService.ItemNameAlredyExist(System.Object)">

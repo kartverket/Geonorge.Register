@@ -60,5 +60,12 @@ namespace Kartverket.Register.Services.RegisterItem
         void DeleteRegisterItems(ICollection<Models.RegisterItem> registerItems);
         void ImportRegisterItemFromFile(Models.Register register, HttpPostedFileBase file);
         void DeleteCoverageByDatasetId(Guid datasetSystemId);
+        
+        /// <summary>
+        /// Gets organizationId by nam, from Organization registry
+        /// </summary>
+        /// <param name="organizationName"></param>
+        /// <returns></returns>
+        Guid GetOrganizationByName(string organizationName);
     }
 }

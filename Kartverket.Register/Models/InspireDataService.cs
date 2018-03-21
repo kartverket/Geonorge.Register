@@ -20,9 +20,8 @@ namespace Kartverket.Register.Models
         [ForeignKey("InspireDeliveryServiceStatus"), Required, Display(Name = "Metadatatjeneste:")]
         public Guid InspireDeliveryServiceStatusId { get; set; }
         public virtual DatasetDelivery InspireDeliveryServiceStatus { get; set; } // Tjenestestatus for WMS/WFS
-
         public int Requests { get; set; } // Manuelt
-        public bool NetworkService { get; set; } // view og download = true
+        //public bool NetworkService { get; set; } // view og download = true
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
         public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
 
@@ -31,7 +30,12 @@ namespace Kartverket.Register.Models
 
         public bool GetSds()
         {
-            return ServiceType != "WFS" && ServiceType != "WMS";
+            return ServiceType != "WFS-tjeneste" && ServiceType != "WMS-tjeneste";
+        }
+
+        public bool GetNetworkService()
+        {
+            return ServiceType == "WFS-tjeneste" && ServiceType == "WMS-tjeneste";
         }
 
     }

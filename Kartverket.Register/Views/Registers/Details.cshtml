@@ -21,15 +21,23 @@
 @section Scripts {
     <script>
         $(function () {
-                var menu_state = localStorage.setItem("navtabselected", "gjeldende");
+            var menu_state = localStorage.setItem("navtabselected", "gjeldende");
+        }
+        );
+
+        $(function () {
+            var selectedTab = localStorage.getItem("InspireRegisteryTabSelected");
+            document.getElementById(selectedTab).click();
             }
-        )
+        );
 
         function toggleTab(event) {
             document.querySelectorAll('.tab-content').forEach(function (tabContentElement) {
                 tabContentElement.style.display = 'none';
             });
+            var selectedTab = event.target.id;
             document.getElementById(event.target.dataset.tab).style.display = 'block';
+            localStorage.setItem("InspireRegisteryTabSelected", selectedTab);
         }
     </script>
 }
@@ -75,12 +83,12 @@
                 {
                     <ul id="tabs" class="nav nav-tabs">
                         <li class="active">
-                            <a onclick="toggleTab(event)" data-tab="inspireDataset" class="facet-checkbox-icon" aria-expanded="true" data-toggle="tab">
+                            <a onclick="toggleTab(event)" data-tab="inspireDataset" class="facet-checkbox-icon" id="inspireDatasetTab" aria-expanded="true" data-toggle="tab">
                                 Datasett
                             </a>
                         </li>
                         <li>
-                            <a onclick="toggleTab(event)" data-tab="serviceDataset" class="facet-checkbox-icon" aria-expanded="false" data-toggle="tab">
+                            <a onclick="toggleTab(event)" data-tab="inspireService" class="facet-checkbox-icon" id="inspireServiceTab" aria-expanded="false" data-toggle="tab">
                                 Tjenester
                             </a>
                         </li>
@@ -146,7 +154,7 @@
         <div id="inspireDataset" class="tab-content">
             @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         </div>
-        <div id="serviceDataset" class="tab-content">
+        <div id="inspireService" class="tab-content">
             @Html.Partial("_inspireDataService", Model.InspireDataService.ToPagedList(pageNumber, pageSize))
         </div>
 
@@ -177,26 +185,26 @@
     </div>
 
     <div class="clearfix"></div>
-<div class="hidden-print">
-    @if (Request.IsAuthenticated)
-    {
-        if (Model.AccessRegister.EditListOfRegisterItems)
+    <div class="hidden-print">
+        @if (Request.IsAuthenticated)
         {
-            <a href="@Model.GetEditListUrl()" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
+            if (Model.AccessRegister.EditListOfRegisterItems)
+            {
+                <a href="@Model.GetEditListUrl()" class="btn btn-default btn-space pull-right">@Registers.EditList</a>
+            }
+            if (Model.AccessRegister.Add)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
+            }
+            if (Model.AccessRegister.Edit)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
+            }
+            if (Model.AccessRegister.Delete)
+            {
+                <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
+            }
         }
-        if (Model.AccessRegister.Add)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectCreateUrl()">@Shared.Add</a>
-        }
-        if (Model.AccessRegister.Edit)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetEditObjectUrl()">@Shared.Edit</a>
-        }
-        if (Model.AccessRegister.Delete)
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetDeleteObjectUrl()">@Shared.Delete</a>
-        }
-    }
-    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
-</div>
+        <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.StepBackUrl()">@Shared.Back</a>
+    </div>
 

@@ -21,7 +21,6 @@ namespace Kartverket.Register.Models
         public Guid InspireDeliveryServiceStatusId { get; set; }
         public virtual DatasetDelivery InspireDeliveryServiceStatus { get; set; } // Tjenestestatus for WMS/WFS
         public int Requests { get; set; } // Manuelt
-        //public bool NetworkService { get; set; } // view og download = true
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
         public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
 
@@ -35,7 +34,7 @@ namespace Kartverket.Register.Models
 
         public bool GetNetworkService()
         {
-            return ServiceType == "WFS-tjeneste" && ServiceType == "WMS-tjeneste";
+            return ServiceType == "WFS-tjeneste" || ServiceType == "WMS-tjeneste";
         }
 
     }

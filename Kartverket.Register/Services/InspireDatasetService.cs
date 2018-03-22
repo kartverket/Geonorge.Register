@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Configuration;
+using System.Xml;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -19,6 +21,8 @@ namespace Kartverket.Register.Services
         private readonly IRegisterItemService _registerItemService;
         private readonly IDatasetDeliveryService _datasetDeliveryService;
         private readonly MetadataService _metadataService;
+
+        private static readonly HttpClient HttpClient = new HttpClient();
 
         public InspireDatasetService(RegisterDbContext dbContext)
         {
@@ -568,9 +572,11 @@ namespace Kartverket.Register.Services
                         inspireDataService.Uuid = service.Uuid;
                         inspireDataService.Theme = service.Theme;
                         inspireDataService.Url = service.GetCapabilitiesUrl;
+                        inspireDataService.NetworkService = IsNetworkService(inspireDataService.Uuid);
 
                         inspireDataService.ServiceType = service.DistributionType;
                         inspireDataServices.Add(inspireDataService);
+
                     }
                 }
                 return inspireDataServices;
@@ -581,6 +587,16 @@ namespace Kartverket.Register.Services
                 System.Diagnostics.Debug.WriteLine(url);
                 return inspireDataServices;
             }
+        }
+
+        private bool IsNetworkService(string serviceuuid)
+        {
+            var url = "http://www.geonorge.no/geonetwork/srv/nor/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&Id=" + serviceuuid + "&resultType=results&outputSchema=csw:IsoRecord";
+            var getFeedTask = HttpClient.GetStringAsync(url);
+            // TODO hente informasjon fra metadata...
+            // True hvis view eller download
+
+            return false;
         }
 
         private InspireDataService GetInspireDataServiceByUuid(string uuid)

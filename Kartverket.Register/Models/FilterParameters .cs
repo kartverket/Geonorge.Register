@@ -9,7 +9,7 @@ namespace Kartverket.Register.Models
     {
         public FilterParameters()
         {
-            
+            InspireRegisteryTab = "dataset";
         }
         public string text { get; set; }
         public bool filterVertikalt { get; set; }
@@ -19,8 +19,7 @@ namespace Kartverket.Register.Models
         public string nationalSeaRequirement { get; set; }
         public string filterOrganization { get; set; }
         public string municipality { get; set; }
-        
-
+        public string InspireRegisteryTab { get; set; }
 
     }
 }

@@ -54,16 +54,33 @@ namespace Kartverket.Register.Services.Register
 
             if (register.RegisterItems.Any())
             {
-                    foreach (var item in register.RegisterItems)
+                foreach (var item in register.RegisterItems)
+                {
+                    if (filter.filterOrganization != null)
                     {
-                        if (filter.filterOrganization != null)
+                        if (item.Owner.seoname == filter.filterOrganization)
                         {
-                            if (item.Owner.seoname == filter.filterOrganization)
+                            registerItemsv2.Add(item);
+                        }
+                    }
+                    else if (filter.InspireRegisteryTab != null)
+                    {
+                        if (filter.InspireRegisteryTab == "dataset")
+                        {
+                            if (item is InspireDataset inspireDataset)
                             {
-                                registerItemsv2.Add(item);
+                                registerItemsv2.Add(inspireDataset);
                             }
                         }
-                        else registerItemsv2.Add(item);
+                        else if (filter.InspireRegisteryTab == "service")
+                        {
+                            if (item is InspireDataService inspireDataService)
+                            {
+                                registerItemsv2.Add(inspireDataService);
+                            }
+                        }
+                    }
+                    else registerItemsv2.Add(item);
                 }
             }
 
@@ -170,7 +187,7 @@ namespace Kartverket.Register.Services.Register
             {
                 foreach (CoverageDataset coverage in dataset.Coverage)
                 {
-                    if (coverage.Municipality. systemId == municipality.systemId)
+                    if (coverage.Municipality.systemId == municipality.systemId)
                     {
                         registerItems.Add(dataset);
                     }
@@ -225,26 +242,26 @@ namespace Kartverket.Register.Services.Register
             if (autoUpdate)
             {
                 statusValue = "deficient";
-            try
-            {
-                if (!string.IsNullOrEmpty(url))
+                try
                 {
-                    System.Net.WebClient c = new System.Net.WebClient();
-                    c.Encoding = System.Text.Encoding.UTF8;
-
-                    var data = c.DownloadString(url + ".json");
-                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                    var status = response["status"];
-                    if (status != null)
+                    if (!string.IsNullOrEmpty(url))
                     {
-                        string statusvalue = status?.ToString();
+                        System.Net.WebClient c = new System.Net.WebClient();
+                        c.Encoding = System.Text.Encoding.UTF8;
 
-                        if (statusvalue == "Gyldig" || statusvalue == "SOSI godkjent")
-                            return "good";
-                        else
-                            return "useable";
+                        var data = c.DownloadString(url + ".json");
+                        var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                        var status = response["status"];
+                        if (status != null)
+                        {
+                            string statusvalue = status?.ToString();
+
+                            if (statusvalue == "Gyldig" || statusvalue == "SOSI godkjent")
+                                return "good";
+                            else
+                                return "useable";
+                        }
                     }
-                }
 
 
                 }
@@ -267,7 +284,7 @@ namespace Kartverket.Register.Services.Register
             if (autoUpdate)
             {
                 try
-                { 
+                {
                     string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                     System.Net.WebClient c = new System.Net.WebClient();
                     c.Encoding = System.Text.Encoding.UTF8;
@@ -278,7 +295,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (metadata != null)
                     {
-    
+
                         if (metadata.Related != null)
                         {
                             foreach (var service in metadata.Related)
@@ -324,7 +341,7 @@ namespace Kartverket.Register.Services.Register
                             var hasCoverage = false;
                             var connectSoso = false;
 
-                            if(data.connect.vurdering == "yes")
+                            if (data.connect.vurdering == "yes")
                                 resposeGetCapabilities = true;
 
                             if (data.connect.vurdering == "soso")
@@ -345,7 +362,7 @@ namespace Kartverket.Register.Services.Register
                             if (data.bbox.vurdering == "yes")
                                 hasCoverage = true;
 
-                            if(!hasServiceUrl)
+                            if (!hasServiceUrl)
                                 status = "deficient";
                             //Grønn på WMS:
                             //Respons fra GetCapabilities
@@ -563,8 +580,8 @@ namespace Kartverket.Register.Services.Register
                     var distribution = metadata.DistributionDetails;
                     if (distribution != null && distribution.Protocol != null && distribution.URL != null)
                     {
-                        if(Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute) 
-                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download" 
+                        if (Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute)
+                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download"
                             || distribution.Protocol.Value == "GEONORGE:FILEDOWNLOAD" || distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
                             hasDistributionUrl = true;
                     }
@@ -591,9 +608,9 @@ namespace Kartverket.Register.Services.Register
             return status;
         }
 
-        public string GetSosiRequirements(string uuid ,string url, bool autoUpdate, string currentStatus)
+        public string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus)
         {
- 
+
             string statusValue = currentStatus;
             bool qualitySpecificationsResult = false;
             bool sosiDistributionFormat = false;
@@ -614,10 +631,10 @@ namespace Kartverket.Register.Services.Register
                     if (metadata != null)
                     {
                         var qualitySpecifications = metadata.QualitySpecifications;
-                        if(qualitySpecifications != null && qualitySpecifications.Count > 0)
+                        if (qualitySpecifications != null && qualitySpecifications.Count > 0)
                         {
-                            for(int q=0;q < qualitySpecifications.Count; q++)
-                            { 
+                            for (int q = 0; q < qualitySpecifications.Count; q++)
+                            {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
                                 if (explanation.StartsWith("SOSI-filer er i henhold"))
@@ -631,7 +648,7 @@ namespace Kartverket.Register.Services.Register
                         var distributionFormats = metadata.DistributionFormats;
                         if (distributionFormats != null && distributionFormats.Count > 0)
                         {
-                            foreach(var format in distributionFormats)
+                            foreach (var format in distributionFormats)
                             {
                                 if (format.Name == "SOSI")
                                     sosiDistributionFormat = true;
@@ -648,7 +665,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (qualitySpecificationsResult)
                         statusValue = "good";
-                    else if(sosiDistributionFormat)
+                    else if (sosiDistributionFormat)
                         statusValue = "useable";
                     else
                         statusValue = "deficient";
@@ -931,9 +948,9 @@ namespace Kartverket.Register.Services.Register
                                    select r;
 
                 var result = queryResults.FirstOrDefault();
-                if(result != null)
+                if (result != null)
                     result.AddMissingTranslations();
-                
+
                 return result;
             }
             else
@@ -946,7 +963,7 @@ namespace Kartverket.Register.Services.Register
                 var result = queryResults.FirstOrDefault();
                 if (result != null)
                     result.AddMissingTranslations();
-                
+
                 return result;
             }
         }
@@ -956,9 +973,9 @@ namespace Kartverket.Register.Services.Register
             if (string.IsNullOrWhiteSpace(parentRegisterName))
             {
                 var queryResults = from r in _dbContext.Registers
-                    where r.seoname == registerName &&
-                          r.parentRegister == null
-                    select r.systemId;
+                                   where r.seoname == registerName &&
+                                         r.parentRegister == null
+                                   select r.systemId;
 
                 var result = queryResults.FirstOrDefault();
                 return result;
@@ -966,9 +983,9 @@ namespace Kartverket.Register.Services.Register
             else
             {
                 var queryResults = from r in _dbContext.Registers
-                    where r.seoname == registerName &&
-                          r.parentRegister.seoname == parentRegisterName
-                    select r.systemId;
+                                   where r.seoname == registerName &&
+                                         r.parentRegister.seoname == parentRegisterName
+                                   select r.systemId;
 
                 var result = queryResults.FirstOrDefault();
                 return result;
@@ -1090,8 +1107,8 @@ namespace Kartverket.Register.Services.Register
         private Guid GetOrganizationKartverket()
         {
             var queryResults = from o in _dbContext.Organizations
-                where o.name == "Kartverket"
-                select o.systemId;
+                               where o.name == "Kartverket"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1099,8 +1116,8 @@ namespace Kartverket.Register.Services.Register
         public Guid GetInspireStatusRegisterId()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
-                select o.systemId;
+                               where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1108,8 +1125,8 @@ namespace Kartverket.Register.Services.Register
         public Models.Register GetInspireStatusRegister()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
-                select o;
+                               where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
+                               select o;
 
             return queryResults.FirstOrDefault();
         }
@@ -1117,8 +1134,8 @@ namespace Kartverket.Register.Services.Register
         public Guid GetGeodatalovStatusRegisterId()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.name == "Geodatalov statusregister"
-                select o.systemId;
+                               where o.name == "Geodatalov statusregister"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1126,8 +1143,8 @@ namespace Kartverket.Register.Services.Register
         public List<Models.Register> GetCodelistRegisters()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.containedItemClass == "CodelistValue"
-                select o;
+                               where o.containedItemClass == "CodelistValue"
+                               select o;
 
             var codelistRegisters = new List<Models.Register>();
             foreach (var item in queryResults)
@@ -1152,10 +1169,10 @@ namespace Kartverket.Register.Services.Register
             if (model is Models.Register register)
             {
                 var queryResults = from o in _dbContext.Registers
-                    where o.name == register.name &&
-                          o.systemId != register.systemId &&
-                          o.parentRegisterId == register.parentRegister.systemId
-                    select o.systemId;
+                                   where o.name == register.name &&
+                                         o.systemId != register.systemId &&
+                                         o.parentRegisterId == register.parentRegister.systemId
+                                   select o.systemId;
 
                 if (queryResults.ToList().Any())
                 {
@@ -1193,7 +1210,7 @@ namespace Kartverket.Register.Services.Register
             foreach (var subregister in subregisters.ToList())
             {
                 DeleteRegister(subregister);
-            }       
+            }
         }
     }
 }

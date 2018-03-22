@@ -411,6 +411,7 @@ namespace Kartverket.Register.Services.Register
             var InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
             var nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
             var nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+            var inspireRegistryTab = HttpContext.Current.Request.QueryString["inspireRegistryTab"] != null ? HttpContext.Current.Request.QueryString["inspireRegistryTab"].ToString() : "";
 
             if (HttpContext.Current.Request.QueryString.Count < 1)
             {
@@ -439,6 +440,10 @@ namespace Kartverket.Register.Services.Register
 
                     if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
                         municipality = HttpContext.Current.Session["municipality"].ToString();
+
+                    if (HttpContext.Current.Session["inspireRegistryTab"] != null && string.IsNullOrEmpty(inspireRegistryTab))
+                        inspireRegistryTab = HttpContext.Current.Session["inspireRegistryTab"].ToString();
+
 
                     string redirect = HttpContext.Current.Request.Path + "?sorting=" + orderBy;
                     bool shallRedirect = false;
@@ -489,6 +494,12 @@ namespace Kartverket.Register.Services.Register
                         shallRedirect = true;
                     }
 
+                    if (inspireRegistryTab != "")
+                    {
+                        redirect = redirect + "&inspireRegistryTab=" + inspireRegistryTab;
+                        shallRedirect = true;
+                    }
+                    
                     if (shallRedirect)
                     {
                         HttpContext.Current.Response.Redirect(redirect);
@@ -504,6 +515,7 @@ namespace Kartverket.Register.Services.Register
             HttpContext.Current.Session["InspireRequirement"] = InspireRequirementParam;
             HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
             HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+            HttpContext.Current.Session["inspireRegistryTab"] = inspireRegistryTab;
 
 
             var sortedList = registers.OrderBy(o => o.name).ToList();

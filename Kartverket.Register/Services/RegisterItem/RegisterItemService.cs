@@ -822,6 +822,78 @@ namespace Kartverket.Register.Services.RegisterItem
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
 
+                    // InspireDataService
+                    case "inspire_theme_status":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Theme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_theme_status_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Theme).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_serviceType":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.ServiceType).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_serviceType_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.ServiceType).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "request":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Requests).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "request_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Requests).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "sds":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Sds).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "sds_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Sds).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "networkService":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.NetworkService).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "networkService_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.NetworkService).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_metadataSearchService_status":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_metadataSearchService_status_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_service_status":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryServiceStatus.Status).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspire_service_status_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryServiceStatus.Status).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+
                     // GeodatalovDataset
                     case "geodatalov_metadata_status":
                         {
@@ -969,6 +1041,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 var inspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
                 var nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
                 var nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+                var inspireRegistryTab = HttpContext.Current.Request.QueryString["inspireRegistryTab"] != null ? HttpContext.Current.Request.QueryString["inspireRegistryTab"].ToString() : "";
 
                 if (HttpContext.Current.Request.QueryString.Count < 1)
                 {
@@ -997,6 +1070,11 @@ namespace Kartverket.Register.Services.RegisterItem
 
                         if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
                             municipality = HttpContext.Current.Session["municipality"].ToString();
+
+                        if (HttpContext.Current.Session["inspireRegistryTab"] != null && string.IsNullOrEmpty(inspireRegistryTab))
+                            municipality = HttpContext.Current.Session["inspireRegistryTab"].ToString();
+
+
 
                         string redirect = HttpContext.Current.Request.Path + "?sorting=" + sorting;
                         bool shallRedirect = false;
@@ -1047,6 +1125,13 @@ namespace Kartverket.Register.Services.RegisterItem
                             shallRedirect = true;
                         }
 
+                        if (inspireRegistryTab != "")
+                        {
+                            redirect = redirect + "&inspireRegistryTab=" + inspireRegistryTab;
+                            shallRedirect = true;
+                        }
+                        
+
                         if (shallRedirect)
                         {
                             HttpContext.Current.Response.Redirect(redirect);
@@ -1062,6 +1147,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 HttpContext.Current.Session["InspireRequirement"] = inspireRequirementParam;
                 HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
                 HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+                HttpContext.Current.Session["inspireRegistryTab"] = inspireRegistryTab;
 
                 List<string> dokStatusOrder = new List<string>();
 

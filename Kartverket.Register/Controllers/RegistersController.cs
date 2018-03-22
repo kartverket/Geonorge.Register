@@ -491,6 +491,7 @@ namespace Kartverket.Register.Controllers
             Session["InspireRequirement"] = null;
             Session["nationalRequirement"] = null;
             Session["nationalSeaRequirement"] = null;
+            Session["inspireRegistryTab"] = null;
         }
 
         private void Viewbags(Models.Register register)

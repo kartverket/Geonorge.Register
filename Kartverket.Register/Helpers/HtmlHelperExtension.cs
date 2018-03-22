@@ -366,7 +366,7 @@ namespace Kartverket.Register.Helpers
             return 0;
         }
 
-        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null)
+        public static IHtmlString OrderByLink(string sortingSelected, string searchParam, string tittel, string defaultSort, string municipality = null, string inspireRegisteryTab = null)
         {
 
             var sortingClass = "";
@@ -535,6 +535,50 @@ namespace Kartverket.Register.Helpers
                 statusIcon += "custom-icon-info";
             }
 
+
+            // ** INSPIRE DATA SERVICE
+
+            else if (sortingParam == "inspire_theme_status" || sortingParam == "inspire_theme_status_desc")
+            {
+                sortTitle = "Tema";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "inspire_serviceType" || sortingParam == "inspire_serviceType_desc")
+            {
+                sortTitle = "Type";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "request" || sortingParam == "request_desc")
+            {
+                sortTitle = "Request";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "sds" || sortingParam == "sds_desc")
+            {
+                sortTitle = "Sds";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "networkService" || sortingParam == "networkService_desc")
+            {
+                sortTitle = "Nettverkstjeneste";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "inspireService_metadata_status" || sortingParam == "inspireService_metadata_status_desc")
+            {
+                sortTitle = "Metadata";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "inspire_metadataSearchService_status" || sortingParam == "inspire_metadataSearchService_status_desc")
+            {
+                sortTitle = "Metadata i søketjeneste";
+                statusIcon += "custom-icon-info";
+            }
+            else if (sortingParam == "inspire_service_status" || sortingParam == "inspire_service_status_desc")
+            {
+                sortTitle = "Tjenestestatus";
+                statusIcon += "custom-icon-info";
+            }
+
             // *** GEODATALOV SORTERING
 
             else if (sortingParam == "inspire" || sortingParam == "inspire_desc")
@@ -609,6 +653,12 @@ namespace Kartverket.Register.Helpers
             {
                 linkSort += "&municipality=" + municipality;
             }
+
+            if (inspireRegisteryTab != null)
+            {
+                linkSort += "&inspireRegisteryTab=" + inspireRegisteryTab;
+            }
+
             if (text != null)
                 linkSort += "&text=" + text;
             if (string.IsNullOrWhiteSpace(tittel))

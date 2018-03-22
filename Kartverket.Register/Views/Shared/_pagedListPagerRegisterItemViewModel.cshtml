@@ -6,6 +6,7 @@
 @Html.PagedListPager(Model, page => Request.Path + "?page=" + page
                                     + (!string.IsNullOrEmpty(ViewBag.SortOrder) ? "&sorting=" + ViewBag.SortOrder : "")
                                     + (Session["text"] != null && !string.IsNullOrEmpty(Session["text"].ToString()) ? "&text=" + Session["text"].ToString() : "")
+                                    + (Session["inspireRegistryTab"] != null && !string.IsNullOrEmpty(Session["inspireRegistryTab"].ToString()) ? "&inspireRegistryTab=" + Session["inspireRegistryTab"].ToString() : "")
                                     , new PagedListRenderOptions { MaximumPageNumbersToDisplay = 1, DisplayEllipsesWhenNotShowingAllPageNumbers = false })
 
 

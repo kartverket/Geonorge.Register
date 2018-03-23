@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Configuration;
 using System.Xml;
+using GeoNorgeAPI;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -564,19 +565,11 @@ namespace Kartverket.Register.Services
 
                     foreach (var service in result)
                     {
-                        var inspireDataService = new InspireDataService();
-                        inspireDataService.Name = service.Title;
-                        inspireDataService.Description = service.Abstract;
-                        inspireDataService.OwnerId = _registerItemService.GetOrganizationByName(service.Organization.ToString());
-
-                        inspireDataService.Uuid = service.Uuid;
-                        inspireDataService.Theme = service.Theme;
-                        inspireDataService.Url = service.GetCapabilitiesUrl;
-                        inspireDataService.NetworkService = IsNetworkService(inspireDataService.Uuid);
-
-                        inspireDataService.ServiceType = service.DistributionType;
-                        inspireDataServices.Add(inspireDataService);
-
+                        var inspireDataService = _metadataService.FetchInspireDataServiceFromKartkatalogen(service.Uuid.ToString());
+                        if (inspireDataService != null)
+                        {
+                            inspireDataServices.Add(inspireDataService);
+                        }
                     }
                 }
                 return inspireDataServices;
@@ -589,14 +582,22 @@ namespace Kartverket.Register.Services
             }
         }
 
-        private bool IsNetworkService(string serviceuuid)
-        {
-            var url = "http://www.geonorge.no/geonetwork/srv/nor/csw?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&Id=" + serviceuuid + "&resultType=results&outputSchema=csw:IsoRecord";
-            var getFeedTask = HttpClient.GetStringAsync(url);
-            // TODO hente informasjon fra metadata...
-            // True hvis view eller download
+        //private bool IsNetworkService(string serviceuuid)
+        //{
+        //    SimpleMetadata metadata = MetadataService.FetchMetadata(serviceuuid);
+        //    var serviceType = metadata.ServiceType;
+        //    //var inspireKeywords = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_GEMET_INSPIRE_V1);
 
-            return false;
+        //    return serviceType == "view" || serviceType == "download";
+        //}
+
+        private bool GetInspireTheme(string serviceuuid)
+        {
+            SimpleMetadata metadata = MetadataService.FetchMetadata(serviceuuid);
+            var serviceType = metadata.ServiceType;
+            //var inspireKeywords = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_GEMET_INSPIRE_V1);
+
+            return serviceType == "view" || serviceType == "download";
         }
 
         private InspireDataService GetInspireDataServiceByUuid(string uuid)
@@ -617,7 +618,7 @@ namespace Kartverket.Register.Services
             originalDataService.Modified = DateTime.Now;
 
             originalDataService.Uuid = inspireDataServiceFromKartkatalogen.Uuid;
-            originalDataService.ServiceType = inspireDataServiceFromKartkatalogen.ServiceType;
+            originalDataService.InspireDataType = inspireDataServiceFromKartkatalogen.InspireDataType;
             
             if (originalDataService.InspireDeliveryMetadata != null)
             {

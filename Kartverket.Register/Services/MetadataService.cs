@@ -483,5 +483,59 @@ namespace Kartverket.DOK.Service
             }
             return result;
         }
+
+        public InspireDataService FetchInspireDataServiceFromKartkatalogen(string uuid)
+        {
+            var inspireDataService = new InspireDataService();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    inspireDataService.Name = data.Title;
+                    inspireDataService.Description = data.Abstract;
+                    inspireDataService.Uuid = data.Uuid;
+                   
+                    //var thumbnails = data.Thumbnails;
+                    //if (thumbnails != null && thumbnails.Count > 0)
+                    //{
+                    //    inspireDataService.DatasetThumbnail = thumbnails[0].URL.Value;
+                    //}
+
+                    inspireDataService.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "");
+
+                    inspireDataService.Theme = GetInspireThemeName(
+                        data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
+                            ? data.KeywordsInspire[0].KeywordValue.Value
+                            : "Annen");
+
+                    inspireDataService.Url = data.DistributionUrl;
+                    inspireDataService.NetworkService = IsNetworkService(data.ServiceType.ToString());
+
+                    inspireDataService.InspireDataType = data.DistributionDetails.ProtocolName;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return inspireDataService;
+
+        }
+
+        private bool IsNetworkService(string serviceType)
+        {
+            return serviceType == "view" || serviceType == "download";
+        }
     }
 }

@@ -27,22 +27,19 @@
 
         $(function () {
 
-                //TODO Default skal være datasett.. Dersom ingen parametre er satt, skal local storage settes til dataset..
             document.querySelectorAll('.tab').forEach(function (tabElement) {
                 tabElement.className = "tab";
-            }); 
-            var selectedTab = localStorage.getItem("InspireRegisteryTabSelected");
-            var item = document.getElementById(selectedTab);
-                item.className = "active";
+            });
 
-            console.log(item);
+            var selectedTabParameter = getParameterByName("inspireregisterytab");
+            var selectedTab = document.getElementById('dataset-Tab');
+                console.log(selectedTabParameter);
+            if (selectedTabParameter != "") {
+                selectedTab = document.getElementById(selectedTabParameter + '-Tab');
+            }
+                selectedTab.className = "active";
         }
         );
-
-        function toggleTab(event) {
-            var selectedTab = event.target.offsetParent.id;
-            localStorage.setItem("InspireRegisteryTabSelected", selectedTab);
-        }
     </script>
 }
 
@@ -86,13 +83,12 @@
                 @if (Model.ContainedItemClassIsInspireDataset())
                 {
                     <ul id="tabs" class="nav nav-tabs">
-                        <li id="datasetTab" class="tab active">
-                            @Html.ActionLink("Dataset", "Details", new { InspireRegisteryTab = "dataset" }, new { onclick = "toggleTab(event)"})
+                        <li id="dataset-Tab" class="tab active">
+                            @Html.ActionLink("Dataset", "Details", new { InspireRegisteryTab = "dataset" })
                         </li>
-                        <li id="serviceTab" class="tab">
-                            @Html.ActionLink("Tjenester", "Details", new { InspireRegisteryTab = "service" }, new { onclick = "toggleTab(event)" })
+                        <li id="service-Tab" class="tab">
+                            @Html.ActionLink("Tjenester", "Details", new { InspireRegisteryTab = "service" })
                         </li>
-
                     </ul>
                 }
             </div>
@@ -153,13 +149,13 @@
     @if (Model.ContainedItemClassIsInspireDataset())
     {
 
-        if (Model.SelectedInspireRegisteryTab == "dataset")
-        {
-            @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-        }
-        else if (Model.SelectedInspireRegisteryTab == "service")
+        if (Model.SelectedInspireRegisteryTab == "service")
         {
             @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+        }
+        else
+        {
+            @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
     }
 

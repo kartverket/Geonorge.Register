@@ -790,6 +790,10 @@
     <Compile Include="Migrations\201803221855547_AddNetworkService.Designer.cs">
       <DependentUpon>201803221855547_AddNetworkService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.cs" />
+    <Compile Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.Designer.cs">
+      <DependentUpon>201803231020143_RenameServiceTypeToInspireDataType.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1893,6 +1897,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201803221855547_AddNetworkService.resx">
       <DependentUpon>201803221855547_AddNetworkService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.resx">
+      <DependentUpon>201803231020143_RenameServiceTypeToInspireDataType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

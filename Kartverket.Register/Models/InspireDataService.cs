@@ -7,7 +7,7 @@ namespace Kartverket.Register.Models
 {
     public class InspireDataService : RegisterItemV2
     {
-        public string ServiceType { get; set; } // WMS, WFS, REST, Atom feed, metadata --> protocol
+        public string InspireDataType { get; set; } // WMS, WFS, REST, Atom feed, metadata --> protocol
 
         [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]
         public Guid InspireDeliveryMetadataId { get; set; }
@@ -30,7 +30,7 @@ namespace Kartverket.Register.Models
 
         public bool GetSds()
         {
-            return ServiceType != "WFS-tjeneste" && ServiceType != "WMS-tjeneste";
+            return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";
         }
 
     }

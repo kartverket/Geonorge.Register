@@ -56,7 +56,7 @@ namespace Kartverket.Register.Models.ViewModels
                     InspireDeliveryServiceStatusId = inspireDataService.InspireDeliveryServiceStatusId;
                 }
 
-                ServiceType = inspireDataService.ServiceType;
+                ServiceType = inspireDataService.InspireDataType;
                 Requests = inspireDataService.Requests;
                 NetworkService = inspireDataService.NetworkService;
                 Sds = inspireDataService.GetSds();

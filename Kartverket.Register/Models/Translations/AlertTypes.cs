@@ -63,7 +63,7 @@ namespace Kartverket.Register.Models.Translations
             List<Translated> NewServiceTranslatedList = new List<Translated>();
             NewServiceTranslatedList.Add(NewServiceTranslated);
 
-            Alert RemovedService = new Alert { Key = "RemovedService", Value = "Fjernet tjenste" };
+            Alert RemovedService = new Alert { Key = "RemovedService", Value = "Fjernet tjeneste" };
             Translated RemovedServiceTranslated = new Translated { AlertType = "Removed service", Culture = "en" };
             List<Translated> RemovedServiceTranslatedList = new List<Translated>();
             RemovedServiceTranslatedList.Add(RemovedServiceTranslated);

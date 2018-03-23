@@ -586,6 +586,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerId = register.SystemId;
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
+            ViewBag.InspireRegisteryTab = filter.InspireRegisteryTab;
         }
 
         private static bool Search(FilterParameters filter)

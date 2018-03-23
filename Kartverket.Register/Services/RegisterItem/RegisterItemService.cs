@@ -873,24 +873,34 @@ namespace Kartverket.Register.Services.RegisterItem
                         var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.NetworkService).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
+                    case "inspireService_metadata_status":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
+                    case "inspireService_metadata_status_desc":
+                    {
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                    }
                     case "inspire_metadataSearchService_status":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
                     case "inspire_metadataSearchService_status_desc":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
                     case "inspire_service_status":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryServiceStatus.Status).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
                     case "inspire_service_status_desc":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryServiceStatus.Status).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
 

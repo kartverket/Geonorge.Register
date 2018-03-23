@@ -835,12 +835,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     }
                     case "inspire_serviceType":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.ServiceType).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDataType).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
                     case "inspire_serviceType_desc":
                     {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.ServiceType).ToList();
+                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDataType).ToList();
                         return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                     }
                     case "request":

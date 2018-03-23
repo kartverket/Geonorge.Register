@@ -154,7 +154,7 @@ namespace Kartverket.Register.Services
                                     i.Register.seoname == registerSeoName
                               select i;
 
-            return queryResult.FirstOrDefault();
+                return queryResult.FirstOrDefault();
         }
 
         private InspireDataset GetInspireDatasetBySystemId(Guid systemId)
@@ -662,5 +662,14 @@ namespace Kartverket.Register.Services
             return inspireDataServiceViewModel;
         }
 
+        public InspireDataService GetInspireDataServiceByName(string registername, string itemname)
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                where i.Seoname == itemname &&
+                      i.Register.seoname == registername
+                              select i;
+
+            return queryResult.FirstOrDefault();
+        }
     }
 }

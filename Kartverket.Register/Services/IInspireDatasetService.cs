@@ -14,5 +14,6 @@ namespace Kartverket.Register.Services
         void DeleteInspireDataset(InspireDataset inspireDataset);
         ICollection<InspireDataService> GetInspireDataService();
         ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> getInspireDataService);
+        InspireDataService GetInspireDataServiceByName(string registername, string itemname);
     }
 }

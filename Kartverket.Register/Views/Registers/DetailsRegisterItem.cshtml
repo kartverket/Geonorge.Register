@@ -70,6 +70,10 @@
     {
         @Html.Partial("_detailsInspireDataset")
     }
+    else if (Model is InspireDataServiceViewModel)
+    {
+        @Html.Partial("_detailsInspireDataService")
+    }
     else if (Model is GeodatalovDatasetViewModel)
     {
         @Html.Partial("_detailsGeodatalovDataset")

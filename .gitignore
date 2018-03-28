@@ -164,3 +164,6 @@ $RECYCLE.BIN/
 
 # Visual Studio 2015 cache/options directory
 .vs/
+
+# npm packages  
+node_modules/

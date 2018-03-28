@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="/dist/vendor.css" />
+<link rel="stylesheet" href="/dist/main.css" />
+
+<header class="page-top-container">
+    <div class="container">
+        <div class="page-top" data-ng-app="geonorge-header" ng-controller="baseController">
+            <div class="logo">
+                <a href="/">
+                    <img ng-src="{{imageLogoPath}}" src="/dist/images/geonorge_logo_350px.svg" alt="geonorge logo" />
+                </a>
+            </div>
+
+            <div class="search">
+                <label for="txtSearch" class="sr-only" ng-cloak>{{(selectedSearch.searchPlaceholder !== undefined ? selectedSearch.searchPlaceholder : localizedText.search[langCode])}}</label>
+                <div class="search-input" data-ng-controller="searchTopController" ng-cloak>
+                    <input autocomplete="off" id="txtSearch" type="search" class="search-text" ng-attr-placeholder="{{(selectedSearch.searchPlaceholder !== undefined ? selectedSearch.searchPlaceholder : localizedText.search[langCode])}}" data-ng-focus="setFocus($event)" data-ng-blur="" data-ng-keyup="autocomplete($event)" data-ng-keydown="preventDefault($event)" data-ng-model="$root.searchQuery"/>
+                    <button class="search-button" type="button">
+                        <img src="/dist/images/search_icon-01.svg" alt="search"/>
+                    </button>
+                    <div class="search-results" data-ng-show="autocompleteActive" data-ng-animate data-ng-cloak data-ng-include="autoCompletePartial"></div>
+                </div>
+            </div>
+
+            <div class="downloads">
+                <a href="" onclick="window.location.href = searchOption.shoppingCartUrl">
+                    <span class="downloads__count"></span>
+                    <svg width="48px" height="32px" viewBox="0 0 48 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g transform="translate(-1.000000, -9.000000)" fill="#7d746d" class="downloads__cloud">
+                                <path d="M25,9 C19.22,9 14.2,12.28 11.7,17.08 C5.68,17.72 1,22.82 1,29 C1,35.62 6.38,41 13,41 L39,41 C44.52,41 49,36.52 49,31 C49,25.72 44.9,21.44 39.7,21.08 C38.34,14.18 32.28,9 25,9 Z M35,27 L25,37 L15,27 L21,27 L21,19 L29,19 L29,27 L35,27 L35,27 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </a>
+            </div>
+
+            <input type="checkbox" class="menu-trigger-chk sr-only" id="menuToggler" />
+            <div class="menu">
+                <label for="menuToggler" class="menu-trigger" href="#topMenu" ng-cloak>
+                    <span>{{localizedText.menu[langCode]}}</span>
+                </label>
+            </div>
+            <div class="menu-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <nav class="menu-content__navigation" data-ng-controller="menuTopController" data-ng-init="getMenuData()">
+                            <h2 class="sr-only">Hovedmeny</h2>
+                            <ul data-ng-if="!getMenuError">
+                                <li class="col-sm-6 col-md-3" data-ng-repeat="item in menuItems">
+                                    <a data-ng-href="{{item.Url}}" target="_self">{{item.Name}}</a>
+                                    <ul data-ng-if="item.HasChildren">
+                                        <li data-ng-repeat="subItem in item.SubMenuItem">
+                                            <a data-ng-href="{{subItem.Url}}" target="_self">{{subItem.Name}}</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="menu-content__utilities">
+                                <a ng-if="loggedIn" href="" onclick="window.location.href = searchOption.logoutUrl">{{localizedText.logout[langCode]}}</a>
+                                <a ng-if="!loggedIn" href="" onclick="window.location.href = searchOption.loginUrl">{{localizedText.login[langCode]}}</a>
+                                <a class="internal" ng-href="{{cultureSwitchUrl}}" ng-click="switchCulture(cultureSwitchCode)">{{cultureSwitchName}}</a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<script type="text/javascript" src="/dist/vendor.js" ></script>
+<script type="text/javascript" src="/dist/main.js" ></script>

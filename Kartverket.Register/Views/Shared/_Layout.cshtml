@@ -19,50 +19,35 @@
         }
         @Resources.Shared.AppPageTitle
     </title>
-    <!-- Stylesheets -->
-    @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
-    @Styles.Render("~/Content/local-styles")
-    <!-- Scripts -->
-    <script>
-        var applicationEnvironment = '@Html.EnvironmentName()';
-        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
-        var authenticationData = {
-            supportsLogin: true,
-            isAuthenticated: @Request.IsAuthenticated.ToString().ToLower(),
-            urlActionSignOut: '@Url.Action("LogOut", "AuthServices")',
-            urlActionSignIn: '@Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url })'
-            @if (Request.IsAuthenticated)
-            {
-                foreach (var c in System.Security.Claims.ClaimsPrincipal.Current.Claims) {
-                    if (c.Type == "urn:oid:0.9.2342.19200300.100.1.1" || c.Type == "username") {
-                       <text>, userName: '@c.Value'</text>
-                    }
-                }
-            }
-        }
+   
 
-        var cultureData = {
-            supportsMultiCulture: @(Html.SupportsMultiCulture() ? "true" : "false"),
-            urlSetCulture: '@Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url })',
-            urlSetCultureNorwegian: '@Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url })',
-            currentCulture: '@CultureHelper.GetCurrentCulture()'
-        };
-
-    </script>
-    @Html.Partial("_Resources")
-    @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/scripts")
-    @Scripts.Render("~/Scripts/local-scripts")
 
     @RenderSection("head", false)
 
+    @Html.Partial("_Resources")
+
+
+    <script>
+        var applicationVersionNumber = '@Html.ApplicationVersionNumber()';
+        var applicationEnvironment = '@Html.EnvironmentName()';
+
+        var cultureData = {
+            friendlyUrlEN: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.EnglishCode, ReturnUrl = Request.Url }))',
+            friendlyUrlNO: '@Html.Raw(Url.Action("SetCulture", "Registers", new { culture = Kartverket.Register.Models.Translations.Culture.NorwegianCode, ReturnUrl = Request.Url }))',
+            currentCulture: '@CultureHelper.GetCurrentCulture()'
+            };
+    </script>
+
 </head>
 
-<body class="geonorge-container prototype  geonorge ng-scope" ng-app="geonorge">
-    
+<body class="geonorge-container prototype  geonorge">
+
     <div id="loading-animation" class="loading-animation" style="display: none;"></div>
 
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
-    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_SharedMenu.min.cshtml")
+    @Html.Raw(File.ReadAllText(Server.MapPath("~/dist/partials/Header.html")))
+    @Styles.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/css/styles")
+    @Styles.Render("~/Content/local-styles")
+
     @{
         var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
     }
@@ -73,21 +58,21 @@
                 <li><a href="@Html.GeonorgeUrl()">Geonorge</a></li>
                 @if (controllerName != "Help")
                 {
-                <li><a href="/">@Shared.Heading</a></li>
-                @Html.Partial("_breadcrumb")
+                    <li><a href="/">@Shared.Heading</a></li>
+                    @Html.Partial("_breadcrumb")
                 }
                 @RenderSection("breadcrumb", false)
             </ul>
         </div>
 
         @if (TempData["success"] != null)
-            {
+        {
             <div class="alert alert-success">
                 @TempData["success"]
             </div>
         }
         @if (TempData["failure"] != null)
-            {
+        {
             <div class="alert alert-danger">
                 @TempData["failure"]
             </div>
@@ -110,20 +95,36 @@
         @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Footer_eng.min.cshtml");
     }
 
+    <script>
+        searchOption.loginUrl = '@Html.Raw(Url.Action("SignIn", "AuthServices", new { ReturnUrl = Request.Url }))';
+        searchOption.logoutUrl = '@Html.Raw(Url.Action("LogOut", "AuthServices"))';
+        searchOption.loggedIn = @Request.IsAuthenticated.ToString().ToLower();
+        searchOption.epiBaseUrl = '@Html.GeonorgeUrl()';
+        var orderItems = Cookies.get('orderitems');
+        if (orderItems && orderItems > 0) {
+            $('.downloads__count').show();
+            $('.downloads__count').text(orderItems);
+        }
+    </script>
+
+    @Scripts.Render("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts")
+    @Scripts.Render("~/Scripts/local-scripts")
+    @RenderPage("~/Content/bower_components/kartverket-felleskomponenter/assets/partials/_Analytics.min.cshtml")
+
 
     @RenderSection("scripts", false)
     <script>
-        $(function(){
+        $(function () {
             $(".jqueryui-marker-datepicker").datepicker({
                 dateFormat: "dd/mm/yy",
                 changeYear: true,
                 showOn: "button"
             }).css("display", "inline-block")
-            .next("button").button({
-                icons: { primary: "ui-icon-calendar" },
-                label: "Velg dato",
-                text: false
-            });
+                .next("button").button({
+                    icons: { primary: "ui-icon-calendar" },
+                    label: "Velg dato",
+                    text: false
+                });
         });
     </script>
 </body>

@@ -2,9 +2,6 @@
 input::-ms-clear {
   display: none; }
 
-body {
-  font-family: 'Open Sans', sans-serif; }
-
 .container-breadcrumbs {
   display: none; }
 
@@ -1690,11 +1687,6 @@ a[data-ng-class="highlight"] {
   .auto-results-title {
     font-size: 13pt;
     line-height: 22pt; }
-  .auto-results-inner,
-  .auto-results-inner:hover,
-  .auto-results-inner[data-ng-class="highlight"] {
-    font-size: 13pt;
-    line-height: 22pt; }
   .container .searchbar .input-group-addon .loader {
     background-size: auto;
     height: 36px;
@@ -1715,11 +1707,6 @@ a[data-ng-class="highlight"] {
   .auto-results-wrapper {
     margin: 0 8.25px;
     position: absolute; } }
-
-body {
-  font-size: 12pt;
-  font-family: "Open Sans", sans-serif;
-  background-image: none; }
 
 .no-border-radius, .help-text, .panel, .panel-heading {
   border-radius: 0; }
@@ -1795,8 +1782,7 @@ aside ul li,
   .panel-default > .panel-heading .help-text-toggle.active {
     background-color: #fe5000; }
 
-.help-text-toggle:hover,
-.help-text-toggle.active,
+.help-text-toggle:hover, .help-text-toggle.active,
 .panel-default > .panel-heading .help-text-toggle:hover,
 .panel-default > .panel-heading .help-text-toggle.active {
   background-color: #fe5000;
@@ -3456,7 +3442,10 @@ input[type="radio"]:checked.custom-radio.disabled + input[type="hidden"] + .radi
   width: 100% !important; }
 
 .no-border-radius, .help-text, .panel, .panel-heading,
-.no-border-radius input, .help-text input, .panel input, .panel-heading input {
+.no-border-radius input,
+.help-text input,
+.panel input,
+.panel-heading input {
   border-radius: 0 !important; }
 
 .inline-block {
@@ -3776,52 +3765,6 @@ ul#thumbnailsCoverage {
     background-color: #fbfcfc; }
   .striped-list .list-item:nth-child(even) {
     background-color: #f7f8f8; }
-
-.menu {
-  margin-bottom: 20px; }
-
-.container-user-menu {
-  padding: 10px 16px 0 0; }
-  .container-user-menu a {
-    line-height: 1.42857;
-    display: inline-block;
-    border-left: 1px solid #968c83;
-    font-family: Raleway,sans-serif;
-    font-size: 10.5pt;
-    font-weight: 500;
-    padding: 0 10px;
-    color: #968c83; }
-    .container-user-menu a:first-child {
-      border-left: none; }
-
-.search-button-wrapper .btn:focus, .search-button-wrapper .btn:hover {
-  background-color: #FFF; }
-
-.container .search .searchbar input {
-  -moz-border-radius: 6px 0 0 6px !important;
-  -webkit-border-radius: 6px 0 0 6px !important;
-  border-radius: 6px 0 0 6px !important;
-  border-radius: 6px 0 0 6px !important;
-  padding: 0 0 0 21px;
-  font-size: 14pt !important; }
-  .container .search .searchbar input:focus {
-    border: none; }
-
-@media (max-width: 767px) {
-  .top-row .col-xs-5 {
-    width: 50%; } }
-
-@media (min-width: 768px) {
-  .top-row .col-xs-5:nth-child(2) {
-    width: 0; }
-  .top-row .col-xs-2 {
-    width: 250px;
-    text-align: right; }
-  .container .search .searchbar input {
-    -moz-border-radius: 3px 0 0 3px !important;
-    -webkit-border-radius: 3px 0 0 3px !important;
-    border-radius: 3px 0 0 3px !important;
-    padding: 0 0 0 34.6px; } }
 
 #norgeskartmodal {
   width: 90%;

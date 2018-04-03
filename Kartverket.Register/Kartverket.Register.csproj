@@ -49,9 +49,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Arkitektum.GIS.Lib.MetadataCSW, Version=1.9.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Arkitektum.GIS.Lib.MetadataCSW.1.9.7.0\lib\net40\Arkitektum.GIS.Lib.MetadataCSW.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Arkitektum.GIS.Lib.MetadataCSW, Version=1.9.91.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Arkitektum.GIS.Lib.MetadataCSW.1.9.91.0\lib\net40\Arkitektum.GIS.Lib.MetadataCSW.dll</HintPath>
     </Reference>
     <Reference Include="Arkitektum.GIS.Lib.SerializeUtil, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Arkitektum.GIS.Lib.SerializeUtil.1.3.0.0\lib\net40\Arkitektum.GIS.Lib.SerializeUtil.dll</HintPath>
@@ -85,9 +84,8 @@
       <HintPath>..\packages\ExpressiveAnnotations.2.9.1\lib\net45\ExpressiveAnnotations.MvcUnobtrusive.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GeoNorgeAPI, Version=3.0.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GeoNorgeAPI.3.0.20.0\lib\net40\GeoNorgeAPI.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GeoNorgeAPI, Version=3.0.42.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GeoNorgeAPI.3.0.42\lib\net40\GeoNorgeAPI.dll</HintPath>
     </Reference>
     <Reference Include="GhostscriptSharp, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1055,7 +1053,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\css\vendorfonts.min.css" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\statusicon.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-blue.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\arrow-select-orange.svg" />
@@ -1188,14 +1185,10 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\js\vendor.min.js" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Analytics.min.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_autoCompleteRow.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.html" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.html" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.html" />
     <Content Include="Content\bower_components\tablesorter\addons\pager\jquery.tablesorter.pager.css" />
     <Content Include="Content\bower_components\tablesorter\addons\pager\jquery.tablesorter.pager.js" />
     <Content Include="Content\bower_components\tablesorter\build.xml" />
@@ -1257,6 +1250,19 @@
     <Content Include="Content\img\rss.png" />
     <Content Include="Content\leaflet.css" />
     <Content Include="Content\print.css" />
+    <Content Include="dist\images\geonorge_logo_350px.svg" />
+    <Content Include="dist\images\geonorge_logo_350px_dev.svg" />
+    <Content Include="dist\images\geonorge_logo_350px_test.svg" />
+    <Content Include="dist\images\search_icon-01.svg" />
+    <Content Include="dist\main.css" />
+    <Content Include="dist\main.js" />
+    <Content Include="dist\partials\Footer.html" />
+    <Content Include="dist\partials\Header.html" />
+    <Content Include="dist\partials\_autoCompleteRow.html" />
+    <Content Include="dist\vendor.css" />
+    <Content Include="dist\vendor.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="gulpfile.js" />
     <Content Include="lib\gsdll32.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1314,6 +1320,10 @@
     <Content Include="Content\bower_components\tablesorter\README.md" />
     <Content Include="Content\bower_components\tablesorter\themes\blue\blue.zip" />
     <Content Include="Content\bower_components\tablesorter\themes\green\green.zip" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\.bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\702ZOKiLJc3WVjuplzInF5uFdDttMLvmWuJdhhgs.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.eot" />
@@ -1321,10 +1331,6 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\fontawesome-webfont.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\FontAwesome.otf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\I4k9un7TZVWzRVT-T8y3USBnSvpkopQaUR-2r7iU.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\JXh38I15wypJXxuGMBp0EAVxt0G0biEntp43Qt6E.ttf" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\fonts\KeOuBrn4kERxqtaUH3aCWcynf_cDxXwCLxiixG1c.ttf" />
@@ -1343,12 +1349,14 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_Footer_eng.min.cshtml" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.cshtml" />
-    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\partials\_SharedMenu.min.cshtml" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\bower.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\package-lock.json" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\README.md" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\yarn.lock" />
+    <Content Include="dist\maps\main.css.map" />
+    <Content Include="dist\maps\main.js.map" />
+    <Content Include="dist\maps\vendor.css.map" />
+    <Content Include="dist\maps\vendor.js.map" />
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1364,6 +1372,7 @@
     <None Include="Formatter\XSD\rowdata.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="package.json" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.0.js" />
     <Content Include="Scripts\jquery-3.1.0.min.js" />

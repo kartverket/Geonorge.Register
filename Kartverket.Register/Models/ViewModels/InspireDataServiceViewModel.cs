@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace Kartverket.Register.Models.ViewModels
@@ -37,6 +38,11 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Tema")]
         public string Theme { get; set; } // Liste opp alle Annex tjenestene hører til..
 
+        [Display(Name = "Metadata url")]
+        public string MetadataUrl { get; set; }
+
+        [Display(Name = "UUid")]
+        public string Uuid { get; set; }
 
 
         public InspireDataServiceViewModel(InspireDataService item)
@@ -74,7 +80,8 @@ namespace Kartverket.Register.Models.ViewModels
                 Sds = inspireDataService.GetSds();
                 Url = inspireDataService.Url;
                 Theme = inspireDataService.Theme;
-
+                Uuid = inspireDataService.Uuid;
+                MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + Uuid;
                 UpdateRegisterItem(inspireDataService);
             }
         }

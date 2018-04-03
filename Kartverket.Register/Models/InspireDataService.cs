@@ -25,9 +25,7 @@ namespace Kartverket.Register.Models
         public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
         public bool NetworkService { get; set; } 
 
-        [Display(Name = "Uuid:")]
         public string Uuid { get; set; }
-
         public bool GetSds()
         {
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";

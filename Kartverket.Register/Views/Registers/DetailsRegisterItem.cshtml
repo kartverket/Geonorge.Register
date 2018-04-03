@@ -23,18 +23,27 @@
             <span class="separator-lg"></span>
         </div>
         <div class="col-sm-12 col-md-10">
+            @if (Model is InspireDataServiceViewModel)
+            {
+                <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-tjeneste" style="width: auto;" data-original-title="Tilgjengelig som Tjeneste">Tjeneste</span>
+            }
+            else if (Model is InspireDatasetViewModel)
+            {
+            <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">Datasett</span>
+            }
+
             @if (Model.Register.containedItemClass != "NameSpace")
-            { <p> @Model.Description</p>}
+            {<p> @Model.Description</p>}
             @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-            { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
+            {<p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
 
             @if (Model.Register.containedItemClass == "NameSpace")
-            { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
-            else
-            {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
+            {<p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
+        else
+        {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
 
             @if (Model.Owner != null)
-            { <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
+            {<p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
 
             <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
             @if (Model.VersionName != null)

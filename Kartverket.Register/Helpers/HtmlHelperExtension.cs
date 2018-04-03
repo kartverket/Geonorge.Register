@@ -540,7 +540,7 @@ namespace Kartverket.Register.Helpers
 
             else if (sortingParam == "inspire_theme_status" || sortingParam == "inspire_theme_status_desc")
             {
-                sortTitle = "Tema";
+                sortTitle = "Inspire tema";
                 statusIcon += "custom-icon-info";
             }
             else if (sortingParam == "inspire_serviceType" || sortingParam == "inspire_serviceType_desc")

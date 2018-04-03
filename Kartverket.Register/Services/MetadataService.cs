@@ -499,12 +499,6 @@ namespace Kartverket.DOK.Service
                     inspireDataService.Name = data.Title;
                     inspireDataService.Description = data.Abstract;
                     inspireDataService.Uuid = data.Uuid;
-                   
-                    //var thumbnails = data.Thumbnails;
-                    //if (thumbnails != null && thumbnails.Count > 0)
-                    //{
-                    //    inspireDataService.DatasetThumbnail = thumbnails[0].URL.Value;
-                    //}
 
                     inspireDataService.OwnerId = mapOrganizationNameToId(
                         data.ContactOwner != null && data.ContactOwner.Organization != null

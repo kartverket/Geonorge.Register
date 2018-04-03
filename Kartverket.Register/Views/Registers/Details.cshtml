@@ -31,7 +31,7 @@
                 tabElement.className = "tab";
             });
 
-            var selectedTabParameter = getParameterByName("inspireregisterytab");
+            var selectedTabParameter = getParameterByName("inspireregisterytype");
             var selectedTab = document.getElementById('dataset-Tab');
                 console.log(selectedTabParameter);
             if (selectedTabParameter != "") {
@@ -84,10 +84,10 @@
                 {
                     <ul id="tabs" class="nav nav-tabs">
                         <li id="dataset-Tab" class="tab active">
-                            @Html.ActionLink("Dataset", "Details", new { InspireRegisteryTab = "dataset" })
+                            @Html.ActionLink("Dataset", "Details", new { InspireRegisteryType = "dataset" })
                         </li>
                         <li id="service-Tab" class="tab">
-                            @Html.ActionLink("Tjenester", "Details", new { InspireRegisteryTab = "service" })
+                            @Html.ActionLink("Tjenester", "Details", new { InspireRegisteryType = "service" })
                         </li>
                     </ul>
                 }
@@ -149,7 +149,7 @@
     @if (Model.ContainedItemClassIsInspireDataset())
     {
 
-        if (Model.SelectedInspireRegisteryTab == "service")
+        if (Model.SelectedInspireRegisteryType == "service")
         {
             @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }

@@ -61,7 +61,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public AccessViewModel AccessRegister { get; set; }
 
-        public string SelectedInspireRegisteryTab { get; set; }
+        public string SelectedInspireRegisteryType { get; set; }
 
         public RegisterV2ViewModel(Register register)
         {

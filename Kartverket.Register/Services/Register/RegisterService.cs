@@ -63,16 +63,16 @@ namespace Kartverket.Register.Services.Register
                             registerItemsv2.Add(item);
                         }
                     }
-                    else if (filter.InspireRegisteryTab != null)
+                    else if (filter.InspireRegisteryType != null)
                     {
-                        if (filter.InspireRegisteryTab == "dataset")
+                        if (filter.InspireRegisteryType == "dataset")
                         {
                             if (item is InspireDataset inspireDataset)
                             {
                                 registerItemsv2.Add(inspireDataset);
                             }
                         }
-                        else if (filter.InspireRegisteryTab == "service")
+                        else if (filter.InspireRegisteryType == "service")
                         {
                             if (item is InspireDataService inspireDataService)
                             {

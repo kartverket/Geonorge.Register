@@ -28,7 +28,7 @@
 {
 <div class="resultItemRow">
     <div class="row">
-        <div class="col-md-3 col-sm-12"><a href="@item.DetailPageUrl()" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
+        <div class="col-md-3 col-sm-12"><a href="@item.DetailPageUrl()?InspireRegisteryType=service" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage"> @item.Name </a></div>
         <div class="col-md-2 col-sm-12"><a href="@item.ItemsByOwnerUrl()" title="Datasett eier: @item.Owner.name" class="show-loading-animation" data-loading-message="@Registers.LoadingMessage">@item.Owner.name</a></div>
         <div class="col-md-2 col-sm-12">@item.Theme</div>
         <div class="col-md-1 col-sm-12">@item.InspireDataType</div>

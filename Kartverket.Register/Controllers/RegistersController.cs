@@ -117,7 +117,7 @@ namespace Kartverket.Register.Controllers
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
-            viewModel.SelectedInspireRegisteryTab = filter.InspireRegisteryTab;
+            viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
@@ -135,7 +135,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
         [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryTab = null)
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
         {
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
@@ -143,7 +143,7 @@ namespace Kartverket.Register.Controllers
             RegisterItemV2ViewModel viewModel;
             if (string.IsNullOrWhiteSpace(systemId))
             {
-                viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryTab);
+                viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryType);
             }
             else
             {
@@ -608,7 +608,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerId = register.SystemId;
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
-            ViewBag.InspireRegisteryTab = filter.InspireRegisteryTab;
+            ViewBag.InspireRegisteryType = filter.InspireRegisteryType;
         }
 
         private static bool Search(FilterParameters filter)

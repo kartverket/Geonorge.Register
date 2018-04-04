@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Kartverket.Register.Models;
 using Kartverket.Register.Models.ViewModels;
 
@@ -15,5 +16,7 @@ namespace Kartverket.Register.Services
         ICollection<InspireDataService> GetInspireDataService();
         ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> getInspireDataService);
         InspireDataService GetInspireDataServiceByName(string registername, string itemname);
+        InspireDataService GetInspireDataServiceById(Guid systemId);
+        InspireDataService UpdateInspireDataService(InspireDataService inspireDataService);
     }
 }

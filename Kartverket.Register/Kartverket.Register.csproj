@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\InspireDataServiceController.cs" />
     <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
@@ -1528,6 +1529,7 @@
     <Content Include="Views\Shared\_breadcrumb.cshtml" />
     <Content Include="Views\Shared\_inspireDataService.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
+    <Content Include="Views\InspireDataService\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

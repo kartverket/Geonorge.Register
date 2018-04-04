@@ -86,5 +86,14 @@ namespace Kartverket.Register.Models.ViewModels
             }
         }
 
+        public string GetInspireDataServiceEditUrl()
+        {
+            if (Register.parentRegister == null)
+            {
+                return "/inspire-data-service/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
+            }
+            return "/inspire-data-service/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
+
+        }
     }
 }

@@ -98,7 +98,14 @@ namespace Kartverket.Register.Controllers
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);
-            register = _registerService.FilterRegisterItems(register, filter);
+            if (register.IsInspireStatusRegister())
+            {
+                register = _registerItemService.GetInspireStatusRegisterItems(register);
+            }
+            else
+            {
+                register = _registerService.FilterRegisterItems(register, filter);
+            }
             return register;
         }
 
@@ -306,6 +313,16 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             new InspireDatasetService(db).SynchronizeInspireDatasets();
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister/dataservices")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireDataServices()
+        {
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
             return Ok();
         }
 
@@ -362,8 +379,7 @@ namespace Kartverket.Register.Controllers
             string selectedDOKMunicipality = "";
             if (filter != null && !string.IsNullOrEmpty(filter.municipality))
             {
-                Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
-                Models.Organization org = regItemService.GetMunicipalityOrganizationByNr(filter.municipality);
+                Models.Organization org = _registerItemService.GetMunicipalityOrganizationByNr(filter.municipality);
                 if (org != null)
                 {
                     selectedDOKMunicipality = org.name;

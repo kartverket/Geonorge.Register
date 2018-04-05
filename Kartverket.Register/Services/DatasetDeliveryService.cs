@@ -112,6 +112,11 @@ namespace Kartverket.Register.Services
 
             }
 
+            return GetServiceStatus(serviceUuid, status, hasServiceUrl);
+        }
+
+        public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
+        {
             var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
             statusUrl = statusUrl + serviceUuid;
             using (var client = new HttpClient())

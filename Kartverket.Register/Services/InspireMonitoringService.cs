@@ -79,11 +79,21 @@ namespace Kartverket.Register.Services
         private int GetNumberOfDatasetsThatHaveMetadata(ICollection<RegisterItemV2> inspireDatasets)
         {
             int datasetsThatHaveMetadata = 0;
-            foreach (InspireDataset inspireDataset in inspireDatasets)
+            foreach (var item in inspireDatasets)
             {
-                if (inspireDataset.HaveMetadata())
+                if (item is InspireDataset inspireDataset)
                 {
-                    datasetsThatHaveMetadata++;
+                    if (inspireDataset.HaveMetadata())
+                    {
+                        datasetsThatHaveMetadata++;
+                    }
+                }
+                else if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.HaveMetadata())
+                    {
+                        datasetsThatHaveMetadata++;
+                    }
                 }
             }
             return datasetsThatHaveMetadata;
@@ -109,25 +119,40 @@ namespace Kartverket.Register.Services
 
         private SpatialDataService[] MappingSpatialDataServices(ICollection<RegisterItemV2> registerItems)
         {
-            List<SpatialDataService> spatialDataService = new List<SpatialDataService>();
-            foreach (InspireDataset item in registerItems)
+            List<SpatialDataService> spatialDataServices = new List<SpatialDataService>();
+
+            foreach (var item in registerItems)
             {
-                var listOfRelatedServices = FetchRelatedServicesFromKartkatalogen(item.Uuid);
-                foreach (var service in listOfRelatedServices)
-                {                    
-                    spatialDataService.Add(service);
+                if (item is InspireDataService inspireDataService)
+                {
+                    spatialDataServices.Add(MappingSpatialDataService(inspireDataService));
                 }
             }
-            return spatialDataService.ToArray();
+            return spatialDataServices.ToArray();
+        }
+
+        private SpatialDataService MappingSpatialDataService(InspireDataService inspireDataService)
+        {
+            var spatialDataService = new SpatialDataService();
+            spatialDataService.name = inspireDataService.Name;
+            spatialDataService.respAuthority = inspireDataService.Owner.name;
+            spatialDataService.uuid = inspireDataService.Uuid;
+            //spatialDataService.Themes = MappingThemes(services.InspireTheme);
+            //spatialDataService.MdServiceExistence = MappingServiceExistence(services);
+            //spatialDataService.NetworkService = MappingNetworkService(services);
+            return spatialDataService;
         }
 
         private SpatialDataSet[] MappingSpatialDataSets(ICollection<RegisterItemV2> registerItems)
         {
             List<SpatialDataSet> spatialDataSetList = new List<SpatialDataSet>();
 
-            foreach (InspireDataset item in registerItems)
+            foreach (var item in registerItems)
             {
-                spatialDataSetList.Add(MappingSpatialDataSet(item));
+                if (item is InspireDataset inspireDataset)
+                {
+                    spatialDataSetList.Add(MappingSpatialDataSet(inspireDataset));
+                }
             }
             return spatialDataSetList.ToArray();
         }

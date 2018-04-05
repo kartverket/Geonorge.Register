@@ -188,6 +188,8 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 case InspireDatasetViewModel inspireDatasetViewModel:
                     return inspireDatasetViewModel.GetInspireDatasetEditUrl();
+                case InspireDataServiceViewModel inspireDataServiceViewModel:
+                    return inspireDataServiceViewModel.GetInspireDataServiceEditUrl();
                 case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
                 case DocumentViewModel documentViewModel:

@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Configuration;
+using System.Xml;
+using GeoNorgeAPI;
 using Kartverket.DOK.Service;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
@@ -19,6 +22,8 @@ namespace Kartverket.Register.Services
         private readonly IRegisterItemService _registerItemService;
         private readonly IDatasetDeliveryService _datasetDeliveryService;
         private readonly MetadataService _metadataService;
+
+        private static readonly HttpClient HttpClient = new HttpClient();
 
         public InspireDatasetService(RegisterDbContext dbContext)
         {
@@ -149,7 +154,7 @@ namespace Kartverket.Register.Services
                                     i.Register.seoname == registerSeoName
                               select i;
 
-            return queryResult.FirstOrDefault();
+                return queryResult.FirstOrDefault();
         }
 
         private InspireDataset GetInspireDatasetBySystemId(Guid systemId)
@@ -457,6 +462,235 @@ namespace Kartverket.Register.Services
                 System.Diagnostics.Debug.WriteLine(url);
                 return null;
             }
+        }
+
+
+
+         //**** INSPIRE DATA SERVICE****
+
+        public void SynchronizeInspireDataServices()
+        {
+            var originalInspireDataServices = GetInspireDataService();
+            var inspireDataServicesFromKartkatalogen = FetchInspireDataServicesFromKartkatalogen();
+
+            RemoveInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
+            AddOrUpdateInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
+
+            _dbContext.SaveChanges();
+        }
+
+
+        private void AddOrUpdateInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen)
+        {
+            foreach (var inspireDataServiceFromKartkatalogen in inspireDataServicesFromKartkatalogen)
+            {
+                var originalInspireDataService = GetInspireDataServiceByUuid(inspireDataServiceFromKartkatalogen.Uuid);
+                if (originalInspireDataService != null)
+                {
+                    UpdateInspireDataService(originalInspireDataService, inspireDataServiceFromKartkatalogen);
+                }
+                else
+                {
+                    NewInspireDataServiceFromKartkatalogen(inspireDataServiceFromKartkatalogen);
+                }
+            }
+        }
+
+        private void NewInspireDataServiceFromKartkatalogen(InspireDataService inspireDataService)
+        {
+            if (_registerItemService.ItemNameAlredyExist(inspireDataService)) return;
+            inspireDataService.SystemId = Guid.NewGuid();
+            inspireDataService.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataService.Name);
+            inspireDataService.SubmitterId = _registerService.GetOrganizationIdByUserName();
+            inspireDataService.DateSubmitted = DateTime.Now;
+            inspireDataService.Modified = DateTime.Now;
+            inspireDataService.RegisterId = _registerService.GetInspireStatusRegisterId();
+            inspireDataService.VersioningId = _registerItemService.NewVersioningGroup(inspireDataService);
+            inspireDataService.VersionNumber = 1;
+            inspireDataService.StatusId = "Submitted";
+
+            var metadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataService.Uuid);
+            var inspireDeliveryMetadataInSearchService = "good";
+            var inspireDeliveryServiceStatus = _datasetDeliveryService.GetServiceStatus(inspireDataService.Uuid, "deficient");
+            inspireDataService.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(metadataStatus);
+            inspireDataService.InspireDeliveryMetadataInSearchServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDeliveryMetadataInSearchService);
+            inspireDataService.InspireDeliveryServiceStatusId = _datasetDeliveryService.CreateDatasetDelivery(inspireDeliveryServiceStatus);
+
+            _dbContext.InspireDataServices.Add(inspireDataService);
+            _dbContext.SaveChanges();
+        }
+
+        private void RemoveInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen)
+        {
+            var exists = false;
+            var removeDataServices = new List<InspireDataService>();
+
+            foreach (var inspireDataServiceFromRegister in inspireDataServicesFromRegister)
+            {
+                if (inspireDataServicesFromKartkatalogen.Any(inspireDataServiceFromKartkatalog => inspireDataServiceFromKartkatalog.Uuid == inspireDataServiceFromRegister.Uuid))
+                {
+                    exists = true;
+                }
+                if (!exists)
+                {
+                    removeDataServices.Add(inspireDataServiceFromRegister);
+                }
+                exists = false;
+            }
+            foreach (var inspireDataService in removeDataServices)
+            {
+                DeleteInspireDataService(inspireDataService);
+            }
+        }
+
+        private void DeleteInspireDataService(InspireDataService inspireDataService)
+        {
+            _dbContext.InspireDataServices.Remove(inspireDataService);
+            _dbContext.SaveChanges();
+        }
+
+        private List<InspireDataService> FetchInspireDataServicesFromKartkatalogen()
+        {
+            List<InspireDataService> inspireDataServices = new List<InspireDataService>();
+
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/servicedirectory?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json";
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    var result = data.Results;
+
+                    foreach (var service in result)
+                    {
+                        var inspireDataService = _metadataService.FetchInspireDataServiceFromKartkatalogen(service.Uuid.ToString());
+                        if (inspireDataService != null)
+                        {
+                            inspireDataServices.Add(inspireDataService);
+                        }
+                    }
+                }
+                return inspireDataServices;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return inspireDataServices;
+            }
+        }
+
+        //private bool IsNetworkService(string serviceuuid)
+        //{
+        //    SimpleMetadata metadata = MetadataService.FetchMetadata(serviceuuid);
+        //    var serviceType = metadata.ServiceType;
+        //    //var inspireKeywords = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_GEMET_INSPIRE_V1);
+
+        //    return serviceType == "view" || serviceType == "download";
+        //}
+
+        private bool GetInspireTheme(string serviceuuid)
+        {
+            SimpleMetadata metadata = MetadataService.FetchMetadata(serviceuuid);
+            var serviceType = metadata.ServiceType;
+            //var inspireKeywords = SimpleKeyword.Filter(metadata.Keywords, null, SimpleKeyword.THESAURUS_GEMET_INSPIRE_V1);
+
+            return serviceType == "view" || serviceType == "download";
+        }
+
+        private InspireDataService GetInspireDataServiceByUuid(string uuid)
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                where i.Uuid == uuid
+                select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        public InspireDataService UpdateInspireDataService(InspireDataService originalDataService, InspireDataService inspireDataServiceFromKartkatalogen)
+        {
+            originalDataService.Name = inspireDataServiceFromKartkatalogen.Name;
+            originalDataService.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataService.Name);
+            originalDataService.Description = inspireDataServiceFromKartkatalogen.Description;
+            originalDataService.OwnerId = inspireDataServiceFromKartkatalogen.OwnerId;
+            originalDataService.Modified = DateTime.Now;
+
+            originalDataService.Uuid = inspireDataServiceFromKartkatalogen.Uuid;
+            originalDataService.InspireDataType = inspireDataServiceFromKartkatalogen.InspireDataType;
+            
+            if (originalDataService.InspireDeliveryMetadata != null)
+            {
+                originalDataService.InspireDeliveryMetadata.StatusId =
+                    _datasetDeliveryService.GetMetadataStatus(inspireDataServiceFromKartkatalogen.Uuid, true,
+                        originalDataService.InspireDeliveryMetadata.StatusId);
+            }
+
+            originalDataService.InspireDeliveryMetadataInSearchService.StatusId = "good";
+
+            if (originalDataService.InspireDeliveryServiceStatus != null)
+            {
+                originalDataService.InspireDeliveryServiceStatus.StatusId =  _datasetDeliveryService.GetServiceStatus(inspireDataServiceFromKartkatalogen.Uuid, originalDataService.InspireDeliveryServiceStatus.StatusId);
+            }
+
+            originalDataService.Url = inspireDataServiceFromKartkatalogen.Url;
+            originalDataService.ServiceType = inspireDataServiceFromKartkatalogen.ServiceType;
+            originalDataService.Theme = inspireDataServiceFromKartkatalogen.Theme;
+
+            _dbContext.Entry(originalDataService).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return originalDataService;
+        }
+
+        public ICollection<InspireDataService> GetInspireDataService()
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                select i;
+
+            return queryResult.Any() ? queryResult.ToList() : new List<InspireDataService>();
+        }
+
+        public ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> inspireDataServices)
+        {
+            List<InspireDataServiceViewModel> inspireDataServiceViewModel = new List<InspireDataServiceViewModel>();
+            foreach (InspireDataService inspireDataService in inspireDataServices)
+            {
+                inspireDataServiceViewModel.Add(new InspireDataServiceViewModel(inspireDataService));
+            }
+
+            return inspireDataServiceViewModel;
+        }
+
+        public InspireDataService GetInspireDataServiceByName(string registername, string itemname)
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                where i.Seoname == itemname &&
+                      i.Register.seoname == registername
+                              select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        public InspireDataService GetInspireDataServiceById(Guid systemId)
+        {
+            var queryResult = from i in _dbContext.InspireDataServices
+                              where i.SystemId == systemId
+                              select i;
+
+            return queryResult.FirstOrDefault();
+        }
+
+        public InspireDataService UpdateInspireDataService(InspireDataService inspireDataService)
+        {
+            var originalInspireDataService = GetInspireDataServiceById(inspireDataService.SystemId);
+            originalInspireDataService.Requests = inspireDataService.Requests;
+
+            _dbContext.Entry(originalInspireDataService).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return originalInspireDataService;
         }
     }
 }

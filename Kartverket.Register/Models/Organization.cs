@@ -167,7 +167,16 @@ namespace Kartverket.Register.Models
             StatusConfirmationMunicipalDOK = statusDOKMunicipal;
             DateConfirmedMunicipalDOK = DateTime.Now;
         }
-    }
+
+        /// <summary>
+        /// Default organization is Kartverket
+        /// </summary>
+        /// <returns></returns>
+	    public static Guid GetDefaultOrganizationId()
+        {
+            return Guid.Parse("10087020-F17C-45E1-8542-02ACBCF3D8A3");
+        }
+	}
 
     public static class OrganizationType
     {

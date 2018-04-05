@@ -24,7 +24,7 @@ namespace Kartverket.Register.Models
         public int Requests { get; set; } // Manuelt
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
         public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
-        public bool NetworkService { get; set; } 
+        public string ServiceType { get; set; } 
 
         public string Uuid { get; set; }
         public bool GetSds()
@@ -32,6 +32,19 @@ namespace Kartverket.Register.Models
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";
         }
 
+        public bool IsNetworkService() {
+            return ServiceType == "view" || ServiceType == "download";
+        }
+
+        public bool IsView()
+        {
+            return ServiceType == "view";
+        }
+
+        public bool IsDownload()
+        {
+            return ServiceType == "download";
+        }
     }
 
 }

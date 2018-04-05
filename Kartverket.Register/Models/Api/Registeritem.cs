@@ -348,7 +348,7 @@ namespace Kartverket.Register.Models.Api
                 Requests = inspireDataService.Requests;
                 ServiceUrl = inspireDataService.Url;
                 InspireTheme = inspireDataService.Theme;
-                NetworkService = inspireDataService.NetworkService;
+                NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.GetSds();
                 UuidMetadata = inspireDataService.Uuid;
                 itemclass = "InspireDataService";

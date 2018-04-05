@@ -635,6 +635,7 @@ namespace Kartverket.Register.Services
             }
 
             originalDataService.Url = inspireDataServiceFromKartkatalogen.Url;
+            originalDataService.ServiceType = inspireDataServiceFromKartkatalogen.ServiceType;
             originalDataService.Theme = inspireDataServiceFromKartkatalogen.Theme;
 
             _dbContext.Entry(originalDataService).State = EntityState.Modified;

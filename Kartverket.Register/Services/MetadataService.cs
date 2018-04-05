@@ -511,7 +511,7 @@ namespace Kartverket.DOK.Service
                             : "Annen");
 
                     inspireDataService.Url = data.DistributionUrl;
-                    inspireDataService.NetworkService = IsNetworkService(data.ServiceType.ToString());
+                    inspireDataService.ServiceType = data.ServiceType.ToString();
 
                     inspireDataService.InspireDataType = data.DistributionDetails.ProtocolName;
                 }

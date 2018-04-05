@@ -196,8 +196,8 @@ namespace Kartverket.Register.Services.RegisterItem
             if (registerItem != null)
             {
                 var queryResultVersions = from r in _dbContext.RegisterItems
-                                      where r.versioningId == registerItem.versioningId
-                                      select r;
+                                          where r.versioningId == registerItem.versioningId
+                                          select r;
                 versions = queryResultVersions.ToList();
             }
             return versions;
@@ -393,7 +393,7 @@ namespace Kartverket.Register.Services.RegisterItem
             }
             if (model is GeodatalovDataset)
             {
-                return GeodatalovDatasetNameAlreadyExist((GeodatalovDataset) model);
+                return GeodatalovDatasetNameAlreadyExist((GeodatalovDataset)model);
             }
             return false;
         }
@@ -402,10 +402,10 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (geodatalovDataset == null) throw new ArgumentNullException(nameof(geodatalovDataset));
             var queryResults = from o in _dbContext.GeodatalovDatasets
-                where o.Name == geodatalovDataset.Name &&
-                      o.SystemId != geodatalovDataset.SystemId
-                      && o.RegisterId == geodatalovDataset.RegisterId
-                select o.SystemId;
+                               where o.Name == geodatalovDataset.Name &&
+                                     o.SystemId != geodatalovDataset.SystemId
+                                     && o.RegisterId == geodatalovDataset.RegisterId
+                               select o.SystemId;
 
             return queryResults.Any();
         }
@@ -425,10 +425,10 @@ namespace Kartverket.Register.Services.RegisterItem
         {
             if (inspireDataset == null) throw new ArgumentNullException(nameof(inspireDataset));
             var queryResults = from o in _dbContext.InspireDatasets
-                where o.Name == inspireDataset.Name &&
-                      o.SystemId != inspireDataset.SystemId
-                      && o.RegisterId == inspireDataset.RegisterId
-                select o.SystemId;
+                               where o.Name == inspireDataset.Name &&
+                                     o.SystemId != inspireDataset.SystemId
+                                     && o.RegisterId == inspireDataset.RegisterId
+                               select o.SystemId;
 
             return queryResults.Any();
         }
@@ -723,13 +723,13 @@ namespace Kartverket.Register.Services.RegisterItem
                     // InspireDataset
                     case "inspiretheme":
                         {
-                        var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspiretheme_desc":
                         {
-                        var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadata_status":
                         {
@@ -824,85 +824,85 @@ namespace Kartverket.Register.Services.RegisterItem
 
                     // InspireDataService
                     case "inspire_theme_status":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Theme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Theme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_theme_status_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Theme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Theme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_serviceType":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDataType).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDataType).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_serviceType_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDataType).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDataType).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "request":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Requests).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Requests).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "request_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Requests).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Requests).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "sds":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Sds).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Sds).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "sds_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Sds).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Sds).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "networkService":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.NetworkService).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.NetworkService).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "networkService_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.NetworkService).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.NetworkService).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspireService_metadata_status":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspireService_metadata_status_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_metadataSearchService_status":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_metadataSearchService_status_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadataInSearchService.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_service_status":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_service_status_desc":
-                    {
-                        var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryServiceStatus.Status.description).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
 
                     // GeodatalovDataset
                     case "geodatalov_metadata_status":
@@ -986,55 +986,55 @@ namespace Kartverket.Register.Services.RegisterItem
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "inspire_desc":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "dok":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Dok).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Dok).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "dok_desc":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Dok).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Dok).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "nationalt_dataset":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.NationalDataset).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.NationalDataset).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "nationalt_dataset_desc":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.NationalDataset).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.NationalDataset).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "plan":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Plan).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Plan).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "plan_desc":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Plan).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Plan).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "geodatalov":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Geodatalov).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderBy(o => o.Geodatalov).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                     case "geodatalov_desc":
-                    {
-                        var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Geodatalov).ToList();
-                        return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
-                    }
+                        {
+                            var sortedList = registerItems.OfType<GeodatalovDatasetViewModel>().OrderByDescending(o => o.Geodatalov).ToList();
+                            return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
+                        }
                 }
             }
             return registerItems.OrderBy(o => o.Name).ToList();
@@ -1140,7 +1140,7 @@ namespace Kartverket.Register.Services.RegisterItem
                             redirect = redirect + "&inspireRegistryTab=" + inspireRegistryTab;
                             shallRedirect = true;
                         }
-                        
+
 
                         if (shallRedirect)
                         {
@@ -1583,8 +1583,8 @@ namespace Kartverket.Register.Services.RegisterItem
         public string GetDistributionType(string codeValue)
         {
             var queryResults = from d in _dbContext.CodelistValues
-                where d.value == codeValue
-                select d.name;
+                               where d.value == codeValue
+                               select d.name;
 
             return queryResults.FirstOrDefault();
         }
@@ -1597,7 +1597,7 @@ namespace Kartverket.Register.Services.RegisterItem
                 {
                     RemoveBroaderAndNarrower(codelistValue);
                 }
-                    _dbContext.RegisterItems.Remove(registerItem);
+                _dbContext.RegisterItems.Remove(registerItem);
             }
         }
 
@@ -1626,8 +1626,8 @@ namespace Kartverket.Register.Services.RegisterItem
         public void DeleteCoverageByDatasetId(Guid datasetSystemId)
         {
             var queryResult = from c in _dbContext.CoverageDatasets
-                where c.DatasetId == datasetSystemId
-                select c;
+                              where c.DatasetId == datasetSystemId
+                              select c;
 
             var coverages = queryResult.ToList();
             foreach (var coverage in coverages)
@@ -1640,10 +1640,31 @@ namespace Kartverket.Register.Services.RegisterItem
         public Guid GetOrganizationByName(string organizationName)
         {
             var queryResult = from c in _dbContext.Organizations
-                where c.name == organizationName
+                              where c.name == organizationName
                               select c.systemId;
 
             return queryResult.Any() ? queryResult.FirstOrDefault() : Organization.GetDefaultOrganizationId();
+        }
+
+        public Models.Register GetInspireStatusRegisterItems(Models.Register register)
+        {
+            if (register.RegisterItems.Any())
+            {
+                var registerItems = new List<Models.RegisterItemV2>();
+                foreach (var item in register.RegisterItems)
+                {
+                    if (item is InspireDataset inspireDataset)
+                    {
+                        registerItems.Add(inspireDataset);
+                    }
+                    else if (item is InspireDataService inspireDataService)
+                    {
+                        registerItems.Add(inspireDataService);
+                    }
+                }
+                register.RegisterItems = registerItems;
+            }
+            return register;
         }
     }
 }

@@ -67,5 +67,6 @@ namespace Kartverket.Register.Services.RegisterItem
         /// <param name="organizationName"></param>
         /// <returns></returns>
         Guid GetOrganizationByName(string organizationName);
+        Models.Register GetInspireStatusRegisterItems(Models.Register register);
     }
 }

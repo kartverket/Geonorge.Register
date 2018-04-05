@@ -1,9 +1,7 @@
-﻿using Resources;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
-using System.Web.Mvc;
 
 namespace Kartverket.Register.Models.ViewModels
 {

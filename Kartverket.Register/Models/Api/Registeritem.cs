@@ -9,6 +9,7 @@ using Kartverket.Register.Models.Translations;
 using Kartverket.Register.Helpers;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Models.Api
 {
@@ -173,6 +174,8 @@ namespace Kartverket.Register.Models.Api
         public bool? restricted { get; set; }
         [DataMemberAttribute]
         public string DatasetType { get; set; }
+        [DataMemberAttribute]
+        public string UuidMetadata { get; set; }
 
         //MunicipalDataset
         [DataMemberAttribute]
@@ -218,6 +221,17 @@ namespace Kartverket.Register.Models.Api
         [DataMemberAttribute]
         public string SpatialDataServiceStatus { get; set; }
 
+        // InspireDataService
+        [DataMemberAttribute]
+        public string InspireDataType { get; set; }
+        public string MetadataInSearchServiceStatus { get; set; }
+        public string ServiceStatus { get; set; }
+        public int Requests { get; set; }
+        public string ServiceUrl { get; set; }
+        public string InspireTheme { get; set; }
+        public bool NetworkService { get; set; }
+        public bool Sds { get; set; }
+
         // GeodatalovDataset
         [DataMemberAttribute]
         public string CommonStatus { get; set; }
@@ -239,7 +253,6 @@ namespace Kartverket.Register.Models.Api
                 label = registerItem.name;
                 lang = CultureHelper.GetCurrentCulture();
                 lastUpdated = registerItem.modified;
-                itemclass = registerItem.register.containedItemClass;
                 if (registerItem.submitter != null) owner = registerItem.submitter.name;
                 if (registerItem.status != null)
                 {
@@ -285,6 +298,7 @@ namespace Kartverket.Register.Models.Api
                 if (datasetV2.Theme != null) theme = datasetV2.Theme.description;
                 if (datasetV2.DokStatusDateAccepted != null) dateAccepted = datasetV2.DokStatusDateAccepted.Value;
                 MetadataUrl = datasetV2.MetadataUrl;
+                UuidMetadata = datasetV2.Uuid;
             }
             if (item is Models.InspireDataset inspireDataset)
             {
@@ -324,6 +338,21 @@ namespace Kartverket.Register.Models.Api
                 {
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
+            }
+            if (item is InspireDataService inspireDataService)
+            {
+                InspireDataType = inspireDataService.InspireDataType;
+                MetadataStatus = inspireDataService.InspireDeliveryMetadata.Status.description;
+                MetadataInSearchServiceStatus = inspireDataService.InspireDeliveryMetadataInSearchService.Status.description;
+                ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.description;
+                Requests = inspireDataService.Requests;
+                ServiceUrl = inspireDataService.Url;
+                InspireTheme = inspireDataService.Theme;
+                NetworkService = inspireDataService.NetworkService;
+                Sds = inspireDataService.GetSds();
+                UuidMetadata = inspireDataService.Uuid;
+                itemclass = "InspireDataService";
+                MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + UuidMetadata;
             }
             if (item is GeodatalovDataset geodatalovDataset)
             {
@@ -432,7 +461,7 @@ namespace Kartverket.Register.Models.Api
                 if (d.dokStatusDateAccepted != null) dokStatusDateAccepted = d.dokStatusDateAccepted;
                 if (d.Kandidatdato != null) Kandidatdato = d.Kandidatdato;
                 if (d.DatasetType != null) DatasetType = d.DatasetType;
-                dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted :  d.dokDeliveryMetadataStatus.description;
+                dokDeliveryMetadataStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryMetadataStatus.description;
                 dokDeliveryProductSheetStatus = (d.restricted != null && d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryProductSheetStatus.description;
                 dokDeliveryPresentationRulesStatus = (d.restricted.HasValue && d.restricted == true) ? DataSet.DOK_Delivery_Restricted : d.dokDeliveryPresentationRulesStatus.description;
 

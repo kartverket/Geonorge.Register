@@ -45,6 +45,11 @@ namespace Kartverket.Register.Models
         {
             return ServiceType == "download";
         }
+
+        public bool HaveMetadata()
+        {
+            return InspireDeliveryMetadata.IsSet();
+        }
     }
 
 }

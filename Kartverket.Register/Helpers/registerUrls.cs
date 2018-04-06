@@ -1,17 +1,50 @@
-﻿using Kartverket.Register.Models;
-using Kartverket.Register.Models.Translations;
-using System;
-using System.Collections.Generic;
+﻿using Kartverket.Register.Models.Translations;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Kartverket.Register.Helpers
 {
     public static class RegisterUrls
     {
+
+        /// <summary>
+        /// Add parameters from current url
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="parameter"></param>
+        /// <param name="parameterValue"></param>
+        /// <returns></returns>
+        public static RouteValueDictionary ToRouteValueDictionary(this NameValueCollection collection, string parameter, string parameterValue)
+        {
+            NameValueCollection nc = new NameValueCollection {{ parameter, parameterValue }};
+
+            var routeValueDictionary = new RouteValueDictionary();
+            foreach (var key in collection.AllKeys)
+            {
+                if (key == "page")
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                else
+                {
+                    routeValueDictionary.Add(key, collection[key]);
+                }
+            }
+            foreach (var key in nc.AllKeys)
+            {
+                if (routeValueDictionary.ContainsKey(key))
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                routeValueDictionary.Add(key, nc[key]);
+            }
+            return routeValueDictionary;
+        }
 
         public static string GeonorgeUrl(this HtmlHelper helper)
         {

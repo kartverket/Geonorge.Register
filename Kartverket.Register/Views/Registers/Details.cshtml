@@ -82,14 +82,14 @@
             <div class="col-sm-12 col-md-12 ">
                 @if (Model.ContainedItemClassIsInspireDataset())
                 {
-                    <ul id="tabs" class="nav nav-tabs">
-                        <li id="dataset-Tab" class="tab active">
-                            @Html.ActionLink("Dataset", "Details", new { InspireRegisteryType = "dataset" })
-                        </li>
-                        <li id="service-Tab" class="tab">
-                            @Html.ActionLink("Tjenester", "Details", new { InspireRegisteryType = "service" })
-                        </li>
-                    </ul>
+                <ul id="tabs" class="nav nav-tabs">
+                    <li id="dataset-Tab" class="tab active">
+                        @Html.ActionLink("Dataset", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
+                    </li>
+                    <li id="service-Tab" class="tab">
+                        @Html.ActionLink("Tjenester", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
+                    </li>
+                </ul>
                 }
             </div>
         </div>

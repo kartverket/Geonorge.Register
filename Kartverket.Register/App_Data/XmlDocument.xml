@@ -800,6 +800,15 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Helpers.RegisterUrls.ToRouteValueDictionary(System.Collections.Specialized.NameValueCollection,System.String,System.String)">
+            <summary>
+            Add parameters from current url
+            </summary>
+            <param name="collection"></param>
+            <param name="parameter"></param>
+            <param name="parameterValue"></param>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Helpers.RegisterUrls.MakeSeoFriendlyDocumentName(System.Web.HttpPostedFileBase,System.String@,System.String@)">
             <summary>
             Makes an SEO friendly document name

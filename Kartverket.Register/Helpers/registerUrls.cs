@@ -19,9 +19,13 @@ namespace Kartverket.Register.Helpers
         /// <param name="parameter"></param>
         /// <param name="parameterValue"></param>
         /// <returns></returns>
-        public static RouteValueDictionary ToRouteValueDictionary(this NameValueCollection collection, string parameter, string parameterValue)
+        public static RouteValueDictionary ToRouteValueDictionary(this NameValueCollection collection, string parameter = null, string parameterValue = null)
         {
-            NameValueCollection nc = new NameValueCollection {{ parameter, parameterValue }};
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            if (!string.IsNullOrWhiteSpace(parameter) && !string.IsNullOrWhiteSpace(parameterValue))
+            {
+                nameValueCollection.Add(parameter, parameterValue);
+            }
 
             var routeValueDictionary = new RouteValueDictionary();
             foreach (var key in collection.AllKeys)
@@ -35,13 +39,13 @@ namespace Kartverket.Register.Helpers
                     routeValueDictionary.Add(key, collection[key]);
                 }
             }
-            foreach (var key in nc.AllKeys)
+            foreach (var key in nameValueCollection.AllKeys)
             {
                 if (routeValueDictionary.ContainsKey(key))
                 {
                     routeValueDictionary.Remove(key);
                 }
-                routeValueDictionary.Add(key, nc[key]);
+                routeValueDictionary.Add(key, nameValueCollection[key]);
             }
             return routeValueDictionary;
         }

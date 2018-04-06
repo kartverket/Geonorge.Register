@@ -609,6 +609,7 @@ namespace Kartverket.Register.Controllers
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
             ViewBag.InspireRegisteryType = filter.InspireRegisteryType;
+            ViewBag.text = filter.text;
         }
 
         private static bool Search(FilterParameters filter)

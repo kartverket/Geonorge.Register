@@ -25,8 +25,12 @@ namespace Kartverket.Register.Models
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
         public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
         public string ServiceType { get; set; } 
-
         public string Uuid { get; set; }
+        [Display(Name = "Areal")]
+        public int Area { get; set; }
+        [Display(Name = "Relevant areal")]
+        public int RelevantArea { get; set; }
+
         public bool GetSds()
         {
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";

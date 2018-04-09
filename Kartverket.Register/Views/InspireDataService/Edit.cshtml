@@ -53,6 +53,13 @@
             @Html.ValidationMessage("ErrorMessage")
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Conformity, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Conformity, new { htmlAttributes = new { @class = "" } })
+            @Html.ValidationMessage("ErrorMessage")
+        </div>
+    </div>
 </div>
 
     <div class="row">

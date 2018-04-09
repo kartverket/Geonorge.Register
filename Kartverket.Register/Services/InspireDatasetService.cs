@@ -688,6 +688,7 @@ namespace Kartverket.Register.Services
             originalInspireDataService.Requests = inspireDataService.Requests;
             originalInspireDataService.Area = inspireDataService.Area;
             originalInspireDataService.RelevantArea = inspireDataService.RelevantArea;
+            originalInspireDataService.Conformity = inspireDataService.Conformity;
 
             _dbContext.Entry(originalInspireDataService).State = EntityState.Modified;
             _dbContext.SaveChanges();

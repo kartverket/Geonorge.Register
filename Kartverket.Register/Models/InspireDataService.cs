@@ -31,6 +31,8 @@ namespace Kartverket.Register.Models
         [Display(Name = "Relevant areal")]
         public int RelevantArea { get; set; }
 
+        public bool Conformity { get; set; }
+
         public bool GetSds()
         {
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";

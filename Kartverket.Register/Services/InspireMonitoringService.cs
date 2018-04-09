@@ -15,21 +15,21 @@ namespace Kartverket.Register.Services
             var monitoring = new Monitoring();
             monitoring.documentYear = GetReportingDate();
             monitoring.memberState = CountryCode.NO;
-            monitoring.RowData = MappingRowData(inspireStatusRegister.RegisterItems);
             monitoring.MonitoringMD = MappingMonitoringMd(inspireStatusRegister);
+            monitoring.RowData = MappingRowData(inspireStatusRegister.RegisterItems);
             monitoring.Indicators = MappingIndicators(inspireStatusRegister.RegisterItems, monitoring.RowData);
 
             return monitoring;
         }
 
-        private Indicators MappingIndicators(ICollection<RegisterItemV2> inspireDatasets, RowData rowData)
+        private Indicators MappingIndicators(ICollection<RegisterItemV2> inspireItems, RowData rowData)
         {
             Indicators indicators = new Indicators();
 
             indicators.NnConformityIndicators = new NnConformityIndicators();
             indicators.GeoCoverageIndicators = new GeoCoverageIndicators();
-            indicators.UseNNindicators = new UseNNindicators();
-            indicators.MetadataExistenceIndicators = GetMetadataExsistensIndicators(inspireDatasets);
+            indicators.UseNNindicators = GetUseNNindicators(inspireItems);
+            indicators.MetadataExistenceIndicators = GetMetadataExsistensIndicators(inspireItems);
             indicators.DiscoveryMetadataIndicators = new DiscoveryMetadataIndicators();
             indicators.ViewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
             indicators.SpatialDataAndService = GetSpatialDataAndService(rowData);
@@ -37,6 +37,79 @@ namespace Kartverket.Register.Services
             indicators.SdsConformantIndicators = new SdsConformantIndicators();
 
             return indicators;
+        }
+
+        private UseNNindicators GetUseNNindicators(ICollection<RegisterItemV2> inspireItems)
+        {
+            UseNNindicators useNNindicators = new UseNNindicators();
+            useNNindicators.NSi31 = AverageNumberOfCallsByServiceType(inspireItems, "discovery"); // Gjennomsnittlig antall kall for NnServiceType="discovery" (<NSv31>/<NSv_NumDiscServ>)
+            useNNindicators.NSi32 = AverageNumberOfCallsByServiceType(inspireItems, "view"); // Gjennomsnittlig antall kall for NnServiceType="view"(<NSv32>/<NSv_NumViewServ>)
+            useNNindicators.NSi33 = AverageNumberOfCallsByServiceType(inspireItems, "download"); // Gjennomsnittlig antall kall for NnServiceType="download" (<NSv33>/<NSv_NumDownServ>)
+            useNNindicators.NSi34 = AverageNumberOfCallsByServiceType(inspireItems, "transformation"); // Gjennomsnittlig antall kall for NnServiceType="transformation" (<NSv34>/<NSv_NumTransfServ>)
+            useNNindicators.NSi35 = AverageNumberOfCallsByServiceType(inspireItems, "invoke"); // Gjennomsnittlig antall kall for NnServiceType="invoke" (<NSv35>/<NSv_NumInvkServ>)
+            useNNindicators.NSi3 = NumberOfCallsByServiceTypeWhereConformityIsTrue(inspireItems); //Gjennomsnittlig antall kall for NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv3>/<
+            useNNindicators.UseNN = GetUseNN(inspireItems);
+
+            return useNNindicators;
+        }
+
+        private UseNN GetUseNN(ICollection<RegisterItemV2> inspireItems)
+        {
+            UseNN useNN = new UseNN();
+            useNN.NSv31 = NumberOfCallsByServiceType(inspireItems, "discovery"); // Akkumulert antall kall for alle NnServiceType="discovery" 
+            useNN.NSv32 = NumberOfCallsByServiceType(inspireItems, "view"); // Akkumulert antall kall for alle NnServiceType="view"
+            useNN.NSv33 = NumberOfCallsByServiceType(inspireItems, "download"); // Akkumulert antall kall for alle NnServiceType="download"
+            useNN.NSv34 = NumberOfCallsByServiceType(inspireItems, "transformation"); // Akkumulert antall kall for alle NnServiceType="transformation"
+            useNN.NSv35 = NumberOfCallsByServiceType(inspireItems, "invoke"); // Akkumulert antall kall for alle NnServiceType="invoke"
+            useNN.NSv3 = NumberOfCallsByServiceType(inspireItems); // Akkumulert antall kall for alle NnServiceType="discovery + view + download + transformation + invoke"
+
+            return useNN;
+        }
+
+        private int NumberOfCallsByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems)
+        {
+            int numberOfCalls = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.Conformity)
+                    {
+                        numberOfCalls = inspireDataService.Requests;
+                    }
+                }
+            }
+            return numberOfCalls;
+        }
+
+        private int NumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfCalls = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (string.IsNullOrWhiteSpace(serviceType))
+                    {
+                            numberOfCalls += inspireDataService.Requests;
+                    }
+                    else
+                    {
+                        if (inspireDataService.ServiceType == serviceType)
+                        {
+                            numberOfCalls += inspireDataService.Requests;
+                        }
+                    }
+                }
+            }
+            return numberOfCalls;
+        }
+
+        private double AverageNumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfCalls = NumberOfCallsByServiceType(inspireItems, serviceType);
+            var averageNumberOfCalls = numberOfCalls / inspireItems.Count;
+            return averageNumberOfCalls;
         }
 
         private Date GetReportingDate()
@@ -287,5 +360,6 @@ namespace Kartverket.Register.Services
 
             return spatialDataServiceList;
         }
+
     }
 }

@@ -26,7 +26,7 @@ namespace Kartverket.Register.Controllers
         {
             _geodatalovDatasetService = geodatalovDatasetService;
             _accessControlService = accessControllService;
-            _metadataService = new MetadataService();
+            _metadataService = new MetadataService(_db);
             _registerService = registerService;
             _registerItemService = registerItemService;
             _datasetDeliveryService = datasetDeliveryService;

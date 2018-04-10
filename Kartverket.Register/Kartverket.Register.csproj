@@ -807,6 +807,14 @@
     <Compile Include="Migrations\201804091242083_AddConformity.Designer.cs">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.cs" />
+    <Compile Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.Designer.cs">
+      <DependentUpon>201804101223315_AddInspireThemeAsCodelistValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.cs" />
+    <Compile Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.Designer.cs">
+      <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1935,6 +1943,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804091242083_AddConformity.resx">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.resx">
+      <DependentUpon>201804101223315_AddInspireThemeAsCodelistValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.resx">
+      <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

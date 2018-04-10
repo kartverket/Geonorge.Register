@@ -24,7 +24,7 @@ namespace Kartverket.Register.Controllers
         public InspireDatasetsController(IInspireDatasetService inspireDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IDatasetDeliveryService datasetDeliveryService, IRegisterItemService registerItemService) {
             _inspireDatasetService = inspireDatasetService;
             _accessControlService = accessControllService;
-            _metadataService = new MetadataService();
+            _metadataService = new MetadataService(_db);
             _registerService = registerService;
             _datasetDeliveryService = datasetDeliveryService;
             _registerItemService = registerItemService;

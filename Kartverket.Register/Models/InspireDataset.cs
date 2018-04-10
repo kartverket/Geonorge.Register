@@ -7,8 +7,11 @@ namespace Kartverket.Register.Models
 {
     public class InspireDataset : DatasetV2
     {
-        //Inspire delivery statuses
-        public string InspireTheme { get; set; }
+
+        [ForeignKey("InspireTheme")]
+        public Guid? InspireThemeId { get; set; }
+        [Display(Name = "Inspiretema:")]
+        public virtual CodelistValue InspireTheme{ get; set; }
 
         //Metadata
         [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]
@@ -58,6 +61,24 @@ namespace Kartverket.Register.Models
         public bool HaveMetadata()
         {
             return InspireDeliveryMetadata.IsSet();
+        }
+
+        public bool IsAnnex3()
+        {
+            //TODO
+            return false;
+        }
+
+        public bool IsAnnex2()
+        {
+            //TODO
+            return false;
+        }
+
+        public bool IsAnnex1()
+        {
+            //TODO
+            return false;
         }
     }
 

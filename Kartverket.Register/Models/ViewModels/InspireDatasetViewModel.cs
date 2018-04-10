@@ -8,7 +8,7 @@ namespace Kartverket.Register.Models.ViewModels
     public class InspireDatasetViewModel : DatasetViewModel
     {
         [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
-        public string InspireTheme { get; set; }
+        public CodelistValue InspireTheme { get; set; }
 
         [Display(Name = "Metadata:")]
         public string MetadataStatusId { get; set; }
@@ -161,6 +161,14 @@ namespace Kartverket.Register.Models.ViewModels
                 return "/inspire/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
             }
             return "/inspire/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+        }
+
+        public string InspireThemeName() {
+            if (InspireTheme != null)
+            {
+                return InspireTheme.NameTranslated();
+            }
+            return "";
         }
     }
 }

@@ -302,7 +302,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
-            new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();
             return Ok();
         }

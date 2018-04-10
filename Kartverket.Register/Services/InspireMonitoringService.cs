@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using Eu.Europa.Ec.Jrc.Inspire;
-using Kartverket.DOK.Service;
 using Kartverket.Register.Models;
-using Microsoft.Ajax.Utilities;
 using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services
 {
     public class InspireMonitoringService : IInspireMonitoringService
     {
+        private readonly RegisterDbContext _dbContext;
+
+        public InspireMonitoringService(RegisterDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public Monitoring Mapping(Models.Register inspireStatusRegister)
         {
             var monitoring = new Monitoring();
@@ -218,9 +223,10 @@ namespace Kartverket.Register.Services
         private SpatialDataAndService GetSpatialDataAndService(ICollection<RegisterItemV2> inspireItems)
         {
             SpatialDataAndService spatialDataAndService = new SpatialDataAndService();
-            spatialDataAndService.DSv_Num1 = 0; // Totalt antall datasett for  annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
-            spatialDataAndService.DSv_Num2 = 0; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
-            spatialDataAndService.DSv_Num3 = 0; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
+
+            spatialDataAndService.DSv_Num1 = NumberOfDatasetsByAnnexI(inspireItems); // Totalt antall datasett for  annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
+            spatialDataAndService.DSv_Num2 = NumberOfDatasetsByAnnexII(inspireItems); // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
+            spatialDataAndService.DSv_Num3 = NumberOfDatasetsByAnnexIII(inspireItems); // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
             spatialDataAndService.SDSv_Num = NumberOfSdS(inspireItems); // Totalt antall tjenester SDS
             spatialDataAndService.NSv_NumDiscServ = NumberOfServicesByServiceType(inspireItems, "discovery"); // Antall NnServiceType="discovery"
             spatialDataAndService.NSv_NumViewServ = NumberOfServicesByServiceType(inspireItems, "view"); // Antall NnServiceType="view"
@@ -231,6 +237,57 @@ namespace Kartverket.Register.Services
 
             return spatialDataAndService;
         }
+
+        private int NumberOfDatasetsByAnnexIII(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexIII = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (IsAnnexIII(inspireDataset.InspireTheme))
+                    {
+                        numberOfDatasetsByAnnexIII++;
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexIII;
+        }
+
+
+
+        private int NumberOfDatasetsByAnnexII(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexII = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (IsAnnexII(inspireDataset.InspireTheme))
+                    {
+                        numberOfDatasetsByAnnexII++;
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexII;
+        }
+
+        private int NumberOfDatasetsByAnnexI(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexI = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (IsAnnexI(inspireDataset.InspireTheme))
+                    {
+                        numberOfDatasetsByAnnexI++;
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexI;
+        }
+
 
         private int NumberOfSdS(ICollection<RegisterItemV2> inspireItems)
         {
@@ -389,7 +446,7 @@ namespace Kartverket.Register.Services
             spatialDataset.name = inspireDataset.Name;
             spatialDataset.respAuthority = inspireDataset.Owner.shortname;
             spatialDataset.uuid = inspireDataset.SystemId.ToString();
-            spatialDataset.Themes = MappingThemes(inspireDataset.InspireTheme);
+            spatialDataset.Themes = GetThemes(inspireDataset.InspireTheme);
             spatialDataset.Coverage = MappingCoverage();
             spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
             return spatialDataset;
@@ -426,21 +483,89 @@ namespace Kartverket.Register.Services
             return coverage;
         }
 
-        private Themes[] MappingThemes(string inspireTheme)
+        private Themes[] GetThemes(CodelistValue inspireTheme)
         {
-            // TODO få tak i riktig theme...
             var themes = new Themes();
+            List<AnnexI> annexiListI = AnnexIList(inspireTheme);
+            List<AnnexII> annexiListII = AnnexIIList(inspireTheme);
+            List<AnnexIII> annexiListIII = AnnexIIIList(inspireTheme);
+
+            themes.AnnexI = annexiListI.ToArray();
+            themes.AnnexII = annexiListII.ToArray();
+            themes.AnnexIII = annexiListIII.ToArray();
+
             var themesArray = new[] { themes };
 
-            var annexiList = new List<AnnexI>();
-            if (inspireTheme == "Hydrografi")
-            {
-                annexiList.Add(AnnexI.hydrography);
-            }
-
-            themes.AnnexI = annexiList.ToArray();
-
             return themesArray;
+        }
+
+        private List<AnnexI> AnnexIList(CodelistValue inspireTheme)
+        {
+            var annexIList = new List<AnnexI>();
+            if (inspireTheme != null)
+            {
+                if (IsAnnexI(inspireTheme))
+                {
+                    AnnexI annexI = (AnnexI)Enum.Parse(typeof(AnnexI), inspireTheme.value);
+                    annexIList.Add(annexI);
+                }
+            }
+            return annexIList;
+        }
+
+        private static bool IsAnnexI(CodelistValue inspireTheme)
+        {
+            if (inspireTheme != null)
+            {
+                return Enum.IsDefined(typeof(AnnexI), inspireTheme.value);
+            }
+            return false;
+        }
+
+        private List<AnnexII> AnnexIIList(CodelistValue inspireTheme)
+        {
+            var annexIIList = new List<AnnexII>();
+            if (inspireTheme != null)
+            {
+                if (IsAnnexII(inspireTheme))
+                {
+                    AnnexII annexII = (AnnexII)Enum.Parse(typeof(AnnexII), inspireTheme.value);
+                    annexIIList.Add(annexII);
+                }
+            }
+            return annexIIList;
+        }
+
+        private static bool IsAnnexII(CodelistValue inspireTheme)
+        {
+            if (inspireTheme != null)
+            {
+                return Enum.IsDefined(typeof(AnnexII), inspireTheme.value);
+            }
+            return false;
+        }
+
+        private List<AnnexIII> AnnexIIIList(CodelistValue inspireTheme)
+        {
+            var annexIIIList = new List<AnnexIII>();
+            if (inspireTheme != null)
+            {
+                if (IsAnnexIII(inspireTheme))
+                {
+                    AnnexIII annexIII = (AnnexIII)Enum.Parse(typeof(AnnexIII), inspireTheme.value);
+                    annexIIIList.Add(annexIII);
+                }
+            }
+            return annexIIIList;
+        }
+
+        private static bool IsAnnexIII(CodelistValue inspireTheme)
+        {
+            if (inspireTheme != null)
+            {
+                return Enum.IsDefined(typeof(AnnexIII), inspireTheme.value);
+            }
+            return false;
         }
 
         public List<SpatialDataService> FetchRelatedServicesFromKartkatalogen(string uuid)
@@ -479,6 +604,8 @@ namespace Kartverket.Register.Services
 
             return spatialDataServiceList;
         }
+
+
 
     }
 }

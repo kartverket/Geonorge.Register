@@ -12,6 +12,7 @@ using Kartverket.Register.Services.Register;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services.RegisterItem;
+using System.Web.Http.ModelBinding;
 
 namespace Kartverket.Register.Services
 {
@@ -31,7 +32,7 @@ namespace Kartverket.Register.Services
             _registerService = new RegisterService(_dbContext);
             _registerItemService = new RegisterItemService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
-            _metadataService = new MetadataService();
+            _metadataService = new MetadataService(_dbContext);
         }
 
         public InspireDataset NewInspireDataset(InspireDatasetViewModel inspireDatasetViewModel, string parentregister, string registername)
@@ -195,7 +196,7 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
 
-            inspireDataset.InspireTheme = viewModel.InspireTheme;
+            //inspireDataset.InspireTheme = viewModel.InspireTheme;
             if (inspireDataset.InspireDeliveryMetadata != null)
             {
                 inspireDataset.InspireDeliveryMetadata.StatusId = viewModel.MetadataStatusId;
@@ -287,7 +288,11 @@ namespace Kartverket.Register.Services
             originalDataset.DatasetThumbnail = inspireDatasetFromKartkatalogen.DatasetThumbnail;
             originalDataset.UuidService = inspireDatasetFromKartkatalogen.UuidService;
 
-            originalDataset.InspireTheme = inspireDatasetFromKartkatalogen.InspireTheme;
+            if (inspireDatasetFromKartkatalogen.InspireThemeId != Guid.Empty)
+            {
+                originalDataset.InspireThemeId = inspireDatasetFromKartkatalogen.InspireThemeId;
+            }
+
             if (originalDataset.InspireDeliveryMetadata != null)
             {
                 originalDataset.InspireDeliveryMetadata.StatusId =
@@ -344,6 +349,7 @@ namespace Kartverket.Register.Services
             }
 
             _dbContext.Entry(originalDataset).State = EntityState.Modified;
+
             _dbContext.SaveChanges();
 
             return originalDataset;

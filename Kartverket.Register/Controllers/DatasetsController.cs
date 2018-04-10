@@ -357,7 +357,7 @@ namespace Kartverket.Register.Controllers
 
         private SearchResultsType SearchMetadataFromKartkatalogen(string searchString)
         {
-            SearchResultsType result = new MetadataService().SearchMetadata(searchString);
+            SearchResultsType result = new MetadataService(db).SearchMetadata(searchString);
             return result;
         }
 
@@ -436,7 +436,7 @@ namespace Kartverket.Register.Controllers
             var model = new Dataset();
             try
             {
-                model = new MetadataService().UpdateDatasetWithMetadata(dataset, uuid, dataset, dontUpdateDescription);
+                model = new MetadataService(db).UpdateDatasetWithMetadata(dataset, uuid, dataset, dontUpdateDescription);
             }
             catch (Exception e)
             {

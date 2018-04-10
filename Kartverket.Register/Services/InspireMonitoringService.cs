@@ -43,38 +43,61 @@ namespace Kartverket.Register.Services
         {
             NnConformityIndicators nnConformityIndicators = new NnConformityIndicators();
             nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems, "discovery"); // Andel av tjenester NnServiceType="discovery" som har nnConformity="true"(<NSv41>/<NSv_NumDiscServ>)
-            nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems, "view"); // Andel av tjenester NnServiceType="view" som har nnConformity="true" (<NSv42>/<NSv_NumViewServ>)
-            nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems, "download"); // Andel av tjenester NnServiceType="download" som har nnConformity="true" (<NSv43>/<NSv_NumDownServ>)
-            nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems, "transformation"); // Andel av tjenester NnServiceType="transformation" som har nnConformity="true" (<NSv44>/<NSv_NumTransfServ>)
-            nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems, "invoke"); // Andel av tjenester NnServiceType="invoke" som har nnConformity="true" (<NSv45>/<NSv_NumInvkServ>)
-            nnConformityIndicators.NSi41 = ProportionOfServicesWithConformityTrue(inspireItems); // Andel av tjenester NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv4>/<NSv_NumAllServ>)
+            nnConformityIndicators.NSi42 = ProportionOfServicesWithConformityTrue(inspireItems, "view"); // Andel av tjenester NnServiceType="view" som har nnConformity="true" (<NSv42>/<NSv_NumViewServ>)
+            nnConformityIndicators.NSi43 = ProportionOfServicesWithConformityTrue(inspireItems, "download"); // Andel av tjenester NnServiceType="download" som har nnConformity="true" (<NSv43>/<NSv_NumDownServ>)
+            nnConformityIndicators.NSi44 = ProportionOfServicesWithConformityTrue(inspireItems, "transformation"); // Andel av tjenester NnServiceType="transformation" som har nnConformity="true" (<NSv44>/<NSv_NumTransfServ>)
+            nnConformityIndicators.NSi45 = ProportionOfServicesWithConformityTrue(inspireItems, "invoke"); // Andel av tjenester NnServiceType="invoke" som har nnConformity="true" (<NSv45>/<NSv_NumInvkServ>)
+            nnConformityIndicators.NSi4 = ProportionOfServicesWithConformityTrue(inspireItems); // Andel av tjenester NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv4>/<NSv_NumAllServ>)
+            nnConformityIndicators.NnConformity = GetNnConformity(inspireItems);
+
             return nnConformityIndicators;
+        }
+
+        private NnConformity GetNnConformity(ICollection<RegisterItemV2> inspireItems)
+        {
+            NnConformity nnConformity = new NnConformity();
+            nnConformity.NSv41 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, "discovery"); // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery" som har nnConformity="true")
+            nnConformity.NSv41 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, "view"); // (Antall tjenester (<SpatialDataService>) av NnServiceType="view" som har nnConformity="true")
+            nnConformity.NSv41 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, "download"); // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
+            nnConformity.NSv41 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, "transformation"); // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
+            nnConformity.NSv41 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, "invoke"); // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
+            nnConformity.NSv4 = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems); // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
+
+            return nnConformity;
         }
 
         private double ProportionOfServicesWithConformityTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
         {
             int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
-            int numberOfServicesWhereConformityIsTrue = NumberOfServicesWhereConformityIsTrue(inspireItems, serviceType);
-            var averageNumberOfCalls = numberOfCalls / numberOfServicesByServiceType;
+            int numberOfServicesWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, serviceType);
+            double averageNumberOfCalls = 0;
+
+            if (numberOfServicesByServiceType != 0)
+            {
+                averageNumberOfCalls = numberOfServicesWhereConformityIsTrue / numberOfServicesByServiceType;
+            }
             return averageNumberOfCalls;
         }
 
-        private int NumberOfServicesWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems, string serviceType)
+        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
         {
             int servicesWhereConformityIsTrue = 0;
             foreach (var item in inspireItems)
             {
                 if (item is InspireDataService inspireDataService)
                 {
-                    if (string.IsNullOrWhiteSpace(serviceType))
+                    if (inspireDataService.Conformity)
                     {
-                        servicesWhereConformityIsTrue++;
-                    }
-                    else
-                    {
-                        if (inspireDataService.ServiceType == serviceType)
+                        if (string.IsNullOrWhiteSpace(serviceType))
                         {
                             servicesWhereConformityIsTrue++;
+                        }
+                        else
+                        {
+                            if (inspireDataService.ServiceType == serviceType)
+                            {
+                                servicesWhereConformityIsTrue++;
+                            }
                         }
                     }
                 }
@@ -152,7 +175,11 @@ namespace Kartverket.Register.Services
         {
             int numberOfCalls = NumberOfCallsByServiceType(inspireItems, serviceType);
             int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
-            var averageNumberOfCalls = numberOfCalls / numberOfServicesByServiceType;
+            var averageNumberOfCalls = 0;
+            if (numberOfServicesByServiceType != 0)
+            {
+                averageNumberOfCalls = numberOfCalls / numberOfServicesByServiceType;
+            }
             return averageNumberOfCalls;
         }
 

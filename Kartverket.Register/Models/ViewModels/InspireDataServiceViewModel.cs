@@ -81,7 +81,7 @@ namespace Kartverket.Register.Models.ViewModels
                 InspireDataType = inspireDataService.InspireDataType;
                 Requests = inspireDataService.Requests;
                 NetworkService = inspireDataService.IsNetworkService();
-                Sds = inspireDataService.GetSds();
+                Sds = inspireDataService.IsSds();
                 Url = inspireDataService.Url;
                 Theme = inspireDataService.Theme;
                 Uuid = inspireDataService.Uuid;

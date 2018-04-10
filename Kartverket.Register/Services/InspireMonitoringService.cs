@@ -32,7 +32,7 @@ namespace Kartverket.Register.Services
             indicators.MetadataExistenceIndicators = GetMetadataExsistensIndicators(inspireItems);
             indicators.DiscoveryMetadataIndicators = new DiscoveryMetadataIndicators();
             indicators.ViewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
-            indicators.SpatialDataAndService = GetSpatialDataAndService(rowData);
+            indicators.SpatialDataAndService = GetSpatialDataAndService(inspireItems);
             indicators.MetadataConformityIndicators = new MetadataConformityIndicators();
             indicators.SdsConformantIndicators = new SdsConformantIndicators();
 
@@ -66,6 +66,7 @@ namespace Kartverket.Register.Services
             return nnConformity;
         }
 
+
         private double ProportionOfServicesWithConformityTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
         {
             int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
@@ -78,7 +79,6 @@ namespace Kartverket.Register.Services
             }
             return averageNumberOfCalls;
         }
-
         private int NumberOfServicesByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
         {
             int servicesWhereConformityIsTrue = 0;
@@ -183,7 +183,7 @@ namespace Kartverket.Register.Services
             return averageNumberOfCalls;
         }
 
-        private int NumberOfServicesByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType)
+        private int NumberOfServicesByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
         {
             int numberOfServices = 0;
             foreach (var item in inspireItems)
@@ -215,12 +215,37 @@ namespace Kartverket.Register.Services
             return date;
         }
 
-        private SpatialDataAndService GetSpatialDataAndService(RowData rowData)
+        private SpatialDataAndService GetSpatialDataAndService(ICollection<RegisterItemV2> inspireItems)
         {
             SpatialDataAndService spatialDataAndService = new SpatialDataAndService();
-            spatialDataAndService.NSv_NumAllServ = rowData.SpatialDataService.Length;
+            spatialDataAndService.DSv_Num1 = 0; // Totalt antall datasett for  annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
+            spatialDataAndService.DSv_Num2 = 0; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
+            spatialDataAndService.DSv_Num3 = 0; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
+            spatialDataAndService.SDSv_Num = NumberOfSdS(inspireItems); // Totalt antall tjenester SDS
+            spatialDataAndService.NSv_NumDiscServ = NumberOfServicesByServiceType(inspireItems, "discovery"); // Antall NnServiceType="discovery"
+            spatialDataAndService.NSv_NumViewServ = NumberOfServicesByServiceType(inspireItems, "view"); // Antall NnServiceType="view"
+            spatialDataAndService.NSv_NumDownServ = NumberOfServicesByServiceType(inspireItems, "download"); // Antall NnServiceType="download"
+            spatialDataAndService.NSv_NumInvkServ = NumberOfServicesByServiceType(inspireItems, "invoke"); // Antall NnServiceType="invoke"
+            spatialDataAndService.NSv_NumAllServ = NumberOfServicesByServiceType(inspireItems); // Antall NnServiceType="discovery + view + download + transformation + invoke" (Network services)
+            spatialDataAndService.NSv_NumTransfServ = NumberOfServicesByServiceType(inspireItems, "transformation"); // Antall NnServiceType="transformation" 
 
             return spatialDataAndService;
+        }
+
+        private int NumberOfSdS(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfSds = 0;
+            foreach (RegisterItemV2 item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.IsSds())
+                    {
+                        numberOfSds++;
+                    }
+                }
+            }
+            return numberOfSds;
         }
 
         private MetadataExistenceIndicators GetMetadataExsistensIndicators(ICollection<RegisterItemV2> inspireDatasets)
@@ -272,7 +297,7 @@ namespace Kartverket.Register.Services
             monitoringMd.organizationName = inspireStatusRegister.owner.name;
             monitoringMd.email = "post@norgedigitalt.no";
             monitoringMd.language = LanguageCode.nor;
-            monitoringMd.monitoringDate = new Date();
+            //monitoringMd.monitoringDate = new Date();
             return monitoringMd;
         }
 

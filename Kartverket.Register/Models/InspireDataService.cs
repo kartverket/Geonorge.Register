@@ -33,7 +33,7 @@ namespace Kartverket.Register.Models
 
         public bool Conformity { get; set; }
 
-        public bool GetSds()
+        public bool IsSds()
         {
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";
         }

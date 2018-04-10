@@ -349,7 +349,7 @@ namespace Kartverket.Register.Models.Api
                 ServiceUrl = inspireDataService.Url;
                 InspireTheme = inspireDataService.Theme;
                 NetworkService = inspireDataService.IsNetworkService();
-                Sds = inspireDataService.GetSds();
+                Sds = inspireDataService.IsSds();
                 UuidMetadata = inspireDataService.Uuid;
                 itemclass = "InspireDataService";
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + UuidMetadata;

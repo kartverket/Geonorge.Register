@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Models;
 using DateTime = System.DateTime;
@@ -506,20 +507,50 @@ namespace Kartverket.Register.Services
             {
                 if (IsAnnexI(inspireTheme))
                 {
-                    AnnexI annexI = (AnnexI)Enum.Parse(typeof(AnnexI), inspireTheme.value);
+                    AnnexI annexI = GetAnnexIByInspireTheme(inspireTheme.value);
                     annexIList.Add(annexI);
                 }
             }
             return annexIList;
         }
 
+        private static AnnexI GetAnnexIByInspireTheme(string inspireTheme)
+        {
+            var inspireThemeCamelCase = CreateCamelCase(inspireTheme);
+            return (AnnexI)Enum.Parse(typeof(AnnexI), inspireThemeCamelCase);
+        }
+
+        private static AnnexII GetAnnexIIByInspireTheme(string inspireTheme)
+        {
+            var inspireThemeCamelCase = CreateCamelCase(inspireTheme);
+            return (AnnexII)Enum.Parse(typeof(AnnexII), inspireThemeCamelCase);
+        }
+
+        private static AnnexIII GetAnnexIIIByInspireTheme(string inspireTheme)
+        {
+            var inspireThemeCamelCase = CreateCamelCase(inspireTheme);
+            return (AnnexIII)Enum.Parse(typeof(AnnexIII), inspireThemeCamelCase);
+        }
+
         private static bool IsAnnexI(CodelistValue inspireTheme)
         {
             if (inspireTheme != null)
             {
-                return Enum.IsDefined(typeof(AnnexI), inspireTheme.value);
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexI), inspireThemeValueCamelCase);
             }
             return false;
+        }
+
+        private static string CreateCamelCase(string inspireTheme)
+        {
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+
+            var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
+            inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
+
+            return inspireThemeCamelCase;
         }
 
         private List<AnnexII> AnnexIIList(CodelistValue inspireTheme)
@@ -529,7 +560,7 @@ namespace Kartverket.Register.Services
             {
                 if (IsAnnexII(inspireTheme))
                 {
-                    AnnexII annexII = (AnnexII)Enum.Parse(typeof(AnnexII), inspireTheme.value);
+                    AnnexII annexII = GetAnnexIIByInspireTheme(inspireTheme.value);
                     annexIIList.Add(annexII);
                 }
             }
@@ -540,7 +571,8 @@ namespace Kartverket.Register.Services
         {
             if (inspireTheme != null)
             {
-                return Enum.IsDefined(typeof(AnnexII), inspireTheme.value);
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexII), inspireThemeValueCamelCase);
             }
             return false;
         }
@@ -552,7 +584,7 @@ namespace Kartverket.Register.Services
             {
                 if (IsAnnexIII(inspireTheme))
                 {
-                    AnnexIII annexIII = (AnnexIII)Enum.Parse(typeof(AnnexIII), inspireTheme.value);
+                    AnnexIII annexIII = GetAnnexIIIByInspireTheme(inspireTheme.value);
                     annexIIIList.Add(annexIII);
                 }
             }
@@ -563,7 +595,8 @@ namespace Kartverket.Register.Services
         {
             if (inspireTheme != null)
             {
-                return Enum.IsDefined(typeof(AnnexIII), inspireTheme.value);
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexIII), inspireThemeValueCamelCase);
             }
             return false;
         }

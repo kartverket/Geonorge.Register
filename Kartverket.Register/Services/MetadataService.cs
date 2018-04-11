@@ -500,7 +500,7 @@ namespace Kartverket.DOK.Service
                             ? data.ContactOwner.Organization.Value
                             : "");
 
-                    inspireDataService.Theme = GetInspireThemeId(
+                    inspireDataService.Theme = GetInspireTheme(
                         data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
                             ? data.KeywordsInspire[0].KeywordValue.Value
                             : "Annen");
@@ -519,6 +519,17 @@ namespace Kartverket.DOK.Service
             }
 
             return inspireDataService;
+
+        }
+
+        private string GetInspireTheme(string code)
+        {
+            var queryResultsRegisterItem = from o in _dbContext.CodelistValues
+                                           where o.register.name == "Inspiretema" &&
+                                           o.value == code
+                                           select o.name;
+
+            return queryResultsRegisterItem.FirstOrDefault();
 
         }
 

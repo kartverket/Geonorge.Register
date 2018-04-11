@@ -1,5 +1,6 @@
 ﻿using Resources;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -8,7 +9,7 @@ namespace Kartverket.Register.Models.ViewModels
     public class InspireDatasetViewModel : DatasetViewModel
     {
         [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
-        public CodelistValue InspireTheme { get; set; }
+        public ICollection<CodelistValue> InspireThemes { get; set; }
 
         [Display(Name = "Metadata:")]
         public string MetadataStatusId { get; set; }
@@ -77,7 +78,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (inspireDataset != null)
             {
-                InspireTheme = inspireDataset.InspireTheme;
+                InspireThemes = inspireDataset.InspireThemes;
                 if (inspireDataset.InspireDeliveryMetadata != null)
                 {
                     MetadataStatusId = inspireDataset.InspireDeliveryMetadata.StatusId;
@@ -163,12 +164,13 @@ namespace Kartverket.Register.Models.ViewModels
             return "/inspire/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
         }
 
-        public string InspireThemeName() {
-            if (InspireTheme != null)
+        public string InspireThemsAsString() {
+            var inspireTeamsString = "";
+            foreach (var item in InspireThemes)
             {
-                return InspireTheme.NameTranslated();
+                inspireTeamsString += item.name + ", ";
             }
-            return "";
+            return inspireTeamsString;
         }
     }
 }

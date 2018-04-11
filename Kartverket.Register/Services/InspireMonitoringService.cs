@@ -246,9 +246,12 @@ namespace Kartverket.Register.Services
             {
                 if (item is InspireDataset inspireDataset)
                 {
-                    if (IsAnnexIII(inspireDataset.InspireTheme))
+                    foreach (var inspireTheame in inspireDataset.InspireThemes)
                     {
-                        numberOfDatasetsByAnnexIII++;
+                        if (IsAnnexIII(inspireTheame))
+                        {
+                            numberOfDatasetsByAnnexIII++;
+                        }
                     }
                 }
             }
@@ -264,9 +267,12 @@ namespace Kartverket.Register.Services
             {
                 if (item is InspireDataset inspireDataset)
                 {
-                    if (IsAnnexII(inspireDataset.InspireTheme))
+                    foreach (var inspireTheame in inspireDataset.InspireThemes)
                     {
-                        numberOfDatasetsByAnnexII++;
+                        if (IsAnnexII(inspireTheame))
+                        {
+                            numberOfDatasetsByAnnexII++;
+                        }
                     }
                 }
             }
@@ -280,9 +286,12 @@ namespace Kartverket.Register.Services
             {
                 if (item is InspireDataset inspireDataset)
                 {
-                    if (IsAnnexI(inspireDataset.InspireTheme))
+                    foreach (var inspireTheme in inspireDataset.InspireThemes)
                     {
-                        numberOfDatasetsByAnnexI++;
+                        if (IsAnnexI(inspireTheme))
+                        {
+                            numberOfDatasetsByAnnexI++;
+                        }
                     }
                 }
             }
@@ -447,7 +456,7 @@ namespace Kartverket.Register.Services
             spatialDataset.name = inspireDataset.Name;
             spatialDataset.respAuthority = inspireDataset.Owner.shortname;
             spatialDataset.uuid = inspireDataset.SystemId.ToString();
-            spatialDataset.Themes = GetThemes(inspireDataset.InspireTheme);
+            spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
             spatialDataset.Coverage = MappingCoverage();
             spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
             return spatialDataset;
@@ -484,13 +493,20 @@ namespace Kartverket.Register.Services
             return coverage;
         }
 
-        private Themes[] GetThemes(CodelistValue inspireTheme)
+        private Themes[] GetThemes(ICollection<CodelistValue> inspireThemes)
         {
             var themes = new Themes();
-            List<AnnexI> annexiListI = AnnexIList(inspireTheme);
-            List<AnnexII> annexiListII = AnnexIIList(inspireTheme);
-            List<AnnexIII> annexiListIII = AnnexIIIList(inspireTheme);
+            List<AnnexI> annexiListI = new List<AnnexI>();
+            List<AnnexII> annexiListII = new List<AnnexII>();
+            List<AnnexIII> annexiListIII = new List<AnnexIII>();
 
+            foreach (var inspireTheme in inspireThemes)
+            {
+                annexiListI = AnnexIList(inspireTheme);
+                annexiListII = AnnexIIList(inspireTheme);
+                annexiListIII = AnnexIIIList(inspireTheme);
+            }
+                   
             themes.AnnexI = annexiListI.ToArray();
             themes.AnnexII = annexiListII.ToArray();
             themes.AnnexIII = annexiListIII.ToArray();

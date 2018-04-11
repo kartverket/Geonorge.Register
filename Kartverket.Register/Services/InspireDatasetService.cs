@@ -70,7 +70,7 @@ namespace Kartverket.Register.Services
 
             GetDeliveryStatuses(inspireDatasetViewModel, inspireDataset);
 
-            inspireDataset.InspireTheme = inspireDatasetViewModel.InspireTheme;
+            inspireDataset.InspireThemes = inspireDatasetViewModel.InspireThemes;
             inspireDataset.InspireDeliveryMetadataId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataStatusId, inspireDatasetViewModel.MetadataNote);
             inspireDataset.InspireDeliveryMetadataServiceId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.MetadataServiceStatusId, inspireDatasetViewModel.MetadataServiceNote);
             inspireDataset.InspireDeliveryDistributionId = _datasetDeliveryService.CreateDatasetDelivery(inspireDatasetViewModel.DistributionStatusId, inspireDatasetViewModel.DistributionNote);
@@ -288,11 +288,8 @@ namespace Kartverket.Register.Services
             originalDataset.DatasetThumbnail = inspireDatasetFromKartkatalogen.DatasetThumbnail;
             originalDataset.UuidService = inspireDatasetFromKartkatalogen.UuidService;
 
-            if (inspireDatasetFromKartkatalogen.InspireThemeId != Guid.Empty)
-            {
-                originalDataset.InspireThemeId = inspireDatasetFromKartkatalogen.InspireThemeId;
-            }
-
+            originalDataset.InspireThemes = inspireDatasetFromKartkatalogen.InspireThemes;
+          
             if (originalDataset.InspireDeliveryMetadata != null)
             {
                 originalDataset.InspireDeliveryMetadata.StatusId =
@@ -514,6 +511,11 @@ namespace Kartverket.Register.Services
             inspireDataService.VersioningId = _registerItemService.NewVersioningGroup(inspireDataService);
             inspireDataService.VersionNumber = 1;
             inspireDataService.StatusId = "Submitted";
+
+            if (inspireDataService.InspireThemeId == Guid.Empty)
+            {
+                inspireDataService.InspireThemeId = null;
+            }
 
             var metadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataService.Uuid);
             var inspireDeliveryMetadataInSearchService = "good";

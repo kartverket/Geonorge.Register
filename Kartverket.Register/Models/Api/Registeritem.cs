@@ -339,7 +339,7 @@ namespace Kartverket.Register.Models.Api
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
 
-                InspireTheme = inspireDataset.InspireTheme?.name;
+                InspireTheme = inspireDataset.InspireThemes.ToString(); // TODO
             }
             if (item is InspireDataService inspireDataService)
             {

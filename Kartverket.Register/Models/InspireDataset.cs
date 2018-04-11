@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Models
 {
@@ -12,6 +12,12 @@ namespace Kartverket.Register.Models
         public Guid? InspireThemeId { get; set; }
         [Display(Name = "Inspiretema:")]
         public virtual CodelistValue InspireTheme{ get; set; }
+
+
+        [ForeignKey("InspireThemes")]
+        public ICollection<Guid> InspireThemesId { get; set; }
+        [Display(Name = "Inspiretema:")]
+        public virtual ICollection<CodelistValue> InspireThemes { get; set; }
 
         //Metadata
         [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]
@@ -61,24 +67,6 @@ namespace Kartverket.Register.Models
         public bool HaveMetadata()
         {
             return InspireDeliveryMetadata.IsSet();
-        }
-
-        public bool IsAnnex3()
-        {
-            //TODO
-            return false;
-        }
-
-        public bool IsAnnex2()
-        {
-            //TODO
-            return false;
-        }
-
-        public bool IsAnnex1()
-        {
-            //TODO
-            return false;
         }
     }
 

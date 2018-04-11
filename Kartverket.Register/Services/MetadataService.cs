@@ -500,7 +500,7 @@ namespace Kartverket.DOK.Service
                             ? data.ContactOwner.Organization.Value
                             : "");
 
-                    inspireDataService.Theme = GetInspireTheme(
+                    inspireDataService.InspireThemeId = GetInspireThemeId(
                         data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
                             ? data.KeywordsInspire[0].KeywordValue.Value
                             : "Annen");

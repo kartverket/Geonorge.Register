@@ -155,8 +155,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "InspireDataset" || item.itemclass == "InspireDataService")
             {
-                text = item.theme + ";" +
-                        item.InspireTheme + ";" +
+                text = item.InspireTheme + ";" +
                         item.label + ";" + 
                         item.owner + ";" + 
                         item.dokStatus + ";" + 
@@ -306,8 +305,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "InspireDataset")
             {
-                return DataSet.DOK_Delivery_Theme + ";" +
-                    "InspireTema;" +
+                return "InspireTema;" +
                         Registers.Name + ";" +
                         Registers.Owner + "; DOK-status;" +
                         DataSet.DOK_StatusDateAccepted + ";" +

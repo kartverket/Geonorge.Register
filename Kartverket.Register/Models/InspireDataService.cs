@@ -23,7 +23,12 @@ namespace Kartverket.Register.Models
 
         public int Requests { get; set; } // Manuelt
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
-        public string Theme { get; set; } // Liste opp alle Annex tjenestene h�rer til..
+
+        [ForeignKey("InspireTheme")]
+        public Guid? InspireThemeId { get; set; }
+        [Display(Name = "Inspiretema:")]
+        public virtual CodelistValue InspireTheme { get; set; } /// Liste opp alle Annex tjenestene h�rer til..
+
         public string ServiceType { get; set; } 
         public string Uuid { get; set; }
         [Display(Name = "Areal")]

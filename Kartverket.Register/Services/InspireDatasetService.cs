@@ -642,7 +642,11 @@ namespace Kartverket.Register.Services
 
             originalDataService.Url = inspireDataServiceFromKartkatalogen.Url;
             originalDataService.ServiceType = inspireDataServiceFromKartkatalogen.ServiceType;
-            originalDataService.Theme = inspireDataServiceFromKartkatalogen.Theme;
+
+            if (inspireDataServiceFromKartkatalogen.InspireThemeId != Guid.Empty)
+            {
+                originalDataService.InspireThemeId = inspireDataServiceFromKartkatalogen.InspireThemeId;
+            }
 
             _dbContext.Entry(originalDataService).State = EntityState.Modified;
             _dbContext.SaveChanges();

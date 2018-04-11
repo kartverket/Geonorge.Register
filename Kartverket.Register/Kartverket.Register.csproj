@@ -815,6 +815,18 @@
     <Compile Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.Designer.cs">
       <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.cs" />
+    <Compile Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.Designer.cs">
+      <DependentUpon>201804110745082_AddInspireThemeAsCodelistValue1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.cs" />
+    <Compile Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.Designer.cs">
+      <DependentUpon>201804110747148_AddInspireThemeAsForeignkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.cs" />
+    <Compile Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.Designer.cs">
+      <DependentUpon>201804110805561_DeleteThemeFromInspireDataServices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1949,6 +1961,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.resx">
       <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.resx">
+      <DependentUpon>201804110745082_AddInspireThemeAsCodelistValue1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.resx">
+      <DependentUpon>201804110747148_AddInspireThemeAsForeignkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.resx">
+      <DependentUpon>201804110805561_DeleteThemeFromInspireDataServices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Resources;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Configuration;
@@ -33,8 +34,8 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "Url")]
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
 
-        [Display(Name = "Tema")]
-        public string Theme { get; set; } // Liste opp alle Annex tjenestene hører til..
+        [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
+        public CodelistValue InspireTheme { get; set; }
 
         [Display(Name = "Metadata url")]
         public string MetadataUrl { get; set; }
@@ -83,7 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
                 NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.IsSds();
                 Url = inspireDataService.Url;
-                Theme = inspireDataService.Theme;
+                InspireTheme = inspireDataService.InspireTheme;
                 Uuid = inspireDataService.Uuid;
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + Uuid;
                 Area = inspireDataService.Area;
@@ -101,6 +102,15 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return "/inspire-data-service/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/rediger";
 
+        }
+
+        public string InspireThemeName()
+        {
+            if (InspireTheme != null)
+            {
+                return InspireTheme.NameTranslated();
+            }
+            return "";
         }
     }
 }

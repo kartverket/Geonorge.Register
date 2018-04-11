@@ -967,6 +967,9 @@
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
+            Liste opp alle Annex tjenestene h�rer til..
+        </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
             Determines what kind of organization: regular or municipality.

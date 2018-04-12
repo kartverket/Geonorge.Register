@@ -35,7 +35,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string Url { get; set; } // Til tjenesten, finnes i metadataene
 
         [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
-        public CodelistValue InspireTheme { get; set; }
+        public ICollection<CodelistValue> InspireThemes { get; set; }
 
         [Display(Name = "Metadata url")]
         public string MetadataUrl { get; set; }
@@ -84,7 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
                 NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.IsSds();
                 Url = inspireDataService.Url;
-                InspireTheme = inspireDataService.InspireTheme;
+                InspireThemes = inspireDataService.InspireThemes;
                 Uuid = inspireDataService.Uuid;
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + Uuid;
                 Area = inspireDataService.Area;
@@ -104,13 +104,21 @@ namespace Kartverket.Register.Models.ViewModels
 
         }
 
-        public string InspireThemeName()
+        public string InspireThemsAsString()
         {
-            if (InspireTheme != null)
+            string inspireTeamsString = null;
+            foreach (var item in InspireThemes)
             {
-                return InspireTheme.NameTranslated();
+                if (inspireTeamsString == null)
+                {
+                    inspireTeamsString += item.name;
+                }
+                else
+                {
+                    inspireTeamsString += ", " + item.name;
+                }
             }
-            return "";
+            return inspireTeamsString;
         }
     }
 }

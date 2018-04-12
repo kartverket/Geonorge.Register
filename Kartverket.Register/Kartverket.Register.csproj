@@ -831,6 +831,10 @@
     <Compile Include="Migrations\201804111212493_AddCollectonOfInspireDatasets.Designer.cs">
       <DependentUpon>201804111212493_AddCollectonOfInspireDatasets.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs" />
+    <Compile Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.Designer.cs">
+      <DependentUpon>201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1977,6 +1981,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804111212493_AddCollectonOfInspireDatasets.resx">
       <DependentUpon>201804111212493_AddCollectonOfInspireDatasets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.resx">
+      <DependentUpon>201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

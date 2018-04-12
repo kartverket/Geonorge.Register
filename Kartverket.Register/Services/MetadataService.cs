@@ -259,11 +259,6 @@ namespace Kartverket.DOK.Service
                             : "kartverket");
                     inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
 
-                    //inspireDataset.InspireThemeId = GetInspireThemeId(
-                    //    data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
-                    //        ? data.KeywordsInspire[0].KeywordValue.Value
-                    //        : null);
-
                     inspireDataset.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 
                     if (data.ServiceUuid != null)
@@ -535,12 +530,7 @@ namespace Kartverket.DOK.Service
                             ? data.ContactOwner.Organization.Value
                             : "");
 
-                    //inspireDataService.InspireThemeId = GetInspireThemeId(
-                    //    data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
-                    //        ? data.KeywordsInspire[0].KeywordValue.Value
-                    //        : "Annen");
-
-                    //inspireDataService.InspireThemeId = GetInspireThemeId(data.KeywordsInspire);
+                    inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 
                     inspireDataService.Url = data.DistributionUrl;
                     inspireDataService.ServiceType = data.ServiceType.ToString();

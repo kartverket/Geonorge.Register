@@ -479,10 +479,13 @@ namespace Kartverket.Register.Services
             var originalInspireDataServices = GetInspireDataService();
             var inspireDataServicesFromKartkatalogen = FetchInspireDataServicesFromKartkatalogen();
 
-            RemoveInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
-            AddOrUpdateInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
+            if (inspireDataServicesFromKartkatalogen != null)
+            {
+                RemoveInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
+                AddOrUpdateInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
 
-            _dbContext.SaveChanges();
+                _dbContext.SaveChanges();
+            }
         }
 
 
@@ -514,11 +517,6 @@ namespace Kartverket.Register.Services
             inspireDataService.VersioningId = _registerItemService.NewVersioningGroup(inspireDataService);
             inspireDataService.VersionNumber = 1;
             inspireDataService.StatusId = "Submitted";
-
-            if (inspireDataService.InspireThemeId == Guid.Empty)
-            {
-                inspireDataService.InspireThemeId = null;
-            }
 
             var metadataStatus = _datasetDeliveryService.GetMetadataStatus(inspireDataService.Uuid);
             var inspireDeliveryMetadataInSearchService = "good";
@@ -589,7 +587,7 @@ namespace Kartverket.Register.Services
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
-                return inspireDataServices;
+                return null;
             }
         }
 
@@ -647,11 +645,6 @@ namespace Kartverket.Register.Services
 
             originalDataService.Url = inspireDataServiceFromKartkatalogen.Url;
             originalDataService.ServiceType = inspireDataServiceFromKartkatalogen.ServiceType;
-
-            if (inspireDataServiceFromKartkatalogen.InspireThemeId != Guid.Empty)
-            {
-                originalDataService.InspireThemeId = inspireDataServiceFromKartkatalogen.InspireThemeId;
-            }
 
             _dbContext.Entry(originalDataService).State = EntityState.Modified;
             _dbContext.SaveChanges();

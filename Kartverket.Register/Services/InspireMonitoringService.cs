@@ -132,12 +132,6 @@ namespace Kartverket.Register.Services
 
             metadataExistenceIndicators.MetadataExistence = GetMetadataExistence(inspireItems);
 
-            metadataExistenceIndicators.MetadataExistence.MDv11 = 0;
-            metadataExistenceIndicators.MetadataExistence.MDv12 = 0;
-            metadataExistenceIndicators.MetadataExistence.MDv13 = 0;
-            metadataExistenceIndicators.MetadataExistence.MDv1_DS = GetNumberOfItemsThatHaveMetadata(inspireItems);
-            metadataExistenceIndicators.MetadataExistence.MDv14 = 0;
-
             return metadataExistenceIndicators;
         }
 

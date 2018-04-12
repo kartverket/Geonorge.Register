@@ -165,11 +165,21 @@ namespace Kartverket.Register.Models.ViewModels
         }
 
         public string InspireThemsAsString() {
-            var inspireTeamsString = "";
-            foreach (var item in InspireThemes)
+            string inspireTeamsString = null;
+            if (InspireThemes != null)
             {
-                inspireTeamsString += item.name + ", ";
-            }
+                foreach (var item in InspireThemes)
+                {
+                    if (inspireTeamsString == null)
+                    {
+                        inspireTeamsString += item.name;
+                    }
+                    else
+                    {
+                        inspireTeamsString += ", " + item.name;
+                    }
+                }
+            }            
             return inspireTeamsString;
         }
     }

@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 
 namespace Kartverket.Register.Models
 {
@@ -28,6 +28,11 @@ namespace Kartverket.Register.Models
         public Guid? InspireThemeId { get; set; }
         [Display(Name = "Inspiretema:")]
         public virtual CodelistValue InspireTheme { get; set; } /// Liste opp alle Annex tjenestene h�rer til..
+
+        [ForeignKey("InspireThemes")]
+        public ICollection<Guid> InspireThemesId { get; set; } /// Liste opp alle Annex tjenestene h�rer til..
+        [Display(Name = "Inspiretema:")]
+        public virtual ICollection<CodelistValue> InspireThemes { get; set; }
 
         public string ServiceType { get; set; } 
         public string Uuid { get; set; }

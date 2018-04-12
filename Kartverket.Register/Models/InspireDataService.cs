@@ -61,6 +61,15 @@ namespace Kartverket.Register.Models
         {
             return InspireDeliveryMetadata.IsSet();
         }
+
+        internal bool MetadataIsGoodOrDeficent()
+        {
+            if (InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryMetadata.IsSet();
+            }
+            return false;
+        }
     }
 
 }

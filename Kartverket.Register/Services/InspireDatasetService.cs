@@ -369,9 +369,12 @@ namespace Kartverket.Register.Services
         public void SynchronizeInspireDatasets()
         {
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen();
-            RemoveInspireDatasets(inspireDatasetsFromKartkatalogen);
-            UpdateInspireDataset(inspireDatasetsFromKartkatalogen);
-            _dbContext.SaveChanges();
+            if (inspireDatasetsFromKartkatalogen != null)
+            {
+                RemoveInspireDatasets(inspireDatasetsFromKartkatalogen);
+                UpdateInspireDataset(inspireDatasetsFromKartkatalogen);
+                _dbContext.SaveChanges();
+            }
         }
 
         private void UpdateInspireDataset(List<InspireDataset> inspireDatasetsFromKartkatalogen)

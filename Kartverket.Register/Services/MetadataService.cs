@@ -240,10 +240,6 @@ namespace Kartverket.DOK.Service
                 if (data != null)
                 {
                     inspireDataset.Name = data.Title;
-                    if (inspireDataset.Name == "Ortofoto Kvitsøy 2015")
-                    {
-                        var tests = ""; ;
-                    }
                     inspireDataset.Description = data.Abstract;
                     inspireDataset.PresentationRulesUrl = data.LegendDescriptionUrl;
                     inspireDataset.ProductSheetUrl = data.ProductSheetUrl;
@@ -544,7 +540,7 @@ namespace Kartverket.DOK.Service
                     //        ? data.KeywordsInspire[0].KeywordValue.Value
                     //        : "Annen");
 
-                    //inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
+                    //inspireDataService.InspireThemeId = GetInspireThemeId(data.KeywordsInspire);
 
                     inspireDataService.Url = data.DistributionUrl;
                     inspireDataService.ServiceType = data.ServiceType.ToString();

@@ -73,44 +73,6 @@ namespace Kartverket.Register.Services
         }
 
 
-        private double ProportionOfServicesWithConformityTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
-        {
-            int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
-            int numberOfServicesWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, serviceType);
-            double averageNumberOfCalls = 0;
-
-            if (numberOfServicesByServiceType != 0)
-            {
-                averageNumberOfCalls = numberOfServicesWhereConformityIsTrue / numberOfServicesByServiceType;
-            }
-            return averageNumberOfCalls;
-        }
-        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
-        {
-            int servicesWhereConformityIsTrue = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.Conformity)
-                    {
-                        if (string.IsNullOrWhiteSpace(serviceType))
-                        {
-                            servicesWhereConformityIsTrue++;
-                        }
-                        else
-                        {
-                            if (inspireDataService.ServiceType == serviceType)
-                            {
-                                servicesWhereConformityIsTrue++;
-                            }
-                        }
-                    }
-                }
-            }
-            return servicesWhereConformityIsTrue;
-        }
-
         private UseNNindicators GetUseNNindicators(ICollection<RegisterItemV2> inspireItems)
         {
             UseNNindicators useNNindicators = new UseNNindicators();
@@ -138,94 +100,12 @@ namespace Kartverket.Register.Services
             return useNN;
         }
 
-        private int NumberOfCallsByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems)
-        {
-            int numberOfCalls = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.Conformity)
-                    {
-                        numberOfCalls = inspireDataService.Requests;
-                    }
-                }
-            }
-            return numberOfCalls;
-        }
-
-        private int NumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
-        {
-            int numberOfCalls = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (string.IsNullOrWhiteSpace(serviceType))
-                    {
-                        numberOfCalls += inspireDataService.Requests;
-                    }
-                    else
-                    {
-                        if (inspireDataService.ServiceType == serviceType)
-                        {
-                            numberOfCalls += inspireDataService.Requests;
-                        }
-                    }
-                }
-            }
-            return numberOfCalls;
-        }
-
-        private double AverageNumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
-        {
-            int numberOfCalls = NumberOfCallsByServiceType(inspireItems, serviceType);
-            int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
-            var averageNumberOfCalls = 0;
-            if (numberOfServicesByServiceType != 0)
-            {
-                averageNumberOfCalls = numberOfCalls / numberOfServicesByServiceType;
-            }
-            return averageNumberOfCalls;
-        }
-
-        private int NumberOfServicesByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
-        {
-            int numberOfServices = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (string.IsNullOrWhiteSpace(serviceType))
-                    {
-                        numberOfServices++;
-                    }
-                    else
-                    {
-                        if (inspireDataService.ServiceType == serviceType)
-                        {
-                            numberOfServices++;
-                        }
-                    }
-                }
-            }
-            return numberOfServices;
-        }
-
-        private Date GetReportingDate()
-        {
-            Date date = new Date();
-            date.day = DateTime.Now.Day.ToString();
-            date.month = DateTime.Now.Month.ToString();
-            date.year = DateTime.Now.Year.ToString();
-            return date;
-        }
 
         private SpatialDataAndService GetSpatialDataAndService(ICollection<RegisterItemV2> inspireItems)
         {
             SpatialDataAndService spatialDataAndService = new SpatialDataAndService();
 
-            spatialDataAndService.DSv_Num1 = NumberOfDatasetsByAnnexI(inspireItems); // Totalt antall datasett for  annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
+            spatialDataAndService.DSv_Num1 = NumberOfDatasetsByAnnexI(inspireItems); // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
             spatialDataAndService.DSv_Num2 = NumberOfDatasetsByAnnexII(inspireItems); // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
             spatialDataAndService.DSv_Num3 = NumberOfDatasetsByAnnexIII(inspireItems); // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
             spatialDataAndService.SDSv_Num = NumberOfSdS(inspireItems); // Totalt antall tjenester SDS
@@ -239,106 +119,137 @@ namespace Kartverket.Register.Services
             return spatialDataAndService;
         }
 
-        private int NumberOfDatasetsByAnnexIII(ICollection<RegisterItemV2> inspireItems)
-        {
-            var numberOfDatasetsByAnnexIII = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    foreach (var inspireTheame in inspireDataset.InspireThemes)
-                    {
-                        if (IsAnnexIII(inspireTheame))
-                        {
-                            numberOfDatasetsByAnnexIII++;
-                        }
-                    }
-                }
-            }
-            return numberOfDatasetsByAnnexIII;
-        }
 
 
-
-        private int NumberOfDatasetsByAnnexII(ICollection<RegisterItemV2> inspireItems)
-        {
-            var numberOfDatasetsByAnnexII = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    foreach (var inspireTheame in inspireDataset.InspireThemes)
-                    {
-                        if (IsAnnexII(inspireTheame))
-                        {
-                            numberOfDatasetsByAnnexII++;
-                        }
-                    }
-                }
-            }
-            return numberOfDatasetsByAnnexII;
-        }
-
-        private int NumberOfDatasetsByAnnexI(ICollection<RegisterItemV2> inspireItems)
-        {
-            var numberOfDatasetsByAnnexI = 0;
-            foreach (var item in inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    foreach (var inspireTheme in inspireDataset.InspireThemes)
-                    {
-                        if (IsAnnexI(inspireTheme))
-                        {
-                            numberOfDatasetsByAnnexI++;
-                        }
-                    }
-                }
-            }
-            return numberOfDatasetsByAnnexI;
-        }
-
-
-        private int NumberOfSdS(ICollection<RegisterItemV2> inspireItems)
-        {
-            var numberOfSds = 0;
-            foreach (RegisterItemV2 item in inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.IsSds())
-                    {
-                        numberOfSds++;
-                    }
-                }
-            }
-            return numberOfSds;
-        }
-
-        private MetadataExistenceIndicators GetMetadataExsistensIndicators(ICollection<RegisterItemV2> inspireDatasets)
+        private MetadataExistenceIndicators GetMetadataExsistensIndicators(ICollection<RegisterItemV2> inspireItems)
         {
             MetadataExistenceIndicators metadataExistenceIndicators = new MetadataExistenceIndicators();
-            metadataExistenceIndicators.MDi11 = 0;
-            metadataExistenceIndicators.MDi12 = 0;
-            metadataExistenceIndicators.MDi13 = 0;
-            metadataExistenceIndicators.MDi14 = 0;
-            metadataExistenceIndicators.MDi1 = 0;
+            metadataExistenceIndicators.MDi11 = 0; // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
+            metadataExistenceIndicators.MDi12 = 0; // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
+            metadataExistenceIndicators.MDi13 = 0; // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
+            metadataExistenceIndicators.MDi14 = 0; // Andel tjenester som har metadata (<MDv1_DS>/<NSv_NumAllServ>)
+            metadataExistenceIndicators.MDi1 = 0; // Andel datasett som har metadata av Annex1 data  (<MDv14>/<DSv_Num>)
 
-            metadataExistenceIndicators.MetadataExistence = new MetadataExistence();
+            metadataExistenceIndicators.MetadataExistence = GetMetadataExistence(inspireItems);
 
             metadataExistenceIndicators.MetadataExistence.MDv11 = 0;
             metadataExistenceIndicators.MetadataExistence.MDv12 = 0;
             metadataExistenceIndicators.MetadataExistence.MDv13 = 0;
-            metadataExistenceIndicators.MetadataExistence.MDv1_DS = GetNumberOfDatasetsThatHaveMetadata(inspireDatasets);
+            metadataExistenceIndicators.MetadataExistence.MDv1_DS = GetNumberOfItemsThatHaveMetadata(inspireItems);
             metadataExistenceIndicators.MetadataExistence.MDv14 = 0;
 
             return metadataExistenceIndicators;
         }
 
-        private int GetNumberOfDatasetsThatHaveMetadata(ICollection<RegisterItemV2> inspireDatasets)
+        private MetadataExistence GetMetadataExistence(ICollection<RegisterItemV2> inspireItems)
+        {
+            MetadataExistence metadataExistence = new MetadataExistence();
+            metadataExistence.MDv11 = NumberOfDatasetsByAnnexIWithMetadata(inspireItems); // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
+            metadataExistence.MDv12 = NumberOfDatasetsByAnnexIIWithMetadata(inspireItems); // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
+            metadataExistence.MDv13 = NumberOfDatasetsByAnnexIIIWithMetadata(inspireItems); // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+            metadataExistence.MDv1_DS = NumberOfDatasetsWithMetadata(inspireItems); // Antall datasett som har metadata (Alle datasett)
+            metadataExistence.MDv14 = NumberOfServicesWithMetadata(inspireItems); // Antall tjenester som har metadata (Alle tjenester)
+            return metadataExistence;
+        }
+
+        private int NumberOfServicesWithMetadata(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfServicesWithMetadata = 0;
+
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.MetadataIsGoodOrDeficent())
+                    {
+                        numberOfServicesWithMetadata++;
+                    }
+                }
+            }
+            return numberOfServicesWithMetadata;
+        }
+
+        private int NumberOfDatasetsWithMetadata(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsWithMetadata = 0;
+
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (inspireDataset.MetadataIsGoodOrDeficent())
+                    {
+                        numberOfDatasetsWithMetadata++;
+                    }
+                }
+            }
+            return numberOfDatasetsWithMetadata;
+        }
+
+        private int NumberOfDatasetsByAnnexIWithMetadata(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexIWithMetadata = 0;
+
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
+                    {
+                        if (inspireDataset.MetadataIsGoodOrDeficent())
+                        {
+                            numberOfDatasetsByAnnexIWithMetadata++;
+                        }
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexIWithMetadata;
+        }
+
+        private int NumberOfDatasetsByAnnexIIWithMetadata(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexIIWithMetadata = 0;
+
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
+                    {
+                        if (inspireDataset.MetadataIsGoodOrDeficent())
+                        {
+                            numberOfDatasetsByAnnexIIWithMetadata++;
+                        }
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexIIWithMetadata;
+        }
+
+        private int NumberOfDatasetsByAnnexIIIWithMetadata(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexIIIWithMetadata = 0;
+
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
+                    {
+                        if (inspireDataset.MetadataIsGoodOrDeficent())
+                        {
+                            numberOfDatasetsByAnnexIIIWithMetadata++;
+                        }
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexIIIWithMetadata;
+        }
+
+        private int GetNumberOfItemsThatHaveMetadata(ICollection<RegisterItemV2> inspireItems)
         {
             int datasetsThatHaveMetadata = 0;
-            foreach (var item in inspireDatasets)
+            foreach (var item in inspireItems)
             {
                 if (item is InspireDataset inspireDataset)
                 {
@@ -506,7 +417,7 @@ namespace Kartverket.Register.Services
                 annexiListII = AnnexIIList(inspireTheme);
                 annexiListIII = AnnexIIIList(inspireTheme);
             }
-                   
+
             themes.AnnexI = annexiListI.ToArray();
             themes.AnnexII = annexiListII.ToArray();
             themes.AnnexIII = annexiListIII.ToArray();
@@ -654,7 +565,237 @@ namespace Kartverket.Register.Services
             return spatialDataServiceList;
         }
 
+        private double ProportionOfServicesWithConformityTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
+            int numberOfServicesWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue(inspireItems, serviceType);
+            double averageNumberOfCalls = 0;
+
+            if (numberOfServicesByServiceType != 0)
+            {
+                averageNumberOfCalls = numberOfServicesWhereConformityIsTrue / numberOfServicesByServiceType;
+            }
+            return averageNumberOfCalls;
+        }
+        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int servicesWhereConformityIsTrue = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.Conformity)
+                    {
+                        if (string.IsNullOrWhiteSpace(serviceType))
+                        {
+                            servicesWhereConformityIsTrue++;
+                        }
+                        else
+                        {
+                            if (inspireDataService.ServiceType == serviceType)
+                            {
+                                servicesWhereConformityIsTrue++;
+                            }
+                        }
+                    }
+                }
+            }
+            return servicesWhereConformityIsTrue;
+        }
+
+        private int NumberOfCallsByServiceTypeWhereConformityIsTrue(ICollection<RegisterItemV2> inspireItems)
+        {
+            int numberOfCalls = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.Conformity)
+                    {
+                        numberOfCalls = inspireDataService.Requests;
+                    }
+                }
+            }
+            return numberOfCalls;
+        }
+
+        private int NumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfCalls = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (string.IsNullOrWhiteSpace(serviceType))
+                    {
+                        numberOfCalls += inspireDataService.Requests;
+                    }
+                    else
+                    {
+                        if (inspireDataService.ServiceType == serviceType)
+                        {
+                            numberOfCalls += inspireDataService.Requests;
+                        }
+                    }
+                }
+            }
+            return numberOfCalls;
+        }
+
+        private double AverageNumberOfCallsByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfCalls = NumberOfCallsByServiceType(inspireItems, serviceType);
+            int numberOfServicesByServiceType = NumberOfServicesByServiceType(inspireItems, serviceType);
+            var averageNumberOfCalls = 0;
+            if (numberOfServicesByServiceType != 0)
+            {
+                averageNumberOfCalls = numberOfCalls / numberOfServicesByServiceType;
+            }
+            return averageNumberOfCalls;
+        }
+
+        private int NumberOfServicesByServiceType(ICollection<RegisterItemV2> inspireItems, string serviceType = null)
+        {
+            int numberOfServices = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (string.IsNullOrWhiteSpace(serviceType))
+                    {
+                        numberOfServices++;
+                    }
+                    else
+                    {
+                        if (inspireDataService.ServiceType == serviceType)
+                        {
+                            numberOfServices++;
+                        }
+                    }
+                }
+            }
+            return numberOfServices;
+        }
+
+        private Date GetReportingDate()
+        {
+            Date date = new Date();
+            date.day = DateTime.Now.Day.ToString();
+            date.month = DateTime.Now.Month.ToString();
+            date.year = DateTime.Now.Year.ToString();
+            return date;
+        }
 
 
+        private int NumberOfDatasetsByAnnexIII(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexIII = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
+                    {
+                        numberOfDatasetsByAnnexIII++;
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexIII;
+        }
+
+
+
+        private int NumberOfDatasetsByAnnexII(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexII = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
+                    {
+                        numberOfDatasetsByAnnexII++;
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexII;
+        }
+
+        private int NumberOfDatasetsByAnnexI(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfDatasetsByAnnexI = 0;
+            foreach (var item in inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
+                    {
+                        numberOfDatasetsByAnnexI++;
+
+                    }
+                }
+            }
+            return numberOfDatasetsByAnnexI;
+        }
+
+        private bool InspireDatasetHaveInspireThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
+        {
+            try
+            {
+                foreach (var inspireTheme in inspireThems)
+                {
+                    if (IsAnnexI(inspireTheme))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+
+        private bool InspireDatasetHaveInspireThemeOfTypeAnnexII(ICollection<CodelistValue> inspireThems)
+        {
+            foreach (var inspireTheme in inspireThems)
+            {
+                if (IsAnnexII(inspireTheme))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool InspireDatasetHaveInspireThemeOfTypeAnnexIII(ICollection<CodelistValue> inspireThems)
+        {
+            foreach (var inspireTheme in inspireThems)
+            {
+                if (IsAnnexIII(inspireTheme))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+        private int NumberOfSdS(ICollection<RegisterItemV2> inspireItems)
+        {
+            var numberOfSds = 0;
+            foreach (RegisterItemV2 item in inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    if (inspireDataService.IsSds())
+                    {
+                        numberOfSds++;
+                    }
+                }
+            }
+            return numberOfSds;
+        }
     }
 }

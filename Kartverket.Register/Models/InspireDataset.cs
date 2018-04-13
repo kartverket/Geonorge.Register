@@ -7,15 +7,6 @@ namespace Kartverket.Register.Models
 {
     public class InspireDataset : DatasetV2
     {
-
-        [ForeignKey("InspireTheme")]
-        public Guid? InspireThemeId { get; set; }
-        [Display(Name = "Inspiretema:")]
-        public virtual CodelistValue InspireTheme{ get; set; }
-
-        [ForeignKey("InspireThemes")]
-        public ICollection<Guid> InspireThemesId { get; set; }
-        [Display(Name = "Inspiretema:")]
         public virtual ICollection<CodelistValue> InspireThemes { get; set; }
 
         //Metadata

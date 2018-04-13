@@ -195,7 +195,7 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusId = viewModel.DokStatusId;
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
-            inspireDataset.InspireThemesId = inspireThemsId;
+            //inspireDataset.InspireThemesId = inspireThemsId;
 
             if (inspireDataset.InspireDeliveryMetadata != null)
             {

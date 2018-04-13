@@ -7,13 +7,13 @@ namespace Kartverket.Register.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class AddCollectonOfInspireDatasets : IMigrationMetadata
+    public sealed partial class AddCollectionOfInspireThemes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCollectonOfInspireDatasets));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddCollectionOfInspireThemes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804111212493_AddCollectonOfInspireDatasets"; }
+            get { return "201804131318498_AddCollectionOfInspireThemes"; }
         }
         
         string IMigrationMetadata.Source

@@ -807,33 +807,9 @@
     <Compile Include="Migrations\201804091242083_AddConformity.Designer.cs">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.cs" />
-    <Compile Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.Designer.cs">
-      <DependentUpon>201804101223315_AddInspireThemeAsCodelistValue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.cs" />
-    <Compile Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.Designer.cs">
-      <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.cs" />
-    <Compile Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.Designer.cs">
-      <DependentUpon>201804110745082_AddInspireThemeAsCodelistValue1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.cs" />
-    <Compile Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.Designer.cs">
-      <DependentUpon>201804110747148_AddInspireThemeAsForeignkey.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.cs" />
-    <Compile Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.Designer.cs">
-      <DependentUpon>201804110805561_DeleteThemeFromInspireDataServices.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804111212493_AddCollectonOfInspireDatasets.cs" />
-    <Compile Include="Migrations\201804111212493_AddCollectonOfInspireDatasets.Designer.cs">
-      <DependentUpon>201804111212493_AddCollectonOfInspireDatasets.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs" />
-    <Compile Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.Designer.cs">
-      <DependentUpon>201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs</DependentUpon>
+    <Compile Include="Migrations\201804131318498_AddCollectionOfInspireThemes.cs" />
+    <Compile Include="Migrations\201804131318498_AddCollectionOfInspireThemes.Designer.cs">
+      <DependentUpon>201804131318498_AddCollectionOfInspireThemes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
@@ -1964,26 +1940,8 @@
     <EmbeddedResource Include="Migrations\201804091242083_AddConformity.resx">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804101223315_AddInspireThemeAsCodelistValue.resx">
-      <DependentUpon>201804101223315_AddInspireThemeAsCodelistValue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804101231052_addForeignkeyToInspireCodeValue.resx">
-      <DependentUpon>201804101231052_addForeignkeyToInspireCodeValue.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804110745082_AddInspireThemeAsCodelistValue1.resx">
-      <DependentUpon>201804110745082_AddInspireThemeAsCodelistValue1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804110747148_AddInspireThemeAsForeignkey.resx">
-      <DependentUpon>201804110747148_AddInspireThemeAsForeignkey.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804110805561_DeleteThemeFromInspireDataServices.resx">
-      <DependentUpon>201804110805561_DeleteThemeFromInspireDataServices.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804111212493_AddCollectonOfInspireDatasets.resx">
-      <DependentUpon>201804111212493_AddCollectonOfInspireDatasets.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201804120828113_AddCollectionOfInspireThemsForInspireDataServices.resx">
-      <DependentUpon>201804120828113_AddCollectionOfInspireThemsForInspireDataServices.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804131318498_AddCollectionOfInspireThemes.resx">
+      <DependentUpon>201804131318498_AddCollectionOfInspireThemes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

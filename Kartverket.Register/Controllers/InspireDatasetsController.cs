@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
@@ -107,11 +108,11 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
-        public ActionResult Edit(InspireDatasetViewModel viewModel)
+        public ActionResult Edit(InspireDatasetViewModel viewModel, List<System.Guid> inspireThemesId)
         {
             if (ModelState.IsValid)
             {
-                var inspireDataset = _inspireDatasetService.UpdateInspireDataset(viewModel);
+                var inspireDataset = _inspireDatasetService.UpdateInspireDataset(viewModel, inspireThemesId);
                 return Redirect(inspireDataset.DetailPageUrl());
             }
             ViewBags(viewModel);

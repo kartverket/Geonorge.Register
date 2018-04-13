@@ -167,7 +167,7 @@ namespace Kartverket.Register.Services
             return queryResult.FirstOrDefault();
         }
 
-        public InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel)
+        public InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel, List<Guid> inspireThemsId)
         {
             var inspireDataset = GetInspireDatasetBySystemId(viewModel.SystemId);
             inspireDataset.Name = viewModel.Name;
@@ -195,8 +195,8 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusId = viewModel.DokStatusId;
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
+            inspireDataset.InspireThemesId = inspireThemsId;
 
-            //inspireDataset.InspireTheme = viewModel.InspireTheme;
             if (inspireDataset.InspireDeliveryMetadata != null)
             {
                 inspireDataset.InspireDeliveryMetadata.StatusId = viewModel.MetadataStatusId;

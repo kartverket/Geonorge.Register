@@ -13,7 +13,6 @@ namespace Kartverket.Register.Models
         [Display(Name = "Inspiretema:")]
         public virtual CodelistValue InspireTheme{ get; set; }
 
-
         [ForeignKey("InspireThemes")]
         public ICollection<Guid> InspireThemesId { get; set; }
         [Display(Name = "Inspiretema:")]

@@ -81,15 +81,6 @@
                     </div>
                 </div>
 
-
-                @*<div class="form-group">
-                        @Html.LabelFor(model => model.Kandidatdato, htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.Kandidatdato, new { cssClass = "date" })
-                            @Html.ValidationMessageFor(model => model.Kandidatdato, "", new { @class = "text-danger" })
-                        </div>
-                    </div>*@
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Owner, new { @class = "control-label col-md-3" })
                     <div class="col-md-9">
@@ -112,15 +103,18 @@
                     </div>
                 </div>
 
-                @if (Model.InspireTheme != null)
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.InspireTheme, new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.EditorFor(model => model.InspireTheme.name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InspireThemes, new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+
+                        @for (int i = 0; i < Model.InspireThemes.Count; i++)
+                        {
+                            @Html.EditorFor(model => model.InspireThemes.ElementAt(i).name, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                            @Html.Hidden("inspireThemesId[" + i + "]", Model.InspireThemes.ElementAt(i).systemId)
+                        }
+
                     </div>
-                }
+                </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.ProductSheetUrl, new { @class = "control-label col-md-3" })

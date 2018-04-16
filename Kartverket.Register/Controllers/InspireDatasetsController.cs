@@ -112,7 +112,7 @@ namespace Kartverket.Register.Controllers
         {
             if (ModelState.IsValid)
             {
-                var inspireDataset = _inspireDatasetService.UpdateInspireDataset(viewModel, inspireThemesId);
+                var inspireDataset = _inspireDatasetService.UpdateInspireDataset(viewModel);
                 return Redirect(inspireDataset.DetailPageUrl());
             }
             ViewBags(viewModel);

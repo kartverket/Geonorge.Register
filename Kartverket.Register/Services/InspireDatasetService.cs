@@ -167,7 +167,7 @@ namespace Kartverket.Register.Services
             return queryResult.FirstOrDefault();
         }
 
-        public InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel, List<Guid> inspireThemsId)
+        public InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel)
         {
             var inspireDataset = GetInspireDatasetBySystemId(viewModel.SystemId);
             inspireDataset.Name = viewModel.Name;
@@ -195,7 +195,6 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusId = viewModel.DokStatusId;
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
-            //inspireDataset.InspireThemesId = inspireThemsId;
 
             if (inspireDataset.InspireDeliveryMetadata != null)
             {
@@ -288,8 +287,10 @@ namespace Kartverket.Register.Services
             originalDataset.DatasetThumbnail = inspireDatasetFromKartkatalogen.DatasetThumbnail;
             originalDataset.UuidService = inspireDatasetFromKartkatalogen.UuidService;
 
-            originalDataset.InspireThemes = inspireDatasetFromKartkatalogen.InspireThemes;
-          
+            //originalDataset.InspireThemes = UpdateInspireTheme(originalDataset, inspireDatasetFromKartkatalogen.InspireThemes);
+
+            originalDataset.UpdateInspireTheme(inspireDatasetFromKartkatalogen.InspireThemes);
+
             if (originalDataset.InspireDeliveryMetadata != null)
             {
                 originalDataset.InspireDeliveryMetadata.StatusId =
@@ -352,6 +353,26 @@ namespace Kartverket.Register.Services
             return originalDataset;
         }
 
+
+        //public InspireDataset UpdateInspireTheme(InspireDataset inspireDataset, ICollection<CodelistValue> inspireThemes)
+        //{
+        //    inspireDataset = RemoveInspireTheme(inspireDataset, inspireThemes);
+        //    inspireDataset = AddToList(inspireDataset, inspireThemes);
+        //    return inspireDataset;
+        //}
+
+        //private InspireDataset AddToList(InspireDataset inspireDataset, ICollection<CodelistValue> inspireThemes)
+        //{
+        //    foreach (var inspireTheme in inspireThemes)
+        //    {
+        //        if (inspireDataset.InspireThemes.Any(i => i.systemId == inspireTheme.systemId))
+        //        {
+        //            inspireDataset.InspireThemes.Add(inspireTheme);
+        //        }
+        //    }
+        //    return inspireDataset;
+        //}
+
         public InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset originalDataset)
         {
             var inspireDatasetFromKartkatalogen = _metadataService.FetchInspireDatasetFromKartkatalogen(originalDataset.Uuid);
@@ -360,9 +381,10 @@ namespace Kartverket.Register.Services
 
         public void DeleteInspireDataset(InspireDataset inspireDataset)
         {
+            inspireDataset.InspireThemes.Clear();
+            
             _dbContext.InspireDatasets.Remove(inspireDataset);
 
-            //Todo, må slette deliveryDataset?
             _dbContext.SaveChanges();
         }
 
@@ -417,6 +439,30 @@ namespace Kartverket.Register.Services
                 DeleteInspireDataset(inspireDataset);
             }
         }
+
+        //private InspireDataset RemoveInspireTheme(InspireDataset inspireDataset, ICollection<CodelistValue> inspireThemesToUpdate)
+        //{
+        //    var exists = false;
+        //    var removeDatasets = new List<CodelistValue>();
+
+        //    foreach (var inspireTheme in inspireDataset.InspireThemes)
+        //    {
+        //        if (inspireThemesToUpdate.Any(i => i.systemId == inspireTheme.systemId))
+        //        {
+        //            exists = true;
+        //        }
+        //        if (!exists)
+        //        {
+        //            removeDatasets.Add(inspireTheme);
+        //        }
+        //        exists = false;
+        //    }
+        //    foreach (var inspireTheme in removeDatasets)
+        //    {
+        //        inspireDataset.InspireThemes.Remove(inspireTheme);
+        //    }
+        //    return inspireDataset;
+        //}
 
         private InspireDataset GetInspireDatasetByUuid(string uuid)
         {

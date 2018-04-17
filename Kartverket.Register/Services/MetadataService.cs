@@ -530,7 +530,7 @@ namespace Kartverket.DOK.Service
                             ? data.ContactOwner.Organization.Value
                             : "");
 
-                    inspireDataService.InspireTheme = GetInspireTheme(data.KeywordsInspire);
+                    inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 
                     inspireDataService.Url = data.DistributionUrl;
                     inspireDataService.ServiceType = data.ServiceType.ToString();

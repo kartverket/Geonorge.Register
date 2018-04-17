@@ -674,7 +674,8 @@ namespace Kartverket.Register.Services
 
             originalDataService.Uuid = inspireDataServiceFromKartkatalogen.Uuid;
             originalDataService.InspireDataType = inspireDataServiceFromKartkatalogen.InspireDataType;
-            
+            originalDataService.UpdateInspireTheme(inspireDataServiceFromKartkatalogen.InspireThemes);
+
             if (originalDataService.InspireDeliveryMetadata != null)
             {
                 originalDataService.InspireDeliveryMetadata.StatusId =

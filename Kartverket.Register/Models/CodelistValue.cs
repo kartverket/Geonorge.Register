@@ -47,6 +47,7 @@ namespace Kartverket.Register.Models
 	    public DateTime? ValidToDate { get; set; }
 
         public virtual ICollection<InspireDataset> InspireItems { get; set; }
+        public virtual ICollection<InspireDataService> InspireDataServices { get; set; }
 
         public void AddMissingTranslations()
         {

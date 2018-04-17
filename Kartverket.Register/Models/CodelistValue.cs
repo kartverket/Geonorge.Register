@@ -46,6 +46,9 @@ namespace Kartverket.Register.Models
 	    [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
 	    public DateTime? ValidToDate { get; set; }
 
+        public virtual ICollection<InspireDataset> InspireItems { get; set; }
+        public virtual ICollection<InspireDataService> InspireDataServices { get; set; }
+
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();

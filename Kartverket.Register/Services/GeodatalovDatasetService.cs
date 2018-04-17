@@ -26,7 +26,7 @@ namespace Kartverket.Register.Services
             _registerService = new RegisterService(_dbContext);
             _datasetDeliveryService = new DatasetDeliveryService(_dbContext);
             _registerItemService = new RegisterItemService(_dbContext);
-            _metadataService = new MetadataService();
+            _metadataService = new MetadataService(_dbContext);
         }
 
         public GeodatalovDataset GetGeodatalovDatasetByName(string registerSeoName, string itemSeoName)

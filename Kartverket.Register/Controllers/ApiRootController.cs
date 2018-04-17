@@ -285,8 +285,8 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
             SetLanguage(Request);
-            List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
-            List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
+            List<RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
+            List<Registeritem> ConverteditemsByOwner = new List<Registeritem>();
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
@@ -302,7 +302,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
-            new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();
             return Ok();
         }

@@ -38,6 +38,10 @@ namespace Kartverket.Register.Helpers
                 {
                     routeValueDictionary.Add(key, collection[key]);
                 }
+                if (key == "sorting")
+                {
+                    routeValueDictionary.Remove(key);
+                }
             }
             foreach (var key in nameValueCollection.AllKeys)
             {

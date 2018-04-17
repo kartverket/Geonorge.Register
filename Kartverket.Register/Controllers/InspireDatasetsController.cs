@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Kartverket.DOK.Service;
@@ -24,7 +25,7 @@ namespace Kartverket.Register.Controllers
         public InspireDatasetsController(IInspireDatasetService inspireDatasetService, IAccessControlService accessControllService, IRegisterService registerService, IDatasetDeliveryService datasetDeliveryService, IRegisterItemService registerItemService) {
             _inspireDatasetService = inspireDatasetService;
             _accessControlService = accessControllService;
-            _metadataService = new MetadataService();
+            _metadataService = new MetadataService(_db);
             _registerService = registerService;
             _datasetDeliveryService = datasetDeliveryService;
             _registerItemService = registerItemService;
@@ -107,7 +108,7 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [Route("inspire/{parentRegister}/{registerowner}/{registername}/{itemowner}/{itemname}/rediger")]
         [Route("inspire/{registername}/{itemowner}/{itemname}/rediger")]
-        public ActionResult Edit(InspireDatasetViewModel viewModel)
+        public ActionResult Edit(InspireDatasetViewModel viewModel, List<System.Guid> inspireThemesId)
         {
             if (ModelState.IsValid)
             {

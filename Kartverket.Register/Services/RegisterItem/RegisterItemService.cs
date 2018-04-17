@@ -723,12 +723,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     // InspireDataset
                     case "inspiretheme":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.InspireTheme).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderBy(o => o.InspireThemsAsString()).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspiretheme_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.InspireTheme).ToList();
+                            var sortedList = registerItems.OfType<InspireDatasetViewModel>().OrderByDescending(o => o.InspireThemsAsString()).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadata_status":
@@ -825,12 +825,12 @@ namespace Kartverket.Register.Services.RegisterItem
                     // InspireDataService
                     case "inspire_theme_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.Theme).ToList();
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireThemsAsString()).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_theme_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.Theme).ToList();
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireThemsAsString()).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_serviceType":

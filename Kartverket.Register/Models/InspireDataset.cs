@@ -60,6 +60,11 @@ namespace Kartverket.Register.Models
             return InspireDeliveryMetadata.IsSet();
         }
 
+        public bool WmsIsGoodOrUseable()
+        {
+            return InspireDeliveryWms.IsGoodOrUseable();
+        }
+
         internal bool MetadataIsGoodOrDeficent()
         {
             if (InspireDeliveryMetadata != null)
@@ -107,6 +112,21 @@ namespace Kartverket.Register.Models
             {
                 InspireThemes.Remove(inspireTheme);
             }
+        }
+
+        internal bool WmsAndWfsIsGoodOrUseable()
+        {
+            return InspireDeliveryWfs.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+        }
+
+        internal bool HarmonizedDataAndConformedmetadata()
+        {
+            return InspireDeliveryHarmonizedData.IsGood() || InspireDeliveryMetadata.IsGood();
+        }
+
+        public bool WfsIsGoodOrUseable()
+        {
+            return InspireDeliveryWfs.IsGoodOrUseable();
         }
     }
 

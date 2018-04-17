@@ -349,7 +349,7 @@ namespace Kartverket.Register.Models.Api
                 ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.description;
                 Requests = inspireDataService.Requests;
                 ServiceUrl = inspireDataService.Url;
-                InspireTheme = inspireDataService.InspireThemes.ToString(); // TODO
+                //InspireTheme = inspireDataService.InspireTheme; // TODO
                 NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.IsSds();
                 UuidMetadata = inspireDataService.Uuid;

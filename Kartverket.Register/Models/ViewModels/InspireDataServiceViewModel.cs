@@ -84,7 +84,7 @@ namespace Kartverket.Register.Models.ViewModels
                 NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.IsSds();
                 Url = inspireDataService.Url;
-                InspireThemes = inspireDataService.InspireThemes;
+                //InspireThemes = inspireDataService.InspireTheme;
                 Uuid = inspireDataService.Uuid;
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + Uuid;
                 Area = inspireDataService.Area;

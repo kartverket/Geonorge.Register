@@ -57,6 +57,14 @@ namespace Kartverket.Register.Services
         private int _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata;
         private int _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata;
 
+        private double _AccumulatedCurrentAreaByAnnexI;
+        private double _AccumulatedCurrentAreaByAnnexII;
+        private double _AccumulatedCurrentAreaByAnnexIII;
+
+        public double _AccumulatedRelevantAreaByAnnexI;
+        public double _AccumulatedRelevantAreaByAnnexII;
+        public double _AccumulatedRelevantAreaByAnnexIII;
+
 
         public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister)
         {
@@ -111,7 +119,17 @@ namespace Kartverket.Register.Services
             _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata();
             _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata();
             _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata();
+
+            _AccumulatedCurrentAreaByAnnexI = AccumulatedCurrentAreaByAnnexI();
+            _AccumulatedCurrentAreaByAnnexII = AccumulatedCurrentAreaByAnnexII();
+            _AccumulatedCurrentAreaByAnnexIII = AccumulatedCurrentAreaByAnnexIII();
+
+            _AccumulatedRelevantAreaByAnnexI = AccumulatedRelevantAreaByAnnexI();
+            _AccumulatedRelevantAreaByAnnexII = AccumulatedRelevantAreaByAnnexII();
+            _AccumulatedRelevantAreaByAnnexIII = AccumulatedRelevantAreaByAnnexIII();
         }
+
+
 
         public Monitoring Mapping()
         {
@@ -125,12 +143,13 @@ namespace Kartverket.Register.Services
             return monitoring;
         }
 
+
         private Indicators MappingIndicators()
         {
             Indicators indicators = new Indicators();
 
             indicators.NnConformityIndicators = GetNnConformityIndicators();
-            indicators.GeoCoverageIndicators = new GeoCoverageIndicators();
+            indicators.GeoCoverageIndicators = GetGeoCoverageIndicators();
             indicators.UseNNindicators = GetUseNNindicators();
             indicators.MetadataExistenceIndicators = GetMetadataExsistensIndicators();
             indicators.DiscoveryMetadataIndicators = GetDiscoveryMetadataIndicators();
@@ -140,71 +159,6 @@ namespace Kartverket.Register.Services
             indicators.SdsConformantIndicators = GetSdsConformantIndicators();
 
             return indicators;
-        }
-
-        private SdsConformantIndicators GetSdsConformantIndicators()
-        {
-            SdsConformantIndicators sdsConformantIndicators = new SdsConformantIndicators();
-            sdsConformantIndicators.DSi21 = ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex1 med konforme metadata og harmoniserte datasett (<DSv21>/<DSv_Num1>)
-            sdsConformantIndicators.DSi22 = ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex2 med konforme metadata og harmoniserte datasett (<DSv22>/<DSv_Num2>)
-            sdsConformantIndicators.DSi23 = ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex3 med konforme metadata og harmoniserte datasett (<DSv23>/<DSv_Num3>)
-            sdsConformantIndicators.DSi2 = ProportionOfDatasetWithHarmonizedDataAndConformedMetadata(); // Andel datasettt fra Annex1,2,3 med konforme metadata og harmoniserte datasett (<DSv2>/<DSv_Num>)
-            sdsConformantIndicators.SdsConformant = GetSdsConformant();
-
-            return sdsConformantIndicators;
-        }
-
-
-
-        private SdsConformant GetSdsConformant()
-        {
-            SdsConformant sdsConformant = new SdsConformant();
-            sdsConformant.DSv21 = _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex1 med harmoniserte data og konforme metadata (Dtasett where <AnnexI>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv22 = _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex2 med harmoniserte data og konforme metadata (Dtasett where <AnnexII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv23 = _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex3 med harmoniserte data og konforme metadata (Dtasett where <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv2 = _NumberOfDatasetsWithHarmonizedDataAndConformedMetadata; // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            return sdsConformant;
-        }
-
-        private ViewDownloadAccessibilityIndicators GetViewDownloadAccessibilityIndicators()
-        {
-            ViewDownloadAccessibilityIndicators viewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
-            viewDownloadAccessibilityIndicators.NSi21 = ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
-            viewDownloadAccessibilityIndicators.NSi22 = ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
-            viewDownloadAccessibilityIndicators.NSi2 = ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
-            viewDownloadAccessibilityIndicators.ViewDownloadAccessibility = GetViewDownloadAccessibility();
-
-            return viewDownloadAccessibilityIndicators;
-        }
-
-        private ViewDownloadAccessibility GetViewDownloadAccessibility()
-        {
-            ViewDownloadAccessibility viewDownloadAccessibility = new ViewDownloadAccessibility();
-            viewDownloadAccessibility.NSv21 = _NumberOfDatasetsAvailableThroughViewService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
-            viewDownloadAccessibility.NSv22 = _NumberOfDatasetsAvailableThroughDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
-            viewDownloadAccessibility.NSv23 = _NumberOfDatasetsAvailableThroughViewOrDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
-
-            return viewDownloadAccessibility;
-        }
-
-
-        private DiscoveryMetadataIndicators GetDiscoveryMetadataIndicators()
-        {
-            DiscoveryMetadataIndicators discoveryMetadataIndicators = new DiscoveryMetadataIndicators();
-            discoveryMetadataIndicators.NSi11 = 0; // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
-            discoveryMetadataIndicators.NSi12 = 0; // Andel tjenester som er registrert i en discovery service (<NSv11>/<DSv_Num>)
-            discoveryMetadataIndicators.NSi1 = 0; // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
-            discoveryMetadataIndicators.DiscoveryMetadata = GetDiscoveryMetadata();
-
-            return discoveryMetadataIndicators;
-        }
-
-        private DiscoveryMetadata GetDiscoveryMetadata()
-        {
-            DiscoveryMetadata discoveryMetadata = new DiscoveryMetadata();
-            discoveryMetadata.NSv11 = 0; // Antall datasett som er registrert i en discovery service (Alle datasett)
-            discoveryMetadata.NSv12 = 0; // Antall tjenester som er registrert i en discovery service (Alle datasett) ?? Tjenester?
-            return discoveryMetadata;
         }
 
         private NnConformityIndicators GetNnConformityIndicators()
@@ -234,6 +188,34 @@ namespace Kartverket.Register.Services
             return nnConformity;
         }
 
+        private GeoCoverageIndicators GetGeoCoverageIndicators()
+        {
+            GeoCoverageIndicators geoCoverageIndicators = new GeoCoverageIndicators();
+            geoCoverageIndicators.DSi11 = 0; // <DSv11_ActArea>/<DSv11_RelArea>
+            geoCoverageIndicators.DSi12 = 0; // <DSv12_ActArea>/<DSv12_RelArea>
+            geoCoverageIndicators.DSi13 = 0; // <DSv13_ActArea>/<DSv13_RelArea>
+            geoCoverageIndicators.DSi1 = 0; // <DSv1_ActArea>/<DSv1_RelArea> 
+
+            geoCoverageIndicators.GeoCoverageSDS = GetGeoCoverageSDS();
+
+            return geoCoverageIndicators;
+        }
+
+        private GeoCoverageSDS GetGeoCoverageSDS()
+        {
+            GeoCoverageSDS geoCoverageSDS = new GeoCoverageSDS();
+            geoCoverageSDS.DSv11_ActArea = _AccumulatedCurrentAreaByAnnexI; // Akkumulert aktuelt areal (<actualArea>) for alle Annex1 data
+            geoCoverageSDS.DSv12_ActArea = _AccumulatedCurrentAreaByAnnexII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex2 data
+            geoCoverageSDS.DSv13_ActArea = _AccumulatedCurrentAreaByAnnexIII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex3 data
+            geoCoverageSDS.DSv1_ActArea = AccumulatedCurrentAreaByAnnex(); // Akkumulert aktuelt areal (<actualArea>) for alle Annex1, Annex2 og Annex3 data
+            geoCoverageSDS.DSv11_RelArea = _AccumulatedRelevantAreaByAnnexI; // Akkumulert relevant areal (<relevantArea>) for alle Annex1 data
+            geoCoverageSDS.DSv12_RelArea = _AccumulatedRelevantAreaByAnnexII; // Akkumulert relevant areal (<relevantArea>) for alle Annex2 data
+            geoCoverageSDS.DSv13_RelArea = _AccumulatedRelevantAreaByAnnexIII; // Akkumulert relevant areal (<relevantArea>) for alle Annex3 data
+            geoCoverageSDS.DSv1_RelArea = AccumulatedRelevantAreaByAnnex(); // Akkumulert relevant areal (<relevantArea>) for alle Annex1, Annex2 og Annex3 data
+            return geoCoverageSDS;
+        }
+
+
 
         private UseNNindicators GetUseNNindicators()
         {
@@ -262,6 +244,72 @@ namespace Kartverket.Register.Services
             return useNN;
         }
 
+        private MetadataExistenceIndicators GetMetadataExsistensIndicators()
+        {
+            MetadataExistenceIndicators metadataExistenceIndicators = new MetadataExistenceIndicators();
+            metadataExistenceIndicators.MDi11 = ProportionOfDatasetsWithMetadataByAnnexI();  // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
+            metadataExistenceIndicators.MDi12 = ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
+            metadataExistenceIndicators.MDi13 = ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
+            metadataExistenceIndicators.MDi14 = ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv1_DS>/<NSv_NumAllServ>)
+            metadataExistenceIndicators.MDi1 = ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata
+
+            metadataExistenceIndicators.MetadataExistence = GetMetadataExistence();
+
+            return metadataExistenceIndicators;
+        }
+
+        private MetadataExistence GetMetadataExistence()
+        {
+            MetadataExistence metadataExistence = new MetadataExistence();
+            metadataExistence.MDv11 = _NumberOfDatasetsByAnnexIWithMetadata; // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
+            metadataExistence.MDv12 = _NumberOfDatasetsByAnnexIIWithMetadata; // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
+            metadataExistence.MDv13 = _NumberOfDatasetsByAnnexIIIWithMetadata; // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+            metadataExistence.MDv1_DS = _NumberOfDatasetsWithMetadata; // Antall datasett som har metadata (Alle datasett)
+            metadataExistence.MDv14 = _NumberOfServicesWithMetadata; // Antall tjenester som har metadata (Alle tjenester)
+            return metadataExistence;
+        }
+
+
+        // TODO
+        private DiscoveryMetadataIndicators GetDiscoveryMetadataIndicators()
+        {
+            DiscoveryMetadataIndicators discoveryMetadataIndicators = new DiscoveryMetadataIndicators();
+            discoveryMetadataIndicators.NSi11 = 0; // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+            discoveryMetadataIndicators.NSi12 = 0; // Andel tjenester som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+            discoveryMetadataIndicators.NSi1 = 0; // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
+            discoveryMetadataIndicators.DiscoveryMetadata = GetDiscoveryMetadata();
+
+            return discoveryMetadataIndicators;
+        }
+
+        private DiscoveryMetadata GetDiscoveryMetadata()
+        {
+            DiscoveryMetadata discoveryMetadata = new DiscoveryMetadata();
+            discoveryMetadata.NSv11 = 0; // Antall datasett som er registrert i en discovery service (Alle datasett)
+            discoveryMetadata.NSv12 = 0; // Antall tjenester som er registrert i en discovery service (Alle datasett) ?? Tjenester?
+            return discoveryMetadata;
+        }
+
+        private ViewDownloadAccessibilityIndicators GetViewDownloadAccessibilityIndicators()
+        {
+            ViewDownloadAccessibilityIndicators viewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
+            viewDownloadAccessibilityIndicators.NSi21 = ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
+            viewDownloadAccessibilityIndicators.NSi22 = ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
+            viewDownloadAccessibilityIndicators.NSi2 = ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
+            viewDownloadAccessibilityIndicators.ViewDownloadAccessibility = GetViewDownloadAccessibility();
+
+            return viewDownloadAccessibilityIndicators;
+        }
+
+        private ViewDownloadAccessibility GetViewDownloadAccessibility()
+        {
+            ViewDownloadAccessibility viewDownloadAccessibility = new ViewDownloadAccessibility();
+            viewDownloadAccessibility.NSv21 = _NumberOfDatasetsAvailableThroughViewService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
+            viewDownloadAccessibility.NSv22 = _NumberOfDatasetsAvailableThroughDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
+            viewDownloadAccessibility.NSv23 = _NumberOfDatasetsAvailableThroughViewOrDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
+
+            return viewDownloadAccessibility;
+        }
 
         private SpatialDataAndService GetSpatialDataAndService()
         {
@@ -282,35 +330,45 @@ namespace Kartverket.Register.Services
             return spatialDataAndService;
         }
 
-
-        private MetadataExistenceIndicators GetMetadataExsistensIndicators()
+        private SdsConformantIndicators GetSdsConformantIndicators()
         {
-            MetadataExistenceIndicators metadataExistenceIndicators = new MetadataExistenceIndicators();
-            metadataExistenceIndicators.MDi11 = ProportionOfDatasetsWithMetadataByAnnexI();  // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
-            metadataExistenceIndicators.MDi12 = ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
-            metadataExistenceIndicators.MDi13 = ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
-            metadataExistenceIndicators.MDi14 = ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv1_DS>/<NSv_NumAllServ>)
-            metadataExistenceIndicators.MDi1 = ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata
+            SdsConformantIndicators sdsConformantIndicators = new SdsConformantIndicators();
+            sdsConformantIndicators.DSi21 = ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex1 med konforme metadata og harmoniserte datasett (<DSv21>/<DSv_Num1>)
+            sdsConformantIndicators.DSi22 = ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex2 med konforme metadata og harmoniserte datasett (<DSv22>/<DSv_Num2>)
+            sdsConformantIndicators.DSi23 = ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex3 med konforme metadata og harmoniserte datasett (<DSv23>/<DSv_Num3>)
+            sdsConformantIndicators.DSi2 = ProportionOfDatasetWithHarmonizedDataAndConformedMetadata(); // Andel datasettt fra Annex1,2,3 med konforme metadata og harmoniserte datasett (<DSv2>/<DSv_Num>)
+            sdsConformantIndicators.SdsConformant = GetSdsConformant();
 
-            metadataExistenceIndicators.MetadataExistence = GetMetadataExistence();
+            return sdsConformantIndicators;
+        }
 
-            return metadataExistenceIndicators;
+        private SdsConformant GetSdsConformant()
+        {
+            SdsConformant sdsConformant = new SdsConformant();
+            sdsConformant.DSv21 = _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex1 med harmoniserte data og konforme metadata (Dtasett where <AnnexI>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv22 = _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex2 med harmoniserte data og konforme metadata (Dtasett where <AnnexII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv23 = _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex3 med harmoniserte data og konforme metadata (Dtasett where <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv2 = _NumberOfDatasetsWithHarmonizedDataAndConformedMetadata; // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            return sdsConformant;
         }
 
 
-        private MetadataExistence GetMetadataExistence()
-        {
-            MetadataExistence metadataExistence = new MetadataExistence();
-            metadataExistence.MDv11 = _NumberOfDatasetsByAnnexIWithMetadata; // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
-            metadataExistence.MDv12 = _NumberOfDatasetsByAnnexIIWithMetadata; // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
-            metadataExistence.MDv13 = _NumberOfDatasetsByAnnexIIIWithMetadata; // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
-            metadataExistence.MDv1_DS = _NumberOfDatasetsWithMetadata; // Antall datasett som har metadata (Alle datasett)
-            metadataExistence.MDv14 = _NumberOfServicesWithMetadata; // Antall tjenester som har metadata (Alle tjenester)
-            return metadataExistence;
-        }
 
 
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         private MonitoringMD MappingMonitoringMd()
@@ -567,8 +625,24 @@ namespace Kartverket.Register.Services
             return themesArray;
         }
 
-        private double Divide(int x, int y) {
-            return (double) x / y; 
+        private double Divide(int x, int y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
         }
 
 
@@ -777,10 +851,10 @@ namespace Kartverket.Register.Services
             {
                 if (item is InspireDataService inspireDataService)
                 {
-                        if (inspireDataService.ServiceType == "download")
-                        {
-                            number += inspireDataService.Requests;
-                        }
+                    if (inspireDataService.ServiceType == "download")
+                    {
+                        number += inspireDataService.Requests;
+                    }
                 }
             }
             return number;
@@ -1060,6 +1134,113 @@ namespace Kartverket.Register.Services
 
 
 
+        private double AccumulatedCurrentAreaByAnnex()
+        {
+            return _AccumulatedCurrentAreaByAnnexI + _AccumulatedCurrentAreaByAnnexII + _AccumulatedCurrentAreaByAnnexIII;
+        }
+
+        private double AccumulatedCurrentAreaByAnnexI()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.Area;
+                    }
+                }
+            }
+            return number;
+        }
+
+        private double AccumulatedCurrentAreaByAnnexII()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.Area;
+                    }
+                }
+            }
+            return number;
+        }
+
+        private double AccumulatedCurrentAreaByAnnexIII()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.Area;
+                    }
+                }
+            }
+            return number;
+        }
+
+
+        private double AccumulatedRelevantAreaByAnnexI()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.RelevantArea;
+                    }
+                }
+            }
+            return number;
+        }
+
+        private double AccumulatedRelevantAreaByAnnexII()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.RelevantArea;
+                    }
+                }
+            }
+            return number;
+        }
+
+        private double AccumulatedRelevantAreaByAnnexIII()
+        {
+            var number = 0;
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
+                    {
+                        number += inspireDataset.RelevantArea;
+                    }
+                }
+            }
+            return number;
+        }
+
+        private double AccumulatedRelevantAreaByAnnex()
+        {
+            return _AccumulatedRelevantAreaByAnnexI + _AccumulatedRelevantAreaByAnnexII + _AccumulatedRelevantAreaByAnnexIII;
+        }
+
         // **** Propotion of... ***
 
         private double AverageNumberOfCallsByServiceTypeDownload()
@@ -1154,7 +1335,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfDatasetsAvailableThroughViewAndDownloadService()
         {
-            return Divide(_NumberOfDatasetsAvailableThroughViewOrDownloadService , (_NumberOfServicesByServiceTypeDownload + _NumberOfServicesByServiceTypeView));
+            return Divide(_NumberOfDatasetsAvailableThroughViewOrDownloadService, (_NumberOfServicesByServiceTypeDownload + _NumberOfServicesByServiceTypeView));
         }
 
         private double ProportionOfServicesWhereConformityIsTrue()

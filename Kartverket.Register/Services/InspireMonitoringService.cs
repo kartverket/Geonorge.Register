@@ -25,6 +25,9 @@ namespace Kartverket.Register.Services
         public int _NumberOfDatasetsWithMetadata;
         public int _NumberOfServicesWithMetadata;
 
+        public int _NumberOfDatasetsRegisteredInADiscoveryService;
+        public int _NumberOfServicesRegisteredInADiscoveryService;
+
         public int _NumberOfServicesByServiceTypeDownload;
         public int _NumberOfServicesByServiceTypeView;
         public int _NumberOfServicesByServiceTypeDiscovery;
@@ -89,6 +92,9 @@ namespace Kartverket.Register.Services
             _NumberOfDatasetsWithMetadata = NumberOfDatasetsWithMetadata();
             _NumberOfServicesWithMetadata = NumberOfServicesWithMetadata();
 
+            _NumberOfDatasetsRegisteredInADiscoveryService = NumberOfDatasetsRegisteredInADiscoveryService();
+            _NumberOfServicesRegisteredInADiscoveryService = NumberOfServicesRegisteredInADiscoveryService();
+
             _NumberOfServicesByServiceTypeDownload = NumberOfServicesByServiceType("download");
             _NumberOfServicesByServiceTypeView = NumberOfServicesByServiceType("view");
             _NumberOfServicesByServiceTypeDiscovery = NumberOfServicesByServiceType("discovery");
@@ -128,7 +134,6 @@ namespace Kartverket.Register.Services
             _AccumulatedRelevantAreaByAnnexII = AccumulatedRelevantAreaByAnnexII();
             _AccumulatedRelevantAreaByAnnexIII = AccumulatedRelevantAreaByAnnexIII();
         }
-
 
 
         public Monitoring Mapping()
@@ -270,23 +275,24 @@ namespace Kartverket.Register.Services
         }
 
 
-        // TODO
+    
         private DiscoveryMetadataIndicators GetDiscoveryMetadataIndicators()
         {
             DiscoveryMetadataIndicators discoveryMetadataIndicators = new DiscoveryMetadataIndicators();
-            discoveryMetadataIndicators.NSi11 = 0; // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
-            discoveryMetadataIndicators.NSi12 = 0; // Andel tjenester som er registrert i en discovery service (<NSv11>/<DSv_Num>)
-            discoveryMetadataIndicators.NSi1 = 0; // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
+            discoveryMetadataIndicators.NSi11 = ProportionOfDatasetsRegisteredInADiscoveryService(); // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+            discoveryMetadataIndicators.NSi12 = ProportionOfServicesRegisteredInADiscoveryService(); // Andel tjenester som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+            discoveryMetadataIndicators.NSi1 = ProportionOfServicesAndDatasetsRegisteredInADiscoveryService(); // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
             discoveryMetadataIndicators.DiscoveryMetadata = GetDiscoveryMetadata();
 
             return discoveryMetadataIndicators;
         }
 
+
         private DiscoveryMetadata GetDiscoveryMetadata()
         {
             DiscoveryMetadata discoveryMetadata = new DiscoveryMetadata();
-            discoveryMetadata.NSv11 = 0; // Antall datasett som er registrert i en discovery service (Alle datasett)
-            discoveryMetadata.NSv12 = 0; // Antall tjenester som er registrert i en discovery service (Alle datasett) ?? Tjenester?
+            discoveryMetadata.NSv11 = _NumberOfDatasetsRegisteredInADiscoveryService; // Antall datasett som er registrert i en discovery service (Alle datasett)
+            discoveryMetadata.NSv12 = _NumberOfServicesRegisteredInADiscoveryService; // Antall tjenester som er registrert i en discovery service (Alle tjenester)
             return discoveryMetadata;
         }
 
@@ -711,6 +717,35 @@ namespace Kartverket.Register.Services
 
 
         // **** Number of... ***
+
+        private int NumberOfServicesRegisteredInADiscoveryService()
+        {
+            int number = 0;
+
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    number++;
+                }
+            }
+            return number;
+        }
+
+        private int NumberOfDatasetsRegisteredInADiscoveryService()
+        {
+            int number = 0;
+
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    number++;
+                }
+            }
+            return number;
+        }
+
         private int NumberOfServicesByServiceTypeWhereConformityIsTrue(string serviceType = null)
         {
             int number = 0;
@@ -1243,6 +1278,7 @@ namespace Kartverket.Register.Services
 
         // **** Propotion of... ***
 
+
         private double AverageNumberOfCallsByServiceTypeDownload()
         {
             return Divide(_NumberOfCallsByServiceTypeDownload, _NumberOfServicesByServiceTypeDownload);
@@ -1272,6 +1308,17 @@ namespace Kartverket.Register.Services
         {
             return Divide(_NumberOfCallsByServiceType, _NumberOfServicesByServiceType);
         }
+
+        private double ProportionOfDatasetsRegisteredInADiscoveryService()
+        {
+            return Divide(_NumberOfDatasetsRegisteredInADiscoveryService, _NumberOfDatasetsByAnnex);
+        }
+
+        private double ProportionOfServicesRegisteredInADiscoveryService()
+        {
+            return Divide(_NumberOfServicesRegisteredInADiscoveryService, _NumberOfServicesByServiceType);
+        }
+
 
         private double ProportionOfDatasetsWithMetadataByAnnexI()
         {
@@ -1366,6 +1413,11 @@ namespace Kartverket.Register.Services
         private double ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue()
         {
             return Divide(_NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue, _NumberOfServicesByServiceTypeInvoke);
+        }
+
+        private double ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
+        {
+            return Divide((_NumberOfDatasetsRegisteredInADiscoveryService + _NumberOfServicesRegisteredInADiscoveryService), (_NumberOfDatasetsByAnnex + _NumberOfServicesByServiceType));
         }
     }
 }

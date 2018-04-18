@@ -386,7 +386,30 @@ namespace Kartverket.Register.Controllers
                         }
                         if (originalCoverage == null)
                         {
-                            originalDataset.Coverage.Add(CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound));
+                            var coverageNew = CreateNewCoverage(item, originalDataset, municipalityCode, coverageFound);
+                            _db.Database.ExecuteSqlCommand(
+                                "INSERT INTO CoverageDatasets (ConfirmedDok, Coverage, Note," +
+                                "RegionalPlan, MunicipalSocialPlan, MunicipalLandUseElementPlan, ZoningPlanArea, ZoningPlanDetails, " +
+                                "BuildingMatter, PartitionOff, EenvironmentalImpactAssessment, SuitabilityAssessmentText, " +
+                                "CoverageId, MunicipalityId, DatasetId, CoverageDOKStatusId  ) " +
+                                " VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15 " +
+                                ")",
+                                coverageNew.ConfirmedDok,
+                                coverageFound,
+                                coverageNew.Note,
+                                item.RegionalPlan,
+                                item.MunicipalSocialPlan,
+                                item.MunicipalLandUseElementPlan,
+                                item.ZoningPlanArea,
+                                item.ZoningPlanDetails,
+                                item.BuildingMatter,
+                                item.PartitionOff,
+                                item.EnvironmentalImpactAssessment,
+                                item.SuitabilityAssessmentText,
+                                coverageNew.CoverageId,
+                                coverageNew.MunicipalityId,
+                                originalDataset.systemId,
+                                coverageNew.CoverageDOKStatusId);
                         }
                         else
                         {
@@ -404,9 +427,9 @@ namespace Kartverket.Register.Controllers
                                 "EenvironmentalImpactAssessment = @p10, " +
                                 "SuitabilityAssessmentText = @p11 " +
                                 "WHERE CoverageId = @p12",
-                                item.Confirmed, 
-                                coverageFound, 
-                                item.Note, 
+                                item.Confirmed,
+                                coverageFound,
+                                item.Note,
                                 item.RegionalPlan,
                                 item.MunicipalSocialPlan,
                                 item.MunicipalLandUseElementPlan,
@@ -416,14 +439,12 @@ namespace Kartverket.Register.Controllers
                                 item.PartitionOff,
                                 item.EnvironmentalImpactAssessment,
                                 item.SuitabilityAssessmentText,
-                                originalCoverage.CoverageId);                                                                                  
+                                originalCoverage.CoverageId);
                         }
                     }
                 }
 
                 _db.Database.ExecuteSqlCommand("update Registers set modified = GETDATE() where systemid='E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8'");
-
-                _db.SaveChanges();
 
                 return Redirect("/register/det-offentlige-kartgrunnlaget-kommunalt?municipality=" + municipalityCode);
             }
@@ -519,7 +540,6 @@ namespace Kartverket.Register.Controllers
                 MunicipalityId = municipality.systemId,
                 Note = item.Note
             };
-            _db.CoverageDatasets.Add(coverage);
             return coverage;
         }
 

@@ -196,15 +196,16 @@ namespace Kartverket.Register.Services
         private GeoCoverageIndicators GetGeoCoverageIndicators()
         {
             GeoCoverageIndicators geoCoverageIndicators = new GeoCoverageIndicators();
-            geoCoverageIndicators.DSi11 = 0; // <DSv11_ActArea>/<DSv11_RelArea>
-            geoCoverageIndicators.DSi12 = 0; // <DSv12_ActArea>/<DSv12_RelArea>
-            geoCoverageIndicators.DSi13 = 0; // <DSv13_ActArea>/<DSv13_RelArea>
-            geoCoverageIndicators.DSi1 = 0; // <DSv1_ActArea>/<DSv1_RelArea> 
+            geoCoverageIndicators.DSi11 = ProportionOfArealByAnnexI(); // <DSv11_ActArea>/<DSv11_RelArea>
+            geoCoverageIndicators.DSi12 = ProportionOfArealByAnnexII(); // <DSv12_ActArea>/<DSv12_RelArea>
+            geoCoverageIndicators.DSi13 = ProportionOfArealByAnnexIII(); // <DSv13_ActArea>/<DSv13_RelArea>
+            geoCoverageIndicators.DSi1 = ProportionOfArealByAnnex(); // <DSv1_ActArea>/<DSv1_RelArea> 
 
             geoCoverageIndicators.GeoCoverageSDS = GetGeoCoverageSDS();
 
             return geoCoverageIndicators;
         }
+
 
         private GeoCoverageSDS GetGeoCoverageSDS()
         {
@@ -642,6 +643,26 @@ namespace Kartverket.Register.Services
                 else
                 {
                     return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
+        }
+
+        private double Divide(double x, double y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return x / y;
                 }
             }
             catch (Exception e)
@@ -1418,6 +1439,26 @@ namespace Kartverket.Register.Services
         private double ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
         {
             return Divide((_NumberOfDatasetsRegisteredInADiscoveryService + _NumberOfServicesRegisteredInADiscoveryService), (_NumberOfDatasetsByAnnex + _NumberOfServicesByServiceType));
+        }
+
+        private double ProportionOfArealByAnnexI()
+        {
+            return Divide(_AccumulatedCurrentAreaByAnnexI, _AccumulatedRelevantAreaByAnnexI);
+        }
+
+        private double ProportionOfArealByAnnexII()
+        {
+            return Divide(_AccumulatedCurrentAreaByAnnexII, _AccumulatedRelevantAreaByAnnexII);
+        }
+
+        private double ProportionOfArealByAnnexIII()
+        {
+            return Divide(_AccumulatedCurrentAreaByAnnexIII, _AccumulatedRelevantAreaByAnnexIII);
+        }
+
+        private double ProportionOfArealByAnnex()
+        {
+            return Divide(AccumulatedCurrentAreaByAnnex(), AccumulatedRelevantAreaByAnnex());
         }
     }
 }

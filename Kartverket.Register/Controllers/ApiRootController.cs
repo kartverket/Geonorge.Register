@@ -90,7 +90,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             var inspireStatusRegister = _registerService.GetInspireStatusRegister();
-            Monitoring inspireMonitoring = _inspireMonitoringService.Mapping(inspireStatusRegister);
+            Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
             return Ok(inspireMonitoring);
         }
 

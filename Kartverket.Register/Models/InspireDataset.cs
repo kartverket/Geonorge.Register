@@ -55,6 +55,11 @@ namespace Kartverket.Register.Models
         public Guid InspireDeliverySpatialDataServiceId { get; set; }
         public virtual DatasetDelivery InspireDeliverySpatialDataService { get; set; }
 
+        [Display(Name = "Areal")]
+        public int Area { get; set; }
+        [Display(Name = "Relevant areal")]
+        public int RelevantArea { get; set; }
+
         public bool HaveMetadata()
         {
             return InspireDeliveryMetadata.IsSet();

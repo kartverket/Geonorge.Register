@@ -195,6 +195,8 @@ namespace Kartverket.Register.Services
             inspireDataset.DokStatusId = viewModel.DokStatusId;
             inspireDataset.DokStatusDateAccepted = viewModel.GetDateAccepted();
             inspireDataset.UuidService = viewModel.UuidService;
+            inspireDataset.Area = viewModel.Area;
+            inspireDataset.RelevantArea = viewModel.RelevantArea;
 
             if (inspireDataset.InspireDeliveryMetadata != null)
             {
@@ -741,8 +743,6 @@ namespace Kartverket.Register.Services
         {
             var originalInspireDataService = GetInspireDataServiceById(inspireDataService.SystemId);
             originalInspireDataService.Requests = inspireDataService.Requests;
-            originalInspireDataService.Area = inspireDataService.Area;
-            originalInspireDataService.RelevantArea = inspireDataService.RelevantArea;
             originalInspireDataService.Conformity = inspireDataService.Conformity;
 
             _dbContext.Entry(originalInspireDataService).State = EntityState.Modified;

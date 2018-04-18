@@ -30,10 +30,6 @@ namespace Kartverket.Register.Models
 
         public string ServiceType { get; set; } 
         public string Uuid { get; set; }
-        [Display(Name = "Areal")]
-        public int Area { get; set; }
-        [Display(Name = "Relevant areal")]
-        public int RelevantArea { get; set; }
 
         public bool Conformity { get; set; }
 

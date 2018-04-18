@@ -815,6 +815,14 @@
     <Compile Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.Designer.cs">
       <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs" />
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.Designer.cs">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.cs" />
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.Designer.cs">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1949,6 +1957,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.resx">
       <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.resx">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.resx">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

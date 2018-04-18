@@ -65,6 +65,11 @@ namespace Kartverket.Register.Models.ViewModels
         public string SpatialDataServiceNote { get; set; }
         public bool SpatialDataServiceAutoUpdate { get; set; }
 
+        [Display(Name = "Areal")]
+        public int Area { get; set; }
+        [Display(Name = "Relevant areal")]
+        public int RelevantArea { get; set; }
+
         public InspireDatasetViewModel(InspireDataset item)
         {
             Update(item);
@@ -142,6 +147,9 @@ namespace Kartverket.Register.Models.ViewModels
                     SpatialDataServiceNote = inspireDataset.InspireDeliverySpatialDataService.Note;
                     SpatialDataServiceAutoUpdate = inspireDataset.InspireDeliverySpatialDataService.AutoUpdate;
                 }
+                Area = inspireDataset.Area;
+                RelevantArea = inspireDataset.RelevantArea;
+
                 UpdateDataset(inspireDataset);
             }
         }

@@ -181,11 +181,11 @@ namespace Kartverket.Register.Services
         {
             var rowData = new RowData();
             rowData.SpatialDataSet = GetSpatialDataSets();
-            rowData.SpatialDataService = MappingSpatialDataServices();
+            rowData.SpatialDataService = GetSpatialDataServices();
             return rowData;
         }
 
-        private SpatialDataService[] MappingSpatialDataServices()
+        private SpatialDataService[] GetSpatialDataServices()
         {
             List<SpatialDataService> spatialDataServices = new List<SpatialDataService>();
 
@@ -205,10 +205,37 @@ namespace Kartverket.Register.Services
             spatialDataService.name = inspireDataService.Name;
             spatialDataService.respAuthority = inspireDataService.Owner.name;
             spatialDataService.uuid = inspireDataService.Uuid;
-            //spatialDataService.Themes = MappingThemes(services.InspireTheme);
-            //spatialDataService.MdServiceExistence = MappingServiceExistence(services);
-            //spatialDataService.NetworkService = MappingNetworkService(services);
+            spatialDataService.Themes = GetThemes(inspireDataService.InspireThemes);
+            spatialDataService.MdServiceExistence = MappingServiceExistence(inspireDataService);
+            spatialDataService.NetworkService = MappingNetworkService(inspireDataService);
             return spatialDataService;
+        }
+
+        private NetworkService MappingNetworkService(InspireDataService inspireDataService)
+        {
+            NetworkService networkService = new NetworkService();
+            networkService.directlyAccessible = inspireDataService.IsNetworkService() ; //Er dette en Network Service" Skal settes til "true" for <NnServiceType> in (discovery, view, download, transformation, invoke)
+            networkService.URL = inspireDataService.Url;
+            networkService.userRequest = inspireDataService.Requests;
+            try
+            {
+                networkService.NnServiceType = (NnServiceType)Enum.Parse(typeof(NnServiceType), inspireDataService.ServiceType);
+            }
+            catch (Exception)
+            {
+            }
+           
+            return networkService;
+        }
+
+        private MdServiceExistence MappingServiceExistence(InspireDataService InspireDataService)
+        {
+            MdServiceExistence mdServiceExistence = new MdServiceExistence();
+            mdServiceExistence.mdConformity = InspireDataService.MetadataIsGood(); // Metadatakrav oppfylt -  Skal settes til "true"
+            mdServiceExistence.discoveryAccessibility = true; // Metadata for tjeneste tilgjengelig gjennom søketjeneste Skal settes til "true"
+            mdServiceExistence.discoveryAccessibilityUuid = InspireDataService.Uuid; // UUID til metadata for tjenesten
+
+            return mdServiceExistence;
         }
 
         private SpatialDataSet[] GetSpatialDataSets()
@@ -229,38 +256,47 @@ namespace Kartverket.Register.Services
         {
             var spatialDataset = new SpatialDataSet();
             spatialDataset.name = inspireDataset.Name;
-            spatialDataset.respAuthority = inspireDataset.Owner.shortname;
+            spatialDataset.respAuthority = inspireDataset.Owner.name;
             spatialDataset.uuid = inspireDataset.Uuid;
             spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
-            spatialDataset.Coverage = MappingCoverage();
-            spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
+            spatialDataset.Coverage = GetCoverage(inspireDataset);
+            spatialDataset.MdDataSetExistence = GetMdDatasetEcistence(inspireDataset);
             return spatialDataset;
         }
 
-        private MdDataSetExistence MappingMdDatasetEcistence(InspireDataset inspireDataset)
+        private MdDataSetExistence GetMdDatasetEcistence(InspireDataset inspireDataset)
         {
             MdDataSetExistence mdDataSetExistence = new MdDataSetExistence();
-            mdDataSetExistence.MdAccessibility = MappingMdAccessibility(inspireDataset);
+            mdDataSetExistence.IRConformity = GetIRConformity(inspireDataset);
+            mdDataSetExistence.MdAccessibility = GetMdAccessibility(inspireDataset);
 
             return mdDataSetExistence;
         }
 
-        private MdAccessibility MappingMdAccessibility(InspireDataset inspireDataset)
+        private IRConformity GetIRConformity(InspireDataset inspireDataset)
+        {
+            IRConformity iRConformity = new IRConformity();
+            iRConformity.structureCompliance = inspireDataset.HarmonizedIsGood(); //  Finnes metadata- Skal settes til "true" GML - harmoniserte skal være "God"
+            return iRConformity;
+        }
+
+        private MdAccessibility GetMdAccessibility(InspireDataset inspireDataset)
         {
             MdAccessibility mdAccessibility = new MdAccessibility();
-            mdAccessibility.discovery = true;
-            mdAccessibility.view = inspireDataset.WmsAndWfsIsGoodOrUseable();
-            mdAccessibility.download = inspireDataset.WfsIsGoodOrUseable();
+            mdAccessibility.discovery = true; // Finnes metadata for datasett?- Skal alltid settes til "true"
+            mdAccessibility.view = inspireDataset.WmsIsGoodOrUseable(); // Finnes metadata for tilhørende visningstjeneste?- Skal alltid settes til "true" dersom datasettet er koplet til en wms
+            mdAccessibility.download = inspireDataset.WfsOrAtomIsGoodOrUseable();
+            mdAccessibility.viewDownload = inspireDataset.WmsAndWfsOrAtomIsGoodOrUseable();
 
             return mdAccessibility;
         }
 
 
-        private Coverage MappingCoverage()
+        private Coverage GetCoverage(InspireDataset inspireDataset)
         {
             Coverage coverage = new Coverage();
-            coverage.actualArea = 323; // TODO, Default verdi.. 
-            coverage.relevantArea = 323; // TODO, Default verdi.. 
+            coverage.actualArea = inspireDataset.Area;
+            coverage.relevantArea = inspireDataset.RelevantArea;
             return coverage;
         }
 

@@ -138,6 +138,21 @@ namespace Kartverket.Register.Models
         {
             return InspireDeliveryMetadata.IsGood();
         }
+
+        internal bool HarmonizedIsGood()
+        {
+            return InspireDeliveryHarmonizedData.IsGood();
+        }
+
+        internal bool WfsOrAtomIsGoodOrUseable()
+        {
+            return InspireDeliveryWfsOrAtom.IsGoodOrUseable();
+        }
+
+        internal bool WmsAndWfsOrAtomIsGoodOrUseable()
+        {
+            return InspireDeliveryWfsOrAtom.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+        }
     }
 
 }//end namespace Datamodell

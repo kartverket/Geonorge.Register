@@ -880,6 +880,7 @@
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />

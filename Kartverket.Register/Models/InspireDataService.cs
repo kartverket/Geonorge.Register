@@ -105,6 +105,11 @@ namespace Kartverket.Register.Models
                 InspireThemes.Remove(inspireTheme);
             }
         }
+
+        internal bool MetadataIsGood()
+        {
+            return InspireDeliveryMetadata.IsGood();
+        }
     }
 
 }

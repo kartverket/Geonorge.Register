@@ -126,12 +126,17 @@ namespace Kartverket.Register.Models
 
         internal bool HarmonizedDataAndConformedmetadata()
         {
-            return InspireDeliveryHarmonizedData.IsGood() || InspireDeliveryMetadata.IsGood();
+            return InspireDeliveryHarmonizedData.IsGood() && InspireDeliveryMetadata.IsGood();
         }
 
         public bool WfsIsGoodOrUseable()
         {
             return InspireDeliveryWfs.IsGoodOrUseable();
+        }
+
+        internal bool MetadataIsGood()
+        {
+            return InspireDeliveryMetadata.IsGood();
         }
     }
 

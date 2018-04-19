@@ -43,6 +43,8 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "UUid")]
         public string Uuid { get; set; }
 
+        public string ServiceType { get; set; }
+
 
         public InspireDataServiceViewModel(InspireDataService item)
         {
@@ -81,6 +83,7 @@ namespace Kartverket.Register.Models.ViewModels
                 InspireThemes = inspireDataService.InspireThemes;
                 Uuid = inspireDataService.Uuid;
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + Uuid;
+                ServiceType = inspireDataService.ServiceType;
 
                 UpdateRegisterItem(inspireDataService);
             }

@@ -4,13 +4,16 @@
 <article class="col-md-12">
     <h3>Tjenesten</h3>
     <p><strong>Type: </strong>@Model.InspireDataType</p>
+    <p><strong>Tjeneste type: </strong>@Model.ServiceType</p>
     <p><strong>Inspire tema: </strong>@Model.InspireThemsAsString()</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Requests): </strong>@Html.DisplayFor(modelItem => Model.Requests)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.NetworkService): </strong>@HtmlHelperExtensions.TranslateBool(Model.NetworkService)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Sds): </strong>@HtmlHelperExtensions.TranslateBool(Model.Sds)</p>
-    <p><strong>@Html.DisplayNameFor(model => Model.Url): </strong><a href="@Model.Url">
-    @Html.DisplayFor(modelItem => Model.Url)<i class="custom-icon-sm custom-icon-eksternlink"></i>
-</a></p>
+    <p>
+        <strong>@Html.DisplayNameFor(model => Model.Url): </strong><a href="@Model.Url">
+            @Html.DisplayFor(modelItem => Model.Url)<i class="custom-icon-sm custom-icon-eksternlink"></i>
+        </a>
+    </p>
 </article>
 
 

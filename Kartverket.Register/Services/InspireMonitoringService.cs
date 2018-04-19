@@ -56,8 +56,6 @@ namespace Kartverket.Register.Services
         public int _NumberOfCallsByServiceTypeInvoke;
         public int _NumberOfCallsByServiceType;
 
-
-
         public int _NumberOfDatasetsAvailableThroughViewOrDownloadService;
         public int _NumberOfDatasetsAvailableThroughDownloadService;
         public int _NumberOfDatasetsAvailableThroughViewService;
@@ -159,6 +157,114 @@ namespace Kartverket.Register.Services
 
             return monitoring;
         }
+
+        private Date GetReportingDate()
+        {
+            Date date = new Date();
+            date.day = DateTime.Now.Day.ToString();
+            date.month = DateTime.Now.Month.ToString();
+            date.year = DateTime.Now.Year.ToString();
+            return date;
+        }
+
+        private MonitoringMD MappingMonitoringMd()
+        {
+            var monitoringMd = new MonitoringMD();
+            monitoringMd.organizationName = _inspireRegister.owner.name;
+            monitoringMd.email = "post@norgedigitalt.no";
+            monitoringMd.language = LanguageCode.nor;
+            //monitoringMd.monitoringDate = new Date();
+            return monitoringMd;
+        }
+
+        private RowData MappingRowData()
+        {
+            var rowData = new RowData();
+            rowData.SpatialDataSet = GetSpatialDataSets();
+            rowData.SpatialDataService = MappingSpatialDataServices();
+            return rowData;
+        }
+
+        private SpatialDataService[] MappingSpatialDataServices()
+        {
+            List<SpatialDataService> spatialDataServices = new List<SpatialDataService>();
+
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataService inspireDataService)
+                {
+                    spatialDataServices.Add(MappingSpatialDataService(inspireDataService));
+                }
+            }
+            return spatialDataServices.ToArray();
+        }
+
+        private SpatialDataService MappingSpatialDataService(InspireDataService inspireDataService)
+        {
+            var spatialDataService = new SpatialDataService();
+            spatialDataService.name = inspireDataService.Name;
+            spatialDataService.respAuthority = inspireDataService.Owner.name;
+            spatialDataService.uuid = inspireDataService.Uuid;
+            //spatialDataService.Themes = MappingThemes(services.InspireTheme);
+            //spatialDataService.MdServiceExistence = MappingServiceExistence(services);
+            //spatialDataService.NetworkService = MappingNetworkService(services);
+            return spatialDataService;
+        }
+
+        private SpatialDataSet[] GetSpatialDataSets()
+        {
+            List<SpatialDataSet> spatialDataSetList = new List<SpatialDataSet>();
+
+            foreach (var item in _inspireItems)
+            {
+                if (item is InspireDataset inspireDataset)
+                {
+                    spatialDataSetList.Add(MappingSpatialDataSet(inspireDataset));
+                }
+            }
+            return spatialDataSetList.ToArray();
+        }
+
+        public SpatialDataSet MappingSpatialDataSet(InspireDataset inspireDataset)
+        {
+            var spatialDataset = new SpatialDataSet();
+            spatialDataset.name = inspireDataset.Name;
+            spatialDataset.respAuthority = inspireDataset.Owner.shortname;
+            spatialDataset.uuid = inspireDataset.Uuid;
+            spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
+            spatialDataset.Coverage = MappingCoverage();
+            spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
+            return spatialDataset;
+        }
+
+        private MdDataSetExistence MappingMdDatasetEcistence(InspireDataset inspireDataset)
+        {
+            MdDataSetExistence mdDataSetExistence = new MdDataSetExistence();
+            mdDataSetExistence.MdAccessibility = MappingMdAccessibility(inspireDataset);
+
+            return mdDataSetExistence;
+        }
+
+        private MdAccessibility MappingMdAccessibility(InspireDataset inspireDataset)
+        {
+            MdAccessibility mdAccessibility = new MdAccessibility();
+            mdAccessibility.discovery = true;
+            mdAccessibility.view = inspireDataset.WmsAndWfsIsGoodOrUseable();
+            mdAccessibility.download = inspireDataset.WfsIsGoodOrUseable();
+
+            return mdAccessibility;
+        }
+
+
+        private Coverage MappingCoverage()
+        {
+            Coverage coverage = new Coverage();
+            coverage.actualArea = 323; // TODO, Default verdi.. 
+            coverage.relevantArea = 323; // TODO, Default verdi.. 
+            return coverage;
+        }
+
+       
 
 
         private Indicators MappingIndicators()
@@ -400,169 +506,6 @@ namespace Kartverket.Register.Services
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private MonitoringMD MappingMonitoringMd()
-        {
-            var monitoringMd = new MonitoringMD();
-            monitoringMd.organizationName = _inspireRegister.owner.name;
-            monitoringMd.email = "post@norgedigitalt.no";
-            monitoringMd.language = LanguageCode.nor;
-            //monitoringMd.monitoringDate = new Date();
-            return monitoringMd;
-        }
-
-        private RowData MappingRowData()
-        {
-            var rowData = new RowData();
-            rowData.SpatialDataSet = MappingSpatialDataSets();
-            rowData.SpatialDataService = MappingSpatialDataServices();
-            return rowData;
-        }
-
-        private SpatialDataService[] MappingSpatialDataServices()
-        {
-            List<SpatialDataService> spatialDataServices = new List<SpatialDataService>();
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    spatialDataServices.Add(MappingSpatialDataService(inspireDataService));
-                }
-            }
-            return spatialDataServices.ToArray();
-        }
-
-        private SpatialDataService MappingSpatialDataService(InspireDataService inspireDataService)
-        {
-            var spatialDataService = new SpatialDataService();
-            spatialDataService.name = inspireDataService.Name;
-            spatialDataService.respAuthority = inspireDataService.Owner.name;
-            spatialDataService.uuid = inspireDataService.Uuid;
-            //spatialDataService.Themes = MappingThemes(services.InspireTheme);
-            //spatialDataService.MdServiceExistence = MappingServiceExistence(services);
-            //spatialDataService.NetworkService = MappingNetworkService(services);
-            return spatialDataService;
-        }
-
-        private SpatialDataSet[] MappingSpatialDataSets()
-        {
-            List<SpatialDataSet> spatialDataSetList = new List<SpatialDataSet>();
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    spatialDataSetList.Add(MappingSpatialDataSet(inspireDataset));
-                }
-            }
-            return spatialDataSetList.ToArray();
-        }
-
-
-        //private NetworkService MappingNetworkService(InspireDataset item)
-        //{
-        //    NetworkService networkService = new NetworkService();
-        //    networkService.nnConformity = false; // TODO skal hentes fra registeret, men registeret må få strengere regler på tjenestestatus 
-        //    networkService.NnServiceType = MappingNnServiceType(""); // TODO Protocoll... 
-        //    return networkService;
-        //}
-
-        //private NnServiceType MappingNnServiceType(string protocol)
-        //{
-        //    switch (protocol)
-        //    {
-        //        case "OGC:WMS":
-        //            return NnServiceType.view;
-        //        case "OGC:WFS":
-        //            return NnServiceType.view;
-        //        case "OGC:WCS":
-        //            return NnServiceType.download;
-        //        case "OGC:CSW":
-        //            return NnServiceType.discovery;
-        //    }
-        //    return new NnServiceType();
-        //}
-
-        //private MdServiceExistence MappingServiceExistence(InspireDataset item)
-        //{
-        //    MdServiceExistence mdServiceExistence = new MdServiceExistence();
-        //    mdServiceExistence.mdConformity = Accessibility(item.InspireDeliveryMetadata.StatusId);
-        //    mdServiceExistence.discoveryAccessibility = Accessibility(item.InspireDeliveryMetadataService.StatusId);
-
-        //    return mdServiceExistence;
-        //}
-
-        public SpatialDataSet MappingSpatialDataSet(InspireDataset inspireDataset)
-        {
-            var spatialDataset = new SpatialDataSet();
-            spatialDataset.name = inspireDataset.Name;
-            spatialDataset.respAuthority = inspireDataset.Owner.shortname;
-            spatialDataset.uuid = inspireDataset.SystemId.ToString();
-            spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
-            spatialDataset.Coverage = MappingCoverage();
-            spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
-            return spatialDataset;
-        }
-
-        private MdDataSetExistence MappingMdDatasetEcistence(InspireDataset inspireDataset)
-        {
-            MdDataSetExistence mdDataSetExistence = new MdDataSetExistence();
-            mdDataSetExistence.MdAccessibility = MappingMdAccessibility(inspireDataset);
-
-            return mdDataSetExistence;
-        }
-
-        private MdAccessibility MappingMdAccessibility(InspireDataset inspireDataset)
-        {
-            MdAccessibility mdAccessibility = new MdAccessibility();
-            mdAccessibility.discovery = true;
-            mdAccessibility.view = inspireDataset.WmsAndWfsIsGoodOrUseable();
-            mdAccessibility.download = inspireDataset.WfsIsGoodOrUseable();
-
-            return mdAccessibility;
-        }
-
-
-        private Coverage MappingCoverage()
-        {
-            Coverage coverage = new Coverage();
-            coverage.actualArea = 323; // TODO, Default verdi.. 
-            coverage.relevantArea = 323; // TODO, Default verdi.. 
-            return coverage;
-        }
-
-        private Date GetReportingDate()
-        {
-            Date date = new Date();
-            date.day = DateTime.Now.Day.ToString();
-            date.month = DateTime.Now.Month.ToString();
-            date.year = DateTime.Now.Year.ToString();
-            return date;
-        }
-
-
-
-
-
-
-
         private bool InspireDatasetHaveInspireThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
         {
             try
@@ -657,9 +600,21 @@ namespace Kartverket.Register.Services
 
             foreach (var inspireTheme in inspireThemes)
             {
-                annexiListI = AnnexIList(inspireTheme);
-                annexiListII = AnnexIIList(inspireTheme);
-                annexiListIII = AnnexIIIList(inspireTheme);
+                if (IsAnnexI(inspireTheme))
+                {
+                    AnnexI annexI = GetAnnexIByInspireTheme(inspireTheme.value);
+                    annexiListI.Add(annexI);
+                }
+                if (IsAnnexII(inspireTheme))
+                {
+                    AnnexII annexII = GetAnnexIIByInspireTheme(inspireTheme.value);
+                    annexiListII.Add(annexII);
+                }
+                if (IsAnnexIII(inspireTheme))
+                {
+                    AnnexIII annexIII = GetAnnexIIIByInspireTheme(inspireTheme.value);
+                    annexiListIII.Add(annexIII);
+                }
             }
 
             themes.AnnexI = annexiListI.ToArray();

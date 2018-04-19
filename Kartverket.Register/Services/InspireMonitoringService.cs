@@ -232,7 +232,7 @@ namespace Kartverket.Register.Services
             spatialDataset.respAuthority = inspireDataset.Owner.shortname;
             spatialDataset.uuid = inspireDataset.Uuid;
             spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
-            spatialDataset.Coverage = MappingCoverage();
+            spatialDataset.Coverage = GetCoverage(inspireDataset);
             spatialDataset.MdDataSetExistence = MappingMdDatasetEcistence(inspireDataset);
             return spatialDataset;
         }
@@ -240,27 +240,36 @@ namespace Kartverket.Register.Services
         private MdDataSetExistence MappingMdDatasetEcistence(InspireDataset inspireDataset)
         {
             MdDataSetExistence mdDataSetExistence = new MdDataSetExistence();
-            mdDataSetExistence.MdAccessibility = MappingMdAccessibility(inspireDataset);
+            mdDataSetExistence.IRConformity = GetIRConformity(inspireDataset);
+            mdDataSetExistence.MdAccessibility = GetMdAccessibility(inspireDataset);
 
             return mdDataSetExistence;
         }
 
-        private MdAccessibility MappingMdAccessibility(InspireDataset inspireDataset)
+        private IRConformity GetIRConformity(InspireDataset inspireDataset)
+        {
+            IRConformity iRConformity = new IRConformity();
+            iRConformity.structureCompliance = inspireDataset.HarmonizedIsGood(); //  Finnes metadata- Skal settes til "true" GML - harmoniserte skal være "God"
+            return iRConformity;
+        }
+
+        private MdAccessibility GetMdAccessibility(InspireDataset inspireDataset)
         {
             MdAccessibility mdAccessibility = new MdAccessibility();
-            mdAccessibility.discovery = true;
-            mdAccessibility.view = inspireDataset.WmsAndWfsIsGoodOrUseable();
-            mdAccessibility.download = inspireDataset.WfsIsGoodOrUseable();
+            mdAccessibility.discovery = true; // Finnes metadata for datasett?- Skal alltid settes til "true"
+            mdAccessibility.view = inspireDataset.WmsIsGoodOrUseable(); // Finnes metadata for tilhørende visningstjeneste?- Skal alltid settes til "true" dersom datasettet er koplet til en wms
+            mdAccessibility.download = inspireDataset.WfsOrAtomIsGoodOrUseable();
+            mdAccessibility.viewDownload = inspireDataset.WmsAndWfsOrAtomIsGoodOrUseable();
 
             return mdAccessibility;
         }
 
 
-        private Coverage MappingCoverage()
+        private Coverage GetCoverage(InspireDataset inspireDataset)
         {
             Coverage coverage = new Coverage();
-            coverage.actualArea = 323; // TODO, Default verdi.. 
-            coverage.relevantArea = 323; // TODO, Default verdi.. 
+            coverage.actualArea = inspireDataset.Area;
+            coverage.relevantArea = inspireDataset.RelevantArea;
             return coverage;
         }
 

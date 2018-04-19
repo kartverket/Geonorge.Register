@@ -5,7 +5,7 @@
     <div class="container">
         <div class="page-top" data-ng-app="geonorge-header" ng-controller="baseController">
             <div class="logo">
-                <a href="/">
+                <a ng-href="{{epiBaseUrl}}">
                     <img ng-src="{{imageLogoPath}}" src="/dist/images/geonorge_logo_350px.svg" alt="geonorge logo" />
                 </a>
             </div>
@@ -14,7 +14,7 @@
                 <label for="txtSearch" class="sr-only" ng-cloak>{{(selectedSearch.searchPlaceholder !== undefined ? selectedSearch.searchPlaceholder : localizedText.search[langCode])}}</label>
                 <div class="search-input" data-ng-controller="searchTopController" ng-cloak>
                     <input autocomplete="off" id="txtSearch" type="search" class="search-text" ng-attr-placeholder="{{(selectedSearch.searchPlaceholder !== undefined ? selectedSearch.searchPlaceholder : localizedText.search[langCode])}}" data-ng-focus="setFocus($event)" data-ng-blur="" data-ng-keyup="autocomplete($event)" data-ng-keydown="preventDefault($event)" data-ng-model="$root.searchQuery"/>
-                    <button class="search-button" type="button">
+                    <button class="search-button" type="button" ng-click="onSearch()">
                         <img src="/dist/images/search_icon-01.svg" alt="search"/>
                     </button>
                     <div class="search-results" data-ng-show="autocompleteActive" data-ng-animate data-ng-cloak data-ng-include="autoCompletePartial"></div>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="downloads">
-                <a href="" onclick="window.location.href = searchOption.shoppingCartUrl">
+                <a ng-href="{{shoppingCartUrl}}">
                     <span class="downloads__count"></span>
                     <svg width="48px" height="32px" viewBox="0 0 48 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                         <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -56,9 +56,9 @@
                                 </li>
                             </ul>
                             <div class="menu-content__utilities">
-                                <a ng-if="loggedIn" href="" onclick="window.location.href = searchOption.logoutUrl">{{localizedText.logout[langCode]}}</a>
-                                <a ng-if="!loggedIn" href="" onclick="window.location.href = searchOption.loginUrl">{{localizedText.login[langCode]}}</a>
-                                <a class="internal" ng-href="{{cultureSwitchUrl}}" ng-click="switchCulture(cultureSwitchCode)">{{cultureSwitchName}}</a>
+                                <a ng-if="selectedSearch.supportsLogin && loggedIn" ng-href="{{logoutUrl}}">{{localizedText.logout[langCode]}}</a>
+                                <a ng-if="selectedSearch.supportsLogin && !loggedIn" ng-href="{{loginUrl}}">{{localizedText.login[langCode]}}</a>
+                                <a ng-if="selectedSearch.supportsCulture" class="internal" ng-href="{{cultureSwitchUrl}}" ng-click="switchCulture(cultureSwitchCode)">{{cultureSwitchName}}</a>
                             </div>
                         </nav>
                     </div>

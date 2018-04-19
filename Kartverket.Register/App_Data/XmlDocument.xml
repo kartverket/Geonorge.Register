@@ -3587,6 +3587,31 @@
               Looks up a localized string similar to Etat.
             </summary>
         </member>
+        <member name="P:Resources.Registers.GroupCodeLists">
+            <summary>
+              Looks up a localized string similar to Kodelister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDatamodelsAndStandards">
+            <summary>
+              Looks up a localized string similar to Datamodeller og standardisering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDocumentRegistry">
+            <summary>
+              Looks up a localized string similar to Dokumentregister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupStatusAndReporting">
+            <summary>
+              Looks up a localized string similar to Status og rapportering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupSymbolAndCartography">
+            <summary>
+              Looks up a localized string similar to Symbolisering og kartografi.
+            </summary>
+        </member>
         <member name="P:Resources.Registers.Historical">
             <summary>
               Looks up a localized string similar to Historiske.

@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
         {
             RemoveSessionSearchParams();
 
-            return View(_registerService.GetRegisters().OrderBy(r => r.NameTranslated()));
+            return View(_registerService.GetRegistersGrouped());
         }
 
         [Route("setculture/{culture}")]

@@ -294,4 +294,19 @@
   <data name="SymbolName" xml:space="preserve">
     <value>Symbol</value>
   </data>
+  <data name="GroupCodeLists" xml:space="preserve">
+    <value>Kodelister</value>
+  </data>
+  <data name="GroupDatamodelsAndStandards" xml:space="preserve">
+    <value>Datamodeller og standardisering</value>
+  </data>
+  <data name="GroupDocumentRegistry" xml:space="preserve">
+    <value>Dokumentregister</value>
+  </data>
+  <data name="GroupStatusAndReporting" xml:space="preserve">
+    <value>Status og rapportering</value>
+  </data>
+  <data name="GroupSymbolAndCartography" xml:space="preserve">
+    <value>Symbolisering og kartografi</value>
+  </data>
 </root>

@@ -779,17 +779,5 @@ namespace Kartverket.Register.Services
 
             return queryResult.FirstOrDefault();
         }
-
-        public InspireDataService UpdateInspireDataService(InspireDataService inspireDataService)
-        {
-            var originalInspireDataService = GetInspireDataServiceById(inspireDataService.SystemId);
-            originalInspireDataService.Requests = inspireDataService.Requests;
-            originalInspireDataService.Conformity = inspireDataService.Conformity;
-
-            _dbContext.Entry(originalInspireDataService).State = EntityState.Modified;
-            _dbContext.SaveChanges();
-
-            return originalInspireDataService;
-        }
     }
 }

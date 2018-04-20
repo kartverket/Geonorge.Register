@@ -212,7 +212,7 @@ namespace Kartverket.Register.Services
         private NetworkService MappingNetworkService(InspireDataService inspireDataService)
         {
             NetworkService networkService = new NetworkService();
-            networkService.directlyAccessible = inspireDataService.IsNetworkService() ; //Er dette en Network Service" Skal settes til "true" for <NnServiceType> in (discovery, view, download, transformation, invoke)
+            networkService.directlyAccessible = inspireDataService.IsNetworkService(); //Er dette en Network Service" Skal settes til "true" for <NnServiceType> in (discovery, view, download, transformation, invoke)
             networkService.URL = inspireDataService.Url;
             networkService.userRequest = inspireDataService.Requests;
             try
@@ -222,7 +222,7 @@ namespace Kartverket.Register.Services
             catch (Exception)
             {
             }
-           
+
             return networkService;
         }
 
@@ -298,7 +298,7 @@ namespace Kartverket.Register.Services
             return coverage;
         }
 
-       
+
 
 
         private Indicators MappingIndicators()
@@ -346,14 +346,7 @@ namespace Kartverket.Register.Services
             return nnConformity;
         }
 
-        private int NumberOfServicesByServiceTypeWhereConformityIsTrue()
-        {
-            return _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeViewWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
-        }
+
 
         private GeoCoverageIndicators GetGeoCoverageIndicators()
         {
@@ -775,6 +768,14 @@ namespace Kartverket.Register.Services
 
 
         // **** Number of... ***
+        private int NumberOfServicesByServiceTypeWhereConformityIsTrue()
+        {
+            return _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeViewWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
+        }
 
         private int NumberOfServicesRegisteredInADiscoveryService()
         {
@@ -926,16 +927,16 @@ namespace Kartverket.Register.Services
 
         private int NumberOfCallsByServiceType()
         {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    number += inspireDataService.Requests;
-                }
-            }
-            return number;
+            return _NumberOfCallsByServiceTypeDiscovery +
+                _NumberOfCallsByServiceTypeView +
+                _NumberOfCallsByServiceTypeDownload +
+                _NumberOfCallsByServiceTypeTransformation +
+                _NumberOfCallsByServiceTypeInvoke;
         }
+
+
+
+
 
         private int NumberOfCallsByServiceTypeDownload()
         {
@@ -1202,27 +1203,29 @@ namespace Kartverket.Register.Services
             return number;
         }
 
-        private int NumberOfServicesByServiceType(string serviceType = null)
+        private int NumberOfServicesByServiceType(string serviceType)
         {
             int number = 0;
             foreach (var item in _inspireItems)
             {
                 if (item is InspireDataService inspireDataService)
                 {
-                    if (string.IsNullOrWhiteSpace(serviceType))
+                    if (inspireDataService.ServiceType == serviceType)
                     {
                         number++;
-                    }
-                    else
-                    {
-                        if (inspireDataService.ServiceType == serviceType)
-                        {
-                            number++;
-                        }
                     }
                 }
             }
             return number;
+        }
+
+        private int NumberOfServicesByServiceType()
+        {
+            return _NumberOfServicesByServiceTypeDownload +
+                    _NumberOfServicesByServiceTypeView +
+                    _NumberOfServicesByServiceTypeDiscovery +
+                    _NumberOfServicesByServiceTypeInvoke +
+                    _NumberOfServicesByServiceTypeTransformation;
         }
 
         private int NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood()

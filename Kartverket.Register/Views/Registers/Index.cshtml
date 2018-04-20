@@ -33,7 +33,7 @@
     </div>
     foreach (var item in group.Items)
     {
-        if (!item.IsInspireStatusRegister() && !item.IsGeodatalovStatusRegister() || HtmlHelperExtensions.IsAdmin())
+        if (!item.IsGeodatalovStatusRegister() || HtmlHelperExtensions.IsAdmin())
         {
             <div class="resultItemRow col-md-12 ">
                 <div class="col-md-12">

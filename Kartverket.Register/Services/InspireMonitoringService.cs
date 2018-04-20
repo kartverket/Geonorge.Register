@@ -46,7 +46,6 @@ namespace Kartverket.Register.Services
         public int _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue;
         public int _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
         public int _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue;
-        public int _NumberOfServicesByServiceTypeWhereConformityIsTrue;
 
         public int _NumberOfCallsByServiceTypeDiscovery;
 
@@ -118,7 +117,6 @@ namespace Kartverket.Register.Services
             _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("discovery");
             _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("invoke");
             _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("transformation");
-            _NumberOfServicesByServiceTypeWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue();
 
             _NumberOfCallsByServiceTypeDiscovery = NumberOfCallsByServiceTypeDiscovery();
             _NumberOfCallsByServiceTypeView = NumberOfCallsByServiceTypeView();
@@ -343,9 +341,18 @@ namespace Kartverket.Register.Services
             nnConformity.NSv43 = _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
             nnConformity.NSv44 = _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
             nnConformity.NSv45 = _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
-            nnConformity.NSv4 = _NumberOfServicesByServiceTypeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
+            nnConformity.NSv4 = NumberOfServicesByServiceTypeWhereConformityIsTrue(); // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
 
             return nnConformity;
+        }
+
+        private int NumberOfServicesByServiceTypeWhereConformityIsTrue()
+        {
+            return _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeViewWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue +
+                    _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
         }
 
         private GeoCoverageIndicators GetGeoCoverageIndicators()
@@ -797,7 +804,7 @@ namespace Kartverket.Register.Services
             return number;
         }
 
-        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(string serviceType = null)
+        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(string serviceType)
         {
             int number = 0;
             foreach (var item in _inspireItems)

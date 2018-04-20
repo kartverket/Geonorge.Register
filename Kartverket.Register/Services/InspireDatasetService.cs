@@ -536,6 +536,12 @@ namespace Kartverket.Register.Services
             }
         }
 
+        public InspireDataService UpdateInspireDataServiceFromKartkatalogen(InspireDataService originalInspireDataService)
+        {
+            var inspireDatasetFromKartkatalogen = _metadataService.FetchInspireDataServiceFromKartkatalogen(originalInspireDataService.Uuid);
+            return inspireDatasetFromKartkatalogen == null ? originalInspireDataService : UpdateInspireDataService(originalInspireDataService, inspireDatasetFromKartkatalogen);
+        }
+
 
         private void AddOrUpdateInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen)
         {
@@ -700,6 +706,41 @@ namespace Kartverket.Register.Services
 
             return originalDataService;
         }
+
+
+        public InspireDataService UpdateInspireDataService(InspireDataServiceViewModel viewModel)
+        {
+            var inspireDataService = GetInspireDataServiceById(viewModel.SystemId);
+            inspireDataService.Modified = DateTime.Now;
+            inspireDataService.Requests = viewModel.Requests;
+
+            if (inspireDataService.InspireDeliveryMetadata != null)
+            {
+                inspireDataService.InspireDeliveryMetadata.StatusId = viewModel.MetadataStatusId;
+                inspireDataService.InspireDeliveryMetadata.Note = viewModel.MetadataNote;
+                inspireDataService.InspireDeliveryMetadata.AutoUpdate = viewModel.MetadataAutoUpdate;
+            }
+
+            if (inspireDataService.InspireDeliveryMetadataInSearchService != null)
+            {
+                inspireDataService.InspireDeliveryMetadataInSearchService.StatusId = viewModel.MetadataInSearchServiceStatusId;
+                inspireDataService.InspireDeliveryMetadataInSearchService.Note = viewModel.MetadataInSearchServiceNote;
+                inspireDataService.InspireDeliveryMetadataInSearchService.AutoUpdate = viewModel.MetadataInSearchAutoUpdate;
+            }
+
+            if (inspireDataService.InspireDeliveryServiceStatus != null)
+            {
+                inspireDataService.InspireDeliveryServiceStatus.StatusId = viewModel.ServiceStatusId;
+                inspireDataService.InspireDeliveryServiceStatus.Note = viewModel.ServiceStatusNote;
+                inspireDataService.InspireDeliveryServiceStatus.AutoUpdate = viewModel.MetadataAutoUpdate;
+            }
+
+            _dbContext.Entry(inspireDataService).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return inspireDataService;
+        }
+
 
         public ICollection<InspireDataService> GetInspireDataService()
         {

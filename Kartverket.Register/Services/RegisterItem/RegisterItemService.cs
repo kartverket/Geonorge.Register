@@ -875,12 +875,12 @@ namespace Kartverket.Register.Services.RegisterItem
                         }
                     case "inspireService_metadata_status":
                         {
-                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderBy(o => o.MetadataStatus).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspireService_metadata_status_desc":
                         {
-                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.InspireDeliveryMetadata.Status.description).ToList();
+                            var sortedList = registerItems.OfType<InspireDataServiceViewModel>().OrderByDescending(o => o.MetadataStatus).ToList();
                             return sortedList.Cast<RegisterItemV2ViewModel>().ToList();
                         }
                     case "inspire_metadataSearchService_status":

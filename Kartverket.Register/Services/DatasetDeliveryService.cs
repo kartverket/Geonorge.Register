@@ -67,6 +67,7 @@ namespace Kartverket.Register.Services
             var status = currentStatus;
             try
             {
+                if (!autoupdate) return currentStatus;
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
@@ -272,6 +273,7 @@ namespace Kartverket.Register.Services
             string status;
             try
             {
+                if (!autoUpdate) return currentStatus;
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
@@ -309,6 +311,8 @@ namespace Kartverket.Register.Services
             string status;
             try
             {
+                if (!autoUpdate) return currentStatus;
+                
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)

@@ -38,9 +38,9 @@
         <div class="col-md-2 col-sm-5 status-icons pull-right">
             @HtmlHelperExtensions.Checked(item.Sds, "Sds")
             @HtmlHelperExtensions.Checked(item.NetworkService, "Nettverkstjeneste")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadata.StatusId, false, "Metadata")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryMetadataInSearchService.StatusId, false, "Metadata i søketjeneste")
-            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.InspireDeliveryServiceStatus.StatusId, false, "Tjenestestatus")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataStatusId, false, "Metadata")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.MetadataInSearchServiceStatusId, false, "Metadata i søketjeneste")
+            @HtmlHelperExtensions.GetDokDeliveryStatusSymbol(item.ServiceStatusId, false, "Tjenestestatus")
         </div>
     </div>
 </div>

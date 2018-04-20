@@ -823,6 +823,10 @@
     <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.Designer.cs">
       <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804200753134_RemoveConformity.cs" />
+    <Compile Include="Migrations\201804200753134_RemoveConformity.Designer.cs">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1964,6 +1968,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.resx">
       <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200753134_RemoveConformity.resx">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

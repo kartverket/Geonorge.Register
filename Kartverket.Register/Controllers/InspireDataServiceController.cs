@@ -1,5 +1,7 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Services;
+using System;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -10,11 +12,13 @@ namespace Kartverket.Register.Controllers
     {
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IAccessControlService _accessControlService;
+        private readonly IDatasetDeliveryService _datasetDeliveryService;
 
-        public InspireDataServiceController(IInspireDatasetService inspireDatasetService, IAccessControlService accessControllService)
+        public InspireDataServiceController(IInspireDatasetService inspireDatasetService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService)
         {
             _inspireDatasetService = inspireDatasetService;
             _accessControlService = accessControllService;
+            _datasetDeliveryService = datasetDeliveryService;
         }
 
 
@@ -30,21 +34,31 @@ namespace Kartverket.Register.Controllers
             }
             if (_accessControlService.Access(inspireDataService))
             {
-                return View(inspireDataService);
+                inspireDataService = _inspireDatasetService.UpdateInspireDataServiceFromKartkatalogen(inspireDataService);
+                var viewModel = new InspireDataServiceViewModel(inspireDataService);
+                ViewBags(viewModel);
+                return View(viewModel);
             }
             throw new HttpException(401, "Access Denied");
+        }
+
+        private void ViewBags(InspireDataServiceViewModel viewModel)
+        {
+            ViewBag.MetadataStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataStatusId);
+            ViewBag.MetadataInSearchServiceStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.MetadataInSearchServiceStatusId);
+            ViewBag.ServiceStatusId = _datasetDeliveryService.GetDokDeliveryStatusesAsSelectlist(viewModel.ServiceStatusId);
         }
 
         // POST: InspireDataService/Edit/5
         [HttpPost]
         [Authorize]
         [Route("inspire-data-service/{registername}/{itemowner}/{itemname}/rediger")]
-        public ActionResult Edit(InspireDataService inspireDataService)
+        public ActionResult Edit(InspireDataServiceViewModel viewModel)
         {
             try
             {
-                var updatedInspireDataset = _inspireDatasetService.UpdateInspireDataService(inspireDataService);
-                return Redirect(updatedInspireDataset.DetailPageUrl());
+                var updatedInspireDataService = _inspireDatasetService.UpdateInspireDataService(viewModel);
+                return Redirect(updatedInspireDataService.DetailPageUrl());
             }
             catch
             {

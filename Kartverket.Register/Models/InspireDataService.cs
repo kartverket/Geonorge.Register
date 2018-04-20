@@ -31,8 +31,6 @@ namespace Kartverket.Register.Models
         public string ServiceType { get; set; } 
         public string Uuid { get; set; }
 
-        public bool Conformity { get; set; }
-
         public bool IsSds()
         {
             return InspireDataType != "WFS-tjeneste" && InspireDataType != "WMS-tjeneste";

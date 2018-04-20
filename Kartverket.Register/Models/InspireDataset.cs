@@ -153,6 +153,23 @@ namespace Kartverket.Register.Models
         {
             return InspireDeliveryWfsOrAtom.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
         }
+
+        public string InspireThemsAsString()
+        {
+            string inspireTeamsString = null;
+            foreach (var item in InspireThemes)
+            {
+                if (inspireTeamsString == null)
+                {
+                    inspireTeamsString += item.name;
+                }
+                else
+                {
+                    inspireTeamsString += ", " + item.name;
+                }
+            }
+            return inspireTeamsString;
+        }
     }
 
 }//end namespace Datamodell

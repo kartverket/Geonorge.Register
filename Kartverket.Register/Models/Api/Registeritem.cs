@@ -339,7 +339,7 @@ namespace Kartverket.Register.Models.Api
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
 
-                InspireTheme = inspireDataset.InspireThemes.ToString(); // TODO
+                InspireTheme = inspireDataset.InspireThemsAsString();
             }
             if (item is InspireDataService inspireDataService)
             {
@@ -349,7 +349,7 @@ namespace Kartverket.Register.Models.Api
                 ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.description;
                 Requests = inspireDataService.Requests;
                 ServiceUrl = inspireDataService.Url;
-                //InspireTheme = inspireDataService.InspireTheme; // TODO
+                InspireTheme = inspireDataService.InspireThemsAsString();
                 NetworkService = inspireDataService.IsNetworkService();
                 Sds = inspireDataService.IsSds();
                 UuidMetadata = inspireDataService.Uuid;

@@ -108,6 +108,23 @@ namespace Kartverket.Register.Models
         {
             return InspireDeliveryMetadata.IsGood();
         }
+
+        public string InspireThemsAsString()
+        {
+            string inspireTeamsString = null;
+            foreach (var item in InspireThemes)
+            {
+                if (inspireTeamsString == null)
+                {
+                    inspireTeamsString += item.name;
+                }
+                else
+                {
+                    inspireTeamsString += ", " + item.name;
+                }
+            }
+            return inspireTeamsString;
+        }
     }
 
 }

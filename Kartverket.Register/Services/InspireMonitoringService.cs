@@ -339,10 +339,10 @@ namespace Kartverket.Register.Services
         {
             NnConformity nnConformity = new NnConformity();
             nnConformity.NSv41 = _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery" som har nnConformity="true")
-            nnConformity.NSv41 = _NumberOfServicesByServiceTypeViewWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="view" som har nnConformity="true")
-            nnConformity.NSv41 = _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
-            nnConformity.NSv41 = _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
-            nnConformity.NSv41 = _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
+            nnConformity.NSv42 = _NumberOfServicesByServiceTypeViewWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="view" som har nnConformity="true")
+            nnConformity.NSv43 = _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
+            nnConformity.NSv44 = _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
+            nnConformity.NSv45 = _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
             nnConformity.NSv4 = _NumberOfServicesByServiceTypeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
 
             return nnConformity;

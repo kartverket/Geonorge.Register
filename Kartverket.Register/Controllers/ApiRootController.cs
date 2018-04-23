@@ -19,6 +19,7 @@ using System.Globalization;
 using System.Threading;
 using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
+using Kartverket.Register.Formatter;
 
 namespace Kartverket.Register.Controllers
 {
@@ -83,7 +84,6 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets inspiremonitoring xml
         /// </summary>
-        /// <param name="registerName">The search engine optimized name of the register</param>
         [Route("api/register/inspire-statusregister/monitoring-report")]
         [HttpGet]
         public IHttpActionResult InspireMonitoring()
@@ -91,7 +91,8 @@ namespace Kartverket.Register.Controllers
             SetLanguage(Request);
             var inspireStatusRegister = _registerService.GetInspireStatusRegister();
             Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
-            return Ok(inspireMonitoring);
+
+            return Content(System.Net.HttpStatusCode.OK, inspireMonitoring, new XMLFormatter(), new MediaTypeHeaderValue("application/xml"));
         }
 
 

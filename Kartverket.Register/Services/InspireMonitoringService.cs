@@ -55,7 +55,7 @@ namespace Kartverket.Register.Services
         public int _NumberOfCallsByServiceTypeInvoke;
         public int _NumberOfCallsByServiceType;
 
-        public int _NumberOfDatasetsAvailableThroughViewOrDownloadService;
+        public int _NumberOfDatasetsAvailableThroughViewANDDownloadService;
         public int _NumberOfDatasetsAvailableThroughDownloadService;
         public int _NumberOfDatasetsAvailableThroughViewService;
 
@@ -125,7 +125,7 @@ namespace Kartverket.Register.Services
             _NumberOfCallsByServiceTypeInvoke = NumberOfCallsByServiceTypeInvoke();
             _NumberOfCallsByServiceType = NumberOfCallsByServiceType();
 
-            _NumberOfDatasetsAvailableThroughViewOrDownloadService = NumberOfDatasetsAvailableThroughViewOrDownloadService();
+            _NumberOfDatasetsAvailableThroughViewANDDownloadService = NumberOfDatasetsAvailableThroughViewAndDownloadService();
             _NumberOfDatasetsAvailableThroughDownloadService = NumberOfDatasetsAvailableThroughDownloadService();
             _NumberOfDatasetsAvailableThroughViewService = NumberOfDatasetsAvailableThroughViewService();
 
@@ -467,7 +467,7 @@ namespace Kartverket.Register.Services
             ViewDownloadAccessibility viewDownloadAccessibility = new ViewDownloadAccessibility();
             viewDownloadAccessibility.NSv21 = _NumberOfDatasetsAvailableThroughViewService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
             viewDownloadAccessibility.NSv22 = _NumberOfDatasetsAvailableThroughDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
-            viewDownloadAccessibility.NSv23 = _NumberOfDatasetsAvailableThroughViewOrDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
+            viewDownloadAccessibility.NSv23 = _NumberOfDatasetsAvailableThroughViewANDDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
 
             return viewDownloadAccessibility;
         }
@@ -1082,7 +1082,7 @@ namespace Kartverket.Register.Services
             return number;
         }
 
-        private int NumberOfDatasetsAvailableThroughViewOrDownloadService()
+        private int NumberOfDatasetsAvailableThroughViewAndDownloadService()
         {
             var number = 0;
             foreach (var item in _inspireItems)
@@ -1523,7 +1523,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfDatasetsAvailableThroughViewAndDownloadService()
         {
-            return Divide(_NumberOfDatasetsAvailableThroughViewOrDownloadService, (_NumberOfServicesByServiceTypeDownload + _NumberOfServicesByServiceTypeView));
+            return Divide(_NumberOfDatasetsAvailableThroughViewANDDownloadService, (_NumberOfServicesByServiceTypeDownload + _NumberOfServicesByServiceTypeView));
         }
 
         private double ProportionOfServicesWhereConformityIsTrue()

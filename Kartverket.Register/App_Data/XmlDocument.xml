@@ -496,7 +496,6 @@
             <summary>
             Gets inspiremonitoring xml
             </summary>
-            <param name="registerName">The search engine optimized name of the register</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String)">
             <summary>

@@ -41,7 +41,7 @@ namespace Kartverket.Register
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new QueryStringMapping("json", "true", "application/json"));
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("json", "application/json"));
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("xml", "application/xml"));
-            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SetSerializer<Models.Api.Registeritem>(new XmlSerializer(typeof(Models.Api.InspireDatasetRegistery)));
+            //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SetSerializer<Eu.Europa.Ec.Jrc.Inspire.Monitoring>(new XmlSerializer(typeof(Eu.Europa.Ec.Jrc.Inspire.Monitoring)));
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.MediaTypeMappings.Add(new UriPathExtensionMapping("skos", "application/rdf+xml"));
             //GlobalConfiguration.Configuration.Formatters.Add(new SKOSFormatter());
             GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);

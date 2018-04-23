@@ -134,7 +134,8 @@ namespace Kartverket.Register.Formatter
             string role = HtmlHelperExtensions.GetSecurityClaim("role");
             bool isAdmin = role == "nd.metadata_admin";
 
-            item.description = RemoveBreaksFromDescription(item.description);
+            item.description = RemoveBreaksAndSemicolon(item.description);
+            item.label = RemoveBreaksAndSemicolon(item.label);
             string text = null;
             if (item.itemclass == "Document")
             {
@@ -152,9 +153,9 @@ namespace Kartverket.Register.Formatter
             {
                 text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + (item.dokStatusDateAccepted.HasValue ? item.dokStatusDateAccepted.Value.ToString("dd/MM/yyyy") : "") + ";" + (item.Kandidatdato.HasValue ? item.Kandidatdato.Value.ToString("dd/MM/yyyy") : "") + (isAdmin ? ";" + item.lastUpdated.ToString("dd/MM/yyyy") : "") + ";" + item.versionNumber + ";" + item.description + ";" + item.id + ";" + GetDOKDeliveryStatus(item) + (isAdmin ? ";" + item.uuid : "") + ";" + item.MetadataUrl;
             }
-            else if (item.itemclass == "InspireDataset")
+            else if (item.itemclass == "InspireDataset" || item.itemclass == "InspireDataService")
             {
-                text = item.theme + ";" + 
+                text = item.InspireTheme + ";" +
                         item.label + ";" + 
                         item.owner + ";" + 
                         item.dokStatus + ";" + 
@@ -164,8 +165,9 @@ namespace Kartverket.Register.Formatter
                         item.versionNumber + ";" + 
                         item.description + ";" + 
                         item.id + ";" + 
-                        GetInspireDeliveryStatus(item) + 
-                        (isAdmin ? ";" + item.uuid : "") + ";" + 
+                        GetInspireDeliveryStatus(item) + ";" +
+                        item.InspireDataType + ";" +
+                        (isAdmin ? item.uuid.ToString() : "") + ";" + 
                         item.MetadataUrl;
             }
             else if (item.itemclass == "GeodatalovDataset")
@@ -194,7 +196,7 @@ namespace Kartverket.Register.Formatter
             }
             else if (item.itemclass == "ServiceAlert")
             {
-                text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + RemoveBreaksFromDescription(item.Note) + ";" + item.MetadataUrl;
+                text = item.AlertDate.ToString("dd/MM/yyyy") + ";" + item.EffectiveDate.ToString("dd/MM/yyyy") + ";" + item.label + ";" + item.ServiceType + ";" + item.AlertType + ";" + item.owner + ";" + RemoveBreaksAndSemicolon(item.Note) + ";" + item.MetadataUrl;
             }
 
             streamWriter.WriteLine(text);
@@ -211,16 +213,28 @@ namespace Kartverket.Register.Formatter
 
         private static string GetInspireDeliveryStatus(Registeritem item)
         {
-            return item.MetadataStatus + ";" + 
-                   item.MetadataServiceStatus + ";" + 
-                   item.DistributionStatus+ ";" + 
-                   item.WmsStatus + ";" + 
-                   item.WfsStatus + ";" + 
-                   item.AtomFeedStatus + ";" + 
-                   item.WfsOrAtomStatus + ";" + 
-                   item.HarmonizedDataStatus + ";" + 
-                   item.SpatialDataServiceStatus;
-
+            if (item.itemclass == "InspireDataset") {
+                return item.MetadataStatus + ";" +
+                   item.MetadataServiceStatus + ";" +
+                   item.DistributionStatus + ";" +
+                   item.WmsStatus + ";" +
+                   item.WfsStatus + ";" +
+                   item.AtomFeedStatus + ";" +
+                   item.WfsOrAtomStatus + ";" +
+                   item.HarmonizedDataStatus + ";" +
+                   item.SpatialDataServiceStatus + ";;;;;";
+            }
+            else if (item.itemclass == "InspireDataService")
+            {
+                return item.MetadataStatus + ";" +
+                   ";;;;;;;;" +
+                   item.MetadataInSearchServiceStatus + ";" +
+                   item.ServiceStatus + ";" +
+                   item.Requests + ";" +
+                   item.NetworkService + ";" +
+                   item.Sds;
+            }
+            else return "";
         }
 
         private static string GetGeodatalovDeliveryStatus(Registeritem item)
@@ -237,7 +251,7 @@ namespace Kartverket.Register.Formatter
 
         private static void ConvertRegisterItemDokMunicipalToCSV(StreamWriter streamWriter, Registeritem item)
         {
-            item.description = RemoveBreaksFromDescription(item.description);
+            item.description = RemoveBreaksAndSemicolon(item.description);
             string text = null;
             text = item.theme + ";" + item.label + ";" + item.owner + ";" + item.dokStatus + ";" + item.lastUpdated.ToString("dd/MM/yyyy") + ";" + item.versionNumber + ";" + item.description + ";" + item.DatasetType + ";" + item.ConfirmedDok + ";" + item.Coverage + ";" + item.NoteMunicipal + ";" + item.MetadataUrl;
             streamWriter.WriteLine(text);
@@ -245,24 +259,24 @@ namespace Kartverket.Register.Formatter
 
         private static void ConvertRegisterToCSV(StreamWriter streamWriter, Models.Api.Register register)
         {
-            register.contentsummary = RemoveBreaksFromDescription(register.contentsummary);
+            register.contentsummary = RemoveBreaksAndSemicolon(register.contentsummary);
             string text = register.id + ";" + register.label + ";" + register.contentsummary + ";" + register.owner + ";" + register.lastUpdated.ToString("dd/MM/yyyy");
             streamWriter.WriteLine(text);
         }
 
-        private static string RemoveBreaksFromDescription(string description)
+        private static string RemoveBreaksAndSemicolon(string text)
         {
             string replaceWith = " ";
-            if (!string.IsNullOrWhiteSpace(description))
+            if (!string.IsNullOrWhiteSpace(text))
             {
-                description = description.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith);
+                text = text.Replace("\r\n", replaceWith).Replace("\n", replaceWith).Replace("\r", replaceWith).Replace(";", ".");
             }
             else
             {
-                description = Registers.NotSet;
+                text = Registers.NotSet;
             }
 
-            return description;
+            return text;
         }
 
         private string RegisterItemHeading(string containedItemClass)
@@ -291,7 +305,7 @@ namespace Kartverket.Register.Formatter
             }
             if (containedItemClass == "InspireDataset")
             {
-                return DataSet.DOK_Delivery_Theme + ";" +
+                return "InspireTema;" +
                         Registers.Name + ";" +
                         Registers.Owner + "; DOK-status;" +
                         DataSet.DOK_StatusDateAccepted + ";" +
@@ -306,7 +320,14 @@ namespace Kartverket.Register.Formatter
                         DataSet.DOK_Delivery_AtomFeed + ";" +
                         InspireDataSet.WfsOrAtomStatus + ";" +
                         InspireDataSet.HarmonizedDataStatus + ";" +
-                        InspireDataSet.SpatialDataServiceStatus + (isAdmin ? ";Uuid" : "") + ";" +
+                        InspireDataSet.SpatialDataServiceStatus + ";" +
+                        "Metadata i søketjenesten;" +
+                        "Tjenestestatus;" +
+                        "Requests;" +
+                        "Nettverkstjeneste;" +
+                        "Sds;" + 
+                        "Datatype;" +
+                        (isAdmin ? "Uuid" : "") + ";" +
                         DataSet.DisplayKartkatalogen;
             }
             if (containedItemClass == "GeodatalovDataset")

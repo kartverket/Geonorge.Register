@@ -90,7 +90,7 @@ namespace Kartverket.Register.Controllers
         {
             SetLanguage(Request);
             var inspireStatusRegister = _registerService.GetInspireStatusRegister();
-            Monitoring inspireMonitoring = _inspireMonitoringService.Mapping(inspireStatusRegister);
+            Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
             return Ok(inspireMonitoring);
         }
 
@@ -98,7 +98,14 @@ namespace Kartverket.Register.Controllers
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);
-            register = _registerService.FilterRegisterItems(register, filter);
+            if (register.IsInspireStatusRegister())
+            {
+                register = _registerItemService.GetInspireStatusRegisterItems(register);
+            }
+            else
+            {
+                register = _registerService.FilterRegisterItems(register, filter);
+            }
             return register;
         }
 
@@ -278,8 +285,8 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
             SetLanguage(Request);
-            List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
-            List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
+            List<RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
+            List<Registeritem> ConverteditemsByOwner = new List<Registeritem>();
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
@@ -295,7 +302,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
-            new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();
             return Ok();
         }
@@ -306,6 +313,16 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             new InspireDatasetService(db).SynchronizeInspireDatasets();
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister/dataservices")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireDataServices()
+        {
+            new InspireDatasetService(db).SynchronizeInspireDataServices();
             return Ok();
         }
 
@@ -362,8 +379,7 @@ namespace Kartverket.Register.Controllers
             string selectedDOKMunicipality = "";
             if (filter != null && !string.IsNullOrEmpty(filter.municipality))
             {
-                Services.RegisterItem.RegisterItemService regItemService = new Services.RegisterItem.RegisterItemService(new RegisterDbContext());
-                Models.Organization org = regItemService.GetMunicipalityOrganizationByNr(filter.municipality);
+                Models.Organization org = _registerItemService.GetMunicipalityOrganizationByNr(filter.municipality);
                 if (org != null)
                 {
                     selectedDOKMunicipality = org.name;

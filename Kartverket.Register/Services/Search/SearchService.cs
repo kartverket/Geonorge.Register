@@ -501,7 +501,7 @@ namespace Kartverket.Register.Services.Search
                 };
             }
 
-            if (register.ContainedItemClassIsInspireDataset())
+            if (register.IsInspireStatusRegister())
             {
                 var queryResults = (from d in _dbContext.InspireDatasets
                                     where d.Name.Contains(text)
@@ -512,8 +512,22 @@ namespace Kartverket.Register.Services.Search
                 {
                     foreach (var item in queryResults.ToList())
                     {
-                        var dataset = item;
-                        registerItemsV2.Add(dataset);
+                        var inspireDataset = item;
+                        registerItemsV2.Add(inspireDataset);
+                    }
+                }
+
+                var queryResultsInspireDataService = (from d in _dbContext.InspireDataServices
+                                    where d.Name.Contains(text)
+                                          || d.Description.Contains(text)
+                                    select d);
+
+                if (queryResultsInspireDataService.Any())
+                {
+                    foreach (var item in queryResultsInspireDataService.ToList())
+                    {
+                        var inspireDataService = item;
+                        registerItemsV2.Add(inspireDataService);
                     }
                 }
 
@@ -880,6 +894,38 @@ namespace Kartverket.Register.Services.Search
                                      Type = null,
                                      currentVersion = o.versioning.currentVersion
                                  }).Union(
+                                (from i in _dbContext.InspireDataServices
+                                 where i.Register.name.Contains(parameters.Text)
+                                 || i.Register.description.Contains(parameters.Text)
+                                 || i.Name.Contains(parameters.Text)
+                                 select new SearchResultItem
+                                 {
+                                     ParentRegisterId = i.Register.parentRegisterId,
+                                     ParentRegisterName = i.Register.parentRegister.name,
+                                     ParentRegisterDescription = i.Register.parentRegister.description,
+                                     ParentRegisterSeoname = i.Register.parentRegister.seoname,
+                                     ParentregisterOwner = i.Register.parentRegister.owner.seoname,
+                                     RegisterName = i.Register.name,
+                                     RegisterDescription = i.Register.description,
+                                     RegisterItemName = i.Name,
+                                     RegisterItemNameEnglish = null,
+                                     RegisterItemDescription = i.Description,
+                                     RegisterID = i.RegisterId,
+                                     SystemID = i.SystemId,
+                                     Discriminator = i.Register.containedItemClass,
+                                     RegisterSeoname = i.Register.seoname,
+                                     RegisterItemSeoname = i.Seoname,
+                                     DocumentOwner = null,
+                                     DatasetOwner = null,
+                                     RegisterItemUpdated = i.Modified,
+                                     RegisterItemStatus = i.StatusId,
+                                     Submitter = i.Submitter.seoname,
+                                     Shortname = null,
+                                     CodelistValue = null,
+                                     ObjektkatalogUrl = null,
+                                     Type = null,
+                                     currentVersion = i.Versioning.currentVersion
+                                 }).Union(
                                 (from i in _dbContext.InspireDatasets
                                  where i.Register.name.Contains(parameters.Text)
                                  || i.Register.description.Contains(parameters.Text)
@@ -944,7 +990,7 @@ namespace Kartverket.Register.Services.Search
                                      Type = null,
                                      currentVersion = i.Versioning.currentVersion
                                  })
-                              ))))))));
+                              )))))))));
 
             searchResultItem = queryResult.ToList();
 

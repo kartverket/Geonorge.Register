@@ -13,6 +13,8 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Xml;
 using Kartverket.Register.Migrations;
+using Kartverket.Register.Models.ViewModels;
+using Resources;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -54,22 +56,96 @@ namespace Kartverket.Register.Services.Register
 
             if (register.RegisterItems.Any())
             {
+                if (register.IsInspireStatusRegister())
+                {
+                    registerItemsv2 = FilterInspireStatusregister(register, filter, registerItemsv2);
+                }
+                else
+                {
                     foreach (var item in register.RegisterItems)
                     {
                         if (filter.filterOrganization != null)
                         {
-                            if (item.Owner.seoname == filter.filterOrganization)
+                            if (FilterOrganization(filter.filterOrganization, item.Owner.seoname))
                             {
                                 registerItemsv2.Add(item);
                             }
                         }
-                        else registerItemsv2.Add(item);
+                        else
+                        {
+                            registerItemsv2.Add(item);
+                        }
+                    }
+
                 }
+
             }
 
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private List<RegisterItemV2> FilterInspireStatusregister(Models.Register register, FilterParameters filter, List<RegisterItemV2> registerItems)
+        {
+            var registerItemsv2 = new List<RegisterItemV2>();
+
+            foreach (var item in register.RegisterItems)
+            {
+                if (filter.InspireRegisteryType != null)
+                {
+                    if (filter.InspireRegisteryType == "dataset")
+                    {
+                        if (item is InspireDataset inspireDataset)
+                        {
+                            if (filter.filterOrganization != null)
+                            {
+                                if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner.seoname))
+                                {
+                                    registerItemsv2.Add(inspireDataset);
+                                }
+                            }
+                            else
+                            {
+                                registerItemsv2.Add(inspireDataset);
+                            }
+                        }
+                    }
+                    else if (filter.InspireRegisteryType == "service")
+                    {
+                        if (item is InspireDataService inspireDataService)
+                        {
+                            if (filter.filterOrganization != null)
+                            {
+                                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner.seoname))
+                                {
+                                    registerItemsv2.Add(inspireDataService);
+                                }
+                            }
+                            else
+                            {
+                                registerItemsv2.Add(inspireDataService);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    registerItemsv2.Add(item);
+
+                }
+            }
+            return registerItemsv2;
+        }
+
+
+        private bool FilterOrganization(string organization, string owner)
+        {
+            if (owner == organization)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
@@ -170,7 +246,7 @@ namespace Kartverket.Register.Services.Register
             {
                 foreach (CoverageDataset coverage in dataset.Coverage)
                 {
-                    if (coverage.Municipality. systemId == municipality.systemId)
+                    if (coverage.Municipality.systemId == municipality.systemId)
                     {
                         registerItems.Add(dataset);
                     }
@@ -225,26 +301,26 @@ namespace Kartverket.Register.Services.Register
             if (autoUpdate)
             {
                 statusValue = "deficient";
-            try
-            {
-                if (!string.IsNullOrEmpty(url))
+                try
                 {
-                    System.Net.WebClient c = new System.Net.WebClient();
-                    c.Encoding = System.Text.Encoding.UTF8;
-
-                    var data = c.DownloadString(url + ".json");
-                    var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                    var status = response["status"];
-                    if (status != null)
+                    if (!string.IsNullOrEmpty(url))
                     {
-                        string statusvalue = status?.ToString();
+                        System.Net.WebClient c = new System.Net.WebClient();
+                        c.Encoding = System.Text.Encoding.UTF8;
 
-                        if (statusvalue == "Gyldig" || statusvalue == "SOSI godkjent")
-                            return "good";
-                        else
-                            return "useable";
+                        var data = c.DownloadString(url + ".json");
+                        var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                        var status = response["status"];
+                        if (status != null)
+                        {
+                            string statusvalue = status?.ToString();
+
+                            if (statusvalue == "Gyldig" || statusvalue == "SOSI godkjent")
+                                return "good";
+                            else
+                                return "useable";
+                        }
                     }
-                }
 
 
                 }
@@ -267,7 +343,7 @@ namespace Kartverket.Register.Services.Register
             if (autoUpdate)
             {
                 try
-                { 
+                {
                     string metadataUrl = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
                     System.Net.WebClient c = new System.Net.WebClient();
                     c.Encoding = System.Text.Encoding.UTF8;
@@ -278,7 +354,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (metadata != null)
                     {
-    
+
                         if (metadata.Related != null)
                         {
                             foreach (var service in metadata.Related)
@@ -324,7 +400,7 @@ namespace Kartverket.Register.Services.Register
                             var hasCoverage = false;
                             var connectSoso = false;
 
-                            if(data.connect.vurdering == "yes")
+                            if (data.connect.vurdering == "yes")
                                 resposeGetCapabilities = true;
 
                             if (data.connect.vurdering == "soso")
@@ -345,7 +421,7 @@ namespace Kartverket.Register.Services.Register
                             if (data.bbox.vurdering == "yes")
                                 hasCoverage = true;
 
-                            if(!hasServiceUrl)
+                            if (!hasServiceUrl)
                                 status = "deficient";
                             //Grønn på WMS:
                             //Respons fra GetCapabilities
@@ -394,6 +470,7 @@ namespace Kartverket.Register.Services.Register
             var InspireRequirementParam = HttpContext.Current.Request.QueryString["InspireRequirement"] != null ? HttpContext.Current.Request.QueryString["InspireRequirement"].ToString() : "";
             var nationalRequirementParam = HttpContext.Current.Request.QueryString["nationalRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalRequirement"].ToString() : "";
             var nationalSeaRequirementParam = HttpContext.Current.Request.QueryString["nationalSeaRequirement"] != null ? HttpContext.Current.Request.QueryString["nationalSeaRequirement"].ToString() : "";
+            var inspireRegistryTab = HttpContext.Current.Request.QueryString["inspireRegistryTab"] != null ? HttpContext.Current.Request.QueryString["inspireRegistryTab"].ToString() : "";
 
             if (HttpContext.Current.Request.QueryString.Count < 1)
             {
@@ -422,6 +499,10 @@ namespace Kartverket.Register.Services.Register
 
                     if (HttpContext.Current.Session["municipality"] != null && string.IsNullOrEmpty(municipality))
                         municipality = HttpContext.Current.Session["municipality"].ToString();
+
+                    if (HttpContext.Current.Session["inspireRegistryTab"] != null && string.IsNullOrEmpty(inspireRegistryTab))
+                        inspireRegistryTab = HttpContext.Current.Session["inspireRegistryTab"].ToString();
+
 
                     string redirect = HttpContext.Current.Request.Path + "?sorting=" + orderBy;
                     bool shallRedirect = false;
@@ -472,6 +553,12 @@ namespace Kartverket.Register.Services.Register
                         shallRedirect = true;
                     }
 
+                    if (inspireRegistryTab != "")
+                    {
+                        redirect = redirect + "&inspireRegistryTab=" + inspireRegistryTab;
+                        shallRedirect = true;
+                    }
+
                     if (shallRedirect)
                     {
                         HttpContext.Current.Response.Redirect(redirect);
@@ -487,6 +574,7 @@ namespace Kartverket.Register.Services.Register
             HttpContext.Current.Session["InspireRequirement"] = InspireRequirementParam;
             HttpContext.Current.Session["nationalRequirement"] = nationalRequirementParam;
             HttpContext.Current.Session["nationalSeaRequirement"] = nationalSeaRequirementParam;
+            HttpContext.Current.Session["inspireRegistryTab"] = inspireRegistryTab;
 
 
             var sortedList = registers.OrderBy(o => o.name).ToList();
@@ -563,8 +651,8 @@ namespace Kartverket.Register.Services.Register
                     var distribution = metadata.DistributionDetails;
                     if (distribution != null && distribution.Protocol != null && distribution.URL != null)
                     {
-                        if(Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute) 
-                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download" 
+                        if (Uri.IsWellFormedUriString(distribution.URL.Value, UriKind.Absolute)
+                            && (distribution.Protocol.Value == "WWW:DOWNLOAD-1.0-http--download"
                             || distribution.Protocol.Value == "GEONORGE:FILEDOWNLOAD" || distribution.Protocol.Value == "GEONORGE:DOWNLOAD"))
                             hasDistributionUrl = true;
                     }
@@ -591,9 +679,9 @@ namespace Kartverket.Register.Services.Register
             return status;
         }
 
-        public string GetSosiRequirements(string uuid ,string url, bool autoUpdate, string currentStatus)
+        public string GetSosiRequirements(string uuid, string url, bool autoUpdate, string currentStatus)
         {
- 
+
             string statusValue = currentStatus;
             bool qualitySpecificationsResult = false;
             bool sosiDistributionFormat = false;
@@ -614,10 +702,10 @@ namespace Kartverket.Register.Services.Register
                     if (metadata != null)
                     {
                         var qualitySpecifications = metadata.QualitySpecifications;
-                        if(qualitySpecifications != null && qualitySpecifications.Count > 0)
+                        if (qualitySpecifications != null && qualitySpecifications.Count > 0)
                         {
-                            for(int q=0;q < qualitySpecifications.Count; q++)
-                            { 
+                            for (int q = 0; q < qualitySpecifications.Count; q++)
+                            {
                                 var qualitySpecification = qualitySpecifications[q];
                                 string explanation = qualitySpecification.Explanation.Value;
                                 if (explanation.StartsWith("SOSI-filer er i henhold"))
@@ -631,7 +719,7 @@ namespace Kartverket.Register.Services.Register
                         var distributionFormats = metadata.DistributionFormats;
                         if (distributionFormats != null && distributionFormats.Count > 0)
                         {
-                            foreach(var format in distributionFormats)
+                            foreach (var format in distributionFormats)
                             {
                                 if (format.Name == "SOSI")
                                     sosiDistributionFormat = true;
@@ -648,7 +736,7 @@ namespace Kartverket.Register.Services.Register
 
                     if (qualitySpecificationsResult)
                         statusValue = "good";
-                    else if(sosiDistributionFormat)
+                    else if (sosiDistributionFormat)
                         statusValue = "useable";
                     else
                         statusValue = "deficient";
@@ -931,9 +1019,9 @@ namespace Kartverket.Register.Services.Register
                                    select r;
 
                 var result = queryResults.FirstOrDefault();
-                if(result != null)
+                if (result != null)
                     result.AddMissingTranslations();
-                
+
                 return result;
             }
             else
@@ -946,7 +1034,7 @@ namespace Kartverket.Register.Services.Register
                 var result = queryResults.FirstOrDefault();
                 if (result != null)
                     result.AddMissingTranslations();
-                
+
                 return result;
             }
         }
@@ -956,9 +1044,9 @@ namespace Kartverket.Register.Services.Register
             if (string.IsNullOrWhiteSpace(parentRegisterName))
             {
                 var queryResults = from r in _dbContext.Registers
-                    where r.seoname == registerName &&
-                          r.parentRegister == null
-                    select r.systemId;
+                                   where r.seoname == registerName &&
+                                         r.parentRegister == null
+                                   select r.systemId;
 
                 var result = queryResults.FirstOrDefault();
                 return result;
@@ -966,9 +1054,9 @@ namespace Kartverket.Register.Services.Register
             else
             {
                 var queryResults = from r in _dbContext.Registers
-                    where r.seoname == registerName &&
-                          r.parentRegister.seoname == parentRegisterName
-                    select r.systemId;
+                                   where r.seoname == registerName &&
+                                         r.parentRegister.seoname == parentRegisterName
+                                   select r.systemId;
 
                 var result = queryResults.FirstOrDefault();
                 return result;
@@ -1090,8 +1178,8 @@ namespace Kartverket.Register.Services.Register
         private Guid GetOrganizationKartverket()
         {
             var queryResults = from o in _dbContext.Organizations
-                where o.name == "Kartverket"
-                select o.systemId;
+                               where o.name == "Kartverket"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1099,8 +1187,8 @@ namespace Kartverket.Register.Services.Register
         public Guid GetInspireStatusRegisterId()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
-                select o.systemId;
+                               where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1108,8 +1196,8 @@ namespace Kartverket.Register.Services.Register
         public Models.Register GetInspireStatusRegister()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
-                select o;
+                               where o.systemId.ToString() == "9A9BEF28-285B-477E-85F1-504F8227FF45"
+                               select o;
 
             return queryResults.FirstOrDefault();
         }
@@ -1117,8 +1205,8 @@ namespace Kartverket.Register.Services.Register
         public Guid GetGeodatalovStatusRegisterId()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.name == "Geodatalov statusregister"
-                select o.systemId;
+                               where o.name == "Geodatalov statusregister"
+                               select o.systemId;
 
             return queryResults.FirstOrDefault();
         }
@@ -1126,8 +1214,8 @@ namespace Kartverket.Register.Services.Register
         public List<Models.Register> GetCodelistRegisters()
         {
             var queryResults = from o in _dbContext.Registers
-                where o.containedItemClass == "CodelistValue"
-                select o;
+                               where o.containedItemClass == "CodelistValue"
+                               select o;
 
             var codelistRegisters = new List<Models.Register>();
             foreach (var item in queryResults)
@@ -1152,10 +1240,10 @@ namespace Kartverket.Register.Services.Register
             if (model is Models.Register register)
             {
                 var queryResults = from o in _dbContext.Registers
-                    where o.name == register.name &&
-                          o.systemId != register.systemId &&
-                          o.parentRegisterId == register.parentRegister.systemId
-                    select o.systemId;
+                                   where o.name == register.name &&
+                                         o.systemId != register.systemId &&
+                                         o.parentRegisterId == register.parentRegister.systemId
+                                   select o.systemId;
 
                 if (queryResults.ToList().Any())
                 {
@@ -1193,7 +1281,81 @@ namespace Kartverket.Register.Services.Register
             foreach (var subregister in subregisters.ToList())
             {
                 DeleteRegister(subregister);
-            }       
+            }
+        }
+
+        public RegisterGrouped GetRegistersGrouped()
+        {
+            RegisterGrouped register = new RegisterGrouped();
+            register.Items = new List<Group>();
+
+            //Datamodeller og standardisering
+            List<Models.ViewModels.RegisterView> registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = Registers.Objektregisteret, description = Registers.ObjektregisteretContent, ExternalUrl = WebConfigurationManager.AppSettings["ObjektkatalogUrl"] });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("6D579BAE-1E0B-48CC-B25D-5AD737E6B3DC"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupDatamodelsAndStandards,
+                Items = registers
+            });
+
+            //Status og rapportering
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = "Det offentlige kartgrunnlaget - dekningskart", description = Registers.DOKCoverageContent, ExternalUrl = "/register/det-offentlige-kartgrunnlaget/dekning" });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("0F428034-0B2D-4FB7-84EA-C547B872B418"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupStatusAndReporting,
+                Items = registers
+            });
+
+            //Kodelister
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("28F22B09-098F-48E2-BC37-27FC63674318"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A46038D-16EE-4562-96D2-8F6304AAB689"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("FCB0685D-24EB-4156-9AC8-25FA30759094"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("25CC9CF7-2190-4A58-B4D2-3378DE295A12"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupCodeLists,
+                Items = registers
+            });
+
+            //Dokumentregister
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupDocumentRegistry,
+                Items = registers
+            });
+
+            //Symbolisering og kartografi
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = Registers.Kartografi, description = Registers.KartografiContent, ExternalUrl = "/register/kartografi" });
+            registers.Add(new RegisterView { name = Registers.SymbolName, description = Registers.SymbolContent, ExternalUrl = "/register/symbol" });
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupSymbolAndCartography,
+                Items = registers
+            });
+
+            return register;
         }
     }
 }

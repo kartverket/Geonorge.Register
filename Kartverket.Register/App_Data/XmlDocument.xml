@@ -800,6 +800,15 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Kartverket.Register.Helpers.RegisterUrls.ToRouteValueDictionary(System.Collections.Specialized.NameValueCollection,System.String,System.String)">
+            <summary>
+            Add parameters from current url
+            </summary>
+            <param name="collection"></param>
+            <param name="parameter"></param>
+            <param name="parameterValue"></param>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Helpers.RegisterUrls.MakeSeoFriendlyDocumentName(System.Web.HttpPostedFileBase,System.String@,System.String@)">
             <summary>
             Makes an SEO friendly document name
@@ -958,12 +967,21 @@
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
         </member>
+        <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
+            Liste opp alle Annex tjenestene h�rer til..
+        </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
             Determines what kind of organization: regular or municipality.
             If empty, then regular organization. 
             If set to 'municipality' then the municipality specific attributes below should be populated
             </summary>
+        </member>
+        <member name="M:Kartverket.Register.Models.Organization.GetDefaultOrganizationId">
+            <summary>
+            Default organization is Kartverket
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Models.Register.GetObjectUrl">
             <summary>
@@ -983,6 +1001,13 @@
             Returns the confirmation status of municipal dataset
             </summary>
             <param name="municipality"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.RegisterItem.IRegisterItemService.GetOrganizationByName(System.String)">
+            <summary>
+            Gets organizationId by nam, from Organization registry
+            </summary>
+            <param name="organizationName"></param>
             <returns></returns>
         </member>
         <member name="M:Kartverket.Register.Services.RegisterItem.RegisterItemService.ItemNameAlredyExist(System.Object)">
@@ -3560,6 +3585,31 @@
         <member name="P:Resources.Registers.Etat">
             <summary>
               Looks up a localized string similar to Etat.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupCodeLists">
+            <summary>
+              Looks up a localized string similar to Kodelister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDatamodelsAndStandards">
+            <summary>
+              Looks up a localized string similar to Datamodeller og standardisering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDocumentRegistry">
+            <summary>
+              Looks up a localized string similar to Dokumentregister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupStatusAndReporting">
+            <summary>
+              Looks up a localized string similar to Status og rapportering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupSymbolAndCartography">
+            <summary>
+              Looks up a localized string similar to Symbolisering og kartografi.
             </summary>
         </member>
         <member name="P:Resources.Registers.Historical">

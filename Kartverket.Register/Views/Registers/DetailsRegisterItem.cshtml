@@ -23,18 +23,27 @@
             <span class="separator-lg"></span>
         </div>
         <div class="col-sm-12 col-md-10">
+            @if (Model is InspireDataServiceViewModel)
+            {
+                <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-tjeneste" style="width: auto;" data-original-title="Tilgjengelig som Tjeneste">Tjeneste</span>
+            }
+            else if (Model is InspireDatasetViewModel)
+            {
+            <span title="" data-toggle="tooltip" data-placement="bottom" class="label label-dataset" style="width: auto;" data-original-title="Tilgjengelig som datasett">Datasett</span>
+            }
+
             @if (Model.Register.containedItemClass != "NameSpace")
-            { <p> @Model.Description</p>}
+            {<p> @Model.Description</p>}
             @if (Model.Register.containedItemClass != "Dataset" && Model.Register.containedItemClass != "InspireDataset")
-            { <p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
+            {<p title="@Html.Raw(HtmlHelperExtensions.StatusBeskrivelse(Model.Register))"><strong>Status:</strong> @Model.Status.DescriptionTranslated() <i class="statusIcon-@Model.StatusId"></i></p>}
 
             @if (Model.Register.containedItemClass == "NameSpace")
-            { <p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
-            else
-            {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
+            {<p><strong>@Registers.Owner:</strong> @Model.Submitter.NameTranslated()</p>}
+        else
+        {<p><strong>@Registers.Submitter:</strong> @Model.Submitter.NameTranslated()</p>}
 
             @if (Model.Owner != null)
-            { <p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
+            {<p><strong>@Registers.Owner:</strong> @Model.Owner.NameTranslated()</p>}
 
             <p><strong>@Html.DisplayNameFor(m => m.VersionNumber)</strong> @Model.VersionNumber</p>
             @if (Model.VersionName != null)
@@ -69,6 +78,10 @@
     @if (Model is InspireDatasetViewModel)
     {
         @Html.Partial("_detailsInspireDataset")
+    }
+    else if (Model is InspireDataServiceViewModel)
+    {
+        @Html.Partial("_detailsInspireDataService")
     }
     else if (Model is GeodatalovDatasetViewModel)
     {
@@ -110,7 +123,10 @@
     @if (!(Model.RegisterItem is ServiceAlert) && Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
-        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
+        if (!(Model is InspireDataServiceViewModel))
+        {
+            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
+        }
     }
 
     <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>

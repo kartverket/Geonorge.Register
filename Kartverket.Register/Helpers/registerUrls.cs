@@ -1,17 +1,58 @@
-﻿using Kartverket.Register.Models;
-using Kartverket.Register.Models.Translations;
-using System;
-using System.Collections.Generic;
+﻿using Kartverket.Register.Models.Translations;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace Kartverket.Register.Helpers
 {
     public static class RegisterUrls
     {
+
+        /// <summary>
+        /// Add parameters from current url
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <param name="parameter"></param>
+        /// <param name="parameterValue"></param>
+        /// <returns></returns>
+        public static RouteValueDictionary ToRouteValueDictionary(this NameValueCollection collection, string parameter = null, string parameterValue = null)
+        {
+            NameValueCollection nameValueCollection = new NameValueCollection();
+            if (!string.IsNullOrWhiteSpace(parameter) && !string.IsNullOrWhiteSpace(parameterValue))
+            {
+                nameValueCollection.Add(parameter, parameterValue);
+            }
+
+            var routeValueDictionary = new RouteValueDictionary();
+            foreach (var key in collection.AllKeys)
+            {
+                if (key == "page")
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                else
+                {
+                    routeValueDictionary.Add(key, collection[key]);
+                }
+                if (key == "sorting")
+                {
+                    routeValueDictionary.Remove(key);
+                }
+            }
+            foreach (var key in nameValueCollection.AllKeys)
+            {
+                if (routeValueDictionary.ContainsKey(key))
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                routeValueDictionary.Add(key, nameValueCollection[key]);
+            }
+            return routeValueDictionary;
+        }
 
         public static string GeonorgeUrl(this HtmlHelper helper)
         {

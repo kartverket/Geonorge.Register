@@ -294,4 +294,19 @@
   <data name="SymbolName" xml:space="preserve">
     <value>Cartography - symbols</value>
   </data>
+  <data name="GroupCodeLists" xml:space="preserve">
+    <value>Code lists</value>
+  </data>
+  <data name="GroupDatamodelsAndStandards" xml:space="preserve">
+    <value>Data models and standards</value>
+  </data>
+  <data name="GroupDocumentRegistry" xml:space="preserve">
+    <value>Document registry</value>
+  </data>
+  <data name="GroupStatusAndReporting" xml:space="preserve">
+    <value>Status and reporting</value>
+  </data>
+  <data name="GroupSymbolAndCartography" xml:space="preserve">
+    <value>Symbols and cartography</value>
+  </data>
 </root>

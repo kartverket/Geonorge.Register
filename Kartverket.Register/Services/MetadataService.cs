@@ -13,6 +13,13 @@ namespace Kartverket.DOK.Service
 {
     public class MetadataService
     {
+        private readonly RegisterDbContext _dbContext;
+        public MetadataService(RegisterDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+
         public Dataset UpdateDatasetWithMetadata(Dataset dataset, string uuid, Dataset originalDataset, bool dontUpdateDescription)
         {
             Dataset metadata = FetchDatasetFromKartkatalogen(uuid);
@@ -81,18 +88,16 @@ namespace Kartverket.DOK.Service
 
         private string AddTheme(string theme)
         {
-            RegisterDbContext db = new RegisterDbContext();
 
-            var queryResultsRegisterItem = from o in db.DOKThemes
+            var queryResultsRegisterItem = from o in _dbContext.DOKThemes
                                            where o.value == theme
                                            select o.value;
 
-            if (queryResultsRegisterItem.ToList().Count == 0) { 
-                db.DOKThemes.Add(new DOKTheme { description = theme, value = theme });
-                db.SaveChanges();
+            if (queryResultsRegisterItem.ToList().Count == 0)
+            {
+                _dbContext.DOKThemes.Add(new DOKTheme { description = theme, value = theme });
+                _dbContext.SaveChanges();
             }
-
-            db.Dispose();
 
             return theme;
         }
@@ -139,7 +144,7 @@ namespace Kartverket.DOK.Service
         {
             Dataset metadata = new Dataset();
 
-            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/"+uuid;
+            string url = System.Web.Configuration.WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
             System.Net.WebClient c = new System.Net.WebClient();
             c.Encoding = System.Text.Encoding.UTF8;
             try
@@ -226,7 +231,7 @@ namespace Kartverket.DOK.Service
         {
             var inspireDataset = new InspireDataset();
             var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
-            var c = new System.Net.WebClient {Encoding = System.Text.Encoding.UTF8};
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
             try
             {
                 var json = c.DownloadString(url);
@@ -254,12 +259,7 @@ namespace Kartverket.DOK.Service
                             : "kartverket");
                     inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
 
-                    inspireDataset.InspireTheme = GetInspireThemeName(
-                        data.KeywordsInspire != null && data.KeywordsInspire.Count > 0
-                            ? data.KeywordsInspire[0].KeywordValue.Value
-                            : "Annen");
-
-
+                    inspireDataset.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 
                     if (data.ServiceUuid != null)
                         inspireDataset.UuidService = data.ServiceUuid;
@@ -290,18 +290,47 @@ namespace Kartverket.DOK.Service
             return inspireDataset;
         }
 
-        private string GetInspireThemeName(string code)
+        private ICollection<CodelistValue> GetInspireThemes(dynamic keywordsInspire)
         {
-            if (!String.IsNullOrWhiteSpace(code))
-            {
-                RegisterDbContext db = new RegisterDbContext();
-                var queryResultsRegisterItem = from o in db.CodelistValues
-                    where o.value == code
-                    select o.name;
+            var inspireTheams = new List<CodelistValue>();
 
+            if (keywordsInspire != null)
+            {
+                foreach (var item in keywordsInspire)
+                {
+                    CodelistValue inspireTheme = GetInspireThemeAsCodelistValue(item.KeywordValue.ToString());
+                    if (inspireTheme != null)
+                    {
+                        inspireTheams.Add(inspireTheme);
+                    }
+                }
+            }
+            return inspireTheams;
+        }
+
+        private Guid? GetInspireThemeId(string code)
+        {
+            var queryResultsRegisterItem = from o in _dbContext.CodelistValues
+                                           where o.register.name == "Inspiretema" &&
+                                           o.value == code
+                                           select o.systemId;
+
+            if (queryResultsRegisterItem.Any())
+            {
                 return queryResultsRegisterItem.FirstOrDefault();
             }
-            return code;
+            return null;
+        }
+
+        private CodelistValue GetInspireThemeAsCodelistValue(string code)
+        {
+            var queryResultsRegisterItem = from o in _dbContext.CodelistValues
+                                           where o.register.name == "Inspiretema" &&
+                                           o.value == code
+                                           select o;
+
+
+            return queryResultsRegisterItem.FirstOrDefault();
         }
 
         public GeodatalovDataset FetchGeodatalovDatasetFromKartkatalogen(string uuid)
@@ -379,7 +408,7 @@ namespace Kartverket.DOK.Service
                             geodatalovDataset.Plan = true;
                         }
                     }
-                    
+
                 }
             }
             catch (Exception e)
@@ -434,24 +463,20 @@ namespace Kartverket.DOK.Service
 
         private Guid mapOrganizationNameToId(string orgname)
         {
-            RegisterDbContext db = new RegisterDbContext();
-
-            var queryResultsRegisterItem = from o in db.Organizations
-                                           where o.name == orgname 
+            var queryResultsRegisterItem = from o in _dbContext.Organizations
+                                           where o.name == orgname
                                            select o.systemId;
 
             Guid ID = queryResultsRegisterItem.FirstOrDefault();
 
-            db.Dispose();
+
 
             return ID;
         }
 
         public string UpdateDatasetsWithMetadata()
         {
-            RegisterDbContext db = new RegisterDbContext();
-
-            var queryResultsRegisterItem = from d in db.Datasets
+            var queryResultsRegisterItem = from d in _dbContext.Datasets
                                            where !string.IsNullOrEmpty(d.Uuid)
                                            select d;
 
@@ -460,10 +485,10 @@ namespace Kartverket.DOK.Service
             foreach (var dataset in datasets)
             {
                 UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
-                db.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
+                _dbContext.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
             }
-            db.SaveChanges();
-            db.Dispose();
+            _dbContext.SaveChanges();
+
 
             return "updated";
         }
@@ -477,11 +502,67 @@ namespace Kartverket.DOK.Service
             {
                 result.AddRange(searchResult.Items.Select(t => new MetadataItemViewModel
                 {
-                    Uuid = ((www.opengis.net.DCMIRecordType) (t)).Items[0].Text[0],
-                    Title = ((www.opengis.net.DCMIRecordType) (t)).Items[2].Text[0]
+                    Uuid = ((www.opengis.net.DCMIRecordType)(t)).Items[0].Text[0],
+                    Title = ((www.opengis.net.DCMIRecordType)(t)).Items[2].Text[0]
                 }));
             }
             return result;
+        }
+
+        public InspireDataService FetchInspireDataServiceFromKartkatalogen(string uuid)
+        {
+            var inspireDataService = new InspireDataService();
+            var url = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/getdata/" + uuid;
+            var c = new System.Net.WebClient { Encoding = System.Text.Encoding.UTF8 };
+            try
+            {
+                var json = c.DownloadString(url);
+
+                dynamic data = Newtonsoft.Json.Linq.JObject.Parse(json);
+                if (data != null)
+                {
+                    inspireDataService.Name = data.Title;
+                    inspireDataService.Description = data.Abstract;
+                    inspireDataService.Uuid = data.Uuid;
+
+                    inspireDataService.OwnerId = mapOrganizationNameToId(
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
+                            : "");
+
+                    inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
+
+                    inspireDataService.Url = data.DistributionUrl;
+                    inspireDataService.ServiceType = data.ServiceType.ToString();
+
+                    inspireDataService.InspireDataType = data.DistributionDetails.ProtocolName;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(url);
+                return null;
+            }
+
+            return inspireDataService;
+
+        }
+
+        private string GetInspireTheme(string code)
+        {
+            var queryResultsRegisterItem = from o in _dbContext.CodelistValues
+                                           where o.register.name == "Inspiretema" &&
+                                           o.value == code
+                                           select o.name;
+
+            return queryResultsRegisterItem.FirstOrDefault();
+
+        }
+
+        private bool IsNetworkService(string serviceType)
+        {
+            return serviceType == "view" || serviceType == "download";
         }
     }
 }

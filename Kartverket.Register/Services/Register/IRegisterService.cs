@@ -1,4 +1,5 @@
 ﻿using Kartverket.Register.Models;
+using Kartverket.Register.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,7 @@ namespace Kartverket.Register.Services.Register
         string GetGmlRequirements(string uuid, bool dokDeliveryGmlRequirementsStatusAutoUpdate, string dokDeliveryGmlRequirementsStatusId);
         List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality);
         string GetDokDeliveryServiceStatus(string uuid, bool autoUpdate, string currentStatus, string uuidService);
+        RegisterGrouped GetRegistersGrouped();
         ICollection<Models.Register> OrderBy(ICollection<Models.Register> registers, string sorting);
         Guid GetInspireStatusRegisterId();
         Models.Register GetInspireStatusRegister();

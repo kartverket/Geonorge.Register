@@ -265,6 +265,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GeodatalovDatasetsController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\InspireDataServiceController.cs" />
     <Compile Include="Controllers\InspireDatasetsController.cs" />
     <Compile Include="Controllers\NameSpacesController.cs" />
     <Compile Include="Controllers\OrganizationsApiController.cs" />
@@ -770,6 +771,62 @@
     <Compile Include="Migrations\201712040910401_AddValidFromAndValidTo.Designer.cs">
       <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803191825070_AddInspireDataService.cs" />
+    <Compile Include="Migrations\201803191825070_AddInspireDataService.Designer.cs">
+      <DependentUpon>201803191825070_AddInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803191911471_RemoveSdsFromInspireDataServiceTable.cs" />
+    <Compile Include="Migrations\201803191911471_RemoveSdsFromInspireDataServiceTable.Designer.cs">
+      <DependentUpon>201803191911471_RemoveSdsFromInspireDataServiceTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803201417295_AddUuidToInspireDataService.cs" />
+    <Compile Include="Migrations\201803201417295_AddUuidToInspireDataService.Designer.cs">
+      <DependentUpon>201803201417295_AddUuidToInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803210956545_RemoveNetworkService.cs" />
+    <Compile Include="Migrations\201803210956545_RemoveNetworkService.Designer.cs">
+      <DependentUpon>201803210956545_RemoveNetworkService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803221855547_AddNetworkService.cs" />
+    <Compile Include="Migrations\201803221855547_AddNetworkService.Designer.cs">
+      <DependentUpon>201803221855547_AddNetworkService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.cs" />
+    <Compile Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.Designer.cs">
+      <DependentUpon>201803231020143_RenameServiceTypeToInspireDataType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804050910497_AddServiceTypeAndRemoveNetworkService.cs" />
+    <Compile Include="Migrations\201804050910497_AddServiceTypeAndRemoveNetworkService.Designer.cs">
+      <DependentUpon>201804050910497_AddServiceTypeAndRemoveNetworkService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804061054226_AddAreaAndRelevantArea.cs" />
+    <Compile Include="Migrations\201804061054226_AddAreaAndRelevantArea.Designer.cs">
+      <DependentUpon>201804061054226_AddAreaAndRelevantArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804091242083_AddConformity.cs" />
+    <Compile Include="Migrations\201804091242083_AddConformity.Designer.cs">
+      <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs" />
+    <Compile Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.Designer.cs">
+      <DependentUpon>201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs" />
+    <Compile Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.Designer.cs">
+      <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs" />
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.Designer.cs">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.cs" />
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.Designer.cs">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804200753134_RemoveConformity.cs" />
+    <Compile Include="Migrations\201804200753134_RemoveConformity.Designer.cs">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -792,6 +849,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
+    <Compile Include="Models\InspireDataService.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetV2.cs" />
     <Compile Include="Models\Dimension.cs" />
@@ -825,6 +883,8 @@
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
@@ -1500,6 +1560,9 @@
     <Content Include="Views\Shared\_geodatalovDataset.cshtml" />
     <Content Include="Views\Shared\_detailsGeodatalovDataset.cshtml" />
     <Content Include="Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Views\Shared\_inspireDataService.cshtml" />
+    <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
+    <Content Include="Views\InspireDataService\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1866,6 +1929,48 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712040910401_AddValidFromAndValidTo.resx">
       <DependentUpon>201712040910401_AddValidFromAndValidTo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191825070_AddInspireDataService.resx">
+      <DependentUpon>201803191825070_AddInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191911471_RemoveSdsFromInspireDataServiceTable.resx">
+      <DependentUpon>201803191911471_RemoveSdsFromInspireDataServiceTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201417295_AddUuidToInspireDataService.resx">
+      <DependentUpon>201803201417295_AddUuidToInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803210956545_RemoveNetworkService.resx">
+      <DependentUpon>201803210956545_RemoveNetworkService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803221855547_AddNetworkService.resx">
+      <DependentUpon>201803221855547_AddNetworkService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231020143_RenameServiceTypeToInspireDataType.resx">
+      <DependentUpon>201803231020143_RenameServiceTypeToInspireDataType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804050910497_AddServiceTypeAndRemoveNetworkService.resx">
+      <DependentUpon>201804050910497_AddServiceTypeAndRemoveNetworkService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804061054226_AddAreaAndRelevantArea.resx">
+      <DependentUpon>201804061054226_AddAreaAndRelevantArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804091242083_AddConformity.resx">
+      <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.resx">
+      <DependentUpon>201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.resx">
+      <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.resx">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.resx">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200753134_RemoveConformity.resx">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

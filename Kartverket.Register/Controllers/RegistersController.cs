@@ -51,7 +51,7 @@ namespace Kartverket.Register.Controllers
         {
             RemoveSessionSearchParams();
 
-            return View(_registerService.GetRegisters().OrderBy(r => r.NameTranslated()));
+            return View(_registerService.GetRegistersGrouped());
         }
 
         [Route("setculture/{culture}")]
@@ -117,6 +117,7 @@ namespace Kartverket.Register.Controllers
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+            viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
@@ -134,7 +135,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/{registername}/{itemowner}/{itemname}.{format}")]
         [Route("register/{registername}/{itemowner}/{itemname}")]
         [Route("register/{registername}/{itemowner}/{itemname}/{systemId}")]
-        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId)
+        public ActionResult DetailsRegisterItem(string registername, string itemowner, string itemname, string format, string systemId, string InspireRegisteryType = null)
         {
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
@@ -142,10 +143,11 @@ namespace Kartverket.Register.Controllers
             RegisterItemV2ViewModel viewModel;
             if (string.IsNullOrWhiteSpace(systemId))
             {
-                viewModel = GetRegisterItem(null, registername, itemowner, itemname);
+                viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryType);
             }
-            else {
-                viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+            else
+            {
+                viewModel = GetRegisterItem(systemId);new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
@@ -153,6 +155,11 @@ namespace Kartverket.Register.Controllers
                 return HttpNotFound();
             }
             return View(viewModel);
+        }
+
+        private RegisterItemV2ViewModel GetRegisterItem(string systemId)
+        {
+            throw new NotImplementedException();
         }
 
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
@@ -163,7 +170,7 @@ namespace Kartverket.Register.Controllers
         {
             string redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
-            var viewModel = GetRegisterItem(parentregister, registername, itemowner, itemname, version);
+            var viewModel = GetRegisterItem(parentregister, registername, itemowner, itemname, null, version);
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
 
             if (viewModel.SystemId == Guid.Empty)
@@ -511,6 +518,7 @@ namespace Kartverket.Register.Controllers
             Session["InspireRequirement"] = null;
             Session["nationalRequirement"] = null;
             Session["nationalSeaRequirement"] = null;
+            Session["inspireRegistryTab"] = null;
         }
 
         private void Viewbags(Models.Register register)
@@ -568,13 +576,29 @@ namespace Kartverket.Register.Controllers
             return register;
         }
 
-        private RegisterItemV2ViewModel GetRegisterItem(string parentregister, string registername, string itemowner, string itemname, int version = 1)
+        private RegisterItemV2ViewModel GetRegisterItem(string parentregister, string registername, string itemowner, string itemname, string inspireRegistryType, int version = 1)
         {
             var register = _registerService.GetRegister(parentregister, registername);
 
             if (register.IsInspireStatusRegister())
             {
-                var viewModel = new InspireDatasetViewModel(_inspireDatasetService.GetInspireDatasetByName(registername, itemname));
+                RegisterItemV2ViewModel viewModel = null;
+                if (string.IsNullOrWhiteSpace(inspireRegistryType) || inspireRegistryType == "dataset")
+                {
+                    var inspireDataset = _inspireDatasetService.GetInspireDatasetByName(registername, itemname);
+                    if (inspireDataset != null)
+                    {
+                        viewModel = new InspireDatasetViewModel(inspireDataset);
+                    }
+                    else
+                    {
+                        viewModel = new InspireDataServiceViewModel(_inspireDatasetService.GetInspireDataServiceByName(registername, itemname));
+                    }
+                }
+                else
+                {
+                    viewModel = new InspireDataServiceViewModel(_inspireDatasetService.GetInspireDataServiceByName(registername, itemname));
+                }
                 return viewModel;
             }
             if (register.IsGeodatalovStatusRegister())
@@ -604,6 +628,8 @@ namespace Kartverket.Register.Controllers
             ViewBag.registerId = register.SystemId;
             ViewBag.register = register.Name;
             ViewBag.registerSEO = register.Seoname;
+            ViewBag.InspireRegisteryType = filter.InspireRegisteryType;
+            ViewBag.text = filter.text;
         }
 
         private static bool Search(FilterParameters filter)

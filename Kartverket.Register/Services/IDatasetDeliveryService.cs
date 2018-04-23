@@ -15,5 +15,7 @@ namespace Kartverket.Register.Services
         string GetHarmonizedStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetSpatialDataStatus(string metadataUuid, bool autoUpdate = true, string currentStatus = "deficient");
         string GetDownloadRequirementsStatus(string wfsStatus, string atomFeedStatus);
+        string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true);
+
     }
 }

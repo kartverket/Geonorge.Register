@@ -49,6 +49,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<InspireDataset> InspireDatasets { get; set; }
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
+        public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
 
         public ILogEntryService LogEntryService
         {
@@ -86,6 +87,12 @@ namespace Kartverket.Register.Models
             {
                 m.MapInheritedProperties();
                 m.ToTable("GeodatalovDatasets");
+            });
+
+            modelBuilder.Entity<InspireDataService>().Map(m =>
+            {
+                m.MapInheritedProperties();
+                m.ToTable("InspireDataServices");
             });
 
             modelBuilder.Entity<RegisterItemV2>()

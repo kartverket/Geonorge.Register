@@ -50,15 +50,19 @@ namespace Kartverket.Register.Services
                 var url = WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + metadataUuid;
                 var data = c.DownloadString(url);
                 var response = Newtonsoft.Json.Linq.JObject.Parse(data);
+                if (response == null)
+                {
+                    return Useable;
+                }
                 var status = response["Status"];
 
                 if (status == null) return Useable;
                 var statusvalue = status.ToString();
                 return statusvalue == "OK" ? Good : Useable;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Notset;
+                return Deficient;
             }
         }
 

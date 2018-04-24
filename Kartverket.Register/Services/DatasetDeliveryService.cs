@@ -58,7 +58,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
-                return Deficient;
+                return Notset;
             }
         }
 

@@ -438,6 +438,7 @@ namespace Kartverket.Register.Services
             }
             foreach (var inspireDataset in removeDatasets)
             {
+                inspireDataset.InspireThemes.Clear();
                 DeleteInspireDataset(inspireDataset);
             }
         }

@@ -602,6 +602,7 @@ namespace Kartverket.Register.Services
             }
             foreach (var inspireDataService in removeDataServices)
             {
+                inspireDataService.InspireThemes.Clear();
                 DeleteInspireDataService(inspireDataService);
             }
         }

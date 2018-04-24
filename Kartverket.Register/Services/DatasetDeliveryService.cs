@@ -42,28 +42,20 @@ namespace Kartverket.Register.Services
         {
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
-            try
-            {
+            
                 if (string.IsNullOrEmpty(metadataUuid)) return Useable;
 
                 var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
                 var url = WebConfigurationManager.AppSettings["EditorUrl"] + "api/validatemetadata/" + metadataUuid;
                 var data = c.DownloadString(url);
                 var response = Newtonsoft.Json.Linq.JObject.Parse(data);
-                if (response == null)
-                {
-                    return Useable;
-                }
                 var status = response["Status"];
 
                 if (status == null) return Useable;
                 var statusvalue = status.ToString();
                 return statusvalue == "OK" ? Good : Useable;
-            }
-            catch (Exception e)
-            {
-                return Deficient;
-            }
+            
+            
         }
 
         public string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoupdate, string currentStatus)

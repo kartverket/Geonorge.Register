@@ -12,65 +12,7 @@ namespace Kartverket.Register.Services
     {
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
-
-
-        public int _NumberOfDatasetsByAnnexI;
-        public int _NumberOfDatasetsByAnnexII;
-        public int _NumberOfDatasetsByAnnexIII;
-
-        public int _NumberOfDatasetsByAnnexIWithMetadata;
-        public int _NumberOfDatasetsByAnnexIIWithMetadata;
-        public int _NumberOfDatasetsByAnnexIIIWithMetadata;
-
-        public int _NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood;
-        public int _NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood;
-        public int _NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood;
-        public int _NumberOfServicesWhereMetadataStatusIsgood;
-
-        public int _NumberOfDatasetsWithMetadata;
-        public int _NumberOfServicesWithMetadata;
-
-        public int _NumberOfDatasetsRegisteredInADiscoveryService;
-        public int _NumberOfServicesRegisteredInADiscoveryService;
-
-        public int _NumberOfServicesByServiceTypeDownload;
-        public int _NumberOfServicesByServiceTypeView;
-        public int _NumberOfServicesByServiceTypeDiscovery;
-        public int _NumberOfServicesByServiceTypeInvoke;
-        public int _NumberOfServicesByServiceTypeTransformation;
-        public int _NumberOfServicesByServiceType;
-        public int _NumberOfSdS;
-
-        public int _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue;
-        public int _NumberOfServicesByServiceTypeViewWhereConformityIsTrue;
-        public int _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue;
-        public int _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
-        public int _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue;
-
-        public int _NumberOfCallsByServiceTypeDiscovery;
-
-        public int _NumberOfCallsByServiceTypeView;
-        public int _NumberOfCallsByServiceTypeDownload;
-        public int _NumberOfCallsByServiceTypeTransformation;
-        public int _NumberOfCallsByServiceTypeInvoke;
-        public int _NumberOfCallsByServiceType;
-
-        public int _NumberOfDatasetsAvailableThroughViewANDDownloadService;
-        public int _NumberOfDatasetsAvailableThroughDownloadService;
-        public int _NumberOfDatasetsAvailableThroughViewService;
-
-        private int _NumberOfDatasetsWithHarmonizedDataAndConformedMetadata;
-        private int _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata;
-        private int _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata;
-        private int _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata;
-
-        private double _AccumulatedCurrentAreaByAnnexI;
-        private double _AccumulatedCurrentAreaByAnnexII;
-        private double _AccumulatedCurrentAreaByAnnexIII;
-
-        public double _AccumulatedRelevantAreaByAnnexI;
-        public double _AccumulatedRelevantAreaByAnnexII;
-        public double _AccumulatedRelevantAreaByAnnexIII;
+        private InspireMonitoring _inspireMonitoring;
 
 
         public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister)
@@ -83,65 +25,8 @@ namespace Kartverket.Register.Services
         {
             _inspireRegister = inspireRegister;
             _inspireItems = _inspireRegister?.RegisterItems;
-
-            _NumberOfDatasetsByAnnexI = NumberOfDatasetsByAnnexI();
-            _NumberOfDatasetsByAnnexII = NumberOfDatasetsByAnnexII();
-            _NumberOfDatasetsByAnnexIII = NumberOfDatasetsByAnnexIII();
-
-            _NumberOfDatasetsByAnnexIWithMetadata = NumberOfDatasetsByAnnexIWithMetadata();
-            _NumberOfDatasetsByAnnexIIWithMetadata = NumberOfDatasetsByAnnexIIWithMetadata();
-            _NumberOfDatasetsByAnnexIIIWithMetadata = NumberOfDatasetsByAnnexIIIWithMetadata();
-
-            _NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood = NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood();
-            _NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood();
-            _NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood();
-            _NumberOfServicesWhereMetadataStatusIsgood = NumberOfServicesWhereMetadataStatusIsgood();
-
-            _NumberOfDatasetsWithMetadata = NumberOfDatasetsWithMetadata();
-            _NumberOfServicesWithMetadata = NumberOfServicesWithMetadata();
-
-            _NumberOfDatasetsRegisteredInADiscoveryService = NumberOfDatasetsRegisteredInADiscoveryService();
-            _NumberOfServicesRegisteredInADiscoveryService = NumberOfServicesRegisteredInADiscoveryService();
-
-            _NumberOfServicesByServiceTypeDownload = NumberOfServicesByServiceType("download");
-            _NumberOfServicesByServiceTypeView = NumberOfServicesByServiceType("view");
-            _NumberOfServicesByServiceTypeDiscovery = NumberOfServicesByServiceType("discovery");
-            _NumberOfServicesByServiceTypeInvoke = NumberOfServicesByServiceType("invoke");
-            _NumberOfServicesByServiceTypeTransformation = NumberOfServicesByServiceType("transformation");
-            _NumberOfServicesByServiceType = NumberOfServicesByServiceType();
-            _NumberOfSdS = NumberOfSdS();
-
-            _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("download");
-            _NumberOfServicesByServiceTypeViewWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("view");
-            _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("discovery");
-            _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("invoke");
-            _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue = NumberOfServicesByServiceTypeWhereConformityIsTrue("transformation");
-
-            _NumberOfCallsByServiceTypeDiscovery = NumberOfCallsByServiceTypeDiscovery();
-            _NumberOfCallsByServiceTypeView = NumberOfCallsByServiceTypeView();
-            _NumberOfCallsByServiceTypeDownload = NumberOfCallsByServiceTypeDownload();
-            _NumberOfCallsByServiceTypeTransformation = NumberOfCallsByServiceTypeTransformation();
-            _NumberOfCallsByServiceTypeInvoke = NumberOfCallsByServiceTypeInvoke();
-            _NumberOfCallsByServiceType = NumberOfCallsByServiceType();
-
-            _NumberOfDatasetsAvailableThroughViewANDDownloadService = NumberOfDatasetsAvailableThroughViewAndDownloadService();
-            _NumberOfDatasetsAvailableThroughDownloadService = NumberOfDatasetsAvailableThroughDownloadService();
-            _NumberOfDatasetsAvailableThroughViewService = NumberOfDatasetsAvailableThroughViewService();
-
-            _NumberOfDatasetsWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsWithHarmonizedDataAndConformedMetadata();
-            _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata();
-            _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata();
-            _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata();
-
-            _AccumulatedCurrentAreaByAnnexI = AccumulatedCurrentAreaByAnnexI();
-            _AccumulatedCurrentAreaByAnnexII = AccumulatedCurrentAreaByAnnexII();
-            _AccumulatedCurrentAreaByAnnexIII = AccumulatedCurrentAreaByAnnexIII();
-
-            _AccumulatedRelevantAreaByAnnexI = AccumulatedRelevantAreaByAnnexI();
-            _AccumulatedRelevantAreaByAnnexII = AccumulatedRelevantAreaByAnnexII();
-            _AccumulatedRelevantAreaByAnnexIII = AccumulatedRelevantAreaByAnnexIII();
+            _inspireMonitoring = new InspireMonitoring(inspireRegister.RegisterItems);
         }
-
 
         public Monitoring Mapping()
         {
@@ -220,6 +105,7 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
+                return networkService;
             }
 
             return networkService;
@@ -298,8 +184,6 @@ namespace Kartverket.Register.Services
         }
 
 
-
-
         private Indicators MappingIndicators()
         {
             Indicators indicators = new Indicators();
@@ -321,12 +205,12 @@ namespace Kartverket.Register.Services
         private NnConformityIndicators GetNnConformityIndicators()
         {
             NnConformityIndicators nnConformityIndicators = new NnConformityIndicators();
-            nnConformityIndicators.NSi41 = ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue(); // Andel av tjenester NnServiceType="discovery" som har nnConformity="true"(<NSv41>/<NSv_NumDiscServ>)
-            nnConformityIndicators.NSi42 = ProportionOfServicesByServiceTypeViewWhereConformityIsTrue(); // Andel av tjenester NnServiceType="view" som har nnConformity="true" (<NSv42>/<NSv_NumViewServ>)
-            nnConformityIndicators.NSi43 = ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue(); // Andel av tjenester NnServiceType="download" som har nnConformity="true" (<NSv43>/<NSv_NumDownServ>)
-            nnConformityIndicators.NSi44 = ProportionOfServicesByServiceTypeTransformationWhereConformityIsTrue(); // Andel av tjenester NnServiceType="transformation" som har nnConformity="true" (<NSv44>/<NSv_NumTransfServ>)
-            nnConformityIndicators.NSi45 = ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue(); // Andel av tjenester NnServiceType="invoke" som har nnConformity="true" (<NSv45>/<NSv_NumInvkServ>)
-            nnConformityIndicators.NSi4 = ProportionOfServicesWhereConformityIsTrue(); // Andel av tjenester NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv4>/<NSv_NumAllServ>)
+            nnConformityIndicators.NSi41 = _inspireMonitoring.ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue(); // Andel av tjenester NnServiceType="discovery" som har nnConformity="true"(<NSv41>/<NSv_NumDiscServ>)
+            nnConformityIndicators.NSi42 = _inspireMonitoring.ProportionOfServicesByServiceTypeViewWhereConformityIsTrue(); // Andel av tjenester NnServiceType="view" som har nnConformity="true" (<NSv42>/<NSv_NumViewServ>)
+            nnConformityIndicators.NSi43 = _inspireMonitoring.ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue(); // Andel av tjenester NnServiceType="download" som har nnConformity="true" (<NSv43>/<NSv_NumDownServ>)
+            nnConformityIndicators.NSi44 = _inspireMonitoring.ProportionOfServicesByServiceTypeTransformationWhereConformityIsTrue(); // Andel av tjenester NnServiceType="transformation" som har nnConformity="true" (<NSv44>/<NSv_NumTransfServ>)
+            nnConformityIndicators.NSi45 = _inspireMonitoring.ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue(); // Andel av tjenester NnServiceType="invoke" som har nnConformity="true" (<NSv45>/<NSv_NumInvkServ>)
+            nnConformityIndicators.NSi4 = _inspireMonitoring.ProportionOfServicesWhereConformityIsTrue(); // Andel av tjenester NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv4>/<NSv_NumAllServ>)
             nnConformityIndicators.NnConformity = GetNnConformity();
 
             return nnConformityIndicators;
@@ -335,12 +219,12 @@ namespace Kartverket.Register.Services
         private NnConformity GetNnConformity()
         {
             NnConformity nnConformity = new NnConformity();
-            nnConformity.NSv41 = _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery" som har nnConformity="true")
-            nnConformity.NSv42 = _NumberOfServicesByServiceTypeViewWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="view" som har nnConformity="true")
-            nnConformity.NSv43 = _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
-            nnConformity.NSv44 = _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
-            nnConformity.NSv45 = _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
-            nnConformity.NSv4 = NumberOfServicesByServiceTypeWhereConformityIsTrue(); // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
+            nnConformity.NSv41 = _inspireMonitoring.NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery" som har nnConformity="true")
+            nnConformity.NSv42 = _inspireMonitoring.NumberOfServicesByServiceTypeViewWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="view" som har nnConformity="true")
+            nnConformity.NSv43 = _inspireMonitoring.NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="download" som har nnConformity="true")
+            nnConformity.NSv44 = _inspireMonitoring.NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="transformation" som har nnConformity="true")
+            nnConformity.NSv45 = _inspireMonitoring.NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue; // (Antall tjenester (<SpatialDataService>) av NnServiceType="invoke" som har nnConformity="true")
+            nnConformity.NSv4 = _inspireMonitoring.NumberOfServicesByServiceTypeWhereConformityIsTrue(); // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true")
 
             return nnConformity;
         }
@@ -350,10 +234,10 @@ namespace Kartverket.Register.Services
         private GeoCoverageIndicators GetGeoCoverageIndicators()
         {
             GeoCoverageIndicators geoCoverageIndicators = new GeoCoverageIndicators();
-            geoCoverageIndicators.DSi11 = ProportionOfArealByAnnexI(); // <DSv11_ActArea>/<DSv11_RelArea>
-            geoCoverageIndicators.DSi12 = ProportionOfArealByAnnexII(); // <DSv12_ActArea>/<DSv12_RelArea>
-            geoCoverageIndicators.DSi13 = ProportionOfArealByAnnexIII(); // <DSv13_ActArea>/<DSv13_RelArea>
-            geoCoverageIndicators.DSi1 = ProportionOfArealByAnnex(); // <DSv1_ActArea>/<DSv1_RelArea> 
+            geoCoverageIndicators.DSi11 = _inspireMonitoring.ProportionOfArealByAnnexI(); // <DSv11_ActArea>/<DSv11_RelArea>
+            geoCoverageIndicators.DSi12 = _inspireMonitoring.ProportionOfArealByAnnexII(); // <DSv12_ActArea>/<DSv12_RelArea>
+            geoCoverageIndicators.DSi13 = _inspireMonitoring.ProportionOfArealByAnnexIII(); // <DSv13_ActArea>/<DSv13_RelArea>
+            geoCoverageIndicators.DSi1 = _inspireMonitoring.ProportionOfArealByAnnex(); // <DSv1_ActArea>/<DSv1_RelArea> 
 
             geoCoverageIndicators.GeoCoverageSDS = GetGeoCoverageSDS();
 
@@ -364,14 +248,14 @@ namespace Kartverket.Register.Services
         private GeoCoverageSDS GetGeoCoverageSDS()
         {
             GeoCoverageSDS geoCoverageSDS = new GeoCoverageSDS();
-            geoCoverageSDS.DSv11_ActArea = _AccumulatedCurrentAreaByAnnexI; // Akkumulert aktuelt areal (<actualArea>) for alle Annex1 data
-            geoCoverageSDS.DSv12_ActArea = _AccumulatedCurrentAreaByAnnexII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex2 data
-            geoCoverageSDS.DSv13_ActArea = _AccumulatedCurrentAreaByAnnexIII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex3 data
-            geoCoverageSDS.DSv1_ActArea = AccumulatedCurrentAreaByAnnex(); // Akkumulert aktuelt areal (<actualArea>) for alle Annex1, Annex2 og Annex3 data
-            geoCoverageSDS.DSv11_RelArea = _AccumulatedRelevantAreaByAnnexI; // Akkumulert relevant areal (<relevantArea>) for alle Annex1 data
-            geoCoverageSDS.DSv12_RelArea = _AccumulatedRelevantAreaByAnnexII; // Akkumulert relevant areal (<relevantArea>) for alle Annex2 data
-            geoCoverageSDS.DSv13_RelArea = _AccumulatedRelevantAreaByAnnexIII; // Akkumulert relevant areal (<relevantArea>) for alle Annex3 data
-            geoCoverageSDS.DSv1_RelArea = AccumulatedRelevantAreaByAnnex(); // Akkumulert relevant areal (<relevantArea>) for alle Annex1, Annex2 og Annex3 data
+            geoCoverageSDS.DSv11_ActArea = _inspireMonitoring.AccumulatedCurrentAreaByAnnexI; // Akkumulert aktuelt areal (<actualArea>) for alle Annex1 data
+            geoCoverageSDS.DSv12_ActArea = _inspireMonitoring.AccumulatedCurrentAreaByAnnexII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex2 data
+            geoCoverageSDS.DSv13_ActArea = _inspireMonitoring.AccumulatedCurrentAreaByAnnexIII; // Akkumulert aktuelt areal (<actualArea>) for alle Annex3 data
+            geoCoverageSDS.DSv1_ActArea = _inspireMonitoring.AccumulatedCurrentAreaByAnnex(); // Akkumulert aktuelt areal (<actualArea>) for alle Annex1, Annex2 og Annex3 data
+            geoCoverageSDS.DSv11_RelArea = _inspireMonitoring.AccumulatedRelevantAreaByAnnexI; // Akkumulert relevant areal (<relevantArea>) for alle Annex1 data
+            geoCoverageSDS.DSv12_RelArea = _inspireMonitoring.AccumulatedRelevantAreaByAnnexII; // Akkumulert relevant areal (<relevantArea>) for alle Annex2 data
+            geoCoverageSDS.DSv13_RelArea = _inspireMonitoring.AccumulatedRelevantAreaByAnnexIII; // Akkumulert relevant areal (<relevantArea>) for alle Annex3 data
+            geoCoverageSDS.DSv1_RelArea = _inspireMonitoring.AccumulatedRelevantAreaByAnnex(); // Akkumulert relevant areal (<relevantArea>) for alle Annex1, Annex2 og Annex3 data
             return geoCoverageSDS;
         }
 
@@ -379,12 +263,12 @@ namespace Kartverket.Register.Services
         private UseNNindicators GetUseNNindicators()
         {
             UseNNindicators useNNindicators = new UseNNindicators();
-            useNNindicators.NSi31 = AverageNumberOfCallsByServiceTypeDiscovery(); // Gjennomsnittlig antall kall for NnServiceType="discovery" (<NSv31>/<NSv_NumDiscServ>)
-            useNNindicators.NSi32 = AverageNumberOfCallsByServiceTypeView(); // Gjennomsnittlig antall kall for NnServiceType="view"(<NSv32>/<NSv_NumViewServ>)
-            useNNindicators.NSi33 = AverageNumberOfCallsByServiceTypeDownload(); // Gjennomsnittlig antall kall for NnServiceType="download" (<NSv33>/<NSv_NumDownServ>)
-            useNNindicators.NSi34 = AverageNumberOfCallsByServiceTypeTransformation(); // Gjennomsnittlig antall kall for NnServiceType="transformation" (<NSv34>/<NSv_NumTransfServ>)
-            useNNindicators.NSi35 = AverageNumberOfCallsByServiceTypeInvoke(); // Gjennomsnittlig antall kall for NnServiceType="invoke" (<NSv35>/<NSv_NumInvkServ>)
-            useNNindicators.NSi3 = AverageNumberOfCallsByServiceType(); //Gjennomsnittlig antall kall for NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv3>/<NSv_NumAllServ>) -->
+            useNNindicators.NSi31 = _inspireMonitoring.AverageNumberOfCallsByServiceTypeDiscovery(); // Gjennomsnittlig antall kall for NnServiceType="discovery" (<NSv31>/<NSv_NumDiscServ>)
+            useNNindicators.NSi32 = _inspireMonitoring.AverageNumberOfCallsByServiceTypeView(); // Gjennomsnittlig antall kall for NnServiceType="view"(<NSv32>/<NSv_NumViewServ>)
+            useNNindicators.NSi33 = _inspireMonitoring.AverageNumberOfCallsByServiceTypeDownload(); // Gjennomsnittlig antall kall for NnServiceType="download" (<NSv33>/<NSv_NumDownServ>)
+            useNNindicators.NSi34 = _inspireMonitoring.AverageNumberOfCallsByServiceTypeTransformation(); // Gjennomsnittlig antall kall for NnServiceType="transformation" (<NSv34>/<NSv_NumTransfServ>)
+            useNNindicators.NSi35 = _inspireMonitoring.AverageNumberOfCallsByServiceTypeInvoke(); // Gjennomsnittlig antall kall for NnServiceType="invoke" (<NSv35>/<NSv_NumInvkServ>)
+            useNNindicators.NSi3 = _inspireMonitoring.AverageNumberOfCallsByServiceType(); //Gjennomsnittlig antall kall for NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv3>/<NSv_NumAllServ>) -->
             useNNindicators.UseNN = GetUseNN();
 
             return useNNindicators;
@@ -393,12 +277,12 @@ namespace Kartverket.Register.Services
         private UseNN GetUseNN()
         {
             UseNN useNN = new UseNN();
-            useNN.NSv31 = _NumberOfCallsByServiceTypeDiscovery; // Akkumulert antall kall for alle NnServiceType="discovery" 
-            useNN.NSv32 = _NumberOfCallsByServiceTypeView; // Akkumulert antall kall for alle NnServiceType="view"
-            useNN.NSv33 = _NumberOfCallsByServiceTypeDownload; // Akkumulert antall kall for alle NnServiceType="download"
-            useNN.NSv34 = _NumberOfCallsByServiceTypeTransformation; // Akkumulert antall kall for alle NnServiceType="transformation"
-            useNN.NSv35 = _NumberOfCallsByServiceTypeInvoke; // Akkumulert antall kall for alle NnServiceType="invoke"
-            useNN.NSv3 = _NumberOfCallsByServiceType; // Akkumulert antall kall for alle NnServiceType="discovery + view + download + transformation + invoke"
+            useNN.NSv31 = _inspireMonitoring.NumberOfCallsByServiceTypeDiscovery; // Akkumulert antall kall for alle NnServiceType="discovery" 
+            useNN.NSv32 = _inspireMonitoring.NumberOfCallsByServiceTypeView; // Akkumulert antall kall for alle NnServiceType="view"
+            useNN.NSv33 = _inspireMonitoring.NumberOfCallsByServiceTypeDownload; // Akkumulert antall kall for alle NnServiceType="download"
+            useNN.NSv34 = _inspireMonitoring.NumberOfCallsByServiceTypeTransformation; // Akkumulert antall kall for alle NnServiceType="transformation"
+            useNN.NSv35 = _inspireMonitoring.NumberOfCallsByServiceTypeInvoke; // Akkumulert antall kall for alle NnServiceType="invoke"
+            useNN.NSv3 = _inspireMonitoring.NumberOfCallsByServiceType(); // Akkumulert antall kall for alle NnServiceType="discovery + view + download + transformation + invoke"
 
             return useNN;
         }
@@ -406,11 +290,11 @@ namespace Kartverket.Register.Services
         private MetadataExistenceIndicators GetMetadataExsistensIndicators()
         {
             MetadataExistenceIndicators metadataExistenceIndicators = new MetadataExistenceIndicators();
-            metadataExistenceIndicators.MDi11 = ProportionOfDatasetsWithMetadataByAnnexI();  // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
-            metadataExistenceIndicators.MDi12 = ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
-            metadataExistenceIndicators.MDi13 = ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
-            metadataExistenceIndicators.MDi14 = ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv14>/<NSv_NumAllServ>)
-            metadataExistenceIndicators.MDi1 = ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata av Annex1 data  (<MDv1_DS>/<DSv_Num>)
+            metadataExistenceIndicators.MDi11 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexI();  // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
+            metadataExistenceIndicators.MDi12 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
+            metadataExistenceIndicators.MDi13 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
+            metadataExistenceIndicators.MDi14 = _inspireMonitoring.ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv14>/<NSv_NumAllServ>)
+            metadataExistenceIndicators.MDi1 = _inspireMonitoring.ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata av Annex1 data  (<MDv1_DS>/<DSv_Num>)
 
             metadataExistenceIndicators.MetadataExistence = GetMetadataExistence();
 
@@ -420,11 +304,11 @@ namespace Kartverket.Register.Services
         private MetadataExistence GetMetadataExistence()
         {
             MetadataExistence metadataExistence = new MetadataExistence();
-            metadataExistence.MDv11 = _NumberOfDatasetsByAnnexIWithMetadata; // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
-            metadataExistence.MDv12 = _NumberOfDatasetsByAnnexIIWithMetadata; // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
-            metadataExistence.MDv13 = _NumberOfDatasetsByAnnexIIIWithMetadata; // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
-            metadataExistence.MDv1_DS = _NumberOfDatasetsWithMetadata; // Antall datasett som har metadata (Alle datasett)
-            metadataExistence.MDv14 = _NumberOfServicesWithMetadata; // Antall tjenester som har metadata (Alle tjenester)
+            metadataExistence.MDv11 = _inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata; // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
+            metadataExistence.MDv12 = _inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata; // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
+            metadataExistence.MDv13 = _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata; // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+            metadataExistence.MDv1_DS = _inspireMonitoring.NumberOfDatasetsWithMetadata; // Antall datasett som har metadata (Alle datasett)
+            metadataExistence.MDv14 = _inspireMonitoring.NumberOfServicesWithMetadata; // Antall tjenester som har metadata (Alle tjenester)
             return metadataExistence;
         }
 
@@ -433,9 +317,9 @@ namespace Kartverket.Register.Services
         private DiscoveryMetadataIndicators GetDiscoveryMetadataIndicators()
         {
             DiscoveryMetadataIndicators discoveryMetadataIndicators = new DiscoveryMetadataIndicators();
-            discoveryMetadataIndicators.NSi11 = ProportionOfDatasetsRegisteredInADiscoveryService(); // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
-            discoveryMetadataIndicators.NSi12 = ProportionOfServicesRegisteredInADiscoveryService(); // Andel tjenester som er registrert i en discovery service (<NSv12>/<NSv_NumAllServ>)
-            discoveryMetadataIndicators.NSi1 = ProportionOfServicesAndDatasetsRegisteredInADiscoveryService(); // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
+            discoveryMetadataIndicators.NSi11 = _inspireMonitoring.ProportionOfDatasetsRegisteredInADiscoveryService(); // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+            discoveryMetadataIndicators.NSi12 = _inspireMonitoring.ProportionOfServicesRegisteredInADiscoveryService(); // Andel tjenester som er registrert i en discovery service (<NSv12>/<NSv_NumAllServ>)
+            discoveryMetadataIndicators.NSi1 = _inspireMonitoring.ProportionOfServicesAndDatasetsRegisteredInADiscoveryService(); // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
             discoveryMetadataIndicators.DiscoveryMetadata = GetDiscoveryMetadata();
 
             return discoveryMetadataIndicators;
@@ -445,17 +329,17 @@ namespace Kartverket.Register.Services
         private DiscoveryMetadata GetDiscoveryMetadata()
         {
             DiscoveryMetadata discoveryMetadata = new DiscoveryMetadata();
-            discoveryMetadata.NSv11 = _NumberOfDatasetsRegisteredInADiscoveryService; // Antall datasett som er registrert i en discovery service (Alle datasett)
-            discoveryMetadata.NSv12 = _NumberOfServicesRegisteredInADiscoveryService; // Antall tjenester som er registrert i en discovery service (Alle tjenester)
+            discoveryMetadata.NSv11 = _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService; // Antall datasett som er registrert i en discovery service (Alle datasett)
+            discoveryMetadata.NSv12 = _inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService; // Antall tjenester som er registrert i en discovery service (Alle tjenester)
             return discoveryMetadata;
         }
 
         private ViewDownloadAccessibilityIndicators GetViewDownloadAccessibilityIndicators()
         {
             ViewDownloadAccessibilityIndicators viewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
-            viewDownloadAccessibilityIndicators.NSi21 = ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
-            viewDownloadAccessibilityIndicators.NSi22 = ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
-            viewDownloadAccessibilityIndicators.NSi2 = ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
+            viewDownloadAccessibilityIndicators.NSi21 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
+            viewDownloadAccessibilityIndicators.NSi22 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
+            viewDownloadAccessibilityIndicators.NSi2 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
             viewDownloadAccessibilityIndicators.ViewDownloadAccessibility = GetViewDownloadAccessibility();
 
             return viewDownloadAccessibilityIndicators;
@@ -464,9 +348,9 @@ namespace Kartverket.Register.Services
         private ViewDownloadAccessibility GetViewDownloadAccessibility()
         {
             ViewDownloadAccessibility viewDownloadAccessibility = new ViewDownloadAccessibility();
-            viewDownloadAccessibility.NSv21 = _NumberOfDatasetsAvailableThroughViewService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
-            viewDownloadAccessibility.NSv22 = _NumberOfDatasetsAvailableThroughDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
-            viewDownloadAccessibility.NSv23 = _NumberOfDatasetsAvailableThroughViewANDDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
+            viewDownloadAccessibility.NSv21 = _inspireMonitoring.NumberOfDatasetsAvailableThroughViewService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
+            viewDownloadAccessibility.NSv22 = _inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
+            viewDownloadAccessibility.NSv23 = _inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService; // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
 
             return viewDownloadAccessibility;
         }
@@ -475,17 +359,17 @@ namespace Kartverket.Register.Services
         {
             SpatialDataAndService spatialDataAndService = new SpatialDataAndService();
 
-            spatialDataAndService.DSv_Num1 = _NumberOfDatasetsByAnnexI; // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
-            spatialDataAndService.DSv_Num2 = _NumberOfDatasetsByAnnexII; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
-            spatialDataAndService.DSv_Num3 = _NumberOfDatasetsByAnnexIII; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
-            spatialDataAndService.DSv_Num = NumberOfDatasetsByAnnex(); // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
-            spatialDataAndService.SDSv_Num = _NumberOfSdS; // Totalt antall tjenester SDS
-            spatialDataAndService.NSv_NumDiscServ = _NumberOfServicesByServiceTypeDiscovery; // Antall NnServiceType="discovery"
-            spatialDataAndService.NSv_NumViewServ = _NumberOfServicesByServiceTypeView; // Antall NnServiceType="view"
-            spatialDataAndService.NSv_NumDownServ = _NumberOfServicesByServiceTypeDownload; // Antall NnServiceType="download"
-            spatialDataAndService.NSv_NumInvkServ = _NumberOfServicesByServiceTypeInvoke; // Antall NnServiceType="invoke"
-            spatialDataAndService.NSv_NumAllServ = _NumberOfServicesByServiceType; // Antall NnServiceType="discovery + view + download + transformation + invoke" (Network services)
-            spatialDataAndService.NSv_NumTransfServ = _NumberOfServicesByServiceTypeTransformation; // Antall NnServiceType="transformation" 
+            spatialDataAndService.DSv_Num1 = _inspireMonitoring.NumberOfDatasetsByAnnexI; // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
+            spatialDataAndService.DSv_Num2 = _inspireMonitoring.NumberOfDatasetsByAnnexII; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
+            spatialDataAndService.DSv_Num3 = _inspireMonitoring.NumberOfDatasetsByAnnexIII; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
+            spatialDataAndService.DSv_Num = _inspireMonitoring.NumberOfDatasetsByAnnex(); // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
+            spatialDataAndService.SDSv_Num = _inspireMonitoring.NumberOfSdS; // Totalt antall tjenester SDS
+            spatialDataAndService.NSv_NumDiscServ = _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery; // Antall NnServiceType="discovery"
+            spatialDataAndService.NSv_NumViewServ = _inspireMonitoring.NumberOfServicesByServiceTypeView; // Antall NnServiceType="view"
+            spatialDataAndService.NSv_NumDownServ = _inspireMonitoring.NumberOfServicesByServiceTypeDownload; // Antall NnServiceType="download"
+            spatialDataAndService.NSv_NumInvkServ = _inspireMonitoring.NumberOfServicesByServiceTypeInvoke; // Antall NnServiceType="invoke"
+            spatialDataAndService.NSv_NumAllServ = _inspireMonitoring.NumberOfServicesByServiceType(); // Antall NnServiceType="discovery + view + download + transformation + invoke" (Network services)
+            spatialDataAndService.NSv_NumTransfServ = _inspireMonitoring.NumberOfServicesByServiceTypeTransformation; // Antall NnServiceType="transformation" 
 
             return spatialDataAndService;
         }
@@ -493,11 +377,11 @@ namespace Kartverket.Register.Services
         private MetadataConformityIndicators GetMetadataConformityIndicators()
         {
             MetadataConformityIndicators metadataConformityIndicators = new MetadataConformityIndicators();
-            metadataConformityIndicators.MDi21 = ProportionOfDatasetByAnnexIWithMetadatastatusGood(); // Andel Annex1 datasett med godkjente metadata (<MDv21>/<DSv_Num1>)
-            metadataConformityIndicators.MDi22 = ProportionOfDatasetByAnnexIIWithMetadatastatusGood(); // Andel Annex2 datasett med godkjente metadata (<MDv22>/<DSv_Num2>)
-            metadataConformityIndicators.MDi23 = ProportionOfDatasetByAnnexIIIWithMetadatastatusGood(); // Andel Annex3 datasett med godkjente metadata (<MDv23>/<DSv_Num3>)
-            metadataConformityIndicators.MDi24 = ProportionOfServicesWithMetadatastatusGood(); // Andel tjenester med godkjente metadata (<MDv24>/<NSv_NumAllServ>)
-            metadataConformityIndicators.MDi2 = ProportionOfServicesAndDatasetsWithMetadatastatusGood(); // Andel tjenester OG datasett med godkjente metadata (<MDv24>+<MDv2_DS>/<NSv_NumAllServ>+<DSv_Num>)
+            metadataConformityIndicators.MDi21 = _inspireMonitoring.ProportionOfDatasetByAnnexIWithMetadatastatusGood(); // Andel Annex1 datasett med godkjente metadata (<MDv21>/<DSv_Num1>)
+            metadataConformityIndicators.MDi22 = _inspireMonitoring.ProportionOfDatasetByAnnexIIWithMetadatastatusGood(); // Andel Annex2 datasett med godkjente metadata (<MDv22>/<DSv_Num2>)
+            metadataConformityIndicators.MDi23 = _inspireMonitoring.ProportionOfDatasetByAnnexIIIWithMetadatastatusGood(); // Andel Annex3 datasett med godkjente metadata (<MDv23>/<DSv_Num3>)
+            metadataConformityIndicators.MDi24 = _inspireMonitoring.ProportionOfServicesWithMetadatastatusGood(); // Andel tjenester med godkjente metadata (<MDv24>/<NSv_NumAllServ>)
+            metadataConformityIndicators.MDi2 = _inspireMonitoring.ProportionOfServicesAndDatasetsWithMetadatastatusGood(); // Andel tjenester OG datasett med godkjente metadata (<MDv24>+<MDv2_DS>/<NSv_NumAllServ>+<DSv_Num>)
             metadataConformityIndicators.MetadataConformity = GetMetadataConformity();
 
             return metadataConformityIndicators;
@@ -507,11 +391,11 @@ namespace Kartverket.Register.Services
         private MetadataConformity GetMetadataConformity()
         {
             MetadataConformity metadataConformity = new MetadataConformity();
-            metadataConformity.MDv21 = _NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex1 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexI> OG <structureCompliance> = "true")
-            metadataConformity.MDv22 = _NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex2 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexII> OG <structureCompliance> = "true")
-            metadataConformity.MDv23 = _NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
-            metadataConformity.MDv2_DS = NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv21>)
-            metadataConformity.MDv24 = _NumberOfServicesWhereMetadataStatusIsgood; // Totalt antall tjenester med konforme metadata (Antall tjenester som har Metadatastatus = "God". Antall elementer av <SpatialDataService> where <mdConformity> = "true")
+            metadataConformity.MDv21 = _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex1 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexI> OG <structureCompliance> = "true")
+            metadataConformity.MDv22 = _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex2 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexII> OG <structureCompliance> = "true")
+            metadataConformity.MDv23 = _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
+            metadataConformity.MDv2_DS = _inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv21>)
+            metadataConformity.MDv24 = _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood; // Totalt antall tjenester med konforme metadata (Antall tjenester som har Metadatastatus = "God". Antall elementer av <SpatialDataService> where <mdConformity> = "true")
 
             return metadataConformity;
         }
@@ -520,10 +404,10 @@ namespace Kartverket.Register.Services
         private SdsConformantIndicators GetSdsConformantIndicators()
         {
             SdsConformantIndicators sdsConformantIndicators = new SdsConformantIndicators();
-            sdsConformantIndicators.DSi21 = ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex1 med konforme metadata og harmoniserte datasett (<DSv21>/<DSv_Num1>)
-            sdsConformantIndicators.DSi22 = ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex2 med konforme metadata og harmoniserte datasett (<DSv22>/<DSv_Num2>)
-            sdsConformantIndicators.DSi23 = ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex3 med konforme metadata og harmoniserte datasett (<DSv23>/<DSv_Num3>)
-            sdsConformantIndicators.DSi2 = ProportionOfDatasetWithHarmonizedDataAndConformedMetadata(); // Andel datasettt fra Annex1,2,3 med konforme metadata og harmoniserte datasett (<DSv2>/<DSv_Num>)
+            sdsConformantIndicators.DSi21 = _inspireMonitoring.ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex1 med konforme metadata og harmoniserte datasett (<DSv21>/<DSv_Num1>)
+            sdsConformantIndicators.DSi22 = _inspireMonitoring.ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex2 med konforme metadata og harmoniserte datasett (<DSv22>/<DSv_Num2>)
+            sdsConformantIndicators.DSi23 = _inspireMonitoring.ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata(); // Andel datasett fra Annex3 med konforme metadata og harmoniserte datasett (<DSv23>/<DSv_Num3>)
+            sdsConformantIndicators.DSi2 = _inspireMonitoring.ProportionOfDatasetWithHarmonizedDataAndConformedMetadata(); // Andel datasettt fra Annex1,2,3 med konforme metadata og harmoniserte datasett (<DSv2>/<DSv_Num>)
             sdsConformantIndicators.SdsConformant = GetSdsConformant();
 
             return sdsConformantIndicators;
@@ -532,99 +416,13 @@ namespace Kartverket.Register.Services
         private SdsConformant GetSdsConformant()
         {
             SdsConformant sdsConformant = new SdsConformant();
-            sdsConformant.DSv21 = _NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex1 med harmoniserte data og konforme metadata (Dtasett where <AnnexI>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv22 = _NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex2 med harmoniserte data og konforme metadata (Dtasett where <AnnexII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv23 = _NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex3 med harmoniserte data og konforme metadata (Dtasett where <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
-            sdsConformant.DSv2 = _NumberOfDatasetsWithHarmonizedDataAndConformedMetadata; // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv21 = _inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex1 med harmoniserte data og konforme metadata (Dtasett where <AnnexI>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv22 = _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex2 med harmoniserte data og konforme metadata (Dtasett where <AnnexII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv23 = _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata; // Antall datasett fra Annex3 med harmoniserte data og konforme metadata (Dtasett where <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+            sdsConformant.DSv2 = _inspireMonitoring.NumberOfDatasetsWithHarmonizedDataAndConformedMetadata(); // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
             return sdsConformant;
         }
-
-
-
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexI(ICollection<CodelistValue> inspireThems)
-        {
-            try
-            {
-                foreach (var inspireTheme in inspireThems)
-                {
-                    if (IsAnnexI(inspireTheme))
-                    {
-                        return true;
-                    }
-                }
-                return false;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
-
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexII(ICollection<CodelistValue> inspireThems)
-        {
-            foreach (var inspireTheme in inspireThems)
-            {
-                if (IsAnnexII(inspireTheme))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private bool InspireDatasetHaveInspireThemeOfTypeAnnexIII(ICollection<CodelistValue> inspireThems)
-        {
-            foreach (var inspireTheme in inspireThems)
-            {
-                if (IsAnnexIII(inspireTheme))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static bool IsAnnexI(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexI), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
-        private static bool IsAnnexII(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexII), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
-        private static bool IsAnnexIII(CodelistValue inspireTheme)
-        {
-            if (inspireTheme != null)
-            {
-                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
-                return Enum.IsDefined(typeof(AnnexIII), inspireThemeValueCamelCase);
-            }
-            return false;
-        }
-
-
-        private static string CreateCamelCase(string inspireTheme)
-        {
-            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
-
-            var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
-            inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
-            inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
-
-            return inspireThemeCamelCase;
-        }
+        
 
         private Themes[] GetThemes(ICollection<CodelistValue> inspireThemes)
         {
@@ -661,88 +459,48 @@ namespace Kartverket.Register.Services
             return themesArray;
         }
 
-        private double Divide(int x, int y)
+        
+        private static string CreateCamelCase(string inspireTheme)
         {
-            try
-            {
-                if (y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return (double)x / y;
-                }
-            }
-            catch (Exception e)
-            {
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
 
-                return 0;
-            }
+            var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
+            inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
+
+            return inspireThemeCamelCase;
         }
 
-        private double Divide(double x, double y)
+        private static bool IsAnnexI(CodelistValue inspireTheme)
         {
-            try
-            {
-                if (y == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return x / y;
-                }
-            }
-            catch (Exception e)
-            {
-
-                return 0;
-            }
-        }
-
-
-        private List<AnnexI> AnnexIList(CodelistValue inspireTheme)
-        {
-            var annexIList = new List<AnnexI>();
             if (inspireTheme != null)
             {
-                if (IsAnnexI(inspireTheme))
-                {
-                    AnnexI annexI = GetAnnexIByInspireTheme(inspireTheme.value);
-                    annexIList.Add(annexI);
-                }
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexI), inspireThemeValueCamelCase);
             }
-            return annexIList;
+            return false;
         }
 
-        private List<AnnexII> AnnexIIList(CodelistValue inspireTheme)
+        private static bool IsAnnexII(CodelistValue inspireTheme)
         {
-            var annexIIList = new List<AnnexII>();
             if (inspireTheme != null)
             {
-                if (IsAnnexII(inspireTheme))
-                {
-                    AnnexII annexII = GetAnnexIIByInspireTheme(inspireTheme.value);
-                    annexIIList.Add(annexII);
-                }
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexII), inspireThemeValueCamelCase);
             }
-            return annexIIList;
+            return false;
         }
 
-        private List<AnnexIII> AnnexIIIList(CodelistValue inspireTheme)
+        private static bool IsAnnexIII(CodelistValue inspireTheme)
         {
-            var annexIIIList = new List<AnnexIII>();
             if (inspireTheme != null)
             {
-                if (IsAnnexIII(inspireTheme))
-                {
-                    AnnexIII annexIII = GetAnnexIIIByInspireTheme(inspireTheme.value);
-                    annexIIIList.Add(annexIII);
-                }
+                var inspireThemeValueCamelCase = CreateCamelCase(inspireTheme.value);
+                return Enum.IsDefined(typeof(AnnexIII), inspireThemeValueCamelCase);
             }
-            return annexIIIList;
+            return false;
         }
+
 
 
         private static AnnexI GetAnnexIByInspireTheme(string inspireTheme)
@@ -763,846 +521,5 @@ namespace Kartverket.Register.Services
             return (AnnexIII)Enum.Parse(typeof(AnnexIII), inspireThemeCamelCase);
         }
 
-
-
-
-        // **** Number of... ***
-        private int NumberOfServicesByServiceTypeWhereConformityIsTrue()
-        {
-            return _NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeViewWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue +
-                    _NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
-        }
-
-        private int NumberOfServicesRegisteredInADiscoveryService()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    number++;
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsRegisteredInADiscoveryService()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    number++;
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfServicesByServiceTypeWhereConformityIsTrue(string serviceType)
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.InspireDeliveryServiceStatus.IsGood())
-                    {
-                        if (string.IsNullOrWhiteSpace(serviceType))
-                        {
-                            number++;
-                        }
-                        else
-                        {
-                            if (inspireDataService.ServiceType == serviceType)
-                            {
-                                number++;
-                            }
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfServicesWithMetadata()
-        {
-            var number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.MetadataIsGoodOrDeficent())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsWithMetadata()
-        {
-            var number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (inspireDataset.MetadataIsGoodOrDeficent())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIWithMetadata()
-        {
-            var number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGoodOrDeficent())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIWithMetadata()
-        {
-            var number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGoodOrDeficent())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIIWithMetadata()
-        {
-            var number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGoodOrDeficent())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfCallsByServiceType()
-        {
-            return _NumberOfCallsByServiceTypeDiscovery +
-                _NumberOfCallsByServiceTypeView +
-                _NumberOfCallsByServiceTypeDownload +
-                _NumberOfCallsByServiceTypeTransformation +
-                _NumberOfCallsByServiceTypeInvoke;
-        }
-
-
-
-
-
-        private int NumberOfCallsByServiceTypeDownload()
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == "download")
-                    {
-                        number += inspireDataService.Requests;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfCallsByServiceTypeDiscovery()
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == "discovery")
-                    {
-                        number += inspireDataService.Requests;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfCallsByServiceTypeView()
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == "view")
-                    {
-                        number += inspireDataService.Requests;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfCallsByServiceTypeTransformation()
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == "transformation")
-                    {
-                        number += inspireDataService.Requests;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfCallsByServiceTypeInvoke()
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == "invoke")
-                    {
-                        number += inspireDataService.Requests;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexI()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfSdS()
-        {
-            var number = 0;
-            foreach (RegisterItemV2 item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.IsSds())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsAvailableThroughViewAndDownloadService()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (inspireDataset.WmsAndWfsIsGoodOrUseable())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsAvailableThroughDownloadService()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (inspireDataset.WfsIsGoodOrUseable())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsAvailableThroughViewService()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (inspireDataset.WmsIsGoodOrUseable())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsWithHarmonizedDataAndConformedMetadata()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (inspireDataset.HarmonizedDataAndConformedmetadata())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.HarmonizedDataAndConformedmetadata())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.HarmonizedDataAndConformedmetadata())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.HarmonizedDataAndConformedmetadata())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfServicesByServiceType(string serviceType)
-        {
-            int number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.ServiceType == serviceType)
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfServicesByServiceType()
-        {
-            return _NumberOfServicesByServiceTypeDownload +
-                    _NumberOfServicesByServiceTypeView +
-                    _NumberOfServicesByServiceTypeDiscovery +
-                    _NumberOfServicesByServiceTypeInvoke +
-                    _NumberOfServicesByServiceTypeTransformation;
-        }
-
-        private int NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGood())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGood())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-
-        private int NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        if (inspireDataset.MetadataIsGood())
-                        {
-                            number++;
-                        }
-                    }
-                }
-            }
-            return number;
-        }
-        private int NumberOfDatasetsByAnnexWhereMetadataStatusIsgood()
-        {
-            return _NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood + _NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood + _NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood;
-        }
-
-        private int NumberOfServicesWhereMetadataStatusIsgood()
-        {
-            int number = 0;
-
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataService inspireDataService)
-                {
-                    if (inspireDataService.MetadataIsGood())
-                    {
-                        number++;
-                    }
-                }
-            }
-            return number;
-        }
-
-
-        private double AccumulatedCurrentAreaByAnnex()
-        {
-            return _AccumulatedCurrentAreaByAnnexI + _AccumulatedCurrentAreaByAnnexII + _AccumulatedCurrentAreaByAnnexIII;
-        }
-
-        private double AccumulatedCurrentAreaByAnnexI()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.Area;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private double AccumulatedCurrentAreaByAnnexII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.Area;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private double AccumulatedCurrentAreaByAnnexIII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.Area;
-                    }
-                }
-            }
-            return number;
-        }
-
-
-        private double AccumulatedRelevantAreaByAnnexI()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.RelevantArea;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private double AccumulatedRelevantAreaByAnnexII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.RelevantArea;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private double AccumulatedRelevantAreaByAnnexIII()
-        {
-            var number = 0;
-            foreach (var item in _inspireItems)
-            {
-                if (item is InspireDataset inspireDataset)
-                {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(inspireDataset.InspireThemes))
-                    {
-                        number += inspireDataset.RelevantArea;
-                    }
-                }
-            }
-            return number;
-        }
-
-        private double AccumulatedRelevantAreaByAnnex()
-        {
-            return _AccumulatedRelevantAreaByAnnexI + _AccumulatedRelevantAreaByAnnexII + _AccumulatedRelevantAreaByAnnexIII;
-        }
-
-        // **** Propotion of... ***
-
-
-        private double AverageNumberOfCallsByServiceTypeDownload()
-        {
-            return Divide(_NumberOfCallsByServiceTypeDownload, _NumberOfServicesByServiceTypeDownload);
-        }
-
-        private double AverageNumberOfCallsByServiceTypeDiscovery()
-        {
-            return Divide(_NumberOfCallsByServiceTypeDiscovery, _NumberOfServicesByServiceTypeDiscovery);
-        }
-
-        private double AverageNumberOfCallsByServiceTypeView()
-        {
-            return Divide(_NumberOfCallsByServiceTypeView, _NumberOfServicesByServiceTypeView);
-        }
-
-        private double AverageNumberOfCallsByServiceTypeTransformation()
-        {
-            return Divide(_NumberOfCallsByServiceTypeTransformation, _NumberOfServicesByServiceTypeTransformation);
-        }
-
-        private double AverageNumberOfCallsByServiceTypeInvoke()
-        {
-            return Divide(_NumberOfCallsByServiceTypeInvoke, _NumberOfServicesByServiceTypeInvoke);
-        }
-
-        private double AverageNumberOfCallsByServiceType()
-        {
-            return Divide(_NumberOfCallsByServiceType, _NumberOfServicesByServiceType);
-        }
-
-        private double ProportionOfDatasetsRegisteredInADiscoveryService()
-        {
-            return Divide(_NumberOfDatasetsRegisteredInADiscoveryService, NumberOfDatasetsByAnnex());
-        }
-
-        private double ProportionOfServicesRegisteredInADiscoveryService()
-        {
-            return Divide(_NumberOfServicesRegisteredInADiscoveryService, _NumberOfServicesByServiceType);
-        }
-
-
-        private double ProportionOfDatasetsWithMetadataByAnnexI()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIWithMetadata, _NumberOfDatasetsByAnnexI);
-        }
-
-        private double ProportionOfDatasetsWithMetadataByAnnexII()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIWithMetadata, _NumberOfDatasetsByAnnexII);
-        }
-
-        private double ProportionOfDatasetsWithMetadataByAnnexIII()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIIWithMetadata, _NumberOfDatasetsByAnnexIII);
-        }
-
-        private double ProportionOfServicesWithMetadata()
-        {
-            return Divide(_NumberOfServicesWithMetadata, _NumberOfServicesByServiceType);
-        }
-
-        private double ProportionOfDatasetsWithMetadata()
-        {
-            return Divide(_NumberOfDatasetsWithMetadata, NumberOfDatasetsByAnnex());
-        }
-
-        private int NumberOfDatasetsByAnnex()
-        {
-            return _NumberOfDatasetsByAnnexI + _NumberOfDatasetsByAnnexII + _NumberOfDatasetsByAnnexIII;
-        }
-
-        private double ProportionOfDatasetWithHarmonizedDataAndConformedMetadata()
-        {
-            return Divide(_NumberOfDatasetsWithHarmonizedDataAndConformedMetadata, NumberOfDatasetsByAnnex());
-        }
-
-        private double ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata, _NumberOfDatasetsByAnnexI);
-        }
-
-        private double ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata, _NumberOfDatasetsByAnnexII);
-        }
-
-        private double ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata, _NumberOfDatasetsByAnnexIII);
-        }
-
-        private double ProportionOfDatasetsAvailableThroughViewService()
-        {
-            return Divide(_NumberOfDatasetsAvailableThroughViewService, _NumberOfServicesByServiceTypeView);
-        }
-
-        private double ProportionOfDatasetsAvailableThroughDownloadService()
-        {
-            return Divide(_NumberOfDatasetsAvailableThroughDownloadService, _NumberOfServicesByServiceTypeDownload);
-        }
-
-        private double ProportionOfDatasetsAvailableThroughViewAndDownloadService()
-        {
-            return Divide(_NumberOfDatasetsAvailableThroughViewANDDownloadService, (_NumberOfServicesByServiceTypeDownload + _NumberOfServicesByServiceTypeView));
-        }
-
-        private double ProportionOfServicesWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue, _NumberOfServicesByServiceType);
-        }
-
-        private double ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue, _NumberOfServicesByServiceTypeDownload);
-        }
-
-        private double ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue, _NumberOfServicesByServiceTypeDiscovery);
-        }
-
-        private double ProportionOfServicesByServiceTypeViewWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeViewWhereConformityIsTrue, _NumberOfServicesByServiceTypeView);
-        }
-
-        private double ProportionOfServicesByServiceTypeTransformationWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue, _NumberOfServicesByServiceTypeTransformation);
-        }
-
-        private double ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue()
-        {
-            return Divide(_NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue, _NumberOfServicesByServiceTypeInvoke);
-        }
-
-        private double ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
-        {
-            return Divide((_NumberOfDatasetsRegisteredInADiscoveryService + _NumberOfServicesRegisteredInADiscoveryService), (NumberOfDatasetsByAnnex() + _NumberOfServicesByServiceType));
-        }
-
-        private double ProportionOfArealByAnnexI()
-        {
-            return Divide(_AccumulatedCurrentAreaByAnnexI, _AccumulatedRelevantAreaByAnnexI);
-        }
-
-        private double ProportionOfArealByAnnexII()
-        {
-            return Divide(_AccumulatedCurrentAreaByAnnexII, _AccumulatedRelevantAreaByAnnexII);
-        }
-
-        private double ProportionOfArealByAnnexIII()
-        {
-            return Divide(_AccumulatedCurrentAreaByAnnexIII, _AccumulatedRelevantAreaByAnnexIII);
-        }
-
-        private double ProportionOfArealByAnnex()
-        {
-            return Divide(AccumulatedCurrentAreaByAnnex(), AccumulatedRelevantAreaByAnnex());
-        }
-
-        private double ProportionOfDatasetByAnnexIWithMetadatastatusGood()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood, _NumberOfDatasetsByAnnexI);
-        }
-
-        private double ProportionOfDatasetByAnnexIIWithMetadatastatusGood()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood, _NumberOfDatasetsByAnnexII);
-        }
-
-        private double ProportionOfDatasetByAnnexIIIWithMetadatastatusGood()
-        {
-            return Divide(_NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood, _NumberOfDatasetsByAnnexIII);
-        }
-
-        private double ProportionOfServicesWithMetadatastatusGood()
-        {
-            return Divide(_NumberOfServicesWhereMetadataStatusIsgood, _NumberOfServicesByServiceType);
-        }
-
-        private double ProportionOfServicesAndDatasetsWithMetadatastatusGood()
-        {
-            return Divide(_NumberOfServicesWhereMetadataStatusIsgood + NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(), _NumberOfServicesByServiceType + NumberOfDatasetsByAnnex());
-        }
     }
 }

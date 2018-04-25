@@ -11,6 +11,12 @@ namespace Kartverket.Register.Models
     {
         private ICollection<InspireDataset> _inspireDataset;
         private ICollection<InspireDataService> _inspireDataService;
+        private readonly string Download = "download";
+        private readonly string View = "view";
+        private readonly string Discovery = "discovery";
+        private readonly string Invoke = "invoke";
+        private readonly string Transformation = "transformation";
+
 
         public Guid Id { get; set; }
         public System.DateTime Date { get; set; }
@@ -94,24 +100,24 @@ namespace Kartverket.Register.Models
             NumberOfServicesRegisteredInADiscoveryService = GetNumberOfServicesRegisteredInADiscoveryService();
             NumberOfDatasetsRegisteredInADiscoveryService = GetNumberOfDatasetsRegisteredInADiscoveryService();
 
-            NumberOfServicesByServiceTypeDownload = GetNumberOfServicesByServiceType("download");
-            NumberOfServicesByServiceTypeView = GetNumberOfServicesByServiceType("view");
-            NumberOfServicesByServiceTypeDiscovery = GetNumberOfServicesByServiceType("discovery");
-            NumberOfServicesByServiceTypeInvoke = GetNumberOfServicesByServiceType("invoke");
-            NumberOfServicesByServiceTypeTransformation = GetNumberOfServicesByServiceType("transformation");
+            NumberOfServicesByServiceTypeDownload = GetNumberOfServicesByServiceType(Download);
+            NumberOfServicesByServiceTypeView = GetNumberOfServicesByServiceType(View);
+            NumberOfServicesByServiceTypeDiscovery = GetNumberOfServicesByServiceType(Discovery);
+            NumberOfServicesByServiceTypeInvoke = GetNumberOfServicesByServiceType(Invoke);
+            NumberOfServicesByServiceTypeTransformation = GetNumberOfServicesByServiceType(Transformation);
             NumberOfSdS = GetNumberOfSdS();
 
-            NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue("download");
-            NumberOfServicesByServiceTypeViewWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue("view");
-            NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue("discovery");
-            NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue("invoke");
-            NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue("transformation");
+            NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue(Download);
+            NumberOfServicesByServiceTypeViewWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue(View);
+            NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue(Discovery);
+            NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue(Invoke);
+            NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue = GetNumberOfServicesByServiceTypeWhereConformityIsTrue(Transformation);
 
-            NumberOfCallsByServiceTypeDiscovery = GetNumberOfCallsByServiceType("discovery");
-            NumberOfCallsByServiceTypeView = GetNumberOfCallsByServiceType("view");
-            NumberOfCallsByServiceTypeDownload = GetNumberOfCallsByServiceType("download");
-            NumberOfCallsByServiceTypeTransformation = GetNumberOfCallsByServiceType("transformation");
-            NumberOfCallsByServiceTypeInvoke = GetNumberOfCallsByServiceType("invoke");
+            NumberOfCallsByServiceTypeDiscovery = GetNumberOfCallsByServiceType(Discovery);
+            NumberOfCallsByServiceTypeView = GetNumberOfCallsByServiceType(View);
+            NumberOfCallsByServiceTypeDownload = GetNumberOfCallsByServiceType(Download);
+            NumberOfCallsByServiceTypeTransformation = GetNumberOfCallsByServiceType(Transformation);
+            NumberOfCallsByServiceTypeInvoke = GetNumberOfCallsByServiceType(Invoke);
 
             NumberOfDatasetsAvailableThroughViewANDDownloadService = GetNumberOfDatasetsAvailableThroughViewANDDownloadService();
             NumberOfDatasetsAvailableThroughDownloadService = GetNumberOfDatasetsAvailableThroughDownloadService();

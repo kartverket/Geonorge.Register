@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Models;
-using Kartverket.Register.Services.Register;
 using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services
@@ -28,7 +27,7 @@ namespace Kartverket.Register.Services
             _inspireMonitoring = new InspireMonitoring(inspireRegister.RegisterItems);
         }
 
-        public Monitoring Mapping()
+        private Monitoring Mapping()
         {
             var monitoring = new Monitoring();
             monitoring.documentYear = GetReportingDate();

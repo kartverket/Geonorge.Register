@@ -42,6 +42,7 @@ namespace Kartverket.Register.Services
         {
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
+            
             try
             {
                 if (string.IsNullOrEmpty(metadataUuid)) return Useable;
@@ -55,10 +56,12 @@ namespace Kartverket.Register.Services
                 if (status == null) return Useable;
                 var statusvalue = status.ToString();
                 return statusvalue == "OK" ? Good : Useable;
+            
+            
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Deficient;
+                return currentStatus;
             }
         }
 

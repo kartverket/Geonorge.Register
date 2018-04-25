@@ -1289,17 +1289,16 @@ namespace Kartverket.Register.Services.Register
             RegisterGrouped register = new RegisterGrouped();
             register.Items = new List<Group>();
 
-            //Datamodeller og standardisering
             List<Models.ViewModels.RegisterView> registers = new List<Models.ViewModels.RegisterView>();
-            registers.Add(new RegisterView { name = Registers.Objektregisteret, description = Registers.ObjektregisteretContent, ExternalUrl = WebConfigurationManager.AppSettings["ObjektkatalogUrl"] });
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"))));
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("6D579BAE-1E0B-48CC-B25D-5AD737E6B3DC"))));
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
+
+            //Dokumentregister
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"))));
 
             register.Items.Add(new Group
             {
-                Name = Registers.GroupDatamodelsAndStandards,
+                Name = Registers.GroupDocumentRegistry,
                 Items = registers
             });
 
@@ -1318,6 +1317,18 @@ namespace Kartverket.Register.Services.Register
                 Items = registers
             });
 
+            //Symbolisering og kartografi
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = Registers.Kartografi, description = Registers.KartografiContent, ExternalUrl = "/register/kartografi" });
+            registers.Add(new RegisterView { name = Registers.SymbolName, description = Registers.SymbolContent, ExternalUrl = "/register/symbol" });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupSymbolAndCartography,
+                Items = registers
+            });
+
             //Kodelister
             registers = new List<Models.ViewModels.RegisterView>();
             registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("28F22B09-098F-48E2-BC37-27FC63674318"))));
@@ -1332,26 +1343,16 @@ namespace Kartverket.Register.Services.Register
                 Items = registers
             });
 
-            //Dokumentregister
-            registers = new List<Models.ViewModels.RegisterView>();
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"))));
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"))));
-            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"))));
+            //Datamodeller og standardisering
+            registers.Add(new RegisterView { name = Registers.Objektregisteret, description = Registers.ObjektregisteretContent, ExternalUrl = WebConfigurationManager.AppSettings["ObjektkatalogUrl"] });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("6D579BAE-1E0B-48CC-B25D-5AD737E6B3DC"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
 
             register.Items.Add(new Group
             {
-                Name = Registers.GroupDocumentRegistry,
-                Items = registers
-            });
-
-            //Symbolisering og kartografi
-            registers = new List<Models.ViewModels.RegisterView>();
-            registers.Add(new RegisterView { name = Registers.Kartografi, description = Registers.KartografiContent, ExternalUrl = "/register/kartografi" });
-            registers.Add(new RegisterView { name = Registers.SymbolName, description = Registers.SymbolContent, ExternalUrl = "/register/symbol" });
-
-            register.Items.Add(new Group
-            {
-                Name = Registers.GroupSymbolAndCartography,
+                Name = Registers.GroupDatamodelsAndStandards,
                 Items = registers
             });
 

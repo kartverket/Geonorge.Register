@@ -13,7 +13,7 @@ namespace Kartverket.Register.Services
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
 
-        public int _NumberOfDatasetsByAnnex;
+
         public int _NumberOfDatasetsByAnnexI;
         public int _NumberOfDatasetsByAnnexII;
         public int _NumberOfDatasetsByAnnexIII;
@@ -84,7 +84,6 @@ namespace Kartverket.Register.Services
             _inspireRegister = inspireRegister;
             _inspireItems = _inspireRegister?.RegisterItems;
 
-            _NumberOfDatasetsByAnnex = NumberOfDatasetsByAnnex();
             _NumberOfDatasetsByAnnexI = NumberOfDatasetsByAnnexI();
             _NumberOfDatasetsByAnnexII = NumberOfDatasetsByAnnexII();
             _NumberOfDatasetsByAnnexIII = NumberOfDatasetsByAnnexIII();
@@ -479,7 +478,7 @@ namespace Kartverket.Register.Services
             spatialDataAndService.DSv_Num1 = _NumberOfDatasetsByAnnexI; // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
             spatialDataAndService.DSv_Num2 = _NumberOfDatasetsByAnnexII; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
             spatialDataAndService.DSv_Num3 = _NumberOfDatasetsByAnnexIII; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
-            spatialDataAndService.DSv_Num = _NumberOfDatasetsByAnnex; // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
+            spatialDataAndService.DSv_Num = NumberOfDatasetsByAnnex(); // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
             spatialDataAndService.SDSv_Num = _NumberOfSdS; // Totalt antall tjenester SDS
             spatialDataAndService.NSv_NumDiscServ = _NumberOfServicesByServiceTypeDiscovery; // Antall NnServiceType="discovery"
             spatialDataAndService.NSv_NumViewServ = _NumberOfServicesByServiceTypeView; // Antall NnServiceType="view"
@@ -1452,7 +1451,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfDatasetsRegisteredInADiscoveryService()
         {
-            return Divide(_NumberOfDatasetsRegisteredInADiscoveryService, _NumberOfDatasetsByAnnex);
+            return Divide(_NumberOfDatasetsRegisteredInADiscoveryService, NumberOfDatasetsByAnnex());
         }
 
         private double ProportionOfServicesRegisteredInADiscoveryService()
@@ -1483,7 +1482,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfDatasetsWithMetadata()
         {
-            return Divide(_NumberOfDatasetsWithMetadata, _NumberOfDatasetsByAnnex);
+            return Divide(_NumberOfDatasetsWithMetadata, NumberOfDatasetsByAnnex());
         }
 
         private int NumberOfDatasetsByAnnex()
@@ -1493,7 +1492,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfDatasetWithHarmonizedDataAndConformedMetadata()
         {
-            return Divide(_NumberOfDatasetsWithHarmonizedDataAndConformedMetadata, _NumberOfDatasetsByAnnex);
+            return Divide(_NumberOfDatasetsWithHarmonizedDataAndConformedMetadata, NumberOfDatasetsByAnnex());
         }
 
         private double ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata()
@@ -1558,7 +1557,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
         {
-            return Divide((_NumberOfDatasetsRegisteredInADiscoveryService + _NumberOfServicesRegisteredInADiscoveryService), (_NumberOfDatasetsByAnnex + _NumberOfServicesByServiceType));
+            return Divide((_NumberOfDatasetsRegisteredInADiscoveryService + _NumberOfServicesRegisteredInADiscoveryService), (NumberOfDatasetsByAnnex() + _NumberOfServicesByServiceType));
         }
 
         private double ProportionOfArealByAnnexI()
@@ -1603,7 +1602,7 @@ namespace Kartverket.Register.Services
 
         private double ProportionOfServicesAndDatasetsWithMetadatastatusGood()
         {
-            return Divide(_NumberOfServicesWhereMetadataStatusIsgood + NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(), _NumberOfServicesByServiceType + _NumberOfDatasetsByAnnex);
+            return Divide(_NumberOfServicesWhereMetadataStatusIsgood + NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(), _NumberOfServicesByServiceType + NumberOfDatasetsByAnnex());
         }
     }
 }

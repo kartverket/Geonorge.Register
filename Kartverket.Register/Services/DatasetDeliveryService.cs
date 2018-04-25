@@ -43,6 +43,8 @@ namespace Kartverket.Register.Services
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
             
+            try
+            {
                 if (string.IsNullOrEmpty(metadataUuid)) return Useable;
 
                 var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
@@ -56,6 +58,11 @@ namespace Kartverket.Register.Services
                 return statusvalue == "OK" ? Good : Useable;
             
             
+            }
+            catch (Exception e)
+            {
+                return currentStatus;
+            }
         }
 
         public string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoupdate, string currentStatus)

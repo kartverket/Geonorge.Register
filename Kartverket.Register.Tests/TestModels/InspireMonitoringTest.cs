@@ -393,7 +393,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfItsRegisteredInADiscoveryService()
+        public void CountServiceIfItsRegisteredInADiscoveryService()
         {
             _inspireItems.Add(_inspireDataService);
 
@@ -405,7 +405,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfServiceTypeIsDownload()
+        public void CountServiceIfServiceTypeIsDownload()
         {
             _inspireDataService.ServiceType = "download";
             _inspireItems.Add(_inspireDataService);
@@ -418,7 +418,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfServiceTypeIsOtherThenDownload()
+        public void NotCountServiceIfServiceTypeIsOtherThenDownload()
         {
             _inspireDataService.ServiceType = "";
             _inspireItems.Add(_inspireDataService);
@@ -431,7 +431,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfServiceTypeIsView()
+        public void CountServiceIfServiceTypeIsView()
         {
             _inspireDataService.ServiceType = "view";
             _inspireItems.Add(_inspireDataService);
@@ -444,7 +444,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfServiceTypeIsOtherThenView()
+        public void NotCountServiceIfServiceTypeIsOtherThenView()
         {
             _inspireDataService.ServiceType = "download";
             _inspireItems.Add(_inspireDataService);
@@ -457,7 +457,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfServiceTypeIsDiscovery()
+        public void CountServiceIfServiceTypeIsDiscovery()
         {
             _inspireDataService.ServiceType = "discovery";
             _inspireItems.Add(_inspireDataService);
@@ -470,7 +470,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfServiceTypeIsOtherThenDiscovery()
+        public void NotCountServiceIfServiceTypeIsOtherThenDiscovery()
         {
             _inspireDataService.ServiceType = "download";
             _inspireItems.Add(_inspireDataService);
@@ -483,7 +483,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfServiceTypeIsInvoke()
+        public void CountServiceIfServiceTypeIsInvoke()
         {
             _inspireDataService.ServiceType = "invoke";
             _inspireItems.Add(_inspireDataService);
@@ -496,7 +496,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfServiceTypeIsOtherThenInvoke()
+        public void NotCountServiceIfServiceTypeIsOtherThenInvoke()
         {
             _inspireDataService.ServiceType = "vhbjknml";
             _inspireItems.Add(_inspireDataService);
@@ -508,7 +508,7 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(0);
         }
 
-        public void CountServicesIfServiceTypeIsTransformation()
+        public void CountServiceIfServiceTypeIsTransformation()
         {
             _inspireDataService.ServiceType = "transformation";
             _inspireItems.Add(_inspireDataService);
@@ -521,7 +521,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfServiceTypeIsOtherThenTransformation()
+        public void NotCountServiceIfServiceTypeIsOtherThenTransformation()
         {
             _inspireDataService.ServiceType = "vhbjknml";
             _inspireItems.Add(_inspireDataService);
@@ -534,7 +534,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountServicesIfInspireDataTypeIsNotWmsOrWfs()
+        public void CountServiceIfInspireDataTypeIsNotWmsOrWfs()
         {
             _inspireDataService.InspireDataType = "other";
             _inspireItems.Add(_inspireDataService);
@@ -547,7 +547,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfInspireDataTypeIsWfs()
+        public void NotCountServiceIfInspireDataTypeIsWfs()
         {
             InspireDataService inspireDataService = CreateInspireDataService();
             inspireDataService.InspireDataType = "other";
@@ -564,7 +564,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountServicesIfInspireDataTypeIsWms()
+        public void NotCountServiceIfInspireDataTypeIsWms()
         {
             InspireDataService inspireDataService = CreateInspireDataService();
             inspireDataService.InspireDataType = "other";
@@ -578,6 +578,241 @@ namespace Kartverket.Register.Tests.TestModels
             var result = inspireMonitoring.NumberOfSdS;
 
             result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountServiceIfServiceTypeIsDownloadAndConformityIsTrue()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("good", null, true);
+            _inspireDataService.ServiceType = "download";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServiceIfServiceTypeIsDownloadAndConformityIsFalse()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.ServiceType = "download";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountServiceIfServiceTypeIsViewAndConformityIsTrue()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("good", null, true);
+            _inspireDataService.ServiceType = "view";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeViewWhereConformityIsTrue;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServiceIfServiceTypeIsViewAndConformityIsFalse()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.ServiceType = "view";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeViewWhereConformityIsTrue;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountServiceIfServiceTypeIsDiscoveryAndConformityIsTrue()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("good", null, true);
+            _inspireDataService.ServiceType = "discovery";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServiceIfServiceTypeIsDiscoveryAndConformityIsFalse()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.ServiceType = "discovery";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountServiceIfServiceTypeIsInvokeAndConformityIsTrue()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("good", null, true);
+            _inspireDataService.ServiceType = "invoke";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServiceIfServiceTypeIsInvokeAndConformityIsFalse()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.ServiceType = "invoke";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountServiceIfServiceTypeIsTransformationAndConformityIsTrue()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("good", null, true);
+            _inspireDataService.ServiceType = "transformation";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServiceIfServiceTypeIsTransformationAndConformityIsFalse()
+        {
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.ServiceType = "transformation";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountNumberOfCallsByServiceTypeDiscorvery()
+        {
+            var inspireDataService = CreateInspireDataService();
+            inspireDataService.ServiceType = "discovery";
+            inspireDataService.Requests = 2;
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.ServiceType = "discovery";
+            _inspireDataService.Requests = 3;
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfCallsByServiceTypeDiscovery;
+
+            result.Should().Be(5);
+        }
+
+        [Fact]
+        public void CountNumberOfCallsByServiceTypeView()
+        {
+            var inspireDataService = CreateInspireDataService();
+            inspireDataService.ServiceType = "view";
+            inspireDataService.Requests = 2;
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.ServiceType = "view";
+            _inspireDataService.Requests = 3;
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfCallsByServiceTypeView;
+
+            result.Should().Be(5);
+        }
+
+        [Fact]
+        public void CountNumberOfCallsByServiceTypeDownload()
+        {
+            var inspireDataService = CreateInspireDataService();
+            inspireDataService.ServiceType = "download";
+            inspireDataService.Requests = 2;
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.ServiceType = "download";
+            _inspireDataService.Requests = 3;
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfCallsByServiceTypeDownload;
+
+            result.Should().Be(5);
+        }
+
+        [Fact]
+        public void CountNumberOfCallsByServiceTypeTransformation()
+        {
+            var inspireDataService = CreateInspireDataService();
+            inspireDataService.ServiceType = "transformation";
+            inspireDataService.Requests = 2;
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.ServiceType = "transformation";
+            _inspireDataService.Requests = 3;
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfCallsByServiceTypeTransformation;
+
+            result.Should().Be(5);
+        }
+
+        [Fact]
+        public void CountNumberOfCallsByServiceTypeInvoke()
+        {
+            var inspireDataService = CreateInspireDataService();
+            inspireDataService.ServiceType = "invoke";
+            inspireDataService.Requests = 2;
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.ServiceType = "invoke";
+            _inspireDataService.Requests = 3;
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfCallsByServiceTypeInvoke;
+
+            result.Should().Be(5);
         }
 
 

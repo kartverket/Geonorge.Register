@@ -1031,6 +1031,57 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexI()
+        {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            inspireDataset.RelevantArea = 4;
+
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.RelevantArea = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedRelevantAreaByAnnexI;
+
+            result.Should().Be(9);
+        }
+
+        public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexII()
+        {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            inspireDataset.RelevantArea = 4;
+
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.RelevantArea = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedRelevantAreaByAnnexII;
+
+            result.Should().Be(9);
+        }
+
+        public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexIII()
+        {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            inspireDataset.RelevantArea = 4;
+
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.RelevantArea = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedRelevantAreaByAnnexIII;
+
+            result.Should().Be(9);
+        }
+
 
         // ******** Hjelpemetoder **********
 

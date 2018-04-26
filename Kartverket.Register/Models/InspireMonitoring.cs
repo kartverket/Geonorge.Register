@@ -137,6 +137,9 @@ namespace Kartverket.Register.Models
 
         }
 
+        public InspireMonitoring()
+        {
+        }
 
 
         // *** Public  methods***

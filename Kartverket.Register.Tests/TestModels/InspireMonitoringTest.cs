@@ -9,18 +9,17 @@ namespace Kartverket.Register.Tests.TestModels
     public class InspireMonitoringTest
     {
         private ICollection<RegisterItemV2> _inspireItems = new List<RegisterItemV2>();
-        private ICollection<InspireDataset> _inspireDatasets = new List<InspireDataset>();
-        private ICollection<InspireDataService> _inspireDataServices = new List<InspireDataService>();
-
         private InspireDataset _inspireDataset;
         private InspireDataService _inspireDataService;
+        private InspireMonitoring _inspireMonitoringTest;
 
 
-        public InspireMonitoringTest() {
+        public InspireMonitoringTest()
+        {
             _inspireDataset = new InspireDataset();
             _inspireDataset.InspireThemes = new List<CodelistValue>();
-
             _inspireDataService = new InspireDataService();
+            _inspireMonitoringTest = InspireMonitoringTestData();
         }
 
 
@@ -360,7 +359,7 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(2);
         }
 
-        
+
 
         [Fact]
         public void NotCountServiceIfMetadataStatusIsOtherThenGoodOrDeficent()
@@ -938,7 +937,8 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountDatasetIfInspireThemeIsOfTypeAnnexIAndHarmonizedDataIsGoodAndMetadataIsGood() {
+        public void CountDatasetIfInspireThemeIsOfTypeAnnexIAndHarmonizedDataIsGoodAndMetadataIsGood()
+        {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
             _inspireDataset.InspireDeliveryHarmonizedData = new DatasetDelivery("good", null, true);
@@ -981,10 +981,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(1);
         }
 
-        public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexI() {
+        [Fact]
+        public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexI()
+        {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             inspireDataset.Area = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             _inspireDataset.Area = 5;
@@ -997,11 +1000,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
         public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexII()
         {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             inspireDataset.Area = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             _inspireDataset.Area = 5;
@@ -1014,11 +1019,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
         public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexIII()
         {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             inspireDataset.Area = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             _inspireDataset.Area = 5;
@@ -1031,11 +1038,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
         public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexI()
         {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             inspireDataset.RelevantArea = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             _inspireDataset.RelevantArea = 5;
@@ -1048,11 +1057,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
         public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexII()
         {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             inspireDataset.RelevantArea = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             _inspireDataset.RelevantArea = 5;
@@ -1065,11 +1076,13 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
         public void CountAccumulatedRelevantAreaWhenInspireThemeIsOfTypeAnnexIII()
         {
             var inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             inspireDataset.RelevantArea = 4;
+            _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             _inspireDataset.RelevantArea = 5;
@@ -1082,12 +1095,322 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(9);
         }
 
+        [Fact]
+        public void NumberOfCallsByServiceType()
+        {
+            var result = _inspireMonitoringTest.NumberOfCallsByServiceType();
+            result.Should().Be(10);
+        }
+
+        [Fact]
+        public void NumberOfServicesByServiceType()
+        {
+            var result = _inspireMonitoringTest.NumberOfServicesByServiceType();
+            result.Should().Be(10);
+        }
+
+        [Fact]
+        public void NumberOfDatasetsWithHarmonizedDataAndConformedMetadata()
+        {
+            var result = _inspireMonitoringTest.NumberOfDatasetsWithHarmonizedDataAndConformedMetadata();
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void NumberOfServicesByServiceTypeWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.NumberOfServicesByServiceTypeWhereConformityIsTrue();
+            result.Should().Be(10);
+        }
+
+        [Fact]
+        public void NumberOfDatasetsByAnnexWhereMetadataStatusIsgood()
+        {
+            var result = _inspireMonitoringTest.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood();
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void AccumulatedCurrentAreaByAnnex()
+        {
+            var result = _inspireMonitoringTest.AccumulatedCurrentAreaByAnnex();
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void AccumulatedRelevantAreaByAnnex()
+        {
+            var result = _inspireMonitoringTest.AccumulatedRelevantAreaByAnnex();
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void AverageNumberOfCallsByServiceTypeDiscovery()
+        {
+            var result = _inspireMonitoringTest.AverageNumberOfCallsByServiceTypeDiscovery();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void AverageNumberOfCallsByServiceTypeView()
+        {
+            var result = _inspireMonitoringTest.AverageNumberOfCallsByServiceTypeView();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void AverageNumberOfCallsByServiceTypeTransformation()
+        {
+            var result = _inspireMonitoringTest.AverageNumberOfCallsByServiceTypeTransformation();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void AverageNumberOfCallsByServiceTypeInvoke()
+        {
+            var result = _inspireMonitoringTest.AverageNumberOfCallsByServiceTypeInvoke();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void AverageNumberOfCallsByServiceType()
+        {
+            var result = _inspireMonitoringTest.AverageNumberOfCallsByServiceType();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsRegisteredInADiscoveryService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsRegisteredInADiscoveryService();
+            result.Should().Be(0.33333333333333331);
+        }
+
+        [Fact]
+        public void ProportionOfServicesRegisteredInADiscoveryService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesRegisteredInADiscoveryService();
+            result.Should().Be(0.2);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsWithMetadataByAnnexI()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsWithMetadataByAnnexI();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsWithMetadataByAnnexII()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsWithMetadataByAnnexII();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsWithMetadataByAnnexIII()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsWithMetadataByAnnexIII();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesWithMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesWithMetadata();
+            result.Should().Be(0.2);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsWithMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsWithMetadata();
+            result.Should().Be(0.33333333333333331);
+        }
+
+        [Fact]
+        public void NumberOfDatasetsByAnnex()
+        {
+            var result = _inspireMonitoringTest.NumberOfDatasetsByAnnex();
+            result.Should().Be(6);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetWithHarmonizedDataAndConformedMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetWithHarmonizedDataAndConformedMetadata();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsAvailableThroughViewService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughViewService();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsAvailableThroughDownloadService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughDownloadService();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetsAvailableThroughViewAndDownloadService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughViewAndDownloadService();
+            result.Should().Be(0.5);
+        }
+
+        [Fact]
+        public void ProportionOfServicesWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesWhereConformityIsTrue();
+            result.Should().Be(0.2);
+        }
+
+        [Fact]
+        public void ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesByServiceTypeViewWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesByServiceTypeViewWhereConformityIsTrue();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesByServiceTypeTransformationWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesByServiceTypeTransformationWhereConformityIsTrue();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesByServiceTypeInvokeWhereConformityIsTrue();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesAndDatasetsRegisteredInADiscoveryService();
+            result.Should().Be(0.25);
+        }
+
+        [Fact]
+        public void ProportionOfArealByAnnexI()
+        {
+            var result = _inspireMonitoringTest.ProportionOfArealByAnnexI();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfArealByAnnexII()
+        {
+            var result = _inspireMonitoringTest.ProportionOfArealByAnnexII();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfArealByAnnexIII()
+        {
+            var result = _inspireMonitoringTest.ProportionOfArealByAnnexIII();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfArealByAnnex()
+        {
+            var result = _inspireMonitoringTest.ProportionOfArealByAnnex();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetByAnnexIWithMetadatastatusGood()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetByAnnexIWithMetadatastatusGood();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetByAnnexIIWithMetadatastatusGood()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetByAnnexIIWithMetadatastatusGood();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfDatasetByAnnexIIIWithMetadatastatusGood()
+        {
+            var result = _inspireMonitoringTest.ProportionOfDatasetByAnnexIIIWithMetadatastatusGood();
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void ProportionOfServicesWithMetadatastatusGood()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesWithMetadatastatusGood();
+            result.Should().Be(0.2);
+        }
+
+        [Fact]
+        public void ProportionOfServicesAndDatasetsWithMetadatastatusGood()
+        {
+            var result = _inspireMonitoringTest.ProportionOfServicesAndDatasetsWithMetadatastatusGood();
+            result.Should().Be(0.5);
+        }
+
+
+
+
+
+
+
+
+
 
         // ******** Hjelpemetoder **********
 
         private CodelistValue ThemeOfTypeAnnexI()
         {
-            return new CodelistValue {
+            return new CodelistValue
+            {
                 name = "Administrative enheter",
                 value = "Administrative units"
             };
@@ -1126,5 +1449,68 @@ namespace Kartverket.Register.Tests.TestModels
                 InspireThemes = new List<CodelistValue>()
             };
         }
+
+        private InspireMonitoring InspireMonitoringTestData()
+        {
+            InspireMonitoring inspireMonitoring = new InspireMonitoring()
+            {
+                NumberOfDatasetsByAnnexI = 2,
+                NumberOfDatasetsByAnnexII = 2,
+                NumberOfDatasetsByAnnexIII = 2,
+
+                NumberOfDatasetsByAnnexIWithMetadata = 2,
+                NumberOfDatasetsByAnnexIIWithMetadata = 2,
+                NumberOfDatasetsByAnnexIIIWithMetadata = 2,
+
+                NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood = 2,
+                NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2,
+                NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = 2,
+                NumberOfServicesWhereMetadataStatusIsgood = 2,
+
+                NumberOfDatasetsWithMetadata = 2,
+                NumberOfServicesWithMetadata = 2,
+
+                NumberOfServicesRegisteredInADiscoveryService = 2,
+                NumberOfDatasetsRegisteredInADiscoveryService = 2,
+
+                NumberOfServicesByServiceTypeDownload = 2,
+                NumberOfServicesByServiceTypeView = 2,
+                NumberOfServicesByServiceTypeDiscovery = 2,
+                NumberOfServicesByServiceTypeInvoke = 2,
+                NumberOfServicesByServiceTypeTransformation = 2,
+                NumberOfSdS = 2,
+
+                NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue = 2,
+                NumberOfServicesByServiceTypeViewWhereConformityIsTrue = 2,
+                NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue = 2,
+                NumberOfServicesByServiceTypeInvokeWhereConformityIsTrue = 2,
+                NumberOfServicesByServiceTypeTransformationWhereConformityIsTrue = 2,
+
+                NumberOfCallsByServiceTypeDiscovery = 2,
+                NumberOfCallsByServiceTypeView = 2,
+                NumberOfCallsByServiceTypeDownload = 2,
+                NumberOfCallsByServiceTypeTransformation = 2,
+                NumberOfCallsByServiceTypeInvoke = 2,
+
+                NumberOfDatasetsAvailableThroughViewANDDownloadService = 2,
+                NumberOfDatasetsAvailableThroughDownloadService = 2,
+                NumberOfDatasetsAvailableThroughViewService = 2,
+
+                NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = 2,
+                NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2,
+                NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2,
+
+                AccumulatedCurrentAreaByAnnexI = 2,
+                AccumulatedCurrentAreaByAnnexII = 2,
+                AccumulatedCurrentAreaByAnnexIII = 2,
+
+                AccumulatedRelevantAreaByAnnexI = 2,
+                AccumulatedRelevantAreaByAnnexII = 2,
+                AccumulatedRelevantAreaByAnnexIII = 2,
+
+            };
+            return inspireMonitoring;
+        }
+
     }
 }

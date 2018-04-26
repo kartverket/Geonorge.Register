@@ -442,7 +442,7 @@ namespace Kartverket.Register.Models
             {
                 if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
                 {
-                    if (item.MetadataIsGoodOrDeficent())
+                    if (item.MetadataIsSet())
                     {
                         number++;
                     }
@@ -459,7 +459,7 @@ namespace Kartverket.Register.Models
             {
                 if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
                 {
-                    if (item.MetadataIsGoodOrDeficent())
+                    if (item.MetadataIsSet())
                     {
                         number++;
                     }
@@ -476,7 +476,7 @@ namespace Kartverket.Register.Models
             {
                 if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
                 {
-                    if (item.MetadataIsGoodOrDeficent())
+                    if (item.MetadataIsSet())
                     {
                         number++;
                     }
@@ -572,7 +572,7 @@ namespace Kartverket.Register.Models
 
             foreach (var item in _inspireDataset)
             {
-                if (item.MetadataIsGoodOrDeficent())
+                if (item.MetadataIsSet())
                 {
                     number++;
                 }

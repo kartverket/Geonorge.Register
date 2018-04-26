@@ -74,7 +74,7 @@ namespace Kartverket.Register.Models
             return false;
         }
 
-        internal bool MetadataIsGoodOrDeficent()
+        internal bool MetadataIsSet()
         {
             if (InspireDeliveryMetadata != null)
             {

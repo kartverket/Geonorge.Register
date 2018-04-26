@@ -100,7 +100,7 @@ namespace Kartverket.Register.Tests.TestModels
 
 
         [Fact]
-        public void CountDatasetWhenInspireThemeIsOfTypeAnnexIAndMetadataIsGoodOrDeficent()
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexIAndMetadataIsSet()
         {
             var inspireDataset = new InspireDataset();
             inspireDataset.InspireThemes = new List<CodelistValue>();
@@ -109,7 +109,7 @@ namespace Kartverket.Register.Tests.TestModels
             _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -120,7 +120,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountDatasetWhenInspireThemeIsAnnexIAndMetadataIsOtherThenGoodOrDeficent()
+        public void NotCountDatasetWhenInspireThemeIsAnnexIAndMetadataIsNotSet()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
@@ -135,7 +135,7 @@ namespace Kartverket.Register.Tests.TestModels
 
 
         [Fact]
-        public void CountDatasetWhenInspireThemesIsOfTypeAnnexIIAndMetadataIsGoodOrDeficent()
+        public void CountDatasetWhenInspireThemesIsOfTypeAnnexIIAndMetadataIsSet()
         {
             InspireDataset inspireDataset = CreateInspireDataset(); ;
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
@@ -143,7 +143,7 @@ namespace Kartverket.Register.Tests.TestModels
             _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -154,7 +154,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIAndMetadataIsOtherThenGoodOrDeficent()
+        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIAndMetadataIsNotSet()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
@@ -170,7 +170,7 @@ namespace Kartverket.Register.Tests.TestModels
 
 
         [Fact]
-        public void CountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsGoodOrDeficent()
+        public void CountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsSet()
         {
             InspireDataset inspireDataset = CreateInspireDataset();
             inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
@@ -178,7 +178,7 @@ namespace Kartverket.Register.Tests.TestModels
             _inspireItems.Add(inspireDataset);
 
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
 
@@ -190,7 +190,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsOtherThenGoodOrDeficent()
+        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsNotSet()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
@@ -223,7 +223,7 @@ namespace Kartverket.Register.Tests.TestModels
         public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIAndMetadataOtherThenGood()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
 
@@ -283,7 +283,7 @@ namespace Kartverket.Register.Tests.TestModels
         public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsOtherThenGood()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
 
@@ -315,7 +315,7 @@ namespace Kartverket.Register.Tests.TestModels
             inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
             _inspireItems.Add(inspireDataset);
 
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -332,7 +332,7 @@ namespace Kartverket.Register.Tests.TestModels
             inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
             _inspireItems.Add(inspireDataset);
 
-            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataset);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -350,7 +350,7 @@ namespace Kartverket.Register.Tests.TestModels
             inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
             _inspireItems.Add(inspireDataService);
 
-            _inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataService);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -369,7 +369,7 @@ namespace Kartverket.Register.Tests.TestModels
             inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
             _inspireItems.Add(inspireDataService);
 
-            _inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("deficient", null, true);
             _inspireItems.Add(_inspireDataService);
 
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
@@ -597,7 +597,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NotCountServiceIfServiceTypeIsDownloadAndConformityIsFalse()
         {
-            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deficient", null, true);
             _inspireDataService.ServiceType = "download";
             _inspireItems.Add(_inspireDataService);
 
@@ -625,7 +625,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NotCountServiceIfServiceTypeIsViewAndConformityIsFalse()
         {
-            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deficient", null, true);
             _inspireDataService.ServiceType = "view";
             _inspireItems.Add(_inspireDataService);
 
@@ -653,7 +653,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NotCountServiceIfServiceTypeIsDiscoveryAndConformityIsFalse()
         {
-            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deficient", null, true);
             _inspireDataService.ServiceType = "discovery";
             _inspireItems.Add(_inspireDataService);
 
@@ -681,7 +681,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NotCountServiceIfServiceTypeIsInvokeAndConformityIsFalse()
         {
-            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deficient", null, true);
             _inspireDataService.ServiceType = "invoke";
             _inspireItems.Add(_inspireDataService);
 
@@ -709,7 +709,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NotCountServiceIfServiceTypeIsTransformationAndConformityIsFalse()
         {
-            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deicent", null, true);
+            _inspireDataService.InspireDeliveryServiceStatus = new DatasetDelivery("deficient", null, true);
             _inspireDataService.ServiceType = "transformation";
             _inspireItems.Add(_inspireDataService);
 
@@ -813,6 +813,48 @@ namespace Kartverket.Register.Tests.TestModels
             var result = inspireMonitoring.NumberOfCallsByServiceTypeInvoke;
 
             result.Should().Be(5);
+        }
+
+        [Fact]
+        public void CountNumberOfDatasetsIfWmsAndWfsIsGoodOrUseable()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("useable", null, true);
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountNumberOfDatasetsIfWmsIsNotGoodOrUseable()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("notset", null, true);
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void NotCountNumberOfDatasetsIfWfsIsNotGoodOrUseable()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("good", null, true);
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService;
+
+            result.Should().Be(0);
         }
 
 

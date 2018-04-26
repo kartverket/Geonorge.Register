@@ -981,7 +981,55 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(1);
         }
 
+        public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexI() {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            inspireDataset.Area = 4;
 
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.Area = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedCurrentAreaByAnnexI;
+
+            result.Should().Be(9);
+        }
+
+        public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexII()
+        {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            inspireDataset.Area = 4;
+
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.Area = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedCurrentAreaByAnnexII;
+
+            result.Should().Be(9);
+        }
+
+        public void CountAccumulatedCurrentAreaWhenInspireThemeIsOfTypeAnnexIII()
+        {
+            var inspireDataset = CreateInspireDataset();
+            inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            inspireDataset.Area = 4;
+
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.Area = 5;
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.AccumulatedCurrentAreaByAnnexIII;
+
+            result.Should().Be(9);
+        }
 
 
         // ******** Hjelpemetoder **********

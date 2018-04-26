@@ -14,15 +14,24 @@ namespace Kartverket.Register.Tests.TestModels
     public class InspireMonitoringTest
     {
         private ICollection<RegisterItemV2> _inspireItems = new List<RegisterItemV2>();
-        private ICollection<InspireDataset> _inspireDataset = new List<InspireDataset>();
+        private ICollection<InspireDataset> _inspireDatasets = new List<InspireDataset>();
         private ICollection<InspireDataService> _inspireDataService = new List<InspireDataService>();
+
+        private InspireDataset _inspireDataset;
+
+
+        public InspireMonitoringTest() {
+            _inspireDataset = new InspireDataset();
+            _inspireDataset.InspireThemes = new List<CodelistValue>();
+        }
 
 
 
         [Fact]
         public void GetNumberOfDatasetsByAnnexI()
         {
-            _inspireItems.Add(InspireDatasetWithInspireThemeOfTypeAnnex(ThemeOfTypeAnnexI()));
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireItems.Add(_inspireDataset);
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
 
             var result = inspireMonitoring.NumberOfDatasetsByAnnexI;
@@ -33,7 +42,8 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void GetNumberOfDatasetsByAnnexII()
         {
-            _inspireItems.Add(InspireDatasetWithInspireThemeOfTypeAnnex(ThemeOfTypeAnnexII()));
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireItems.Add(_inspireDataset);
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
 
             var result = inspireMonitoring.NumberOfDatasetsByAnnexII;
@@ -44,7 +54,8 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void GetNumberOfDatasetsByAnnexIII()
         {
-            _inspireItems.Add(InspireDatasetWithInspireThemeOfTypeAnnex(ThemeOfTypeAnnexIII()));
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireItems.Add(_inspireDataset);
             var inspireMonitoring = new InspireMonitoring(_inspireItems);
 
             var result = inspireMonitoring.NumberOfDatasetsByAnnexIII;
@@ -55,13 +66,16 @@ namespace Kartverket.Register.Tests.TestModels
 
 
 
-        private InspireDataset InspireDatasetWithInspireThemeOfTypeAnnex(CodelistValue inspireTheme)
-        {
-            var inspireDataset = new InspireDataset();
-            inspireDataset.InspireThemes = new List<CodelistValue>();
-            inspireDataset.InspireThemes.Add(inspireTheme);
-            return inspireDataset;
-        }
+
+
+
+
+
+
+
+
+
+        // ******** Hjelpemetoder **********
 
         private CodelistValue ThemeOfTypeAnnexI()
         {

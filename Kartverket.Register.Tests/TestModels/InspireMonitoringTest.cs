@@ -9,14 +9,17 @@ namespace Kartverket.Register.Tests.TestModels
     {
         private ICollection<RegisterItemV2> _inspireItems = new List<RegisterItemV2>();
         private ICollection<InspireDataset> _inspireDatasets = new List<InspireDataset>();
-        private ICollection<InspireDataService> _inspireDataService = new List<InspireDataService>();
+        private ICollection<InspireDataService> _inspireDataServices = new List<InspireDataService>();
 
         private InspireDataset _inspireDataset;
+        private InspireDataService _inspireDataService;
 
 
         public InspireMonitoringTest() {
             _inspireDataset = new InspireDataset();
             _inspireDataset.InspireThemes = new List<CodelistValue>();
+
+            _inspireDataService = new InspireDataService();
         }
 
 
@@ -293,6 +296,18 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
 
+        [Fact]
+        public void CountServiceWhenMetadataIsGood()
+        {
+            _inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood;
+
+            result.Should().Be(1);
+        }
 
 
 

@@ -635,7 +635,7 @@ namespace Kartverket.Register.Models
             int number = 0;
             foreach (var item in _inspireDataService)
             {
-                if (item.InspireDeliveryServiceStatus.IsGood())
+                if (item.ServiceStatusIsGood())
                 {
                     if (string.IsNullOrWhiteSpace(serviceType))
                     {

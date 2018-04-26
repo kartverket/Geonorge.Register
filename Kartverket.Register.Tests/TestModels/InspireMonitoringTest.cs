@@ -816,7 +816,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void CountNumberOfDatasetsIfWmsAndWfsIsGoodOrUseable()
+        public void CountDatasetIfWmsAndWfsIsGoodOrUseable()
         {
             _inspireDataset.InspireDeliveryWms = new DatasetDelivery("useable", null, true);
             _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("good", null, true);
@@ -830,7 +830,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountNumberOfDatasetsIfWmsIsNotGoodOrUseable()
+        public void NotCountDatasetIfWmsIsNotGoodOrUseable()
         {
             _inspireDataset.InspireDeliveryWms = new DatasetDelivery("notset", null, true);
             _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("good", null, true);
@@ -844,7 +844,7 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void NotCountNumberOfDatasetsIfWfsIsNotGoodOrUseable()
+        public void NotCountDatasetIfWfsIsNotGoodOrUseable()
         {
             _inspireDataset.InspireDeliveryWms = new DatasetDelivery("good", null, true);
             _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("notset", null, true);
@@ -856,6 +856,87 @@ namespace Kartverket.Register.Tests.TestModels
 
             result.Should().Be(0);
         }
+
+
+        [Fact]
+        public void CountDatasetIfWfsIsGood()
+        {
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetIfWfsIsUseable()
+        {
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("useable", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountDatasetIfWfsIsNeitherGoodOrUseable()
+        {
+            _inspireDataset.InspireDeliveryWfs = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService;
+
+            result.Should().Be(0);
+        }
+
+
+        [Fact]
+        public void CountDatasetIfWmsIsGood()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetIfWmsIsUseable()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("useable", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountDatasetIfWmsIsNeitherGoodOrUseable()
+        {
+            _inspireDataset.InspireDeliveryWms = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsAvailableThroughViewService;
+
+            result.Should().Be(0);
+        }
+
 
 
         // ******** Hjelpemetoder **********

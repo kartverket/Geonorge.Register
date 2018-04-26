@@ -937,6 +937,51 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(0);
         }
 
+        [Fact]
+        public void CountDatasetIfInspireThemeIsOfTypeAnnexIAndHarmonizedDataIsGoodAndMetadataIsGood() {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireDataset.InspireDeliveryHarmonizedData = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetIfInspireThemeIsOfTypeAnnexIIAndHarmonizedDataIsGoodAndMetadataIsGood()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireDataset.InspireDeliveryHarmonizedData = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetIfInspireThemeIsOfTypeAnnexIIIAndHarmonizedDataIsGoodAndMetadataIsGood()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireDataset.InspireDeliveryHarmonizedData = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata;
+
+            result.Should().Be(1);
+        }
+
+
 
 
         // ******** Hjelpemetoder **********

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using Kartverket.Register.Models;
-using Kartverket.Register.Services;
-using Moq;
 using Xunit;
 
 namespace Kartverket.Register.Tests.TestModels
@@ -28,7 +22,7 @@ namespace Kartverket.Register.Tests.TestModels
 
 
         [Fact]
-        public void GetNumberOfDatasetsByAnnexI()
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexI()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
             _inspireItems.Add(_inspireDataset);
@@ -40,7 +34,19 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void GetNumberOfDatasetsByAnnexII()
+        public void NotCountDatasetWhenInspireThemeIsNotOfTypeAnnexI()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireItems.Add(_inspireDataset);
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexI;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexII()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
             _inspireItems.Add(_inspireDataset);
@@ -52,7 +58,19 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
         [Fact]
-        public void GetNumberOfDatasetsByAnnexIII()
+        public void NotCountDatasetWhenInspireThemeIsNotOfTypeAnnexII()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireItems.Add(_inspireDataset);
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexII;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexIII()
         {
             _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
             _inspireItems.Add(_inspireDataset);
@@ -63,8 +81,144 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(1);
         }
 
+        [Fact]
+        public void NotCountDatasetsWhenInspireThemeIsNotOfTypeAnnexIII()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireItems.Add(_inspireDataset);
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIII;
+
+            result.Should().Be(0);
+        }
 
 
+        [Fact]
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexIAndMetadataIsGood() {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetWhenInspireThemeIsOfTypeAnnexIAndMetadataIsDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountDatasetWhenInspireThemeIsAnnexIAndMetadataIsOtherThenGoodOrDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexI());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata;
+
+            result.Should().Be(0);
+        }
+
+        [Fact]
+        public void CountDatasetWhenInspireThemesIsOfTypeAnnexIIAndMetadataIsGood()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetWhenInspireThemesIsOfTypeAnnexIIAndMetadataIsDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIAndMetadataIsOtherThenGoodOrDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata;
+
+            result.Should().Be(0);
+        }
+
+
+        [Fact]
+        public void CountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsGood()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("deficent", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountDatasetsWhenInspireThemeIsOfTypeAnnexIIIAndMetadataIsOtherThenGoodOrDeficent()
+        {
+            _inspireDataset.InspireThemes.Add(ThemeOfTypeAnnexIII());
+            _inspireDataset.InspireDeliveryMetadata = new DatasetDelivery("notset", null, true);
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata;
+
+            result.Should().Be(0);
+        }
 
 
 

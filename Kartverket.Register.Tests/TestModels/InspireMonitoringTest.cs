@@ -380,6 +380,29 @@ namespace Kartverket.Register.Tests.TestModels
         }
 
 
+        [Fact]
+        public void CountDatasetIfItsRegisteredInADiscoveryService()
+        {
+            _inspireItems.Add(_inspireDataset);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void CountServicesIfItsRegisteredInADiscoveryService()
+        {
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService;
+
+            result.Should().Be(1);
+        }
 
 
         // ******** Hjelpemetoder **********

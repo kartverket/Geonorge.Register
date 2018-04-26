@@ -533,6 +533,53 @@ namespace Kartverket.Register.Tests.TestModels
             result.Should().Be(0);
         }
 
+        [Fact]
+        public void CountServicesIfInspireDataTypeIsNotWmsOrWfs()
+        {
+            _inspireDataService.InspireDataType = "other";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfSdS;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServicesIfInspireDataTypeIsWfs()
+        {
+            InspireDataService inspireDataService = CreateInspireDataService();
+            inspireDataService.InspireDataType = "other";
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.InspireDataType = "WFS-tjeneste";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfSdS;
+
+            result.Should().Be(1);
+        }
+
+        [Fact]
+        public void NotCountServicesIfInspireDataTypeIsWms()
+        {
+            InspireDataService inspireDataService = CreateInspireDataService();
+            inspireDataService.InspireDataType = "other";
+            _inspireItems.Add(inspireDataService);
+
+            _inspireDataService.InspireDataType = "WMS-tjeneste";
+            _inspireItems.Add(_inspireDataService);
+
+            var inspireMonitoring = new InspireMonitoring(_inspireItems);
+
+            var result = inspireMonitoring.NumberOfSdS;
+
+            result.Should().Be(1);
+        }
+
 
         // ******** Hjelpemetoder **********
 

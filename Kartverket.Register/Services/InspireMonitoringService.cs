@@ -11,21 +11,22 @@ namespace Kartverket.Register.Services
     {
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
-        private InspireMonitoring _inspireMonitoring;
+        private IInspireMonitoring _inspireMonitoring;
 
 
-        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister)
+        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister) 
         {
-            SetClassVariables(inspireRegister);
-            return Mapping();
+            return GetInspireMonitoringReport(inspireRegister, new InspireMonitoring(inspireRegister.RegisterItems));
         }
 
-        private void SetClassVariables(Models.Register inspireRegister)
+        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister, IInspireMonitoring monitoringData)
         {
             _inspireRegister = inspireRegister;
             _inspireItems = _inspireRegister?.RegisterItems;
-            _inspireMonitoring = new InspireMonitoring(inspireRegister.RegisterItems);
+            _inspireMonitoring = monitoringData;
+            return Mapping();
         }
+
 
         private Monitoring Mapping()
         {

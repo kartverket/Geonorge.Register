@@ -853,6 +853,7 @@
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
+    <Compile Include="Models\IInspireMonitoring.cs" />
     <Compile Include="Models\InspireDataService.cs" />
     <Compile Include="Models\InspireDataset.cs" />
     <Compile Include="Models\DatasetV2.cs" />

@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Kartverket.Register.Models
 {
-    public class InspireMonitoring
+    public class InspireMonitoring : IInspireMonitoring
     {
         private ICollection<InspireDataset> _inspireDataset;
         private ICollection<InspireDataService> _inspireDataService;
@@ -806,10 +806,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -819,10 +819,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -832,10 +832,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -844,7 +844,7 @@ namespace Kartverket.Register.Models
 
 
 
-       
+
 
 
 

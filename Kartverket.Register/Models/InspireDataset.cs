@@ -1,14 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Kartverket.Register.Models
 {
     public class InspireDataset : DatasetV2
     {
-        //Inspire delivery statuses
-        public string InspireTheme { get; set; }
+        public virtual ICollection<CodelistValue> InspireThemes { get; set; }
 
         //Metadata
         [ForeignKey("InspireDeliveryMetadata"), Required, Display(Name = "Metadata:")]
@@ -55,9 +55,152 @@ namespace Kartverket.Register.Models
         public Guid InspireDeliverySpatialDataServiceId { get; set; }
         public virtual DatasetDelivery InspireDeliverySpatialDataService { get; set; }
 
+        [Display(Name = "Areal")]
+        public int Area { get; set; }
+        [Display(Name = "Relevant areal")]
+        public int RelevantArea { get; set; }
+
         public bool HaveMetadata()
         {
             return InspireDeliveryMetadata.IsSet();
+        }
+
+        public bool WmsIsGoodOrUseable()
+        {
+            if (InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
+        }
+
+        internal bool MetadataIsSet()
+        {
+            if (InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryMetadata.IsSet();
+            }
+            return false;
+        }
+
+        public void UpdateInspireTheme(ICollection<CodelistValue> inspireThemes)
+        {
+            RemoveInspireTheme(inspireThemes);
+            AddToList(inspireThemes);
+        }
+
+        private void AddToList(ICollection<CodelistValue> inspireThemesUpdated)
+        {
+            foreach (var inspireTheme in inspireThemesUpdated)
+            {
+                if (!InspireThemes.Any(i => i.systemId == inspireTheme.systemId))
+                {
+                    InspireThemes.Add(inspireTheme);
+                }
+            }
+        }
+
+        private void RemoveInspireTheme(ICollection<CodelistValue> inspireThemesToUpdate)
+        {
+            var exists = false;
+            var removeDatasets = new List<CodelistValue>();
+
+            foreach (var inspireTheme in InspireThemes)
+            {
+                if (inspireThemesToUpdate.Any(i => i.systemId == inspireTheme.systemId))
+                {
+                    exists = true;
+                }
+                if (!exists)
+                {
+                    removeDatasets.Add(inspireTheme);
+                }
+                exists = false;
+            }
+            foreach (var inspireTheme in removeDatasets)
+            {
+                InspireThemes.Remove(inspireTheme);
+            }
+        }
+
+        internal bool WmsAndWfsIsGoodOrUseable()
+        {
+            if (InspireDeliveryWfs != null && InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWfs.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
+        }
+
+        internal bool HarmonizedDataAndConformedmetadata()
+        {
+            if (InspireDeliveryHarmonizedData != null && InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryHarmonizedData.IsGood() && InspireDeliveryMetadata.IsGood();
+            }
+            return false;
+        }
+
+        public bool WfsIsGoodOrUseable()
+        {
+            if (InspireDeliveryWfs != null)
+            {
+                return InspireDeliveryWfs.IsGoodOrUseable();
+            }
+            return false;
+        }
+
+        internal bool MetadataIsGood()
+        {
+            if (InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryMetadata.IsGood();
+            }
+            return false;
+        }
+
+        internal bool HarmonizedIsGood()
+        {
+            if (InspireDeliveryHarmonizedData != null)
+            {
+                return InspireDeliveryHarmonizedData.IsGood();
+            }
+            return false;
+        }
+
+        internal bool WfsOrAtomIsGoodOrUseable()
+        {
+            if (InspireDeliveryWfsOrAtom != null)
+            {
+                return InspireDeliveryWfsOrAtom.IsGoodOrUseable();
+            }
+            return false;
+        }
+
+        internal bool WmsAndWfsOrAtomIsGoodOrUseable()
+        {
+            if (InspireDeliveryWfsOrAtom != null && InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWfsOrAtom.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
+        }
+
+        public string InspireThemsAsString()
+        {
+            string inspireTeamsString = null;
+            foreach (var item in InspireThemes)
+            {
+                if (inspireTeamsString == null)
+                {
+                    inspireTeamsString += item.name;
+                }
+                else
+                {
+                    inspireTeamsString += ", " + item.name;
+                }
+            }
+            return inspireTeamsString;
         }
     }
 

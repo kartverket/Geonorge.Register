@@ -807,6 +807,26 @@
     <Compile Include="Migrations\201804091242083_AddConformity.Designer.cs">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs" />
+    <Compile Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.Designer.cs">
+      <DependentUpon>201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs" />
+    <Compile Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.Designer.cs">
+      <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs" />
+    <Compile Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.Designer.cs">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.cs" />
+    <Compile Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.Designer.cs">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804200753134_RemoveConformity.cs" />
+    <Compile Include="Migrations\201804200753134_RemoveConformity.Designer.cs">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -837,6 +857,7 @@
     <Compile Include="Models\Facet.cs" />
     <Compile Include="Models\FacetParameter.cs" />
     <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\InspireMonitoring.cs" />
     <Compile Include="Models\MunicipalityCenterPoint.cs" />
     <Compile Include="Models\NameSpace.cs" />
     <Compile Include="Models\NotFoundModel.cs" />
@@ -864,6 +885,7 @@
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
@@ -1935,6 +1957,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804091242083_AddConformity.resx">
       <DependentUpon>201804091242083_AddConformity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804170619277_AddInspireThemeAsCollectionToInspireDataset.resx">
+      <DependentUpon>201804170619277_AddInspireThemeAsCollectionToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804170631104_AddInspireThemeAsCollectionToInspireDataServices.resx">
+      <DependentUpon>201804170631104_AddInspireThemeAsCollectionToInspireDataServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181052342_RemoveArealAndRelevantArealFromInspireDataService.resx">
+      <DependentUpon>201804181052342_RemoveArealAndRelevantArealFromInspireDataService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804181054045_AddArealAndRelevantArealToInspireDataset.resx">
+      <DependentUpon>201804181054045_AddArealAndRelevantArealToInspireDataset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200753134_RemoveConformity.resx">
+      <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

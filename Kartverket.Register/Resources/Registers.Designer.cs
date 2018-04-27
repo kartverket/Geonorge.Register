@@ -286,6 +286,51 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kodelister.
+        /// </summary>
+        public static string GroupCodeLists {
+            get {
+                return ResourceManager.GetString("GroupCodeLists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datamodeller og standardisering.
+        /// </summary>
+        public static string GroupDatamodelsAndStandards {
+            get {
+                return ResourceManager.GetString("GroupDatamodelsAndStandards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dokumentregister.
+        /// </summary>
+        public static string GroupDocumentRegistry {
+            get {
+                return ResourceManager.GetString("GroupDocumentRegistry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status og rapportering.
+        /// </summary>
+        public static string GroupStatusAndReporting {
+            get {
+                return ResourceManager.GetString("GroupStatusAndReporting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Symbolisering og kartografi.
+        /// </summary>
+        public static string GroupSymbolAndCartography {
+            get {
+                return ResourceManager.GetString("GroupSymbolAndCartography", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Historiske.
         /// </summary>
         public static string Historical {

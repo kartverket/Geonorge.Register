@@ -13,6 +13,8 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Xml;
 using Kartverket.Register.Migrations;
+using Kartverket.Register.Models.ViewModels;
+using Resources;
 
 namespace Kartverket.Register.Services.Register
 {
@@ -54,39 +56,96 @@ namespace Kartverket.Register.Services.Register
 
             if (register.RegisterItems.Any())
             {
-                foreach (var item in register.RegisterItems)
+                if (register.IsInspireStatusRegister())
                 {
-                    if (filter.filterOrganization != null)
+                    registerItemsv2 = FilterInspireStatusregister(register, filter, registerItemsv2);
+                }
+                else
+                {
+                    foreach (var item in register.RegisterItems)
                     {
-                        if (item.Owner.seoname == filter.filterOrganization)
+                        if (filter.filterOrganization != null)
+                        {
+                            if (FilterOrganization(filter.filterOrganization, item.Owner.seoname))
+                            {
+                                registerItemsv2.Add(item);
+                            }
+                        }
+                        else
                         {
                             registerItemsv2.Add(item);
                         }
                     }
-                    else if (filter.InspireRegisteryType != null)
-                    {
-                        if (filter.InspireRegisteryType == "dataset")
-                        {
-                            if (item is InspireDataset inspireDataset)
-                            {
-                                registerItemsv2.Add(inspireDataset);
-                            }
-                        }
-                        else if (filter.InspireRegisteryType == "service")
-                        {
-                            if (item is InspireDataService inspireDataService)
-                            {
-                                registerItemsv2.Add(inspireDataService);
-                            }
-                        }
-                    }
-                    else registerItemsv2.Add(item);
+
                 }
+
             }
 
             register.items = registerItems;
             register.RegisterItems = registerItemsv2;
             return register;
+        }
+
+        private List<RegisterItemV2> FilterInspireStatusregister(Models.Register register, FilterParameters filter, List<RegisterItemV2> registerItems)
+        {
+            var registerItemsv2 = new List<RegisterItemV2>();
+
+            foreach (var item in register.RegisterItems)
+            {
+                if (filter.InspireRegisteryType != null)
+                {
+                    if (filter.InspireRegisteryType == "dataset")
+                    {
+                        if (item is InspireDataset inspireDataset)
+                        {
+                            if (filter.filterOrganization != null)
+                            {
+                                if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner.seoname))
+                                {
+                                    registerItemsv2.Add(inspireDataset);
+                                }
+                            }
+                            else
+                            {
+                                registerItemsv2.Add(inspireDataset);
+                            }
+                        }
+                    }
+                    else if (filter.InspireRegisteryType == "service")
+                    {
+                        if (item is InspireDataService inspireDataService)
+                        {
+                            if (filter.filterOrganization != null)
+                            {
+                                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner.seoname))
+                                {
+                                    registerItemsv2.Add(inspireDataService);
+                                }
+                            }
+                            else
+                            {
+                                registerItemsv2.Add(inspireDataService);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    registerItemsv2.Add(item);
+
+                }
+            }
+            return registerItemsv2;
+        }
+
+
+        private bool FilterOrganization(string organization, string owner)
+        {
+            if (owner == organization)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void FilterDataset(Models.Register register, FilterParameters filter, List<Models.RegisterItem> registerItems)
@@ -499,7 +558,7 @@ namespace Kartverket.Register.Services.Register
                         redirect = redirect + "&inspireRegistryTab=" + inspireRegistryTab;
                         shallRedirect = true;
                     }
-                    
+
                     if (shallRedirect)
                     {
                         HttpContext.Current.Response.Redirect(redirect);
@@ -1223,6 +1282,81 @@ namespace Kartverket.Register.Services.Register
             {
                 DeleteRegister(subregister);
             }
+        }
+
+        public RegisterGrouped GetRegistersGrouped()
+        {
+            RegisterGrouped register = new RegisterGrouped();
+            register.Items = new List<Group>();
+
+            List<Models.ViewModels.RegisterView> registers = new List<Models.ViewModels.RegisterView>();
+
+            //Dokumentregister
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("A42BC2B3-2314-4B7E-8007-71D9B10F2C04"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("8E726684-F216-4497-91BE-6AB2496A84D3"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupDocumentRegistry,
+                Items = registers
+            });
+
+            //Status og rapportering
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = "Det offentlige kartgrunnlaget - dekningskart", description = Registers.DOKCoverageContent, ExternalUrl = "/register/det-offentlige-kartgrunnlaget/dekning" });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E807439B-2BFC-4DA5-87C0-B40E7B0CDFB8"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("3D9114F6-FAAB-4521-BDF8-19EF6211E7D2"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A9BEF28-285B-477E-85F1-504F8227FF45"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("0F428034-0B2D-4FB7-84EA-C547B872B418"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupStatusAndReporting,
+                Items = registers
+            });
+
+            //Symbolisering og kartografi
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView { name = Registers.Kartografi, description = Registers.KartografiContent, ExternalUrl = "/register/kartografi" });
+            registers.Add(new RegisterView { name = Registers.SymbolName, description = Registers.SymbolContent, ExternalUrl = "/register/symbol" });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("5EACB130-D61F-469D-8454-E96943491BA0"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupSymbolAndCartography,
+                Items = registers
+            });
+
+            //Kodelister
+            registers = new List<Models.ViewModels.RegisterView>();
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("28F22B09-098F-48E2-BC37-27FC63674318"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("9A46038D-16EE-4562-96D2-8F6304AAB689"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("FCB0685D-24EB-4156-9AC8-25FA30759094"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("37B9DC41-D868-4CBC-84F9-39557041FB2C"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("25CC9CF7-2190-4A58-B4D2-3378DE295A12"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupCodeLists,
+                Items = registers
+            });
+
+            //Datamodeller og standardisering
+            registers.Add(new RegisterView { name = Registers.Objektregisteret, description = Registers.ObjektregisteretContent, ExternalUrl = WebConfigurationManager.AppSettings["ObjektkatalogUrl"] });
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("E43B65C6-452F-489D-A2E6-A5262E5740D8"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("6D579BAE-1E0B-48CC-B25D-5AD737E6B3DC"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("61E5A933-EA1E-4B16-8CE4-B1A1645B5B51"))));
+            registers.Add(new RegisterView(GetRegisterBySystemId(Guid.Parse("75A778A8-AD2C-4D91-A39F-1320762B2D5F"))));
+
+            register.Items.Add(new Group
+            {
+                Name = Registers.GroupDatamodelsAndStandards,
+                Items = registers
+            });
+
+            return register;
         }
     }
 }

@@ -496,7 +496,6 @@
             <summary>
             Gets inspiremonitoring xml
             </summary>
-            <param name="registerName">The search engine optimized name of the register</param>
         </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.GetSubregisterByName(System.String,System.String)">
             <summary>
@@ -966,6 +965,9 @@
             <summary>
             Valgfri, dersom ikke oppgitt settes til 3 måneder fram i tid. Format: YYYY-MM-DD, f.eks. "2018-07-21".
             </summary>
+        </member>
+        <member name="P:Kartverket.Register.Models.InspireDataService.ServiceType">
+            Liste opp alle Annex tjenestene h�rer til..
         </member>
         <member name="P:Kartverket.Register.Models.Organization.OrganizationType">
             <summary>
@@ -3582,6 +3584,31 @@
         <member name="P:Resources.Registers.Etat">
             <summary>
               Looks up a localized string similar to Etat.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupCodeLists">
+            <summary>
+              Looks up a localized string similar to Kodelister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDatamodelsAndStandards">
+            <summary>
+              Looks up a localized string similar to Datamodeller og standardisering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupDocumentRegistry">
+            <summary>
+              Looks up a localized string similar to Dokumentregister.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupStatusAndReporting">
+            <summary>
+              Looks up a localized string similar to Status og rapportering.
+            </summary>
+        </member>
+        <member name="P:Resources.Registers.GroupSymbolAndCartography">
+            <summary>
+              Looks up a localized string similar to Symbolisering og kartografi.
             </summary>
         </member>
         <member name="P:Resources.Registers.Historical">

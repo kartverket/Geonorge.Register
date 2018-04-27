@@ -4,19 +4,16 @@
 <article class="col-md-12">
     <h3>Tjenesten</h3>
     <p><strong>Type: </strong>@Model.InspireDataType</p>
-    <p><strong>Inspire tema: </strong>@Model.Theme</p>
+    <p><strong>Tjeneste type: </strong>@Model.ServiceType</p>
+    <p><strong>Inspire tema: </strong>@Model.InspireThemsAsString()</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Requests): </strong>@Html.DisplayFor(modelItem => Model.Requests)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.NetworkService): </strong>@HtmlHelperExtensions.TranslateBool(Model.NetworkService)</p>
     <p><strong>@Html.DisplayNameFor(model => Model.Sds): </strong>@HtmlHelperExtensions.TranslateBool(Model.Sds)</p>
-    <p><strong>@Html.DisplayNameFor(model => Model.Url): </strong><a href="@Model.Url">
-    @Html.DisplayFor(modelItem => Model.Url)<i class="custom-icon-sm custom-icon-eksternlink"></i>
-</a></p>
-</article>
-
-<article class="col-md-12">
-    <h3>Areal</h3>
-    <p><strong>Areal: </strong>@Model.Area</p>
-    <p><strong>Relevant areal: </strong>@Model.RelevantArea</p>
+    <p>
+        <strong>@Html.DisplayNameFor(model => Model.Url): </strong><a href="@Model.Url">
+            @Html.DisplayFor(modelItem => Model.Url)<i class="custom-icon-sm custom-icon-eksternlink"></i>
+        </a>
+    </p>
 </article>
 
 
@@ -32,18 +29,18 @@
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.InspireDeliveryMetadataId)</div>
-        <div class="col-md-2 col"> @Html.DisplayFor(model => Model.InspireDeliveryMetadata.Status.description)</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.InspireDeliveryMetadata.Note)</div>
+        <div class="col-md-2 col"> @Html.DisplayFor(model => Model.MetadataStatus)</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.MetadataNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.InspireDeliveryMetadataInSearchServiceId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.InspireDeliveryMetadataInSearchService.Status.description)</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.InspireDeliveryMetadataInSearchService.Note)</div>
+        <div class="col-md-2 col">@Html.DisplayFor(model => Model.MetadataInSearchServiceStatus)</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.MetadataInSearchServiceNote)</div>
     </div>
     <div class="resultItemRow col-md-12">
         <div class="col-md-3 col">@Html.DisplayNameFor(model => Model.InspireDeliveryServiceStatusId)</div>
-        <div class="col-md-2 col">@Html.DisplayFor(model => Model.InspireDeliveryServiceStatus.Status.description)</div>
-        <div class="col-md-7 col">@Html.DisplayFor(model => Model.InspireDeliveryServiceStatus.Note)</div>
+        <div class="col-md-2 col">@Html.DisplayFor(model => Model.ServiceStatus)</div>
+        <div class="col-md-7 col">@Html.DisplayFor(model => Model.ServiceStatusNote)</div>
     </div>
 </article>
 

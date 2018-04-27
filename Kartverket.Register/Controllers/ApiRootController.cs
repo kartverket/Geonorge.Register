@@ -19,6 +19,7 @@ using System.Globalization;
 using System.Threading;
 using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
+using Kartverket.Register.Formatter;
 
 namespace Kartverket.Register.Controllers
 {
@@ -83,15 +84,15 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Gets inspiremonitoring xml
         /// </summary>
-        /// <param name="registerName">The search engine optimized name of the register</param>
         [Route("api/register/inspire-statusregister/monitoring-report")]
         [HttpGet]
         public IHttpActionResult InspireMonitoring()
         {
             SetLanguage(Request);
             var inspireStatusRegister = _registerService.GetInspireStatusRegister();
-            Monitoring inspireMonitoring = _inspireMonitoringService.Mapping(inspireStatusRegister);
-            return Ok(inspireMonitoring);
+            Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
+
+            return Content(System.Net.HttpStatusCode.OK, inspireMonitoring, new XMLFormatter(), new MediaTypeHeaderValue("application/xml"));
         }
 
 
@@ -285,8 +286,8 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult GetRegisterItemsByOrganization(string parent, string register, string itemowner)
         {
             SetLanguage(Request);
-            List<Models.RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
-            List<Models.Api.Registeritem> ConverteditemsByOwner = new List<Models.Api.Registeritem>();
+            List<RegisterItem> itemsByOwner = _registerItemService.GetRegisterItemsFromOrganization(parent, register, itemowner);
+            List<Registeritem> ConverteditemsByOwner = new List<Registeritem>();
 
             foreach (Models.RegisterItem item in itemsByOwner)
             {
@@ -302,7 +303,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeDokMetadata()
         {
             new CoverageService(db).UpdateDatasetsWithCoverage();
-            new DOK.Service.MetadataService().UpdateDatasetsWithMetadata();
+            new DOK.Service.MetadataService(db).UpdateDatasetsWithMetadata();
             _registerService.UpdateDOKStatus();
             return Ok();
         }

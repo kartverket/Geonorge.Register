@@ -42,6 +42,7 @@ namespace Kartverket.Register.Services
         {
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
+            
             try
             {
                 if (string.IsNullOrEmpty(metadataUuid)) return Useable;
@@ -55,10 +56,12 @@ namespace Kartverket.Register.Services
                 if (status == null) return Useable;
                 var statusvalue = status.ToString();
                 return statusvalue == "OK" ? Good : Useable;
+            
+            
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Deficient;
+                return currentStatus;
             }
         }
 
@@ -67,6 +70,7 @@ namespace Kartverket.Register.Services
             var status = currentStatus;
             try
             {
+                if (!autoupdate) return currentStatus;
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
@@ -98,14 +102,16 @@ namespace Kartverket.Register.Services
             if (!autoupdate) return currentStatus;
             try
             {
-                dynamic metadata = GetMetadataFromKartkatalogen(metadataUuid);
+                var metadata = GetDistributions(metadataUuid);
 
-                if (metadata != null && metadata.Related != null)
-                    foreach (var service in metadata.Related)
+                if (metadata != null)
+                {
+                    foreach (var service in metadata)
                     {
-                        if (service.DistributionDetails != null &&
-                            service.DistributionDetails.Protocol.Value == "OGC:WMS") hasServiceUrl = true;
+                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS"
+                        ) hasServiceUrl = true;
                     }
+                }
             }
             catch (Exception)
             {
@@ -206,13 +212,13 @@ namespace Kartverket.Register.Services
             if (!autoupdate) return currentStatus;
             try
             {
-                var metadata = GetMetadataFromKartkatalogen(metadataUuid);
+                var metadata = GetDistributions(metadataUuid);
 
-                if (metadata != null && metadata.Related != null)
+                if (metadata != null)
                 {
-                    foreach (var service in metadata.Related)
+                    foreach (var service in metadata)
                     {
-                        if (service.DistributionDetails != null && service.DistributionDetails.Protocol == "OGC:WFS"
+                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS"
                         ) return Useable;
                     }
                 }
@@ -228,6 +234,24 @@ namespace Kartverket.Register.Services
             }
 
             return statusValue;
+        }
+
+        private static dynamic GetDistributions(string metadataUuid)
+        {
+            try
+            {
+                var metadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "api/distributions/" + metadataUuid;
+                var c = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+
+                var json = c.DownloadString(metadataUrl);
+
+                dynamic metadata = Newtonsoft.Json.Linq.JArray.Parse(json);
+                return metadata;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public string GetAtomFeedStatus(string metadataUuid, bool autoUpdate, string currentStatus)
@@ -252,6 +276,7 @@ namespace Kartverket.Register.Services
             string status;
             try
             {
+                if (!autoUpdate) return currentStatus;
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
@@ -289,6 +314,8 @@ namespace Kartverket.Register.Services
             string status;
             try
             {
+                if (!autoUpdate) return currentStatus;
+                
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)

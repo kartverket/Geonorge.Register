@@ -1,5 +1,6 @@
 ﻿using Resources;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -8,7 +9,7 @@ namespace Kartverket.Register.Models.ViewModels
     public class InspireDatasetViewModel : DatasetViewModel
     {
         [Display(Name = "InspireTheme", ResourceType = typeof(InspireDataSet))]
-        public string InspireTheme { get; set; }
+        public ICollection<CodelistValue> InspireThemes { get; set; }
 
         [Display(Name = "Metadata:")]
         public string MetadataStatusId { get; set; }
@@ -64,6 +65,11 @@ namespace Kartverket.Register.Models.ViewModels
         public string SpatialDataServiceNote { get; set; }
         public bool SpatialDataServiceAutoUpdate { get; set; }
 
+        [Display(Name = "Areal")]
+        public int Area { get; set; }
+        [Display(Name = "Relevant areal")]
+        public int RelevantArea { get; set; }
+
         public InspireDatasetViewModel(InspireDataset item)
         {
             Update(item);
@@ -77,7 +83,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (inspireDataset != null)
             {
-                InspireTheme = inspireDataset.InspireTheme;
+                InspireThemes = inspireDataset.InspireThemes;
                 if (inspireDataset.InspireDeliveryMetadata != null)
                 {
                     MetadataStatusId = inspireDataset.InspireDeliveryMetadata.StatusId;
@@ -141,6 +147,9 @@ namespace Kartverket.Register.Models.ViewModels
                     SpatialDataServiceNote = inspireDataset.InspireDeliverySpatialDataService.Note;
                     SpatialDataServiceAutoUpdate = inspireDataset.InspireDeliverySpatialDataService.AutoUpdate;
                 }
+                Area = inspireDataset.Area;
+                RelevantArea = inspireDataset.RelevantArea;
+
                 UpdateDataset(inspireDataset);
             }
         }
@@ -161,6 +170,25 @@ namespace Kartverket.Register.Models.ViewModels
                 return "/inspire/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
             }
             return "/inspire/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+        }
+
+        public string InspireThemsAsString() {
+            string inspireTeamsString = null;
+            if (InspireThemes != null)
+            {
+                foreach (var item in InspireThemes)
+                {
+                    if (inspireTeamsString == null)
+                    {
+                        inspireTeamsString += item.name;
+                    }
+                    else
+                    {
+                        inspireTeamsString += ", " + item.name;
+                    }
+                }
+            }            
+            return inspireTeamsString;
         }
     }
 }

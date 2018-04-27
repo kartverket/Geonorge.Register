@@ -12,15 +12,17 @@
             </a>
         </div>
         <div>
-            <a data-ng-href="{{result.url}}?text={{$root.searchQuery}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner" href="{{result.url}}?text={{$root.searchQuery}}">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Vis alle treff...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </a>
+            <div ng-if="$root.activePageUrl != result.showAllUrl"> 
+                <a data-ng-href="{{result.showAllUrl}}}" data-ng-mouseover="mouseOver(false, undefined, undefined)" data-ng-mouseout="mouseOut(true)" data-ng-class="" class="col-xs-12 auto-results-inner" href="{{result.showAllUrl}}">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>{{$root.showAllText}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -29,7 +31,7 @@
         <div class="auto-results-inner">
             <table>
                 <tr>
-                    <td>Søket gir ingen treff</td>
+                    <td>{{$root.noResultsText}}</td>
                 </tr>
             </table>
         </div>

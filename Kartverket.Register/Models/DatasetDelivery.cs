@@ -41,6 +41,16 @@ namespace Kartverket.Register.Models
         {
             return StatusId != Notset;
         }
+
+        public bool IsGoodOrUseable()
+        {
+            return StatusId == Good || StatusId == Useable;
+        }
+
+        internal bool IsGood()
+        {
+            return StatusId == Good;
+        }
     }
 
 }//end namespace Datamodell

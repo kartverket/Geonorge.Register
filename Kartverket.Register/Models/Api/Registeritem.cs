@@ -338,6 +338,8 @@ namespace Kartverket.Register.Models.Api
                 {
                     SpatialDataServiceStatus = inspireDataset.InspireDeliverySpatialDataService.Status.value;
                 }
+
+                InspireTheme = inspireDataset.InspireThemsAsString();
             }
             if (item is InspireDataService inspireDataService)
             {
@@ -347,9 +349,9 @@ namespace Kartverket.Register.Models.Api
                 ServiceStatus = inspireDataService.InspireDeliveryServiceStatus.Status.description;
                 Requests = inspireDataService.Requests;
                 ServiceUrl = inspireDataService.Url;
-                InspireTheme = inspireDataService.Theme;
+                InspireTheme = inspireDataService.InspireThemsAsString();
                 NetworkService = inspireDataService.IsNetworkService();
-                Sds = inspireDataService.GetSds();
+                Sds = inspireDataService.IsSds();
                 UuidMetadata = inspireDataService.Uuid;
                 itemclass = "InspireDataService";
                 MetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + UuidMetadata;

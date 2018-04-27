@@ -42,7 +42,7 @@ namespace Kartverket.Register.Services
         {
             var statusValue = currentStatus;
             if (!autoUpdate) return statusValue;
-            
+
             try
             {
                 if (string.IsNullOrEmpty(metadataUuid)) return Useable;
@@ -56,8 +56,8 @@ namespace Kartverket.Register.Services
                 if (status == null) return Useable;
                 var statusvalue = status.ToString();
                 return statusvalue == "OK" ? Good : Useable;
-            
-            
+
+
             }
             catch (Exception e)
             {
@@ -119,6 +119,32 @@ namespace Kartverket.Register.Services
             }
 
             return GetServiceStatus(serviceUuid, status, hasServiceUrl);
+        }
+
+        public string GetInspireWmsStatus(string metadataUuid, bool autoupdate, string currentStatus, string serviceUuid)
+        {
+            // Todo, skal etterhvert sjekkes mot tjenestestatus api..
+
+            if (!autoupdate) return currentStatus;
+            try
+            {
+                var metadata = GetDistributions(metadataUuid);
+
+                if (metadata != null)
+                {
+                    foreach (var service in metadata)
+                    {
+                        if (service.Protocol == "WMS-tjeneste" || service.Protocol == "OGC:WMS"
+                        ) return Useable;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return currentStatus;
+            }
+
+            return Deficient;
         }
 
         public string GetServiceStatus(string serviceUuid, string status, bool hasServiceUrl = true)
@@ -205,6 +231,79 @@ namespace Kartverket.Register.Services
             return status;
         }
 
+        public string GetInspireWfsServiceStatus(string serviceUuid, string status)
+        {
+            // TODO - flere tester kommer... 
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
+            statusUrl = statusUrl + serviceUuid;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                try
+                {
+                    var response = client.GetAsync(new Uri(statusUrl)).Result;
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var text = response.Content.ReadAsStringAsync().Result;
+                        dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+
+                        if (data.inspire_metadataurl.svar == "yes")
+                            status = Good;
+
+                    }
+                }
+                catch (Exception)
+                {
+                    return status;
+                }
+            }
+            return status;
+        }
+
+        public string GetInspireServiceStatus(string serviceType, string serviceUuid, string status)
+        {
+            if (serviceType == "WFS-tjeneste")
+            {
+                return GetInspireWfsServiceStatus(serviceUuid, Useable);
+            }
+            else if (serviceType == "WMS-tjeneste")
+            {
+                return Useable;
+            }
+            return Deficient;
+        }
+
+        public string GetInspireServiceStatus(string serviceUuid, string status)
+        {
+            // TODO - flere tester kommer... 
+            var statusUrl = WebConfigurationManager.AppSettings["StatusApiUrl"] + "monitorApi/serviceDetail?uuid=";
+            statusUrl = statusUrl + serviceUuid;
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Clear();
+                try
+                {
+                    var response = client.GetAsync(new Uri(statusUrl)).Result;
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        var text = response.Content.ReadAsStringAsync().Result;
+                        dynamic data = Newtonsoft.Json.Linq.JObject.Parse(text);
+
+                        if (data.inspire_metadataurl.svar == "yes")
+                            status = Good;
+
+                    }
+                }
+                catch (Exception)
+                {
+                    return status;
+                }
+            }
+            return status;
+        }
+
         public string GetWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
         {
             var statusValue = Deficient;
@@ -231,6 +330,37 @@ namespace Kartverket.Register.Services
             catch (Exception)
             {
                 return Notset;
+            }
+
+            return statusValue;
+        }
+
+        public string GetInspireWfsStatus(string metadataUuid, bool autoupdate, string currentStatus)
+        {
+            string statusValue = Deficient;
+
+            if (!autoupdate) return currentStatus;
+            try
+            {
+                var metadata = GetDistributions(metadataUuid);
+
+                if (metadata != null)
+                {
+                    foreach (var service in metadata)
+                    {
+                        if (service.Protocol == "WFS-tjeneste" || service.Protocol == "OGC:WFS")
+                        {
+                            string uuid = service.Uuid;
+                            statusValue = GetInspireWfsServiceStatus(uuid, Useable);
+                        }
+
+                    }
+                }
+            }
+
+            catch (Exception e)
+            {
+                return statusValue;
             }
 
             return statusValue;
@@ -315,7 +445,7 @@ namespace Kartverket.Register.Services
             try
             {
                 if (!autoUpdate) return currentStatus;
-                
+
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
 
                 if (metadata != null)

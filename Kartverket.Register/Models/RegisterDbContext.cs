@@ -50,6 +50,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<GeodatalovDataset> GeodatalovDatasets { get; set; }
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
         public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
+        public virtual DbSet<InspireMonitoring> InspireMonitorings { get; set; }
 
         public ILogEntryService LogEntryService
         {

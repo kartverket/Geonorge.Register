@@ -827,6 +827,10 @@
     <Compile Include="Migrations\201804200753134_RemoveConformity.Designer.cs">
       <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804270618294_AddTableInspireMonitorings.cs" />
+    <Compile Include="Migrations\201804270618294_AddTableInspireMonitorings.Designer.cs">
+      <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1972,6 +1976,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804200753134_RemoveConformity.resx">
       <DependentUpon>201804200753134_RemoveConformity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804270618294_AddTableInspireMonitorings.resx">
+      <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

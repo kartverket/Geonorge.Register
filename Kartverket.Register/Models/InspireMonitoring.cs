@@ -1,6 +1,7 @@
 ﻿using Eu.Europa.Ec.Jrc.Inspire;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,7 @@ namespace Kartverket.Register.Models
         private readonly string Transformation = "transformation";
 
 
+        [Key]
         public Guid Id { get; set; }
         public System.DateTime Date { get; set; }
 

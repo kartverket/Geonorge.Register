@@ -574,9 +574,154 @@ namespace Kartverket.Register.Tests.Services
         }
 
 
+        [Fact]
+        // Andel datasett som har metadata av Annex1 data (<MDv11>/<DSv_Num1>)
+        public void MDi11()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv11 = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv11;
+            var DSv_Num1 = monitoring.Indicators.SpatialDataAndService.DSv_Num1;
+
+            var MDi11 = Divide(MDv11, DSv_Num1);
+
+            MDi11.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
+        public void MDi12()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv12 = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv12;
+            var DSv_Num2 = monitoring.Indicators.SpatialDataAndService.DSv_Num2;
+
+            var MDi12 = Divide(MDv12, DSv_Num2);
+
+            MDi12.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
+        public void MDi13()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv13 = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv13;
+            var DSv_Num3 = monitoring.Indicators.SpatialDataAndService.DSv_Num3;
+
+            var MDi13 = Divide(MDv13, DSv_Num3);
+
+            MDi13.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel tjenester som har metadata (<MDv14>/<NSv_NumAllServ>)
+        public void MDi14()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesWithMetadata = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv14 = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv14;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+
+            var MDi14 = Divide(MDv14, NSv_NumAllServ);
+
+            MDi14.Should().Be(0.2);
+        }
+
+        [Fact]
+        // Andel datasett som har metadata av Annex1 data  (<MDv1_DS>/<DSv_Num>)
+        public void MDi1()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsWithMetadata = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv1_DS = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv1_DS;
+            var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+
+            var MDi1 = Divide(MDv1_DS, DSv_Num);
+
+            MDi1.Should().Be(0.33333333333333331);
+        }
 
 
+        [Fact]
+        // Antall Annex1 datasett som har metadata (Alle Annex1 datasett)
+        public void MDv11()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv11.Should().Be(2);
+        }
 
+        [Fact]
+        // Antall Annex2 datasett som har metadata (Alle Annex2 datasett)
+        public void MDv12()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv12.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        public void MDv13()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv13.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        public void MDv1_DS()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsWithMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv1_DS.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        public void MDv14()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesWithMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv14.Should().Be(2);
+        }
 
 
 

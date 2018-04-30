@@ -304,7 +304,7 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfServicesWhereConformityIsTrue()
         {
-            return Divide(NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue, NumberOfServicesByServiceType());
+            return Divide(NumberOfServicesByServiceTypeWhereConformityIsTrue(), NumberOfServicesByServiceType());
         }
 
         public double ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue()

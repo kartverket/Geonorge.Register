@@ -21,7 +21,6 @@ namespace Kartverket.Register.Tests.Services
 
 
 
-        // *********** NnConformityIndicators *******************
 
         [Fact]
         // (Antall tjenester (<SpatialDataService>) av NnServiceType="discovery" som har nnConformity="true")
@@ -203,9 +202,6 @@ namespace Kartverket.Register.Tests.Services
 
 
 
-        // *********** GeoCoverageIndicators *******************
-
-
         [Fact]
         // <DSv11_ActArea>/<DSv11_RelArea>
         public void DSi11()
@@ -382,6 +378,205 @@ namespace Kartverket.Register.Tests.Services
 
             DSv1_ActArea.Should().Be(6);
         }
+
+
+
+        [Fact]
+        // Gjennomsnittlig antall kall for NnServiceType="discovery" (<NSv31>/<NSv_NumDiscServ>)
+        public void NSi31()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv31 = monitoring.Indicators.UseNNindicators.UseNN.NSv31;
+            var NSv_NumDiscServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDiscServ;
+
+            var NSi31 = Divide(NSv31, NSv_NumDiscServ);
+
+            NSi31.Should().Be(1);
+        }
+
+        [Fact]
+        // Gjennomsnittlig antall kall for NnServiceType="view"(<NSv32>/<NSv_NumViewServ>)
+        public void NSi32()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv32 = monitoring.Indicators.UseNNindicators.UseNN.NSv32;
+            var NSv_NumViewServ = monitoring.Indicators.SpatialDataAndService.NSv_NumViewServ;
+
+            var NSi32 = Divide(NSv32, NSv_NumViewServ);
+
+            NSi32.Should().Be(1);
+        }
+
+        [Fact]
+        // Gjennomsnittlig antall kall for NnServiceType="download" (<NSv33>/<NSv_NumDownServ>)
+        public void NSi33()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv33 = monitoring.Indicators.UseNNindicators.UseNN.NSv33;
+            var NSv_NumDownServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDownServ;
+
+            var NSi33 = Divide(NSv33, NSv_NumDownServ);
+
+            NSi33.Should().Be(1);
+        }
+
+        [Fact]
+        // Gjennomsnittlig antall kall for NnServiceType="transformation" (<NSv34>/<NSv_NumTransfServ>)
+        public void NSi34()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeTransformation = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv34 = monitoring.Indicators.UseNNindicators.UseNN.NSv34;
+            var NSv_NumTransfServ = monitoring.Indicators.SpatialDataAndService.NSv_NumTransfServ;
+
+            var NSi34 = Divide(NSv34, NSv_NumTransfServ);
+
+            NSi34.Should().Be(1);
+        }
+
+        [Fact]
+        // Gjennomsnittlig antall kall for NnServiceType="invoke" (<NSv35>/<NSv_NumInvkServ>)
+        public void NSi35()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv35 = monitoring.Indicators.UseNNindicators.UseNN.NSv35;
+            var NSv_NumInvkServ = monitoring.Indicators.SpatialDataAndService.NSv_NumInvkServ;
+
+            var NSi35 = Divide(NSv35, NSv_NumInvkServ);
+
+            NSi35.Should().Be(1);
+        }
+
+        [Fact]
+        //Gjennomsnittlig antall kall for NnServiceType="discovery + view + download + transformation + invoke" som har nnConformity="true" (<NSv3>/<NSv_NumAllServ>) -->
+        public void NSi3()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeTransformation = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeInvoke = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv3 = monitoring.Indicators.UseNNindicators.UseNN.NSv3;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+
+            var NSi35 = Divide(NSv3, NSv_NumAllServ);
+
+            NSi35.Should().Be(1);
+        }
+
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="discovery" 
+        public void NSv31()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDiscovery = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.UseNNindicators.UseNN.NSv31.Should().Be(2);
+        }
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="view"
+        public void NSv32()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeView = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.UseNNindicators.UseNN.NSv32.Should().Be(2);
+        }
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="download"
+        public void NSv33()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDownload = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.UseNNindicators.UseNN.NSv33.Should().Be(2);
+        }
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="transformation"
+        public void NSv34()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeTransformation = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.UseNNindicators.UseNN.NSv34.Should().Be(2);
+        }
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="invoke"
+        public void NSv35()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeInvoke = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.UseNNindicators.UseNN.NSv35.Should().Be(2);
+        }
+
+
+        [Fact]
+        // Akkumulert antall kall for alle NnServiceType="discovery + view + download + transformation + invoke"
+        public void NSv3()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfCallsByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeTransformation = 2;
+            _inspireMonitoring.NumberOfCallsByServiceTypeInvoke = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            var NSv31 = monitoring.Indicators.UseNNindicators.UseNN.NSv31;
+            var NSv32 = monitoring.Indicators.UseNNindicators.UseNN.NSv32;
+            var NSv33 = monitoring.Indicators.UseNNindicators.UseNN.NSv33;
+            var NSv34 = monitoring.Indicators.UseNNindicators.UseNN.NSv34;
+            var NSv35 = monitoring.Indicators.UseNNindicators.UseNN.NSv35;
+
+            var NSv3 = NSv31 + NSv32 + NSv33 + NSv34 + NSv35;
+
+            NSv3.Should().Be(10);
+        }
+
+
+
+
+
 
 
 

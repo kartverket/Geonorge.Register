@@ -908,6 +908,147 @@ namespace Kartverket.Register.Tests.Services
             monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv23.Should().Be(2);
         }
 
+
+
+        [Fact]
+        // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
+        public void DSv_Num1()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.DSv_Num1.Should().Be(2);
+        }
+
+        [Fact]
+        // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
+        public void DSv_Num2()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.DSv_Num2.Should().Be(2);
+        }
+
+        [Fact]
+        // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
+        public void DSv_Num3()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.DSv_Num3.Should().Be(2);
+        }
+
+        [Fact]
+        // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
+        public void DSv_Num()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv_Num1 = monitoring.Indicators.SpatialDataAndService.DSv_Num1;
+            var DSv_Num2 = monitoring.Indicators.SpatialDataAndService.DSv_Num2;
+            var DSv_Num3 = monitoring.Indicators.SpatialDataAndService.DSv_Num3;
+
+            var DSv_Num = DSv_Num1 + DSv_Num2 + DSv_Num3;
+
+            DSv_Num.Should().Be(6);
+        }
+
+        [Fact]
+        // Totalt antall tjenester SDS
+        public void SDSv_Num()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfSdS = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.SDSv_Num.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="discovery"
+        public void NSv_NumDiscServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.NSv_NumDiscServ.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="view"
+        public void NSv_NumViewServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.NSv_NumViewServ.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="download"
+        public void NSv_NumDownServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.NSv_NumDownServ.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="invoke"
+        public void NSv_NumInvkServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.NSv_NumInvkServ.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="transformation" 
+        public void NSv_NumTransfServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SpatialDataAndService.NSv_NumTransfServ.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall NnServiceType="discovery + view + download + transformation + invoke" (Network services)
+        public void NSv_NumAllServ()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv_NumDiscServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDiscServ;
+            var NSv_NumViewServ = monitoring.Indicators.SpatialDataAndService.NSv_NumViewServ;
+            var NSv_NumDownServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDownServ;
+            var NSv_NumInvkServ = monitoring.Indicators.SpatialDataAndService.NSv_NumInvkServ;
+            var NSv_NumTransfServ = monitoring.Indicators.SpatialDataAndService.NSv_NumTransfServ;
+
+            var NSv_NumAllServ = NSv_NumDiscServ + NSv_NumViewServ + NSv_NumDownServ + NSv_NumInvkServ + NSv_NumTransfServ;
+
+            NSv_NumAllServ.Should().Be(10);
+        }
+
+
+
+
+
         // **********************
 
         private double Divide(int x, int y)

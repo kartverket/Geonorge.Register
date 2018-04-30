@@ -395,7 +395,7 @@ namespace Kartverket.Register.Services
             metadataConformity.MDv21 = _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex1 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexI> OG <structureCompliance> = "true")
             metadataConformity.MDv22 = _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex2 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexII> OG <structureCompliance> = "true")
             metadataConformity.MDv23 = _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
-            metadataConformity.MDv2_DS = _inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv21>)
+            metadataConformity.MDv2_DS = _inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv22>+<MDv23>)
             metadataConformity.MDv24 = _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood; // Totalt antall tjenester med konforme metadata (Antall tjenester som har Metadatastatus = "God". Antall elementer av <SpatialDataService> where <mdConformity> = "true")
 
             return metadataConformity;

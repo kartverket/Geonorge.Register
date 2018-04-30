@@ -1046,8 +1046,315 @@ namespace Kartverket.Register.Tests.Services
         }
 
 
+        [Fact]
+        // Andel Annex1 datasett med godkjente metadata (<MDv21>/<DSv_Num1>)
+        public void MDi21()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv21 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv21;
+            var DSv_Num1 = monitoring.Indicators.SpatialDataAndService.DSv_Num1;
+
+            var MDi21 = Divide(MDv21, DSv_Num1);
+
+            MDi21.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel Annex2 datasett med godkjente metadata (<MDv22>/<DSv_Num2>)
+        public void MDi22()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv22 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv22;
+            var DSv_Num2 = monitoring.Indicators.SpatialDataAndService.DSv_Num2;
+
+            var MDi22 = Divide(MDv22, DSv_Num2);
+
+            MDi22.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel Annex3 datasett med godkjente metadata (<MDv23>/<DSv_Num3>)
+        public void MDi23()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv23 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv23;
+            var DSv_Num3 = monitoring.Indicators.SpatialDataAndService.DSv_Num3;
+
+            var MDi23 = Divide(MDv23, DSv_Num3);
+
+            MDi23.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel tjenester med godkjente metadata (<MDv24>/<NSv_NumAllServ>)
+        public void MDi24()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv24 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv24;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+
+            var MDi24 = Divide(MDv24, NSv_NumAllServ);
+
+            MDi24.Should().Be(0.2);
+        }
 
 
+        // Andel tjenester OG datasett med godkjente metadata (<MDv24>+<MDv2_DS>/<NSv_NumAllServ>+<DSv_Num>)
+        public void MDi2()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv24 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv24;
+            var MDv2_DS = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv2_DS;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+            var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+
+            var MDi2 = Divide(MDv24 + MDv2_DS, NSv_NumAllServ + DSv_Num);
+
+            MDi2.Should().Be(0.375);
+        }
+
+
+        [Fact]
+        // Totalt antall datasett for  annex1 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexI> OG <structureCompliance> = "true")
+        public void MDv21()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv21.Should().Be(2);
+        }
+
+        [Fact]
+        // Totalt antall datasett for  annex2 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexII> OG <structureCompliance> = "true")
+        public void MDv22()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv22.Should().Be(2);
+        }
+
+        [Fact]
+        // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
+        public void MDv23()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv23.Should().Be(2);
+        }
+
+
+        [Fact]
+        // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
+        public void MDv24()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv24.Should().Be(2);
+        }
+
+
+        [Fact]
+        // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv22>+<MDv23>)
+        public void MDv2_DS()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var MDv21 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv21;
+            var MDv22 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv22;
+            var MDv23 = monitoring.Indicators.MetadataConformityIndicators.MetadataConformity.MDv23;
+
+            var MDi2 = MDv21 + MDv22 + MDv23;
+
+            MDi2.Should().Be(6);
+        }
+
+
+        [Fact]
+        // Andel datasett fra Annex1 med konforme metadata og harmoniserte datasett (<DSv21>/<DSv_Num1>)
+        public void DSi21()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv21 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv21;
+            var DSv_Num1 = monitoring.Indicators.SpatialDataAndService.DSv_Num1;
+
+            var DSi21 = Divide(DSv21, DSv_Num1);
+
+            DSi21.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel datasett fra Annex2 med konforme metadata og harmoniserte datasett (<DSv22>/<DSv_Num2>)
+        public void DSi22()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv22 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv22;
+            var DSv_Num2 = monitoring.Indicators.SpatialDataAndService.DSv_Num2;
+
+            var DSi22 = Divide(DSv22, DSv_Num2);
+
+            DSi22.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel datasett fra Annex3 med konforme metadata og harmoniserte datasett (<DSv23>/<DSv_Num3>)
+        public void DSi23()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv23 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv23;
+            var DSv_Num3 = monitoring.Indicators.SpatialDataAndService.DSv_Num3;
+
+            var DSi23 = Divide(DSv23, DSv_Num3);
+
+            DSi23.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel datasettt fra Annex1,2,3 med konforme metadata og harmoniserte datasett (<DSv2>/<DSv_Num>)
+        public void DSi2()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv2 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv2;
+            var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+
+            var DSi2 = Divide(DSv2, DSv_Num);
+
+            DSi2.Should().Be(1);
+        }
+
+
+        [Fact]
+        // Antall datasett fra Annex1 med harmoniserte data og konforme metadata (Dtasett where <AnnexI>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+        public void DSv21()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv21.Should().Be(2);
+        }
+
+
+        [Fact]
+        // Antall datasett fra Annex2 med harmoniserte data og konforme metadata (Dtasett where <AnnexII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+        public void DSv22()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv22.Should().Be(2);
+        }
+
+
+        [Fact]
+        // Antall datasett fra Annex3 med harmoniserte data og konforme metadata (Dtasett where <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+        public void DSv23()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv23.Should().Be(2);
+        }
+
+        [Fact]
+        // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
+        public void DSv2()
+        {
+            var register = new Mock<Models.Register>();
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var DSv21 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv21;
+            var DSv22 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv22;
+            var DSv23 = monitoring.Indicators.SdsConformantIndicators.SdsConformant.DSv23;
+
+            var DSv2 = DSv21 + DSv22 + DSv23;
+
+            DSv2.Should().Be(6);
+        }
 
         // **********************
 

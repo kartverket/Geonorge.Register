@@ -23,6 +23,7 @@ namespace Kartverket.Register.Services
         {
             _inspireRegister = inspireRegister;
             _inspireItems = _inspireRegister?.RegisterItems;
+            if (_inspireItems == null) _inspireItems = new List<RegisterItemV2>();
             _inspireMonitoring = monitoringData;
             return Mapping();
         }
@@ -52,7 +53,7 @@ namespace Kartverket.Register.Services
         private MonitoringMD MappingMonitoringMd()
         {
             var monitoringMd = new MonitoringMD();
-            monitoringMd.organizationName = _inspireRegister.owner.name;
+            monitoringMd.organizationName = _inspireRegister.owner?.name;
             monitoringMd.email = "post@norgedigitalt.no";
             monitoringMd.language = LanguageCode.nor;
             //monitoringMd.monitoringDate = new Date();

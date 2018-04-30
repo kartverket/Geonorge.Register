@@ -724,6 +724,103 @@ namespace Kartverket.Register.Tests.Services
         }
 
 
+        [Fact]
+        // Andel datasett som er registrert i en discovery service (<NSv11>/<DSv_Num>)
+        public void NSi11()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv11 = monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv11;
+            var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+
+            var NSi11 = Divide(NSv11, DSv_Num);
+
+            NSi11.Should().Be(0.33333333333333331);
+        }
+
+        [Fact]
+        // Andel tjenester som er registrert i en discovery service (<NSv12>/<NSv_NumAllServ>)
+        public void NSi12()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv12 = monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv12;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+
+            var NSi12 = Divide(NSv12, NSv_NumAllServ);
+
+            NSi12.Should().Be(0.2);
+        }
+
+        [Fact]
+        // Andel datasett og tjenester som er registrert i en discovery service (<NSv11>+<NSv12>/<DSv_Num>+<NSv_NumAllServ>)
+        public void NSi1()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService = 2;
+            _inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService = 2;
+
+            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv11 = monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv11;
+            var NSv12 = monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv12;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
+            var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+
+            var NSi1 = Divide(NSv11 + NSv12, NSv_NumAllServ + DSv_Num);
+
+            NSi1.Should().Be(0.25);
+        }
+
+
+        [Fact]
+        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        public void NSv11()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv11.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        public void NSv12()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.DiscoveryMetadataIndicators.DiscoveryMetadata.NSv12.Should().Be(2);
+        }
+
+
+
 
         // **********************
 

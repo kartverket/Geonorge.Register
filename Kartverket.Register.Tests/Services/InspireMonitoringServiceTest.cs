@@ -800,7 +800,7 @@ namespace Kartverket.Register.Tests.Services
 
 
         [Fact]
-        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        // Antall datasett som er registrert i en discovery service (Alle datasett)
         public void NSv11()
         {
             var register = new Mock<Models.Register>();
@@ -810,7 +810,7 @@ namespace Kartverket.Register.Tests.Services
         }
 
         [Fact]
-        // Antall Annex3 datasett som har metadata (Alle Annex3 datasett)
+        // Antall tjenester som er registrert i en discovery service (Alle tjenester)
         public void NSv12()
         {
             var register = new Mock<Models.Register>();
@@ -821,6 +821,92 @@ namespace Kartverket.Register.Tests.Services
 
 
 
+        [Fact]
+        // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
+        public void NSi21()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughViewService = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv21 = monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv21;
+            var NSv_NumViewServ = monitoring.Indicators.SpatialDataAndService.NSv_NumViewServ;
+
+            var NSi21 = Divide(NSv21, NSv_NumViewServ);
+
+            NSi21.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
+        public void NSi22()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv22 = monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv22;
+            var NSv_NumDownServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDownServ;
+
+            var NSi22 = Divide(NSv22, NSv_NumDownServ);
+
+            NSi22.Should().Be(1);
+        }
+
+        [Fact]
+        // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
+        public void NSi2()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+
+            var NSv23 = monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv23;
+            var NSv_NumDownServ = monitoring.Indicators.SpatialDataAndService.NSv_NumDownServ;
+            var NSv_NumViewServ = monitoring.Indicators.SpatialDataAndService.NSv_NumViewServ;
+
+            var NSi2 = Divide(NSv23, NSv_NumDownServ + NSv_NumViewServ);
+
+            NSi2.Should().Be(0.5);
+        }
+
+
+        [Fact]
+        // Antall Annex1-3 datasett som er tilgjengelig gjennom view service (Alle inspiredata som har WMSstatus= god eller brukbar)
+        public void NSv21()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughViewService = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv21.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex1-3 datasett som er tilgjengelig gjennom download service service (Alle registerdata som har WFSstatus= god eller brukbar)
+        public void NSv22()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughDownloadService = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv22.Should().Be(2);
+        }
+
+        [Fact]
+        // Antall Annex1-3 datasett som er tilgjengelig gjennom view OG download service  (Alle registerdata som har WFSstatus OG WMSstatus = god eller brukbar)
+        public void NSv23()
+        {
+            var register = new Mock<Models.Register>();
+            _inspireMonitoring.NumberOfDatasetsAvailableThroughViewANDDownloadService = 2;
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
+            monitoring.Indicators.ViewDownloadAccessibilityIndicators.ViewDownloadAccessibility.NSv23.Should().Be(2);
+        }
 
         // **********************
 

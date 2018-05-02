@@ -86,7 +86,7 @@ namespace Kartverket.Register.Services
         {
             var spatialDataService = new SpatialDataService();
             spatialDataService.name = inspireDataService.Name;
-            spatialDataService.respAuthority = inspireDataService.Owner.name;
+            spatialDataService.respAuthority = inspireDataService.Owner?.name;
             spatialDataService.uuid = inspireDataService.Uuid;
             spatialDataService.Themes = GetThemes(inspireDataService.InspireThemes);
             spatialDataService.MdServiceExistence = MappingServiceExistence(inspireDataService);
@@ -140,7 +140,7 @@ namespace Kartverket.Register.Services
         {
             var spatialDataset = new SpatialDataSet();
             spatialDataset.name = inspireDataset.Name;
-            spatialDataset.respAuthority = inspireDataset.Owner.name;
+            spatialDataset.respAuthority = inspireDataset.Owner?.name;
             spatialDataset.uuid = inspireDataset.Uuid;
             spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
             spatialDataset.Coverage = GetCoverage(inspireDataset);

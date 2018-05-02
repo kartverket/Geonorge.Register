@@ -4,6 +4,7 @@ using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Kartverket.Register.Tests.Services
@@ -1356,6 +1357,233 @@ namespace Kartverket.Register.Tests.Services
             DSv2.Should().Be(6);
         }
 
+
+        [Fact]
+        public void SpatialDataService()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+            
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var inspireDataServices = monitoring.RowData.SpatialDataService;
+
+            inspireDataServices.Length.Should().Be(1);
+        }
+
+        [Fact]
+        public void SpatialDataset()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var inspireDatasets = monitoring.RowData.SpatialDataSet;
+
+            inspireDatasets.Length.Should().Be(1);
+        }
+
+        [Fact]
+        public void SpatialDataset_name()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var name = monitoring.RowData.SpatialDataSet[0].name;
+
+            name.Should().Be("Test Navn");
+        }
+
+        [Fact]
+        public void SpatialDataset_respAuthority()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var respAuthority = monitoring.RowData.SpatialDataSet[0].respAuthority;
+
+            respAuthority.Should().Be("Kartverket");
+        }
+
+
+        [Fact]
+        public void SpatialDataset_uuid()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var uuid = monitoring.RowData.SpatialDataSet[0].uuid;
+
+            uuid.Should().Be("1234");
+        }
+
+        [Fact]
+        public void SpatialDataset_Themes()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var annexI = monitoring.RowData.SpatialDataSet[0].Themes[0].AnnexI[0].ToString();
+            var annexII = monitoring.RowData.SpatialDataSet[0].Themes[0].AnnexII[0].ToString();
+            var annexIII = monitoring.RowData.SpatialDataSet[0].Themes[0].AnnexIII[0].ToString();
+
+            annexI.Should().Be("administrativeUnits");
+            annexII.Should().Be("geology");
+            annexIII.Should().Be("seaRegions");
+        }
+
+        [Fact]
+        public void SpatialDataset_Coverage()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var actualArea = monitoring.RowData.SpatialDataSet[0].Coverage.actualArea;
+            var relevantArea = monitoring.RowData.SpatialDataSet[0].Coverage.relevantArea;
+
+            actualArea.Should().Be(233);
+            relevantArea.Should().Be(322);
+        }
+
+        [Fact]
+        public void SpatialDataset_IRConformity()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var structureCompliance = monitoring.RowData.SpatialDataSet[0].MdDataSetExistence.IRConformity.structureCompliance;
+
+            structureCompliance.Should().BeTrue();
+        }
+
+        [Fact]
+        public void SpatialDataset_MdAccessibility()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDatasets();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var discovery = monitoring.RowData.SpatialDataSet[0].MdDataSetExistence.MdAccessibility.discovery;
+            var view = monitoring.RowData.SpatialDataSet[0].MdDataSetExistence.MdAccessibility.view;
+            var download = monitoring.RowData.SpatialDataSet[0].MdDataSetExistence.MdAccessibility.download;
+            var viewDownload = monitoring.RowData.SpatialDataSet[0].MdDataSetExistence.MdAccessibility.viewDownload;
+
+            discovery.Should().BeTrue();
+            view.Should().BeTrue();
+            download.Should().BeTrue();
+            viewDownload.Should().BeTrue();
+        }
+
+
+        [Fact]
+        public void SpatialDataService_name()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var name = monitoring.RowData.SpatialDataService[0].name;
+
+            name.Should().Be("Test Navn");
+        }
+
+        [Fact]
+        public void SpatialDataService_respAuthority()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var respAuthority = monitoring.RowData.SpatialDataService[0].respAuthority;
+
+            respAuthority.Should().Be("Kartverket");
+        }
+
+
+        [Fact]
+        public void SpatialDataService_uuid()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var uuid = monitoring.RowData.SpatialDataService[0].uuid;
+
+            uuid.Should().Be("1234");
+        }
+
+        [Fact]
+        public void SpatialDataService_Themes()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var annexI = monitoring.RowData.SpatialDataService[0].Themes[0].AnnexI[0].ToString();
+            var annexII = monitoring.RowData.SpatialDataService[0].Themes[0].AnnexII[0].ToString();
+            var annexIII = monitoring.RowData.SpatialDataService[0].Themes[0].AnnexIII[0].ToString();
+
+            annexI.Should().Be("administrativeUnits");
+            annexII.Should().Be("geology");
+            annexIII.Should().Be("seaRegions");
+        }
+
+
+        [Fact]
+        public void SpatialDataService_MdAccessibility()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var mdConformity = monitoring.RowData.SpatialDataService[0].MdServiceExistence.mdConformity;
+            var discoveryAccessibility = monitoring.RowData.SpatialDataService[0].MdServiceExistence.discoveryAccessibility;
+            var discoveryAccessibilityUuid = monitoring.RowData.SpatialDataService[0].MdServiceExistence.discoveryAccessibilityUuid;
+
+            mdConformity.Should().BeTrue();
+            discoveryAccessibility.Should().BeTrue();
+            discoveryAccessibilityUuid.Should().Be("1234");
+        }
+
+        [Fact]
+        public void SpatialDataService_NetworkService()
+        {
+            var register = CreateRegister();
+            register.RegisterItems = CreateInspireDataServices();
+
+            Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register, _inspireMonitoring);
+
+            var directlyAccessible = monitoring.RowData.SpatialDataService[0].NetworkService.directlyAccessible;
+            var url = monitoring.RowData.SpatialDataService[0].NetworkService.URL;
+            var userRequest = monitoring.RowData.SpatialDataService[0].NetworkService.userRequest;
+            var NnServiceType = monitoring.RowData.SpatialDataService[0].NetworkService.NnServiceType.ToString();
+
+            directlyAccessible.Should().BeTrue();
+            url.Should().Be("test.no");
+            userRequest.Should().Be(1);
+            NnServiceType.Should().Be("view");
+        }
+
+
         // **********************
 
         private double Divide(int x, int y)
@@ -1398,5 +1626,106 @@ namespace Kartverket.Register.Tests.Services
             }
         }
 
+        private ICollection<RegisterItemV2> CreateInspireDataServices()
+        {
+            var inspireDataServices = new List<RegisterItemV2>();
+            inspireDataServices.Add(CreateInspireDataService());
+
+            return inspireDataServices;
+        }
+
+        private InspireDataService CreateInspireDataService()
+        {
+            var inspireDataService = new InspireDataService();
+            inspireDataService.InspireThemes = new List<CodelistValue>();
+            inspireDataService.Name = "Test Navn";
+            inspireDataService.Owner = CreateOrganization();
+            inspireDataService.Uuid = "1234";
+            inspireDataService.InspireThemes = CreateThemes();
+            inspireDataService.InspireDeliveryMetadata = new DatasetDelivery("good", null, true);
+            inspireDataService.ServiceType = "view";
+            inspireDataService.Url = "test.no";
+            inspireDataService.Requests = 1;
+
+            return inspireDataService;
+        }
+
+        private Models.Register CreateRegister()
+        {
+            var register = new Models.Register();
+            register.RegisterItems = new List<RegisterItemV2>();
+
+            return register;
+        }
+
+        private ICollection<RegisterItemV2> CreateInspireDatasets()
+        {
+            var inspireDatasets = new List<RegisterItemV2>();
+            inspireDatasets.Add(CreateInspireDataset());
+
+            return inspireDatasets;
+        }
+
+        private InspireDataset CreateInspireDataset()
+        {
+            var inspireDataset = new InspireDataset();
+            inspireDataset.InspireThemes = new List<CodelistValue>();
+            inspireDataset.Name = "Test Navn";
+            inspireDataset.Owner = CreateOrganization();
+            inspireDataset.Uuid = "1234";
+            inspireDataset.InspireThemes = CreateThemes();
+            inspireDataset.Area = 233;
+            inspireDataset.RelevantArea = 322;
+            inspireDataset.InspireDeliveryHarmonizedData = new DatasetDelivery("good", null, true);
+            inspireDataset.InspireDeliveryWms = new DatasetDelivery("good", null, true);
+            inspireDataset.InspireDeliveryWfsOrAtom = new DatasetDelivery("good", null, true);
+
+            return inspireDataset;
+        }
+
+
+        private List<CodelistValue> CreateThemes()
+        {
+            var inspireThemes = new List<CodelistValue>();
+            inspireThemes.Add(ThemeOfTypeAnnexI());
+            inspireThemes.Add(ThemeOfTypeAnnexII());
+            inspireThemes.Add(ThemeOfTypeAnnexIII());
+            return inspireThemes;
+        }
+
+        private Organization CreateOrganization()
+        {
+            return new Organization
+            {
+                name = "Kartverket"
+            };
+        }
+
+        private CodelistValue ThemeOfTypeAnnexI()
+        {
+            return new CodelistValue
+            {
+                name = "Administrative enheter",
+                value = "Administrative units"
+            };
+        }
+
+        private CodelistValue ThemeOfTypeAnnexII()
+        {
+            return new CodelistValue
+            {
+                name = "Geologi",
+                value = "Geology"
+            };
+        }
+
+        private CodelistValue ThemeOfTypeAnnexIII()
+        {
+            return new CodelistValue
+            {
+                name = "Havområder",
+                value = "Sea regions"
+            };
+        }
     }
 }

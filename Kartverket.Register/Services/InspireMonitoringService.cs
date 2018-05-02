@@ -12,7 +12,12 @@ namespace Kartverket.Register.Services
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
         private IInspireMonitoring _inspireMonitoring;
+        private readonly RegisterDbContext _db;
 
+        public InspireMonitoringService(RegisterDbContext dbContext)
+        {
+            _db = dbContext;
+        }
 
         public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister) 
         {
@@ -26,6 +31,13 @@ namespace Kartverket.Register.Services
             if (_inspireItems == null) _inspireItems = new List<RegisterItemV2>();
             _inspireMonitoring = monitoringData;
             return Mapping();
+        }
+
+        public void SaveInspireMonitoring(Models.Register inspireStatusRegister)
+        {
+            InspireMonitoring monitoring = new InspireMonitoring(inspireStatusRegister.RegisterItems);
+            _db.InspireMonitorings.Add(monitoring);
+            _db.SaveChanges();
         }
 
 

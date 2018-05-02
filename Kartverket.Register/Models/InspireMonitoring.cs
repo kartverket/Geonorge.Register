@@ -83,6 +83,9 @@ namespace Kartverket.Register.Models
             _inspireDataset = GetInspireDatasets(inspireItems);
             _inspireDataService = GetInspireDataService(inspireItems);
 
+            Id = Guid.NewGuid();
+            Date = System.DateTime.Now;
+
             NumberOfDatasetsByAnnexI = GetNumberOfDatasetsByAnnexI();
             NumberOfDatasetsByAnnexII = GetNumberOfDatasetsByAnnexII();
             NumberOfDatasetsByAnnexIII = GetNumberOfDatasetsByAnnexIII();
@@ -139,8 +142,10 @@ namespace Kartverket.Register.Models
 
         }
 
+
         public InspireMonitoring()
         {
+
         }
 
 

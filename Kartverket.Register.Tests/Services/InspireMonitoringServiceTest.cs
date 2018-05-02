@@ -5,6 +5,8 @@ using Kartverket.Register.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Xunit;
 
 namespace Kartverket.Register.Tests.Services
@@ -16,11 +18,9 @@ namespace Kartverket.Register.Tests.Services
 
         public InspireMonitoringServiceTest()
         {
-            _inpsireMonitoringService = new InspireMonitoringService();
+            _inpsireMonitoringService = new InspireMonitoringService(CreateTestDbContext());
             _inspireMonitoring = new InspireMonitoring();
         }
-
-
 
 
         [Fact]
@@ -1726,6 +1726,25 @@ namespace Kartverket.Register.Tests.Services
                 name = "Havområder",
                 value = "Sea regions"
             };
+        }
+
+        private static RegisterDbContext CreateTestDbContext(ICollection<Models.RegisterItem> items = null)
+        {
+            var mockContext = new Mock<RegisterDbContext>();
+
+            if (items != null)
+            {
+                var data = items.AsQueryable();
+                var mockSet = new Mock<DbSet<Models.RegisterItem>>();
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Provider).Returns(data.Provider);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.Expression).Returns(data.Expression);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.ElementType).Returns(data.ElementType);
+                mockSet.As<IQueryable<Models.RegisterItem>>().Setup(m => m.GetEnumerator())
+                    .Returns(data.GetEnumerator());
+                mockContext.Setup(c => c.RegisterItems).Returns(mockSet.Object);
+            }
+
+            return mockContext.Object;
         }
     }
 }

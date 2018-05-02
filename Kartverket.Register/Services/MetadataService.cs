@@ -254,8 +254,8 @@ namespace Kartverket.DOK.Service
                     }
 
                     inspireDataset.OwnerId = mapOrganizationNameToId(
-                        data.ContactMetadata != null && data.ContactMetadata.Organization != null
-                            ? data.ContactMetadata.Organization.Value
+                        data.ContactOwner != null && data.ContactOwner.Organization != null
+                            ? data.ContactOwner.Organization.Value
                             : "kartverket");
                     inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
 

@@ -122,7 +122,6 @@ namespace Kartverket.Register.Controllers
             }
             else
             {
-
                 return Content(System.Net.HttpStatusCode.Forbidden, "No access");
             }
         }

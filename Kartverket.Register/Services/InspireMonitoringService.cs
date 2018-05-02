@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Models;
+using System.Linq;
 using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services
@@ -12,11 +13,11 @@ namespace Kartverket.Register.Services
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
         private IInspireMonitoring _inspireMonitoring;
-        private readonly RegisterDbContext _db;
+        private readonly RegisterDbContext _dbContext;
 
         public InspireMonitoringService(RegisterDbContext dbContext)
         {
-            _db = dbContext;
+            _dbContext = dbContext;
         }
 
         public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister) 
@@ -36,10 +37,18 @@ namespace Kartverket.Register.Services
         public void SaveInspireMonitoring(Models.Register inspireStatusRegister)
         {
             InspireMonitoring monitoring = new InspireMonitoring(inspireStatusRegister.RegisterItems);
-            _db.InspireMonitorings.Add(monitoring);
-            _db.SaveChanges();
+            _dbContext.InspireMonitorings.Add(monitoring);
+            _dbContext.SaveChanges();
         }
 
+        public InspireMonitoring GetLatestInsporeMonitroingData() {
+           var queryResults = from o in _dbContext.InspireMonitorings
+                              select o;
+
+            InspireMonitoring latestMonitoring = queryResults?.OrderByDescending(o => o.Date).FirstOrDefault();
+            return latestMonitoring;
+
+        }
 
         private Monitoring Mapping()
         {

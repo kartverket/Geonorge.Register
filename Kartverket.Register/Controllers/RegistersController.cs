@@ -30,10 +30,11 @@ namespace Kartverket.Register.Controllers
         private readonly ITranslationService _translationService;
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
+        private readonly IInspireMonitoringService _inspireMonitoringService;
 
         public RegistersController(ITranslationService translationService, 
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService )
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Controllers
             _translationService = translationService;
             _inspireDatasetService = inspireDatasetService;
             _geodatalovDatasetService = geodatalovService;
+            _inspireMonitoringService = inspireMonitoringService;
         }
 
         // GET: Registers
@@ -118,6 +120,7 @@ namespace Kartverket.Register.Controllers
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
+            viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInsporeMonitroingData());
 
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);

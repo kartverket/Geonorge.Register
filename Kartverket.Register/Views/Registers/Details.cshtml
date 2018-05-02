@@ -33,11 +33,11 @@
 
             var selectedTabParameter = getParameterByName("inspireregisterytype");
             var selectedTab = document.getElementById('dataset-Tab');
-                console.log(selectedTabParameter);
+            console.log(selectedTabParameter);
             if (selectedTabParameter != "") {
                 selectedTab = document.getElementById(selectedTabParameter + '-Tab');
             }
-                selectedTab.className = "active";
+            selectedTab.className = "active";
         }
         );
     </script>
@@ -82,39 +82,49 @@
             <div class="col-sm-12 col-md-12 ">
                 @if (Model.ContainedItemClassIsInspireDataset())
                 {
-                <ul id="tabs" class="nav nav-tabs">
-                    <li id="dataset-Tab" class="tab active">
-                        @Html.ActionLink("Dataset", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
-                    </li>
-                    <li id="service-Tab" class="tab">
-                        @Html.ActionLink("Tjenester", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
-                    </li>
-                </ul>
+                    <ul id="tabs" class="nav nav-tabs">
+                        <li id="dataset-Tab" class="tab active">
+                            @Html.ActionLink("Dataset", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
+                        </li>
+                        <li id="service-Tab" class="tab">
+                            @Html.ActionLink("Tjenester", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "service"))
+                        </li>
+                        @if (HtmlHelperExtensions.IsAdmin())
+                        {
+                            <li id="report-Tab" class="tab">
+                                @Html.ActionLink("Rapport", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "report"))
+                            </li>
+                        }
+                    </ul>
                 }
             </div>
         </div>
     </section>
 
-    <div class="row search-result-navigation">
-        <div class="col-md-4">
-            @if (Model.ContainedItemClassIsRegister())
-            {
-                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
-            }
-            else if (Model.RegisterItemsV2.Any())
-            {
-                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-            }
-            else
-            {
-                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-            }
-        </div>
-        <div class="col-md-4 pull-right">
-            @Html.Partial("_otherformats")
-        </div>
+    @if (Model.SelectedInspireRegisteryType != "report")
+    {
+        <div class="row search-result-navigation">
+            <div class="col-md-4">
+                @if (Model.ContainedItemClassIsRegister())
+                {
+                    @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+                }
+                else if (Model.RegisterItemsV2.Any())
+                {
+                    @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+                }
+                else
+                {
+                    @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+                }
+            </div>
+            <div class="col-md-4 pull-right">
+                @Html.Partial("_otherformats")
+            </div>
 
-    </div>
+        </div>
+    }
+
     <div class="clearfix"></div>
     <span class="separator-small margin-bottom-10"></span>
 
@@ -153,6 +163,10 @@
         {
             @Html.Partial("_inspireDataService", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
         }
+        else if (Model.SelectedInspireRegisteryType == "report")
+        {
+            @Html.Partial("_inspireMonitoring", Model.InspireMonitoringData)
+        }
         else
         {
             @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
@@ -169,20 +183,23 @@
     }
 
     <div class="clearfix"></div>
-    <div class="col-sm-12 row">
-        @if (Model.ContainedItemClassIsRegister())
-        {
-            @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
-        }
-        else if (Model.RegisterItemsV2.Any())
-        {
-            @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
-        }
-        else
-        {
-            @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
-        }
-    </div>
+    @if (Model.SelectedInspireRegisteryType != "report")
+    {
+        <div class="col-sm-12 row">
+            @if (Model.ContainedItemClassIsRegister())
+            {
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+            }
+            else if (Model.RegisterItemsV2.Any())
+            {
+                @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
+            }
+            else
+            {
+                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            }
+        </div>
+    }
 
     <div class="clearfix"></div>
     <div class="hidden-print">

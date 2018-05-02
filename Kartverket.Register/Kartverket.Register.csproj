@@ -890,6 +890,7 @@
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
@@ -1569,6 +1570,7 @@
     <Content Include="Views\Shared\_inspireDataService.cshtml" />
     <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
     <Content Include="Views\InspireDataService\Edit.cshtml" />
+    <Content Include="Views\Shared\_inspireMonitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

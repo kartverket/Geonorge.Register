@@ -54,6 +54,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string OrderBy { get; set; }
         public int AccessId { get; set; }
+        public InspireMonitoringViewModel InspireMonitoringData { get; set; }
 
 
         public string MunicipalityCode { get; set; }
@@ -84,6 +85,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+
                 //InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
 
                 if (register.accessId != null) AccessId = register.accessId.Value;

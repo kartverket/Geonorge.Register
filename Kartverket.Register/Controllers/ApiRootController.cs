@@ -20,6 +20,7 @@ using System.Threading;
 using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
+using System.Web;
 
 namespace Kartverket.Register.Controllers
 {
@@ -32,14 +33,16 @@ namespace Kartverket.Register.Controllers
         private readonly IRegisterItemService _registerItemService;
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IInspireMonitoringService _inspireMonitoringService;
+        private readonly IAccessControlService _accessControlService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
             _searchService = searchService;
             _registerService = registerService;
             _inspireMonitoringService = inspireMonitoringService;
+            _accessControlService = accessControlService;
             db = dbContext;
         }
 
@@ -95,6 +98,33 @@ namespace Kartverket.Register.Controllers
             return Content(System.Net.HttpStatusCode.OK, inspireMonitoring, new XMLFormatter(), new MediaTypeHeaderValue("application/xml"));
         }
 
+        /// <summary>
+        /// Save inspire monitoring report data to database.
+        /// </summary>
+        [Authorize]
+        [Route("api/register/inspire-statusregister/monitoring-report/save")]
+        [HttpGet]
+        public IHttpActionResult SaveInspireMonitoringData()
+        {
+            if (_accessControlService.IsAdmin())
+            {
+                try
+                {
+                    var inspireStatusRegister = _registerService.GetInspireStatusRegister();
+                    _inspireMonitoringService.SaveInspireMonitoring(inspireStatusRegister);
+
+                    return Ok("Saved");
+                }
+                catch
+                {
+                    return Ok("Error");
+                }
+            }
+            else
+            {
+                return Content(System.Net.HttpStatusCode.Forbidden, "No access");
+            }
+        }
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {

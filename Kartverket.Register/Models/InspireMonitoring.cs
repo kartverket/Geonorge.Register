@@ -1,13 +1,14 @@
 ﻿using Eu.Europa.Ec.Jrc.Inspire;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Web;
 
 namespace Kartverket.Register.Models
 {
-    public class InspireMonitoring
+    public class InspireMonitoring : IInspireMonitoring
     {
         private ICollection<InspireDataset> _inspireDataset;
         private ICollection<InspireDataService> _inspireDataService;
@@ -18,6 +19,7 @@ namespace Kartverket.Register.Models
         private readonly string Transformation = "transformation";
 
 
+        [Key]
         public Guid Id { get; set; }
         public System.DateTime Date { get; set; }
 
@@ -81,6 +83,9 @@ namespace Kartverket.Register.Models
             _inspireDataset = GetInspireDatasets(inspireItems);
             _inspireDataService = GetInspireDataService(inspireItems);
 
+            Id = Guid.NewGuid();
+            Date = System.DateTime.Now;
+
             NumberOfDatasetsByAnnexI = GetNumberOfDatasetsByAnnexI();
             NumberOfDatasetsByAnnexII = GetNumberOfDatasetsByAnnexII();
             NumberOfDatasetsByAnnexIII = GetNumberOfDatasetsByAnnexIII();
@@ -137,8 +142,10 @@ namespace Kartverket.Register.Models
 
         }
 
+
         public InspireMonitoring()
         {
+
         }
 
 
@@ -313,7 +320,7 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfServicesWhereConformityIsTrue()
         {
-            return Divide(NumberOfServicesByServiceTypeDownloadWhereConformityIsTrue, NumberOfServicesByServiceType());
+            return Divide(NumberOfServicesByServiceTypeWhereConformityIsTrue(), NumberOfServicesByServiceType());
         }
 
         public double ProportionOfServicesByServiceTypeDownloadWhereConformityIsTrue()
@@ -804,10 +811,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -817,10 +824,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -830,10 +837,10 @@ namespace Kartverket.Register.Models
             var number = 0;
             foreach (var item in _inspireDataset)
             {
-                    if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
-                    {
-                        number += item.RelevantArea;
-                    }
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                {
+                    number += item.RelevantArea;
+                }
             }
             return number;
         }
@@ -842,7 +849,7 @@ namespace Kartverket.Register.Models
 
 
 
-       
+
 
 
 

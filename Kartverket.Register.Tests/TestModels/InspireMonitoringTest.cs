@@ -1288,7 +1288,7 @@ namespace Kartverket.Register.Tests.TestModels
         public void ProportionOfServicesWhereConformityIsTrue()
         {
             var result = _inspireMonitoringTest.ProportionOfServicesWhereConformityIsTrue();
-            result.Should().Be(0.2);
+            result.Should().Be(1);
         }
 
         [Fact]

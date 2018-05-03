@@ -30,10 +30,11 @@ namespace Kartverket.Register.Controllers
         private readonly ITranslationService _translationService;
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
+        private readonly IInspireMonitoringService _inspireMonitoringService;
 
         public RegistersController(ITranslationService translationService, 
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService )
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Controllers
             _translationService = translationService;
             _inspireDatasetService = inspireDatasetService;
             _geodatalovDatasetService = geodatalovService;
+            _inspireMonitoringService = inspireMonitoringService;
         }
 
         // GET: Registers
@@ -112,17 +114,33 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
+            filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
-
+            if (register.IsInspireStatusRegister())
+            {
+                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInsporeMonitroingData());
+            }
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
+        }
+
+        private string GetInspireRegistryType(string filter)
+        {
+            if (filter == "report")
+            {
+                if (!IsAdmin())
+                {
+                    return "dataset";
+                }
+            }
+            return filter;
         }
 
         private void ItemsOrderBy(string sorting, RegisterV2ViewModel viewModel)
@@ -147,7 +165,7 @@ namespace Kartverket.Register.Controllers
             }
             else
             {
-                viewModel = GetRegisterItem(systemId);new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
@@ -157,10 +175,7 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-        private RegisterItemV2ViewModel GetRegisterItem(string systemId)
-        {
-            throw new NotImplementedException();
-        }
+
 
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no")]

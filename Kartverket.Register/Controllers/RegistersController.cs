@@ -121,8 +121,10 @@ namespace Kartverket.Register.Controllers
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
-            viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInsporeMonitroingData());
-
+            if (register.IsInspireStatusRegister())
+            {
+                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInsporeMonitroingData());
+            }
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
@@ -163,7 +165,7 @@ namespace Kartverket.Register.Controllers
             }
             else
             {
-                viewModel = GetRegisterItem(systemId);new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))
@@ -173,10 +175,7 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
-        private RegisterItemV2ViewModel GetRegisterItem(string systemId)
-        {
-            throw new NotImplementedException();
-        }
+
 
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no")]

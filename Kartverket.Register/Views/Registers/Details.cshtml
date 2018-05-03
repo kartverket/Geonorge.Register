@@ -129,11 +129,11 @@
             </div>
 
         </div>
+
+
+        <div class="clearfix"></div>
+        <span class="separator-small margin-bottom-10"></span>
     }
-
-    <div class="clearfix"></div>
-    <span class="separator-small margin-bottom-10"></span>
-
     @if (Model.ContainedItemClassIsOrganization())
     {
         @Html.Partial("_organization", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
@@ -188,9 +188,9 @@
         @Html.Partial("_geodatalovDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
     }
 
-    <div class="clearfix"></div>
+
     @if (Model.SelectedInspireRegisteryType != "report")
-    {
+    {<div class="clearfix"></div>
         <div class="col-sm-12 row">
             @if (Model.ContainedItemClassIsRegister())
             {
@@ -209,7 +209,7 @@
 
     <div class="clearfix"></div>
     <div class="hidden-print">
-        @if (Request.IsAuthenticated)
+        @if (Request.IsAuthenticated && Model.SelectedInspireRegisteryType != "report")
         {
             if (Model.AccessRegister.EditListOfRegisterItems)
             {

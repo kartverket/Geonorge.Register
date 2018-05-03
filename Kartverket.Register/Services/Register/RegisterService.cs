@@ -96,37 +96,18 @@ namespace Kartverket.Register.Services.Register
                 {
                     if (filter.InspireRegisteryType == "dataset")
                     {
-                        if (item is InspireDataset inspireDataset)
-                        {
-                            if (filter.filterOrganization != null)
-                            {
-                                if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner.seoname))
-                                {
-                                    registerItemsv2.Add(inspireDataset);
-                                }
-                            }
-                            else
-                            {
-                                registerItemsv2.Add(inspireDataset);
-                            }
-                        }
+                        GetInspireDatasets(filter, registerItemsv2, item);
                     }
                     else if (filter.InspireRegisteryType == "service")
                     {
                         if (item is InspireDataService inspireDataService)
                         {
-                            if (filter.filterOrganization != null)
-                            {
-                                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner.seoname))
-                                {
-                                    registerItemsv2.Add(inspireDataService);
-                                }
-                            }
-                            else
-                            {
-                                registerItemsv2.Add(inspireDataService);
-                            }
+                            GetInspireDataServices(filter, registerItemsv2, inspireDataService);
                         }
+                    }
+                    else if (filter.InspireRegisteryType != "report")
+                    {
+                        GetInspireDatasets(filter, registerItemsv2, item);
                     }
                 }
                 else
@@ -138,6 +119,38 @@ namespace Kartverket.Register.Services.Register
             return registerItemsv2;
         }
 
+        private void GetInspireDataServices(FilterParameters filter, List<RegisterItemV2> registerItemsv2, InspireDataService inspireDataService)
+        {
+            if (filter.filterOrganization != null)
+            {
+                if (FilterOrganization(filter.filterOrganization, inspireDataService.Owner.seoname))
+                {
+                    registerItemsv2.Add(inspireDataService);
+                }
+            }
+            else
+            {
+                registerItemsv2.Add(inspireDataService);
+            }
+        }
+
+        private void GetInspireDatasets(FilterParameters filter, List<RegisterItemV2> registerItemsv2, RegisterItemV2 item)
+        {
+            if (item is InspireDataset inspireDataset)
+            {
+                if (filter.filterOrganization != null)
+                {
+                    if (FilterOrganization(filter.filterOrganization, inspireDataset.Owner.seoname))
+                    {
+                        registerItemsv2.Add(inspireDataset);
+                    }
+                }
+                else
+                {
+                    registerItemsv2.Add(inspireDataset);
+                }
+            }
+        }
 
         private bool FilterOrganization(string organization, string owner)
         {

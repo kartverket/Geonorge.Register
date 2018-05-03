@@ -114,6 +114,7 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
+            filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register);
             viewModel.MunicipalityCode = filter.municipality;
@@ -126,6 +127,18 @@ namespace Kartverket.Register.Controllers
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
+        }
+
+        private string GetInspireRegistryType(string filter)
+        {
+            if (filter == "report")
+            {
+                if (!IsAdmin())
+                {
+                    return "dataset";
+                }
+            }
+            return filter;
         }
 
         private void ItemsOrderBy(string sorting, RegisterV2ViewModel viewModel)

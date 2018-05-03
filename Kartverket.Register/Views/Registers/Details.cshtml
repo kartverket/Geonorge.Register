@@ -36,8 +36,14 @@
             console.log(selectedTabParameter);
             if (selectedTabParameter != "") {
                 selectedTab = document.getElementById(selectedTabParameter + '-Tab');
+                if (selectedTab == null) {
+                    console.log(null);
+                    selectedTab = document.getElementById('dataset-Tab');
+                }
             }
+
             selectedTab.className = "active";
+
         }
         );
     </script>

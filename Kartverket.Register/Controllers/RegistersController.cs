@@ -121,7 +121,7 @@ namespace Kartverket.Register.Controllers
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
-            if (register.IsInspireStatusRegister())
+            if (viewModel.ContainedItemClassIsInspireDataset())
             {
                 viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInsporeMonitroingData());
             }

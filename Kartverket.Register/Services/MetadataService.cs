@@ -135,9 +135,16 @@ namespace Kartverket.DOK.Service
 
         public static SimpleMetadata FetchMetadata(string uuid)
         {
-            GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
-            MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
-            return metadata != null ? new SimpleMetadata(metadata) : null;
+            try
+            {
+                GeoNorge g = new GeoNorge("", "", WebConfigurationManager.AppSettings["GeoNetworkUrl"]);
+                MD_Metadata_Type metadata = g.GetRecordByUuid(uuid);
+                return metadata != null ? new SimpleMetadata(metadata) : null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public Dataset FetchDatasetFromKartkatalogen(string uuid)

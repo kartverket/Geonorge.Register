@@ -1,4 +1,7 @@
-﻿<h2>Indicators</h2>
+﻿@model InspireMonitoringViewModel
+@using Kartverket.Register.Models.ViewModels
+
+<h2>Indicators</h2>
 
 <table class="table table-bordered">
     <tr>
@@ -33,36 +36,36 @@
 
     <tr>
         <th>Indicator Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi1Value</td>
+        <td>@Model.MDi2Value</td>
+        <td>@Model.DSi1Value</td>
+        <td>@Model.DSi2Value</td>
+        <td>@Model.NSi1Value</td>
+        <td>@Model.NSi2Value</td>
+        <td>@Model.NSi3Value</td>
+        <td>@Model.NSi4Value</td>
     </tr>
     <tr>
         <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi1Numerator</td>
+        <td>@Model.MDi2Numerator</td>
+        <td>@Model.DSi1Numerator</td>
+        <td>@Model.DSi2Numerator</td>
+        <td>@Model.NSi1Numerator</td>
+        <td>@Model.NSi2Numerator</td>
+        <td>@Model.NSi3Numerator</td>
+        <td>@Model.NSi4Numerator</td>
     </tr>
     <tr>
         <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi1Denominator</td>
+        <td>@Model.MDi2Denominator</td>
+        <td>@Model.DSi1Denominator</td>
+        <td>@Model.DSi2Denominator</td>
+        <td>@Model.NSi1Denominator</td>
+        <td>@Model.NSi2Denominator</td>
+        <td>@Model.NSi3Denominator</td>
+        <td>@Model.NSi4Denominator</td>
     </tr>
 
 </table>
@@ -114,7 +117,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>@Model.NSi11Value</td>
         <td></td>
         <td></td>
         <td></td>
@@ -126,7 +129,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>@Model.NSi11Numerator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -138,7 +141,7 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>@Model.NSi11Denominator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -147,7 +150,7 @@
 
     @* ***** ANNEX I ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Annex I</th>
         <th>SubInd. Name</th>
         <th>MDi1.1</th>
@@ -163,10 +166,10 @@
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi11Value</td>
+        <td>@Model.MDi21Value</td>
+        <td>@Model.DSi11Value</td>
+        <td>@Model.DSi21Value</td>
         <td></td>
         <td></td>
         <td></td>
@@ -175,10 +178,10 @@
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi11Numerator</td>
+        <td>@Model.MDi21Numerator</td>
+        <td>@Model.DSi11Numerator</td>
+        <td>@Model.DSi21Numerator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -187,10 +190,10 @@
     <tr>
         <th></th>
         <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi11Denominator</td>
+        <td>@Model.MDi21Denominator</td>
+        <td>@Model.DSi11Denominator</td>
+        <td>@Model.DSi21Denominator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -201,7 +204,7 @@
     @* ***** ANNEX II ******* *@
 
 
-<tr class="active">
+    <tr class="active">
         <th>Annex II</th>
         <th>SubInd. Name</th>
         <th>MDi1.2</th>
@@ -217,10 +220,10 @@
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi12Value</td>
+        <td>@Model.MDi22Value</td>
+        <td>@Model.DSi12Value</td>
+        <td>@Model.DSi22Value</td>
         <td></td>
         <td></td>
         <td></td>
@@ -229,10 +232,10 @@
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi12Numerator</td>
+        <td>@Model.MDi22Numerator</td>
+        <td>@Model.DSi12Numerator</td>
+        <td>@Model.DSi22Numerator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -241,10 +244,10 @@
     <tr>
         <th></th>
         <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi12Denominator</td>
+        <td>@Model.MDi22Denominator</td>
+        <td>@Model.DSi12Denominator</td>
+        <td>@Model.DSi22Denominator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -253,7 +256,7 @@
 
     @* ***** ANNEX III ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Annex III</th>
         <th>SubInd. Name</th>
         <th>MDi1.3</th>
@@ -269,10 +272,10 @@
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi13Value</td>
+        <td>@Model.MDi23Value</td>
+        <td>@Model.DSi13Value</td>
+        <td>@Model.DSi23Value</td>
         <td></td>
         <td></td>
         <td></td>
@@ -281,10 +284,10 @@
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi13Numerator</td>
+        <td>@Model.MDi23Numerator</td>
+        <td>@Model.DSi13Numerator</td>
+        <td>@Model.DSi23Numerator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -293,10 +296,10 @@
     <tr>
         <th></th>
         <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.MDi13Denominator</td>
+        <td>@Model.MDi23Denominator</td>
+        <td>@Model.DSi13Denominator</td>
+        <td>@Model.DSi23Denominator</td>
         <td></td>
         <td></td>
         <td></td>
@@ -332,7 +335,7 @@
         <th>Compliance</th>
     </tr>
 
-<tr class="active">
+    <tr class="active">
         <th></th>
         <th>SubInd. Name</th>
         <th>MDi1.4</th>
@@ -348,44 +351,44 @@
     <tr>
         <th></th>
         <th>SubInd. Value</th>
+        <td>@Model.MDi14Value</td>
+        <td>@Model.MDi24Value</td>
         <td></td>
         <td></td>
+        <td>@Model.NSi12Value</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi3Value</td>
+        <td>@Model.NSi4Value</td>
     </tr>
     <tr>
         <th></th>
         <th>Numerator</th>
+        <td>@Model.MDi14Numerator</td>
+        <td>@Model.MDi24Numerator</td>
         <td></td>
         <td></td>
+        <td>@Model.NSi12Numerator</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi3Numerator</td>
+        <td>@Model.NSi4Numerator</td>
     </tr>
     <tr>
         <th></th>
         <th>Denominator</th>
+        <td>@Model.MDi14Denominator</td>
+        <td>@Model.MDi24Denominator</td>
         <td></td>
         <td></td>
+        <td>@Model.NSi12Denominator</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi3Denominator</td>
+        <td>@Model.NSi4Denominator</td>
     </tr>
 
 
     @* ***** Discovery Services ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Discovery Services</th>
         <th>SubInd. Name</th>
         <th></th>
@@ -407,20 +410,20 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi31Value</td>
+        <td>@Model.NSi41Value</td>
     </tr>
     <tr>
         <th></th>
-        <th>Numerator</th>
+        <th>v</th>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi31Numerator</td>
+        <td>@Model.NSi41Numerator</td>
     </tr>
     <tr>
         <th></th>
@@ -431,15 +434,15 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi31Denominator</td>
+        <td>@Model.NSi41Denominator</td>
     </tr>
 
 
     @* ***** View Services ******* *@
 
 
-<tr class="active">
+    <tr class="active">
         <th>View Services</th>
         <th>SubInd. Name</th>
         <th></th>
@@ -460,9 +463,9 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi21Value</td>
+        <td>@Model.NSi32Value</td>
+        <td>@Model.NSi42Value</td>
     </tr>
     <tr>
         <th></th>
@@ -472,9 +475,9 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi21Numerator</td>
+        <td>@Model.NSi32Numerator</td>
+        <td>@Model.NSi42Numerator</td>
     </tr>
     <tr>
         <th></th>
@@ -484,14 +487,14 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi21Denominator</td>
+        <td>@Model.NSi32Denominator</td>
+        <td>@Model.NSi42Denominator</td>
     </tr>
 
     @* ***** Download Services ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Download Services</th>
         <th>SubInd. Name</th>
         <th></th>
@@ -512,9 +515,9 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi22Value</td>
+        <td>@Model.NSi33Value</td>
+        <td>@Model.NSi43Value</td>
     </tr>
     <tr>
         <th></th>
@@ -524,9 +527,9 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi22Numerator</td>
+        <td>@Model.NSi33Numerator</td>
+        <td>@Model.NSi43Numerator</td>
     </tr>
     <tr>
         <th></th>
@@ -536,14 +539,14 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi22Denominator</td>
+        <td>@Model.NSi33Denominator</td>
+        <td>@Model.NSi43Denominator</td>
     </tr>
 
     @* ***** Transformation Services ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Transformation Services</th>
         <th>SubInd. Name</th>
         <th></th>
@@ -565,8 +568,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi34Value</td>
+        <td>@Model.NSi44Value</td>
     </tr>
     <tr>
         <th></th>
@@ -577,8 +580,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi34Numerator</td>
+        <td>@Model.NSi44Numerator</td>
     </tr>
     <tr>
         <th></th>
@@ -589,14 +592,14 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi34Denominator</td>
+        <td>@Model.NSi44Denominator</td>
     </tr>
 
 
     @* ***** Invoke Services ******* *@
 
-<tr class="active">
+    <tr class="active">
         <th>Invoke Services</th>
         <th>SubInd. Name</th>
         <th></th>
@@ -618,8 +621,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi35Value</td>
+        <td>@Model.NSi45Value</td>
     </tr>
     <tr>
         <th></th>
@@ -630,8 +633,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi35Numerator</td>
+        <td>@Model.NSi45Numerator</td>
     </tr>
     <tr>
         <th></th>
@@ -642,8 +645,8 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
+        <td>@Model.NSi35Denominator</td>
+        <td>@Model.NSi45Denominator</td>
     </tr>
 
 </table>

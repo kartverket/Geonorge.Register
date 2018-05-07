@@ -173,7 +173,7 @@ namespace Kartverket.DOK.Service
                         metadata.datasetthumbnail = thumbnails[0].URL.Value;
                     }
 
-                    metadata.datasetownerId = mapOrganizationNameToId(data.ContactOwner != null && data.ContactOwner.Organization != null ? data.ContactOwner.Organization.Value : "");
+                    metadata.datasetownerId = mapOrganizationNameToId(data.ContactOwner != null && data.ContactOwner.Organization != null ? data.ContactOwner.Organization.Value : "Kartverket");
                     metadata.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
 
                     if (data.ServiceUuid != null)
@@ -263,7 +263,7 @@ namespace Kartverket.DOK.Service
                     inspireDataset.OwnerId = mapOrganizationNameToId(
                         data.ContactOwner != null && data.ContactOwner.Organization != null
                             ? data.ContactOwner.Organization.Value
-                            : "kartverket");
+                            : "Kartverket");
                     inspireDataset.ThemeGroupId = AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0 ? data.KeywordsNationalTheme[0].KeywordValue.Value : "Annen");
 
                     inspireDataset.InspireThemes = GetInspireThemes(data.KeywordsInspire);
@@ -369,7 +369,7 @@ namespace Kartverket.DOK.Service
                     geodatalovDataset.OwnerId = mapOrganizationNameToId(
                         data.ContactOwner != null && data.ContactOwner.Organization != null
                             ? data.ContactOwner.Organization.Value
-                            : "");
+                            : "Kartverket");
                     geodatalovDataset.ThemeGroupId =
                         AddTheme(data.KeywordsNationalTheme != null && data.KeywordsNationalTheme.Count > 0
                             ? data.KeywordsNationalTheme[0].KeywordValue.Value
@@ -535,7 +535,7 @@ namespace Kartverket.DOK.Service
                     inspireDataService.OwnerId = mapOrganizationNameToId(
                         data.ContactOwner != null && data.ContactOwner.Organization != null
                             ? data.ContactOwner.Organization.Value
-                            : "");
+                            : "Kartverket");
 
                     inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 

@@ -55,11 +55,16 @@ namespace Kartverket.Register.Models
         public void GetMetadataByUuid()
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
+            ServiceType = "Ikke satt";
             if (metadata != null)
             {
                 name = metadata.Title;
                 Translations[0].Name = metadata.EnglishTitle;
-                if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionDetails.Protocol;
+                if (metadata.DistributionDetails != null || metadata.DistributionDetails.Protocol != null) 
+                {
+                    ServiceType = metadata.DistributionDetails.Protocol;
+                }
+
                 if (metadata.ContactOwner != null)
                 {
                     Owner = metadata.ContactOwner.Organization;

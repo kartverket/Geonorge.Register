@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +10,8 @@ namespace Kartverket.Register.Models.ViewModels
     {
 
         // **** Metadata ****
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Date { get; set; }
 
         public double MDi1Value { get; set; }
         public int MDi1Numerator { get; set; }
@@ -163,6 +166,8 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (inspireMonitoring != null)
             {
+                Date = inspireMonitoring.Date;
+
                 MDi1Value = Percent(inspireMonitoring.ProportionOfDatasetsWithMetadata());
                 MDi1Numerator = inspireMonitoring.NumberOfDatasetsWithMetadata;
                 MDi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex();

@@ -55,13 +55,22 @@ namespace Kartverket.Register.Models
         public void GetMetadataByUuid()
         {
             SimpleMetadata metadata = MetadataService.FetchMetadata(ServiceUuid);
-            name = metadata.Title;
-            Translations[0].Name = metadata.EnglishTitle;
-            if (metadata.DistributionDetails != null) ServiceType = metadata.DistributionDetails.Protocol;
-            if (metadata.ContactOwner != null)
+            ServiceType = "Ikke satt";
+            if (metadata != null)
             {
-                Owner = metadata.ContactOwner.Organization;
-                Translations[0].Owner = metadata.ContactOwner.OrganizationEnglish;
+                name = metadata.Title;
+                Translations[0].Name = metadata.EnglishTitle;
+                if (metadata.DistributionDetails != null && metadata.DistributionDetails?.Protocol != null) 
+                {
+                    ServiceType = metadata.DistributionDetails.Protocol;
+                }
+
+                if (metadata.ContactOwner != null)
+                {
+                    Owner = metadata.ContactOwner.Organization;
+                    Translations[0].Owner = metadata.ContactOwner.OrganizationEnglish;
+                }
+                ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
             }
             ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }

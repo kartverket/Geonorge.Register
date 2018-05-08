@@ -162,7 +162,7 @@ namespace Kartverket.Register.Models.ViewModels
         public int NSi45Numerator { get; set; }
         public double NSi45Denominator { get; set; }
 
-        public InspireMonitoringViewModel(InspireMonitoring inspireMonitoring)
+        public InspireMonitoringViewModel(IInspireMonitoring inspireMonitoring)
         {
             if (inspireMonitoring != null)
             {
@@ -269,10 +269,6 @@ namespace Kartverket.Register.Models.ViewModels
                 NSi12Numerator = inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService;
                 NSi12Denominator = inspireMonitoring.NumberOfServicesByServiceType();
 
-                NSi3Value = Percent(inspireMonitoring.ProportionOfServicesAndDatasetsRegisteredInADiscoveryService());
-                NSi3Numerator = inspireMonitoring.NumberOfCallsByServiceType();
-                NSi3Denominator = inspireMonitoring.NumberOfServicesByServiceType();
-
                 NSi31Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeDiscovery());
                 NSi31Numerator = inspireMonitoring.NumberOfCallsByServiceTypeDiscovery;
                 NSi31Denominator = inspireMonitoring.NumberOfServicesByServiceTypeDiscovery;
@@ -292,10 +288,6 @@ namespace Kartverket.Register.Models.ViewModels
                 NSi35Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeInvoke());
                 NSi35Numerator = inspireMonitoring.NumberOfCallsByServiceTypeInvoke;
                 NSi35Denominator = inspireMonitoring.NumberOfServicesByServiceTypeInvoke;
-
-                NSi4Value = Percent(inspireMonitoring.ProportionOfServicesWhereConformityIsTrue());
-                NSi4Numerator = inspireMonitoring.NumberOfServicesByServiceTypeWhereConformityIsTrue();
-                NSi4Denominator = inspireMonitoring.NumberOfServicesByServiceType();
 
                 NSi41Value = Percent(inspireMonitoring.ProportionOfServicesByServiceTypeDiscoveryWhereConformityIsTrue());
                 NSi41Numerator = inspireMonitoring.NumberOfServicesByServiceTypeDiscoveryWhereConformityIsTrue;

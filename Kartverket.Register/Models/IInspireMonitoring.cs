@@ -8,6 +8,8 @@ namespace Kartverket.Register.Models
 {
     public interface IInspireMonitoring
     {
+        DateTime Date { get; set; }
+
         int NumberOfDatasetsByAnnexI { get; set; }
         int NumberOfDatasetsByAnnexII { get; set; }
         int NumberOfDatasetsByAnnexIII { get; set; }

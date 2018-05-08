@@ -183,6 +183,7 @@
     <Compile Include="Services\Register\RegisterServiceTest.cs" />
     <Compile Include="Services\AccessControlServiceTest.cs" />
     <Compile Include="TestModels\InspireMonitoringTest.cs" />
+    <Compile Include="TestModels\ViewModel\InspireMonitoringViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

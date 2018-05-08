@@ -41,13 +41,19 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
-        public InspireMonitoring GetLatestInsporeMonitroingData() {
+        public InspireMonitoring GetLatestInspireMonitroingData() {
            var queryResults = from o in _dbContext.InspireMonitorings
                               select o;
 
             InspireMonitoring latestMonitoring = queryResults?.OrderByDescending(o => o.Date).FirstOrDefault();
             return latestMonitoring;
 
+        }
+
+        public InspireMonitoring GetCurrentInspireMonitroingData(Models.Register inspireRegister)
+        {
+            InspireMonitoring monitoring = new InspireMonitoring(inspireRegister.RegisterItems);
+            return monitoring;
         }
 
         private Monitoring Mapping()

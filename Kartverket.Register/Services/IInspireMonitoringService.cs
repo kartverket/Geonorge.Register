@@ -14,6 +14,7 @@ namespace Kartverket.Register.Services
         Monitoring GetInspireMonitoringReport(Models.Register inspireStatusRegister);
         Monitoring GetInspireMonitoringReport(Models.Register inspireRegister, IInspireMonitoring monitoringData);
         void SaveInspireMonitoring(Models.Register inspireStatusRegister);
-        InspireMonitoring GetLatestInsporeMonitroingData();
+        InspireMonitoring GetLatestInspireMonitroingData();
+        InspireMonitoring GetCurrentInspireMonitroingData(Models.Register inspireRegister);
     }
 }

@@ -20,6 +20,7 @@ namespace Kartverket.Register.Models
         public string filterOrganization { get; set; }
         public string municipality { get; set; }
         public string InspireRegisteryType { get; set; }
+        public bool ShowCurrentInspireMonitoringReport { get; set; }
 
     }
 }

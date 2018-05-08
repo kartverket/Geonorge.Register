@@ -126,6 +126,8 @@ namespace Kartverket.Register.Controllers
             }
         }
 
+        
+
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {
             if (Search(filter)) register = _searchService.Search(register, filter.text);

@@ -1,9 +1,12 @@
 ﻿@model InspireMonitoringViewModel
+@using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
+
+
 
 <h2>Indicators</h2>
 <p>@Html.DisplayFor(model => model.Date)</p>
-
+<a class="btn btn-default pull-right" href="@Url.Action("Details", Request.QueryString.ToRouteValueDictionary("ShowCurrentInspireMonitoringReport", "true"))">Vis dagens status</a>
 <table class="table table-bordered">
     <tr>
         <th></th>
@@ -416,7 +419,7 @@
     </tr>
     <tr>
         <th></th>
-        <th>v</th>
+        <th>Numerator</th>
         <td></td>
         <td></td>
         <td></td>

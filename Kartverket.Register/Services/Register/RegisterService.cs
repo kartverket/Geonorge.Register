@@ -105,7 +105,11 @@ namespace Kartverket.Register.Services.Register
                             GetInspireDataServices(filter, registerItemsv2, inspireDataService);
                         }
                     }
-                    else if (filter.InspireRegisteryType != "report")
+                    else if (filter.InspireRegisteryType == "report")
+                    {
+                        registerItemsv2.Add(item);
+                    }
+                    else
                     {
                         GetInspireDatasets(filter, registerItemsv2, item);
                     }

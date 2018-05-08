@@ -392,11 +392,14 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeInspireDatasets()
         {
+            var register = _registerService.GetInspireStatusRegister();
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen();
             if (inspireDatasetsFromKartkatalogen != null)
             {
                 RemoveInspireDatasets(inspireDatasetsFromKartkatalogen);
                 UpdateInspireDataset(inspireDatasetsFromKartkatalogen);
+
+                register.modified = DateTime.Now;
                 _dbContext.SaveChanges();
             }
         }
@@ -525,6 +528,8 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeInspireDataServices()
         {
+            var register = _registerService.GetInspireStatusRegister();
+
             var originalInspireDataServices = GetInspireDataService();
             var inspireDataServicesFromKartkatalogen = FetchInspireDataServicesFromKartkatalogen();
 
@@ -533,6 +538,7 @@ namespace Kartverket.Register.Services
                 RemoveInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
                 AddOrUpdateInspireDataServices(originalInspireDataServices, inspireDataServicesFromKartkatalogen);
 
+                register.modified = DateTime.Now;
                 _dbContext.SaveChanges();
             }
         }

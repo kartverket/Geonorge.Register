@@ -475,8 +475,10 @@ namespace Kartverket.DOK.Service
                                            select o.systemId;
 
             Guid ID = queryResultsRegisterItem.FirstOrDefault();
-
-
+            if (ID == Guid.Empty)
+            {
+                ID = Organization.GetDefaultOrganizationId();
+            }
 
             return ID;
         }

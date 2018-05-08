@@ -188,5 +188,14 @@ namespace Kartverket.Register.Helpers
             return seofilename;
         }
 
+        public static string SynchronizeInspireRegistry()
+        {
+            return "/api/metadata/synchronize/inspire-statusregister";
+        }
+
+        public static string SynchronizeInspireServices()
+        {
+            return "/api/metadata/synchronize/inspire-statusregister/dataservices";
+        }
     }
 }

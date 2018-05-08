@@ -85,9 +85,20 @@
                 <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
             </div>
 
-            <div class="col-sm-12 col-md-12 ">
-                @if (Model.ContainedItemClassIsInspireDataset())
+            @if (Model.ContainedItemClassIsInspireDataset())
+            {
+                if (HtmlHelperExtensions.IsAdmin())
                 {
+                    <div class="clearfix"></div>
+                    <div class="col-sm-12 col-md-12">
+                        @if (Model.SelectedInspireRegisteryType == "service")
+                        {
+                            <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.SynchronizeInspireServices())">Synkroniser tjenester</a>
+                        }
+                        <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.SynchronizeInspireRegistry()">Synkroniser register</a>
+                    </div>
+                }
+                <div class="col-sm-12 col-md-12 ">
                     <ul id="tabs" class="nav nav-tabs">
                         <li id="dataset-Tab" class="tab active">
                             @Html.ActionLink("Dataset", "Details", Request.QueryString.ToRouteValueDictionary("InspireRegisteryType", "dataset"))
@@ -102,8 +113,9 @@
                             </li>
                         }
                     </ul>
-                }
-            </div>
+
+                </div>
+            }
         </div>
     </section>
 

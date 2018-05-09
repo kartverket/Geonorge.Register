@@ -653,24 +653,34 @@ namespace Kartverket.Register.Tests.Services
         }
 
         [Fact]
-        // Andel datasett som har metadata av Annex1 data  (<MDv1_DS>/<DSv_Num>)
+        // <MDv1_DS>+<MDv14> /<NSv_NumAllServ>+<DSv_Num>
         public void MDi1()
         {
             var register = new Mock<Models.Register>();
             _inspireMonitoring.NumberOfDatasetsWithMetadata = 2;
+            _inspireMonitoring.NumberOfServicesWithMetadata = 2;
 
             _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
             _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
             _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
 
+            _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeInvoke = 2;
+            _inspireMonitoring.NumberOfServicesByServiceTypeTransformation = 2;
+
             Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
 
             var MDv1_DS = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv1_DS;
+            var MDv14 = monitoring.Indicators.MetadataExistenceIndicators.MetadataExistence.MDv14;
             var DSv_Num = monitoring.Indicators.SpatialDataAndService.DSv_Num;
+            var NSv_NumAllServ = monitoring.Indicators.SpatialDataAndService.NSv_NumAllServ;
 
-            var MDi1 = Divide(MDv1_DS, DSv_Num);
+            var MDi1 = Divide(MDv1_DS + MDv14, DSv_Num + NSv_NumAllServ);
 
-            MDi1.Should().Be(0.33333333333333331);
+            monitoring.Indicators.MetadataExistenceIndicators.MDi1.Should().Be(MDi1);
+            MDi1.Should().Be(0.25);
         }
 
 

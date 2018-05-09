@@ -85,7 +85,7 @@ namespace Kartverket.Register.Models
         double ProportionOfDatasetsWithMetadataByAnnexII();
         double ProportionOfDatasetsWithMetadataByAnnexIII();
         double ProportionOfServicesWithMetadata();
-        double ProportionOfDatasetsWithMetadata();
+        double ProportionOfDatasetsAndServicesWithMetadata();
         int NumberOfDatasetsByAnnex();
         double ProportionOfDatasetWithHarmonizedDataAndConformedMetadata();
         double ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata();

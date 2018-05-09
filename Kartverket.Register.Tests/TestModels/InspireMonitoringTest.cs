@@ -1224,8 +1224,8 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void ProportionOfDatasetsWithMetadata()
         {
-            var result = _inspireMonitoringTest.ProportionOfDatasetsWithMetadata();
-            result.Should().Be(0.33333333333333331);
+            var result = _inspireMonitoringTest.ProportionOfDatasetsAndServicesWithMetadata();
+            result.Should().Be(0.25);
         }
 
         [Fact]

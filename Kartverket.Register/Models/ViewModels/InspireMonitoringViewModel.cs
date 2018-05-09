@@ -168,9 +168,9 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 Date = inspireMonitoring.Date;
 
-                MDi1Value = Percent(inspireMonitoring.ProportionOfDatasetsWithMetadata());
-                MDi1Numerator = inspireMonitoring.NumberOfDatasetsWithMetadata;
-                MDi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex();
+                MDi1Value = Percent(inspireMonitoring.ProportionOfDatasetsAndServicesWithMetadata());
+                MDi1Numerator = inspireMonitoring.NumberOfDatasetsWithMetadata + inspireMonitoring.NumberOfServicesWithMetadata;
+                MDi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex() + inspireMonitoring.NumberOfServicesByServiceType();
 
                 MDi2Value = Percent(inspireMonitoring.ProportionOfDatasetByAnnexIWithMetadatastatusGood());
                 MDi2Numerator = inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood +

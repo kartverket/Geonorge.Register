@@ -163,7 +163,7 @@ namespace Kartverket.Register.Models
 
         public int NumberOfServicesByServiceType()
         {
-            return NumberOfServicesByServiceTypeDownload +
+            return  NumberOfServicesByServiceTypeDownload +
                     NumberOfServicesByServiceTypeView +
                     NumberOfServicesByServiceTypeDiscovery +
                     NumberOfServicesByServiceTypeInvoke +
@@ -273,9 +273,9 @@ namespace Kartverket.Register.Models
             return Divide(NumberOfServicesWithMetadata, NumberOfServicesByServiceType());
         }
 
-        public double ProportionOfDatasetsWithMetadata()
+        public double ProportionOfDatasetsAndServicesWithMetadata()
         {
-            return Divide(NumberOfDatasetsWithMetadata, NumberOfDatasetsByAnnex());
+            return Divide(NumberOfDatasetsWithMetadata + NumberOfServicesWithMetadata, NumberOfServicesByServiceType() + NumberOfDatasetsByAnnex());
         }
 
         public int NumberOfDatasetsByAnnex()

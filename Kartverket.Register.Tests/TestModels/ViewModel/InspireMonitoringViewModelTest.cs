@@ -28,7 +28,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void MDi1Value()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.ProportionOfDatasetsWithMetadata()).Returns(0.2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.ProportionOfDatasetsAndServicesWithMetadata()).Returns(0.2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.MDi1Value.Should().Be(20);
         }

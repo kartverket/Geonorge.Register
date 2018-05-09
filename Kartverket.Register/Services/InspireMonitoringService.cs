@@ -322,7 +322,7 @@ namespace Kartverket.Register.Services
             metadataExistenceIndicators.MDi12 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
             metadataExistenceIndicators.MDi13 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
             metadataExistenceIndicators.MDi14 = _inspireMonitoring.ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv14>/<NSv_NumAllServ>)
-            metadataExistenceIndicators.MDi1 = _inspireMonitoring.ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata av Annex data  (<MDv1_DS>/<DSv_Num>)
+            metadataExistenceIndicators.MDi1 = _inspireMonitoring.ProportionOfDatasetsAndServicesWithMetadata(); // <MDv1_DS>+<MDv14> /<NSv_NumAllServ>+<DSv_Num>
 
             metadataExistenceIndicators.MetadataExistence = GetMetadataExistence();
 

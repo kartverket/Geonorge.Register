@@ -34,8 +34,9 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly IAccessControlService _accessControlService;
+        private readonly ISynchronizationService _synchronizationService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
@@ -43,6 +44,7 @@ namespace Kartverket.Register.Controllers
             _registerService = registerService;
             _inspireMonitoringService = inspireMonitoringService;
             _accessControlService = accessControlService;
+            _synchronizationService = synchronizationService;
             db = dbContext;
         }
 
@@ -345,8 +347,14 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
-            new InspireDatasetService(db).SynchronizeInspireDatasets();
-            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            var register = _registerService.GetInspireStatusRegister();
+            var synchronizationJob = _synchronizationService.StartSynchronizationJob(register);
+
+            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJob);
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
+
+            _synchronizationService.StopSynchronizationJob(synchronizationJob);
+            
             return Ok();
         }
 
@@ -355,7 +363,12 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult SynchronizeInspireDataServices()
         {
-            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            var register = _registerService.GetInspireStatusRegister();
+            var synchronizationJob = _synchronizationService.StartSynchronizationJob(register);
+
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
+
+            _synchronizationService.StopSynchronizationJob(synchronizationJob);
             return Ok();
         }
 

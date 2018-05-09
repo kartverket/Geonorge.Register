@@ -835,6 +835,10 @@
     <Compile Include="Migrations\201805091120020_AddSynchronizationTable.Designer.cs">
       <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1069,6 +1073,7 @@
     <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\ISynchronizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1095,6 +1100,7 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -1990,6 +1996,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805091120020_AddSynchronizationTable.resx">
       <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091258295_UpdateSynchronizationTable.resx">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

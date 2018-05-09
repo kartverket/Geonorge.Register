@@ -51,6 +51,9 @@ namespace Kartverket.Register.Models
         public virtual DbSet<DatasetDelivery> DatasetDeliveries { get; set; }
         public virtual DbSet<InspireDataService> InspireDataServices { get; set; }
         public virtual DbSet<InspireMonitoring> InspireMonitorings { get; set; }
+        public virtual DbSet<Synchronize> Synchronizes { get; set; }
+        public virtual DbSet<SyncLogEntry> SyncLogEntries { get; set; }
+
 
         public ILogEntryService LogEntryService
         {

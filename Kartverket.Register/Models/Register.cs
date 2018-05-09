@@ -29,6 +29,7 @@ namespace Kartverket.Register.Models
             this.subregisters = new HashSet<Register>();
             this.replaces = new HashSet<Version>();
             this.Translations = new TranslationCollection<RegisterTranslation>();
+            Synchronizes = new HashSet<Synchronize>();
         }
         [Key]
         public Guid systemId { get; set; }
@@ -80,6 +81,8 @@ namespace Kartverket.Register.Models
         public bool MakeAllItemsValid { get; set; }
 
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
+
+        public virtual ICollection<Synchronize> Synchronizes { get; set; }
 
         public void AddMissingTranslations()
         {

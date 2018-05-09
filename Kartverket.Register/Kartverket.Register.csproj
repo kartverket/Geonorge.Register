@@ -831,6 +831,10 @@
     <Compile Include="Migrations\201804270618294_AddTableInspireMonitorings.Designer.cs">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -872,6 +876,7 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
@@ -1982,6 +1987,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804270618294_AddTableInspireMonitorings.resx">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091120020_AddSynchronizationTable.resx">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

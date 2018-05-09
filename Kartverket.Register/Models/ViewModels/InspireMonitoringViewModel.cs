@@ -197,7 +197,7 @@ namespace Kartverket.Register.Models.ViewModels
                 NSi2Denominator = inspireMonitoring.NumberOfServicesByServiceTypeDownload +
                                   inspireMonitoring.NumberOfServicesByServiceTypeView;
 
-                NSi3Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceType());
+                NSi3Value = inspireMonitoring.AverageNumberOfCallsByServiceType();
                 NSi3Numerator = inspireMonitoring.NumberOfCallsByServiceType();
                 NSi3Denominator = inspireMonitoring.NumberOfServicesByServiceType();
 

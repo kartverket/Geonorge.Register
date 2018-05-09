@@ -178,9 +178,9 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void NSi3Value()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.AverageNumberOfCallsByServiceType()).Returns(0.2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.AverageNumberOfCallsByServiceType()).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
-            inspireMonitoringViewModel.NSi3Value.Should().Be(20);
+            inspireMonitoringViewModel.NSi3Value.Should().Be(2);
         }
 
         [Fact]

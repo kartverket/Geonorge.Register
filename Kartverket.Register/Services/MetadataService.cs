@@ -542,7 +542,7 @@ namespace Kartverket.DOK.Service
                     inspireDataService.InspireThemes = GetInspireThemes(data.KeywordsInspire);
 
                     inspireDataService.Url = data.DistributionUrl;
-                    inspireDataService.ServiceType = data.ServiceType.ToString();
+                    inspireDataService.GetServiceType(data.ServiceType.ToString());
 
                     inspireDataService.InspireDataType = data.DistributionDetails.ProtocolName;
                 }

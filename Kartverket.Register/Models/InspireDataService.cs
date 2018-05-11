@@ -134,6 +134,14 @@ namespace Kartverket.Register.Models
             }
             return false;
         }
+
+        public void GetServiceType(string serviceType)
+        {
+            if (serviceType == "other")
+            {
+                ServiceType = "invoke";
+            }
+        }
     }
 
 }

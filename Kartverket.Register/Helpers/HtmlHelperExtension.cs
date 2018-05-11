@@ -532,7 +532,7 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire_spatialdataservice_status" || sortingParam == "inspire_spatialdataservice_status_desc")
             {
                 sortTitle = InspireDataSet.SpatialDataServiceStatus;
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-spatialdataservice";
             }
 
 
@@ -556,12 +556,12 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "sds" || sortingParam == "sds_desc")
             {
                 sortTitle = "Sds";
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-spatialdataservice";
             }
             else if (sortingParam == "networkService" || sortingParam == "networkService_desc")
             {
                 sortTitle = "Nettverkstjeneste";
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-netverkstjeneste";
             }
             else if (sortingParam == "inspireService_metadata_status" || sortingParam == "inspireService_metadata_status_desc")
             {
@@ -571,12 +571,12 @@ namespace Kartverket.Register.Helpers
             else if (sortingParam == "inspire_metadataSearchService_status" || sortingParam == "inspire_metadataSearchService_status_desc")
             {
                 sortTitle = "Metadata i søketjeneste";
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-metadata-i-soketjeneste";
             }
             else if (sortingParam == "inspire_service_status" || sortingParam == "inspire_service_status_desc")
             {
                 sortTitle = "Tjenestestatus";
-                statusIcon += "custom-icon-info";
+                statusIcon += "custom-icon-tjenestestatus";
             }
 
             // *** GEODATALOV SORTERING

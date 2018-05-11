@@ -2226,7 +2226,8 @@ input[type="submit"].btn {
   width: 25px;
   height: 25px;
   display: inline-block;
-  vertical-align: middle; }
+  vertical-align: middle;
+  background-size: contain; }
   .custom-icon .custom-icon-overlay {
     background-color: #fe5000;
     border-radius: 50%;

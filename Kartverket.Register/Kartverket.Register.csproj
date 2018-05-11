@@ -1220,7 +1220,9 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lastned.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\lukk_968c83_50px-01-01.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\metadata-i-soketjeneste.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\metadatatjeneste.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\netverkstjeneste.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\norge-digitalt.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\open_fe5000_50px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\produktark.svg" />
@@ -1241,7 +1243,9 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\smile-yellow.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\soek.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\sosi.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\spatialdataservice.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tick_fe5000_16px.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\tjenestestatus.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\totop_3867c8_75px-01.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\warning.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\wfs.svg" />

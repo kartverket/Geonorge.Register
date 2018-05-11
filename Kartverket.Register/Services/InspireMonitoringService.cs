@@ -494,7 +494,9 @@ namespace Kartverket.Register.Services
 
             var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
             inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("/", " ");
             inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("-", "");
 
             return inspireThemeCamelCase;
         }

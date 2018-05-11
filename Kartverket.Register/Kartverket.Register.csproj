@@ -1571,6 +1571,7 @@
     <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
     <Content Include="Views\InspireDataService\Edit.cshtml" />
     <Content Include="Views\Shared\_inspireMonitoring.cshtml" />
+    <Content Include="Views\InspireDataService\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

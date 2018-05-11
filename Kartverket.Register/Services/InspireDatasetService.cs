@@ -390,6 +390,7 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
+
         public void SynchronizeInspireDatasets()
         {
             var register = _registerService.GetInspireStatusRegister();
@@ -614,8 +615,9 @@ namespace Kartverket.Register.Services
             }
         }
 
-        private void DeleteInspireDataService(InspireDataService inspireDataService)
+        public void DeleteInspireDataService(InspireDataService inspireDataService)
         {
+            inspireDataService.InspireThemes.Clear();
             _dbContext.InspireDataServices.Remove(inspireDataService);
             _dbContext.SaveChanges();
         }

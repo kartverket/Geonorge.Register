@@ -170,13 +170,13 @@ namespace Kartverket.Register.Models.ViewModels
 
                 MDi1Value = Percent(inspireMonitoring.ProportionOfDatasetsAndServicesWithMetadata());
                 MDi1Numerator = inspireMonitoring.NumberOfDatasetsWithMetadata + inspireMonitoring.NumberOfServicesWithMetadata;
-                MDi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex() + inspireMonitoring.NumberOfServicesByServiceType();
+                MDi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex + inspireMonitoring.NumberOfServicesByServiceType();
 
                 MDi2Value = Percent(inspireMonitoring.ProportionOfDatasetByAnnexIWithMetadatastatusGood());
                 MDi2Numerator = inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood +
                                 inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood();
                 MDi2Denominator = inspireMonitoring.NumberOfServicesByServiceType() +
-                                  inspireMonitoring.NumberOfDatasetsByAnnex();
+                                  inspireMonitoring.NumberOfDatasetsByAnnex;
 
                 DSi1Value = Percent(inspireMonitoring.ProportionOfArealByAnnex());
                 DSi1Numerator = inspireMonitoring.AccumulatedCurrentAreaByAnnex();
@@ -184,12 +184,12 @@ namespace Kartverket.Register.Models.ViewModels
 
                 DSi2Value = Percent(inspireMonitoring.ProportionOfDatasetWithHarmonizedDataAndConformedMetadata());
                 DSi2Numerator = inspireMonitoring.NumberOfDatasetsWithHarmonizedDataAndConformedMetadata();
-                DSi2Denominator = inspireMonitoring.NumberOfDatasetsByAnnex();
+                DSi2Denominator = inspireMonitoring.NumberOfDatasetsByAnnex;
 
                 NSi1Value = Percent(inspireMonitoring.ProportionOfServicesAndDatasetsRegisteredInADiscoveryService());
                 NSi1Numerator = inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService +
                                 inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService;
-                NSi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex() +
+                NSi1Denominator = inspireMonitoring.NumberOfDatasetsByAnnex +
                                   inspireMonitoring.NumberOfServicesByServiceType();
 
                 NSi2Value = Percent(inspireMonitoring.ProportionOfDatasetsAvailableThroughViewAndDownloadService());
@@ -207,7 +207,7 @@ namespace Kartverket.Register.Models.ViewModels
 
                 NSi11Value = Percent(inspireMonitoring.ProportionOfDatasetsRegisteredInADiscoveryService());
                 NSi11Numerator = inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService;
-                NSi11Denominator = inspireMonitoring.NumberOfDatasetsByAnnex();
+                NSi11Denominator = inspireMonitoring.NumberOfDatasetsByAnnex;
 
                 MDi11Value = Percent(inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexI());
                 MDi11Numerator = inspireMonitoring.NumberOfDatasetsByAnnexIWithMetadata;

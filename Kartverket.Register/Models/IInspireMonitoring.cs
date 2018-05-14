@@ -10,6 +10,7 @@ namespace Kartverket.Register.Models
     {
         DateTime Date { get; set; }
 
+        int NumberOfDatasetsByAnnex { get; set; }
         int NumberOfDatasetsByAnnexI { get; set; }
         int NumberOfDatasetsByAnnexII { get; set; }
         int NumberOfDatasetsByAnnexIII { get; set; }
@@ -86,7 +87,6 @@ namespace Kartverket.Register.Models
         double ProportionOfDatasetsWithMetadataByAnnexIII();
         double ProportionOfServicesWithMetadata();
         double ProportionOfDatasetsAndServicesWithMetadata();
-        int NumberOfDatasetsByAnnex();
         double ProportionOfDatasetWithHarmonizedDataAndConformedMetadata();
         double ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata();
         double ProportionOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata();

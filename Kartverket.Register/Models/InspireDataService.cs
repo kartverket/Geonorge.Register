@@ -137,6 +137,7 @@ namespace Kartverket.Register.Models
 
         public void GetServiceType(string serviceType)
         {
+            ServiceType = serviceType;
             if (serviceType == "other")
             {
                 ServiceType = "invoke";

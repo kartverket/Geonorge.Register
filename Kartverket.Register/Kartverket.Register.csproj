@@ -831,6 +831,10 @@
     <Compile Include="Migrations\201804270618294_AddTableInspireMonitorings.Designer.cs">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.cs" />
+    <Compile Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.Designer.cs">
+      <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1987,6 +1991,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804270618294_AddTableInspireMonitorings.resx">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.resx">
+      <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

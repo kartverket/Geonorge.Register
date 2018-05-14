@@ -44,7 +44,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void MDi1Denominator()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex()).Returns(2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.MDi1Denominator.Should().Be(2);
         }
@@ -70,7 +70,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         public void MDi2Denominator()
         {
             _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfServicesByServiceType()).Returns(2);
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex()).Returns(2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.MDi2Denominator.Should().Be(4);
         }
@@ -118,7 +118,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void DSi2Denominator()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex()).Returns(2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.DSi2Denominator.Should().Be(2);
         }
@@ -143,7 +143,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void NSi1Denominator()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex()).Returns(2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex).Returns(2);
             _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfServicesByServiceType()).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.NSi1Denominator.Should().Be(4);
@@ -242,7 +242,7 @@ namespace Kartverket.Register.Tests.TestModels.ViewModel
         [Fact]
         public void NSi11Denominator()
         {
-            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex()).Returns(2);
+            _mockInspireMonitoring.As<IInspireMonitoring>().Setup(m => m.NumberOfDatasetsByAnnex).Returns(2);
             var inspireMonitoringViewModel = new InspireMonitoringViewModel(_mockInspireMonitoring.Object);
             inspireMonitoringViewModel.NSi11Denominator.Should().Be(2);
         }

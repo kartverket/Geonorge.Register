@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
 using Kartverket.Register.Models.Translations;
 using Resources;
 
@@ -63,6 +65,8 @@ namespace Kartverket.Register.Models.ViewModels
         public AccessViewModel AccessRegister { get; set; }
 
         public string SelectedInspireRegisteryType { get; set; }
+        public ICollection<Synchronize> SynchronizationJobs { get; set; }
+        public Synchronize ActiveSynchronizationJob { get; set; }
 
         public RegisterV2ViewModel(Register register)
         {
@@ -85,6 +89,8 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
+                SynchronizationJobs = register.Synchronizes;
+                ActiveSynchronizationJob = GetActiveSynchronizationJob();
 
                 //InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
 
@@ -98,6 +104,11 @@ namespace Kartverket.Register.Models.ViewModels
                     }
                 }
             }
+        }
+
+        private Synchronize GetActiveSynchronizationJob()
+        {
+            return SynchronizationJobs.FirstOrDefault(s => s.Active);
         }
 
         private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)

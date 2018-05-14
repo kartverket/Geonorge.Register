@@ -31,10 +31,11 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
         private readonly IInspireMonitoringService _inspireMonitoringService;
+        private readonly ISynchronizationService _synchronizationService;
 
         public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService)
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -46,6 +47,7 @@ namespace Kartverket.Register.Controllers
             _inspireDatasetService = inspireDatasetService;
             _geodatalovDatasetService = geodatalovService;
             _inspireMonitoringService = inspireMonitoringService;
+            _synchronizationService = synchronizationService;
         }
 
         // GET: Registers
@@ -99,6 +101,41 @@ namespace Kartverket.Register.Controllers
         }
 
 
+
+        // GET: Registers/Details/5
+        [Route("register/inspire-statusregister")]
+        [Route("register/inspire-statusregister.{format}")]
+        [Route("register/inspire-statusregister/{filterOrganization}")]
+        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetInspireStatusRegister();
+            if (register == null) return HttpNotFound();
+
+            filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
+            register = FilterRegisterItems(register, filter);
+            var viewModel = new RegisterV2ViewModel(register);
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+            viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
+
+            if (filter.ShowCurrentInspireMonitoringReport)
+            {
+                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetCurrentInspireMonitroingData(register));
+            }
+            else
+            {
+                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
+            }
+            ItemsOrderBy(sorting, viewModel);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+
+            return View(viewModel);
+        }
+
+
         // GET: Registers/Details/5
         [Route("register/{registername}")]
         [Route("register/{registername}.{format}")]
@@ -114,24 +151,12 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
-            filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
-            viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
-            if (viewModel.ContainedItemClassIsInspireDataset())
-            {
-                if (filter.ShowCurrentInspireMonitoringReport)
-                {
-                    viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetCurrentInspireMonitroingData(register));
-                }
-                else
-                {
-                    viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
-                }
-            }
+            
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);

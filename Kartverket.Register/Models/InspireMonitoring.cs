@@ -17,12 +17,15 @@ namespace Kartverket.Register.Models
         private readonly string Discovery = "discovery";
         private readonly string Invoke = "invoke";
         private readonly string Transformation = "transformation";
+        private int _numberOfDatasetsByAnnex;
 
 
         [Key]
         public Guid Id { get; set; }
         public System.DateTime Date { get; set; }
 
+
+        public int NumberOfDatasetsByAnnex { get; set; }
         public int NumberOfDatasetsByAnnexI { get; set; }
         public int NumberOfDatasetsByAnnexII { get; set; }
         public int NumberOfDatasetsByAnnexIII { get; set; }
@@ -86,6 +89,7 @@ namespace Kartverket.Register.Models
             Id = Guid.NewGuid();
             Date = System.DateTime.Now;
 
+            NumberOfDatasetsByAnnex = GetNumberOfDatasetsByAnnex();
             NumberOfDatasetsByAnnexI = GetNumberOfDatasetsByAnnexI();
             NumberOfDatasetsByAnnexII = GetNumberOfDatasetsByAnnexII();
             NumberOfDatasetsByAnnexIII = GetNumberOfDatasetsByAnnexIII();
@@ -244,7 +248,7 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfDatasetsRegisteredInADiscoveryService()
         {
-            return Divide(NumberOfDatasetsRegisteredInADiscoveryService, NumberOfDatasetsByAnnex());
+            return Divide(NumberOfDatasetsRegisteredInADiscoveryService, NumberOfDatasetsByAnnex);
         }
 
         public double ProportionOfServicesRegisteredInADiscoveryService()
@@ -275,17 +279,17 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfDatasetsAndServicesWithMetadata()
         {
-            return Divide(NumberOfDatasetsWithMetadata + NumberOfServicesWithMetadata, NumberOfServicesByServiceType() + NumberOfDatasetsByAnnex());
+            return Divide(NumberOfDatasetsWithMetadata + NumberOfServicesWithMetadata, NumberOfServicesByServiceType() + NumberOfDatasetsByAnnex);
         }
 
-        public int NumberOfDatasetsByAnnex()
-        {
-            return NumberOfDatasetsByAnnexI + NumberOfDatasetsByAnnexII + NumberOfDatasetsByAnnexIII;
-        }
+        //public int NumberOfDatasetsByAnnex
+        //{
+        //    return NumberOfDatasetsByAnnexI + NumberOfDatasetsByAnnexII + NumberOfDatasetsByAnnexIII;
+        //}
 
         public double ProportionOfDatasetWithHarmonizedDataAndConformedMetadata()
         {
-            return Divide(NumberOfDatasetsWithHarmonizedDataAndConformedMetadata(), NumberOfDatasetsByAnnex());
+            return Divide(NumberOfDatasetsWithHarmonizedDataAndConformedMetadata(), NumberOfDatasetsByAnnex);
         }
 
         public double ProportionOfDatasetsByAnnexIWithHarmonizedDataAndConformedMetadata()
@@ -350,7 +354,7 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfServicesAndDatasetsRegisteredInADiscoveryService()
         {
-            return Divide((NumberOfDatasetsRegisteredInADiscoveryService + NumberOfServicesRegisteredInADiscoveryService), (NumberOfDatasetsByAnnex() + NumberOfServicesByServiceType()));
+            return Divide((NumberOfDatasetsRegisteredInADiscoveryService + NumberOfServicesRegisteredInADiscoveryService), (NumberOfDatasetsByAnnex + NumberOfServicesByServiceType()));
         }
 
         public double ProportionOfArealByAnnexI()
@@ -395,14 +399,31 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfServicesAndDatasetsWithMetadatastatusGood()
         {
-            return Divide(NumberOfServicesWhereMetadataStatusIsgood + NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(), NumberOfServicesByServiceType() + NumberOfDatasetsByAnnex());
+            return Divide(NumberOfServicesWhereMetadataStatusIsgood + NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(), NumberOfServicesByServiceType() + NumberOfDatasetsByAnnex);
         }
 
 
 
 
         // ******** PRIVATE *********
-
+        private int GetNumberOfDatasetsByAnnex()
+        {
+            var number = 0;
+            foreach (var item in _inspireDataset)
+            {
+                if (InspireDatasetHaveInspireThemeOfTypeAnnexI(item.InspireThemes) ||
+                    InspireDatasetHaveInspireThemeOfTypeAnnexII(item.InspireThemes) ||
+                    InspireDatasetHaveInspireThemeOfTypeAnnexIII(item.InspireThemes))
+                {
+                    number++;
+                }
+                else
+                {
+                        
+                }
+            }
+            return number;
+        }
 
         private int GetNumberOfDatasetsByAnnexI()
         {
@@ -958,7 +979,9 @@ namespace Kartverket.Register.Models
 
             var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
             inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("/", " ");
             inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("-", "");
 
             return inspireThemeCamelCase;
         }

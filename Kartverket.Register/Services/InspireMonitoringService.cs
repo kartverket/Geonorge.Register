@@ -390,7 +390,7 @@ namespace Kartverket.Register.Services
             spatialDataAndService.DSv_Num1 = _inspireMonitoring.NumberOfDatasetsByAnnexI; // Totalt antall datasett for annex1 (<Antall <SpatialDataSet> som har <AnnexI> )
             spatialDataAndService.DSv_Num2 = _inspireMonitoring.NumberOfDatasetsByAnnexII; // Totalt antall datasett for  annex2 (<Antall <SpatialDataSet> som har <AnnexII> )
             spatialDataAndService.DSv_Num3 = _inspireMonitoring.NumberOfDatasetsByAnnexIII; // Totalt antall datasett for  annex3 (<Antall <SpatialDataSet> som har <AnnexIII> )
-            spatialDataAndService.DSv_Num = _inspireMonitoring.NumberOfDatasetsByAnnex(); // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
+            spatialDataAndService.DSv_Num = _inspireMonitoring.NumberOfDatasetsByAnnex; // Totalt antall datasett for alle annex (<DSv_Num1>+<DSv_Num2>+<DSv_Num3> )
             spatialDataAndService.SDSv_Num = _inspireMonitoring.NumberOfSdS; // Totalt antall tjenester SDS
             spatialDataAndService.NSv_NumDiscServ = _inspireMonitoring.NumberOfServicesByServiceTypeDiscovery; // Antall NnServiceType="discovery"
             spatialDataAndService.NSv_NumViewServ = _inspireMonitoring.NumberOfServicesByServiceTypeView; // Antall NnServiceType="view"

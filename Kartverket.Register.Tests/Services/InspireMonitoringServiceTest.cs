@@ -660,9 +660,7 @@ namespace Kartverket.Register.Tests.Services
             _inspireMonitoring.NumberOfDatasetsWithMetadata = 2;
             _inspireMonitoring.NumberOfServicesWithMetadata = 2;
 
-            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnex = 6;
 
             _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
             _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
@@ -742,9 +740,7 @@ namespace Kartverket.Register.Tests.Services
             var register = new Mock<Models.Register>();
             _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService = 2;
 
-            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnex = 6;
 
             Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
 
@@ -787,9 +783,7 @@ namespace Kartverket.Register.Tests.Services
             _inspireMonitoring.NumberOfDatasetsRegisteredInADiscoveryService = 2;
             _inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService = 2;
 
-            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnex = 6;
 
             _inspireMonitoring.NumberOfServicesByServiceTypeDownload = 2;
             _inspireMonitoring.NumberOfServicesByServiceTypeView = 2;
@@ -1299,9 +1293,7 @@ namespace Kartverket.Register.Tests.Services
             _inspireMonitoring.NumberOfDatasetsByAnnexIIWithHarmonizedDataAndConformedMetadata = 2;
             _inspireMonitoring.NumberOfDatasetsByAnnexIIIWithHarmonizedDataAndConformedMetadata = 2;
 
-            _inspireMonitoring.NumberOfDatasetsByAnnexI = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexII = 2;
-            _inspireMonitoring.NumberOfDatasetsByAnnexIII = 2;
+            _inspireMonitoring.NumberOfDatasetsByAnnex = 6;
 
             Monitoring monitoring = _inpsireMonitoringService.GetInspireMonitoringReport(register.Object, _inspireMonitoring);
 

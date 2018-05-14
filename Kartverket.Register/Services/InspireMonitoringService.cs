@@ -125,7 +125,8 @@ namespace Kartverket.Register.Services
         {
             NetworkService networkService = new NetworkService();
             networkService.directlyAccessible = inspireDataService.IsNetworkService(); //Er dette en Network Service" Skal settes til "true" for <NnServiceType> in (discovery, view, download, transformation, invoke)
-            networkService.URL = inspireDataService.Url;
+
+            networkService.URL = inspireDataService.Url ?? string.Empty;
             networkService.userRequest = inspireDataService.Requests;
             try
             {

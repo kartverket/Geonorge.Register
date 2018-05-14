@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Models;
-using Kartverket.Register.Services.Register;
+using System.Linq;
 using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services
@@ -12,23 +12,51 @@ namespace Kartverket.Register.Services
     {
         private Models.Register _inspireRegister;
         private ICollection<RegisterItemV2> _inspireItems;
-        private InspireMonitoring _inspireMonitoring;
+        private IInspireMonitoring _inspireMonitoring;
+        private readonly RegisterDbContext _dbContext;
 
-
-        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister)
+        public InspireMonitoringService(RegisterDbContext dbContext)
         {
-            SetClassVariables(inspireRegister);
-            return Mapping();
+            _dbContext = dbContext;
         }
 
-        private void SetClassVariables(Models.Register inspireRegister)
+        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister) 
+        {
+            return GetInspireMonitoringReport(inspireRegister, new InspireMonitoring(inspireRegister.RegisterItems));
+        }
+
+        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister, IInspireMonitoring monitoringData)
         {
             _inspireRegister = inspireRegister;
             _inspireItems = _inspireRegister?.RegisterItems;
-            _inspireMonitoring = new InspireMonitoring(inspireRegister.RegisterItems);
+            if (_inspireItems == null) _inspireItems = new List<RegisterItemV2>();
+            _inspireMonitoring = monitoringData;
+            return Mapping();
         }
 
-        public Monitoring Mapping()
+        public void SaveInspireMonitoring(Models.Register inspireStatusRegister)
+        {
+            InspireMonitoring monitoring = new InspireMonitoring(inspireStatusRegister.RegisterItems);
+            _dbContext.InspireMonitorings.Add(monitoring);
+            _dbContext.SaveChanges();
+        }
+
+        public InspireMonitoring GetLatestInspireMonitroingData() {
+           var queryResults = from o in _dbContext.InspireMonitorings
+                              select o;
+
+            InspireMonitoring latestMonitoring = queryResults?.OrderByDescending(o => o.Date).FirstOrDefault();
+            return latestMonitoring;
+
+        }
+
+        public InspireMonitoring GetCurrentInspireMonitroingData(Models.Register inspireRegister)
+        {
+            InspireMonitoring monitoring = new InspireMonitoring(inspireRegister.RegisterItems);
+            return monitoring;
+        }
+
+        private Monitoring Mapping()
         {
             var monitoring = new Monitoring();
             monitoring.documentYear = GetReportingDate();
@@ -52,7 +80,7 @@ namespace Kartverket.Register.Services
         private MonitoringMD MappingMonitoringMd()
         {
             var monitoringMd = new MonitoringMD();
-            monitoringMd.organizationName = _inspireRegister.owner.name;
+            monitoringMd.organizationName = _inspireRegister.owner?.name;
             monitoringMd.email = "post@norgedigitalt.no";
             monitoringMd.language = LanguageCode.nor;
             //monitoringMd.monitoringDate = new Date();
@@ -85,7 +113,7 @@ namespace Kartverket.Register.Services
         {
             var spatialDataService = new SpatialDataService();
             spatialDataService.name = inspireDataService.Name;
-            spatialDataService.respAuthority = inspireDataService.Owner.name;
+            spatialDataService.respAuthority = inspireDataService.Owner?.name;
             spatialDataService.uuid = inspireDataService.Uuid;
             spatialDataService.Themes = GetThemes(inspireDataService.InspireThemes);
             spatialDataService.MdServiceExistence = MappingServiceExistence(inspireDataService);
@@ -139,7 +167,7 @@ namespace Kartverket.Register.Services
         {
             var spatialDataset = new SpatialDataSet();
             spatialDataset.name = inspireDataset.Name;
-            spatialDataset.respAuthority = inspireDataset.Owner.name;
+            spatialDataset.respAuthority = inspireDataset.Owner?.name;
             spatialDataset.uuid = inspireDataset.Uuid;
             spatialDataset.Themes = GetThemes(inspireDataset.InspireThemes);
             spatialDataset.Coverage = GetCoverage(inspireDataset);
@@ -294,7 +322,7 @@ namespace Kartverket.Register.Services
             metadataExistenceIndicators.MDi12 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexII(); // Andel datasett som har metadata av Annex2 data (<MDv12>/<DSv_Num2>)
             metadataExistenceIndicators.MDi13 = _inspireMonitoring.ProportionOfDatasetsWithMetadataByAnnexIII(); // Andel datasett som har metadata av Annex3 data (<MDv13>/<DSv_Num3>)
             metadataExistenceIndicators.MDi14 = _inspireMonitoring.ProportionOfServicesWithMetadata(); // Andel tjenester som har metadata (<MDv14>/<NSv_NumAllServ>)
-            metadataExistenceIndicators.MDi1 = _inspireMonitoring.ProportionOfDatasetsWithMetadata(); // Andel datasett som har metadata av Annex1 data  (<MDv1_DS>/<DSv_Num>)
+            metadataExistenceIndicators.MDi1 = _inspireMonitoring.ProportionOfDatasetsAndServicesWithMetadata(); // <MDv1_DS>+<MDv14> /<NSv_NumAllServ>+<DSv_Num>
 
             metadataExistenceIndicators.MetadataExistence = GetMetadataExistence();
 
@@ -394,7 +422,7 @@ namespace Kartverket.Register.Services
             metadataConformity.MDv21 = _inspireMonitoring.NumberOfDatasetsByAnnexIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex1 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexI> OG <structureCompliance> = "true")
             metadataConformity.MDv22 = _inspireMonitoring.NumberOfDatasetsByAnnexIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex2 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexII> OG <structureCompliance> = "true")
             metadataConformity.MDv23 = _inspireMonitoring.NumberOfDatasetsByAnnexIIIWhereMetadataStatusIsgood; // Totalt antall datasett for  annex3 med Metadatastatus = "God i registeret" (Antall elementer av <SpatialDataSet> where <AnnexIII> OG <structureCompliance> = "true")
-            metadataConformity.MDv2_DS = _inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv21>)
+            metadataConformity.MDv2_DS = _inspireMonitoring.NumberOfDatasetsByAnnexWhereMetadataStatusIsgood(); // Totalt antall datasett med Metadatastatus = "God" i registeret for annex1,2,3 (<MDv21>+<MDv22>+<MDv23>)
             metadataConformity.MDv24 = _inspireMonitoring.NumberOfServicesWhereMetadataStatusIsgood; // Totalt antall tjenester med konforme metadata (Antall tjenester som har Metadatastatus = "God". Antall elementer av <SpatialDataService> where <mdConformity> = "true")
 
             return metadataConformity;
@@ -466,7 +494,9 @@ namespace Kartverket.Register.Services
 
             var inspireThemeCamelCase = textInfo.ToTitleCase(inspireTheme);
             inspireThemeCamelCase = Char.ToLowerInvariant(inspireThemeCamelCase[0]) + inspireThemeCamelCase.Substring(1);
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("/", " ");
             inspireThemeCamelCase = inspireThemeCamelCase.Replace(" ", "");
+            inspireThemeCamelCase = inspireThemeCamelCase.Replace("-", "");
 
             return inspireThemeCamelCase;
         }

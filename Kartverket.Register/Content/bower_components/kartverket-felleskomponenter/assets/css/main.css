@@ -2226,7 +2226,8 @@ input[type="submit"].btn {
   width: 25px;
   height: 25px;
   display: inline-block;
-  vertical-align: middle; }
+  vertical-align: middle;
+  background-size: contain; }
   .custom-icon .custom-icon-overlay {
     background-color: #fe5000;
     border-radius: 50%;
@@ -2512,6 +2513,18 @@ input[type="submit"].btn {
 .custom-icon.custom-icon-hengelaas-closed-yellow {
   background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/hengelaas-lukket-yellow.svg"); }
 
+.custom-icon.custom-icon-tjenestestatus {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/tjenestestatus.svg"); }
+
+.custom-icon.custom-icon-spatialdataservice {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/spatialdataservice.svg"); }
+
+.custom-icon.custom-icon-netverkstjeneste {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/netverkstjeneste.svg"); }
+
+.custom-icon.custom-icon-metadata-i-soketjeneste {
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/metadata-i-soketjeneste.svg"); }
+
 .btn .custom-icon.custom-icon-hengelaas-open-green,
 .btn .custom-icon.custom-icon-hengelaas-open-red,
 .btn .custom-icon.custom-icon-hengelaas-open-yellow {
@@ -2642,7 +2655,7 @@ input[type="submit"].btn {
 
 .custom-select-list .custom-select-list-dropdown-container.active .custom-select-list-dropdown {
   display: block;
-  z-index: 2;
+  z-index: 3;
   height: 0;
   position: relative;
   overflow: visible; }

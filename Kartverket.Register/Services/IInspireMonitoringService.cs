@@ -12,5 +12,9 @@ namespace Kartverket.Register.Services
     {
         SpatialDataSet MappingSpatialDataSet(InspireDataset inspireDataset);
         Monitoring GetInspireMonitoringReport(Models.Register inspireStatusRegister);
+        Monitoring GetInspireMonitoringReport(Models.Register inspireRegister, IInspireMonitoring monitoringData);
+        void SaveInspireMonitoring(Models.Register inspireStatusRegister);
+        InspireMonitoring GetLatestInspireMonitroingData();
+        InspireMonitoring GetCurrentInspireMonitroingData(Models.Register inspireRegister);
     }
 }

@@ -54,6 +54,7 @@ namespace Kartverket.Register
             builder.RegisterType<GeodatalovDatasetService>().As<IGeodatalovDatasetService>();
             builder.RegisterType<DocumentService>().As<IDocumentService>();
             builder.RegisterType<InspireMonitoringService>().As<IInspireMonitoringService>();
+            builder.RegisterType<InspireMonitoring>().As<IInspireMonitoring>();
 
             builder.RegisterType<HttpClientFactory>().As<IHttpClientFactory>();
             builder.RegisterType<LogEntryService>().As<ILogEntryService>().WithParameters(new List<Parameter>

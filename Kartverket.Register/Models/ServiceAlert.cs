@@ -72,7 +72,6 @@ namespace Kartverket.Register.Models
                 }
                 ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
             }
-            ServiceMetadataUrl = WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + ServiceUuid;
         }
 
         public virtual TranslationCollection<ServiceAlertTranslation> Translations { get; set; }

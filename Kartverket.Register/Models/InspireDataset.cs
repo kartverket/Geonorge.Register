@@ -67,10 +67,14 @@ namespace Kartverket.Register.Models
 
         public bool WmsIsGoodOrUseable()
         {
-            return InspireDeliveryWms.IsGoodOrUseable();
+            if (InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
         }
 
-        internal bool MetadataIsGoodOrDeficent()
+        internal bool MetadataIsSet()
         {
             if (InspireDeliveryMetadata != null)
             {
@@ -121,37 +125,65 @@ namespace Kartverket.Register.Models
 
         internal bool WmsAndWfsIsGoodOrUseable()
         {
-            return InspireDeliveryWfs.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            if (InspireDeliveryWfs != null && InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWfs.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
         }
 
         internal bool HarmonizedDataAndConformedmetadata()
         {
-            return InspireDeliveryHarmonizedData.IsGood() && InspireDeliveryMetadata.IsGood();
+            if (InspireDeliveryHarmonizedData != null && InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryHarmonizedData.IsGood() && InspireDeliveryMetadata.IsGood();
+            }
+            return false;
         }
 
         public bool WfsIsGoodOrUseable()
         {
-            return InspireDeliveryWfs.IsGoodOrUseable();
+            if (InspireDeliveryWfs != null)
+            {
+                return InspireDeliveryWfs.IsGoodOrUseable();
+            }
+            return false;
         }
 
         internal bool MetadataIsGood()
         {
-            return InspireDeliveryMetadata.IsGood();
+            if (InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryMetadata.IsGood();
+            }
+            return false;
         }
 
         internal bool HarmonizedIsGood()
         {
-            return InspireDeliveryHarmonizedData.IsGood();
+            if (InspireDeliveryHarmonizedData != null)
+            {
+                return InspireDeliveryHarmonizedData.IsGood();
+            }
+            return false;
         }
 
         internal bool WfsOrAtomIsGoodOrUseable()
         {
-            return InspireDeliveryWfsOrAtom.IsGoodOrUseable();
+            if (InspireDeliveryWfsOrAtom != null)
+            {
+                return InspireDeliveryWfsOrAtom.IsGoodOrUseable();
+            }
+            return false;
         }
 
         internal bool WmsAndWfsOrAtomIsGoodOrUseable()
         {
-            return InspireDeliveryWfsOrAtom.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            if (InspireDeliveryWfsOrAtom != null && InspireDeliveryWms != null)
+            {
+                return InspireDeliveryWfsOrAtom.IsGoodOrUseable() && InspireDeliveryWms.IsGoodOrUseable();
+            }
+            return false;
         }
 
         public string InspireThemsAsString()

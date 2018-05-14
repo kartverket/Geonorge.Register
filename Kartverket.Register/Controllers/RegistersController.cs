@@ -30,10 +30,11 @@ namespace Kartverket.Register.Controllers
         private readonly ITranslationService _translationService;
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
+        private readonly IInspireMonitoringService _inspireMonitoringService;
 
-        public RegistersController(ITranslationService translationService, 
+        public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService )
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -44,6 +45,7 @@ namespace Kartverket.Register.Controllers
             _translationService = translationService;
             _inspireDatasetService = inspireDatasetService;
             _geodatalovDatasetService = geodatalovService;
+            _inspireMonitoringService = inspireMonitoringService;
         }
 
         // GET: Registers
@@ -93,7 +95,7 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrEmpty(returnUrl))
                 return Redirect(returnUrl);
             else
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
         }
 
 
@@ -112,17 +114,41 @@ namespace Kartverket.Register.Controllers
             var register = _registerService.GetRegister(parentRegister, registername);
             if (register == null) return HttpNotFound();
 
+            filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
             var viewModel = new RegisterV2ViewModel(register);
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
-
+            if (viewModel.ContainedItemClassIsInspireDataset())
+            {
+                if (filter.ShowCurrentInspireMonitoringReport)
+                {
+                    viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetCurrentInspireMonitroingData(register));
+                }
+                else
+                {
+                    viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
+                }
+            }
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
             return View(viewModel);
+        }
+
+
+        private string GetInspireRegistryType(string filter)
+        {
+            if (filter == "report")
+            {
+                if (!IsAdmin())
+                {
+                    return "dataset";
+                }
+            }
+            return filter;
         }
 
         private void ItemsOrderBy(string sorting, RegisterV2ViewModel viewModel)
@@ -156,6 +182,7 @@ namespace Kartverket.Register.Controllers
             }
             return View(viewModel);
         }
+
 
 
         [Route("subregister/versjoner/{parentregister}/{parentowner}/{registername}/{itemowner}/{itemname}/{version}/no.{format}")]
@@ -336,7 +363,8 @@ namespace Kartverket.Register.Controllers
                     ViewBag.statusDOKMunicipal = new SelectList(statusDokMunicipalList, "value", "description", DOKmunicipalStatus(municipality));
                     return View(dokMunicipalEditList);
                 }
-                else {
+                else
+                {
                     return HttpNotFound();
                 }
             }
@@ -377,7 +405,8 @@ namespace Kartverket.Register.Controllers
                         }
                         _registerItemService.SaveDeleteRegisterItem(originalDataset);
                     }
-                    else {
+                    else
+                    {
                         var coverageFound = originalCoverage?.Coverage ?? false;
                         try
                         {
@@ -519,9 +548,9 @@ namespace Kartverket.Register.Controllers
 
         private void Viewbags(Models.Register register)
         {
-            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new {s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", register.statusId);
-            ViewBag.ownerId = new SelectList(_db.Organizations.ToList().Select(s => new {s.systemId, name = s.NameTranslated() } ).OrderBy(s => s.name), "systemId", "name", register.ownerId);
-            ViewBag.parentRegisterId = new SelectList(_db.Registers.ToList().Select(s => new {s.systemId, name = s.NameTranslated(), s.containedItemClass }).Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
+            ViewBag.statusId = new SelectList(_db.Statuses.ToList().Select(s => new { s.value, description = s.DescriptionTranslated() }).OrderBy(o => o.description), "value", "description", register.statusId);
+            ViewBag.ownerId = new SelectList(_db.Organizations.ToList().Select(s => new { s.systemId, name = s.NameTranslated() }).OrderBy(s => s.name), "systemId", "name", register.ownerId);
+            ViewBag.parentRegisterId = new SelectList(_db.Registers.ToList().Select(s => new { s.systemId, name = s.NameTranslated(), s.containedItemClass }).Where(r => r.containedItemClass == "Register" && r.name != register.name).OrderBy(s => s.name), "systemId", "name", register.parentRegisterId);
             ViewBag.containedItemClass = new SelectList(_db.ContainedItemClass.OrderBy(s => s.description), "value", "description", string.Empty);
         }
 
@@ -611,7 +640,7 @@ namespace Kartverket.Register.Controllers
             }
 
             return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
-            
+
         }
 
         private void ViewbagsRegisterDetails(string sorting, int? page, FilterParameters filter, RegisterV2ViewModel register)
@@ -688,7 +717,7 @@ namespace Kartverket.Register.Controllers
                 if (pathReferer.Contains("/"))
                 {
                     var registerNameRefererObject = pathReferer.Split('/');
-                    if(registerNameRefererObject.Count() > 2)
+                    if (registerNameRefererObject.Count() > 2)
                         registerNameReferer = registerNameRefererObject[2];
                 }
 

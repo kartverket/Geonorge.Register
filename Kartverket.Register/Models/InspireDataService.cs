@@ -50,10 +50,6 @@ namespace Kartverket.Register.Models
             return ServiceType == "download";
         }
 
-        public bool HaveMetadata()
-        {
-            return InspireDeliveryMetadata.IsSet();
-        }
 
         internal bool MetadataIsGoodOrDeficent()
         {
@@ -106,7 +102,11 @@ namespace Kartverket.Register.Models
 
         internal bool MetadataIsGood()
         {
-            return InspireDeliveryMetadata.IsGood();
+            if (InspireDeliveryMetadata != null)
+            {
+                return InspireDeliveryMetadata.IsGood();
+            }
+            return false;
         }
 
         public string InspireThemsAsString()
@@ -124,6 +124,23 @@ namespace Kartverket.Register.Models
                 }
             }
             return inspireTeamsString;
+        }
+
+        internal bool ServiceStatusIsGood()
+        {
+            if (InspireDeliveryServiceStatus != null)
+            {
+                return InspireDeliveryServiceStatus.IsGood();
+            }
+            return false;
+        }
+
+        public void GetServiceType(string serviceType)
+        {
+            if (serviceType == "other")
+            {
+                ServiceType = "invoke";
+            }
         }
     }
 

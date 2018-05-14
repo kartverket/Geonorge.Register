@@ -19,5 +19,6 @@ namespace Kartverket.Register.Services
         InspireDataService GetInspireDataServiceById(Guid systemId);
         InspireDataService UpdateInspireDataService(InspireDataServiceViewModel viewModel);
         InspireDataService UpdateInspireDataServiceFromKartkatalogen(InspireDataService originalInspireDataService);
+        void DeleteInspireDataService(InspireDataService inspireDataset);
     }
 }

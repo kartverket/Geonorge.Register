@@ -1231,7 +1231,7 @@ namespace Kartverket.Register.Tests.TestModels
         [Fact]
         public void NumberOfDatasetsByAnnex()
         {
-            var result = _inspireMonitoringTest.NumberOfDatasetsByAnnex();
+            var result = _inspireMonitoringTest.NumberOfDatasetsByAnnex;
             result.Should().Be(6);
         }
 
@@ -1454,6 +1454,7 @@ namespace Kartverket.Register.Tests.TestModels
         {
             InspireMonitoring inspireMonitoring = new InspireMonitoring()
             {
+                NumberOfDatasetsByAnnex = 6,
                 NumberOfDatasetsByAnnexI = 2,
                 NumberOfDatasetsByAnnexII = 2,
                 NumberOfDatasetsByAnnexIII = 2,

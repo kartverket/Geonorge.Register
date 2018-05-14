@@ -123,10 +123,7 @@
     @if (!(Model.RegisterItem is ServiceAlert) && Request.IsAuthenticated && Model.AccessRegisterItem)
     {
         <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectEditUrl()">@Shared.Edit</a>
-        if (!(Model is InspireDataServiceViewModel))
-        {
-            <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
-        }
+        <a class="btn btn-default btn-space pull-right" href="@Model.GetObjectDeleteUrl()">@Shared.Delete</a>
     }
 
     <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="@Model.Register.GetObjectUrl()">@Shared.Back</a>

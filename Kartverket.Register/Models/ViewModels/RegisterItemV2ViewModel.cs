@@ -229,6 +229,8 @@ namespace Kartverket.Register.Models.ViewModels
             {
                 case InspireDatasetViewModel inspireDatasetViewModel:
                     return inspireDatasetViewModel.GetInspireDatasetDeleteUrl();
+                case InspireDataServiceViewModel inspireDataServiceViewModel:
+                    return inspireDataServiceViewModel.GetInspireDataServiceDeleteUrl();
                 case GeodatalovDatasetViewModel geodatalovDatasetViewModel:
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
                 case DocumentViewModel documentViewModel:

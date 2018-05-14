@@ -139,5 +139,14 @@ namespace Kartverket.Register.Models.ViewModels
             }
             return inspireTeamsString;
         }
+
+        public string GetInspireDataServiceDeleteUrl()
+        {
+            if (Register.parentRegister == null)
+            {
+                return "/inspire-data-service/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+            }
+            return "/inspire-data-service/" + Register.parentRegister.seoname + "/" + Register.owner.seoname + "/" + Register.seoname + "/" + Owner.seoname + "/" + Seoname + "/slett";
+        }
     }
 }

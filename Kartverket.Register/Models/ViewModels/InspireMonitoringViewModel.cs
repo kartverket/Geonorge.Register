@@ -269,23 +269,23 @@ namespace Kartverket.Register.Models.ViewModels
                 NSi12Numerator = inspireMonitoring.NumberOfServicesRegisteredInADiscoveryService;
                 NSi12Denominator = inspireMonitoring.NumberOfServicesByServiceType();
 
-                NSi31Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeDiscovery());
+                NSi31Value = Math.Round(inspireMonitoring.AverageNumberOfCallsByServiceTypeDiscovery());
                 NSi31Numerator = inspireMonitoring.NumberOfCallsByServiceTypeDiscovery;
                 NSi31Denominator = inspireMonitoring.NumberOfServicesByServiceTypeDiscovery;
 
-                NSi32Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeView());
+                NSi32Value = Math.Round(inspireMonitoring.AverageNumberOfCallsByServiceTypeView());
                 NSi32Numerator = inspireMonitoring.NumberOfCallsByServiceTypeView;
                 NSi32Denominator = inspireMonitoring.NumberOfServicesByServiceTypeView;
 
-                NSi33Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeDownload());
+                NSi33Value = Math.Round(inspireMonitoring.AverageNumberOfCallsByServiceTypeDownload());
                 NSi33Numerator = inspireMonitoring.NumberOfCallsByServiceTypeDownload;
                 NSi33Denominator = inspireMonitoring.NumberOfServicesByServiceTypeDownload;
 
-                NSi34Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeTransformation());
+                NSi34Value = Math.Round(inspireMonitoring.AverageNumberOfCallsByServiceTypeTransformation());
                 NSi34Numerator = inspireMonitoring.NumberOfCallsByServiceTypeTransformation;
                 NSi34Denominator = inspireMonitoring.NumberOfServicesByServiceTypeTransformation;
 
-                NSi35Value = Percent(inspireMonitoring.AverageNumberOfCallsByServiceTypeInvoke());
+                NSi35Value = Math.Round(inspireMonitoring.AverageNumberOfCallsByServiceTypeInvoke());
                 NSi35Numerator = inspireMonitoring.NumberOfCallsByServiceTypeInvoke;
                 NSi35Denominator = inspireMonitoring.NumberOfServicesByServiceTypeInvoke;
 

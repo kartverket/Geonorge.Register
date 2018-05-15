@@ -847,6 +847,10 @@
     <Compile Include="Migrations\201805141310404_Merge.Designer.cs">
       <DependentUpon>201805141310404_Merge.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs" />
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.Designer.cs">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2021,6 +2025,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805141310404_Merge.resx">
       <DependentUpon>201805141310404_Merge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.resx">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

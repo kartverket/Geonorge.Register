@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models
         public DateTime Start { get; set; }
         public DateTime? Stop { get; set; }
         public bool Active { get; set; }
+        public string ItemType { get; set; }
         public int SuccessCount { get; set; }
         public int FailCount { get; set; }
         public int NumberOfItems { get; set; }
@@ -29,6 +30,8 @@ namespace Kartverket.Register.Models
         public int NumberOfNewItems { get; set; }
 
         public virtual ICollection<SyncLogEntry> FailLog { get; set; }
+        public virtual ICollection<SyncLogEntry> AddedLog { get; set; }
+        public virtual ICollection<SyncLogEntry> DeletedLog { get; set; }
 
         public void StoppJob()
         {

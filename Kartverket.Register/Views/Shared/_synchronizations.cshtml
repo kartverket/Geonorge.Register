@@ -1,1 +1,43 @@
-﻿
+﻿@model SynchronizationViewModel
+@using Kartverket.Register.Helpers
+@using Kartverket.Register.Models.ViewModels
+
+
+
+<h2>Synkronisering</h2>
+
+@if (Model.ActiveSynchronizationJob != null)
+{
+    <h3>Pågår</h3>
+    <p><strong>Startet: </strong>@Model.ActiveSynchronizationJob.Start</p>
+    <p><strong>Synkronisert: </strong>@Model.ActiveSynchronizationJob.SuccessCount av @Model.ActiveSynchronizationJob.NumberOfItems</p>
+    <p><strong>Slettet: </strong>@Model.ActiveSynchronizationJob.NumberOfDeletedItems</p>
+    <p><strong>Lagt til: </strong>@Model.ActiveSynchronizationJob.NumberOfNewItems</p>
+}
+
+<table class="table table-bordered">
+
+    <tr>
+        <th>Start</th>
+        <th>Stopp</th>
+        <th>Antall</th>
+        <th>Lagt til</th>
+        <th>Slettet</th>
+        <th>Vellykket</th>
+        <th>Feil</th>
+    </tr>
+    @foreach (var synchronization in Model.SynchronizationJobs)
+    {
+
+        <tr>
+            <td>@synchronization.Start</td>
+            <td>@synchronization.Stop</td>
+            <td>@synchronization.NumberOfItems</td>
+            <td>@synchronization.NumberOfNewItems</td>
+            <td>@synchronization.NumberOfDeletedItems</td>
+            <td>@synchronization.SuccessCount</td>
+            <td>@synchronization.FailCount</td>
+        </tr>
+    }
+</table>
+

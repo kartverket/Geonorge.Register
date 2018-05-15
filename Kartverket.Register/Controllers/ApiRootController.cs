@@ -348,13 +348,15 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             var register = _registerService.GetInspireStatusRegister();
+
             var synchronizationJob = _synchronizationService.StartSynchronizationJob(register);
-
             new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJob);
-            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
-
             _synchronizationService.StopSynchronizationJob(synchronizationJob);
-            
+
+            synchronizationJob = _synchronizationService.StartSynchronizationJob(register);
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
+            _synchronizationService.StopSynchronizationJob(synchronizationJob);
+
             return Ok();
         }
 

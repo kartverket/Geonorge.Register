@@ -1,10 +1,12 @@
-﻿@model Kartverket.Register.Models.ViewModels.RegisterV2ViewModel
+﻿@model RegisterV2ViewModel
 @using Kartverket.Register.Helpers
 @using PagedList
 @using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
 @{
     ViewBag.Title = Model.Name;
+    string municipalityCode = ViewBag.selectedMunicipalityCode;
+    Organization municipality = ViewBag.organizationMunicipality;
 }
 
 @section breadcrumb {
@@ -63,12 +65,12 @@
             <p>
                 @Model.Description
             </p>
+
         </div>
 
         <div class="col-sm-12 col-md-2 text-right">
             <span class="small">@Registers.Updated: @Html.DisplayFor(model => model.Modified)</span><br />
         </div>
-
 
         @if (HtmlHelperExtensions.IsAdmin())
         {
@@ -99,9 +101,7 @@
                     </li>
                 }
             </ul>
-
         </div>
-
     </div>
 </section>
 
@@ -109,12 +109,18 @@
 {
     <div class="row search-result-navigation">
         <div class="col-md-4">
-
-            @if (Model.RegisterItemsV2.Any())
+            @if (Model.ContainedItemClassIsRegister())
+            {
+                @Html.Partial("_pagedListPagerSubRegisters", Model.Subregisters.ToPagedList(pageNumber, pageSize))
+            }
+            else if (Model.RegisterItemsV2.Any())
             {
                 @Html.Partial("_pagedListPagerRegisterItemViewModel", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
             }
-
+            else
+            {
+                @Html.Partial("_pagedListPager", Model.RegisterItems.ToPagedList(pageNumber, pageSize))
+            }
         </div>
         <div class="col-md-4 pull-right">
             @Html.Partial("_otherformats")
@@ -126,7 +132,6 @@
     <div class="clearfix"></div>
     <span class="separator-small margin-bottom-10"></span>
 }
-
 
 
 @if (Model.SelectedInspireRegisteryType == "service")
@@ -145,7 +150,6 @@ else
 {
     @Html.Partial("_inspireDataset", Model.RegisterItemsV2.ToPagedList(pageNumber, pageSize))
 }
-
 
 
 
@@ -169,7 +173,7 @@ else
 
 <div class="clearfix"></div>
 <div class="hidden-print">
-    @if (Request.IsAuthenticated && (Model.SelectedInspireRegisteryType != "report" || Model.SelectedInspireRegisteryType != "synchronizations"))
+    @if (Model.SelectedInspireRegisteryType != "report" && Model.SelectedInspireRegisteryType != "synchronizations")
     {
         if (Model.AccessRegister.EditListOfRegisterItems)
         {

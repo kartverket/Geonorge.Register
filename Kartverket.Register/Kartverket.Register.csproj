@@ -909,6 +909,7 @@
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
+    <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />

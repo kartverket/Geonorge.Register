@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Kartverket.Register.Models.Translations;
 using Resources;
 using Kartverket.Register.Helpers;
@@ -251,6 +252,11 @@ namespace Kartverket.Register.Models
         public bool RegisterAccessAdminMunicipalUserDokEditorAndDocAdmin()
         {
             return accessId is 4;
+        }
+
+        public bool TooManySynchronizationJobs()
+        {
+            return Synchronizes.Count(s => s.Active) > 3;
         }
     }
 }

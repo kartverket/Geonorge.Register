@@ -6,20 +6,49 @@
 
 <h2>Synkronisering</h2>
 
-@if (Model.ActiveSynchronizationJob != null)
+@if (Model.ActiveSynchronizationJob.Any())
 {
     <h3>Pågår</h3>
-    <p><strong>Startet: </strong>@Model.ActiveSynchronizationJob.Start</p>
-    <p><strong>Synkronisert: </strong>@Model.ActiveSynchronizationJob.SuccessCount av @Model.ActiveSynchronizationJob.NumberOfItems</p>
-    <p><strong>Slettet: </strong>@Model.ActiveSynchronizationJob.NumberOfDeletedItems</p>
-    <p><strong>Lagt til: </strong>@Model.ActiveSynchronizationJob.NumberOfNewItems</p>
+
+    foreach (var job in Model.ActiveSynchronizationJob)
+    {
+        <p><strong>Startet: </strong>@job.Start</p>
+        if (job.ItemType != null)
+        {
+            <p><strong>Type: </strong>@job.ItemType</p>
+        }
+        if (job.NumberOfItems > 0)
+        {
+            <p><strong>Synkronisert: </strong>@job.SuccessCount av @job.NumberOfItems</p>
+        }
+        else
+        {
+            <p>Henter data...</p>
+        }
+        if (job.NumberOfNewItems > 0)
+        {
+            <p><strong>Lagt til: </strong>@job.NumberOfNewItems</p>
+        }
+        if (job.NumberOfDeletedItems > 0)
+        {
+            <p><strong>Slettet: </strong>@job.NumberOfDeletedItems</p>
+        }   
+    }
+}
+else
+{
+    <a class="btn btn-default btn-space" href="@RegisterUrls.SynchronizeInspireServices()">Synkroniser tjenester</a>
+    <a class="btn btn-default btn-space" href="@RegisterUrls.SynchronizeInspireRegistry()">Synkroniser register</a> 
 }
 
+<h3>Logg</h3>
 <table class="table table-bordered">
 
     <tr>
         <th>Start</th>
         <th>Stopp</th>
+        <th>Tid</th>
+        <th>Type</th>
         <th>Antall</th>
         <th>Lagt til</th>
         <th>Slettet</th>
@@ -32,6 +61,8 @@
         <tr>
             <td>@synchronization.Start</td>
             <td>@synchronization.Stop</td>
+            <td>@synchronization.Time() min</td>
+            <td>@synchronization.ItemType</td>
             <td>@synchronization.NumberOfItems</td>
             <td>@synchronization.NumberOfNewItems</td>
             <td>@synchronization.NumberOfDeletedItems</td>

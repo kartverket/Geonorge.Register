@@ -8,22 +8,22 @@ namespace Kartverket.Register.Models.ViewModels
     public class SynchronizationViewModel
     {
         public ICollection<Synchronize> SynchronizationJobs { get; set; }
-        public Synchronize ActiveSynchronizationJob { get; set; }
+        public ICollection<Synchronize> ActiveSynchronizationJob { get; set; }
 
         public SynchronizationViewModel(ICollection<Synchronize> synchronizes)
         {
-            SynchronizationJobs = synchronizes;
-            ActiveSynchronizationJob = GetActiveSynchronizationJob();
+            SynchronizationJobs = synchronizes.Where(s => s.Active == false).OrderByDescending(s => s.Start).ToList();
+            ActiveSynchronizationJob = GetActiveSynchronizationJob(synchronizes);
         }
 
-        private Synchronize GetActiveSynchronizationJob()
+        private List<Synchronize> GetActiveSynchronizationJob(ICollection<Synchronize> synchronizes)
         {
             var activJob =
-                from s in SynchronizationJobs
+                from s in synchronizes
                 where s.Active
                 select s;
 
-            return activJob.FirstOrDefault();
+            return activJob.OrderByDescending(s => s.Start).ToList();
         }
     }
 }

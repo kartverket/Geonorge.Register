@@ -88,7 +88,7 @@ namespace Kartverket.Register.Services
             return inspireDataset;
         }
 
-        private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset)
+        private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset, Synchronize synchronizationJob)
         {
             if (_registerItemService.ItemNameAlredyExist(inspireDataset)) return;
             inspireDataset.SystemId = Guid.NewGuid();
@@ -123,6 +123,7 @@ namespace Kartverket.Register.Services
             inspireDataset.InspireDeliveryHarmonizedDataId = _datasetDeliveryService.CreateDatasetDelivery(harmonizedDataStatus);
             inspireDataset.InspireDeliverySpatialDataServiceId = _datasetDeliveryService.CreateDatasetDelivery(spatialDataServiceStatusId);
 
+            synchronizationJob.AddedLog.Add(new SyncLogEntry(inspireDataset, "Lagt til"));
             _dbContext.InspireDatasets.Add(inspireDataset);
             _dbContext.SaveChanges();
         }
@@ -396,7 +397,7 @@ namespace Kartverket.Register.Services
                 }
                 else
                 {
-                    NewInspireDatasetFromKartkatalogen(inspireDatasetFromKartkatalogen);
+                    NewInspireDatasetFromKartkatalogen(inspireDatasetFromKartkatalogen, synchronizationJob);
                     synchronizationJob.NumberOfNewItems++;
                 }
                 synchronizationJob.SuccessCount++;
@@ -426,6 +427,7 @@ namespace Kartverket.Register.Services
             {
                 inspireDataset.InspireThemes.Clear();
                 DeleteInspireDataset(inspireDataset);
+                synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataset, "Slettet"));
                 synchronizationJob.NumberOfDeletedItems++;
             }
 
@@ -522,15 +524,16 @@ namespace Kartverket.Register.Services
                 }
                 else
                 {
-                    NewInspireDataServiceFromKartkatalogen(inspireDataServiceFromKartkatalogen);
+                    NewInspireDataServiceFromKartkatalogen(inspireDataServiceFromKartkatalogen, synchronizationJob);
                     synchronizationJob.NumberOfNewItems++;
                 }
 
                 synchronizationJob.SuccessCount++;
+                _dbContext.SaveChanges();
             }
         }
 
-        private void NewInspireDataServiceFromKartkatalogen(InspireDataService inspireDataService)
+        private void NewInspireDataServiceFromKartkatalogen(InspireDataService inspireDataService, Synchronize synchronizationJob)
         {
             if (_registerItemService.ItemNameAlredyExist(inspireDataService)) return;
             inspireDataService.SystemId = Guid.NewGuid();
@@ -552,6 +555,7 @@ namespace Kartverket.Register.Services
 
             _dbContext.InspireDataServices.Add(inspireDataService);
             _dbContext.SaveChanges();
+            synchronizationJob.AddedLog.Add(new SyncLogEntry(inspireDataService, "Lagt til"));
         }
 
         private void RemoveInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen, Synchronize synchronizationJob)
@@ -575,6 +579,7 @@ namespace Kartverket.Register.Services
             {
                 inspireDataService.InspireThemes.Clear();
                 DeleteInspireDataService(inspireDataService);
+                synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataService, "Slettet"));
                 synchronizationJob.NumberOfDeletedItems++;
             }
         }

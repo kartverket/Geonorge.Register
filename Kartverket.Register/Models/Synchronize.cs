@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Kartverket.Register.Migrations;
 
 namespace Kartverket.Register.Models
 {
@@ -15,6 +16,8 @@ namespace Kartverket.Register.Models
             Start = DateTime.Now;
             Active = true;
             FailLog = new HashSet<SyncLogEntry>();
+            DeletedLog = new HashSet<SyncLogEntry>();
+            AddedLog = new HashSet<SyncLogEntry>();
         }
 
         [Key]
@@ -38,10 +41,39 @@ namespace Kartverket.Register.Models
             Stop = DateTime.Now;
             Active = false;
         }
+
+        public int Time()
+        {
+            try
+            {
+                return (Stop - Start).Value.Minutes;
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+        }
     }
 
     public class SyncLogEntry
     {
+
+        public SyncLogEntry(InspireDataset inspireDataset, string message)
+        {
+            Id = Guid.NewGuid();
+            Uuid = inspireDataset.Uuid;
+            Name = inspireDataset.Name;
+            Message = message;
+        }
+
+        public SyncLogEntry(InspireDataService inspireDataService, string message)
+        {
+            Id = Guid.NewGuid();
+            Uuid = inspireDataService.Uuid;
+            Name = inspireDataService.Name;
+            Message = message;
+        }
+
         public Guid Id { get; set; }
         public string Uuid { get; set; }
         public string Name { get; set; }

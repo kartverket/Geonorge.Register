@@ -10,7 +10,7 @@ namespace Kartverket.Register.Services
 {
     public interface ISynchronizationService
     {
-        Synchronize StartSynchronizationJob(Models.Register register);
+        Synchronize StartSynchronizationJob(Models.Register register, string itemType);
         void StopSynchronizationJob(Synchronize register);
     }
 }

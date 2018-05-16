@@ -16,9 +16,11 @@ namespace Kartverket.Register.Services
             _dbContext = dbContext;
         }
 
-        public Synchronize StartSynchronizationJob(Models.Register register)
+        public Synchronize StartSynchronizationJob(Models.Register register, string itemType)
         {
             var synchronizationJob = new Synchronize();
+            synchronizationJob.Active = true;
+            synchronizationJob.ItemType = itemType;
             register.Synchronizes.Add(synchronizationJob);
             _dbContext.SaveChanges();
             return synchronizationJob;

@@ -8,6 +8,9 @@
 
 @if (Model.ActiveSynchronizationJob.Any())
 {
+    <a class="btn btn-default btn-space disabled">Synkroniser register</a>
+    <a class="btn btn-default btn-space disabled">Synkroniser tjenester</a>
+
     <h3>Pågår</h3>
 
     foreach (var job in Model.ActiveSynchronizationJob)
@@ -32,43 +35,46 @@
         if (job.NumberOfDeletedItems > 0)
         {
             <p><strong>Slettet: </strong>@job.NumberOfDeletedItems</p>
-        }   
+        }
     }
 }
 else
 {
+    <a class="btn btn-default btn-space" href="@RegisterUrls.SynchronizeInspireRegistry()">Synkroniser register</a>
     <a class="btn btn-default btn-space" href="@RegisterUrls.SynchronizeInspireServices()">Synkroniser tjenester</a>
-    <a class="btn btn-default btn-space" href="@RegisterUrls.SynchronizeInspireRegistry()">Synkroniser register</a> 
 }
 
-<h3>Logg</h3>
-<table class="table table-bordered">
-
-    <tr>
-        <th>Start</th>
-        <th>Stopp</th>
-        <th>Tid</th>
-        <th>Type</th>
-        <th>Antall</th>
-        <th>Lagt til</th>
-        <th>Slettet</th>
-        <th>Vellykket</th>
-        <th>Feil</th>
-    </tr>
-    @foreach (var synchronization in Model.SynchronizationJobs)
-    {
+@if (Model.SynchronizationJobs.Any())
+{
+    <h3>Logg</h3>
+    <table class="table table-bordered">
 
         <tr>
-            <td>@synchronization.Start</td>
-            <td>@synchronization.Stop</td>
-            <td>@synchronization.Time() min</td>
-            <td>@synchronization.ItemType</td>
-            <td>@synchronization.NumberOfItems</td>
-            <td>@synchronization.NumberOfNewItems</td>
-            <td>@synchronization.NumberOfDeletedItems</td>
-            <td>@synchronization.SuccessCount</td>
-            <td>@synchronization.FailCount</td>
+            <th>Start</th>
+            <th>Stopp</th>
+            <th>Tid</th>
+            <th>Type</th>
+            <th>Antall</th>
+            <th>Lagt til</th>
+            <th>Slettet</th>
+            <th>Vellykket</th>
+            <th>Feil</th>
         </tr>
-    }
-</table>
+        @foreach (var synchronization in Model.SynchronizationJobs)
+        {
+
+            <tr>
+                <td>@synchronization.Start</td>
+                <td>@synchronization.Stop</td>
+                <td>@synchronization.Time() min</td>
+                <td>@synchronization.ItemType</td>
+                <td>@synchronization.NumberOfItems</td>
+                <td>@synchronization.NumberOfNewItems</td>
+                <td>@synchronization.NumberOfDeletedItems</td>
+                <td>@synchronization.SuccessCount</td>
+                <td>@synchronization.FailCount</td>
+            </tr>
+        }
+    </table>
+}
 

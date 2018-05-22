@@ -1293,6 +1293,13 @@ namespace Kartverket.Register.Services.Register
             return register;
         }
 
+        public void UpdateDateModified(Models.Register register)
+        {
+            register.modified = DateTime.Now;
+            _dbContext.Entry(register).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+        }
+
         private void DeleteSubregisters(ICollection<Models.Register> subregisters)
         {
             foreach (var subregister in subregisters.ToList())

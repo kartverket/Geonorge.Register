@@ -42,15 +42,20 @@ namespace Kartverket.Register.Models
             Active = false;
         }
 
-        public int Time()
+        public string Time()
         {
+            if (Active)
+            {
+                return "Pågår";
+            }
+
             try
             {
-                return (Stop - Start).Value.Minutes;
+                return (Stop - Start).Value.Minutes.ToString() + " min";
             }
             catch (Exception e)
             {
-                return 0;
+                return "Stoppet";
             }
         }
     }

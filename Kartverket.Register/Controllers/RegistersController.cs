@@ -109,7 +109,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
-        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter, string synchronization)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
@@ -124,14 +124,21 @@ namespace Kartverket.Register.Controllers
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 
-            if (filter.ShowCurrentInspireMonitoringReport)
+            if (viewModel.SelectedInspireRegisteryTypeIsReport())
             {
-                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetCurrentInspireMonitroingData(register));
+                if (filter.ShowCurrentInspireMonitoringReport)
+                {
+                    viewModel.InspireMonitoringData =
+                        new InspireMonitoringViewModel(
+                            _inspireMonitoringService.GetCurrentInspireMonitroingData(register));
+                }
+                else
+                {
+                    viewModel.InspireMonitoringData =
+                        new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
+                }
             }
-            else
-            {
-                viewModel.InspireMonitoringData = new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
-            }
+
             ItemsOrderBy(sorting, viewModel);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
 

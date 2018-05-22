@@ -262,5 +262,15 @@ namespace Kartverket.Register.Models.ViewModels
         {
             return ParentRegister == null ? "/" : ParentRegister.GetObjectUrl();
         }
+
+        public bool SelectedInspireRegisteryTypeIsReport()
+        {
+            return SelectedInspireRegisteryType == "report";
+        }
+
+        public bool SelectedInspireRegisteryTypeIsSynchronizations()
+        {
+            return SelectedInspireRegisteryType == "synchronizations";
+        }
     }
 }

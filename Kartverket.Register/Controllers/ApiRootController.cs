@@ -348,14 +348,19 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             var register = _registerService.GetInspireStatusRegister();
+            if (register.TooManySynchronizationJobs())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
 
-            var synchronizationJob = _synchronizationService.StartSynchronizationJob(register, "Datasett");
-            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJob);
-            _synchronizationService.StopSynchronizationJob(synchronizationJob);
+            var synchronizationJobDataset = _synchronizationService.StartSynchronizationJob(register, "Datasett");
+            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJobDataset);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobDataset);
 
-            synchronizationJob = _synchronizationService.StartSynchronizationJob(register, "Tjenester");
-            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
-            _synchronizationService.StopSynchronizationJob(synchronizationJob);
+            var synchronizationJobServices = _synchronizationService.StartSynchronizationJob(register, "Tjenester");
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJobServices);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobServices);
+            _registerService.UpdateDateModified(register);
 
             return Ok();
         }
@@ -375,6 +380,8 @@ namespace Kartverket.Register.Controllers
             new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
 
             _synchronizationService.StopSynchronizationJob(synchronizationJob);
+            _registerService.UpdateDateModified(register);
+
             return Ok();
         }
 

@@ -25,5 +25,29 @@ namespace Kartverket.Register.Models.ViewModels
 
             return activJob.OrderByDescending(s => s.Start).ToList();
         }
+
+        public bool ActiveSynchronizationOfDatasets()
+        {
+            foreach (var activeJobs in ActiveSynchronizationJob)
+            {
+                if (activeJobs.ItemType == "Datasett")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool ActiveSynchronizationOfServices()
+        {
+            foreach (var activeJobs in ActiveSynchronizationJob)
+            {
+                if (activeJobs.ItemType == "Tjenester")
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

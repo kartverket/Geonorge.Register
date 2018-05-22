@@ -11,8 +11,11 @@ using Kartverket.Register.Services.RegisterItem;
 using Kartverket.Register.Helpers;
 using Kartverket.Register.Services;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Kartverket.Register.Services.Translation;
 using System.Web;
+using System.Web.Configuration;
 using Resources;
 
 namespace Kartverket.Register.Controllers
@@ -109,7 +112,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
-        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter, string synchronization)
+        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter, string dataset, string service)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
@@ -117,6 +120,15 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetInspireStatusRegister();
             if (register == null) return HttpNotFound();
+
+            if (dataset != null)
+            {
+                StartSynchronizationDataset();
+            }
+            else if (service != null)
+            {
+                StartSynchronizationService();
+            }
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
@@ -145,6 +157,18 @@ namespace Kartverket.Register.Controllers
             return View(viewModel);
         }
 
+        private void StartSynchronizationDataset()
+        {
+            HttpClient hc = new HttpClient();
+            hc.GetAsync(WebConfigurationManager.AppSettings["RegistryUrl"] + "api/metadata/synchronize/inspire-statusregister/dataset");
+        }
+
+        private void StartSynchronizationService()
+        {
+            HttpClient hc = new HttpClient();
+            hc.GetAsync(WebConfigurationManager.AppSettings["RegistryUrl"] + "api/metadata/synchronize/inspire-statusregister/dataservices");
+        }
+
 
         // GET: Registers/Details/5
         [Route("register/{registername}")]
@@ -166,7 +190,7 @@ namespace Kartverket.Register.Controllers
             viewModel.MunicipalityCode = filter.municipality;
             viewModel.Municipality = _registerItemService.GetMunicipalityOrganizationByNr(viewModel.MunicipalityCode);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
-            
+
             ItemsOrderBy(sorting, viewModel);
             ViewBagOrganizationMunizipality(filter.municipality);
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);

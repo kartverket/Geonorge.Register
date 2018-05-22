@@ -386,6 +386,24 @@ namespace Kartverket.Register.Controllers
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister/dataset")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireDataset()
+        {
+            var register = _registerService.GetInspireStatusRegister();
+            if (register.TooManySynchronizationJobs())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
+
+            var synchronizationJobDataset = _synchronizationService.StartSynchronizationJob(register, "Datasett");
+            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJobDataset);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobDataset);
+
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
         [Route("api/metadata/synchronize/geodatalov-statusregister")]
         [HttpGet]
         public IHttpActionResult SynchronizeGeodatalovStatusregister()

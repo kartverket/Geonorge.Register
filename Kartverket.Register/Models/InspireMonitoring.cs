@@ -309,17 +309,17 @@ namespace Kartverket.Register.Models
 
         public double ProportionOfDatasetsAvailableThroughViewService()
         {
-            return Divide(NumberOfDatasetsAvailableThroughViewService, NumberOfServicesByServiceTypeView);
+            return Divide(NumberOfDatasetsAvailableThroughViewService, NumberOfDatasetsByAnnex);
         }
 
         public double ProportionOfDatasetsAvailableThroughDownloadService()
         {
-            return Divide(NumberOfDatasetsAvailableThroughDownloadService, NumberOfServicesByServiceTypeDownload);
+            return Divide(NumberOfDatasetsAvailableThroughDownloadService, NumberOfDatasetsByAnnex);
         }
 
         public double ProportionOfDatasetsAvailableThroughViewAndDownloadService()
         {
-            return Divide(NumberOfDatasetsAvailableThroughViewANDDownloadService, (NumberOfServicesByServiceTypeDownload + NumberOfServicesByServiceTypeView));
+            return Divide(NumberOfDatasetsAvailableThroughViewANDDownloadService, NumberOfDatasetsByAnnex);
         }
 
         public double ProportionOfServicesWhereConformityIsTrue()

@@ -366,9 +366,9 @@ namespace Kartverket.Register.Services
         private ViewDownloadAccessibilityIndicators GetViewDownloadAccessibilityIndicators()
         {
             ViewDownloadAccessibilityIndicators viewDownloadAccessibilityIndicators = new ViewDownloadAccessibilityIndicators();
-            viewDownloadAccessibilityIndicators.NSi21 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<NSv_NumViewServ>)
-            viewDownloadAccessibilityIndicators.NSi22 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<NSv_NumDownServ>)
-            viewDownloadAccessibilityIndicators.NSi2 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<NSv_NumViewServ>+<NSv_NumDownServ>)
+            viewDownloadAccessibilityIndicators.NSi21 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view service (<NSv21>/<DSv_Num>)
+            viewDownloadAccessibilityIndicators.NSi22 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom download service (<NSv22>/<DSv_Num>)
+            viewDownloadAccessibilityIndicators.NSi2 = _inspireMonitoring.ProportionOfDatasetsAvailableThroughViewAndDownloadService(); // Andel Annex1-3 datasett som er tilgjengelig gjennom view OG download service (<NSv23>/<DSv_Num>)
             viewDownloadAccessibilityIndicators.ViewDownloadAccessibility = GetViewDownloadAccessibility();
 
             return viewDownloadAccessibilityIndicators;

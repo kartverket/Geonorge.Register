@@ -20,32 +20,36 @@
 }
 @section Scripts {
     <script>
-        $(function () {
-            var menu_state = localStorage.setItem("navtabselected", "gjeldende");
-        }
-        );
-
-        $(function () {
-
-            document.querySelectorAll('.tab').forEach(function (tabElement) {
-                tabElement.className = "tab";
-            });
-
-            var selectedTabParameter = getParameterByName("inspireregisterytype");
-            var selectedTab = document.getElementById('dataset-Tab');
-            console.log(selectedTabParameter);
-            if (selectedTabParameter != "") {
-                selectedTab = document.getElementById(selectedTabParameter + '-Tab');
-                if (selectedTab == null) {
-                    console.log(null);
-                    selectedTab = document.getElementById('dataset-Tab');
-                }
+        $(function() {
+                var menu_state = localStorage.setItem("navtabselected", "gjeldende");
             }
-
-            selectedTab.className = "active";
-
-        }
         );
+
+        $(function() {
+
+            var tabs = document.querySelectorAll('.tab');
+            console.log(tabs);
+
+            for (var i = 0; i < tabs.length; i++) {
+                var item = tabs[i]; // Calling myNodeList.item(i) isn't necessary in JavaScript
+                item.className = "tab";
+            }
+        });
+
+        var selectedTabParameter = getParameterByName("inspireregisterytype");
+        var selectedTab = document.getElementById('dataset-Tab');
+        console.log(selectedTabParameter);
+        if (selectedTabParameter != "") {
+            selectedTab = document.getElementById(selectedTabParameter + '-Tab');
+            if (selectedTab == null) {
+                console.log(null);
+                selectedTab = document.getElementById('dataset-Tab');
+            }
+        }
+
+        selectedTab.className = "active";
+
+        
     </script>
 }
 

@@ -112,7 +112,7 @@ namespace Kartverket.Register.Controllers
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
-        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter, string dataset, string service)
+        public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
             RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
             var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
@@ -120,15 +120,6 @@ namespace Kartverket.Register.Controllers
 
             var register = _registerService.GetInspireStatusRegister();
             if (register == null) return HttpNotFound();
-
-            if (dataset != null)
-            {
-                StartSynchronizationDataset();
-            }
-            else if (service != null)
-            {
-                StartSynchronizationService();
-            }
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
@@ -155,6 +146,31 @@ namespace Kartverket.Register.Controllers
             ViewbagsRegisterDetails(sorting, page, filter, viewModel);
 
             return View(viewModel);
+        }
+
+        // POST: Registers/Details/5
+        [Authorize]
+        [HttpPost]
+        [Route("register/inspire-statusregister")]
+        [Route("register/inspire-statusregister.{format}")]
+        [Route("register/inspire-statusregister/{filterOrganization}")]
+        public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
+        {
+            if (IsAdmin())
+            {
+                if (dataset != null)
+                {
+                    StartSynchronizationDataset();
+                }
+                else if (service != null)
+                {
+                    StartSynchronizationService();
+                }
+
+                return Redirect(Request.RawUrl);
+            }
+
+            return HttpNotFound();
         }
 
         private void StartSynchronizationDataset()

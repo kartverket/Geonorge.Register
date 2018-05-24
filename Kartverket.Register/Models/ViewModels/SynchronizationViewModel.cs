@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Configuration;
 
 namespace Kartverket.Register.Models.ViewModels
 {
@@ -48,6 +49,11 @@ namespace Kartverket.Register.Models.ViewModels
                 }
             }
             return false;
+        }
+
+        public string MetadataUrl(string uuid)
+        {
+            return WebConfigurationManager.AppSettings["KartkatalogenUrl"] + "metadata/uuid/" + uuid;
         }
     }
 }

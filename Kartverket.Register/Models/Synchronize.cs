@@ -62,6 +62,9 @@ namespace Kartverket.Register.Models
 
     public class SyncLogEntry
     {
+        public SyncLogEntry()
+        {
+        }
 
         public SyncLogEntry(InspireDataset inspireDataset, string message)
         {

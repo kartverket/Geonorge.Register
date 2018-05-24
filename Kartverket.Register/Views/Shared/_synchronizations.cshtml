@@ -1,10 +1,54 @@
 ﻿@model SynchronizationViewModel
+@using System.Web.Configuration
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
 
 
+<script>
+
+    function toggleNewItems(i) {
+        var x = document.getElementById("newItems-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function toggleDeletedItems(i) {
+        var x = document.getElementById("deletedItems-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function toggleNewItemsLog(i) {
+        var x = document.getElementById("newItemsLog-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function toggleDeletedItemsLog(i) {
+        var x = document.getElementById("deletedItemsLog-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+
 
 <h2>Synkronisering</h2>
+
+@* *** Synchronization buttons *** *@
+
 @using (Html.BeginForm())
 {
     if (Model.ActiveSynchronizationOfDatasets())
@@ -24,51 +68,137 @@
         <input class="btn btn-default btn-space pull-right" name="service" type="submit" value="Synkroniser tjeneste" />
     }
 }
-@if (Model.SynchronizationJobs.Any())
+
+
+@* *** Synchronization table *** *@
+
+@if (Model.SynchronizationJobs.Any() || Model.ActiveSynchronizationJob.Any())
 {
-    <table class="table table-bordered">
-
-        <tr>
-            <th>Start</th>
-            <th>Stopp</th>
-            <th>Tid</th>
-            <th>Type</th>
-            <th>Antall</th>
-            <th>Synkronisert</th>
-            <th>Lagt til</th>
-            <th>Slettet</th>
-            @*            <th>Feil</th>*@
-        </tr>
-
-        @foreach (var activeJobs in Model.ActiveSynchronizationJob)
-        {
-            <tr class="success">
-                <td>@activeJobs.Start</td>
-                <td>@activeJobs.Stop</td>
-                <td>@activeJobs.Time()</td>
-                <td>@activeJobs.ItemType</td>
-                <td>@activeJobs.NumberOfItems</td>
-                <td>@activeJobs.SuccessCount</td>
-                <td>@activeJobs.NumberOfNewItems</td>
-                <td>@activeJobs.NumberOfDeletedItems</td>
-                @*          <td>@activeJobs.FailCount</td>*@
-            </tr>
-        }
-
-        @foreach (var synchronization in Model.SynchronizationJobs)
-        {
+    <table class="table table-bordered table-responsive">
+        <thead>
             <tr>
-                <td>@synchronization.Start</td>
-                <td>@synchronization.Stop</td>
-                <td>@synchronization.Time()</td>
-                <td>@synchronization.ItemType</td>
-                <td>@synchronization.NumberOfItems</td>
-                <td>@synchronization.SuccessCount</td>
-                <td>@synchronization.NumberOfNewItems</td>
-                <td>@synchronization.NumberOfDeletedItems</td>
-                @*        <td>@synchronization.FailCount</td>*@
+                <th>Start</th>
+                <th>Stopp</th>
+                <th>Tid</th>
+                <th>Type</th>
+                <th>Antall</th>
+                <th>Synkronisert</th>
+                <th>Lagt til</th>
+                <th>Slettet</th>
             </tr>
-        }
+        </thead>
+
+        <tbody>
+            @* *** Active jobs *** *@
+
+            @for (int i = 0; i < Model.ActiveSynchronizationJob.Count; i++)
+            {
+
+                <tr class="success">
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).Start</td>
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).Stop</td>
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).Time()</td>
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).ItemType</td>
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfItems</td>
+                    <td>@Model.ActiveSynchronizationJob.ElementAt(i).SuccessCount</td>
+
+                    @if (Model.ActiveSynchronizationJob.ElementAt(i).AddedLog.Any())
+                    {
+                        <td data-toggle="collapse" data-target="#newItems-@i" onclick="toggleNewItems(@i)">@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfNewItems</td>
+                    }
+                    else
+                    {
+                        <td>@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfNewItems</td>
+                    }
+
+                    @if (Model.ActiveSynchronizationJob.ElementAt(i).DeletedLog.Any())
+                    {
+                        <td data-toggle="collapse" data-target="#deletedItems-@i" onclick="toggleDeletedItems(@i)">@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfDeletedItems</td>
+                    }
+                    else
+                    {
+                        <td>@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfDeletedItems</td>
+                    }
+
+                </tr>
+                <tr id="newItems-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="7" style="display: table-cell">
+                        <p><b>Lagt til</b></p>
+                        @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).AddedLog)
+                        {
+                            <div class="col-sm-4">@item.Uuid</div>
+                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+     
+                        }
+                    </td>
+                </tr>
+
+                <tr id="deletedItems-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="8" style="display: table-cell">
+                        <p><b>Slettet</b></p>
+                        @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).DeletedLog)
+                        {
+                            <div class="col-sm-4">@item.Uuid</div>
+                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a>a</div>
+                        }
+                    </td>
+                </tr>
+            }
+
+            @* *** Log *** *@
+
+            @for (int i = 0; i < Model.SynchronizationJobs.Count; i++)
+            {
+                <tr>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).Start</td>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).Stop</td>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).Time()</td>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).ItemType</td>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfItems</td>
+                    <td>@Model.SynchronizationJobs.ElementAt(i).SuccessCount</td>
+                    @if (Model.SynchronizationJobs.ElementAt(i).AddedLog.Any())
+                    {
+                        <td data-toggle="collapse" data-target="#newItemsLog-@i" onclick="toggleNewItemsLog(@i)">@Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems</td>
+                    }
+                    else
+                    {
+                        <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems</td>
+                    }
+
+                    @if (Model.SynchronizationJobs.ElementAt(i).DeletedLog.Any())
+                    {
+                        <td data-toggle="collapse" data-target="#deletedItemsLog-@i" onclick="toggleDeletedItemsLog(@i)">@Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems</td>
+                    }
+                    else
+                    {
+                        <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems</td>
+                    }
+                </tr>
+
+                <tr id="newItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="8" style="display: table-cell">
+                        <p><b>Lagt til</b></p>
+                        @foreach (var item in Model.SynchronizationJobs.ElementAt(i).AddedLog)
+                        {
+                            <div class="col-sm-4">@item.Uuid</div>
+                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        }
+                    </td>
+                </tr>
+
+                <tr id="deletedItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="8" style="display: table-cell">
+                        <p><b>Slettet</b></p>
+                        @foreach (var item in Model.SynchronizationJobs.ElementAt(i).DeletedLog)
+                        {
+                            <div class="col-sm-4">@item.Uuid</div>
+                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
     </table>
 }
 

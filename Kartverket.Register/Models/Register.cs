@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Kartverket.Register.Models.Translations;
 using Resources;
 using Kartverket.Register.Helpers;
@@ -29,6 +30,7 @@ namespace Kartverket.Register.Models
             this.subregisters = new HashSet<Register>();
             this.replaces = new HashSet<Version>();
             this.Translations = new TranslationCollection<RegisterTranslation>();
+            Synchronizes = new HashSet<Synchronize>();
         }
         [Key]
         public Guid systemId { get; set; }
@@ -80,6 +82,8 @@ namespace Kartverket.Register.Models
         public bool MakeAllItemsValid { get; set; }
 
         public virtual TranslationCollection<RegisterTranslation> Translations { get; set; }
+
+        public virtual ICollection<Synchronize> Synchronizes { get; set; }
 
         public void AddMissingTranslations()
         {
@@ -248,6 +252,11 @@ namespace Kartverket.Register.Models
         public bool RegisterAccessAdminMunicipalUserDokEditorAndDocAdmin()
         {
             return accessId is 4;
+        }
+
+        public bool TooManySynchronizationJobs()
+        {
+            return Synchronizes.Count(s => s.Active) > 3;
         }
     }
 }

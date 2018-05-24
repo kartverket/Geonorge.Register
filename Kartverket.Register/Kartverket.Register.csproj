@@ -835,6 +835,26 @@
     <Compile Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.Designer.cs">
       <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805141310404_Merge.cs" />
+    <Compile Include="Migrations\201805141310404_Merge.Designer.cs">
+      <DependentUpon>201805141310404_Merge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs" />
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.Designer.cs">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.cs" />
+    <Compile Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.Designer.cs">
+      <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -876,6 +896,7 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
@@ -896,6 +917,7 @@
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
+    <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
@@ -1068,6 +1090,7 @@
     <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\ISynchronizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1094,6 +1117,7 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -1579,6 +1603,8 @@
     <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
     <Content Include="Views\InspireDataService\Edit.cshtml" />
     <Content Include="Views\Shared\_inspireMonitoring.cshtml" />
+    <Content Include="Views\Registers\DetailsInspireStatusRegistry.cshtml" />
+    <Content Include="Views\Shared\_synchronizations.cshtml" />
     <Content Include="Views\InspireDataService\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -1992,8 +2018,23 @@
     <EmbeddedResource Include="Migrations\201804270618294_AddTableInspireMonitorings.resx">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091120020_AddSynchronizationTable.resx">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091258295_UpdateSynchronizationTable.resx">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.resx">
       <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141310404_Merge.resx">
+      <DependentUpon>201805141310404_Merge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.resx">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.resx">
+      <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

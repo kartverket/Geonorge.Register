@@ -440,6 +440,9 @@ namespace Kartverket.Register.Migrations
             context.Database.ExecuteSqlCommand("UPDATE RegisterItems SET dokDeliveryAtomFeedStatusAutoUpdate = 1 WHERE  Discriminator ='Dataset' AND dokDeliveryAtomFeedStatusAutoUpdate IS NULL");
 
 
+            context.Database.ExecuteSqlCommand("UPDATE Synchronizes SET Active = 0 WHERE Active = 1");
+
+
             var queryResult = from c in context.CoverageDatasets
                 where c.dataset.DatasetType == "Kommunalt"
                 select c.CoverageId;

@@ -47,5 +47,6 @@ namespace Kartverket.Register.Services.Register
         void DeleteRegister(Models.Register register);
         bool RegisterNameAlredyExist(Object register);
         Models.Register CreateNewRegister(Models.Register register);
+        void UpdateDateModified(Models.Register register);
     }
 }

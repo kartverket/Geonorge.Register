@@ -104,7 +104,10 @@
 
                     @if (Model.ActiveSynchronizationJob.ElementAt(i).AddedLog.Any())
                     {
-                        <td data-toggle="collapse" data-target="#newItems-@i" onclick="toggleNewItems(@i)">@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfNewItems</td>
+                    <td data-toggle="collapse" data-target="#newItems-@i" onclick="toggleNewItems(@i)">
+                        @Model.ActiveSynchronizationJob.ElementAt(i).NumberOfNewItems
+                        <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                    </td>
                     }
                     else
                     {
@@ -113,7 +116,10 @@
 
                     @if (Model.ActiveSynchronizationJob.ElementAt(i).DeletedLog.Any())
                     {
-                        <td data-toggle="collapse" data-target="#deletedItems-@i" onclick="toggleDeletedItems(@i)">@Model.ActiveSynchronizationJob.ElementAt(i).NumberOfDeletedItems</td>
+                        <td data-toggle="collapse" data-target="#deletedItems-@i" onclick="toggleDeletedItems(@i)">
+                            @Model.ActiveSynchronizationJob.ElementAt(i).NumberOfDeletedItems
+                            <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                        </td>
                     }
                     else
                     {
@@ -126,8 +132,7 @@
                         <p><b>Lagt til</b></p>
                         @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).AddedLog)
                         {
-                            <div class="col-sm-4">@item.Uuid</div>
-                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
      
                         }
                     </td>
@@ -138,8 +143,7 @@
                         <p><b>Slettet</b></p>
                         @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).DeletedLog)
                         {
-                            <div class="col-sm-4">@item.Uuid</div>
-                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a>a</div>
+                        <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
                         }
                     </td>
                 </tr>
@@ -158,7 +162,10 @@
                     <td>@Model.SynchronizationJobs.ElementAt(i).SuccessCount</td>
                     @if (Model.SynchronizationJobs.ElementAt(i).AddedLog.Any())
                     {
-                        <td data-toggle="collapse" data-target="#newItemsLog-@i" onclick="toggleNewItemsLog(@i)">@Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems</td>
+                    <td data-toggle="collapse" data-target="#newItemsLog-@i" onclick="toggleNewItemsLog(@i)">
+                        @Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems
+                        <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                    </td>
                     }
                     else
                     {
@@ -167,7 +174,10 @@
 
                     @if (Model.SynchronizationJobs.ElementAt(i).DeletedLog.Any())
                     {
-                        <td data-toggle="collapse" data-target="#deletedItemsLog-@i" onclick="toggleDeletedItemsLog(@i)">@Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems</td>
+                        <td data-toggle="collapse" data-target="#deletedItemsLog-@i" onclick="toggleDeletedItemsLog(@i)">
+                            @Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems
+                            <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                        </td>
                     }
                     else
                     {
@@ -180,8 +190,7 @@
                         <p><b>Lagt til</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).AddedLog)
                         {
-                            <div class="col-sm-4">@item.Uuid</div>
-                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
                         }
                     </td>
                 </tr>
@@ -191,8 +200,7 @@
                         <p><b>Slettet</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).DeletedLog)
                         {
-                            <div class="col-sm-4">@item.Uuid</div>
-                            <div class="col-sm-8"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                            <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
                         }
                     </td>
                 </tr>

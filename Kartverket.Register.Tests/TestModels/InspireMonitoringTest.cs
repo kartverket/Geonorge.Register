@@ -1267,21 +1267,21 @@ namespace Kartverket.Register.Tests.TestModels
         public void ProportionOfDatasetsAvailableThroughViewService()
         {
             var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughViewService();
-            result.Should().Be(1);
+            result.Should().Be(0.33333333333333331);
         }
 
         [Fact]
         public void ProportionOfDatasetsAvailableThroughDownloadService()
         {
             var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughDownloadService();
-            result.Should().Be(1);
+            result.Should().Be(0.33333333333333331);
         }
 
         [Fact]
         public void ProportionOfDatasetsAvailableThroughViewAndDownloadService()
         {
             var result = _inspireMonitoringTest.ProportionOfDatasetsAvailableThroughViewAndDownloadService();
-            result.Should().Be(0.5);
+            result.Should().Be(0.33333333333333331);
         }
 
         [Fact]

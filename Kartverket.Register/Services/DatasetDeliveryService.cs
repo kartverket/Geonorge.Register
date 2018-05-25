@@ -78,10 +78,6 @@ namespace Kartverket.Register.Services
 
         public string GetDeliveryDistributionStatus(string metadataUuid, string distributionUrl, bool autoupdate, string currentStatus)
         {
-            if (metadataUuid == "e2dadc82-c628-47ed-af31-74763052aa6c")
-            {
-                
-            }
             var status = currentStatus;
             try
             {

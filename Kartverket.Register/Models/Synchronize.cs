@@ -62,8 +62,16 @@ namespace Kartverket.Register.Models
 
     public class SyncLogEntry
     {
+        private string v;
+
         public SyncLogEntry()
         {
+        }
+
+        public SyncLogEntry(string message)
+        {
+            Id = Guid.NewGuid();
+            Message = message;
         }
 
         public SyncLogEntry(InspireDataset inspireDataset, string message)
@@ -79,6 +87,13 @@ namespace Kartverket.Register.Models
             Id = Guid.NewGuid();
             Uuid = inspireDataService.Uuid;
             Name = inspireDataService.Name;
+            Message = message;
+        }
+
+        public SyncLogEntry(string uuid, string message)
+        {
+            Id = Guid.NewGuid();
+            Uuid = uuid;
             Message = message;
         }
 

@@ -90,7 +90,14 @@ namespace Kartverket.Register.Services
 
         private void NewInspireDatasetFromKartkatalogen(InspireDataset inspireDataset, Synchronize synchronizationJob)
         {
-            if (_registerItemService.ItemNameAlredyExist(inspireDataset)) return;
+            if (_registerItemService.ItemNameAlredyExist(inspireDataset))
+            {
+                synchronizationJob.FailCount++;
+                synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Navn finnes fra før"));
+                return;
+            }
+
+            
             inspireDataset.SystemId = Guid.NewGuid();
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
             inspireDataset.SubmitterId = _registerService.GetOrganizationIdByUserName();
@@ -270,7 +277,7 @@ namespace Kartverket.Register.Services
             return inspireDataset;
         }
 
-        public InspireDataset UpdateInspireDataset(InspireDataset originalDataset, InspireDataset inspireDatasetFromKartkatalogen)
+        public InspireDataset UpdateInspireDataset(InspireDataset originalDataset, InspireDataset inspireDatasetFromKartkatalogen, Synchronize synchronizationJob = null)
         {
             originalDataset.Name = inspireDatasetFromKartkatalogen.Name;
             originalDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(originalDataset.Name);
@@ -292,47 +299,46 @@ namespace Kartverket.Register.Services
             originalDataset.DatasetThumbnail = inspireDatasetFromKartkatalogen.DatasetThumbnail;
             originalDataset.UuidService = inspireDatasetFromKartkatalogen.UuidService;
 
-            //originalDataset.InspireThemes = UpdateInspireTheme(originalDataset, inspireDatasetFromKartkatalogen.InspireThemes);
-
             originalDataset.UpdateInspireTheme(inspireDatasetFromKartkatalogen.InspireThemes);
 
+            DatasetDeliveryService d = new DatasetDeliveryService(synchronizationJob);
             if (originalDataset.InspireDeliveryMetadata != null)
             {
                 originalDataset.InspireDeliveryMetadata.StatusId =
-                    _datasetDeliveryService.GetMetadataStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryMetadata.AutoUpdate,
+                    d.GetMetadataStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryMetadata.AutoUpdate,
                         originalDataset.InspireDeliveryMetadata.StatusId);
             }
             originalDataset.InspireDeliveryMetadataService.StatusId = "good";
             if (originalDataset.InspireDeliveryDistribution != null)
             {
                 originalDataset.InspireDeliveryDistribution.StatusId =
-                    _datasetDeliveryService.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, inspireDatasetFromKartkatalogen.DistributionUrl, originalDataset.InspireDeliveryDistribution.AutoUpdate,
+                    d.GetDeliveryDistributionStatus(inspireDatasetFromKartkatalogen.Uuid, inspireDatasetFromKartkatalogen.DistributionUrl, originalDataset.InspireDeliveryDistribution.AutoUpdate,
                         originalDataset.InspireDeliveryDistribution.StatusId);
             }
             if (originalDataset.InspireDeliveryWms != null)
             {
-                originalDataset.InspireDeliveryWms.StatusId = _datasetDeliveryService.GetInspireWmsStatus(
+                originalDataset.InspireDeliveryWms.StatusId = d.GetInspireWmsStatus(
                     inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryWms.AutoUpdate, originalDataset.InspireDeliveryWms.StatusId,
                     originalDataset.UuidService);
             }
 
             if (originalDataset.InspireDeliveryWfs != null)
             {
-                originalDataset.InspireDeliveryWfs.StatusId = _datasetDeliveryService.GetInspireWfsStatus(inspireDatasetFromKartkatalogen.Uuid,
+                originalDataset.InspireDeliveryWfs.StatusId = d.GetInspireWfsStatus(inspireDatasetFromKartkatalogen.Uuid,
                     originalDataset.InspireDeliveryWfs.AutoUpdate, originalDataset.InspireDeliveryWfs.StatusId);
             }
 
             if (originalDataset.InspireDeliveryAtomFeed != null)
             {
                 originalDataset.InspireDeliveryAtomFeed.StatusId =
-                    _datasetDeliveryService.GetAtomFeedStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryAtomFeed.AutoUpdate,
+                    d.GetAtomFeedStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryAtomFeed.AutoUpdate,
                         originalDataset.InspireDeliveryAtomFeed.StatusId);
             }
 
             if (originalDataset.InspireDeliveryWfsOrAtom != null)
             {
                 if (originalDataset.InspireDeliveryWfs != null && originalDataset.InspireDeliveryAtomFeed != null)
-                    originalDataset.InspireDeliveryWfsOrAtom.StatusId = _datasetDeliveryService.GetDownloadRequirementsStatus(originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryAtomFeed.StatusId);
+                    originalDataset.InspireDeliveryWfsOrAtom.StatusId = d.GetDownloadRequirementsStatus(originalDataset.InspireDeliveryWfs.StatusId, originalDataset.InspireDeliveryAtomFeed.StatusId);
                 else originalDataset.InspireDeliveryWfsOrAtom.StatusId = "notset";
 
             }
@@ -340,14 +346,14 @@ namespace Kartverket.Register.Services
             if (originalDataset.InspireDeliveryHarmonizedData != null)
             {
                 originalDataset.InspireDeliveryHarmonizedData.StatusId =
-                    _datasetDeliveryService.GetHarmonizedStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryHarmonizedData.AutoUpdate,
+                    d.GetHarmonizedStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliveryHarmonizedData.AutoUpdate,
                         originalDataset.InspireDeliveryHarmonizedData.StatusId);
             }
 
             if (originalDataset.InspireDeliverySpatialDataService != null)
             {
                 originalDataset.InspireDeliverySpatialDataService.StatusId =
-                    _datasetDeliveryService.GetSpatialDataStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliverySpatialDataService.AutoUpdate,
+                    d.GetSpatialDataStatus(inspireDatasetFromKartkatalogen.Uuid, originalDataset.InspireDeliverySpatialDataService.AutoUpdate,
                         originalDataset.InspireDeliverySpatialDataService.StatusId);
             }
 
@@ -375,7 +381,7 @@ namespace Kartverket.Register.Services
 
         public void SynchronizeInspireDatasets(Synchronize synchronizationJob)
         {
-            var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen();
+            var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen(synchronizationJob);
             if (inspireDatasetsFromKartkatalogen != null)
             {
                 synchronizationJob.NumberOfItems = inspireDatasetsFromKartkatalogen.Count;
@@ -383,6 +389,11 @@ namespace Kartverket.Register.Services
                 UpdateInspireDataset(inspireDatasetsFromKartkatalogen, synchronizationJob);
 
                 _dbContext.SaveChanges();
+            }
+            else
+            {
+                synchronizationJob.FailCount++;
+                synchronizationJob.FailLog.Add(new SyncLogEntry("Klarer ikke hente datasett fra kartkatalogen"));
             }
         }
 
@@ -393,7 +404,7 @@ namespace Kartverket.Register.Services
                 var originalInspireDataset = GetInspireDatasetByUuid(inspireDatasetFromKartkatalogen.Uuid);
                 if (originalInspireDataset != null)
                 {
-                    UpdateInspireDataset(originalInspireDataset, inspireDatasetFromKartkatalogen);
+                    UpdateInspireDataset(originalInspireDataset, inspireDatasetFromKartkatalogen, synchronizationJob);
                 }
                 else
                 {
@@ -454,7 +465,7 @@ namespace Kartverket.Register.Services
             return inspireDatasets;
         }
 
-        private List<InspireDataset> FetchInspireDatasetsFromKartkatalogen()
+        private List<InspireDataset> FetchInspireDatasetsFromKartkatalogen(Synchronize synchronizationJob)
         {
             var inspireDatasetsFromKartkatalogen = new List<InspireDataset>();
 
@@ -477,10 +488,19 @@ namespace Kartverket.Register.Services
                         }
                     }
                 }
+                else
+                {
+                    synchronizationJob.FailCount++;
+                    synchronizationJob.FailLog.Add(new SyncLogEntry("0 treff fra kartkatalogen"));
+
+                }
                 return inspireDatasetsFromKartkatalogen;
             }
             catch (Exception e)
             {
+                synchronizationJob.FailCount++;
+                synchronizationJob.FailLog.Add(new SyncLogEntry("Klarer ikke hente fra - api/datasets?facets%5b0%5dname=nationalinitiative&facets%5b0%5dvalue=Inspire&Offset=1&limit=500&mediatype=json "));
+
                 System.Diagnostics.Debug.WriteLine(e);
                 System.Diagnostics.Debug.WriteLine(url);
                 return null;

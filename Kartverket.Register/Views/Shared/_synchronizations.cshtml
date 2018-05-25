@@ -157,7 +157,7 @@
 
                 </tr>
                 <tr id="newItems-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="7" style="display: table-cell">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Lagt til</b></p>
                         @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).AddedLog)
                         {
@@ -168,7 +168,7 @@
                 </tr>
 
                 <tr id="deletedItems-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="8" style="display: table-cell">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Slettet</b></p>
                         @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).DeletedLog)
                         {
@@ -178,7 +178,7 @@
                 </tr>
 
                 <tr id="faildItems-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="8" style="display: table-cell">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Feil</b></p>
                         @foreach (var item in Model.ActiveSynchronizationJob.ElementAt(i).FailLog)
                         {
@@ -240,7 +240,7 @@
                 </tr>
 
                 <tr id="newItemsLog-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="8" style="display: table-cell">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Lagt til</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).AddedLog)
                         {
@@ -250,7 +250,7 @@
                 </tr>
 
                 <tr id="deletedItemsLog-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="8" style="display: table-cell">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Slettet</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).DeletedLog)
                         {
@@ -259,8 +259,8 @@
                     </td>
                 </tr>
 
-                <tr id="faildItems-@i" class="toggleTableRow" style="display: none">
-                    <td colspan="8" style="display: table-cell">
+                <tr id="faildItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="9" style="display: table-cell">
                         <p><b>Feil</b></p>
                         @foreach (var item in Model.SynchronizationJobs.ElementAt(i).FailLog)
                         {

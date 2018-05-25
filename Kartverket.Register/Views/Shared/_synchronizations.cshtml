@@ -73,7 +73,7 @@
     }
     else
     {
-        <input class="btn btn-default btn-space pull-right" name="dataset" type="submit" value="Synkroniser datasett" />
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering"  name="dataset" type="submit" value="Synkroniser datasett" />
     }
     if (Model.ActiveSynchronizationOfServices())
     {
@@ -81,7 +81,7 @@
     }
     else
     {
-        <input class="btn btn-default btn-space pull-right" name="service" type="submit" value="Synkroniser tjeneste" />
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="service" type="submit" value="Synkroniser tjeneste" />
     }
 }
 

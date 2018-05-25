@@ -123,7 +123,7 @@ namespace Kartverket.Register.Controllers
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
-            var viewModel = new RegisterV2ViewModel(register);
+            var viewModel = new RegisterV2ViewModel(register, page);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
 

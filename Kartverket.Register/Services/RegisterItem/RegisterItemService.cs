@@ -1037,7 +1037,7 @@ namespace Kartverket.Register.Services.RegisterItem
                         }
                 }
             }
-            return registerItems.OrderBy(o => o.Name).ToList();
+            return registerItems;
         }
 
         public ICollection<Models.RegisterItem> OrderBy(ICollection<Models.RegisterItem> registerItems, string sorting)

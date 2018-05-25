@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
+using PagedList;
 
 namespace Kartverket.Register.Models.ViewModels
 {
     public class SynchronizationViewModel
     {
-        public ICollection<Synchronize> SynchronizationJobs { get; set; }
+        public IPagedList<Synchronize> SynchronizationJobs { get; set; }
         public ICollection<Synchronize> ActiveSynchronizationJob { get; set; }
 
-        public SynchronizationViewModel(ICollection<Synchronize> synchronizes)
+        public SynchronizationViewModel(ICollection<Synchronize> synchronizes, int? page)
         {
-            SynchronizationJobs = synchronizes.Where(s => s.Active == false).OrderByDescending(s => s.Start).ToList();
+            if (page == null) { page = 1; }
+            SynchronizationJobs = synchronizes.OrderByDescending(s => s.Start).ToPagedList(page.Value, 30);
             ActiveSynchronizationJob = GetActiveSynchronizationJob(synchronizes);
         }
 

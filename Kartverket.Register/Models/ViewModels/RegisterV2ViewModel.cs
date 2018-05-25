@@ -11,6 +11,8 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class RegisterV2ViewModel
     {
+        private int? page;
+
         public Guid SystemId { get; set; }
 
         [Display(Name = "Owner", ResourceType = typeof(Registers))]
@@ -68,7 +70,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string SelectedInspireRegisteryType { get; set; }
 
-        public RegisterV2ViewModel(Register register)
+        public RegisterV2ViewModel(Register register, int? page = null)
         {
             if (register != null)
             {
@@ -89,7 +91,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
-                SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes);
+                SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
 

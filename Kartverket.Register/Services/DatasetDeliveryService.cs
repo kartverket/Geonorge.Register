@@ -85,7 +85,7 @@ namespace Kartverket.Register.Services
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
-                    if (metadata.DistributionDetails != null &&
+                    if (metadata.DistributionDetails != null && metadata.DistributionDetails.Length > 0 &&
                         metadata.DistributionDetails.Protocol.Value != "GEONORGE:OFFLINE" && distributionUrl != null)
                     {
                         status = Good;
@@ -102,7 +102,7 @@ namespace Kartverket.Register.Services
                 if (_synchronizationJob != null)
                 {
                     _synchronizationJob.FailCount++;
-                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av status for datadeling - DistributionDetails er tom "));
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av status for datadeling"));
                 }
                 return Deficient;
             }

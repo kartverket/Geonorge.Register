@@ -916,6 +916,7 @@
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
     <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
@@ -1337,6 +1338,15 @@
     <Content Include="Content\bower_components\tablesorter\themes\green\bg.png" />
     <Content Include="Content\bower_components\tablesorter\themes\green\desc.png" />
     <Content Include="Content\bower_components\tablesorter\themes\green\style.css" />
+    <Content Include="Content\bower_components\vue\dist\vue.common.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.esm.browser.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.esm.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.min.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.common.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.esm.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.min.js" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
@@ -1456,6 +1466,19 @@
     <Content Include="dist\maps\main.js.map" />
     <Content Include="dist\maps\vendor.css.map" />
     <Content Include="dist\maps\vendor.js.map" />
+    <Content Include="Content\bower_components\vue\.babelrc" />
+    <Content Include="Content\bower_components\vue\.bower.json" />
+    <Content Include="Content\bower_components\vue\.editorconfig" />
+    <Content Include="Content\bower_components\vue\.eslintignore" />
+    <Content Include="Content\bower_components\vue\.eslintrc" />
+    <Content Include="Content\bower_components\vue\.flowconfig" />
+    <Content Include="Content\bower_components\vue\.gitignore" />
+    <Content Include="Content\bower_components\vue\BACKERS.md" />
+    <Content Include="Content\bower_components\vue\dist\README.md" />
+    <Content Include="Content\bower_components\vue\LICENSE" />
+    <Content Include="Content\bower_components\vue\package.json" />
+    <Content Include="Content\bower_components\vue\README.md" />
+    <Content Include="Content\bower_components\vue\yarn.lock" />
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1606,6 +1629,7 @@
     <Content Include="Views\Registers\DetailsInspireStatusRegistry.cshtml" />
     <Content Include="Views\Shared\_synchronizations.cshtml" />
     <Content Include="Views\InspireDataService\Delete.cshtml" />
+    <Content Include="Views\Shared\Vue\_inspireMonitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

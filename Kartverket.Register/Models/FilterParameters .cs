@@ -21,6 +21,9 @@ namespace Kartverket.Register.Models
         public string municipality { get; set; }
         public string InspireRegisteryType { get; set; }
         public bool ShowCurrentInspireMonitoringReport { get; set; }
+        public string SelectedInspireMonitoringReport { get; set; }
+        public string SelectedComparableCandidate { get; set; }
+        public bool Compare { get; set; }
 
     }
 }

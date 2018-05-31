@@ -42,6 +42,18 @@ namespace Kartverket.Register.Helpers
                 {
                     routeValueDictionary.Remove(key);
                 }
+                if (key == "SelectedInspireMonitoringReport")
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                if (key == "SelectedComparableCandidate")
+                {
+                    routeValueDictionary.Remove(key);
+                }
+                if (key == "Compare")
+                {
+                    routeValueDictionary.Remove(key);
+                }
             }
             foreach (var key in nameValueCollection.AllKeys)
             {

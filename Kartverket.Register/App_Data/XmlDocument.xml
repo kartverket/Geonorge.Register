@@ -1000,6 +1000,19 @@
             <param name="municipalityCode">Selected municipality code</param>
             <returns>bool</returns>
         </member>
+        <member name="M:Kartverket.Register.Services.InspireMonitoringService.GetInspireMonitorings">
+            <summary>
+            Get inspireMonitorings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Kartverket.Register.Services.InspireMonitoringService.GetInspireMonitorings(Kartverket.Register.Models.Register)">
+            <summary>
+            Get inspireMonitorings included todays status(not saved)
+            </summary>
+            <param name="inspireRegister"></param>
+            <returns></returns>
+        </member>
         <member name="M:Kartverket.Register.Services.RegisterItem.IRegisterItemService.GetDOKMunicipalStatus(Kartverket.Register.Models.RegisterItem)">
             <summary>
             Returns the confirmation status of municipal dataset

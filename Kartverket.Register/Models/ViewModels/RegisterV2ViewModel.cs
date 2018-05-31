@@ -58,7 +58,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string OrderBy { get; set; }
         public int AccessId { get; set; }
-        public InspireMonitoringViewModel InspireMonitoringData { get; set; }
+        public InspireReportViewModel InspireReport { get; set; }
 
 
         public string MunicipalityCode { get; set; }

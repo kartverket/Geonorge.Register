@@ -993,7 +993,7 @@ namespace Kartverket.Register.Services.Register
                               where r.parentRegisterId == null
                               select r;
 
-            return queryResult.ToList();
+            return queryResult?.ToList();
 
         }
 

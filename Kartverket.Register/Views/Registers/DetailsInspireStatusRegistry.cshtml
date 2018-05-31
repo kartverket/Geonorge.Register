@@ -1,12 +1,9 @@
 ﻿@model RegisterV2ViewModel
 @using Kartverket.Register.Helpers
 @using PagedList
-@using Kartverket.Register.Models
 @using Kartverket.Register.Models.ViewModels
 @{
     ViewBag.Title = Model.Name;
-    string municipalityCode = ViewBag.selectedMunicipalityCode;
-    Organization municipality = ViewBag.organizationMunicipality;
 }
 
 @section breadcrumb {
@@ -19,13 +16,19 @@
     int pageNumber = (page ?? 1);
 }
 @section Scripts {
+    
+    @if (Model.InspireReport != null)
+    {
+        @Html.Partial("Vue/_inspireMonitoring", Model.InspireReport)
+    }
+
     <script>
-        $(function() {
-                var menu_state = localStorage.setItem("navtabselected", "gjeldende");
-            }
+        $(function () {
+            var menu_state = localStorage.setItem("navtabselected", "gjeldende");
+        }
         );
 
-        $(function() {
+        $(function () {
 
             var tabs = document.querySelectorAll('.tab');
             console.log(tabs);
@@ -49,7 +52,7 @@
 
         selectedTab.className = "active";
 
-        
+
     </script>
 }
 
@@ -133,7 +136,7 @@
 }
 else if (Model.SelectedInspireRegisteryType == "report")
 {
-    @Html.Partial("_inspireMonitoring", Model.InspireMonitoringData)
+    @Html.Partial("_inspireMonitoring", Model.InspireReport)
 }
 else if (Model.SelectedInspireRegisteryType == "synchronizations")
 {

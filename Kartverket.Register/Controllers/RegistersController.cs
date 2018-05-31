@@ -129,17 +129,7 @@ namespace Kartverket.Register.Controllers
 
             if (viewModel.SelectedInspireRegisteryTypeIsReport())
             {
-                if (filter.ShowCurrentInspireMonitoringReport)
-                {
-                    viewModel.InspireMonitoringData =
-                        new InspireMonitoringViewModel(
-                            _inspireMonitoringService.GetCurrentInspireMonitroingData(register));
-                }
-                else
-                {
-                    viewModel.InspireMonitoringData =
-                        new InspireMonitoringViewModel(_inspireMonitoringService.GetLatestInspireMonitroingData());
-                }
+                viewModel.InspireReport = _inspireMonitoringService.GetInspireReportViewModel(register, filter);
             }
 
             ItemsOrderBy(sorting, viewModel);

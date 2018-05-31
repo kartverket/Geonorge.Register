@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using System.Web;
+using Kartverket.Register.App_Start;
 
 namespace Kartverket.Register.Controllers
 {
@@ -103,32 +104,25 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save inspire monitoring report data to database.
         /// </summary>
-        [Authorize]
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [Route("api/register/inspire-statusregister/monitoring-report/save")]
         [HttpGet]
         public IHttpActionResult SaveInspireMonitoringData()
         {
-            if (_accessControlService.IsAdmin())
+            try
             {
-                try
-                {
-                    var inspireStatusRegister = _registerService.GetInspireStatusRegister();
-                    _inspireMonitoringService.SaveInspireMonitoring(inspireStatusRegister);
+                var inspireStatusRegister = _registerService.GetInspireStatusRegister();
+                _inspireMonitoringService.SaveInspireMonitoring(inspireStatusRegister);
 
-                    return Ok("Saved");
-                }
-                catch
-                {
-                    return Ok("Error");
-                }
+                return Ok("Saved");
             }
-            else
+            catch
             {
-                return Content(System.Net.HttpStatusCode.Forbidden, "No access");
+                return Ok("Error");
             }
         }
 
-        
+
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {

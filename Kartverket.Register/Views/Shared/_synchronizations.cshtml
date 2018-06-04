@@ -1,0 +1,224 @@
+﻿@model SynchronizationViewModel
+
+@using Kartverket.Register.Models.ViewModels
+@using PagedList.Mvc
+
+
+<script>
+
+    function toggleNewItemsLog(i) {
+        var x = document.getElementById("newItemsLog-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function toggleDeletedItemsLog(i) {
+        var x = document.getElementById("deletedItemsLog-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function toggleFaildItemsLog(i) {
+        var x = document.getElementById("faildItemsLog-" + i);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+
+
+@* *** Synchronization buttons *** *@
+
+@using (Html.BeginForm())
+{
+    if (Model.ActiveSynchronizationOfDatasets())
+    {
+        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av datasett pågår">Synkroniser datasett</a>
+    }
+    else
+    {
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="dataset" type="submit" value="Synkroniser datasett" />
+    }
+    if (Model.ActiveSynchronizationOfServices())
+    {
+        <a class="btn btn-default btn-space disabled pull-right" title="Synkronisering av tjenester pågår">Synkroniser tjenester</a>
+    }
+    else
+    {
+        <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="Starter synkronisering" name="service" type="submit" value="Synkroniser tjeneste" />
+    }
+}
+
+
+@* *** Synchronization table *** *@
+
+@Registers.HitsDisplay @(Model.SynchronizationJobs.TotalItemCount == 0 ? 0 : Model.SynchronizationJobs.FirstItemOnPage) - @Model.SynchronizationJobs.LastItemOnPage @Registers.HitsOf @Model.SynchronizationJobs.TotalItemCount @Registers.Hits
+
+@Html.PagedListPager(Model.SynchronizationJobs, page => Request.Path + "?page=" + page + "&InspireRegisteryType=synchronizations")
+
+
+
+@if (Model.SynchronizationJobs.Any() || Model.ActiveSynchronizationJob.Any())
+{
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>Stopp</th>
+                <th>Tid</th>
+                <th>Type</th>
+                <th>Antall</th>
+                <th>Synkronisert</th>
+                <th>Lagt til</th>
+                <th>Slettet</th>
+                <th>Feil</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @* *** Log *** *@
+
+            @for (int i = 0; i < Model.SynchronizationJobs.Count; i++)
+            {
+                if (Model.SynchronizationJobs.ElementAt(i).Active)
+                {
+                    <tr class="success">
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Start</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Stop</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Time()</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).ItemType</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfItems</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).SuccessCount</td>
+                        @if (Model.SynchronizationJobs.ElementAt(i).AddedLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#newItemsLog-@i" onclick="toggleNewItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems</td>
+                        }
+
+                        @if (Model.SynchronizationJobs.ElementAt(i).DeletedLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#deletedItemsLog-@i" onclick="toggleDeletedItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems</td>
+                        }
+
+                        @if (Model.SynchronizationJobs.ElementAt(i).FailLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#faildItemsLog-@i" onclick="toggleFaildItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).FailCount
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).FailCount</td>
+                        }
+
+                    </tr>
+                }
+                else
+                {
+
+                    <tr>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Start</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Stop</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).Time()</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).ItemType</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfItems</td>
+                        <td>@Model.SynchronizationJobs.ElementAt(i).SuccessCount</td>
+                        @if (Model.SynchronizationJobs.ElementAt(i).AddedLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#newItemsLog-@i" onclick="toggleNewItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfNewItems</td>
+                        }
+
+                        @if (Model.SynchronizationJobs.ElementAt(i).DeletedLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#deletedItemsLog-@i" onclick="toggleDeletedItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).NumberOfDeletedItems</td>
+                        }
+
+                        @if (Model.SynchronizationJobs.ElementAt(i).FailLog.Any())
+                        {
+                            <td data-toggle="collapse" data-target="#faildItemsLog-@i" onclick="toggleFaildItemsLog(@i)">
+                                @Model.SynchronizationJobs.ElementAt(i).FailCount
+                                <span class="glyphicon glyphicon-chevron-down" style="float: right"></span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@Model.SynchronizationJobs.ElementAt(i).FailCount</td>
+                        }
+
+                    </tr>
+                }
+
+                <tr id="newItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="9" style="display: table-cell">
+                        <p><b>Lagt til</b></p>
+                        @foreach (var item in Model.SynchronizationJobs.ElementAt(i).AddedLog)
+                        {
+                            <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        }
+                    </td>
+                </tr>
+
+                <tr id="deletedItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="9" style="display: table-cell">
+                        <p><b>Slettet</b></p>
+                        @foreach (var item in Model.SynchronizationJobs.ElementAt(i).DeletedLog)
+                        {
+                            <div class="col-sm-12"><a href="@Model.MetadataUrl(item.Uuid)">@item.Name</a></div>
+                        }
+                    </td>
+                </tr>
+
+                <tr id="faildItemsLog-@i" class="toggleTableRow" style="display: none">
+                    <td colspan="9" style="display: table-cell">
+                        <p><b>Feil</b></p>
+                        @foreach (var item in Model.SynchronizationJobs.ElementAt(i).FailLog)
+                        {
+                            <div class="col-sm-4"><a href="@Model.MetadataUrl(item.Uuid)">@item.Uuid</a></div>
+                            <div class="col-sm-8">@item.Message</div>
+                        }
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+

@@ -835,6 +835,26 @@
     <Compile Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.Designer.cs">
       <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091120020_AddSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.cs" />
+    <Compile Include="Migrations\201805091258295_UpdateSynchronizationTable.Designer.cs">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805141310404_Merge.cs" />
+    <Compile Include="Migrations\201805141310404_Merge.Designer.cs">
+      <DependentUpon>201805141310404_Merge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs" />
+    <Compile Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.Designer.cs">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.cs" />
+    <Compile Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.Designer.cs">
+      <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -876,6 +896,7 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />
     <Compile Include="Models\Translations\Culture.cs" />
@@ -895,7 +916,9 @@
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
+    <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
+    <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
     <Compile Include="Models\ViewModels\GeodatalovDatasetViewModel.cs" />
@@ -1068,6 +1091,7 @@
     <Compile Include="Services\IDocumentService.cs" />
     <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
+    <Compile Include="Services\ISynchronizationService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1094,6 +1118,7 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -1313,6 +1338,15 @@
     <Content Include="Content\bower_components\tablesorter\themes\green\bg.png" />
     <Content Include="Content\bower_components\tablesorter\themes\green\desc.png" />
     <Content Include="Content\bower_components\tablesorter\themes\green\style.css" />
+    <Content Include="Content\bower_components\vue\dist\vue.common.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.esm.browser.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.esm.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.min.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.common.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.esm.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.js" />
+    <Content Include="Content\bower_components\vue\dist\vue.runtime.min.js" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\img\arrow-down.svg" />
     <Content Include="Content\img\arrow-up.svg" />
@@ -1432,6 +1466,19 @@
     <Content Include="dist\maps\main.js.map" />
     <Content Include="dist\maps\vendor.css.map" />
     <Content Include="dist\maps\vendor.js.map" />
+    <Content Include="Content\bower_components\vue\.babelrc" />
+    <Content Include="Content\bower_components\vue\.bower.json" />
+    <Content Include="Content\bower_components\vue\.editorconfig" />
+    <Content Include="Content\bower_components\vue\.eslintignore" />
+    <Content Include="Content\bower_components\vue\.eslintrc" />
+    <Content Include="Content\bower_components\vue\.flowconfig" />
+    <Content Include="Content\bower_components\vue\.gitignore" />
+    <Content Include="Content\bower_components\vue\BACKERS.md" />
+    <Content Include="Content\bower_components\vue\dist\README.md" />
+    <Content Include="Content\bower_components\vue\LICENSE" />
+    <Content Include="Content\bower_components\vue\package.json" />
+    <Content Include="Content\bower_components\vue\README.md" />
+    <Content Include="Content\bower_components\vue\yarn.lock" />
     <None Include="Formatter\XSD\basictype.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -1579,7 +1626,10 @@
     <Content Include="Views\Shared\_detailsInspireDataService.cshtml" />
     <Content Include="Views\InspireDataService\Edit.cshtml" />
     <Content Include="Views\Shared\_inspireMonitoring.cshtml" />
+    <Content Include="Views\Registers\DetailsInspireStatusRegistry.cshtml" />
+    <Content Include="Views\Shared\_synchronizations.cshtml" />
     <Content Include="Views\InspireDataService\Delete.cshtml" />
+    <Content Include="Views\Shared\Vue\_inspireMonitoring.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />
@@ -1992,8 +2042,23 @@
     <EmbeddedResource Include="Migrations\201804270618294_AddTableInspireMonitorings.resx">
       <DependentUpon>201804270618294_AddTableInspireMonitorings.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091120020_AddSynchronizationTable.resx">
+      <DependentUpon>201805091120020_AddSynchronizationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805091258295_UpdateSynchronizationTable.resx">
+      <DependentUpon>201805091258295_UpdateSynchronizationTable.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805141045521_AddNumberOfDatasetsByAnnex.resx">
       <DependentUpon>201805141045521_AddNumberOfDatasetsByAnnex.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805141310404_Merge.resx">
+      <DependentUpon>201805141310404_Merge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151302135_AddAddedLogAndDeletedLogToSynchronize.resx">
+      <DependentUpon>201805151302135_AddAddedLogAndDeletedLogToSynchronize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.resx">
+      <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

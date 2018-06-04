@@ -1,118 +1,174 @@
-﻿@model InspireMonitoringViewModel
+﻿@model InspireReportViewModel
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
+
+@* Vue/_inspireMonitoring*@
 
 
 
 <h2>Indicators</h2>
-<p>@Html.DisplayFor(model => model.Date)</p>
-<a class="btn btn-default pull-right show-loading-animation" data-loading-message="Henter dagens status" href="@Url.Action("Details", Request.QueryString.ToRouteValueDictionary("ShowCurrentInspireMonitoringReport", "true"))">Vis dagens status</a>
-<table class="table table-bordered">
-    <tr>
-        <th></th>
-        <th colspan="2">Metadata</th>
-        <th colspan="2">Data Sets</th>
-        <th colspan="4">Services</th>
-    </tr>
-    <tr class="success">
-        <th></th>
-        <th>Existence</th>
-        <th>Compliance</th>
-        <th>Extend</th>
-        <th>Compliance</th>
-        <th>MD Accessibility</th>
-        <th>DS Accessibility</th>
-        <th>Use</th>
-        <th>Compliance</th>
-    </tr>
 
-    <tr class="active">
-        <th>Indicator Name</th>
-        <th>MDi1</th>
-        <th>MDi2</th>
-        <th>DSi1</th>
-        <th>DSi2</th>
-        <th>NSi1</th>
-        <th>NSi2</th>
-        <th>NSi3</th>
-        <th>NSi4</th>
-    </tr>
+<div id="inspireMonitoringApp">
+    <div class="row form-group">
+        @using (Html.BeginForm("DetailsInspireStatusRegistry", "Registers", FormMethod.Get))
+        {
 
-    <tr>
-        <th>Indicator Value</th>
-        <td>@Model.MDi1Value %</td>
-        <td>@Model.MDi2Value %</td>
-        <td>@Model.DSi1Value %</td>
-        <td>@Model.DSi2Value %</td>
-        <td>@Model.NSi1Value %</td>
-        <td>@Model.NSi2Value %</td>
-        <td>@Model.NSi3Value</td>
-        <td>@Model.NSi4Value %</td>
-    </tr>
-    <tr>
-        <th>Numerator</th>
-        <td>@Model.MDi1Numerator</td>
-        <td>@Model.MDi2Numerator</td>
-        <td>@Model.DSi1Numerator</td>
-        <td>@Model.DSi2Numerator</td>
-        <td>@Model.NSi1Numerator</td>
-        <td>@Model.NSi2Numerator</td>
-        <td>@Model.NSi3Numerator</td>
-        <td>@Model.NSi4Numerator</td>
-    </tr>
-    <tr>
-        <th>Denominator</th>
-        <td>@Model.MDi1Denominator</td>
-        <td>@Model.MDi2Denominator</td>
-        <td>@Model.DSi1Denominator</td>
-        <td>@Model.DSi2Denominator</td>
-        <td>@Model.NSi1Denominator</td>
-        <td>@Model.NSi2Denominator</td>
-        <td>@Model.NSi3Denominator</td>
-        <td>@Model.NSi4Denominator</td>
-    </tr>
+            @Html.Hidden("InspireRegisteryType", "report")
+            <div class="col-sm-12 col-md-3">
+                @Html.DropDownList("SelectedInspireMonitoringReport", Model.InspireMonitoringSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+            </div>
+            <div class="col-sm-12 col-md-2 text-center">
+                <input v-on:click="compare = !compare" Id="compareCb" type="checkbox" style="vertical-align:middle" v-bind:checked="compare" v-bind:value="compare" name="Compare" />
+                <label for="compareCb" class="control-label">Sammenlign</label>
+            </div>
+            <div class="col-sm-12 col-md-3">
+                <div v-if="compare">
+                    @Html.DropDownList("SelectedComparableCandidate", Model.InspireCompareMonitoringSelectList, "-- Sammenlign med --", new { onchange = "this.form.submit();", @class = "form-control" })
+                </div>
+            </div>
 
-</table>
+        }
+    </div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th></th>
+            <th colspan="2">Metadata</th>
+            <th colspan="2">Data Sets</th>
+            <th colspan="4">Services</th>
+        </tr>
+        <tr class="success">
+            <th></th>
+            <th>Existence</th>
+            <th>Compliance</th>
+            <th>Extend</th>
+            <th>Compliance</th>
+            <th>MD Accessibility</th>
+            <th>DS Accessibility</th>
+            <th>Use</th>
+            <th>Compliance</th>
+        </tr>
+
+        <tr class="active">
+            <th>Indicator Name</th>
+            <th>MDi1</th>
+            <th>MDi2</th>
+            <th>DSi1</th>
+            <th>DSi2</th>
+            <th>NSi1</th>
+            <th>NSi2</th>
+            <th>NSi3</th>
+            <th>NSi4</th>
+        </tr>
+
+        <tr title="@Model.CurrentInspireMonitoring.Date">
+            <th>Indicator Value</th>
+            <td>{{current.MDi1Value}} %</td>
+            <td>{{current.MDi2Value}} %</td>
+            <td>{{current.DSi1Value}} %</td>
+            <td>{{current.DSi2Value}} %</td>
+            <td>{{current.NSi1Value}} %</td>
+            <td>{{current.NSi2Value}} %</td>
+            <td>{{current.NSi3Value}} </td>
+            <td>{{current.NSi4Value}} %</td>
+        </tr>
+
+        <tr v-if="comparable && compare" class="warning" title="">
+            <th>Indicator Value</th>
+            <td>{{comparable.MDi1Value}} %</td>
+            <td>{{comparable.MDi2Value}} %</td>
+            <td>{{comparable.DSi1Value}} %</td>
+            <td>{{comparable.DSi2Value}} %</td>
+            <td>{{comparable.NSi1Value}} %</td>
+            <td>{{comparable.NSi2Value}} %</td>
+            <td>{{comparable.NSi3Value}} </td>
+            <td>{{comparable.NSi4Value}} %</td>
+        </tr>
+        <tr>
+            <th>Numerator</th>
+            <td>{{current.MDi1Numerator}}</td>
+            <td>{{current.MDi2Numerator}}</td>
+            <td>{{current.DSi1Numerator}}</td>
+            <td>{{current.DSi2Numerator}}</td>
+            <td>{{current.NSi1Numerator}}</td>
+            <td>{{current.NSi2Numerator}}</td>
+            <td>{{current.NSi3Numerator}}</td>
+            <td>{{current.NSi4Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="">
+            <th>Numerator</th>
+            <td>{{comparable.MDi1Numerator}}</td>
+            <td>{{comparable.MDi2Numerator}}</td>
+            <td>{{comparable.DSi1Numerator}}</td>
+            <td>{{comparable.DSi2Numerator}}</td>
+            <td>{{comparable.NSi1Numerator}}</td>
+            <td>{{comparable.NSi2Numerator}}</td>
+            <td>{{comparable.NSi3Numerator}}</td>
+            <td>{{comparable.NSi4Numerator}}</td>
+        </tr>
+        <tr>
+            <th>Denominator</th>
+            <td>{{current.MDi1Denominator}}</td>
+            <td>{{current.MDi2Denominator}}</td>
+            <td>{{current.DSi1Denominator}}</td>
+            <td>{{current.DSi2Denominator}}</td>
+            <td>{{current.NSi1Denominator}}</td>
+            <td>{{current.NSi2Denominator}}</td>
+            <td>{{current.NSi3Denominator}}</td>
+            <td>{{current.NSi4Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="">
+            <th>Denominator</th>
+            <td>{{comparable.MDi1Denominator}}</td>
+            <td>{{comparable.MDi2Denominator}}</td>
+            <td>{{comparable.DSi1Denominator}}</td>
+            <td>{{comparable.DSi2Denominator}}</td>
+            <td>{{comparable.NSi1Denominator}}</td>
+            <td>{{comparable.NSi2Denominator}}</td>
+            <td>{{comparable.NSi3Denominator}}</td>
+            <td>{{comparable.NSi4Denominator}}</td>
+        </tr>
+    </table>
 
 
-@***** SPATIAL DATA SETS*****@
+    @***** SPATIAL DATA SETS*****@
 
-<h3>Spatial Data Sets</h3>
+    <h3>Spatial Data Sets</h3>
 
-<table class="table table-bordered">
-    <tr>
-        <th colspan="2"></th>
-        <th colspan="2">Metadata</th>
-        <th colspan="2">Data Sets</th>
-        <th colspan="4">Services</th>
-    </tr>
+    <table class="table table-bordered">
+        <tr>
+            <th colspan="2"></th>
+            <th colspan="2">Metadata</th>
+            <th colspan="2">Data Sets</th>
+            <th colspan="4">Services</th>
+        </tr>
 
 
-    <tr class="success">
-        <th>All Annexes</th>
-        <th></th>
-        <th>Existence</th>
-        <th>Compliance</th>
-        <th>Extend</th>
-        <th>Compliance</th>
-        <th>MD Accessibility</th>
-        <th>DS Accessibility</th>
-        <th>Use</th>
-        <th>Compliance</th>
-    </tr>
+        <tr class="success">
+            <th>All Annexes</th>
+            <th></th>
+            <th>Existence</th>
+            <th>Compliance</th>
+            <th>Extend</th>
+            <th>Compliance</th>
+            <th>MD Accessibility</th>
+            <th>DS Accessibility</th>
+            <th>Use</th>
+            <th>Compliance</th>
+        </tr>
 
-    <tr class="active">
-        <th></th>
-        <th>SubInd. Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NS1.1</th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
+        <tr class="active">
+            <th></th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NS1.1</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
 
     <tr>
         <th></th>
@@ -121,11 +177,26 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi11Value %</td>
+        <td>{{current.NSi11Value}} %</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi11Value}} %</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    
     <tr>
         <th></th>
         <th>Numerator</th>
@@ -133,11 +204,25 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi11Numerator</td>
+        <td>{{current.NSi11Numerator}}</td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi11Numerator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
@@ -145,7 +230,20 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi11Denominator</td>
+        <td>{{current.NSi11Denominator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi11Denominator}}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -154,50 +252,88 @@
 
     @* ***** ANNEX I ******* *@
 
-    <tr class="active">
-        <th>Annex I</th>
-        <th>SubInd. Name</th>
-        <th>MDi1.1</th>
-        <th>MDi2.1</th>
-        <th>DSi1.1</th>
-        <th>DSi2.1</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
+        <tr class="active">
+            <th>Annex I</th>
+            <th>SubInd. Name</th>
+            <th>MDi1.1</th>
+            <th>MDi2.1</th>
+            <th>DSi1.1</th>
+            <th>DSi2.1</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
 
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td>@Model.MDi11Value %</td>
-        <td>@Model.MDi21Value %</td>
-        <td>@Model.DSi11Value %</td>
-        <td>@Model.DSi21Value %</td>
+        <td>{{current.MDi11Value}} %</td>
+        <td>{{current.MDi21Value}} %</td>
+        <td>{{current.DSi11Value}} %</td>
+        <td>{{current.DSi21Value}} %</td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td>{{comparable.MDi11Value}} %</td>
+        <td>{{comparable.MDi21Value}} %</td>
+        <td>{{comparable.DSi11Value}} %</td>
+        <td>{{comparable.DSi21Value}} %</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td>@Model.MDi11Numerator</td>
-        <td>@Model.MDi21Numerator</td>
-        <td>@Model.DSi11Numerator</td>
-        <td>@Model.DSi21Numerator</td>
+        <td>{{current.MDi11Numerator}}</td>
+        <td>{{current.MDi21Numerator}}</td>
+        <td>{{current.DSi11Numerator}}</td>
+        <td>{{current.DSi21Numerator}}</td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td>{{comparable.MDi11Numerator}}</td>
+        <td>{{comparable.MDi21Numerator}}</td>
+        <td>{{comparable.DSi11Numerator}}</td>
+        <td>{{comparable.DSi21Numerator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
-        <td>@Model.MDi11Denominator</td>
-        <td>@Model.MDi21Denominator</td>
-        <td>@Model.DSi11Denominator</td>
-        <td>@Model.DSi21Denominator</td>
+        <td>{{current.MDi11Denominator}}</td>
+        <td>{{current.MDi21Denominator}}</td>
+        <td>{{current.DSi11Denominator}}</td>
+        <td>{{current.DSi21Denominator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td>{{comparable.MDi11Denominator}}</td>
+        <td>{{comparable.MDi21Denominator}}</td>
+        <td>{{comparable.DSi11Denominator}}</td>
+        <td>{{comparable.DSi21Denominator}}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -205,363 +341,319 @@
     </tr>
 
 
-    @* ***** ANNEX II ******* *@
+        @* ***** ANNEX II ******* *@
 
 
-    <tr class="active">
-        <th>Annex II</th>
-        <th>SubInd. Name</th>
-        <th>MDi1.2</th>
-        <th>MDi2.2</th>
-        <th>DSi1.2</th>
-        <th>DSi2.2</th>
+        <tr class="active">
+            <th>Annex II</th>
+            <th>SubInd. Name</th>
+            <th>MDi1.2</th>
+            <th>MDi2.2</th>
+            <th>DSi1.2</th>
+            <th>DSi2.2</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{current.MDi12Value}} %</td>
+            <td>{{current.MDi22Value}} %</td>
+            <td>{{current.DSi12Value}} %</td>
+            <td>{{current.DSi22Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{comparable.MDi12Value}} %</td>
+            <td>{{comparable.MDi22Value}} %</td>
+            <td>{{comparable.DSi12Value}} %</td>
+            <td>{{comparable.DSi22Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+    <tr>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th>Numerator</th>
+        <td>{{current.MDi12Numerator}}</td>
+        <td>{{current.MDi22Numerator}}</td>
+        <td>{{current.DSi12Numerator}}</td>
+        <td>{{current.DSi22Numerator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td>{{comparable.MDi12Numerator}}</td>
+        <td>{{comparable.MDi22Numerator}}</td>
+        <td>{{comparable.DSi12Numerator}}</td>
+        <td>{{comparable.DSi22Numerator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Denominator</th>
+        <td>{{current.MDi12Denominator}}</td>
+        <td>{{current.MDi22Denominator}}</td>
+        <td>{{current.DSi12Denominator}}</td>
+        <td>{{current.DSi22Denominator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td>{{comparable.MDi12Denominator}}</td>
+        <td>{{comparable.MDi22Denominator}}</td>
+        <td>{{comparable.DSi12Denominator}}</td>
+        <td>{{comparable.DSi22Denominator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
+        @* ***** ANNEX III ******* *@
+
+        <tr class="active">
+            <th>Annex III</th>
+            <th>SubInd. Name</th>
+            <th>MDi1.3</th>
+            <th>MDi2.3</th>
+            <th>DSi1.3</th>
+            <th>DSi2.3</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
 
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td>@Model.MDi12Value %</td>
-        <td>@Model.MDi22Value %</td>
-        <td>@Model.DSi12Value %</td>
-        <td>@Model.DSi22Value %</td>
+        <td>{{current.MDi13Value}} %</td>
+        <td>{{current.MDi23Value}} %</td>
+        <td>{{current.DSi13Value}} %</td>
+        <td>{{current.DSi23Value}} %</td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td>{{comparable.MDi13Value}} %</td>
+        <td>{{comparable.MDi23Value}} %</td>
+        <td>{{comparable.DSi13Value}} %</td>
+        <td>{{comparable.DSi23Value}} %</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td>@Model.MDi12Numerator</td>
-        <td>@Model.MDi22Numerator</td>
-        <td>@Model.DSi12Numerator</td>
-        <td>@Model.DSi22Numerator</td>
+        <td>{{current.MDi13Numerator}}</td>
+        <td>{{current.MDi23Numerator}}</td>
+        <td>{{current.DSi13Numerator}}</td>
+        <td>{{current.DSi23Numerator}}</td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td>{{comparable.MDi13Numerator}}</td>
+        <td>{{comparable.MDi23Numerator}}</td>
+        <td>{{comparable.DSi13Numerator}}</td>
+        <td>{{comparable.DSi23Numerator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
-        <td>@Model.MDi12Denominator</td>
-        <td>@Model.MDi22Denominator</td>
-        <td>@Model.DSi12Denominator</td>
-        <td>@Model.DSi22Denominator</td>
+        <td>{{current.MDi13Denominator}}</td>
+        <td>{{current.MDi23Denominator}}</td>
+        <td>{{current.DSi13Denominator}}</td>
+        <td>{{current.DSi23Denominator}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td>{{comparable.MDi13Denominator}}</td>
+        <td>{{comparable.MDi23Denominator}}</td>
+        <td>{{comparable.DSi13Denominator}}</td>
+        <td>{{comparable.DSi23Denominator}}</td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
     </tr>
 
-    @* ***** ANNEX III ******* *@
+    </table>
 
-    <tr class="active">
-        <th>Annex III</th>
-        <th>SubInd. Name</th>
-        <th>MDi1.3</th>
-        <th>MDi2.3</th>
-        <th>DSi1.3</th>
-        <th>DSi2.3</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
+
+    @***** SPATIAL DATA SERVICES*****@
+
+    <h3>Spatial Data Services</h3>
+
+    <table class="table table-bordered">
+        <tr>
+            <th colspan="2"></th>
+            <th colspan="2">Metadata</th>
+            <th colspan="2">Data Sets</th>
+            <th colspan="4">Services</th>
+        </tr>
+
+
+        <tr class="success">
+            <th>All Services</th>
+            <th></th>
+            <th>Existence</th>
+            <th>Compliance</th>
+            <th>Extend</th>
+            <th>Compliance</th>
+            <th>MD Accessibility</th>
+            <th>DS Accessibility</th>
+            <th>Use</th>
+            <th>Compliance</th>
+        </tr>
+
+        <tr class="active">
+            <th></th>
+            <th>SubInd. Name</th>
+            <th>MDi1.4</th>
+            <th>MDi2.4</th>
+            <th></th>
+            <th></th>
+            <th>NSi1.2</th>
+            <th></th>
+            <th>NSi3</th>
+            <th>NSi4</th>
+        </tr>
 
     <tr>
         <th></th>
         <th>SubInd. Value</th>
-        <td>@Model.MDi13Value %</td>
-        <td>@Model.MDi23Value %</td>
-        <td>@Model.DSi13Value %</td>
-        <td>@Model.DSi23Value %</td>
+        <td>{{current.MDi14Value}} %</td>
+        <td>{{current.MDi24Value}} %</td>
         <td></td>
         <td></td>
+        <td>{{current.NSi12Value}} %</td>
         <td></td>
-        <td></td>
+        <td>{{current.NSi3Value}}</td>
+        <td>{{current.NSi4Value}} %</td>
     </tr>
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td>@Model.MDi13Numerator</td>
-        <td>@Model.MDi23Numerator</td>
-        <td>@Model.DSi13Numerator</td>
-        <td>@Model.DSi23Numerator</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>@Model.MDi13Denominator</td>
-        <td>@Model.MDi23Denominator</td>
-        <td>@Model.DSi13Denominator</td>
-        <td>@Model.DSi23Denominator</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-
-</table>
-
-
-@***** SPATIAL DATA SERVICES*****@
-
-<h3>Spatial Data Services</h3>
-
-<table class="table table-bordered">
-    <tr>
-        <th colspan="2"></th>
-        <th colspan="2">Metadata</th>
-        <th colspan="2">Data Sets</th>
-        <th colspan="4">Services</th>
-    </tr>
-
-
-    <tr class="success">
-        <th>All Services</th>
-        <th></th>
-        <th>Existence</th>
-        <th>Compliance</th>
-        <th>Extend</th>
-        <th>Compliance</th>
-        <th>MD Accessibility</th>
-        <th>DS Accessibility</th>
-        <th>Use</th>
-        <th>Compliance</th>
-    </tr>
-
-    <tr class="active">
-        <th></th>
-        <th>SubInd. Name</th>
-        <th>MDi1.4</th>
-        <th>MDi2.4</th>
-        <th></th>
-        <th></th>
-        <th>NSi1.2</th>
-        <th></th>
-        <th>NSi3</th>
-        <th>NSi4</th>
-    </tr>
-
-    <tr>
+    <tr v-if="comparable && compare" class="warning" title="">
         <th></th>
         <th>SubInd. Value</th>
-        <td>@Model.MDi14Value %</td>
-        <td>@Model.MDi24Value %</td>
+        <td>{{comparable.MDi14Value}} %</td>
+        <td>{{comparable.MDi24Value}} %</td>
         <td></td>
         <td></td>
-        <td>@Model.NSi12Value %</td>
+        <td>{{comparable.NSi12Value}} %</td>
         <td></td>
-        <td>@Model.NSi3Value</td>
-        <td>@Model.NSi4Value %</td>
+        <td>{{comparable.NSi3Value}}</td>
+        <td>{{comparable.NSi4Value}} %</td>
     </tr>
+
     <tr>
         <th></th>
         <th>Numerator</th>
-        <td>@Model.MDi14Numerator</td>
-        <td>@Model.MDi24Numerator</td>
+        <td>{{current.MDi14Numerator}}</td>
+        <td>{{current.MDi24Numerator}}</td>
         <td></td>
         <td></td>
-        <td>@Model.NSi12Numerator</td>
+        <td>{{current.NSi12Numerator}}</td>
         <td></td>
-        <td>@Model.NSi3Numerator</td>
-        <td>@Model.NSi4Numerator</td>
+        <td>{{current.NSi3Numerator}}</td>
+        <td>{{current.NSi4Numerator}}</td>
     </tr>
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>@Model.MDi14Denominator</td>
-        <td>@Model.MDi24Denominator</td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi12Denominator</td>
-        <td></td>
-        <td>@Model.NSi3Denominator</td>
-        <td>@Model.NSi4Denominator</td>
-    </tr>
-
-
-    @* ***** Discovery Services ******* *@
-
-    <tr class="active">
-        <th>Discovery Services</th>
-        <th>SubInd. Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NSi3.1</th>
-        <th>NSi4.1</th>
-    </tr>
-
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi31Value</td>
-        <td>@Model.NSi41Value %</td>
-    </tr>
-    <tr>
+    <tr v-if="comparable && compare" class="warning" title="">
         <th></th>
         <th>Numerator</th>
+        <td>{{comparable.MDi14Numerator}}</td>
+        <td>{{comparable.MDi24Numerator}}</td>
         <td></td>
         <td></td>
+        <td>{{comparable.NSi12Numerator}}</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi31Numerator</td>
-        <td>@Model.NSi41Numerator</td>
+        <td>{{comparable.NSi3Numerator}}</td>
+        <td>{{comparable.NSi4Numerator}}</td>
     </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
+        <td>{{current.MDi14Denominator}}</td>
+        <td>{{current.MDi24Denominator}}</td>
         <td></td>
         <td></td>
+        <td>{{current.NSi12Denominator}}</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi31Denominator</td>
-        <td>@Model.NSi41Denominator</td>
+        <td>{{current.NSi3Denominator}}</td>
+        <td>{{current.NSi4Denominator}}</td>
     </tr>
-
-
-    @* ***** View Services ******* *@
-
-
-    <tr class="active">
-        <th>View Services</th>
-        <th>SubInd. Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NSi2.1</th>
-        <th>NSi3.2</th>
-        <th>NSi4.2</th>
-    </tr>
-
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi21Value %</td>
-        <td>@Model.NSi32Value</td>
-        <td>@Model.NSi42Value %</td>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi21Numerator</td>
-        <td>@Model.NSi32Numerator</td>
-        <td>@Model.NSi42Numerator</td>
-    </tr>
-    <tr>
+    <tr v-if="comparable && compare" class="warning" title="">
         <th></th>
         <th>Denominator</th>
+        <td>{{comparable.MDi14Denominator}}</td>
+        <td>{{comparable.MDi24Denominator}}</td>
         <td></td>
         <td></td>
+        <td>{{comparable.NSi12Denominator}}</td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi21Denominator</td>
-        <td>@Model.NSi32Denominator</td>
-        <td>@Model.NSi42Denominator</td>
+        <td>{{comparable.NSi3Denominator}}</td>
+        <td>{{comparable.NSi4Denominator}}</td>
     </tr>
 
-    @* ***** Download Services ******* *@
 
-    <tr class="active">
-        <th>Download Services</th>
-        <th>SubInd. Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NSi2.2</th>
-        <th>NSi3.3</th>
-        <th>NSi4.3</th>
-    </tr>
+        @* ***** Discovery Services ******* *@
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi22Value %</td>
-        <td>@Model.NSi33Value</td>
-        <td>@Model.NSi43Value %</td>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi22Numerator</td>
-        <td>@Model.NSi33Numerator</td>
-        <td>@Model.NSi43Numerator</td>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>@Model.NSi22Denominator</td>
-        <td>@Model.NSi33Denominator</td>
-        <td>@Model.NSi43Denominator</td>
-    </tr>
-
-    @* ***** Transformation Services ******* *@
-
-    <tr class="active">
-        <th>Transformation Services</th>
-        <th>SubInd. Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NSi3.4</th>
-        <th>NSi4.4</th>
-    </tr>
+        <tr class="active">
+            <th>Discovery Services</th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NSi3.1</th>
+            <th>NSi4.1</th>
+        </tr>
 
     <tr>
         <th></th>
@@ -572,9 +664,22 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi34Value</td>
-        <td>@Model.NSi44Value %</td>
+        <td>{{current.NSi31Value}}</td>
+        <td>{{current.NSi41Value}} %</td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi31Value}}</td>
+        <td>{{comparable.NSi41Value}} %</td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Numerator</th>
@@ -584,9 +689,22 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi34Numerator</td>
-        <td>@Model.NSi44Numerator</td>
+        <td>{{current.NSi31Numerator}}</td>
+        <td>{{current.NSi41Numerator}}</td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi31Numerator}}</td>
+        <td>{{comparable.NSi41Numerator}}</td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
@@ -596,25 +714,218 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi34Denominator</td>
-        <td>@Model.NSi44Denominator</td>
+        <td>{{current.NSi31Denominator}}</td>
+        <td>{{current.NSi41Denominator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi31Denominator}}</td>
+        <td>{{comparable.NSi41Denominator}}</td>
     </tr>
 
 
-    @* ***** Invoke Services ******* *@
+        @* ***** View Services ******* *@
 
-    <tr class="active">
-        <th>Invoke Services</th>
-        <th>SubInd. Name</th>
+
+        <tr class="active">
+            <th>View Services</th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NSi2.1</th>
+            <th>NSi3.2</th>
+            <th>NSi4.2</th>
+        </tr>
+
+    <tr>
         <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>NSi3.5</th>
-        <th>NSi4.5</th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi21Value}} %</td>
+        <td>{{current.NSi32Value}}</td>
+        <td>{{current.NSi42Value}} %</td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi21Value}}</td>
+        <td>{{comparable.NSi32Value}}</td>
+        <td>{{comparable.NSi42Value}}</td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi21Numerator}}</td>
+        <td>{{current.NSi32Numerator}}</td>
+        <td>{{current.NSi42Numerator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi21Numerator}}</td>
+        <td>{{comparable.NSi32Numerator}}</td>
+        <td>{{comparable.NSi42Numerator}}</td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi21Denominator}}</td>
+        <td>{{current.NSi32Denominator}}</td>
+        <td>{{current.NSi42Denominator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi21Denominator}}</td>
+        <td>{{comparable.NSi32Denominator}}</td>
+        <td>{{comparable.NSi42Denominator}}</td>
+    </tr>
+
+        @* ***** Download Services ******* *@
+
+        <tr class="active">
+            <th>Download Services</th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NSi2.2</th>
+            <th>NSi3.3</th>
+            <th>NSi4.3</th>
+        </tr>
+
+    <tr>
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi22Value}} %</td>
+        <td>{{current.NSi33Value}}</td>
+        <td>{{current.NSi43Value}} %</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi22Value}} %</td>
+        <td>{{comparable.NSi33Value}}</td>
+        <td>{{comparable.NSi43Value}} %</td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi22Numerator}}</td>
+        <td>{{current.NSi33Numerator}}</td>
+        <td>{{current.NSi43Numerator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi22Numerator}}</td>
+        <td>{{comparable.NSi33Numerator}}</td>
+        <td>{{comparable.NSi43Numerator}}</td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi22Denominator}}</td>
+        <td>{{current.NSi33Denominator}}</td>
+        <td>{{current.NSi43Denominator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi22Denominator}}</td>
+        <td>{{comparable.NSi33Denominator}}</td>
+        <td>{{comparable.NSi43Denominator}}</td>
+    </tr>
+
+        @* ***** Transformation Services ******* *@
+
+        <tr class="active">
+            <th>Transformation Services</th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NSi3.4</th>
+            <th>NSi4.4</th>
+        </tr>
 
     <tr>
         <th></th>
@@ -625,9 +936,22 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi35Value</td>
-        <td>@Model.NSi45Value %</td>
+        <td>{{current.NSi34Value}}</td>
+        <td>{{current.NSi44Value}} %</td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>SubInd. Value</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi34Value}}</td>
+        <td>{{comparable.NSi44Value}} %</td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Numerator</th>
@@ -637,9 +961,22 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi35Numerator</td>
-        <td>@Model.NSi45Numerator</td>
+        <td>{{current.NSi34Numerator}}</td>
+        <td>{{current.NSi44Numerator}}</td>
     </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi34Numerator}}</td>
+        <td>{{comparable.NSi44Numerator}}</td>
+    </tr>
+
     <tr>
         <th></th>
         <th>Denominator</th>
@@ -649,8 +986,113 @@
         <td></td>
         <td></td>
         <td></td>
-        <td>@Model.NSi35Denominator</td>
-        <td>@Model.NSi45Denominator</td>
+        <td>{{current.NSi34Denominator}}</td>
+        <td>{{current.NSi44Denominator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi34Denominator}}</td>
+        <td>{{comparable.NSi44Denominator}}</td>
     </tr>
 
-</table>
+
+        @* ***** Invoke Services ******* *@
+
+        <tr class="active">
+            <th>Invoke Services</th>
+            <th>SubInd. Name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>NSi3.5</th>
+            <th>NSi4.5</th>
+        </tr>
+
+        <tr>
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi35Value}}</td>
+            <td>{{current.NSi45Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi35Value}}</td>
+            <td>{{comparable.NSi45Value}} %</td>
+        </tr>
+
+    <tr>
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi35Numerator}}</td>
+        <td>{{current.NSi45Numerator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Numerator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi35Numerator}}</td>
+        <td>{{comparable.NSi45Numerator}}</td>
+    </tr>
+
+    <tr>
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{current.NSi35Denominator}}</td>
+        <td>{{current.NSi45Denominator}}</td>
+    </tr>
+    <tr v-if="comparable && compare" class="warning" title="">
+        <th></th>
+        <th>Denominator</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{comparable.NSi35Denominator}}</td>
+        <td>{{comparable.NSi45Denominator}}</td>
+    </tr>
+
+    </table>
+
+</div>

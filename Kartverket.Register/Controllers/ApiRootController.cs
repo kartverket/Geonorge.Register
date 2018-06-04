@@ -21,6 +21,7 @@ using System.Net.Http.Headers;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Formatter;
 using System.Web;
+using Kartverket.Register.App_Start;
 
 namespace Kartverket.Register.Controllers
 {
@@ -34,8 +35,9 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireDatasetService _inspireDatasetService;
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly IAccessControlService _accessControlService;
+        private readonly ISynchronizationService _synchronizationService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
@@ -43,6 +45,7 @@ namespace Kartverket.Register.Controllers
             _registerService = registerService;
             _inspireMonitoringService = inspireMonitoringService;
             _accessControlService = accessControlService;
+            _synchronizationService = synchronizationService;
             db = dbContext;
         }
 
@@ -101,32 +104,25 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save inspire monitoring report data to database.
         /// </summary>
-        [Authorize]
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [Route("api/register/inspire-statusregister/monitoring-report/save")]
         [HttpGet]
         public IHttpActionResult SaveInspireMonitoringData()
         {
-            if (_accessControlService.IsAdmin())
+            try
             {
-                try
-                {
-                    var inspireStatusRegister = _registerService.GetInspireStatusRegister();
-                    _inspireMonitoringService.SaveInspireMonitoring(inspireStatusRegister);
+                var inspireStatusRegister = _registerService.GetInspireStatusRegister();
+                _inspireMonitoringService.SaveInspireMonitoring(inspireStatusRegister);
 
-                    return Ok("Saved");
-                }
-                catch
-                {
-                    return Ok("Error");
-                }
+                return Ok("Saved");
             }
-            else
+            catch
             {
-                return Content(System.Net.HttpStatusCode.Forbidden, "No access");
+                return Ok("Error");
             }
         }
 
-        
+
 
         private Models.Register RegisterItems(Models.Register register, FilterParameters filter)
         {
@@ -345,8 +341,21 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
-            new InspireDatasetService(db).SynchronizeInspireDatasets();
-            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            var register = _registerService.GetInspireStatusRegister();
+            if (register.TooManySynchronizationJobs())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
+
+            var synchronizationJobDataset = _synchronizationService.StartSynchronizationJob(register, "Datasett");
+            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJobDataset);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobDataset);
+
+            var synchronizationJobServices = _synchronizationService.StartSynchronizationJob(register, "Tjenester");
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJobServices);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobServices);
+            _registerService.UpdateDateModified(register);
+
             return Ok();
         }
 
@@ -355,7 +364,36 @@ namespace Kartverket.Register.Controllers
         [HttpGet]
         public IHttpActionResult SynchronizeInspireDataServices()
         {
-            new InspireDatasetService(db).SynchronizeInspireDataServices();
+            var register = _registerService.GetInspireStatusRegister();
+            if (register.TooManySynchronizationJobs())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
+            var synchronizationJob = _synchronizationService.StartSynchronizationJob(register, "Tjenester");
+
+            new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJob);
+
+            _synchronizationService.StopSynchronizationJob(synchronizationJob);
+            _registerService.UpdateDateModified(register);
+
+            return Ok();
+        }
+
+        [ApiExplorerSettings(IgnoreApi = true)]
+        [Route("api/metadata/synchronize/inspire-statusregister/dataset")]
+        [HttpGet]
+        public IHttpActionResult SynchronizeInspireDataset()
+        {
+            var register = _registerService.GetInspireStatusRegister();
+            if (register.TooManySynchronizationJobs())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
+
+            var synchronizationJobDataset = _synchronizationService.StartSynchronizationJob(register, "Datasett");
+            new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJobDataset);
+            _synchronizationService.StopSynchronizationJob(synchronizationJobDataset);
+
             return Ok();
         }
 

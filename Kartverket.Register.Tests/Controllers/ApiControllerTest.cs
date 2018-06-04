@@ -293,7 +293,7 @@ namespace Kartverket.Register.Tests.Controllers
 
         private ApiRootController createController(string uri, IRegisterService registerService, IRegisterItemService registerItemService)
         {
-            var controller = new ApiRootController(null, null, registerService, registerItemService, null, null, null);
+            var controller = new ApiRootController(null, null, registerService, registerItemService, null, null, null, null);
             controller.Request = new HttpRequestMessage(HttpMethod.Get, uri);
             return controller;
         }

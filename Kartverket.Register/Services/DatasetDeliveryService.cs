@@ -12,6 +12,7 @@ namespace Kartverket.Register.Services
     public class DatasetDeliveryService : IDatasetDeliveryService
     {
         private readonly RegisterDbContext _dbContext;
+        private readonly Synchronize _synchronizationJob;
         private XmlDocument _atomFeedDoc;
         private XmlNamespaceManager _nsmgr;
         private const string Useable = "useable";
@@ -23,6 +24,11 @@ namespace Kartverket.Register.Services
         public DatasetDeliveryService(RegisterDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public DatasetDeliveryService(Synchronize synchronizationJob)
+        {
+            _synchronizationJob = synchronizationJob;
         }
 
         public Guid CreateDatasetDelivery(string deliveryStatusId, string note, bool autoupdate = true)
@@ -61,6 +67,11 @@ namespace Kartverket.Register.Services
             }
             catch (Exception e)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av metadatastatus"));
+                }
                 return currentStatus;
             }
         }
@@ -74,7 +85,7 @@ namespace Kartverket.Register.Services
                 var metadata = GetMetadataFromKartkatalogen(metadataUuid);
                 if (metadata != null)
                 {
-                    if (metadata.DistributionDetails != null &&
+                    if (metadata.DistributionDetails != null && metadata.DistributionDetails.Length > 0 &&
                         metadata.DistributionDetails.Protocol.Value != "GEONORGE:OFFLINE" && distributionUrl != null)
                     {
                         status = Good;
@@ -88,6 +99,11 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av status for datadeling"));
+                }
                 return Deficient;
             }
 
@@ -115,7 +131,11 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
-
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av tjenestestatus"));
+                }
             }
 
             return GetServiceStatus(serviceUuid, status, hasServiceUrl);
@@ -141,6 +161,11 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av WMS status"));
+                }
                 return currentStatus;
             }
 
@@ -223,8 +248,13 @@ namespace Kartverket.Register.Services
                             status = Deficient;
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    if (_synchronizationJob != null)
+                    {
+                        _synchronizationJob.FailCount++;
+                        _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "GetServiceStatus - " + e.Message));
+                    }
                     // ignored
                 }
             }
@@ -255,6 +285,11 @@ namespace Kartverket.Register.Services
                 }
                 catch (Exception)
                 {
+                    if (_synchronizationJob != null)
+                    {
+                        _synchronizationJob.FailCount++;
+                        _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "Feil ved henting av status for WFS"));
+                    }
                     return status;
                 }
             }
@@ -298,6 +333,11 @@ namespace Kartverket.Register.Services
                 }
                 catch (Exception)
                 {
+                    if (_synchronizationJob != null)
+                    {
+                        _synchronizationJob.FailCount++;
+                        _synchronizationJob.FailLog.Add(new SyncLogEntry(serviceUuid, "Feil ved henting av tjenestestatus"));
+                    }
                     return status;
                 }
             }
@@ -329,6 +369,11 @@ namespace Kartverket.Register.Services
 
             catch (Exception)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av WFS status"));
+                }
                 return Notset;
             }
 
@@ -360,6 +405,11 @@ namespace Kartverket.Register.Services
 
             catch (Exception e)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av WFS status"));
+                }
                 return statusValue;
             }
 
@@ -395,6 +445,11 @@ namespace Kartverket.Register.Services
             }
             catch (Exception)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av AtomFeed status"));
+                }
                 return Notset;
             }
 
@@ -412,19 +467,15 @@ namespace Kartverket.Register.Services
                 {
                     if (metadata.QualitySpecifications != null)
                     {
-                        if (metadata.QualitySpecifications[0].Result == "true" && metadata.QualitySpecifications[0].Title.Contains("COMMISSION REGULATION"))
+                        if (metadata.QualitySpecifications[0].Result == "true" && metadata.QualitySpecifications[0].Title.ToString().Contains("COMMISSION REGULATION"))
                         {
                             return Good;
                         }
-                        else
-                        {
-                            return Deficient;
-                        }
+
+                        return Deficient;
                     }
-                    else
-                    {
-                        status = Deficient;
-                    }
+
+                    status = Deficient;
                 }
                 else
                 {
@@ -432,8 +483,13 @@ namespace Kartverket.Register.Services
                 }
             }
 
-            catch (Exception)
+            catch (Exception e)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av harmonisert status"));
+                }
                 return Deficient;
             }
             return status;
@@ -480,6 +536,11 @@ namespace Kartverket.Register.Services
 
             catch (Exception)
             {
+                if (_synchronizationJob != null)
+                {
+                    _synchronizationJob.FailCount++;
+                    _synchronizationJob.FailLog.Add(new SyncLogEntry(metadataUuid, "Feil ved henting av spatial status"));
+                }
                 return Deficient;
             }
             if (!string.IsNullOrWhiteSpace(status)) return status;

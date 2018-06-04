@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web.Mvc;
 using Kartverket.Register.Models.Translations;
 using Resources;
 
@@ -9,6 +11,8 @@ namespace Kartverket.Register.Models.ViewModels
 {
     public class RegisterV2ViewModel
     {
+        private int? page;
+
         public Guid SystemId { get; set; }
 
         [Display(Name = "Owner", ResourceType = typeof(Registers))]
@@ -54,7 +58,7 @@ namespace Kartverket.Register.Models.ViewModels
 
         public string OrderBy { get; set; }
         public int AccessId { get; set; }
-        public InspireMonitoringViewModel InspireMonitoringData { get; set; }
+        public InspireReportViewModel InspireReport { get; set; }
 
 
         public string MunicipalityCode { get; set; }
@@ -62,9 +66,11 @@ namespace Kartverket.Register.Models.ViewModels
 
         public AccessViewModel AccessRegister { get; set; }
 
+        public SynchronizationViewModel SynchronizationJobs { get; set; }
+
         public string SelectedInspireRegisteryType { get; set; }
 
-        public RegisterV2ViewModel(Register register)
+        public RegisterV2ViewModel(Register register, int? page = null)
         {
             if (register != null)
             {
@@ -85,8 +91,7 @@ namespace Kartverket.Register.Models.ViewModels
                 Versioning = register.versioning;
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
-
-                //InspireDataService = GetInspireDataService(register.containedItemClass, register.RegisterItems);
+                SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
 
@@ -99,6 +104,7 @@ namespace Kartverket.Register.Models.ViewModels
                 }
             }
         }
+
 
         private ICollection<RegisterItemV2ViewModel> GetRegisterItems(string containedItemClass, ICollection<RegisterItemV2> registerItems)
         {
@@ -257,6 +263,16 @@ namespace Kartverket.Register.Models.ViewModels
         public string StepBackUrl()
         {
             return ParentRegister == null ? "/" : ParentRegister.GetObjectUrl();
+        }
+
+        public bool SelectedInspireRegisteryTypeIsReport()
+        {
+            return SelectedInspireRegisteryType == "report";
+        }
+
+        public bool SelectedInspireRegisteryTypeIsSynchronizations()
+        {
+            return SelectedInspireRegisteryType == "synchronizations";
         }
     }
 }

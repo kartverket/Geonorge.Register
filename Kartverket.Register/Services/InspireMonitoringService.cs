@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Eu.Europa.Ec.Jrc.Inspire;
 using Kartverket.Register.Models;
 using System.Linq;
+using Kartverket.Register.Models.ViewModels;
 using DateTime = System.DateTime;
 
 namespace Kartverket.Register.Services
@@ -20,7 +22,7 @@ namespace Kartverket.Register.Services
             _dbContext = dbContext;
         }
 
-        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister) 
+        public Monitoring GetInspireMonitoringReport(Models.Register inspireRegister)
         {
             return GetInspireMonitoringReport(inspireRegister, new InspireMonitoring(inspireRegister.RegisterItems));
         }
@@ -41,19 +43,79 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
-        public InspireMonitoring GetLatestInspireMonitroingData() {
-           var queryResults = from o in _dbContext.InspireMonitorings
-                              select o;
+        public InspireMonitoring GetLatestInspireMonitroingData()
+        {
+            var queryResults = from o in _dbContext.InspireMonitorings
+                               select o;
 
             InspireMonitoring latestMonitoring = queryResults?.OrderByDescending(o => o.Date).FirstOrDefault();
             return latestMonitoring;
 
         }
 
-        public InspireMonitoring GetCurrentInspireMonitroingData(Models.Register inspireRegister)
+        public InspireMonitoring GetTodaysInspireMonitroingData(Models.Register inspireRegister)
         {
             InspireMonitoring monitoring = new InspireMonitoring(inspireRegister.RegisterItems);
+            monitoring.Id = Guid.Empty;
+
             return monitoring;
+        }
+
+        /// <summary>
+        /// Get inspireMonitorings
+        /// </summary>
+        /// <returns></returns>
+        public List<InspireMonitoring> GetInspireMonitorings()
+        {
+            var queryResults = from o in _dbContext.InspireMonitorings
+                               select o;
+
+            return queryResults.ToList();
+        }
+
+        /// <summary>
+        /// Get inspireMonitorings included todays status(not saved)
+        /// </summary>
+        /// <param name="inspireRegister"></param>
+        /// <returns></returns>
+        public List<InspireMonitoring> GetInspireMonitorings(Models.Register inspireRegister)
+        {
+            List<InspireMonitoring> inspireMonitorings = GetInspireMonitorings();
+            inspireMonitorings.Add(GetTodaysInspireMonitroingData(inspireRegister));
+            return inspireMonitorings;
+        }
+
+        public InspireMonitoring GetInspireMonitroingDataById(string id)
+        {
+            var queryResults = from o in _dbContext.InspireMonitorings
+                               where o.Id.ToString() == id
+                               select o;
+
+            return queryResults.FirstOrDefault();
+        }
+
+        public InspireReportViewModel GetInspireReportViewModel(Models.Register register, FilterParameters filter)
+        {
+            var currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
+                GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedInspireMonitoringReport);
+
+            if (filter.Compare)
+            {
+                var comparableInspireMonitoring = filter.SelectedComparableCandidate == "today" ?
+                    GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedComparableCandidate);
+
+                return
+                    new InspireReportViewModel(currentInspireMonitoring, comparableInspireMonitoring,
+                        GetInspireMonitorings(register));
+            }
+
+            if (filter.SelectedInspireMonitoringReport != null)
+            {
+                return
+                    new InspireReportViewModel(currentInspireMonitoring, null, GetInspireMonitorings(register));
+            }
+
+            return new InspireReportViewModel(GetLatestInspireMonitroingData(), null, GetInspireMonitorings(register));
         }
 
         private Monitoring Mapping()
@@ -451,7 +513,7 @@ namespace Kartverket.Register.Services
             sdsConformant.DSv2 = _inspireMonitoring.NumberOfDatasetsWithHarmonizedDataAndConformedMetadata(); // (Dtasett where <AnnexI> or <AnnexII> or <AnnexIII>:  Harmoniserte data="God" OG Metadatastatus = "God"= )
             return sdsConformant;
         }
-        
+
 
         private Themes[] GetThemes(ICollection<CodelistValue> inspireThemes)
         {
@@ -488,7 +550,7 @@ namespace Kartverket.Register.Services
             return themesArray;
         }
 
-        
+
         private static string CreateCamelCase(string inspireTheme)
         {
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;

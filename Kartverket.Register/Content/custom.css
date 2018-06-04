@@ -362,3 +362,12 @@ a.link-unstyled {
 .navbar-bottom {
     margin-top: 30px;
 }
+
+.toggleTableRow.collapse.in {
+    display: table-row !important;
+}
+
+.toggleTableRow.collapsing {
+    display: table-row !important;
+}
+

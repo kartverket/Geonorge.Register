@@ -17,7 +17,7 @@ namespace Kartverket.Register
             bundles.Add(new ScriptBundle("~/Content/bower_components/kartverket-felleskomponenter/assets/js/scripts").Include(
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/vendor.min.js",
                "~/Content/bower_components/kartverket-felleskomponenter/assets/js/main.min.js",
-            "~/Content/bower_components/vue/dist/vue.min.js"
+                "~/Content/bower_components/vue/dist/vue.min.js"
            ));
 
 

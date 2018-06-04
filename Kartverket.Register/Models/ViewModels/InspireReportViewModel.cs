@@ -12,7 +12,9 @@ namespace Kartverket.Register.Models.ViewModels
     {
 
         public InspireMonitoringViewModel CurrentInspireMonitoring { get; set; }
+        public string CurrentInspireMonitoringDate { get; set; }
         public InspireMonitoringViewModel ComparableCandidate { get; set; }
+        public string ComparableCandidateDate { get; set; }
 
         public SelectList InspireMonitoringSelectList { get; set; }
         public SelectList InspireCompareMonitoringSelectList { get; set; }
@@ -20,9 +22,11 @@ namespace Kartverket.Register.Models.ViewModels
         public InspireReportViewModel(IInspireMonitoring current, IInspireMonitoring candidate, List<InspireMonitoring> inspireMonitorings)
         {
             CurrentInspireMonitoring = new InspireMonitoringViewModel(current);
+            CurrentInspireMonitoringDate = CurrentInspireMonitoring.Date.ToString();
             if (candidate != null)
             {
                 ComparableCandidate = new InspireMonitoringViewModel(candidate);
+                ComparableCandidateDate = candidate.Date.ToString();
             }
 
             InspireMonitoringSelectList = CreateSelectList(inspireMonitorings);

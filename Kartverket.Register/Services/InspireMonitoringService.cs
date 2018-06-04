@@ -96,8 +96,17 @@ namespace Kartverket.Register.Services
 
         public InspireReportViewModel GetInspireReportViewModel(Models.Register register, FilterParameters filter)
         {
-            var currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
-                GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedInspireMonitoringReport);
+            InspireMonitoring currentInspireMonitoring = null;
+            if (filter.SelectedInspireMonitoringReport != null)
+            {
+                currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
+                    GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedInspireMonitoringReport);
+            }
+            else
+            {
+                currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
+                    GetTodaysInspireMonitroingData(register) : GetLatestInspireMonitroingData();
+            }
 
             if (filter.Compare)
             {

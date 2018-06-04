@@ -41,19 +41,22 @@ namespace Kartverket.Register.Models.Api
 
         public Register(Models.Register item, string baseUrl, string selectedDOKMunicipality = null, string cultureName = Culture.NorwegianCode) 
         {
-            id = baseUrl + item.GetObjectUrl();
-            label = GetNameLocale(item, cultureName);
-            lang = cultureName;
-            contentsummary = GetDescriptionLocale(item, cultureName);
-            lastUpdated = item.modified;
-            targetNamespace = item.targetNamespace;
-            containedItemClass = item.containedItemClass;
-            if (item.owner != null) owner = item.owner.seoname;
-            if (item.manager != null) manager = item.manager.seoname;
-            containeditems = new List<Registeritem>();
-            containedSubRegisters = new List<Register>();
-            SelectedDOKMunicipality = selectedDOKMunicipality;
-            uuid = item.systemId;
+            if (item != null)
+            {
+                id = baseUrl + item.GetObjectUrl();
+                label = GetNameLocale(item, cultureName);
+                lang = cultureName;
+                contentsummary = GetDescriptionLocale(item, cultureName);
+                lastUpdated = item.modified;
+                targetNamespace = item.targetNamespace;
+                containedItemClass = item.containedItemClass;
+                if (item.owner != null) owner = item.owner.seoname;
+                if (item.manager != null) manager = item.manager.seoname;
+                containeditems = new List<Registeritem>();
+                containedSubRegisters = new List<Register>();
+                SelectedDOKMunicipality = selectedDOKMunicipality;
+                uuid = item.systemId;
+            }
         }
 
         public Register() { }

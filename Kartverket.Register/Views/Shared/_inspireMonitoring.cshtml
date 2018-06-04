@@ -12,7 +12,7 @@
 
             @Html.Hidden("InspireRegisteryType", "report")
             <div class="col-sm-12 col-md-3">
-                @Html.DropDownList("SelectedInspireMonitoringReport", Model.InspireMonitoringSelectList, Model.CurrentInspireMonitoringDate, new { onchange = "this.form.submit();", @class = "form-control" })
+                @Html.DropDownList("SelectedInspireMonitoringReport", Model.InspireMonitoringSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             </div>
             <div class="col-sm-12 col-md-2 text-center">
                 <input v-on:click="compare = !compare" Id="compareCb" type="checkbox" style="vertical-align:middle" v-bind:checked="compare" v-bind:value="compare" name="Compare" />

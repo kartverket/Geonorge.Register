@@ -36,19 +36,15 @@ namespace Kartverket.Register.Models.ViewModels
         private SelectList CreateSelectList(List<InspireMonitoring> inspireMonitorings)
         {
             List<SelectListItem> items = new List<SelectListItem>();
-            foreach (var monitorings in inspireMonitorings)
+            if (inspireMonitorings.Any())
             {
-                if (monitorings.Id == Guid.Empty)
+                foreach (var monitorings in inspireMonitorings.OrderByDescending(i => i.Date))
                 {
-                    items.Add(new SelectListItem() {Text = "Dagens status (ikke lagret)", Value = "today"});
-                }
-                else
-                {
-                    items.Add(new SelectListItem() { Text = monitorings.Date.ToString() , Value = monitorings.Id.ToString() });
+                    items.Add(new SelectListItem() { Text = monitorings.Date.ToString(), Value = monitorings.Id.ToString() });
                 }
             }
-
-            var selectList = new SelectList(items, "Value", "Text", CurrentInspireMonitoring.Date);
+            items.Add(new SelectListItem() { Text = "Dagens status (ikke lagret)", Value = "today" });
+            var selectList = new SelectList(items, "Value", "Text");
 
             return selectList;
         }

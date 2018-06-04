@@ -81,7 +81,7 @@ namespace Kartverket.Register.Services
         public List<InspireMonitoring> GetInspireMonitorings(Models.Register inspireRegister)
         {
             List<InspireMonitoring> inspireMonitorings = GetInspireMonitorings();
-            inspireMonitorings.Add(GetTodaysInspireMonitroingData(inspireRegister));
+            //inspireMonitorings.Add(GetTodaysInspireMonitroingData(inspireRegister));
             return inspireMonitorings;
         }
 

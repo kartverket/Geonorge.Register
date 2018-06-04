@@ -124,7 +124,7 @@ namespace Kartverket.Register.Services
                     new InspireReportViewModel(currentInspireMonitoring, null, GetInspireMonitorings(register));
             }
 
-            return new InspireReportViewModel(GetLatestInspireMonitroingData(), null, GetInspireMonitorings(register));
+            return new InspireReportViewModel(currentInspireMonitoring, null, GetInspireMonitorings(register));
         }
 
         private Monitoring Mapping()

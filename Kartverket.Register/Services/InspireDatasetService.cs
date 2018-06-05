@@ -473,6 +473,25 @@ namespace Kartverket.Register.Services
             }
         }
 
+        private static void RemoveDuplicates(Synchronize synchronizationJob, List<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> removeDataServices)
+        {
+            foreach (var inspireDatasetFromRegister in inspireDataServicesFromRegister)
+            {
+                var instancesOfItem = inspireDataServicesFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
+                if (instancesOfItem.Count > 1)
+                {
+                    if (!removeDataServices.Contains(inspireDatasetFromRegister))
+                    {
+                        for (int i = 1; i < instancesOfItem.Count; i++)
+                        {
+                            removeDataServices.Add(instancesOfItem.ElementAt(i));
+                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
+                        }
+                    }
+                }
+            }
+        }
+
         private InspireDataset GetInspireDatasetByUuid(string uuid)
         {
             var queryResult = from i in _dbContext.InspireDatasets
@@ -605,10 +624,11 @@ namespace Kartverket.Register.Services
             synchronizationJob.AddedLog.Add(new SyncLogEntry(inspireDataService, "Lagt til"));
         }
 
-        private void RemoveInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen, Synchronize synchronizationJob)
+        private void RemoveInspireDataServices(List<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen, Synchronize synchronizationJob)
         {
             var exists = false;
-            var removeDataServices = new List<InspireDataService>();
+            List<InspireDataService> removeDataServices = new List<InspireDataService>();
+            RemoveDuplicates(synchronizationJob, inspireDataServicesFromRegister, removeDataServices);
 
             foreach (var inspireDataServiceFromRegister in inspireDataServicesFromRegister)
             {
@@ -768,7 +788,7 @@ namespace Kartverket.Register.Services
         }
 
 
-        public ICollection<InspireDataService> GetInspireDataService()
+        public List<InspireDataService> GetInspireDataService()
         {
             var queryResult = from i in _dbContext.InspireDataServices
                 select i;

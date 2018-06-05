@@ -96,7 +96,6 @@ namespace Kartverket.Register.Services
                 synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Navn finnes fra før"));
                 return;
             }
-
             
             inspireDataset.SystemId = Guid.NewGuid();
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
@@ -382,7 +381,7 @@ namespace Kartverket.Register.Services
         public void SynchronizeInspireDatasets(Synchronize synchronizationJob)
         {
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen(synchronizationJob);
-            if (inspireDatasetsFromKartkatalogen != null)
+           if (inspireDatasetsFromKartkatalogen != null)
             {
                 synchronizationJob.NumberOfItems = inspireDatasetsFromKartkatalogen.Count;
                 RemoveInspireDatasets(inspireDatasetsFromKartkatalogen, synchronizationJob);
@@ -424,6 +423,22 @@ namespace Kartverket.Register.Services
 
             foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
             {
+                var instancesOfItem = inspireDatasetsFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
+                if (instancesOfItem.Count > 1)
+                {
+                    if (!removeDatasets.Contains(inspireDatasetFromRegister))
+                    {
+                        for (int i = 1; i < instancesOfItem.Count; i++)
+                        {
+                            removeDatasets.Add(instancesOfItem.ElementAt(i));
+                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
+                        }
+                    }
+                }
+            }
+
+            foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
+            {
                 if (inspireDatasetsFromKartkatalogen.Any(inspireDatasetFromKartkatalog => inspireDatasetFromKartkatalog.Uuid == inspireDatasetFromRegister.Uuid))
                 {
                     exists = true;
@@ -437,9 +452,17 @@ namespace Kartverket.Register.Services
             foreach (var inspireDataset in removeDatasets)
             {
                 inspireDataset.InspireThemes.Clear();
-                DeleteInspireDataset(inspireDataset);
-                synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataset, "Slettet"));
-                synchronizationJob.NumberOfDeletedItems++;
+                try
+                {
+                    DeleteInspireDataset(inspireDataset);
+                    synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataset, "Slettet"));
+                    synchronizationJob.NumberOfDeletedItems++;
+                }
+                catch (Exception e)
+                {
+                    synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Kunne ikke slette..." + e));
+                    synchronizationJob.FailCount++;
+                }
             }
 
             _dbContext.SaveChanges();

@@ -969,7 +969,8 @@ namespace Kartverket.Register.Services.Register
         public Models.Register GetSubregisterByName(string parentName, string registerName)
         {
             var queryResultsSubregister = from r in _dbContext.Registers
-                                          where r.seoname == registerName && r.parentRegister.seoname == parentName
+                                          where (r.seoname == registerName || r.name == registerName) && 
+                                                (r.parentRegister.seoname == parentName || r.parentRegister.name == parentName)
                                           select r;
 
             Models.Register register = queryResultsSubregister.FirstOrDefault();

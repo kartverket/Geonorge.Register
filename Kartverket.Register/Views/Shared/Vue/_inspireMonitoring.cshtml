@@ -8,16 +8,7 @@
         data: {
             current: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.CurrentInspireMonitoring))),
             comparable: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.ComparableCandidate))),
-            compare: getParameterByName("compare") !== "" ? true : false,
-        },
-        computed: {
-            currentDate: function () {
-                if (this.current != null) {
-                    return @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.CurrentInspireMonitoring.Date)));
-                } else {
-                    return "";
-                }
-            }
+            compare: getParameterByName("compare") !== "" ? true : false
         }
     });
 

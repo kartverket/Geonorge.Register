@@ -81,7 +81,7 @@ namespace Kartverket.Register.Services
         public List<InspireMonitoring> GetInspireMonitorings(Models.Register inspireRegister)
         {
             List<InspireMonitoring> inspireMonitorings = GetInspireMonitorings();
-            inspireMonitorings.Add(GetTodaysInspireMonitroingData(inspireRegister));
+            //inspireMonitorings.Add(GetTodaysInspireMonitroingData(inspireRegister));
             return inspireMonitorings;
         }
 
@@ -96,8 +96,17 @@ namespace Kartverket.Register.Services
 
         public InspireReportViewModel GetInspireReportViewModel(Models.Register register, FilterParameters filter)
         {
-            var currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
-                GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedInspireMonitoringReport);
+            InspireMonitoring currentInspireMonitoring = null;
+            if (filter.SelectedInspireMonitoringReport != null)
+            {
+                currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
+                    GetTodaysInspireMonitroingData(register) : GetInspireMonitroingDataById(filter.SelectedInspireMonitoringReport);
+            }
+            else
+            {
+                currentInspireMonitoring = filter.SelectedInspireMonitoringReport == "today" ?
+                    GetTodaysInspireMonitroingData(register) : GetLatestInspireMonitroingData();
+            }
 
             if (filter.Compare)
             {
@@ -115,7 +124,7 @@ namespace Kartverket.Register.Services
                     new InspireReportViewModel(currentInspireMonitoring, null, GetInspireMonitorings(register));
             }
 
-            return new InspireReportViewModel(GetLatestInspireMonitroingData(), null, GetInspireMonitorings(register));
+            return new InspireReportViewModel(currentInspireMonitoring, null, GetInspireMonitorings(register));
         }
 
         private Monitoring Mapping()

@@ -2,9 +2,6 @@
 @using Kartverket.Register.Helpers
 @using Kartverket.Register.Models.ViewModels
 
-@* Vue/_inspireMonitoring*@
-
-
 
 <h2>Indicators</h2>
 
@@ -26,7 +23,6 @@
                     @Html.DropDownList("SelectedComparableCandidate", Model.InspireCompareMonitoringSelectList, "-- Sammenlign med --", new { onchange = "this.form.submit();", @class = "form-control" })
                 </div>
             </div>
-
         }
     </div>
 
@@ -61,7 +57,7 @@
             <th>NSi4</th>
         </tr>
 
-        <tr title="@Model.CurrentInspireMonitoring.Date">
+        <tr title="@Model.CurrentInspireMonitoringDate">
             <th>Indicator Value</th>
             <td>{{current.MDi1Value}} %</td>
             <td>{{current.MDi2Value}} %</td>
@@ -73,7 +69,7 @@
             <td>{{current.NSi4Value}} %</td>
         </tr>
 
-        <tr v-if="comparable && compare" class="warning" title="">
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
             <th>Indicator Value</th>
             <td>{{comparable.MDi1Value}} %</td>
             <td>{{comparable.MDi2Value}} %</td>
@@ -84,7 +80,7 @@
             <td>{{comparable.NSi3Value}} </td>
             <td>{{comparable.NSi4Value}} %</td>
         </tr>
-        <tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
             <th>Numerator</th>
             <td>{{current.MDi1Numerator}}</td>
             <td>{{current.MDi2Numerator}}</td>
@@ -95,7 +91,7 @@
             <td>{{current.NSi3Numerator}}</td>
             <td>{{current.NSi4Numerator}}</td>
         </tr>
-        <tr v-if="comparable && compare" class="warning" title="">
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
             <th>Numerator</th>
             <td>{{comparable.MDi1Numerator}}</td>
             <td>{{comparable.MDi2Numerator}}</td>
@@ -106,7 +102,7 @@
             <td>{{comparable.NSi3Numerator}}</td>
             <td>{{comparable.NSi4Numerator}}</td>
         </tr>
-        <tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
             <th>Denominator</th>
             <td>{{current.MDi1Denominator}}</td>
             <td>{{current.MDi2Denominator}}</td>
@@ -117,7 +113,7 @@
             <td>{{current.NSi3Denominator}}</td>
             <td>{{current.NSi4Denominator}}</td>
         </tr>
-        <tr v-if="comparable && compare" class="warning" title="">
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
             <th>Denominator</th>
             <td>{{comparable.MDi1Denominator}}</td>
             <td>{{comparable.MDi2Denominator}}</td>
@@ -170,87 +166,87 @@
             <th></th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi11Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi11Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi11Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi11Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi11Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi11Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi11Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi11Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
 
-    @* ***** ANNEX I ******* *@
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi11Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi11Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi11Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi11Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+
+        @* ***** ANNEX I ******* *@
 
         <tr class="active">
             <th>Annex I</th>
@@ -265,80 +261,80 @@
             <th></th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{current.MDi11Value}} %</td>
-        <td>{{current.MDi21Value}} %</td>
-        <td>{{current.DSi11Value}} %</td>
-        <td>{{current.DSi21Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{comparable.MDi11Value}} %</td>
-        <td>{{comparable.MDi21Value}} %</td>
-        <td>{{comparable.DSi11Value}} %</td>
-        <td>{{comparable.DSi21Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{current.MDi11Value}} %</td>
+            <td>{{current.MDi21Value}} %</td>
+            <td>{{current.DSi11Value}} %</td>
+            <td>{{current.DSi21Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{comparable.MDi11Value}} %</td>
+            <td>{{comparable.MDi21Value}} %</td>
+            <td>{{comparable.DSi11Value}} %</td>
+            <td>{{comparable.DSi21Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td>{{current.MDi11Numerator}}</td>
-        <td>{{current.MDi21Numerator}}</td>
-        <td>{{current.DSi11Numerator}}</td>
-        <td>{{current.DSi21Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td>{{comparable.MDi11Numerator}}</td>
-        <td>{{comparable.MDi21Numerator}}</td>
-        <td>{{comparable.DSi11Numerator}}</td>
-        <td>{{comparable.DSi21Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{current.MDi11Numerator}}</td>
+            <td>{{current.MDi21Numerator}}</td>
+            <td>{{current.DSi11Numerator}}</td>
+            <td>{{current.DSi21Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{comparable.MDi11Numerator}}</td>
+            <td>{{comparable.MDi21Numerator}}</td>
+            <td>{{comparable.DSi11Numerator}}</td>
+            <td>{{comparable.DSi21Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>{{current.MDi11Denominator}}</td>
-        <td>{{current.MDi21Denominator}}</td>
-        <td>{{current.DSi11Denominator}}</td>
-        <td>{{current.DSi21Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td>{{comparable.MDi11Denominator}}</td>
-        <td>{{comparable.MDi21Denominator}}</td>
-        <td>{{comparable.DSi11Denominator}}</td>
-        <td>{{comparable.DSi21Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{current.MDi11Denominator}}</td>
+            <td>{{current.MDi21Denominator}}</td>
+            <td>{{current.DSi11Denominator}}</td>
+            <td>{{current.DSi21Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{comparable.MDi11Denominator}}</td>
+            <td>{{comparable.MDi21Denominator}}</td>
+            <td>{{comparable.DSi11Denominator}}</td>
+            <td>{{comparable.DSi21Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
 
         @* ***** ANNEX II ******* *@
@@ -357,7 +353,7 @@
             <th></th>
         </tr>
 
-        <tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
             <th></th>
             <th>SubInd. Value</th>
             <td>{{current.MDi12Value}} %</td>
@@ -369,7 +365,7 @@
             <td></td>
             <td></td>
         </tr>
-        <tr v-if="comparable && compare" class="warning" title="">
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
             <th></th>
             <th>SubInd. Value</th>
             <td>{{comparable.MDi12Value}} %</td>
@@ -382,55 +378,55 @@
             <td></td>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td>{{current.MDi12Numerator}}</td>
-        <td>{{current.MDi22Numerator}}</td>
-        <td>{{current.DSi12Numerator}}</td>
-        <td>{{current.DSi22Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td>{{comparable.MDi12Numerator}}</td>
-        <td>{{comparable.MDi22Numerator}}</td>
-        <td>{{comparable.DSi12Numerator}}</td>
-        <td>{{comparable.DSi22Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{current.MDi12Numerator}}</td>
+            <td>{{current.MDi22Numerator}}</td>
+            <td>{{current.DSi12Numerator}}</td>
+            <td>{{current.DSi22Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{comparable.MDi12Numerator}}</td>
+            <td>{{comparable.MDi22Numerator}}</td>
+            <td>{{comparable.DSi12Numerator}}</td>
+            <td>{{comparable.DSi22Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>{{current.MDi12Denominator}}</td>
-        <td>{{current.MDi22Denominator}}</td>
-        <td>{{current.DSi12Denominator}}</td>
-        <td>{{current.DSi22Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td>{{comparable.MDi12Denominator}}</td>
-        <td>{{comparable.MDi22Denominator}}</td>
-        <td>{{comparable.DSi12Denominator}}</td>
-        <td>{{comparable.DSi22Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{current.MDi12Denominator}}</td>
+            <td>{{current.MDi22Denominator}}</td>
+            <td>{{current.DSi12Denominator}}</td>
+            <td>{{current.DSi22Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{comparable.MDi12Denominator}}</td>
+            <td>{{comparable.MDi22Denominator}}</td>
+            <td>{{comparable.DSi12Denominator}}</td>
+            <td>{{comparable.DSi22Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
         @* ***** ANNEX III ******* *@
 
@@ -447,80 +443,80 @@
             <th></th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{current.MDi13Value}} %</td>
-        <td>{{current.MDi23Value}} %</td>
-        <td>{{current.DSi13Value}} %</td>
-        <td>{{current.DSi23Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{comparable.MDi13Value}} %</td>
-        <td>{{comparable.MDi23Value}} %</td>
-        <td>{{comparable.DSi13Value}} %</td>
-        <td>{{comparable.DSi23Value}} %</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{current.MDi13Value}} %</td>
+            <td>{{current.MDi23Value}} %</td>
+            <td>{{current.DSi13Value}} %</td>
+            <td>{{current.DSi23Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{comparable.MDi13Value}} %</td>
+            <td>{{comparable.MDi23Value}} %</td>
+            <td>{{comparable.DSi13Value}} %</td>
+            <td>{{comparable.DSi23Value}} %</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td>{{current.MDi13Numerator}}</td>
-        <td>{{current.MDi23Numerator}}</td>
-        <td>{{current.DSi13Numerator}}</td>
-        <td>{{current.DSi23Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td>{{comparable.MDi13Numerator}}</td>
-        <td>{{comparable.MDi23Numerator}}</td>
-        <td>{{comparable.DSi13Numerator}}</td>
-        <td>{{comparable.DSi23Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{current.MDi13Numerator}}</td>
+            <td>{{current.MDi23Numerator}}</td>
+            <td>{{current.DSi13Numerator}}</td>
+            <td>{{current.DSi23Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{comparable.MDi13Numerator}}</td>
+            <td>{{comparable.MDi23Numerator}}</td>
+            <td>{{comparable.DSi13Numerator}}</td>
+            <td>{{comparable.DSi23Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>{{current.MDi13Denominator}}</td>
-        <td>{{current.MDi23Denominator}}</td>
-        <td>{{current.DSi13Denominator}}</td>
-        <td>{{current.DSi23Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td>{{comparable.MDi13Denominator}}</td>
-        <td>{{comparable.MDi23Denominator}}</td>
-        <td>{{comparable.DSi13Denominator}}</td>
-        <td>{{comparable.DSi23Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{current.MDi13Denominator}}</td>
+            <td>{{current.MDi23Denominator}}</td>
+            <td>{{current.DSi13Denominator}}</td>
+            <td>{{current.DSi23Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{comparable.MDi13Denominator}}</td>
+            <td>{{comparable.MDi23Denominator}}</td>
+            <td>{{comparable.DSi13Denominator}}</td>
+            <td>{{comparable.DSi23Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
 
     </table>
 
@@ -564,80 +560,80 @@
             <th>NSi4</th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{current.MDi14Value}} %</td>
-        <td>{{current.MDi24Value}} %</td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi12Value}} %</td>
-        <td></td>
-        <td>{{current.NSi3Value}}</td>
-        <td>{{current.NSi4Value}} %</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td>{{comparable.MDi14Value}} %</td>
-        <td>{{comparable.MDi24Value}} %</td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi12Value}} %</td>
-        <td></td>
-        <td>{{comparable.NSi3Value}}</td>
-        <td>{{comparable.NSi4Value}} %</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{current.MDi14Value}} %</td>
+            <td>{{current.MDi24Value}} %</td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi12Value}} %</td>
+            <td></td>
+            <td>{{current.NSi3Value}}</td>
+            <td>{{current.NSi4Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td>{{comparable.MDi14Value}} %</td>
+            <td>{{comparable.MDi24Value}} %</td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi12Value}} %</td>
+            <td></td>
+            <td>{{comparable.NSi3Value}}</td>
+            <td>{{comparable.NSi4Value}} %</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td>{{current.MDi14Numerator}}</td>
-        <td>{{current.MDi24Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi12Numerator}}</td>
-        <td></td>
-        <td>{{current.NSi3Numerator}}</td>
-        <td>{{current.NSi4Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td>{{comparable.MDi14Numerator}}</td>
-        <td>{{comparable.MDi24Numerator}}</td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi12Numerator}}</td>
-        <td></td>
-        <td>{{comparable.NSi3Numerator}}</td>
-        <td>{{comparable.NSi4Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{current.MDi14Numerator}}</td>
+            <td>{{current.MDi24Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi12Numerator}}</td>
+            <td></td>
+            <td>{{current.NSi3Numerator}}</td>
+            <td>{{current.NSi4Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td>{{comparable.MDi14Numerator}}</td>
+            <td>{{comparable.MDi24Numerator}}</td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi12Numerator}}</td>
+            <td></td>
+            <td>{{comparable.NSi3Numerator}}</td>
+            <td>{{comparable.NSi4Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td>{{current.MDi14Denominator}}</td>
-        <td>{{current.MDi24Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi12Denominator}}</td>
-        <td></td>
-        <td>{{current.NSi3Denominator}}</td>
-        <td>{{current.NSi4Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td>{{comparable.MDi14Denominator}}</td>
-        <td>{{comparable.MDi24Denominator}}</td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi12Denominator}}</td>
-        <td></td>
-        <td>{{comparable.NSi3Denominator}}</td>
-        <td>{{comparable.NSi4Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{current.MDi14Denominator}}</td>
+            <td>{{current.MDi24Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi12Denominator}}</td>
+            <td></td>
+            <td>{{current.NSi3Denominator}}</td>
+            <td>{{current.NSi4Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td>{{comparable.MDi14Denominator}}</td>
+            <td>{{comparable.MDi24Denominator}}</td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi12Denominator}}</td>
+            <td></td>
+            <td>{{comparable.NSi3Denominator}}</td>
+            <td>{{comparable.NSi4Denominator}}</td>
+        </tr>
 
 
         @* ***** Discovery Services ******* *@
@@ -655,80 +651,80 @@
             <th>NSi4.1</th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi31Value}}</td>
-        <td>{{current.NSi41Value}} %</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi31Value}}</td>
-        <td>{{comparable.NSi41Value}} %</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi31Value}}</td>
+            <td>{{current.NSi41Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi31Value}}</td>
+            <td>{{comparable.NSi41Value}} %</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi31Numerator}}</td>
-        <td>{{current.NSi41Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi31Numerator}}</td>
-        <td>{{comparable.NSi41Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi31Numerator}}</td>
+            <td>{{current.NSi41Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi31Numerator}}</td>
+            <td>{{comparable.NSi41Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi31Denominator}}</td>
-        <td>{{current.NSi41Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi31Denominator}}</td>
-        <td>{{comparable.NSi41Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi31Denominator}}</td>
+            <td>{{current.NSi41Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi31Denominator}}</td>
+            <td>{{comparable.NSi41Denominator}}</td>
+        </tr>
 
 
         @* ***** View Services ******* *@
@@ -747,80 +743,80 @@
             <th>NSi4.2</th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi21Value}} %</td>
-        <td>{{current.NSi32Value}}</td>
-        <td>{{current.NSi42Value}} %</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi21Value}}</td>
-        <td>{{comparable.NSi32Value}}</td>
-        <td>{{comparable.NSi42Value}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi21Value}} %</td>
+            <td>{{current.NSi32Value}}</td>
+            <td>{{current.NSi42Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi21Value}}</td>
+            <td>{{comparable.NSi32Value}}</td>
+            <td>{{comparable.NSi42Value}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi21Numerator}}</td>
-        <td>{{current.NSi32Numerator}}</td>
-        <td>{{current.NSi42Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi21Numerator}}</td>
-        <td>{{comparable.NSi32Numerator}}</td>
-        <td>{{comparable.NSi42Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi21Numerator}}</td>
+            <td>{{current.NSi32Numerator}}</td>
+            <td>{{current.NSi42Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi21Numerator}}</td>
+            <td>{{comparable.NSi32Numerator}}</td>
+            <td>{{comparable.NSi42Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi21Denominator}}</td>
-        <td>{{current.NSi32Denominator}}</td>
-        <td>{{current.NSi42Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi21Denominator}}</td>
-        <td>{{comparable.NSi32Denominator}}</td>
-        <td>{{comparable.NSi42Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi21Denominator}}</td>
+            <td>{{current.NSi32Denominator}}</td>
+            <td>{{current.NSi42Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi21Denominator}}</td>
+            <td>{{comparable.NSi32Denominator}}</td>
+            <td>{{comparable.NSi42Denominator}}</td>
+        </tr>
 
         @* ***** Download Services ******* *@
 
@@ -837,80 +833,80 @@
             <th>NSi4.3</th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi22Value}} %</td>
-        <td>{{current.NSi33Value}}</td>
-        <td>{{current.NSi43Value}} %</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi22Value}} %</td>
-        <td>{{comparable.NSi33Value}}</td>
-        <td>{{comparable.NSi43Value}} %</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi22Value}} %</td>
+            <td>{{current.NSi33Value}}</td>
+            <td>{{current.NSi43Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi22Value}} %</td>
+            <td>{{comparable.NSi33Value}}</td>
+            <td>{{comparable.NSi43Value}} %</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi22Numerator}}</td>
-        <td>{{current.NSi33Numerator}}</td>
-        <td>{{current.NSi43Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi22Numerator}}</td>
-        <td>{{comparable.NSi33Numerator}}</td>
-        <td>{{comparable.NSi43Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi22Numerator}}</td>
+            <td>{{current.NSi33Numerator}}</td>
+            <td>{{current.NSi43Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi22Numerator}}</td>
+            <td>{{comparable.NSi33Numerator}}</td>
+            <td>{{comparable.NSi43Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi22Denominator}}</td>
-        <td>{{current.NSi33Denominator}}</td>
-        <td>{{current.NSi43Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi22Denominator}}</td>
-        <td>{{comparable.NSi33Denominator}}</td>
-        <td>{{comparable.NSi43Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi22Denominator}}</td>
+            <td>{{current.NSi33Denominator}}</td>
+            <td>{{current.NSi43Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi22Denominator}}</td>
+            <td>{{comparable.NSi33Denominator}}</td>
+            <td>{{comparable.NSi43Denominator}}</td>
+        </tr>
 
         @* ***** Transformation Services ******* *@
 
@@ -927,80 +923,80 @@
             <th>NSi4.4</th>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi34Value}}</td>
-        <td>{{current.NSi44Value}} %</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>SubInd. Value</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi34Value}}</td>
-        <td>{{comparable.NSi44Value}} %</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi34Value}}</td>
+            <td>{{current.NSi44Value}} %</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>SubInd. Value</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi34Value}}</td>
+            <td>{{comparable.NSi44Value}} %</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi34Numerator}}</td>
-        <td>{{current.NSi44Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi34Numerator}}</td>
-        <td>{{comparable.NSi44Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi34Numerator}}</td>
+            <td>{{current.NSi44Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi34Numerator}}</td>
+            <td>{{comparable.NSi44Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi34Denominator}}</td>
-        <td>{{current.NSi44Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi34Denominator}}</td>
-        <td>{{comparable.NSi44Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi34Denominator}}</td>
+            <td>{{current.NSi44Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi34Denominator}}</td>
+            <td>{{comparable.NSi44Denominator}}</td>
+        </tr>
 
 
         @* ***** Invoke Services ******* *@
@@ -1018,7 +1014,7 @@
             <th>NSi4.5</th>
         </tr>
 
-        <tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
             <th></th>
             <th>SubInd. Value</th>
             <td></td>
@@ -1030,7 +1026,7 @@
             <td>{{current.NSi35Value}}</td>
             <td>{{current.NSi45Value}} %</td>
         </tr>
-        <tr v-if="comparable && compare" class="warning" title="">
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
             <th></th>
             <th>SubInd. Value</th>
             <td></td>
@@ -1043,55 +1039,55 @@
             <td>{{comparable.NSi45Value}} %</td>
         </tr>
 
-    <tr>
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi35Numerator}}</td>
-        <td>{{current.NSi45Numerator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Numerator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi35Numerator}}</td>
-        <td>{{comparable.NSi45Numerator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi35Numerator}}</td>
+            <td>{{current.NSi45Numerator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Numerator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi35Numerator}}</td>
+            <td>{{comparable.NSi45Numerator}}</td>
+        </tr>
 
-    <tr>
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{current.NSi35Denominator}}</td>
-        <td>{{current.NSi45Denominator}}</td>
-    </tr>
-    <tr v-if="comparable && compare" class="warning" title="">
-        <th></th>
-        <th>Denominator</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>{{comparable.NSi35Denominator}}</td>
-        <td>{{comparable.NSi45Denominator}}</td>
-    </tr>
+        <tr title="@Model.CurrentInspireMonitoringDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{current.NSi35Denominator}}</td>
+            <td>{{current.NSi45Denominator}}</td>
+        </tr>
+        <tr v-if="comparable && compare" class="warning" title="@Model.ComparableCandidateDate">
+            <th></th>
+            <th>Denominator</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>{{comparable.NSi35Denominator}}</td>
+            <td>{{comparable.NSi45Denominator}}</td>
+        </tr>
 
     </table>
 

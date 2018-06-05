@@ -421,21 +421,7 @@ namespace Kartverket.Register.Services
             var exists = false;
             var removeDatasets = new List<InspireDataset>();
 
-            foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
-            {
-                var instancesOfItem = inspireDatasetsFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
-                if (instancesOfItem.Count > 1)
-                {
-                    if (!removeDatasets.Contains(inspireDatasetFromRegister))
-                    {
-                        for (int i = 1; i < instancesOfItem.Count; i++)
-                        {
-                            removeDatasets.Add(instancesOfItem.ElementAt(i));
-                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
-                        }
-                    }
-                }
-            }
+            RemoveDuplicates(synchronizationJob, inspireDatasetsFromRegister, removeDatasets);
 
             foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
             {
@@ -468,6 +454,24 @@ namespace Kartverket.Register.Services
             _dbContext.SaveChanges();
         }
 
+        private static void RemoveDuplicates(Synchronize synchronizationJob, List<InspireDataset> inspireDatasetsFromRegister, List<InspireDataset> removeDatasets)
+        {
+            foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
+            {
+                var instancesOfItem = inspireDatasetsFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
+                if (instancesOfItem.Count > 1)
+                {
+                    if (!removeDatasets.Contains(inspireDatasetFromRegister))
+                    {
+                        for (int i = 1; i < instancesOfItem.Count; i++)
+                        {
+                            removeDatasets.Add(instancesOfItem.ElementAt(i));
+                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
+                        }
+                    }
+                }
+            }
+        }
 
         private InspireDataset GetInspireDatasetByUuid(string uuid)
         {

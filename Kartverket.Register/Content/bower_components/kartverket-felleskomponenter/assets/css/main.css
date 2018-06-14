@@ -2396,23 +2396,23 @@ input[type="submit"].btn {
 
 /* Handlekurv */
 .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud.svg"); }
 
 .added .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-added.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud-added.svg"); }
 
 .btn .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-white.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud-white.svg"); }
 
 .btn.added .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-white-added.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud-white-added.svg"); }
 
 .disabled .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-disabled.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud-disabled.svg"); }
 
 .disabled.added .custom-icon.custom-icon-handlekurv,
 .btn.disabled.added .custom-icon.custom-icon-handlekurv {
-  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/handlekurv-disabled-added.svg"); }
+  background-image: url("/Content/bower_components/kartverket-felleskomponenter/assets/images/svg/download-cloud-disabled-added.svg"); }
 
 /* Last ned */
 .custom-icon.custom-icon-lastned {

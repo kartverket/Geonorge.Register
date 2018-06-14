@@ -13,7 +13,7 @@ namespace Kartverket.Register.Services
         InspireDataset UpdateInspireDataset(InspireDatasetViewModel viewModel);
         InspireDataset UpdateInspireDatasetFromKartkatalogen(InspireDataset inspireDataset);
         void DeleteInspireDataset(InspireDataset inspireDataset);
-        ICollection<InspireDataService> GetInspireDataService();
+        List<InspireDataService> GetInspireDataService();
         ICollection<InspireDataServiceViewModel> ConvertToViewModel(ICollection<InspireDataService> getInspireDataService);
         InspireDataService GetInspireDataServiceByName(string registername, string itemname);
         InspireDataService GetInspireDataServiceById(Guid systemId);

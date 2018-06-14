@@ -342,7 +342,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireStatusregister()
         {
             var register = _registerService.GetInspireStatusRegister();
-            if (register.TooManySynchronizationJobs())
+            if (register.TooManySynchronizationJobsDataset())
             {
                 return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
             }
@@ -350,6 +350,11 @@ namespace Kartverket.Register.Controllers
             var synchronizationJobDataset = _synchronizationService.StartSynchronizationJob(register, "Datasett");
             new InspireDatasetService(db).SynchronizeInspireDatasets(synchronizationJobDataset);
             _synchronizationService.StopSynchronizationJob(synchronizationJobDataset);
+
+            if (register.TooManySynchronizationJobsServices())
+            {
+                return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
+            }
 
             var synchronizationJobServices = _synchronizationService.StartSynchronizationJob(register, "Tjenester");
             new InspireDatasetService(db).SynchronizeInspireDataServices(synchronizationJobServices);
@@ -365,7 +370,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireDataServices()
         {
             var register = _registerService.GetInspireStatusRegister();
-            if (register.TooManySynchronizationJobs())
+            if (register.TooManySynchronizationJobsServices())
             {
                 return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
             }
@@ -385,7 +390,7 @@ namespace Kartverket.Register.Controllers
         public IHttpActionResult SynchronizeInspireDataset()
         {
             var register = _registerService.GetInspireStatusRegister();
-            if (register.TooManySynchronizationJobs())
+            if (register.TooManySynchronizationJobsDataset())
             {
                 return Ok("Can not start synchronization. Wait for other synchronization jobs to stop");
             }

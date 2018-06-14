@@ -96,7 +96,6 @@ namespace Kartverket.Register.Services
                 synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Navn finnes fra før"));
                 return;
             }
-
             
             inspireDataset.SystemId = Guid.NewGuid();
             inspireDataset.Seoname = RegisterUrls.MakeSeoFriendlyString(inspireDataset.Name);
@@ -382,7 +381,7 @@ namespace Kartverket.Register.Services
         public void SynchronizeInspireDatasets(Synchronize synchronizationJob)
         {
             var inspireDatasetsFromKartkatalogen = FetchInspireDatasetsFromKartkatalogen(synchronizationJob);
-            if (inspireDatasetsFromKartkatalogen != null)
+           if (inspireDatasetsFromKartkatalogen != null)
             {
                 synchronizationJob.NumberOfItems = inspireDatasetsFromKartkatalogen.Count;
                 RemoveInspireDatasets(inspireDatasetsFromKartkatalogen, synchronizationJob);
@@ -422,6 +421,8 @@ namespace Kartverket.Register.Services
             var exists = false;
             var removeDatasets = new List<InspireDataset>();
 
+            RemoveDuplicates(synchronizationJob, inspireDatasetsFromRegister, removeDatasets);
+
             foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
             {
                 if (inspireDatasetsFromKartkatalogen.Any(inspireDatasetFromKartkatalog => inspireDatasetFromKartkatalog.Uuid == inspireDatasetFromRegister.Uuid))
@@ -437,14 +438,59 @@ namespace Kartverket.Register.Services
             foreach (var inspireDataset in removeDatasets)
             {
                 inspireDataset.InspireThemes.Clear();
-                DeleteInspireDataset(inspireDataset);
-                synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataset, "Slettet"));
-                synchronizationJob.NumberOfDeletedItems++;
+                try
+                {
+                    DeleteInspireDataset(inspireDataset);
+                    synchronizationJob.DeletedLog.Add(new SyncLogEntry(inspireDataset, "Slettet"));
+                    synchronizationJob.NumberOfDeletedItems++;
+                }
+                catch (Exception e)
+                {
+                    synchronizationJob.FailLog.Add(new SyncLogEntry(inspireDataset, "Kunne ikke slette..." + e));
+                    synchronizationJob.FailCount++;
+                }
             }
 
             _dbContext.SaveChanges();
         }
 
+        private static void RemoveDuplicates(Synchronize synchronizationJob, List<InspireDataset> inspireDatasetsFromRegister, List<InspireDataset> removeDatasets)
+        {
+            foreach (var inspireDatasetFromRegister in inspireDatasetsFromRegister)
+            {
+                var instancesOfItem = inspireDatasetsFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
+                if (instancesOfItem.Count > 1)
+                {
+                    if (!removeDatasets.Contains(inspireDatasetFromRegister))
+                    {
+                        for (int i = 1; i < instancesOfItem.Count; i++)
+                        {
+                            removeDatasets.Add(instancesOfItem.ElementAt(i));
+                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void RemoveDuplicates(Synchronize synchronizationJob, List<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> removeDataServices)
+        {
+            foreach (var inspireDatasetFromRegister in inspireDataServicesFromRegister)
+            {
+                var instancesOfItem = inspireDataServicesFromRegister.Where(i => i.Uuid == inspireDatasetFromRegister.Uuid).ToList();
+                if (instancesOfItem.Count > 1)
+                {
+                    if (!removeDataServices.Contains(inspireDatasetFromRegister))
+                    {
+                        for (int i = 1; i < instancesOfItem.Count; i++)
+                        {
+                            removeDataServices.Add(instancesOfItem.ElementAt(i));
+                            synchronizationJob.DeletedLog.Add(new SyncLogEntry(instancesOfItem.ElementAt(i), "Duplikat"));
+                        }
+                    }
+                }
+            }
+        }
 
         private InspireDataset GetInspireDatasetByUuid(string uuid)
         {
@@ -578,10 +624,11 @@ namespace Kartverket.Register.Services
             synchronizationJob.AddedLog.Add(new SyncLogEntry(inspireDataService, "Lagt til"));
         }
 
-        private void RemoveInspireDataServices(ICollection<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen, Synchronize synchronizationJob)
+        private void RemoveInspireDataServices(List<InspireDataService> inspireDataServicesFromRegister, List<InspireDataService> inspireDataServicesFromKartkatalogen, Synchronize synchronizationJob)
         {
             var exists = false;
-            var removeDataServices = new List<InspireDataService>();
+            List<InspireDataService> removeDataServices = new List<InspireDataService>();
+            RemoveDuplicates(synchronizationJob, inspireDataServicesFromRegister, removeDataServices);
 
             foreach (var inspireDataServiceFromRegister in inspireDataServicesFromRegister)
             {
@@ -741,7 +788,7 @@ namespace Kartverket.Register.Services
         }
 
 
-        public ICollection<InspireDataService> GetInspireDataService()
+        public List<InspireDataService> GetInspireDataService()
         {
             var queryResult = from i in _dbContext.InspireDataServices
                 select i;

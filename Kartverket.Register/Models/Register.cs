@@ -254,9 +254,14 @@ namespace Kartverket.Register.Models
             return accessId is 4;
         }
 
-        public bool TooManySynchronizationJobs()
+        public bool TooManySynchronizationJobsDataset()
         {
-            return Synchronizes.Count(s => s.Active) > 3;
+            return Synchronizes.Where(s => s.Active && s.ItemType == "Datasett").Count(s => s.Active) >= 1;
+        }
+
+        public bool TooManySynchronizationJobsServices()
+        {
+            return Synchronizes.Where(s => s.Active && s.ItemType == "Tjenester").Count(s => s.Active) >= 1;
         }
     }
 }

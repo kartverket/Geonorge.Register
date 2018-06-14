@@ -2,7 +2,7 @@
   "name": "ASP.NET",
   "private": true,
   "dependencies": {
-    "kartverket-felleskomponenter": "8.7.2",
+    "kartverket-felleskomponenter": "9.0.0",
     "tablesorter": "*",
     "vue": "^2.5.13"
   }

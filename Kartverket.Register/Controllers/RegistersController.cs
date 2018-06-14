@@ -110,7 +110,6 @@ namespace Kartverket.Register.Controllers
 
         // GET: Registers/Details/5
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister.{format}")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
         {
@@ -142,8 +141,6 @@ namespace Kartverket.Register.Controllers
         [Authorize]
         [HttpPost]
         [Route("register/inspire-statusregister")]
-        [Route("register/inspire-statusregister.{format}")]
-        [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(FilterParameters filter, string dataset, string service)
         {
             if (IsAdmin())

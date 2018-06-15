@@ -15,12 +15,12 @@ namespace Kartverket.Register.Services
 
         public Organization GetOrganizationByName(string name)
         {
-            return _dbContext.Organizations.SingleOrDefault(o => o.name == name);
+            return _dbContext.Organizations.FirstOrDefault(o => o.name == name);
         }
 
         public Organization GetOrganizationByNumber(string number)
         {
-            return _dbContext.Organizations.SingleOrDefault(o => o.number == number);
+            return _dbContext.Organizations.FirstOrDefault(o => o.number == number);
         }
 
         public Organization GetOrganization(string organizationName)
@@ -45,7 +45,7 @@ namespace Kartverket.Register.Services
 
         public Organization GetOrganizationTranslatedByName(string name, string culture)
         {
-            var organization = _dbContext.Organizations.SingleOrDefault(o => o.name == name && o.Translations.Any(oo => oo.CultureName == culture));
+            var organization = _dbContext.Organizations.FirstOrDefault(o => o.name == name && o.Translations.Any(oo => oo.CultureName == culture));
             if (organization != null)
             {
                 var translated = organization.Translations.Where(t => t.CultureName == culture).FirstOrDefault();

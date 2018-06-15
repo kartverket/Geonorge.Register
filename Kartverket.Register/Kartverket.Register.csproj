@@ -1195,6 +1195,12 @@
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dekningskart.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\den-norske-loeve.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\dok.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud-disabled-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud-disabled.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud-white-added.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud-white.svg" />
+    <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\download-cloud.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-disabled.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink-white.svg" />
     <Content Include="Content\bower_components\kartverket-felleskomponenter\assets\images\svg\eksternlink.svg" />

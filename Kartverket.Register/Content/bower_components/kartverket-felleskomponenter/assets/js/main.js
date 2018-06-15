@@ -270,7 +270,7 @@ function removeBrokenOrderItems() {
 }
 
 function updateShoppingCart() {
-    var shoppingCartElement = $('#orderitem-count');
+    var shoppingCartElement = $('.downloads__count');
     var orderItems = "";
     var orderItemsObj = {};
     var cookieName = "orderitems";
@@ -306,7 +306,7 @@ function updateShoppingCart() {
 }
 
 function updateShoppingCartCookie() {
-    var shoppingCartElement = $('#orderitem-count');
+    var shoppingCartElement = $('.downloads__count');
     var cookieName = "orderitems";
     var cookieDomain = ".geonorge.no";
     var cookieValue = 0;

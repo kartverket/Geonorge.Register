@@ -876,7 +876,14 @@ namespace Kartverket.Register.Controllers
             if (documentOwnerId == Guid.Empty)
             {
                 Organization submitterOrganisasjon = _registerService.GetOrganizationByUserName();
-                return submitterOrganisasjon.systemId;
+                if (submitterOrganisasjon != null)
+                {
+                    return submitterOrganisasjon.systemId;
+                }
+                else
+                {
+                    Organization.GetDefaultOrganizationId();
+                }
             }
             else
             {

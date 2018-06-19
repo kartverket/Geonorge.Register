@@ -876,6 +876,7 @@
     <Compile Include="Models\ContainedItemClass.cs" />
     <Compile Include="Models\CoverageDataset.cs" />
     <Compile Include="Models\DatasetDelivery.cs" />
+    <Compile Include="Models\DatasetStatusHistory.cs" />
     <Compile Include="Models\GeodatalovDataset.cs" />
     <Compile Include="Models\IInspireMonitoring.cs" />
     <Compile Include="Models\InspireDataService.cs" />
@@ -896,6 +897,8 @@
     <Compile Include="Models\ServiceAlert.cs" />
     <Compile Include="Models\Sorting.cs" />
     <Compile Include="Models\DokStatus.cs" />
+    <Compile Include="Models\StatusHistory.cs" />
+    <Compile Include="Models\StatusReport.cs" />
     <Compile Include="Models\Synchronize.cs" />
     <Compile Include="Models\Translations\AlertTypes.cs" />
     <Compile Include="Models\Translations\CodelistValueTranslation.cs" />

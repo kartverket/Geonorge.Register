@@ -855,6 +855,10 @@
     <Compile Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.Designer.cs">
       <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806191035048_AddStatusHistory.cs" />
+    <Compile Include="Migrations\201806191035048_AddStatusHistory.Designer.cs">
+      <DependentUpon>201806191035048_AddStatusHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -2068,6 +2072,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805151318513_AddItemTypeToSynchronizeTable.resx">
       <DependentUpon>201805151318513_AddItemTypeToSynchronizeTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806191035048_AddStatusHistory.resx">
+      <DependentUpon>201806191035048_AddStatusHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

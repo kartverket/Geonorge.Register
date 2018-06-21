@@ -27,7 +27,16 @@
     <input type="hidden" name="currentVersionId" id="currentVersionId" value="@Model.systemId" />
     <input type="hidden" name="registerId" id="registerId" value="@Model.registerId" />
     <input type="hidden" name="versioningId" id="versioningId" value="@Model.versioningId" />
-    <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versioning.lastVersionNumber" />
+
+    if (Model.versioning != null)
+    {
+        <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versioning.lastVersionNumber" />
+    }
+    else
+    {
+        <input type="hidden" name="versionNumber" id="versionNumber" value="@Model.versionNumber" />
+    }
+    
 
     if (Model.register.parentRegisterId != null)
     {
@@ -35,18 +44,19 @@
         <input type="hidden" name="parentRegisterOwner" id="parentRegisterOwner" value="@Model.register.parentRegister.owner.seoname" />
     }
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage("ErrorMessage")
-            </div>
-        </div>
+        <div class="form-horizontal">
 
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("ErrorMessage")
+                </div>
+            </div>
+
+            @for (int t = 0; t < Model.Translations.Count; t++)
+    {
         @Html.HiddenFor(m => Model.Translations[t].CultureName)
         <div class="form-group">
             @Html.LabelFor(m => Model.Translations[t].Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -55,18 +65,18 @@
                 @Html.ValidationMessageFor(m => Model.Translations[t].Name)
             </div>
         </div>
-        }
+}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        @for (int t = 0; t < Model.Translations.Count; t++)
-        {
+            @for (int t = 0; t < Model.Translations.Count; t++)
+    {
         @Html.HiddenFor(m => Model.Translations[t].CultureName)
         <div class="form-group">
             @Html.LabelFor(m => Model.Translations[t].Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -75,32 +85,32 @@
                 @Html.ValidationMessageFor(m => Model.Translations[t].Description)
             </div>
         </div>
-        }
+}
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.versionName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.versionName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.versionName, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.versionName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.versionName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.versionName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
+                <div class="col-md-10">
+                    <input type="file" name="documentfile" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="thumbnail" />
+                    @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
+                    @Documents.ThumbnailInfo
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="documentfile">@Documents.DocumentFile:</label>
-            <div class="col-md-10">
-                <input type="file" name="documentfile" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.thumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="file" name="thumbnail" />
-                @Html.ValidationMessageFor(model => model.thumbnail, "", new { @class = "text-danger" })
-                @Documents.ThumbnailInfo
-            </div>
-        </div>
-    </div>
     <div class="form-group">
         <hr />
         <input type="submit" value="@Registers.Propose" class="btn btn-default pull-right" />

@@ -54,7 +54,7 @@ namespace Kartverket.Register.Models
         public virtual DbSet<Synchronize> Synchronizes { get; set; }
         public virtual DbSet<SyncLogEntry> SyncLogEntries { get; set; }
         public virtual DbSet<StatusReport> StatusReports { get; set; }
-        //public virtual DbSet<StatusHistory> StatusHistories { get; set; }
+        public virtual DbSet<DatasetStatusHistory> DatasetStatusHistories  { get; set; }
 
 
         public ILogEntryService LogEntryService

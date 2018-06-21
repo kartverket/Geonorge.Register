@@ -8,6 +8,14 @@ namespace Kartverket.Register.Models
 {
     public class StatusReport
     {
+        public StatusReport()
+        {
+            Id = Guid.NewGuid();
+            Date = DateTime.Now;
+            StatusHistories = new List<StatusHistory>();
+        }
+
+
         [Key]
         public Guid Id { get; set; }
         public DateTime Date { get; set; }

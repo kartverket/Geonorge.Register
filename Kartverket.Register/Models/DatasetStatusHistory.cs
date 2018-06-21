@@ -7,6 +7,28 @@ namespace Kartverket.Register.Models
 {
     public class DatasetStatusHistory : StatusHistory
     {
+        public DatasetStatusHistory()
+        {
+        }
+
+        public DatasetStatusHistory(Dataset dataset)
+        {
+            Dataset = dataset;
+            DatasetUuid = dataset.Uuid;
+            Metadata = dataset.dokDeliveryMetadataStatusId;
+            ProductSheet = dataset.dokDeliveryProductSheetStatusId;
+            PresentationRules = dataset.dokDeliveryPresentationRulesStatusId;
+            ProductSpecification = dataset.dokDeliveryProductSpecificationStatusId;
+            Wms = dataset.dokDeliveryWmsStatusId;
+            Wfs = dataset.dokDeliveryWfsStatusId;
+            Distribution = dataset.dokDeliveryDistributionStatusId;
+            SosiRequirements = dataset.dokDeliverySosiRequirementsStatusId;
+            GmlRequirements = dataset.dokDeliveryGmlRequirementsStatusId;
+            AtomFeed = dataset.dokDeliveryAtomFeedStatusId;
+        }
+
+        public virtual Dataset Dataset { get; set; }
+        public string DatasetUuid { get; set; }
         public string Metadata { get; set; }
         public string ProductSheet { get; set; }
         public string PresentationRules { get; set; }

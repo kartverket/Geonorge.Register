@@ -696,6 +696,11 @@ namespace Kartverket.Register.Controllers
             {
                 return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
             }
+
+            if (register.ContainedItemClassIsDataset())
+            {
+                return new DokDatasetViewModel((Dataset)_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
+            }
             if (register.ContainedItemClassIsDocument())
             {
                 return new DocumentViewModel((Document)_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));

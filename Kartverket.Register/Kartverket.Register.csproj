@@ -859,6 +859,10 @@
     <Compile Include="Migrations\201806191035048_AddStatusHistory.Designer.cs">
       <DependentUpon>201806191035048_AddStatusHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806201251486_AddDatasetUuid.cs" />
+    <Compile Include="Migrations\201806201251486_AddDatasetUuid.Designer.cs">
+      <DependentUpon>201806201251486_AddDatasetUuid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -920,6 +924,7 @@
     <Compile Include="Models\ViewModels\AccessViewModel.cs" />
     <Compile Include="Models\ViewModels\BoundingBoxViewModel.cs" />
     <Compile Include="Models\ViewModels\CoverageConfirmedMunicipalityViewModel.cs" />
+    <Compile Include="Models\ViewModels\DokDatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\DatasetViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireDataServiceViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
@@ -1099,6 +1104,7 @@
     <Compile Include="Services\InspireMonitoringService.cs" />
     <Compile Include="Services\IOrganizationService.cs" />
     <Compile Include="Services\ISynchronizationService.cs" />
+    <Compile Include="Services\IStatusReportService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\MetadataService.cs" />
     <Compile Include="Services\Notify\EmailService.cs" />
@@ -1125,6 +1131,7 @@
     <Compile Include="Services\SolrIndexDocumentCreator.cs" />
     <Compile Include="Services\SolrIndexer.cs" />
     <Compile Include="Services\SolrRegisterIndexer.cs" />
+    <Compile Include="Services\StatusReportService.cs" />
     <Compile Include="Services\SynchronizationService.cs" />
     <Compile Include="Services\Translation\ITranslationService.cs" />
     <Compile Include="Services\Translation\TranslationService.cs" />
@@ -2075,6 +2082,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806191035048_AddStatusHistory.resx">
       <DependentUpon>201806191035048_AddStatusHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806201251486_AddDatasetUuid.resx">
+      <DependentUpon>201806201251486_AddDatasetUuid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

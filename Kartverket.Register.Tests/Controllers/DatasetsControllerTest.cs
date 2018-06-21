@@ -183,7 +183,7 @@ namespace Kartverket.Register.Tests.Controllers
         // *** HJELPEMETODER
         private DatasetsController CreateController(RegisterDbContext dbContext, IRegisterService registerService, IRegisterItemService registerItemService, IAccessControlService accessControlService, IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService)
         {
-            var controller = new DatasetsController(dbContext, registerItemService, registerService, accessControlService, datasetDeliveryService, translationService);
+            var controller = new DatasetsController(dbContext, registerItemService, registerService, accessControlService, datasetDeliveryService, translationService, null, null);
             return controller;
         }
 

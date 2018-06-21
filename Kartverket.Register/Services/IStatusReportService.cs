@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using Kartverket.Register.Models;
+
+namespace Kartverket.Register.Services
+{
+    public interface IStatusReportService
+    {
+        void CreateStatusReport(Models.Register register);
+        ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset);
+    }
+}

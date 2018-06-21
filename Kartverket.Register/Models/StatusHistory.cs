@@ -8,6 +8,11 @@ namespace Kartverket.Register.Models
 {
     public class StatusHistory
     {
+        public StatusHistory()
+        {
+            Id = Guid.NewGuid();
+        }
+
         [Key]
         public Guid Id { get; set; }
     }

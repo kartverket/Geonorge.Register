@@ -105,6 +105,7 @@ namespace Kartverket.Register.Controllers
         /// <summary>
         /// Save dok status report to db
         /// </summary>
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
         [Route("api/register/{registerName}/report")]
         [HttpGet]
         public IHttpActionResult DokReport(string registerName)

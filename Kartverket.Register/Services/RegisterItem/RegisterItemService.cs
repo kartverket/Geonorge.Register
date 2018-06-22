@@ -441,7 +441,8 @@ namespace Kartverket.Register.Services.RegisterItem
                                      o.systemId != registeritem.systemId
                                      && o.registerId == registeritem.registerId
                                      && o.versioningId != registeritem.versioningId
-                               select o.systemId;
+                               select o;
+
             if (queryResults.Count() > 0)
             {
                 return false;

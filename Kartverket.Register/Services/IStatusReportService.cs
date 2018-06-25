@@ -8,5 +8,6 @@ namespace Kartverket.Register.Services
     {
         void CreateStatusReport(Models.Register register);
         ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset);
+        StatusReport GetLatestReport();
     }
 }

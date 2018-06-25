@@ -161,6 +161,11 @@ namespace Kartverket.Register.Models.ViewModels
             return SystemId == Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
         }
 
+        public bool IsDokRegistry()
+        {
+            return SystemId == Guid.Parse("CD429E8B-2533-45D8-BCAA-86BC2CBDD0DD");
+        }
+
         public bool ContainedItemClassIsOrganization()
         {
             return ContainedItemClass == "Organization";

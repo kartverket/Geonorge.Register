@@ -209,5 +209,10 @@ namespace Kartverket.Register.Helpers
         {
             return "/api/metadata/synchronize/inspire-statusregister/dataservices";
         }
+
+        public static string DokStatusRegistryReport()
+        {
+            return "/dok/rapport";
+        }
     }
 }

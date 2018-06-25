@@ -179,7 +179,7 @@ namespace Kartverket.Register.Models
             {
                 if (item is DatasetStatusHistory datasetStatusHistory)
                 {
-                    if (datasetStatusHistory.AtomFeed == status)
+                    if (datasetStatusHistory.Distribution == status)
                     {
                         number++;
                     }

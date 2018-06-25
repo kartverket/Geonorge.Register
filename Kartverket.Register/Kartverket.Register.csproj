@@ -930,6 +930,7 @@
     <Compile Include="Models\ViewModels\InspireMonitoringViewModel.cs" />
     <Compile Include="Models\ViewModels\InspireReportViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterGrouped.cs" />
+    <Compile Include="Models\ViewModels\StatusReportViewModel.cs" />
     <Compile Include="Models\ViewModels\SynchronizationViewModel.cs" />
     <Compile Include="Models\ViewModels\VersionsViewModel.cs" />
     <Compile Include="Models\ViewModels\DocumentViewModel.cs" />
@@ -1650,6 +1651,7 @@
     <Content Include="Views\Shared\_synchronizations.cshtml" />
     <Content Include="Views\InspireDataService\Delete.cshtml" />
     <Content Include="Views\Shared\Vue\_inspireMonitoring.cshtml" />
+    <Content Include="Views\Datasets\Report.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-3.1.0.slim.min.map" />

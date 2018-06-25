@@ -104,10 +104,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-
-
-
-
         // GET: Registers/Details/5
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister/{filterOrganization}")]

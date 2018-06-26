@@ -8,12 +8,6 @@ namespace Kartverket.Register.Models
 {
     public class StatusReport
     {
-
-        private const string Good = "good";
-        private const string Dificent = "dificent";
-        private const string Notset = "notset";
-        private const string Useable = "useable";
-
         public StatusReport()
         {
             Id = Guid.NewGuid();
@@ -27,6 +21,11 @@ namespace Kartverket.Register.Models
         public DateTime Date { get; set; }
         public virtual ICollection<StatusHistory> StatusHistories { get; set; }
 
+
+        public int NumberOfIems()
+        {
+            return StatusHistories.Count;
+        }
 
         public int NumberOfItemsWithMetadata(string status)
         {

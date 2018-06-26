@@ -49,5 +49,22 @@ namespace Kartverket.Register.Services
             StatusReport latestReport = queryResults.OrderByDescending(o => o.Date).FirstOrDefault();
             return latestReport;
         }
+
+        public List<StatusReport> GetStatusReports()
+        {
+            var queryResults = from r in _dbContext.StatusReports
+                select r;
+
+            return queryResults.OrderByDescending(o => o.Date).ToList();
+        }
+
+        public StatusReport GetStatusReportById(string statusReportId)
+        {
+            var queryResults = from r in _dbContext.StatusReports
+                               where r.Id.ToString() == statusReportId
+                                select r;
+
+            return queryResults.FirstOrDefault();
+        }
     }
 }

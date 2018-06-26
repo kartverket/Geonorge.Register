@@ -1166,6 +1166,16 @@ namespace Kartverket.Register.Services.Register
             return queryResult.FirstOrDefault();
         }
 
+        public Models.Register GetDokStatusRegister()
+        {
+            var dokId = Guid.Parse(GlobalVariables.DokRegistryId);
+
+            var queryResult = from r in _dbContext.Registers
+                where r.systemId == dokId
+                select r;
+            return queryResult.FirstOrDefault();
+        }
+
         public List<Models.RegisterItem> GetConfirmdDatasetBySelectedMunicipality(Models.Register dokMunicipalRegister, Organization municipality)
         {
             List<Models.RegisterItem> datasets = new List<Models.RegisterItem>();

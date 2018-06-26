@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc;
 using Kartverket.Register.Models;
 
 namespace Kartverket.Register.Services
@@ -9,5 +10,7 @@ namespace Kartverket.Register.Services
         void CreateStatusReport(Models.Register register);
         ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset);
         StatusReport GetLatestReport();
+        List<StatusReport> GetStatusReports();
+        StatusReport GetStatusReportById(string statusReportId);
     }
 }

@@ -43,16 +43,6 @@ namespace Kartverket.Register.Controllers
         }
 
 
-        // GET: Registers/Report/
-        [Route("dok/rapport")]
-        public ActionResult Report(string report)
-        {
-            var latestStatusReport = _statusReportService.GetLatestReport();
-            var statusReportViewModel = new StatusReportViewModel(latestStatusReport);
-            return View(statusReportViewModel);
-        }
-
-
         // GET: Datasets/Create
         [Authorize]
         [Route("dataset/{parentRegister}/{registerowner}/{registername}/ny")]

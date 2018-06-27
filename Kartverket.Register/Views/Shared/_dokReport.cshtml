@@ -11,15 +11,22 @@ else
     <p>@Model.Date</p>
     <p>Antall datasett: @Model.NumberOfItems</p>
 
-    <div class="row form-group">
-        @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
-        {
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+            {
 
-            @Html.Hidden("DokSelectedTab", "report")
-            <div class="col-sm-12 col-md-3">
-                @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
-            </div>
-        }
+                @Html.Hidden("DokSelectedTab", "report")
+                    @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+            }
+        </div>
+        @*<div class="col-md-8 col-sm-12">
+            @using (Html.BeginForm())
+            {
+                <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="eksporter til CSV" name="csv" type="submit" value="CSV" />
+            }
+
+        </div>*@
     </div>
 
     <table class="table table-bordered table-responsive">

@@ -19,6 +19,7 @@ namespace Kartverket.Register.Models.ViewModels
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
         public SelectList DokReportsSelectList { get; set; }
+        public bool ReportNotExists { get; set; }
 
         // Metadata
         [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
@@ -94,11 +95,11 @@ namespace Kartverket.Register.Models.ViewModels
 
         public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports)
         {
+            DokReportsSelectList = CreateSelectList(statusReports);
             if (statusReport != null)
             {
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
-                DokReportsSelectList = CreateSelectList(statusReports);
 
                 NumberOfItemsWithMetadataGood = statusReport.NumberOfItemsWithMetadata(Good);
                 NumberOfItemsWithMetadataDeficient = statusReport.NumberOfItemsWithMetadata(Deficient);
@@ -150,14 +151,21 @@ namespace Kartverket.Register.Models.ViewModels
                 NumberOfItemsWithDistributionNotSet = statusReport.NumberOfItemsWithDistribution(Notset);
                 NumberOfItemsWithDistributionUseable = statusReport.NumberOfItemsWithDistribution(Useable);
             }
+            else
+            {
+                ReportNotExists = true;
+            }
         }
 
         private SelectList CreateSelectList(List<StatusReport> statusReports)
         {
-            if (statusReports == null) return null;
             List<SelectListItem> items = new List<SelectListItem>();
 
-            if (statusReports.Any())
+            if (statusReports == null)
+            {
+                items.Add(new SelectListItem() { Text = "Ingen rapporter", Value = null });
+            }
+            else if (statusReports.Any())
             {
                 foreach (var report in statusReports.OrderByDescending(i => i.Date))
                 {

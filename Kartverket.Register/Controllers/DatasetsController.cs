@@ -27,8 +27,10 @@ namespace Kartverket.Register.Controllers
         private IAccessControlService _accessControlService;
         private IDatasetDeliveryService _datasetDeliveryService;
         private ITranslationService _translationService;
+        private IDatasetService _datasetService;
+        private IStatusReportService _statusReportService;
 
-        public DatasetsController(RegisterDbContext dbContext, IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService)
+        public DatasetsController(RegisterDbContext dbContext, IRegisterItemService registerItemService, IRegisterService registerService, IAccessControlService accessControllService, IDatasetDeliveryService datasetDeliveryService, ITranslationService translationService, IDatasetService datasetService, IStatusReportService statusReportService)
         {
              db = dbContext;
             _registerItemService = registerItemService;
@@ -36,7 +38,10 @@ namespace Kartverket.Register.Controllers
             _accessControlService = accessControllService;
             _datasetDeliveryService = datasetDeliveryService;
             _translationService = translationService;
+            _datasetService = datasetService;
+            _statusReportService = statusReportService;
         }
+
 
         // GET: Datasets/Create
         [Authorize]
@@ -108,6 +113,7 @@ namespace Kartverket.Register.Controllers
                             dataset = initialisationDataset(dataset);
                             dataset = GetMetadataFromKartkatalogen(dataset, dataset.Uuid);
                             dataset.datasetowner = (Organization)_registerItemService.GetRegisterItemBySystemId(dataset.datasetownerId);
+                            dataset.StatusHistories = _statusReportService.GetStatusHistoriesByDataset(dataset);
                             _registerItemService.SaveNewRegisterItem(dataset);
                             return Redirect(dataset.GetObjectUrl());
                         }
@@ -330,6 +336,7 @@ namespace Kartverket.Register.Controllers
         {
             Dataset dataset = (Dataset)_registerItemService.GetCurrentRegisterItem(parentregister, registername, itemname);
             _registerItemService.DeleteCoverageByDatasetId(dataset.systemId);
+            dataset.StatusHistories.Clear();
             _registerItemService.SaveDeleteRegisterItem(dataset);
             return Redirect(RegisterUrls.registerUrl(parentregister, registerowner, registername));
         }

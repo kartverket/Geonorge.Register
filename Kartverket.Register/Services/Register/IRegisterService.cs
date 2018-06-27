@@ -48,5 +48,6 @@ namespace Kartverket.Register.Services.Register
         bool RegisterNameAlredyExist(Object register);
         Models.Register CreateNewRegister(Models.Register register);
         void UpdateDateModified(Models.Register register);
+        Models.Register GetDokStatusRegister();
     }
 }

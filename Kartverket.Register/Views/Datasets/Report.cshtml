@@ -1,0 +1,36 @@
+﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+
+@{
+    ViewBag.Title = "Dok-rapport";
+}
+
+@section breadcrumb {
+    <li>Dok-rapport</li>
+}
+
+
+<section>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="small-h1">
+                Dok-rapport
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <span class="separator-lg"></span>
+        </div>
+        <div class="col-sm-12 col-md-10">
+            <p>
+                Beskrivelse
+            </p>
+        </div>
+    </div>
+</section>
+
+<span class="separator-small margin-bottom-10"></span>
+<div class="clearfix"></div>
+
+<div class="hidden-print">
+    <a class="hidden-print show-loading-animation" data-loading-message="@Registers.LoadingMessage" href="#">@Shared.Back</a>
+</div>
+

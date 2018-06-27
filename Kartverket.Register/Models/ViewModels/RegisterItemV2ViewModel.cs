@@ -113,6 +113,11 @@ namespace Kartverket.Register.Models.ViewModels
                 Owner = document.documentowner;
                 OwnerId = document.documentownerId;
             }
+            if (item is Dataset dataset)
+            {
+                Owner = dataset.datasetowner;
+                OwnerId = dataset.datasetownerId;
+            }
         }
 
         public string NameTranslated(RegisterItem registerItem)
@@ -194,6 +199,8 @@ namespace Kartverket.Register.Models.ViewModels
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetEditUrl();
                 case DocumentViewModel documentViewModel:
                     return documentViewModel.EditVersionOfDocumentUrl();
+                case DokDatasetViewModel dokDatasetViewModel:
+                    return dokDatasetViewModel.GetDatasetEditUrl();
 
             }
             switch (RegisterItem)
@@ -235,6 +242,8 @@ namespace Kartverket.Register.Models.ViewModels
                     return geodatalovDatasetViewModel.GetGeodatalovDatasetDeleteUrl();
                 case DocumentViewModel documentViewModel:
                     return documentViewModel.DeleteVersionOfDocumentUrl();
+                case DokDatasetViewModel dokDatasetViewModel:
+                    return dokDatasetViewModel.GetDatasetDeleteUrl();
             }
             switch (RegisterItem)
             {

@@ -35,10 +35,11 @@ namespace Kartverket.Register.Controllers
         private readonly IGeodatalovDatasetService _geodatalovDatasetService;
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly ISynchronizationService _synchronizationService;
+        private readonly IStatusReportService _statusReportService;
 
         public RegistersController(ITranslationService translationService,
             RegisterDbContext dbContext, IRegisterItemService registerItemService, ISearchService searchService, IVersioningService versioningService,
-            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService)
+            IRegisterService registerService, IAccessControlService accessControlService, IInspireDatasetService inspireDatasetService, IGeodatalovDatasetService geodatalovService, IInspireMonitoringService inspireMonitoringService, ISynchronizationService synchronizationService, IStatusReportService statusReportService)
         {
             _db = dbContext;
             _registerItemService = registerItemService;
@@ -51,6 +52,7 @@ namespace Kartverket.Register.Controllers
             _geodatalovDatasetService = geodatalovService;
             _inspireMonitoringService = inspireMonitoringService;
             _synchronizationService = synchronizationService;
+            _statusReportService = statusReportService;
         }
 
         // GET: Registers
@@ -104,11 +106,7 @@ namespace Kartverket.Register.Controllers
         }
 
 
-
-
-
-
-        // GET: Registers/Details/5
+        // GET: Registers/Details Inspire registry/5
         [Route("register/inspire-statusregister")]
         [Route("register/inspire-statusregister/{filterOrganization}")]
         public ActionResult DetailsInspireStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
@@ -122,6 +120,7 @@ namespace Kartverket.Register.Controllers
 
             filter.InspireRegisteryType = GetInspireRegistryType(filter.InspireRegisteryType);
             register = FilterRegisterItems(register, filter);
+
             var viewModel = new RegisterV2ViewModel(register, page);
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
             viewModel.SelectedInspireRegisteryType = filter.InspireRegisteryType;
@@ -158,6 +157,33 @@ namespace Kartverket.Register.Controllers
             }
 
             return HttpNotFound();
+        }
+
+        // GET: Registers/Details DOK/5
+        [Route("register/det-offentlige-kartgrunnlaget")]
+        [Route("register/det-offentlige-kartgrunnlagetr/{filterOrganization}")]
+        public ActionResult DetailsDokStatusRegistry(string sorting, int? page, string format, FilterParameters filter)
+        {
+            RemoveSessionsParamsIfCurrentRegisterIsNotTheSameAsReferer();
+            var redirectToApiUrl = RedirectToApiIfFormatIsNotNull(format);
+            if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
+
+            var register = _registerService.GetDokStatusRegister();
+            if (register == null) return HttpNotFound();
+
+            register = FilterRegisterItems(register, filter);
+
+            StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : _statusReportService.GetLatestReport();
+            
+
+            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports());
+            viewModel.SelectedDokTab = filter.DokSelectedTab;
+            viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
+
+            ItemsOrderBy(sorting, viewModel);
+            ViewBagOrganizationMunizipality(filter.municipality);
+            ViewbagsRegisterDetails(sorting, page, filter, viewModel);
+            return View(viewModel);
         }
 
         private void StartSynchronizationDataset()
@@ -695,6 +721,11 @@ namespace Kartverket.Register.Controllers
             if (register.IsDokMunicipal())
             {
                 return new RegisterItemV2ViewModel(_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
+            }
+
+            if (register.ContainedItemClassIsDataset())
+            {
+                return new DokDatasetViewModel((Dataset)_registerItemService.GetRegisterItem(parentregister, registername, itemname, version, itemowner));
             }
             if (register.ContainedItemClassIsDocument())
             {

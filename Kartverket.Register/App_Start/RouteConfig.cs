@@ -7,6 +7,7 @@ namespace Kartverket.Register
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             
             routes.MapRoute("DisplayDataset", "datasett/{id}/{name}",
@@ -14,8 +15,8 @@ namespace Kartverket.Register
                 new { id = @"^\d+$" }
             );
 
+            //routes.MapRoute("Report", "register/det-offentlige-kartgrunnlaget/rapport", new { controller = "Datasets", action = "Report" });
             routes.MapRoute("Dataset", "datasett", new { controller = "DisplayDataset", action = "Index" });
-
             routes.MapRoute("DokDekning", "register/det-offentlige-kartgrunnlaget/dekning", new { controller = "DokCoverage", action = "Index" });
             routes.MapRoute("InspireMonitoring", "api/register/inspire-statusregister/monitoring-report", new { controller = "ApiRoot", action = "InspireMonitoring" });
             routes.MapRoute("InspireDatasetMonitoring", "api/register/{registerName}/{itemowner}/{item}/monitoring-report", new { controller = "ApiRoot", action = "InspireDatasetMonitoring" });

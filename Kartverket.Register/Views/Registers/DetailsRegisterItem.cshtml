@@ -87,9 +87,9 @@
     {
         @Html.Partial("_detailsGeodatalovDataset")
     }
-    else if (Model.RegisterItem is Dataset)
+    else if (Model is DokDatasetViewModel)
     {
-        @Html.Partial("_detailsDataset", (Dataset)Model.RegisterItem)
+        @Html.Partial("_detailsDataset")
     }
     else if (Model.RegisterItem is Organization)
     {

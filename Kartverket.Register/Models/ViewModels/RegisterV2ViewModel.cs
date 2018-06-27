@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web.Mvc;
+using Kartverket.Register.Helpers;
 using Kartverket.Register.Models.Translations;
 using Resources;
 
@@ -67,10 +68,12 @@ namespace Kartverket.Register.Models.ViewModels
         public AccessViewModel AccessRegister { get; set; }
 
         public SynchronizationViewModel SynchronizationJobs { get; set; }
+        public StatusReportViewModel StatusReport { get; set; }
 
         public string SelectedInspireRegisteryType { get; set; }
+        public string SelectedDokTab { get; set; }
 
-        public RegisterV2ViewModel(Register register, int? page = null)
+        public RegisterV2ViewModel(Register register, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
         {
             if (register != null)
             {
@@ -92,6 +95,8 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
+                StatusReport = new StatusReportViewModel(statusReport, statusReports);
+
 
                 if (register.accessId != null) AccessId = register.accessId.Value;
 
@@ -159,6 +164,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool IsServiceAlertRegister()
         {
             return SystemId == Guid.Parse("0f428034-0b2d-4fb7-84ea-c547b872b418");
+        }
+
+        public bool IsDokRegistry()
+        {
+            return SystemId == Guid.Parse(GlobalVariables.DokRegistryId);
         }
 
         public bool ContainedItemClassIsOrganization()
@@ -273,6 +283,11 @@ namespace Kartverket.Register.Models.ViewModels
         public bool SelectedInspireRegisteryTypeIsSynchronizations()
         {
             return SelectedInspireRegisteryType == "synchronizations";
+        }
+
+        public bool SelectedDokTabIsReport()
+        {
+            return SelectedDokTab == "report";
         }
     }
 }

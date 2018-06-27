@@ -206,6 +206,9 @@ namespace Kartverket.Register.Models
         public string EenvironmentalImpactAssessmentNote { get; set; }
 
         public virtual TranslationCollection<DatasetTranslation> Translations { get; set; }
+
+        public virtual ICollection<DatasetStatusHistory> StatusHistories { get; set; }
+
         public void AddMissingTranslations()
         {
             Translations.AddMissingTranslations();

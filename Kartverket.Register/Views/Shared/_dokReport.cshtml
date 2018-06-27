@@ -1,0 +1,106 @@
+﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
+
+<h2> Rapport </h2>
+<p>@Model.Date</p>
+<p>Antall datasett: @Model.NumberOfItems</p>
+
+<div class="row form-group">
+    @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+    {
+
+        @Html.Hidden("DokSelectedTab", "report")
+        <div class="col-sm-12 col-md-3">
+            @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+        </div>
+    }
+</div>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th></th>
+            <th>@DataSet.DOK_Delivery_Status_Good</th>
+            <th>@DataSet.DOK_Delivery_Status_Useable</th>
+            <th>@DataSet.DOK_Delivery_Status_Deficient</th>
+            <th>@DataSet.DOK_Delivery_Status_NotSet</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithMetadataGood)</td>
+            <td>@Model.NumberOfItemsWithMetadataGood</td>
+            <td>@Model.NumberOfItemsWithMetadataUseable</td>
+            <td>@Model.NumberOfItemsWithMetadataDeficient</td>
+            <td>@Model.NumberOfItemsWithMetadataNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithProductsheetGood)</td>
+            <td>@Model.NumberOfItemsWithProductsheetGood</td>
+            <td>@Model.NumberOfItemsWithProductsheetUseable</td>
+            <td>@Model.NumberOfItemsWithProductsheetDeficient</td>
+            <td>@Model.NumberOfItemsWithMetadataNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithPresentationRulesGood)</td>
+            <td>@Model.NumberOfItemsWithPresentationRulesGood</td>
+            <td>@Model.NumberOfItemsWithPresentationRulesUseable</td>
+            <td>@Model.NumberOfItemsWithPresentationRulesDeficient</td>
+            <td>@Model.NumberOfItemsWithPresentationRulesNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithProductSpecificationGood)</td>
+            <td>@Model.NumberOfItemsWithProductSpecificationGood</td>
+            <td>@Model.NumberOfItemsWithProductSpecificationUseable</td>
+            <td>@Model.NumberOfItemsWithProductSpecificationDeficient</td>
+            <td>@Model.NumberOfItemsWithProductSpecificationNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithWmsGood)</td>
+            <td>@Model.NumberOfItemsWithWmsGood</td>
+            <td>@Model.NumberOfItemsWithWmsUseable</td>
+            <td>@Model.NumberOfItemsWithWmsDeficient</td>
+            <td>@Model.NumberOfItemsWithWmsNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithWfsGood)</td>
+            <td>@Model.NumberOfItemsWithWfsGood</td>
+            <td>@Model.NumberOfItemsWithWfsUseable</td>
+            <td>@Model.NumberOfItemsWithWfsDeficient</td>
+            <td>@Model.NumberOfItemsWithWfsNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithSosiRequirementsGood)</td>
+            <td>@Model.NumberOfItemsWithSosiRequirementsGood</td>
+            <td>@Model.NumberOfItemsWithSosiRequirementsUseable</td>
+            <td>@Model.NumberOfItemsWithSosiRequirementsDeficient</td>
+            <td>@Model.NumberOfItemsWithSosiRequirementsNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithGmlRequirementsGood)</td>
+            <td>@Model.NumberOfItemsWithGmlRequirementsGood</td>
+            <td>@Model.NumberOfItemsWithGmlRequirementsUseable</td>
+            <td>@Model.NumberOfItemsWithGmlRequirementsDeficient</td>
+            <td>@Model.NumberOfItemsWithGmlRequirementsNotSet</td>
+        </tr>
+
+        <tr>
+            <td>@Html.LabelFor(model => model.NumberOfItemsWithDistributionGood)</td>
+            <td>@Model.NumberOfItemsWithDistributionGood</td>
+            <td>@Model.NumberOfItemsWithDistributionUseable</td>
+            <td>@Model.NumberOfItemsWithDistributionDeficient</td>
+            <td>@Model.NumberOfItemsWithDistributionNotSet</td>
+        </tr>
+
+
+    </tbody>
+</table>
+

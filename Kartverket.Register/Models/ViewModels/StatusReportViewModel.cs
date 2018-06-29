@@ -20,6 +20,7 @@ namespace Kartverket.Register.Models.ViewModels
         public int NumberOfItems { get; set; }
         public SelectList DokReportsSelectList { get; set; }
         public bool ReportNotExists { get; set; }
+        public DokHistoricalChart DokHistoricalChart { get; set; }
 
         // Metadata
         [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
@@ -96,8 +97,11 @@ namespace Kartverket.Register.Models.ViewModels
         public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports)
         {
             DokReportsSelectList = CreateSelectList(statusReports);
+            DokHistoricalChart = new DokHistoricalChart(statusReports);
+            
             if (statusReport != null)
             {
+
                 Date = statusReport.Date;
                 NumberOfItems = statusReport.NumberOfIems();
 

@@ -1,13 +1,12 @@
 ﻿@model Kartverket.Register.Models.ViewModels.StatusReportViewModel
 
-<h2> Rapport </h2>
-
 @if (Model.ReportNotExists)
 {
     <p>Ingen rapporter enda...</p>
 }
 else
 {
+    <h2> Rapport </h2>
     <p>@Model.Date</p>
     <p>Antall datasett: @Model.NumberOfItems</p>
 
@@ -17,16 +16,16 @@ else
             {
 
                 @Html.Hidden("DokSelectedTab", "report")
-                    @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
+                @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
         @*<div class="col-md-8 col-sm-12">
-            @using (Html.BeginForm())
-            {
-                <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="eksporter til CSV" name="csv" type="submit" value="CSV" />
-            }
+                @using (Html.BeginForm())
+                {
+                    <input class="btn btn-default btn-space pull-right show-loading-animation" data-loading-message="eksporter til CSV" name="csv" type="submit" value="CSV" />
+                }
 
-        </div>*@
+            </div>*@
     </div>
 
     <table class="table table-bordered table-responsive">
@@ -117,5 +116,13 @@ else
 
         </tbody>
     </table>
+
+
+    <h2> Oversikt </h2>
+    <p>Endringer antall med status "God"</p>
+    <div class="col-md-12">
+        <canvas id="myChart" height="200" chart-colors="colors"></canvas>
+    </div>
+
 
 }

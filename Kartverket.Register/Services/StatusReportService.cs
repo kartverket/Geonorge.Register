@@ -55,7 +55,7 @@ namespace Kartverket.Register.Services
             var queryResults = from r in _dbContext.StatusReports
                 select r;
 
-            return queryResults.OrderByDescending(o => o.Date).ToList();
+            return queryResults.OrderBy(o => o.Date).ToList();
         }
 
         public StatusReport GetStatusReportById(string statusReportId)

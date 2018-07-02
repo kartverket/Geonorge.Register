@@ -133,7 +133,7 @@ namespace Kartverket.Register.Models.ViewModels
         {
             if (Register.parentRegister == null)
             {
-                return "/dataset/" + Register.seoname + "/" + Register.seoname + "/" + Register + "/rediger";
+                return "/dataset/" + Register.seoname + "/" + Register.seoname + "/" + Seoname + "/rediger";
             }
             else
             {

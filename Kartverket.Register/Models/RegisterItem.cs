@@ -99,6 +99,9 @@ namespace Kartverket.Register.Models
         [Display(Name = "Kartografi-fil")]
         public string CartographyFile { get; set; }
 
+        [Display(Name = "Kartografi-detaljer")]
+        public string CartographyDetailsUrl { get; set; }
+
         //end RegisterItem
 
         public string NameTranslated()

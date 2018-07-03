@@ -85,7 +85,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CartographyFile, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <select id="CartographyFile" name="CartographyFile" class="form-control"></select>
+                <select id="CartographyFile" name="CartographyFile" class="form-control" onchange="SetCartographyDetailsUrl(this.value);"></select>
+                @Html.HiddenFor(model => model.CartographyDetailsUrl)
                 @Html.ValidationMessageFor(model => model.CartographyFile, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -130,6 +131,20 @@
                 $('#CartographyFile').append(new Option(dataText, dataValue ));
             });
 
+        });
+    }
+
+    function SetCartographyDetailsUrl(value)
+    {
+        console.log(value);
+        selectedCartograhyUrl = value;
+
+        var checkedFile = false;
+
+        $.each(cartographyFiles, function(i, obj) {
+
+            if(obj.FileUrl == selectedCartograhyUrl)
+                $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/Details?SystemId=' + obj.Uuid);      
         });
     }
 

@@ -10,7 +10,7 @@ namespace Kartverket.Register.Services
         void CreateStatusReport(Models.Register register);
         ICollection<DatasetStatusHistory> GetStatusHistoriesByDataset(Dataset dataset);
         StatusReport GetLatestReport();
-        List<StatusReport> GetStatusReports();
+        List<StatusReport> GetStatusReports(int numberOfReports = 0);
         StatusReport GetStatusReportById(string statusReportId);
     }
 }

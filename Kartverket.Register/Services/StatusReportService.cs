@@ -50,10 +50,18 @@ namespace Kartverket.Register.Services
             return latestReport;
         }
 
-        public List<StatusReport> GetStatusReports()
+        public List<StatusReport> GetStatusReports(int numberOfReports = 0)
         {
             var queryResults = from r in _dbContext.StatusReports
                 select r;
+
+
+            if (numberOfReports > 0)
+            {
+
+                var reports = queryResults.OrderByDescending(o => o.Date).Take(numberOfReports);
+                return reports.OrderBy(o => o.Date).ToList();
+            }
 
             return queryResults.OrderBy(o => o.Date).ToList();
         }

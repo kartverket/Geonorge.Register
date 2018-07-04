@@ -864,6 +864,10 @@
     <Compile Include="Migrations\201806201251486_AddDatasetUuid.Designer.cs">
       <DependentUpon>201806201251486_AddDatasetUuid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807030837390_AddCartographyDetailsUrl.cs" />
+    <Compile Include="Migrations\201807030837390_AddCartographyDetailsUrl.Designer.cs">
+      <DependentUpon>201807030837390_AddCartographyDetailsUrl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="ModelsDok\Dataset.cs" />
     <Compile Include="ModelsDok\DatasetIndexViewModel.cs" />
@@ -1828,7 +1832,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\tabs.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2375,6 +2381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806201251486_AddDatasetUuid.resx">
       <DependentUpon>201806201251486_AddDatasetUuid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807030837390_AddCartographyDetailsUrl.resx">
+      <DependentUpon>201807030837390_AddCartographyDetailsUrl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GeodatalovDataSet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

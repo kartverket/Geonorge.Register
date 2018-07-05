@@ -491,4 +491,7 @@ Kryss av for type oppgaver der dere bruker, eller kan bruke, datasettet. Høyere
   <data name="TypeNational" xml:space="preserve">
     <value>Nasjonalt</value>
   </data>
+  <data name="DOK_Delivery_Status_NotSetShort" xml:space="preserve">
+    <value>Ikke satt</value>
+  </data>
 </root>

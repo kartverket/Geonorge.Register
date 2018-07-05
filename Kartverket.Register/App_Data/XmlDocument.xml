@@ -2590,6 +2590,11 @@
               Looks up a localized string similar to Leveransestatus er ikke satt.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_NotSetShort">
+            <summary>
+              Looks up a localized string similar to Ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Status_Useable">
             <summary>
               Looks up a localized string similar to Brukbar.

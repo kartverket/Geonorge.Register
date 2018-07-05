@@ -371,3 +371,18 @@ a.link-unstyled {
     display: table-row !important;
 }
 
+
+.good {
+    background-color: #36c545;
+}
+.useable {
+    background-color: #fed633;
+}
+.deficient {
+    background-color: #ee432a;
+}
+.notset {
+    background-color: #d8d8d8;
+}
+
+

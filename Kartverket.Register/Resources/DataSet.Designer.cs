@@ -331,6 +331,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ikke satt.
+        /// </summary>
+        public static string DOK_Delivery_Status_NotSetShort {
+            get {
+                return ResourceManager.GetString("DOK_Delivery_Status_NotSetShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Brukbar.
         /// </summary>
         public static string DOK_Delivery_Status_Useable {

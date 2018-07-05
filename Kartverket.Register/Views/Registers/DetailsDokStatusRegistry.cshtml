@@ -17,10 +17,8 @@
 }
 @section Scripts {
 
-    @if (Model.InspireReport != null)
-    {
-        @Html.Partial("Vue/_inspireMonitoring", Model.InspireReport)
-    }
+    @Html.Partial("js/_dokReportCharts", Model.StatusReport)
+
 
     <script>
 
@@ -47,87 +45,6 @@
         }
 
         selectedTab.className = "active";
-
-        @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
-
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            fill: false,
-            data: {
-                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Labels))),
-                datasets: [{
-                    label: "Metadata",
-                    backgroundColor: 'transparent',
-                    borderColor: 'rgb(255, 0, 0)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Metadata))),
-                },{
-                    label: "Produktark",
-                    backgroundColor: 'transparent',
-                        borderColor: 'rgb(240, 179, 35)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Productsheet))),
-                    },
-                    {
-                        label: "Tegneregler",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(169, 196, 127)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.PresentationRules))),
-                    },
-                    {
-                        label: "Produktspesifikasjoner",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(93, 71, 119)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.ProductSpecification))),
-                    },
-                    {
-                        label: "WMS",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(254, 80, 0)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Wms))),
-                    },
-                    {
-                        label: "WFS",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(125, 161, 196)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Wfs))),
-                    },
-                    {
-                        label: "Sosi-krav",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(54, 197, 69)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.SosiRequirements))),
-                    },
-                    {
-                        label: "Gml-krav",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(101, 126, 224)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.GmlRequirements))),
-                    },
-                    {
-                        label: "Atom-feed",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(102, 153, 102)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.AtomFeed))),
-                    },
-                    {
-                        label: "Nedlasting",
-                        backgroundColor: 'transparent',
-                        borderColor: 'rgb(0, 26, 0)',
-                        data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusReport.DokHistoricalChart.Distribution))),
-                    },
-
-
-                    ]
-            },
-
-            options: {
-                elements: {
-                    line: {
-                        tension: 0, // disables bezier curves
-                    }
-                }
-            }
-        });
 
     </script>
 

@@ -2,13 +2,34 @@
 
 <script>
 
-    function reportView(view) {
+    $(document).ready(function () {
+        var selectedView = localStorage.getItem("SelectedViewButtons");
+        reportView(selectedView, null);
+    });
+
+    function reportView(view, event) {
+        var buttons = $("#reportViewButtons button");
+        $.each(buttons,
+            function(index, btn) {
+                console.log(btn);
+                $(btn).removeClass("button-selected");
+            });
+
+        if (event == null) {
+            document.getElementById(view + "Button").classList.add("button-selected");
+        }
+        else {
+            event.target.classList.add("button-selected");
+        }
+
         var i;
         var x = document.getElementsByClassName("reportViewContent");
         for (i = 0; i < x.length; i++) {
             x[i].style.display = "none";
         }
         document.getElementById(view).style.display = "block";
+
+        localStorage.setItem("SelectedViewButtons", view);
     }
 
 
@@ -16,86 +37,107 @@
     @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
 
         var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            fill: false,
-            data: {
-                labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Labels))),
-                datasets: [
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        fill: false,
+        data: {
+            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Labels))),
+            datasets: [
                 {
                     label: "Metadata",
-                    backgroundColor: 'transparent',
                     borderColor: 'rgb(255, 0, 0)',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Metadata))),
-                    pointHitRadius: 20,
-                    points: 50
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Metadata))),
+                    backgroundColor: "rgb(255, 0, 0)",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    fill: false
                 },
                 {
                     label: "Produktark",
-                    backgroundColor: 'transparent',
-                        borderColor: 'rgb(240, 179, 35)',
+                    fill: false,
+                    backgroundColor: 'rgb(240, 179, 35)',
+                    borderColor: 'rgb(240, 179, 35)',
                     data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Productsheet))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Tegneregler",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(169, 196, 127)",
+                        fill: false,
                         borderColor: 'rgb(169, 196, 127)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PresentationRules))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Produktspesifikasjoner",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(93, 71, 119)",
+                        fill: false,
                         borderColor: 'rgb(93, 71, 119)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.ProductSpecification))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "WMS",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(254, 80, 0)",
+                        fill: false,
                         borderColor: 'rgb(254, 80, 0)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Wms))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "WFS",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(125, 161, 196)",
+                        fill: false,
                         borderColor: 'rgb(125, 161, 196)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Wfs))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Sosi-krav",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(54, 197, 69)",
+                        fill: false,
                         borderColor: 'rgb(54, 197, 69)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.SosiRequirements))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Gml-krav",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(101, 126, 224)",
+                        fill: false,
                         borderColor: 'rgb(101, 126, 224)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.GmlRequirements))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Atom-feed",
-                        backgroundColor: 'transparent',
+                        backgroundColor: 'rgb(102, 153, 102)',
+                        fill: false,
                         borderColor: 'rgb(102, 153, 102)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.AtomFeed))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
                     {
                         label: "Nedlasting",
-                        backgroundColor: 'transparent',
+                        backgroundColor: "rgb(0, 26, 0)",
+                        fill: false,
                         borderColor: 'rgb(0, 26, 0)',
                         data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Distribution))),
+                        pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                        pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                     },
 
 
                     ]
             },
 
-            options: {
-                elements: {
-                    line: {
-                        tension: 0, // disables bezier curves
-                    }
-                }
-            }
     });
 
 

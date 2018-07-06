@@ -117,7 +117,7 @@ namespace Kartverket.Register.Models.ViewModels
         public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports)
         {
             DokReportsSelectList = CreateSelectList(statusReports);
-            DokHistoricalChart = new DokHistoricalChart(statusReports);
+            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport);
 
 
             if (statusReport != null)

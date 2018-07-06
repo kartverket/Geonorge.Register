@@ -19,8 +19,10 @@ namespace Kartverket.Register.Models
         public List<int> AtomFeed { get; set; }
         public List<int> Distribution { get; set; }
 
+        public List<int> PointSize { get; set; }
 
-        public DokHistoricalChart(List<StatusReport> statusReports)
+
+        public DokHistoricalChart(List<StatusReport> statusReports, StatusReport selectedStatusReport)
         {
             Metadata = new List<int>();
             Productsheet = new List<int>();
@@ -33,12 +35,15 @@ namespace Kartverket.Register.Models
             AtomFeed = new List<int>();
             Distribution = new List<int>();
             Labels = new List<string>();
+            PointSize = new List<int>();
+
             if (statusReports != null)
             {
 
                 foreach (var statusReport in statusReports)
                 {
                     var xName = statusReport.Date.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("nb-NO"));
+                    PointSize.Add(selectedStatusReport != null && statusReport.Id == selectedStatusReport.Id ? 7 : 3);
 
                     Labels.Add(xName);
                     Metadata.Add(statusReport.NumberOfItemsWithMetadata("good"));

@@ -19,9 +19,10 @@ else
                 @Html.DropDownList("SelectedDokReport", Model.DokReportsSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
             }
         </div>
-        <div>
-            <button class="btn btn-view-report" onclick="reportView('tabel')"><i class="fa fa-table"></i></button>
-            <button class="btn btn-view-report" onclick="reportView('pieChart')"><i class="fa fa-pie-chart"></i></button>
+        <div id="reportViewButtons">
+            <button class="btn" id="tabelButton" onclick="reportView('tabel', event)"><i class="fa fa-table"></i></button>
+            <button class="btn" id="pieChartButton" onclick="reportView('pieChart', event)"><i class="fa fa-pie-chart"></i></button>
+            <button class="btn" id="lineChartButton" onclick="reportView('lineChart', event)"><i class="fa fa-line-chart"></i></button>
         </div>
     </div>
 
@@ -170,13 +171,13 @@ else
         </div>
     </div>
 
-        <h2> Oversikt </h2>
+    <div id="lineChart" style="display:none" class="reportViewContent">
         <p>Endringer antall med status "God"</p>
 
         <div class="col-md-12">
             <canvas id="myChart" height="200" chart-colors="colors"></canvas>
         </div>
-
+    </div>
 
 
 

@@ -255,13 +255,20 @@ namespace Kartverket.Register.Controllers
             if (!string.IsNullOrWhiteSpace(redirectToApiUrl)) return Redirect(redirectToApiUrl);
 
             RegisterItemV2ViewModel viewModel;
-            if (string.IsNullOrWhiteSpace(systemId))
+            try
             {
-                viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryType);
+                if (string.IsNullOrWhiteSpace(systemId))
+                {
+                    viewModel = GetRegisterItem(null, registername, itemowner, itemname, InspireRegisteryType);
+                }
+                else
+                {
+                    viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                }
             }
-            else
+            catch (Exception e)
             {
-                viewModel = new RegisterItemV2ViewModel(_registerItemService.GetRegisterItemBySystemId(Guid.Parse(systemId)));
+                return HttpNotFound();
             }
             viewModel.AccessRegisterItem = _accessControlService.Access(viewModel);
             if (string.IsNullOrWhiteSpace(viewModel.Name))

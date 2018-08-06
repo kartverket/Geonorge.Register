@@ -35,6 +35,7 @@ namespace Kartverket.DOK.Service
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
                 dataset.datasetthumbnail = metadata.datasetthumbnail;
                 dataset.register = originalDataset.register;
+                dataset.modified = DateTime.Now;
 
                 dataset.dokStatusId = originalDataset.dokStatusId;
                 dataset.datasetownerId = metadata.datasetownerId;

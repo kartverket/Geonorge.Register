@@ -24,6 +24,8 @@ namespace Kartverket.Register.Models
         public string SelectedInspireMonitoringReport { get; set; }
         public string SelectedComparableCandidate { get; set; }
         public bool Compare { get; set; }
+        public string DokSelectedTab { get; set; }
+        public string SelectedDokReport { get; set; }
 
     }
 }

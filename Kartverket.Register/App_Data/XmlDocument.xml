@@ -497,6 +497,11 @@
             Gets inspiremonitoring xml
             </summary>
         </member>
+        <member name="M:Kartverket.Register.Controllers.ApiRootController.DokReport(System.String)">
+            <summary>
+            Save dok status report to db
+            </summary>
+        </member>
         <member name="M:Kartverket.Register.Controllers.ApiRootController.SaveInspireMonitoringData">
             <summary>
             Save inspire monitoring report data to database.
@@ -2585,6 +2590,11 @@
               Looks up a localized string similar to Leveransestatus er ikke satt.
             </summary>
         </member>
+        <member name="P:Resources.DataSet.DOK_Delivery_Status_NotSetShort">
+            <summary>
+              Looks up a localized string similar to Ikke satt.
+            </summary>
+        </member>
         <member name="P:Resources.DataSet.DOK_Delivery_Status_Useable">
             <summary>
               Looks up a localized string similar to Brukbar.
@@ -3651,7 +3661,7 @@
         </member>
         <member name="P:Resources.Registers.Kartografi">
             <summary>
-              Looks up a localized string similar to Kartografi.
+              Looks up a localized string similar to Digital kartografi.
             </summary>
         </member>
         <member name="P:Resources.Registers.KartografiContent">

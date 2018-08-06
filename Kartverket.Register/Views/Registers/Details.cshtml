@@ -116,6 +116,13 @@
 
                 </div>
             }
+            @if (Model.IsDokRegistry())
+            {
+                if (HtmlHelperExtensions.IsAdmin())
+                {
+                    <a class="btn btn-default btn-space pull-right" href="@RegisterUrls.DokStatusRegistryReport()">Dok rapport</a>
+                }
+            }
         </div>
     </section>
 

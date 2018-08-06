@@ -1,5 +1,4 @@
-﻿
-using Kartverket.Register.Models;
+﻿using Kartverket.Register.Models;
 using Kartverket.Register.Services;
 using Kartverket.Register.Services.Register;
 using Kartverket.Register.Services.RegisterItem;
@@ -36,8 +35,9 @@ namespace Kartverket.Register.Controllers
         private readonly IInspireMonitoringService _inspireMonitoringService;
         private readonly IAccessControlService _accessControlService;
         private readonly ISynchronizationService _synchronizationService;
+        private readonly IStatusReportService _statusReportService;
 
-        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService)
+        public ApiRootController(RegisterDbContext dbContext, ISearchService searchService, IRegisterService registerService, IRegisterItemService registerItemService, IInspireDatasetService inspireDatasetService, IInspireMonitoringService inspireMonitoringService, IAccessControlService accessControlService, ISynchronizationService synchronizationService, IStatusReportService statusReportService)
         {
             _registerItemService = registerItemService;
             _inspireDatasetService = inspireDatasetService;
@@ -46,6 +46,7 @@ namespace Kartverket.Register.Controllers
             _inspireMonitoringService = inspireMonitoringService;
             _accessControlService = accessControlService;
             _synchronizationService = synchronizationService;
+            _statusReportService = statusReportService;
             db = dbContext;
         }
 
@@ -99,6 +100,26 @@ namespace Kartverket.Register.Controllers
             Monitoring inspireMonitoring = _inspireMonitoringService.GetInspireMonitoringReport(inspireStatusRegister);
 
             return Content(System.Net.HttpStatusCode.OK, inspireMonitoring, new XMLFormatter(), new MediaTypeHeaderValue("application/xml"));
+        }
+
+        /// <summary>
+        /// Save dok status report to db
+        /// </summary>
+        [Authorize(Roles = AuthConfig.RegisterProviderRole)]
+        [Route("api/register/{registerName}/report")]
+        [HttpGet]
+        public IHttpActionResult DokReport(string registerName)
+        {
+            try
+            {
+                var register = _registerService.GetRegister(null, registerName);
+                _statusReportService.CreateStatusReport(register);
+                return Ok("Saved");
+            }
+            catch
+            {
+                return Ok("Error");
+            }
         }
 
         /// <summary>

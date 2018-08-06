@@ -14,6 +14,7 @@ namespace Kartverket.Register.Models.ViewModels
                 ApplicationSchema = document.ApplicationSchema;
                 GmlApplicationSchema = document.GMLApplicationSchema;
                 CartographyFile = document.CartographyFile;
+                CartographyDetailsUrl = document.CartographyDetailsUrl;
                 ApprovalDocument = document.approvalDocument;
                 ApprovalReference = document.approvalReference;
                 Accepted = GetAcceptedStatus(document.Accepted);
@@ -55,6 +56,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string ApplicationSchema { get; set; }
         public string GmlApplicationSchema { get; set; }
         public string CartographyFile { get; set; }
+        public string CartographyDetailsUrl { get; set; }
         public string ApprovalDocument { get; set; }
         public string ApprovalReference { get; set; }
         public string Accepted { get; set; }

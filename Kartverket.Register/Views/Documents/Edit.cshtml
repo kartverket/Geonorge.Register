@@ -262,6 +262,7 @@
                     @Html.LabelFor(model => model.CartographyFile, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         <select id="CartographyFile" name="CartographyFile" class="form-control" onchange="CheckOfficial(this.value);"></select>
+                        @Html.HiddenFor(model => model.CartographyDetailsUrl)
                         @Html.ValidationMessageFor(model => model.CartographyFile, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -375,9 +376,14 @@
             $.each(cartographyFiles, function(i, obj) {
                 var dataText = obj.DatasetName + ': ' + obj.Name;
                 var dataValue = obj.FileUrl;
+                var uuid = obj.Uuid;
+
                 var selected = false;
-                if(dataValue == selectedCartograhyUrl)
+                if (dataValue == selectedCartograhyUrl)
+                {
                     selected = true;
+                    $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/Details?SystemId=' + uuid);
+                }
                 $('#CartographyFile').append(new Option(dataText, dataValue, false, selected ));
             });
 
@@ -395,6 +401,8 @@
 
             if(obj.FileUrl == selectedCartograhyUrl)
             {
+                $('#CartographyDetailsUrl').val('@WebConfigurationManager.AppSettings["RegistryCartographyUrl"]files/Details?SystemId=' + obj.Uuid);
+
                 if(obj.OfficialStatus){  
                     console.log("Official")
                     $('#not-accepted').prop('checked', false);

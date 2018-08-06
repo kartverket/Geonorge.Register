@@ -56,6 +56,7 @@ namespace Kartverket.Register
             builder.RegisterType<InspireMonitoringService>().As<IInspireMonitoringService>();
             builder.RegisterType<InspireMonitoring>().As<IInspireMonitoring>();
             builder.RegisterType<SynchronizationService>().As<ISynchronizationService>();
+            builder.RegisterType<StatusReportService>().As<IStatusReportService>();
 
             builder.RegisterType<HttpClientFactory>().As<IHttpClientFactory>();
             builder.RegisterType<LogEntryService>().As<ILogEntryService>().WithParameters(new List<Parameter>

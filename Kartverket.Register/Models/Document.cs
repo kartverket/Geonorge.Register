@@ -117,6 +117,7 @@ namespace Kartverket.Register.Models
             ApplicationSchema = document.ApplicationSchema;
             GMLApplicationSchema = document.GMLApplicationSchema;
             CartographyFile = document.CartographyFile;
+            CartographyDetailsUrl = document.CartographyDetailsUrl;
             versionName = document.versionName;
             versionNumber = document.versionNumber;
             Accepted = document.Accepted;

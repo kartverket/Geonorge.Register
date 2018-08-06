@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kartografi.
+        ///   Looks up a localized string similar to Digital kartografi.
         /// </summary>
         public static string Kartografi {
             get {

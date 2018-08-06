@@ -484,4 +484,7 @@ As a data set quality and coverage can vary considerably from site to area, the 
   <data name="TypeNational" xml:space="preserve">
     <value>National</value>
   </data>
+  <data name="DOK_Delivery_Status_NotSetShort" xml:space="preserve">
+    <value>Not set</value>
+  </data>
 </root>

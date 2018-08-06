@@ -4,6 +4,7 @@
   "dependencies": {
     "kartverket-felleskomponenter": "9.0.0",
     "tablesorter": "*",
-    "vue": "^2.5.13"
+    "vue": "^2.5.13",
+    "chart.js": "^2.7.2"
   }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Kartverket.Register.Models.ViewModels
@@ -58,12 +59,17 @@ namespace Kartverket.Register.Models.ViewModels
         [Display(Name = "ServiceUuid", ResourceType = typeof(DataSet))]
         public string UuidService { get; set; }
 
+        public ICollection<DatasetStatusHistory> StatusHistories { get; set; }
+
         //Search for metadata
         public string SearchString { get; set; }
         public List<MetadataItemViewModel> SearchResultList { get; set; }
 
         //SelectList
         public SelectList DokStatusSelectList { get; set; }
+
+        [Display(Name = "DOK_DatasetType", ResourceType = typeof(DataSet))]
+        public string DatasetType { get; set; }
 
         public void UpdateDataset(DatasetV2 dataset)
         {
@@ -85,6 +91,35 @@ namespace Kartverket.Register.Models.ViewModels
             DokStatus = dataset.DokStatus;
             DokStatusDateAccepted = dataset.DokStatusDateAccepted;
             UuidService = dataset.UuidService;
+
+            UpdateRegisterItem(dataset);
+        }
+
+        public DatasetViewModel()
+        {
+        }
+
+        public void UpdateDataset(Dataset dataset)
+        {
+            Uuid = dataset.Uuid;
+            Notes = dataset.Notes;
+            MetadataUrl = dataset.MetadataUrl;
+            SpecificUsage = dataset.SpecificUsage;
+            ProductSheetUrl = dataset.ProductSheetUrl;
+            PresentationRulesUrl = dataset.PresentationRulesUrl;
+            ProductSpecificationUrl = dataset.ProductSpecificationUrl;
+            DistributionFormat = dataset.DistributionFormat;
+            DistributionUrl = dataset.DistributionUrl;
+            DistributionArea = dataset.DistributionArea;
+            WmsUrl = dataset.WmsUrl;
+            ThemeGroupId = dataset.ThemeGroupId;
+            DatasetThumbnail = dataset.datasetthumbnail;
+            DokStatusId = dataset.dokStatusId;
+            DokStatus = dataset.dokStatus;
+            DokStatusDateAccepted = dataset.dateAccepted;
+            UuidService = dataset.UuidService;
+            StatusHistories = dataset.StatusHistories;
+            DatasetType = dataset.GetDatasetType();
 
             UpdateRegisterItem(dataset);
         }

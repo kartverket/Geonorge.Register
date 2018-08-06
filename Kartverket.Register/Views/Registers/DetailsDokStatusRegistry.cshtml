@@ -16,8 +16,10 @@
     int pageNumber = (page ?? 1);
 }
 @section Scripts {
-
-    @Html.Partial("js/_dokReportCharts", Model.StatusReport)
+    @if (!Model.StatusReport.ReportNotExists)
+    {
+        @Html.Partial("js/_dokReportCharts", Model.StatusReport)
+    }
 
 
     <script>

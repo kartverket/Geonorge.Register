@@ -6,6 +6,7 @@ using System.Web.Configuration;
 using Kartverket.Register.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using Kartverket.Register.Models.ViewModels;
 using Kartverket.Register.Models.Translations;
 
@@ -35,7 +36,6 @@ namespace Kartverket.DOK.Service
                 dataset.ProductSpecificationUrl = metadata.ProductSpecificationUrl;
                 dataset.datasetthumbnail = metadata.datasetthumbnail;
                 dataset.register = originalDataset.register;
-                dataset.modified = DateTime.Now;
 
                 dataset.dokStatusId = originalDataset.dokStatusId;
                 dataset.datasetownerId = metadata.datasetownerId;
@@ -80,7 +80,8 @@ namespace Kartverket.DOK.Service
                 {
                     dataset.DistributionFormat = metadata.DistributionFormat;
                 }
-                dataset.Translations.Clear();
+               
+                dataset.Translations.Where(t => t.RegisterItemId != Guid.Empty).ToList().ForEach(x => _dbContext.Entry(x).State = EntityState.Deleted);
                 dataset.Translations = metadata.Translations;
             }
 
@@ -496,9 +497,8 @@ namespace Kartverket.DOK.Service
             {
                 UpdateDatasetWithMetadata(dataset, dataset.Uuid, dataset, false);
                 _dbContext.Entry(dataset).State = System.Data.Entity.EntityState.Modified;
+                _dbContext.SaveChanges();
             }
-            _dbContext.SaveChanges();
-
 
             return "updated";
         }

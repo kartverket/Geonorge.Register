@@ -143,6 +143,7 @@ namespace Kartverket.Register.Models
                     { 
                         regItem.register.modified = System.DateTime.Now;
                     }
+                    regItem.modified = System.DateTime.Now;
 
                     uuid = regItem.systemId.ToString();
                     title = regItem.name;

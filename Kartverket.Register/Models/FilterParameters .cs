@@ -10,6 +10,7 @@ namespace Kartverket.Register.Models
         public FilterParameters()
         {
             InspireRegisteryType = "dataset";
+            StatusType = "Metadata";
         }
         public string text { get; set; }
         public bool filterVertikalt { get; set; }
@@ -26,6 +27,7 @@ namespace Kartverket.Register.Models
         public bool Compare { get; set; }
         public string DokSelectedTab { get; set; }
         public string SelectedDokReport { get; set; }
+        public string StatusType { get; set; }
 
     }
 }

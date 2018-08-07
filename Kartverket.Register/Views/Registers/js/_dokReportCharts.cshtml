@@ -138,6 +138,53 @@
     });
 
 
+    var ctx = document.getElementById("LineChart").getContext('2d');
+    var LineChart = new Chart(ctx, {
+        type: 'line',
+        fill: false,
+        data: {
+            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Labels))),
+            datasets: [
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Good",
+                    borderColor: '#36c545',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Good))),
+                    backgroundColor: "#36c545",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    fill: false
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Useable",
+                    fill: false,
+                    backgroundColor: '#fed633',
+                    borderColor: '#fed633',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Useable))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Deficient",
+                    backgroundColor: "#ee432a",
+                    fill: false,
+                    borderColor: '#ee432a',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Deficient))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_NotSet",
+                    backgroundColor: "#d8d8d8",
+                    fill: false,
+                    borderColor: '#d8d8d8',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Notset))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                }
+            ]
+        }
+    });
+
 
     var dataMetadata = {
         labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],

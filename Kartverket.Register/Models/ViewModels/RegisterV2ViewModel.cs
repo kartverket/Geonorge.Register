@@ -73,7 +73,7 @@ namespace Kartverket.Register.Models.ViewModels
         public string SelectedInspireRegisteryType { get; set; }
         public string SelectedDokTab { get; set; }
 
-        public RegisterV2ViewModel(Register register, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null)
+        public RegisterV2ViewModel(Register register, int? page = null, StatusReport statusReport = null, List<StatusReport> statusReports = null, string statusType = null)
         {
             if (register != null)
             {
@@ -95,7 +95,7 @@ namespace Kartverket.Register.Models.ViewModels
                 VersionNumber = register.versionNumber;
                 RegisterItemsV2 = GetRegisterItems(register.containedItemClass, register.RegisterItems);
                 SynchronizationJobs = new SynchronizationViewModel(register.Synchronizes, page);
-                StatusReport = new StatusReportViewModel(statusReport, statusReports);
+                StatusReport = new StatusReportViewModel(statusReport, statusReports, statusType);
 
 
                 if (register.accessId != null) AccessId = register.accessId.Value;

@@ -19,6 +19,7 @@ namespace Kartverket.Register.Models.ViewModels
         public DateTime Date { get; set; }
         public int NumberOfItems { get; set; }
         public SelectList DokReportsSelectList { get; set; }
+        public SelectList StatusTypeSelectList { get; set; }
         public bool ReportNotExists { get; set; }
         public DokHistoricalChart DokHistoricalChart { get; set; }
 
@@ -114,10 +115,11 @@ namespace Kartverket.Register.Models.ViewModels
         public DokPieChart DokDistributionPieChart { get; set; }
 
 
-        public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports)
+        public StatusReportViewModel(StatusReport statusReport, List<StatusReport> statusReports, string statusType)
         {
             DokReportsSelectList = CreateSelectList(statusReports);
-            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport);
+            StatusTypeSelectList = CreateStatusTypeSelectList();
+            DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport, statusType);
 
 
             if (statusReport != null)
@@ -221,6 +223,26 @@ namespace Kartverket.Register.Models.ViewModels
                     items.Add(new SelectListItem() { Text = report.Date.ToString(), Value = report.Id.ToString() });
                 }
             }
+            var selectList = new SelectList(items, "Value", "Text");
+
+            return selectList;
+        }
+
+        private SelectList CreateStatusTypeSelectList()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem() { Text = "Metadata", Value = "Metadata" });
+            items.Add(new SelectListItem() { Text = "Produktark", Value = "ProductSheet" });
+            items.Add(new SelectListItem() { Text = "Tegneregler", Value = "PresentationRules" });
+            items.Add(new SelectListItem() { Text = "Produktspesifikasjoner", Value = "ProductSpecification" });
+            items.Add(new SelectListItem() { Text = "Wms", Value = "Wms" });
+            items.Add(new SelectListItem() { Text = "Wfs", Value = "Wfs" });
+            items.Add(new SelectListItem() { Text = "Sosi-krav", Value = "SosiRequirements" });
+            items.Add(new SelectListItem() { Text = "Gml-krav", Value = "GmlRequirements" });
+            items.Add(new SelectListItem() { Text = "Atom-feed", Value = "AtomFeed" });
+            items.Add(new SelectListItem() { Text = "Nedlasting", Value = "Distribution" });
+
             var selectList = new SelectList(items, "Value", "Text");
 
             return selectList;

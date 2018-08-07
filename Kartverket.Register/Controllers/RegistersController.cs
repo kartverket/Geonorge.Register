@@ -176,7 +176,7 @@ namespace Kartverket.Register.Controllers
             StatusReport statusReport = filter.SelectedDokReport != null ? _statusReportService.GetStatusReportById(filter.SelectedDokReport) : _statusReportService.GetLatestReport();
             
 
-            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12));
+            var viewModel = new RegisterV2ViewModel(register, null, statusReport, _statusReportService.GetStatusReports(12), filter.StatusType);
             viewModel.SelectedDokTab = filter.DokSelectedTab;
             viewModel.AccessRegister = _accessControlService.AccessViewModel(viewModel);
 

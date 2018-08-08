@@ -256,4 +256,7 @@
   <data name="LogIn" xml:space="preserve">
     <value>Log in</value>
   </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
 </root>

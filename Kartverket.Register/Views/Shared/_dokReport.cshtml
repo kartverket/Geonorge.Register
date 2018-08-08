@@ -177,35 +177,36 @@ else
         </div>
     </div>
 
-        <div id="lineChart" style="display: none" class="reportViewContent">
-            <div class="row">
-                <div class="col-md-4 col-sm-12">
-                    @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
-                    {
+    <div id="lineChart" style="display: none" class="reportViewContent">
+        <div class="row">
+            <div class="col-md-4 col-sm-12 form-group">
+                @using (Html.BeginForm("DetailsDokStatusRegistry", "Registers", FormMethod.Get))
+                {
 
-                        @Html.Hidden("DokSelectedTab", "report")
-                        @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control" })
-                    }
-                </div>
+                    @Html.Hidden("DokSelectedTab", "report")
+                    @Html.DropDownList("StatusType", Model.StatusTypeSelectList, new { onchange = "this.form.submit();", @class = "form-control", id = "ddStatusType" })
+                }
+            </div>
 
-                <div class="col-md-12">
+            <a id="lineChartStatusbutton" class="btn btn-default" onclick="ShowAll(null)">@Shared.All</a>
+
+            <div class="col-md-12">
+                <div id="lineChartStatus">
                     <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
                 </div>
-            
-                
-                <div class="col-md-12">
-                    <p>Endringer antall med status "God"</p>
 
+                <div id="lineChartAll">
                     <canvas id="myChart" height="200" chart-colors="colors"></canvas>
-                </div>            
-            
                 </div>
+            </div>
 
         </div>
 
+    </div>
 
 
 
 
 
-        }
+
+}

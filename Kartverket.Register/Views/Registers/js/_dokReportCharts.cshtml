@@ -4,7 +4,9 @@
 
     $(document).ready(function () {
         var selectedView = localStorage.getItem("SelectedViewButtons");
+        var showAllLineCart = localStorage.getItem("ShowAllLineCart");
         reportView(selectedView, null);
+        ShowAll(showAllLineCart);
     });
 
     function reportView(view, event) {
@@ -30,6 +32,27 @@
         document.getElementById(view).style.display = "block";
 
         localStorage.setItem("SelectedViewButtons", view);
+    }
+
+    function ShowAll(selected) {
+        var chartAll = document.getElementById("lineChartAll");
+        var chartStatus = document.getElementById("lineChartStatus");
+        var ddList = document.getElementById("ddStatusType");
+        var button = document.getElementById("lineChartStatusbutton");
+        if (chartAll.style.display === "none" || selected) {
+            chartAll.style.display = "block";
+            chartStatus.style.display = "none";
+            ddList.disabled = true;
+            button.classList.add("button-selected");
+            localStorage.setItem("ShowAllLineCart", true);
+        } else {
+            chartAll.style.display = "none";
+            chartStatus.style.display = "block";
+            ddList.disabled = false;
+            $(button).removeClass("button-selected");
+            localStorage.setItem("ShowAllLineCart", false);
+        }
+
     }
 
 
@@ -334,15 +357,20 @@
         options: {
             responsive: true,
             legend: {
-                display: false
+                display: true
+            },
+            legendCallback: function(chart) {
+                return chart;
             },
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_Metadata',
                 fontSize: 20
-            }
+            },
+            
         }
     });
+
 
     var ctx = document.getElementById("productsheetChart").getContext('2d');
     var productsheetChart = new Chart(ctx, {

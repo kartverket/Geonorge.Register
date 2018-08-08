@@ -3830,6 +3830,11 @@
               Looks up a localized string similar to Legg til.
             </summary>
         </member>
+        <member name="P:Resources.Shared.All">
+            <summary>
+              Looks up a localized string similar to Alle.
+            </summary>
+        </member>
         <member name="P:Resources.Shared.AppPageTitle">
             <summary>
               Looks up a localized string similar to Geonorge Register.

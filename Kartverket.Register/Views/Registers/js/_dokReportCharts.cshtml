@@ -20,6 +20,7 @@
             function(index, btn) {
                 console.log(btn);
                 $(btn).removeClass("button-selected");
+                $(btn.children).removeClass("button-selected");
             });
 
         if (event == null) {

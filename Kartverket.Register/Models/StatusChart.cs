@@ -29,7 +29,9 @@ namespace Kartverket.Register.Models
                 foreach (var statusReport in statusReports)
                 {
                     PointSize.Add(selectedStatusReport != null && statusReport.Id == selectedStatusReport.Id ? 7 : 3);
+                    var xName = statusReport.Date.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("nb-NO"));
 
+                    Labels.Add(xName);
                     Good.Add(statusReport.NumberOfItemsByType(statusType, "good"));
                     Deficient.Add(statusReport.NumberOfItemsByType(statusType, "deficient"));
                     Notset.Add(statusReport.NumberOfItemsByType(statusType, "notset"));

@@ -218,27 +218,71 @@
                 data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Good))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Useable))),
                         @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.Deficient))),
-                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.NotSet)))],
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokMetadataPieChart.NotSet)))
+                ],
             }
         ]
     };
 
-    var dataProductsheet = {
-            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
-            datasets: [
-                {
-                    fill: true,
-                    backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                    data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Good))),
-                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Useable))),
-                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Deficient))),
-                            @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.NotSet)))],
+    var legendPie = {
+        display: true,
+        position: 'right',
+        labels: {
+            generateLabels: function (chart) {
+                var data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                    return data.labels.map(function (label, i) {
+                        var meta = chart.getDatasetMeta(0);
+                        var ds = data.datasets[0];
+                        var arc = meta.data[i];
+                        var custom = arc && arc.custom || {};
+                        var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+                        var arcOpts = chart.options.elements.arc;
+                        var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+                        var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+                        var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+
+                        // We get the value of the current label
+                        var value = chart.config.data.datasets[arc._datasetIndex].data[arc._index];
+
+                        return {
+                            // Instead of `text: label,`
+                            // We add the value to the string
+                            text: label + " : " + value,
+                            fillStyle: fill,
+                            strokeStyle: stroke,
+                            lineWidth: bw,
+                            hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+                            index: i
+                        };
+                    });
+                } else {
+                    return [];
                 }
-            ]
+            }
+        }
+    }
+
+    var dataProductsheet = {
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable",
+            "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"
+        ],
+        datasets: [
+            {
+                fill: true,
+                backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                data: [
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Good))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Useable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.Deficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokProductSheetPieChart.NotSet)))
+                ],
+            }
+        ]
     };
 
     var dataPresentationRules = {
-            labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
             datasets: [
                 {
                     fill: true,
@@ -356,18 +400,14 @@
         data: dataMetadata,
         options: {
             responsive: true,
-            legend: {
-                display: true
-            },
-            legendCallback: function(chart) {
-                return chart;
-            },
+            legend: legendPie
+            ,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_Metadata',
                 fontSize: 20
             },
-            
+           
         }
     });
 
@@ -378,23 +418,11 @@
         data: dataProductsheet,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_ProductSheet',
                 fontSize: 20
-            },
-            pieceLabel: {
-                render: 'percentage',
-                fontColor: function (data) {
-                    var rgb = hexToRgb(data.dataset.backgroundColor[data.index]);
-                    var threshold = 140;
-                    var luminance = 0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b;
-                    return luminance > threshold ? 'black' : 'white';
-                },
-                precision: 2
             }
         }
     });
@@ -405,9 +433,7 @@
         data: dataPresentationRules,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_PresentationRules',
@@ -422,9 +448,7 @@
         data: dataProductSpecification,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_ProductSpesification',
@@ -439,9 +463,7 @@
         data: dataWms,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_Wms',
@@ -456,9 +478,7 @@
         data: dataWfs,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_Wfs',
@@ -473,9 +493,7 @@
         data: dataSosiRequirements,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_SosiRequirements',
@@ -490,9 +508,7 @@
         data: dataGmlRequirements,
         options: {
             responsive: true,
-            legend: {
-                display: false
-            },
+            legend: legendPie,
             title: {
                 display: true,
                 text: '@DataSet.DOK_Delivery_GmlRequirements',
@@ -507,9 +523,7 @@
         data: dataAtomFeed,
             options: {
                 responsive: true,
-                legend: {
-                    display: false
-                },
+                legend: legendPie,
                 title: {
                     display: true,
                     text: '@DataSet.DOK_Delivery_AtomFeed',
@@ -524,9 +538,7 @@
         data: dataDistribution,
             options: {
                 responsive: true,
-                legend: {
-                    display: false
-                },
+                legend: legendPie,
                 title: {
                     display: true,
                     text: '@DataSet.DOK_Delivery_Distribution',

@@ -121,13 +121,6 @@ else
     <div id="pieChart" style="display:none" class="reportViewContent">
         <div class="col-md-12 row text-center grid">
 
-            @*<div class="col-md-12 margin-bottom-10">
-                <div class="label good">@DataSet.DOK_Delivery_Status_Good</div>
-                <div class="label useable">@DataSet.DOK_Delivery_Status_Useable</div>
-                <div class="label deficient">@DataSet.DOK_Delivery_Status_Deficient</div>
-                <div class="label notset">@DataSet.DOK_Delivery_Status_NotSetShort</div>
-            </div>*@
-
             <div class="col-md-6 col-sm-1">
                 <canvas id="metadataChart"></canvas>
             </div>
@@ -188,7 +181,7 @@ else
                 }
             </div>
 
-            <a id="lineChartStatusbutton" class="btn btn-default" onclick="ShowAll(null)">@Shared.All</a>
+            <a id="lineChartStatusbutton" class="btn btn-default" onclick="SelectLineChartType()">@Shared.All</a>
 
             <div class="col-md-12">
                 <div id="lineChartStatus">

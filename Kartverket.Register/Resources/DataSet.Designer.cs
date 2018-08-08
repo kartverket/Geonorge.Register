@@ -367,7 +367,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wfs status.
+        ///   Looks up a localized string similar to WFS status.
         /// </summary>
         public static string DOK_Delivery_Wfs {
             get {
@@ -376,7 +376,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wms status.
+        ///   Looks up a localized string similar to WMS status.
         /// </summary>
         public static string DOK_Delivery_Wms {
             get {

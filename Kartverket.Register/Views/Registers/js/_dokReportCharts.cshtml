@@ -507,19 +507,6 @@
             }
     });
 
-    var MetadataDataBar = {
-        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
-        datasets: [
-            {
-                fill: true,
-                backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
-                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Good))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Useable))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Deficient))),
-                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.NotSet)))],
-            }
-        ]
-    };
 
     var ctx = document.getElementById("statusBarChart").getContext('2d');
 
@@ -636,50 +623,6 @@
             },
         }
     });
-
-    @*var statusBarChart = new Chart(ctx, {
-        type: 'horizontalBar',
-        labels: [
-            '@DataSet.DOK_Delivery_Metadata',
-            '@DataSet.DOK_Delivery_ProductSheet',
-            '@DataSet.DOK_Delivery_PresentationRules',
-            '@DataSet.DOK_Delivery_ProductSpesification',
-            '@DataSet.DOK_Delivery_Wms',
-            '@DataSet.DOK_Delivery_Wfs',
-            '@DataSet.DOK_Delivery_SosiRequirements',
-            '@DataSet.DOK_Delivery_GmlRequirements',
-            '@DataSet.DOK_Delivery_AtomFeed',
-            '@DataSet.DOK_Delivery_Distribution',
-        ],
-        datasets: [{
-                label: 'Dataset 1',
-                backgroundColor: "#36c545",
-                data: [
-                    1,2,2,2,2,2,2,2,3,1
-                ]
-            }, {
-                label: 'Dataset 2',
-                backgroundColor: "#fed633",
-                data: [
-                    1, 2, 2, 2, 2, 2, 2, 2, 3, 1
-                ]
-            }, {
-                label: 'Dataset 3',
-                backgroundColor: "#ee432a",
-                data: [
-                    1, 2, 2, 2, 2, 2, 2, 2, 3, 1
-                ]
-            }
-            ]
-        ,
-        options: {
-            scales: {
-                xAxes: [{ stacked: true }],
-                yAxes: [{ stacked: true }]
-            },
-            responsive: true,
-        }
-    });*@
 
 
 

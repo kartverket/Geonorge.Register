@@ -18,16 +18,16 @@
         var buttons = $("#reportViewButtons button");
         $.each(buttons,
             function(index, btn) {
-                console.log(btn);
                 $(btn).removeClass("button-selected");
                 $(btn.children).removeClass("button-selected");
             });
 
-        if (event == null) {
-            document.getElementById(view + "Button").classList.add("button-selected");
-        } else {
+        if (event != null) {
             event.target.classList.add("button-selected");
-        }
+        } 
+            
+            document.getElementById(view + "Button").classList.add("button-selected");
+        
 
         var i;
         var x = document.getElementsByClassName("reportViewContent");

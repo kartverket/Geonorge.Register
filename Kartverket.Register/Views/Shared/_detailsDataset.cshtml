@@ -1,6 +1,6 @@
 ﻿@using Kartverket.Register.Helpers
 @model Kartverket.Register.Models.ViewModels.DokDatasetViewModel
-
+@*@Html.Partial("Js/_datasetCharts")*@
 
 @if (!string.IsNullOrEmpty(Model.SpecificUsage))
 {
@@ -102,6 +102,12 @@
         <div class="col-md-7 col">@Html.DisplayFor(model => Model.DokDeliveryAtomFeedStatusNote)</div>
     </div>
 </article>
+
+@*<article>
+    <div class="col-md-12">
+        <canvas id="lineChart" height="200" chart-colors="colors"></canvas>
+    </div>
+</article>*@
 
 
 @if (!string.IsNullOrWhiteSpace(Model.MetadataUrl))

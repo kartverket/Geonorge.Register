@@ -143,15 +143,15 @@
         type: 'line',
         fill: false,
         data: {
-            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Labels))),
+            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Labels))),
             datasets: [
                 {
                     label: "@DataSet.DOK_Delivery_Status_Good",
                     borderColor: '#36c545',
-                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Good))),
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Good))),
                     backgroundColor: "#36c545",
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                     fill: false
                 },
                 {
@@ -159,27 +159,27 @@
                     fill: false,
                     backgroundColor: '#fed633',
                     borderColor: '#fed633',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Useable))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Useable))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_Deficient",
                     backgroundColor: "#ee432a",
                     fill: false,
                     borderColor: '#ee432a',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Deficient))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Deficient))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                 },
                 {
                     label: "@DataSet.DOK_Delivery_Status_NotSet",
                     backgroundColor: "#d8d8d8",
                     fill: false,
                     borderColor: '#d8d8d8',
-                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.Notset))),
-                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
-                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.Notset))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.StatusChart.PointSize))),
                 }
             ]
         }
@@ -506,6 +506,180 @@
                 }
             }
     });
+
+    var MetadataDataBar = {
+        labels: ["@DataSet.DOK_Delivery_Status_Good", "@DataSet.DOK_Delivery_Status_Useable", "@DataSet.DOK_Delivery_Status_Deficient", "@DataSet.DOK_Delivery_Status_NotSet"],
+        datasets: [
+            {
+                fill: true,
+                backgroundColor: ['#36c545', '#fed633', '#ee432a', '#d8d8d8'],
+                data: [@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Good))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Useable))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.Deficient))),
+                    @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokDistributionPieChart.NotSet)))],
+            }
+        ]
+    };
+
+    var ctx = document.getElementById("statusBarChart").getContext('2d');
+
+    var statusBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: [
+                '@DataSet.DOK_Delivery_Metadata',
+                '@DataSet.DOK_Delivery_ProductSheet',
+                '@DataSet.DOK_Delivery_PresentationRules',
+                '@DataSet.DOK_Delivery_ProductSpesification',
+                '@DataSet.DOK_Delivery_Wms',
+                '@DataSet.DOK_Delivery_Wfs',
+                '@DataSet.DOK_Delivery_SosiRequirements',
+                '@DataSet.DOK_Delivery_GmlRequirements',
+                '@DataSet.DOK_Delivery_AtomFeed',
+                '@DataSet.DOK_Delivery_Distribution'
+            ],
+            datasets: [
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Good',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadataGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductsheetGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRulesGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecificationGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWmsGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfsGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirementsGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirementsGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeedGood)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithDistributionGood)))),
+                    ],
+                    backgroundColor: '#36c545',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Useable',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadataUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductsheetUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRulesUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecificationUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWmsUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfsUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirementsUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirementsUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeedUseable)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithDistributionUseable)))),
+                    ],
+                    backgroundColor: '#fed633',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_Deficient',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadataDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductsheetDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRulesDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecificationDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWmsDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfsDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirementsDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirementsDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeedDeficient)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithDistributionDeficient)))),
+                    ],
+                    backgroundColor: '#ee432a',
+                },
+                {
+                    label: '@DataSet.DOK_Delivery_Status_NotSet',
+                    data: [
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithMetadataNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductsheetNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithPresentationRulesNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithProductSpecificationNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWmsNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithWfsNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithSosiRequirementsNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithGmlRequirementsNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithAtomFeedNotSet)))),
+                        @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Percent(Model.NumberOfItemsWithDistributionNotSet)))),
+                    ],
+                    backgroundColor: '#d8d8d8',
+                }
+            ]
+        },
+        options: {
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true,
+                            steps: 10,
+                            stepValue: 5,
+                            max: 100,
+                            callback: function(value, index, values) {
+                                return value + " %";
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                        },
+                        stacked: true,
+                    }],
+                yAxes: [{ stacked: true }]
+            },
+            tooltips: {
+                enabled: true,
+                mode: 'single',
+                callbacks: {
+                    label: function (tooltipItems, data) {
+                        return tooltipItems.yLabel + ': ' + tooltipItems.xLabel + ' %';
+                    }
+                }
+            },
+        }
+    });
+
+    @*var statusBarChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        labels: [
+            '@DataSet.DOK_Delivery_Metadata',
+            '@DataSet.DOK_Delivery_ProductSheet',
+            '@DataSet.DOK_Delivery_PresentationRules',
+            '@DataSet.DOK_Delivery_ProductSpesification',
+            '@DataSet.DOK_Delivery_Wms',
+            '@DataSet.DOK_Delivery_Wfs',
+            '@DataSet.DOK_Delivery_SosiRequirements',
+            '@DataSet.DOK_Delivery_GmlRequirements',
+            '@DataSet.DOK_Delivery_AtomFeed',
+            '@DataSet.DOK_Delivery_Distribution',
+        ],
+        datasets: [{
+                label: 'Dataset 1',
+                backgroundColor: "#36c545",
+                data: [
+                    1,2,2,2,2,2,2,2,3,1
+                ]
+            }, {
+                label: 'Dataset 2',
+                backgroundColor: "#fed633",
+                data: [
+                    1, 2, 2, 2, 2, 2, 2, 2, 3, 1
+                ]
+            }, {
+                label: 'Dataset 3',
+                backgroundColor: "#ee432a",
+                data: [
+                    1, 2, 2, 2, 2, 2, 2, 2, 3, 1
+                ]
+            }
+            ]
+        ,
+        options: {
+            scales: {
+                xAxes: [{ stacked: true }],
+                yAxes: [{ stacked: true }]
+            },
+            responsive: true,
+        }
+    });*@
 
 
 

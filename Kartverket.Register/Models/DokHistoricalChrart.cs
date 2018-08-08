@@ -20,13 +20,6 @@ namespace Kartverket.Register.Models
         public List<int> Distribution { get; set; }
 
         public List<int> PointSize { get; set; }
-        public List<int> Good { get; set; }
-        public List<int> Deficient { get; set; }
-        public List<int> Notset { get; set; }
-        public List<int> Useable { get; set; }
-
-
-
 
         public DokHistoricalChart(List<StatusReport> statusReports, StatusReport selectedStatusReport, string statusType = "Metadata")
         {
@@ -42,11 +35,6 @@ namespace Kartverket.Register.Models
             Distribution = new List<int>();
             Labels = new List<string>();
             PointSize = new List<int>();
-
-            Good = new List<int>();
-            Deficient = new List<int>();
-            Notset = new List<int>();
-            Useable = new List<int>();
 
             if (statusReports != null)
             {
@@ -68,10 +56,6 @@ namespace Kartverket.Register.Models
                     AtomFeed.Add(statusReport.NumberOfItemsWithAtomFeed("good"));
                     Distribution.Add(statusReport.NumberOfItemsWithDistribution("good"));
 
-                    Good.Add(statusReport.NumberOfItemsByType(statusType, "good"));
-                    Deficient.Add(statusReport.NumberOfItemsByType(statusType, "deficient"));
-                    Notset.Add(statusReport.NumberOfItemsByType(statusType, "notset"));
-                    Useable.Add(statusReport.NumberOfItemsByType(statusType, "useable"));
                 }
             }
         }

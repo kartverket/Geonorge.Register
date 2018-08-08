@@ -1,0 +1,54 @@
+﻿@model Kartverket.Register.Models.StatusChart
+
+<script>
+
+    @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
+
+    var ctx = document.getElementById("LineChart").getContext('2d');
+    var LineChart = new Chart(ctx, {
+        type: 'line',
+        fill: false,
+        data: {
+            labels: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Labels))),
+            datasets: [
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Good",
+                    borderColor: '#36c545',
+                    data:@Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Good))),
+                    backgroundColor: "#36c545",
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                    fill: false
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Useable",
+                    fill: false,
+                    backgroundColor: '#fed633',
+                    borderColor: '#fed633',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Useable))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_Deficient",
+                    backgroundColor: "#ee432a",
+                    fill: false,
+                    borderColor: '#ee432a',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Deficient))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                },
+                {
+                    label: "@DataSet.DOK_Delivery_Status_NotSet",
+                    backgroundColor: "#d8d8d8",
+                    fill: false,
+                    borderColor: '#d8d8d8',
+                    data: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.Notset))),
+                    pointRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                    pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.PointSize))),
+                }
+            ]
+        }
+    });
+
+</script>

@@ -22,6 +22,7 @@ namespace Kartverket.Register.Models.ViewModels
         public SelectList StatusTypeSelectList { get; set; }
         public bool ReportNotExists { get; set; }
         public DokHistoricalChart DokHistoricalChart { get; set; }
+        public StatusChart StatusChart { get; set; }
 
         // Metadata
         [Display(Name = "DOK_Delivery_Metadata", ResourceType = typeof(DataSet))]
@@ -120,7 +121,7 @@ namespace Kartverket.Register.Models.ViewModels
             DokReportsSelectList = CreateSelectList(statusReports);
             StatusTypeSelectList = CreateStatusTypeSelectList();
             DokHistoricalChart = new DokHistoricalChart(statusReports, statusReport, statusType);
-
+            StatusChart = new StatusChart(statusReports, statusReport, statusType);
 
             if (statusReport != null)
             {
@@ -246,6 +247,32 @@ namespace Kartverket.Register.Models.ViewModels
             var selectList = new SelectList(items, "Value", "Text");
 
             return selectList;
+        }
+
+        public double Percent(int numberOf)
+        {
+            var x = Divide(numberOf, NumberOfItems);
+            return Math.Round(x * 100, 2);
+        }
+
+        private double Divide(int x, int y)
+        {
+            try
+            {
+                if (y == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return (double)x / y;
+                }
+            }
+            catch (Exception e)
+            {
+
+                return 0;
+            }
         }
     }
 }

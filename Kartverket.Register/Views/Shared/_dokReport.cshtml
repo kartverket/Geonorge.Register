@@ -181,15 +181,23 @@ else
                 }
             </div>
 
-            <div class="col-md-12">
-                <div id="lineChartStatus">
-                    <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
-                </div>
+            <div id="lineChartStatus">
+                <div class="col-md-12">
+                <canvas id="LineChart" height="200" chart-colors="colors"></canvas>
+            </div>
+            </div>
 
                 <div id="lineChartAll">
-                    <canvas id="myChart" height="200" chart-colors="colors"></canvas>
+                    <div class="pull-right col-md-4">
+                        <a  class="pull-right btn btn-default" id="exportMyChart" download="LineChart-All.jpg"> <span class="fa fa-image"></span> @Shared.Download</a>
+                        @*<input type="button" value="CSV" onclick="exportCSV();" />*@
+                    </div>
+                    <div class="col-md-12">
+
+                    <canvas id="myChart" height="200" style="background-color: #ffffff"></canvas>
                 </div>
-            </div>
+                </div>
+        
 
 
         </div>

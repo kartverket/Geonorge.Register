@@ -26,10 +26,10 @@
 
         if (event != null) {
             event.target.classList.add("button-selected");
-        } 
-            
+        }
+
             document.getElementById(view + "Button").classList.add("button-selected");
-        
+
 
         var i;
         var x = document.getElementsByClassName("reportViewContent");
@@ -43,7 +43,7 @@
 
     function SelectLineChartType() {
         var chartAll = document.getElementById("lineChartAll");
-        
+
         if (chartAll.style.display === "none") {
             ShowAllChart();
             localStorage.setItem("ShowAllLineCart", true);
@@ -72,8 +72,18 @@
 
     @{var javaScriptSerializer = new System.Web.Script.Serialization.JavaScriptSerializer(); }
 
-        var ctx = document.getElementById("myChart").getContext('2d');
+
+    // ********** LINE CHART ****************
+
+    var ctx = document.getElementById("myChart").getContext('2d');
     var myChart = new Chart(ctx, {
+        plugins: [{
+            beforeDraw: function (myChart) {
+                var ctx = myChart.chart.ctx;
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, myChart.chart.width, myChart.chart.height);
+            } 
+        }],
         type: 'line',
         fill: false,
         data: {
@@ -170,8 +180,21 @@
                     pointHoverRadius: @Html.Raw(HttpUtility.HtmlDecode(javaScriptSerializer.Serialize(Model.DokHistoricalChart.PointSize))),
                 }
             ]
-        }
+        },
+
     });
+
+    $("#exportMyChart").click(function () {
+        var url = myChart.toBase64Image('image/png');
+        document.getElementById("exportMyChart").href = url;
+    });
+
+    //function exportCSV() {
+    //        console.log(myChart);
+    //        myChart.export.toCSV({}, function(data) {
+    //            this.download(data, this.defaults.formats.CSV.mimeType, "amCharts.csv");
+    //        });
+    //}
 
 
     var ctx = document.getElementById("LineChart").getContext('2d');
@@ -420,7 +443,7 @@
                 text: '@DataSet.DOK_Delivery_Metadata',
                 fontSize: 20
             },
-           
+
         }
     });
 
